@@ -1,13 +1,13 @@
 <p style="text-align:center;">
     {% if page.prev %}
-    <a alt="Previous chapter" href="{{ site.baseurl }}{{ page.prev }}">Prev</a>
+    <a alt="Previous chapter" href="{{ site.baseurl }}{{ page.prev }}">前一章</a>
     &bullet;
     {% endif %}
     {% if page.src %}
-    <a alt="Source code" href="https://github.com/{{ site.repository }}/blob/{{ site.branch }}/{{ page.src }}">Source</a>
+    <a alt="Source code" href="https://github.com/{{ site.repository }}/blob/{{ site.branch }}/{{ page.src }}">源代码</a>
     {% endif %}
     {% if page.next %}
     &bullet;
-    <a alt="Next chapter" href="{{ site.baseurl }}{{ page.next }}">Next</a>
+    <a alt="Next chapter" href="{{ site.baseurl }}{{ page.next }}">后一章</a>
     {% endif %}
 </p>
