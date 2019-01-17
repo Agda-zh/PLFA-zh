@@ -34,15 +34,22 @@
     {%- endif -%}
     {%- endfor -%}
     
-    {%- if page.progress -%}
-      {%- capture progress_text -%}本章翻译进度：{{ page.progress }}%{%- endcapture -%}
-      <h3 class="footer-heading">{{ progress_text }}</h3>
+    {%- if page.layout == 'home' -%}
       {%- if page.translators -%}
-        <h3 class="footer-heading">本章译者：</h3>
+        <h3 class="footer-heading">译者：</h3>
         <p>{{ page.translators | join: "，" | escape }}</p>
       {%- endif -%}
     {%- else -%}
-      <h3 class="footer-heading">本章暂无翻译</h3>
+      {%- if page.progress -%}
+        {%- capture progress_text -%}本章翻译进度：{{ page.progress }}%{%- endcapture -%}
+        <h3 class="footer-heading">{{ progress_text }}</h3>
+        {%- if page.translators -%}
+          <h3 class="footer-heading">本章译者：</h3>
+          <p>{{ page.translators | join: "，" | escape }}</p>
+        {%- endif -%}
+      {%- else -%}
+        <h3 class="footer-heading">本章暂无翻译</h3>
+      {%- endif -%}
     {%- endif -%}
     本作品采用<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>进行许可。<br />
     This work is licensed under a <a rel="license" href="{{ site.license-file }}">{{ site.license }}</a>
