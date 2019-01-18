@@ -34,7 +34,7 @@
     {%- endif -%}
     {%- endfor -%}
     
-    {%- if page.layout == 'home' -%}
+    {%- if page.layout == 'home' or page.title == '使用说明' -%}
       {%- if page.translators -%}
         <h3 class="footer-heading">译者：</h3>
         <p>{{ page.translators | join: "，" | escape }}</p>
