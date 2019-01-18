@@ -13,32 +13,32 @@ This is a Chinese translation of "Programming Language Foundations in Agda" by P
 以下为原书目录翻译：
 
 本书是对编程语言理论的介绍。书中的程序使用证明助理 Agda 编写。
-{::comment}
+<!---
 This book is an introduction to programming language theory using the
 proof assistant Agda.
-{:/}
+--->
 
 欢迎对本书各方面的评论和建议（章节组织，可以添加/移除的材料，解释不够清楚的部分，有价值的习题，内容或拼写错误等）。
 本书的源码托管在 [GitHub]。欢迎拉取请求。
-{::comment}
+<!---
 Comments on all matters---organisation, material to add, material to
 remove, parts that require better explanation, good exercises, errors,
 and typos---are welcome.  The book repository is on [GitHub].
 Pull requests are encouraged.  
-{:/}
+--->
 
 ## 前言
-{::comment}
+<!---
 Front matter
-{:/}
+--->
 
   - [Dedication](/Dedication/)
   - [Preface](/Preface/)
 
 ## 第一册：逻辑基础
-{::comment}
+<!---
 Part 1: Logical Foundations
-{:/}
+--->
 
   - [自然数](/Naturals/): 自然数
   - [Induction](/Induction/): Proof by induction
@@ -51,7 +51,7 @@ Part 1: Logical Foundations
   - [Decidable](/Decidable/): Booleans and decision procedures
   - [Lists](/Lists/): Lists and higher-order functions
 
-{::comment}
+<!---
 [Naturals](/Naturals/): Natural numbers
 [Induction](/Induction/): Proof by induction
 [Relations](/Relations/): Inductive definition of relations
@@ -62,12 +62,12 @@ Part 1: Logical Foundations
 [Quantifiers](/Quantifiers/): Universals and existentials
 [Decidable](/Decidable/): Booleans and decision procedures
 [Lists](/Lists/): Lists and higher-order functions
-{:/}
+--->
 
 ## 第二册：编程语言基础
-{::comment}
+<!---
 Part 2: Programming Language Foundations
-{:/}
+--->
 
   - [Lambda](/Lambda/): Introduction to Lambda Calculus
   - [Properties](/Properties/): Progress and Preservation
@@ -78,18 +78,18 @@ Part 2: Programming Language Foundations
   - [Untyped](/Untyped/): Untyped lambda calculus with full normalisation
 
 ## 后记
-{::comment}
+<!---
 Backmatter
-{:/}
+--->
 
   - [Acknowledgements](/Acknowledgements/)
   - [Fonts](/Fonts/): Test page for fonts
   - [Statistics](/Statistics/): Line counts for each chapter
 
 ## 相关
-{::comment}
+<!---
 Related
-{:/}
+--->
 
   - A paper describing the book appears in [SBMF][sbmf].
   - Courses taught from the textbook:
