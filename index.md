@@ -8,7 +8,7 @@ translators : ["Rongxiao Fu"]
 
 This is a Chinese translation of "Programming Language Foundations in Agda" by Philip Wadler and Wen Kokke。The original book is located at [PLFA].
 
-目前翻译过程刚刚开始。欢迎参与到翻译规范的拟定中。项目地址 [PLFA-zh]。
+目前翻译过程刚刚开始，仅试译了正文第一章和使用说明。欢迎参与到翻译规范的拟定中。欢迎指出译文的错漏之处。项目地址 [PLFA-zh]。
 
 以下为原书目录翻译：
 
