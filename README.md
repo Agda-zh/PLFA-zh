@@ -159,7 +159,7 @@ unzip, and from within the directory run
 --->
 
 如果你只想获取本书的副本以供离线阅读，而并不关心如何编辑并构建本书，
-那么你可以下载由 Travis 自动构建的 master 分支（[原书](https://github.com/plfa/plfa.github.io/archive/master.zip) / [中文版](https://github.com/Agda-zh/plfa-zh/archive/master.zip)）。若要在本地部署本书，你需要 Ruby 和 Bundler（见上文）。请下载 master 分支的压缩包，并在解压后的目录中运行：
+那么你可以下载由 Travis 自动构建的 master 分支（[原书](https://github.com/plfa/plfa.github.io/archive/master.zip) / [中文版](https://github.com/Agda-zh/PLFA-zh/archive/master.zip)）。若要在本地部署本书，你需要 Ruby 和 Bundler（见上文）。请下载 master 分支的压缩包，并在解压后的目录中运行：
 
     bundle install
     bundle exec jekyll serve
@@ -255,7 +255,7 @@ Command to give when in a hole:
 
     C-c C-c x    在变量 x 上分项（自动模式匹配）
     C-c C-空格   填坑
-    C-c C-r      用构造器精华
+    C-c C-r      用构造器精化
     C-c C-a      自动填坑
     C-c C-,      目标类型和上下文
     C-c C-.      目标类型，上下文，以及推断的类型
