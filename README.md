@@ -5,7 +5,7 @@ permalink: /GettingStarted/
 translators : ["Rongxiao Fu"]
 ---
 
-[![Build Status](https://travis-ci.org/plfa-zh/plfa-zh.github.io.svg?branch=dev)](https://travis-ci.org/plfa-zh/plfa-zh.github.io)
+[![Build Status](https://travis-ci.org/Agda-zh/plfa-zh.svg?branch=dev)](https://travis-ci.org/plfa-zh/plfa-zh.github.io)
 [![Agda](https://img.shields.io/badge/agda-2.5.4.2-blue.svg)](https://github.com/agda/agda/releases/tag/v2.5.4.2)
 [![agda-stdlib](https://img.shields.io/badge/agda--stdlib-0.17-blue.svg)](https://github.com/agda/agda-stdlib/releases/tag/v0.17)
 [![agda2html](https://img.shields.io/badge/agda2html-0.2.3.0-blue.svg)](https://github.com/wenkokke/agda2html/releases/tag/v0.2.3.0)
@@ -315,7 +315,7 @@ The book is written in
 Travis Continuous Integration
 --->
 
-你可以在 <https://travis-ci.org/> 查看 PLFA 的编译历史（[原书](https://travis-ci.org/plfa/plfa.github.io) / [中文版](https://travis-ci.org/plfa-zh/plfa-zh.github.io)）。
+你可以在 <https://travis-ci.org/> 查看 PLFA 的编译历史（[原书](https://travis-ci.org/plfa/plfa.github.io) / [中文版](https://travis-ci.org/Agda-zh/plfa-zh)）。
 <!---
 You can view the build history of PLFA at [travis-ci.org](https://travis-ci.org/plfa/plfa.github.io).
 --->
