@@ -194,6 +194,10 @@ Using negation, show that
 [strict inequality][plfa.Relations#strict-inequality]
 is irreflexive, that is, `n < n` holds for no `n`.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 
 #### Exercise `trichotomy`
 
@@ -208,6 +212,10 @@ that is, for any naturals `m` and `n` exactly one of the following holds:
 Here "exactly one" means that not only one of the three must hold,
 but that when one holds the negation of the other two must also hold.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `⊎-dual-×` (recommended)
 
 Show that conjunction, disjunction, and negation are related by a
@@ -216,6 +224,11 @@ version of De Morgan's Law.
     ¬ (A ⊎ B) ≃ (¬ A) × (¬ B)
 
 This result is an easy consequence of something we've proved previously.
+
+\begin{code}
+-- Your code goes here
+\end{code}
+
 
 Do we also have the following?
 
@@ -369,6 +382,10 @@ Consider the following principles:
 
 Show that each of these implies all the others.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 
 #### Exercise `Stable` (stretch)
 
@@ -379,6 +396,10 @@ Stable A = ¬ ¬ A → A
 \end{code}
 Show that any negated formula is stable, and that the conjunction
 of two stable formulas is stable.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 ## Standard Prelude
 

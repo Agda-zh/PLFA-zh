@@ -337,10 +337,18 @@ determine its bound variable and body, `ƛ x ⇒ N`, so we can show that
 
 Show that `Progress M` is isomorphic to `Value M ⊎ ∃[ N ](M —→ N)`.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `progress′`
 
 Write out the proof of `progress′` in full, and compare it to the
 proof of `progress` above.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 #### Exercise `value?`
 
@@ -350,7 +358,6 @@ whether a well-typed term is a value:
 postulate
   value? : ∀ {A M} → ∅ ⊢ M ⦂ A → Dec (Value M)
 \end{code}
-
 
 ## Prelude to preservation
 
@@ -777,6 +784,10 @@ from the exercise in the previous chapter.  As before, this
 should factor dealing with bound variables into a single function,
 defined by mutual recursion with the proof that substitution
 preserves types.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 ## Preservation
@@ -1262,11 +1273,19 @@ above.
 
 Using the evaluator, confirm that two times two is four.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 
 #### Exercise: `progress-preservation`
 
 Without peeking at their statements above, write down the progress
 and preservation theorems for the simply typed lambda-calculus.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 #### Exercise `subject_expansion`
@@ -1279,6 +1298,10 @@ Its opposite is _subject expansion_, which holds if
 `M —→ N` and `∅ ⊢ N ⦂ A` imply `∅ ⊢ M ⦂ A`.
 Find two counter-examples to subject expansion, one
 with case expressions and one not involving case expressions.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 ## Well-typed terms don't get stuck
@@ -1336,9 +1359,17 @@ showed _well-typed terms don't go wrong_.)
 
 Give an example of an ill-typed term that does get stuck.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `unstuck` (recommended)
 
 Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` above.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 ## Reduction is deterministic
 

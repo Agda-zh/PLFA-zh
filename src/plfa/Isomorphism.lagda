@@ -434,6 +434,10 @@ postulate
     → A ≲ B  
 \end{code}
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `_⇔_` {#iff}
 
 Define equivalence of propositions (also known as "if and only if") as follows:
@@ -444,6 +448,10 @@ record _⇔_ (A B : Set) : Set where
     from : B → A
 \end{code}
 Show that equivalence is reflexive, symmetric, and transitive.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 #### Exercise `Bin-embedding` (stretch) {#Bin-embedding}
 
@@ -467,7 +475,12 @@ which satisfy the following property:
     from (to n) ≡ n
 
 Using the above, establish that there is an embedding of `ℕ` into `Bin`.
+\begin{code}
+-- Your code goes here
+\end{code}
+
 Why is there not an isomorphism?
+
 
 
 ## Standard library

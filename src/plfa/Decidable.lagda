@@ -301,12 +301,20 @@ postulate
   _<?_ : ∀ (m n : ℕ) → Dec (m < n)
 \end{code}
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `_≡ℕ?_`
 
 Define a function to decide whether two naturals are equal:
 \begin{code}
 postulate
   _≡ℕ?_ : ∀ (m n : ℕ) → Dec (m ≡ n)
+\end{code}
+
+\begin{code}
+-- Your code goes here
 \end{code}
 
 
@@ -551,6 +559,9 @@ postulate
   iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋  
 \end{code}
 
+\begin{code}
+-- Your code goes here
+\end{code}
 
 ## Standard Library
 

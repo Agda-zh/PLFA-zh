@@ -200,8 +200,15 @@ partial order but not a total order.
 
 Give an example of a preorder that is not a partial order.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 Give an example of a partial order that is not a total order.
 
+\begin{code}
+-- Your code goes here
+\end{code}
 
 ## Reflexivity
 
@@ -311,6 +318,10 @@ follows by congruence.
 
 The above proof omits cases where one argument is `z≤n` and one
 argument is `s≤s`.  Why is it ok to omit them?
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 ## Total
@@ -498,6 +509,10 @@ transitivity proves `m + p ≤ n + q`, as was to be shown.
 
 Show that multiplication is monotonic with regard to inequality.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 
 ## Strict inequality {#strict-inequality}
 
@@ -541,6 +556,10 @@ exploiting the corresponding properties of inequality.
 
 Show that strict inequality is transitive.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `trichotomy` {#trichotomy}
 
 Show that strict inequality satisfies a weak version of trichotomy, in
@@ -555,20 +574,36 @@ similar to that used for totality.
 (We will show that the three cases are exclusive after we introduce
 [negation][plfa.Negation].)
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `+-mono-<` {#plus-mono-less}
 
 Show that addition is monotonic with respect to strict inequality.
 As with inequality, some additional definitions may be required.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `≤-iff-<` (recommended) {#leq-iff-less}
 
 Show that `suc m ≤ n` implies `m < n`, and conversely.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 #### Exercise `<-trans-revisited` {#less-trans-revisited}
 
 Give an alternative proof that strict inequality is transitive,
 using the relating between strict inequality and inequality and
 the fact that inequality is transitive.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 ## Even and odd
@@ -673,6 +708,10 @@ successor of the sum of two even numbers, which is even.
 
 Show that the sum of two odd numbers is even.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `Bin-predicates` (stretch) {#Bin-predicates}
 
 Recall that 
@@ -720,6 +759,10 @@ and back is the identity:
 
 (Hint: For each of these, you may first need to prove related
 properties of `One`.)
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 ## Standard library
 

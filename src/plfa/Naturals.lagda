@@ -130,6 +130,10 @@ Exercise `seven`
 Write out `7` in longhand.
 {:/}
 
+\begin{code}
+-- 在此处书写你的代码
+\end{code}
+
 ## 推理规则分析
 {::comment}
 Unpacking the inference rules
@@ -745,6 +749,10 @@ Exercise `+-example` {#plus-example}
 Compute `3 + 4`, writing out your reasoning as a chain of equations.
 {:/}
 
+\begin{code}
+-- 在此处书写你的代码
+\end{code}
+
 ## 乘法
 {::comment}
 Multiplication
@@ -838,6 +846,10 @@ Exercise `*-example`
 Compute `3 * 4`, writing out your reasoning as a chain of equations.
 {:/}
 
+\begin{code}
+-- 在此处书写你的代码
+\end{code}
+
 #### 练习 `_^_`（推荐） {#power}
 {::comment}
 Exercise `_^_` (recommended)
@@ -855,6 +867,10 @@ Define exponentiation, which is given by the following equations:
 {::comment}
 Check that `3 ^ 4` is `81`.
 {:/}
+
+\begin{code}
+-- 在此处书写你的代码
+\end{code}
 
 ## 饱和减法
 {::comment}
@@ -949,6 +965,10 @@ Exercise `∸-examples` (recommended)
 {::comment}
 Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equations.
 {:/}
+
+\begin{code}
+-- 在此处书写你的代码
+\end{code}
 
 ## 优先级
 {::comment}
@@ -1579,6 +1599,10 @@ For the former, choose the bitstring to have no leading zeros if it
 represents a positive natural, and represent zero by `x0 nil`.
 Confirm that these both give the correct answer for zero through four.
 {:/}
+
+\begin{code}
+-- 在此处书写你的代码
+\end{code}
 
 ## 标准库
 {::comment}

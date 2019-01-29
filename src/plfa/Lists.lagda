@@ -624,6 +624,10 @@ For example:
 
     product [ 1 , 2 , 3 , 4 ] ≡ 24
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `foldr-++` (recommended)
 
 Show that fold and append are related as follows:
@@ -653,9 +657,17 @@ postulate
     → (A → C) → (C → B → C → C) → Tree A B → C
 \end{code}
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `map-is-fold-Tree`
 
 Demonstrate an analogue of `map-is-foldr` for the type of trees.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 #### Exercise `sum-downFrom` (stretch)
 
@@ -775,11 +787,19 @@ operations associate to the left rather than the right.  For example:
     foldr _⊗_ e [ x , y , z ]  =  x ⊗ (y ⊗ (z ⊗ e))
     foldl _⊗_ e [ x , y , z ]  =  ((e ⊗ x) ⊗ y) ⊗ z
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 
 #### Exercise `foldr-monoid-foldl`
 
 Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 `foldl _⊗_ e` always compute the same result.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 ## All {#All}
@@ -895,9 +915,17 @@ Prove a result similar to `All-++-↔`, but with `Any` in place of `All`, and a 
 replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 `_∈_` and `_++_`.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `All-++-≃` (stretch)
 
 Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 #### Exercise `¬Any≃All¬` (stretch)
 
@@ -907,6 +935,10 @@ First generalise composition to arbitrary levels, using
 _∘′_ : ∀ {ℓ₁ ℓ₂ ℓ₃ : Level} {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃}
   → (B → C) → (A → B) → A → C
 (g ∘′ f) x  =  g (f x)
+\end{code}
+
+\begin{code}
+-- Your code goes here
 \end{code}
 
 Show that `Any` and `All` satisfy a version of De Morgan's Law:
@@ -969,6 +1001,10 @@ Just as `All` has analogues `all` and `all?` which determine whether a
 predicate holds for every element of a list, so does `Any` have
 analogues `any` and `any?` which determine whether a predicates holds
 for some element of a list.  Give their definitions.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 #### Exercise `filter?` (stretch)

@@ -352,10 +352,18 @@ How do the proofs become more difficult if we replace `m * 2` and `1 + m * 2`
 by `2 * m` and `2 * m + 1`?  Rewrite the proofs of `∃-even` and `∃-odd` when
 restated in this way.
 
+\begin{code}
+-- Your code goes here
+\end{code}
+
 #### Exercise `∃-+-≤`
 
 Show that `y ≤ z` holds if and only if there exists a `x` such that
 `x + y ≡ z`.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 ## Existentials, Universals, and Negation
@@ -438,6 +446,10 @@ And to establish the following properties:
 
 Using the above, establish that there is an isomorphism between `ℕ` and
 `∃[ x ](Can x)`.
+
+\begin{code}
+-- Your code goes here
+\end{code}
 
 
 ## Standard Prelude
