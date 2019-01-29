@@ -31,7 +31,7 @@ For most of the tools, you can simply follow their respective build instructions
 We list the versions of our dependencies on the badges above.
 --->
 
-你可以执行下方的命令克隆仓库或者下载 zip 包（[原书](https://github.com/plfa/plfa.github.io/archive/dev.zip) / [中文版](https://github.com/plfa-zh/plfa-zh.github.io/archive/dev.zip)）以从 GitHub 获取最新版的 PLFA。
+你可以执行下方的命令克隆仓库或者下载 zip 包（[原书](https://github.com/plfa/plfa.github.io/archive/dev.zip) / [中文版](https://github.com/Agda-zh/plfa-zh/archive/dev.zip)）以从 GitHub 获取最新版的 PLFA。
 <!---
 You can get the latest version of Programming Language Foundations in Agda from Github, 
 either by cloning the repository, 
@@ -44,7 +44,7 @@ or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archi
 
 中文版：
 
-    git clone https://github.com/plfa-zh/plfa-zh.github.io
+    git clone https://github.com/Agda-zh/plfa-zh
 
 最后，我们需要让 Agda 知道标准库位于何处。[此处](https://agda.readthedocs.io/en/latest/tools/package-system.html#example-using-the-standard-library)的说明可供参考。
 <!---
@@ -135,7 +135,7 @@ The Makefile offers more than just these options:
 --->
 
 如果你只是希望保留一份此书的本地副本用于离线阅读，并不关心如何编辑和编译此书，
-你可以下载由 Travis 自动编译的 master 分支（[原书](https://github.com/plfa/plfa.github.io/archive/master.zip) / [中文版](https://github.com/plfa-zh/plfa-zh.github.io/archive/master.zip)）。你仍将需要 Ruby 和 Bundler 以
+你可以下载由 Travis 自动编译的 master 分支（[原书](https://github.com/plfa/plfa.github.io/archive/master.zip) / [中文版](https://github.com/Agda-zh/plfa-zh/archive/master.zip)）。你仍将需要 Ruby 和 Bundler 以
 在本地部署此书（见上文）。在这种情况下，你需要下载 master 分支，解压并在解压得到的目录中运行：
 <!---
 If you simply wish to have a local copy of the book, e.g. for offline reading,

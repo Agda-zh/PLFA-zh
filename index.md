@@ -104,5 +104,5 @@ Related
 [GitHub]: https://github.com/plfa/plfa.github.io/
 [sbmf]: https://homepages.inf.ed.ac.uk/wadler/topics/agda.html#sbmf
 [PLFA]: https://plfa.github.io/
-[PLFA-zh]: https://github.com/plfa-zh/plfa-zh.github.io
+[PLFA-zh]: https://github.com/Agda-zh/plfa-zh
 
