@@ -23,11 +23,11 @@ authors:
 
 google_analytics: "UA-125055580-1"
 
-repository: Agda-zh/plfa-zh
+repository: Agda-zh/PLFA-zh
 branch: dev
 
 baseurl: ""
-url: "https://agda-zh.github.io/plfa-zh/"
+url: "https://agda-zh.github.io/PLFA-zh/"
 markdown: kramdown
 theme: minima
 exclude:
