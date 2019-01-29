@@ -200,7 +200,7 @@ The forward proof has one more clause than the reverse proof,
 precisely because in the forward proof we need clauses corresponding to
 the comparison yielding both true and false, while in the reverse proof
 we only need clauses corresponding to the case where there is evidence
-that the comparision holds.  This is exactly why we tend to prefer the
+that the comparison holds.  This is exactly why we tend to prefer the
 evidence formulation to the computation formulation, because it allows
 us to do less work: we consider only cases where the relation holds,
 and can ignore those where it does not.
@@ -511,7 +511,7 @@ no ¬x →-dec _      =  yes (λ x → ⊥-elim (¬x x))
 yes x →-dec no ¬y  =  no (λ f → ¬y (f x))
 \end{code}
 The implication holds if either the second holds or
-the negatioin of the first holds, and its negation
+the negation of the first holds, and its negation
 holds if the first holds and the negation of the second holds.
 Evidence for the implication is a function from evidence
 of the first to evidence of the second.

@@ -121,8 +121,8 @@ constructor is the identity over products:
 η-× ⟨ x , y ⟩ = refl
 \end{code}
 The pattern matching on the left-hand side is essential, since
-replacing `w` by `⟨ x , y ⟩` allows both sides of the equation to
-simplify to the same term.
+replacing `w` by `⟨ x , y ⟩` allows both sides of the
+propositional equality to simplify to the same term.
 
 We set the precedence of conjunction so that it binds less
 tightly than anything save disjunction:
@@ -133,7 +133,7 @@ Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
 
 Given two types `A` and `B`, we refer to `A x B` as the
 _product_ of `A` and `B`.  In set theory, it is also sometimes
-called the _cartesian product_, and in computing it corresponds
+called the _Cartesian product_, and in computing it corresponds
 to a _record_ type. Among other reasons for
 calling it the product, note that if type `A` has `m`
 distinct members, and type `B` has `n` distinct members,
@@ -420,7 +420,7 @@ Show sum is commutative up to isomorphism.
 
 #### Exercise `⊎-assoc`
 
-Show sum is associative up to ismorphism. 
+Show sum is associative up to isomorphism.
 
 ## False is empty
 
@@ -436,7 +436,7 @@ Dual to `⊤`, for `⊥` there is no introduction rule but an elimination rule.
 Since false never holds, knowing that it holds tells us we are in a
 paradoxical situation.  Given evidence that `⊥` holds, we might
 conclude anything!  This is a basic principle of logic, known in
-medieval times by the latin phrase _ex falso_, and known to children
+medieval times by the Latin phrase _ex falso_, and known to children
 through phrases such as "if pigs had wings, then I'd be the Queen of
 Sheba".  We formalise it as follows.
 \begin{code}
@@ -514,7 +514,7 @@ then we may conclude that `B` holds:
 In medieval times, this rule was known by the name _modus ponens_.
 It corresponds to function application.
 
-Defining a function, with an named definition or a lambda abstraction,
+Defining a function, with a named definition or a lambda abstraction,
 is referred to as _introducing_ a function,
 while applying a function is referred to as _eliminating_ the function.
 
