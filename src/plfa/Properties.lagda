@@ -79,7 +79,7 @@ Agda code that can compute for us the reduction sequence of `plus ·
 two · two`, and its Church numeral variant.
 
 (The development in this chapter was inspired by the corresponding
-development in in _Software Foundations, volume _Programming Language
+development in _Software Foundations, volume _Programming Language
 Foundations_, chapter _StlcProp_.  It will turn out that one of our technical choices
 — to introduce an explicit judgment `Γ ∋ x ⦂ A` in place of
 treating a context as a function from identifiers to types —
@@ -175,7 +175,7 @@ There are only three interesting cases to consider:
 * If the term is a lambda abstraction, then well-typing of the term
   guarantees well-typing of the body.
 
-* If the term is zero than it is canonical trivially.
+* If the term is zero then it is canonical trivially.
 
 * If the term is a successor then since it is well-typed its argument
   is well-typed, and since it is a value its argument is a value.
@@ -470,7 +470,7 @@ variable in the extended `Δ`.
 variable in the extended `Γ`, where `x≢y` is evidence that `x` and `y`
 differ, and `∋x` is the evidence that `x` appears in `Γ`; and we can
 similarly use `S` to skip over the last variable in the extended `Δ`,
-applying `ρ` to find the evidence that `w` appears in `Δ`.
+applying `ρ` to find the evidence that `x` appears in `Δ`.
 
 With the extension lemma under our belts, it is straightforward to
 prove renaming preserves types:
@@ -616,7 +616,7 @@ subst {x = y} ⊢V (⊢ƛ {x = x} ⊢N) with x ≟ y
 ... | no  x≢y         =  ⊢ƛ (subst ⊢V (swap x≢y ⊢N))
 subst ⊢V (⊢L · ⊢M)    =  (subst ⊢V ⊢L) · (subst ⊢V ⊢M)
 subst ⊢V ⊢zero        =  ⊢zero
-subst  ⊢V(⊢suc ⊢M)    =  ⊢suc (subst ⊢V ⊢M)
+subst ⊢V (⊢suc ⊢M)    =  ⊢suc (subst ⊢V ⊢M)
 subst {x = y} ⊢V (⊢case {x = x} ⊢L ⊢M ⊢N) with x ≟ y
 ... | yes refl        =  ⊢case (subst ⊢V ⊢L) (subst ⊢V ⊢M) (drop ⊢N)
 ... | no  x≢y         =  ⊢case (subst ⊢V ⊢L) (subst ⊢V ⊢M) (subst ⊢V (swap x≢y ⊢N))
@@ -1555,3 +1555,26 @@ false, give a counterexample:
 
 Are all properties preserved in this case? Are there any
 other alterations we would wish to make to the system?
+
+## Unicode
+
+This chapter uses the following unicode:
+
+    ƛ  U+019B  LATIN SMALL LETTER LAMBDA WITH STROKE (\Gl-)
+    Δ  U+0394  GREEK CAPITAL LETTER DELTA (\GD or \Delta)
+    β  U+03B2  GREEK SMALL LETTER BETA (\Gb or \beta)
+    δ  U+03B4  GREEK SMALL LETTER DELTA (\Gd or \delta)
+    μ  U+03BC  GREEK SMALL LETTER MU (\Gm or \mu)
+    ξ  U+03BE  GREEK SMALL LETTER XI (\Gx or \xi)
+    ρ  U+03B4  GREEK SMALL LETTER RHO (\Gr or \rho)
+    ᵢ  U+1D62  LATIN SUBSCRIPT SMALL LETTER I (\_i)
+    ᶜ  U+1D9C  MODIFIER LETTER SMALL C (\^c)
+    –  U+2013  EM DASH (\em)
+    ₄  U+2084  SUBSCRIPT FOUR (\_4)
+    ↠  U+21A0  RIGHTWARDS TWO HEADED ARROW (\rr-)
+    ⇒  U+21D2  RIGHTWARDS DOUBLE ARROW (\=>)
+    ∅  U+2205  EMPTY SET (\0)
+    ∋  U+220B  CONTAINS AS MEMBER (\ni)
+    ≟  U+225F  QUESTIONED EQUAL TO (\?=)
+    ⊢  U+22A2  RIGHT TACK (\vdash or \|-)
+    ⦂  U+2982  Z NOTATION TYPE COLON (\:)

@@ -356,7 +356,7 @@ Pattern matching against `inj₁` and `inj₂` is typical of how we exploit
 evidence that a disjunction holds.
 
 When `inj₁` and `inj₂` appear on the right-hand side of an equation we
-refer to them as _constructors_, and when they appears on the
+refer to them as _constructors_, and when they appear on the
 left-hand side we refer to them as _destructors_.  We also refer to
 `case-⊎` as a destructor, since it plays a similar role.  Other
 terminology refers to `inj₁` and `inj₂` as _introducing_ a
@@ -378,8 +378,8 @@ uniq-⊎ h (inj₁ x) = refl
 uniq-⊎ h (inj₂ y) = refl
 \end{code}
 The pattern matching on the left-hand side is essential.  Replacing
-`w` by `inj₁ x` allows both sides of the equation to simplify to the
-same term, and similarly for `inj₂ y`.
+`w` by `inj₁ x` allows both sides of the propositional equality to
+simplify to the same term, and similarly for `inj₂ y`.
 
 We set the precedence of disjunction so that it binds less tightly
 than any other declared operator:
@@ -450,7 +450,7 @@ paradoxical situation.  Given evidence that `⊥` holds, we might
 conclude anything!  This is a basic principle of logic, known in
 medieval times by the Latin phrase _ex falso_, and known to children
 through phrases such as "if pigs had wings, then I'd be the Queen of
-Sheba".  We formalise it as follows.
+Sheba".  We formalise it as follows:
 \begin{code}
 ⊥-elim : ∀ {A : Set}
   → ⊥
@@ -491,7 +491,7 @@ is the identity of sums _up to isomorphism_.
 
 #### Exercise `⊥-identityˡ` (recommended)
 
-Show zero is the left identity of addition.
+Show empty is the left identity of sums up to isomorphism.
 
 \begin{code}
 -- Your code goes here
@@ -499,7 +499,7 @@ Show zero is the left identity of addition.
 
 #### Exercise `⊥-identityʳ`
 
-Show zero is the right identity of addition. 
+Show empty is the right identity of sums up to isomorphism.
 
 \begin{code}
 -- Your code goes here

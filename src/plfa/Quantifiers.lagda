@@ -100,7 +100,7 @@ Chapter [Connectives][plfa.Connectives].
 Show that a disjunction of universals implies a universal of disjunctions:
 \begin{code}
 postulate
-  ⊎∀-implies-∀⊎ : ∀ {A : Set} { B C : A → Set } →
+  ⊎∀-implies-∀⊎ : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x)  →  ∀ (x : A) → B x ⊎ C x
 \end{code}
 Does the converse hold? If so, prove; if not, explain why.
@@ -157,7 +157,7 @@ corresponds to the term
 
 where `M` is a term of type `A` and `N` is a term of type `B M`.
 
-Products arise a special case of existentials, where the second
+Products arise as a special case of existentials, where the second
 component does not depend on a variable drawn from the first
 component.  When a product is viewed as evidence of a conjunction,
 both of its components are viewed as evidence, whereas when it is
@@ -170,7 +170,7 @@ of a type and evidence of a proposition are indistinguishable.
 Existentials are sometimes referred to as dependent sums,
 because if `A` is a finite type with values `x₁ , ⋯ , xₙ`, and if
 each of the types `B x₁ , ⋯ B xₙ` has `m₁ , ⋯ , mₙ` distinct members,
-then `Σ[ x ∈ A] B x` has `m₁ + ⋯ + mₙ` members, which explains the
+then `Σ[ x ∈ A ] B x` has `m₁ + ⋯ + mₙ` members, which explains the
 choice of notation for existentials, since `Σ` stands for sum.
 
 Existentials are sometimes referred to as dependent products, since
@@ -239,7 +239,7 @@ postulate
 Show that an existential of conjunctions implies a conjunction of existentials:
 \begin{code}
 postulate
-  ∃×-implies-×∃ : ∀ {A : Set} { B C : A → Set } →
+  ∃×-implies-×∃ : ∀ {A : Set} {B C : A → Set} →
     ∃[ x ] (B x × C x) → (∃[ x ] B x) × (∃[ x ] C x)
 \end{code}
 Does the converse hold? If so, prove; if not, explain why.
@@ -269,7 +269,7 @@ data odd where
     → odd (suc n)
 \end{code}
 A number is even if it is zero or the successor of an odd number, and
-odd if it the successor of an even number.
+odd if it is the successor of an even number.
 
 We will show that a number is even if and only if it is twice some
 other number, and odd if and only if it is one more than twice
@@ -306,7 +306,7 @@ consisting of zero and the evidence that twice zero is zero.
 * If the number is even because it is one more than an odd number,
 then we apply the induction hypothesis to give a number `m` and
 evidence that `1 + m * 2 ≡ n`. We return a pair consisting of `suc m`
-and evidence that `suc m * 2` ≡ suc n`, which is immediate after
+and evidence that `suc m * 2 ≡ suc n`, which is immediate after
 substituting for `n`.
 
 * If the number is odd because it is the successor of an even number,
@@ -388,7 +388,7 @@ In the `to` direction, we are given a value `¬∃xy` of type
 `¬ ∃[ x ] B x`, and need to show that given a value
 `x` that `¬ B x` follows, in other words, from
 a value `y` of type `B x` we can derive false.  Combining
-`x` and `y` gives us a value `(x , y)` of type `∃[ x ] B x`,
+`x` and `y` gives us a value `⟨ x , y ⟩` of type `∃[ x ] B x`,
 and applying `¬∃xy` to that yields a contradiction.
 
 In the `from` direction, we are given a value `∀¬xy` of type

@@ -22,12 +22,15 @@ Getting Started with PLFA
 
 <!---
 There are several tools you need to work with PLFA:
+
+  - [Agda](https://agda.readthedocs.io/en/v2.5.4.2/getting-started/installation.html)
+  - [Agda standard library](https://github.com/agda/agda-stdlib/tree/5819a4dd9c965296224944f05b1481805649bdc2)
 --->
 
 为使用 PLFA，你需要以下工具：
 
-  - [Agda](https://agda.readthedocs.io/en/latest/getting-started/installation.html)
-  - [Agda 标准库](https://github.com/agda/agda-stdlib)
+  - [Agda](https://agda-zh.rtfd.io/zh_CN/latest/getting-started/installation.html)
+  - [Agda 标准库](https://github.com/agda/agda-stdlib/tree/5819a4dd9c965296224944f05b1481805649bdc2)
 
 <!---
 For most of the tools, you can simply follow their respective build instructions.
@@ -55,7 +58,7 @@ or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archi
 
 <!---
 Finally, we need to let Agda know where to find the standard library.
-For this, you can follow the instructions [here](https://agda.readthedocs.io/en/latest/tools/package-system.html#example-using-the-standard-library).
+For this, you can follow the instructions [here](https://agda.readthedocs.io/en/v2.5.4.2/tools/package-system.html#example-using-the-standard-library).
 --->
 
 最后，我们需要让 Agda 知道标准库位于何处。[此处](https://agda-zh.rtfd.io/zh_CN/latest/tools/package-system.html#example-using-the-standard-library)的说明可供参考。

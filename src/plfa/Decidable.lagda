@@ -23,18 +23,16 @@ of a new notion of _decidable_.
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; refl; sym; trans; cong)
+open Eq using (_≡_; refl)
 open Eq.≡-Reasoning
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Product using (_×_) renaming (_,_ to ⟨_,_⟩)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Relation.Nullary using (¬_)
-open import Relation.Nullary.Negation using (contraposition)
+open import Relation.Nullary.Negation using ()
   renaming (contradiction to ¬¬-intro)
 open import Data.Unit using (⊤; tt)
 open import Data.Empty using (⊥; ⊥-elim)
-open import Data.List using (List; []; _∷_; foldr; map)
-open import Function using (_∘_)
 open import plfa.Relations using (_<_; z<s; s<s)
 open import plfa.Isomorphism using (_⇔_)
 \end{code}
@@ -155,7 +153,7 @@ T→≡ false ()
 If `b` is true then `T b` is inhabited by `tt` and `b ≡ true` is inhabited
 by `refl`, while if `b` is false then `T b` in uninhabited.
 
-In the reverse direction, there is no need for a case analysis:
+In the reverse direction, there is no need for a case analysis on the boolean `b`:
 \begin{code}
 ≡→T : ∀ {b : Bool} → b ≡ true → T b
 ≡→T refl  =  tt
@@ -330,17 +328,17 @@ m ≤?′ n with m ≤ᵇ n | ≤ᵇ→≤ m n | ≤→≤ᵇ {m} {n}
 ...        | false  | _        | ¬p           = no ¬p
 \end{code}
 If `m ≤ᵇ n` is true then `≤ᵇ→≤` yields a proof that `m ≤ n` holds,
-while if it is false then `≤→≤ᵇ` takes a proof the `m ≤ n` holds into a contradiction.
+while if it is false then `≤→≤ᵇ` takes a proof that `m ≤ n` holds into a contradiction.
 
 The triple binding of the `with` clause in this proof is essential.
-If instead we wrote
+If instead we wrote:
 
     _≤?″_ : ∀ (m n : ℕ) → Dec (m ≤ n)
     m ≤?″ n with m ≤ᵇ n
     ... | true   =  yes (≤ᵇ→≤ m n tt)
     ... | false  =  no (≤→≤ᵇ {m} {n})
 
-then Agda would make two complaints, one for each clause
+then Agda would make two complaints, one for each clause:
 
     ⊤ !=< (T (m ≤ᵇ n)) of type Set
     when checking that the expression tt has type T (m ≤ᵇ n)
@@ -400,7 +398,7 @@ Most readers will be familiar with the logical connectives for booleans.
 Each of these extends to decidables.
 
 The conjunction of two booleans is true if both are true,
-and false is either is false:
+and false if either is false:
 \begin{code}
 infixr 6 _∧_
 
@@ -568,7 +566,6 @@ postulate
 \begin{code}
 import Data.Bool.Base using (Bool; true; false; T; _∧_; _∨_; not)
 import Data.Nat using (_≤?_)
-import Data.List.All using (All; []; _∷_) renaming (all to All?)
 import Relation.Nullary using (Dec; yes; no)
 import Relation.Nullary.Decidable using (⌊_⌋; toWitness; fromWitness)
 import Relation.Nullary.Negation using (¬?)

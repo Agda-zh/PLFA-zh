@@ -368,7 +368,7 @@ judgments:
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "z" ⦂ `ℕ ``
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "s" ⦂ `ℕ ⇒ `ℕ ``
-* `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` ` "s" · ` "z" ⦂  `ℕ ``
+* `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "s" · ` "z" ⦂  `ℕ ``
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "s" · (` "s" · ` "z") ⦂  `ℕ ``
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ ⊢ (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) ⦂  `ℕ ⇒ `ℕ ``
 * `` ∅ ⊢ ƛ "s" ⇒ ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) ⦂  (`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ ``
@@ -553,7 +553,7 @@ to variables in `Δ`.  Let's unpack the first three cases:
   the body of the abstraction.
 
 * If the term is an application, recursively rename both
-  both the function and the argument.
+  the function and the argument.
 
 The remaining cases are similar, recursing on each subterm,
 and extending the map whenever the construct introduces a
@@ -610,7 +610,7 @@ an arbitrary context, and need not be closed.
 The structure of the definition and the proof is remarkably
 close to that for renaming.  Again, we first need an extension
 lemma that allows us to extend the context when we encounter a
-binder.  Whereas renaming concerned a map from from variables
+binder.  Whereas renaming concerned a map from variables
 in one context to variables in another, substitution takes a
 map from variables in one context to _terms_ in another.
 Given a map from variables in one context map to terms over
@@ -1351,3 +1351,16 @@ The relation between the two approaches approximates the
 golden ratio: raw terms with a separate typing relation
 require about 1.6 times as much code as inherently-typed terms
 with de Bruijn indices.
+
+## Unicode
+
+This chapter uses the following unicode:
+
+    σ  U+03C3  GREEK SMALL LETTER SIGMA (\Gs or \sigma)
+    ₀  U+2080  SUBSCRIPT ZERO (\_0)
+    ₃  U+20B3  SUBSCRIPT THREE (\_3)
+    ₄  U+2084  SUBSCRIPT FOUR (\_4)
+    ₅  U+2085  SUBSCRIPT FIVE (\_5)
+    ₆  U+2086  SUBSCRIPT SIX (\_6)
+    ₇  U+2087  SUBSCRIPT SEVEN (\_7)
+    ≠  U+2260  NOT EQUAL TO (\=n)

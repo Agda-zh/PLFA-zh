@@ -173,7 +173,7 @@ sucᶜ : Term
 sucᶜ = ƛ "n" ⇒ `suc (` "n")
 
 fourᶜ : Term
-fourᶜ = plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero
+fourᶜ = plusᶜ · twoᶜ · twoᶜ
 \end{code}
 The Church numeral for two takes two arguments `s` and `z`
 and applies `s` twice to `z`.
@@ -548,7 +548,7 @@ which terms are values.
 The rules break into two sorts. Compatibility rules direct us to
 reduce some part of a term.  We give them names starting with the
 Greek letter `ξ` (_xi_).  Once a term is sufficiently reduced, it will
-consist of a constructor and a deconstructor, in our case `λ` and `·`,
+consist of a constructor and a deconstructor, in our case `ƛ` and `·`,
 which reduces directly.  We give them names starting with the Greek
 letter `β` (_beta_) and such rules are traditionally called _beta rules_.
 
@@ -840,7 +840,7 @@ _ =
 
 And here is a similar sample reduction for Church numerals:
 \begin{code}
-_ : fourᶜ —↠ `suc `suc `suc `suc `zero
+_ : fourᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero
 _ =
   begin
     (ƛ "m" ⇒ ƛ "n" ⇒ ƛ "s" ⇒ ƛ "z" ⇒ ` "m" · ` "s" · (` "n" · ` "s" · ` "z"))
@@ -1347,6 +1347,7 @@ This chapter uses the following unicode:
     ξ  U+03BE  GREEK SMALL LETTER XI (\Gx or \xi)
     β  U+03B2  GREEK SMALL LETTER BETA (\Gb or \beta)
     ∋  U+220B  CONTAINS AS MEMBER (\ni)
+    ∅  U+2205  EMPTY SET (\0)
     ⊢  U+22A2  RIGHT TACK (\vdash or \|-)
     ⦂  U+2982  Z NOTATION TYPE COLON (\:)
     😇  U+1F607  SMILING FACE WITH HALO

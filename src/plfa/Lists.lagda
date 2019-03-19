@@ -54,7 +54,7 @@ For example,
 _ : List ℕ
 _ = 0 ∷ 1 ∷ 2 ∷ []
 \end{code}
-denotes the list of the first three natural numbers.  Since `_::_`
+denotes the list of the first three natural numbers.  Since `_∷_`
 associates to the right, the term parses as `0 ∷ (1 ∷ (2 ∷ []))`.
 Here `0` is the first element of the list, called the _head_,
 and `1 ∷ (2 ∷ [])` is a list of the remaining elements, called the
@@ -69,14 +69,14 @@ data List′ : Set → Set where
   _∷′_ : ∀ {A : Set} → A → List′ A → List′ A
 \end{code}
 Each constructor takes the parameter as an implicit argument.
-Thus, our example list could also be written
+Thus, our example list could also be written:
 \begin{code}
 _ : List ℕ
 _ = _∷_ {ℕ} 0 (_∷_ {ℕ} 1 (_∷_ {ℕ} 2 ([] {ℕ})))
 \end{code}
 where here we have provided the implicit parameters explicitly.
 
-Including the pragma
+Including the pragma:
 
     {-# BUILTIN LIST List #-}
 
@@ -162,6 +162,8 @@ about numbers.  Here is the proof that append is associative:
   begin
     (x ∷ xs ++ ys) ++ zs
   ≡⟨⟩
+    x ∷ (xs ++ ys) ++ zs
+  ≡⟨⟩
     x ∷ ((xs ++ ys) ++ zs)
   ≡⟨ cong (x ∷_) (++-assoc xs ys zs) ⟩
     x ∷ (xs ++ (ys ++ zs))
@@ -177,11 +179,11 @@ inductive hypothesis.  As usual, the inductive hypothesis is indicated by a recu
 invocation of the proof, in this case `++-assoc xs ys zs`.
 
 Recall that Agda supports [sections][plfa.Induction#sections].
-Applying `cong (x ∷_)` promotes the inductive hypothesis
+Applying `cong (x ∷_)` promotes the inductive hypothesis:
 
     xs ++ (ys ++ zs) ≡ (xs ++ ys) ++ zs
 
-to the equality
+to the equality:
 
     x ∷ (xs ++ (ys ++ zs)) ≡ x ∷ ((xs ++ ys) ++ zs)
 
@@ -373,8 +375,8 @@ one might expect since it takes time quadratic in the length of the list.
 The idea is that we generalise reverse to take an additional argument:
 \begin{code}
 shunt : ∀ {A : Set} → List A → List A → List A
-shunt [] ys = ys
-shunt (x ∷ xs) ys =  shunt xs (x ∷ ys)
+shunt []       ys  =  ys
+shunt (x ∷ xs) ys  =  shunt xs (x ∷ ys)
 \end{code}
 The definition is by recursion on the first argument. The second argument
 actually becomes _larger_, but this is not a problem because the argument
@@ -466,7 +468,7 @@ Now the time to reverse a list is linear in the length of the list.
 
 Map applies a function to every element of a list to generate a corresponding list.
 Map is an example of a _higher-order function_, one which takes a function as an
-argument and returns a function as a result:
+argument or returns a function as a result:
 \begin{code}
 map : ∀ {A B : Set} → (A → B) → List A → List B
 map f []        =  []

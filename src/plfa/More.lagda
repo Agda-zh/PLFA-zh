@@ -295,7 +295,7 @@ We can also translate back the other way:
     L, M, N ::= ...                     Terms
       `inj₁ M                             inject first component
       `inj₂ N                             inject second component
-      case L [inj₁ x ⇒ M |inj₂ y ⇒ N ]    case
+      case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ]    case
 
     V, W ::= ...                        Values
       `inj₁ V                             inject first component
@@ -329,7 +329,7 @@ We can also translate back the other way:
 
     L —→ L′
     ---------------------------------------------------------------------- ξ-case⊎
-    case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] —→ case⊎ L′[inj₁ x ⇒ M |inj₂ y ⇒ N ]
+    case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] —→ case⊎ L′ [inj₁ x ⇒ M |inj₂ y ⇒ N ]
 
     --------------------------------------------------------- β-inj₁
     case⊎ (`inj₁ V) [inj₁ x ⇒ M |inj₂ y ⇒ N ] —→ M [ x := V ]
@@ -1202,6 +1202,7 @@ _ =
 #### Exercise `More`
 
 Formalise the remaining constructs defined in this chapter.
+Make your changes in this file.
 Evaluate each example, applied to data as needed,
 to confirm it returns the expected answer:
 
@@ -1211,7 +1212,11 @@ to confirm it returns the expected answer:
   * empty type (recommended)
   * lists
 
-\begin{code}
--- Your code goes here
-\end{code}
 
+## Unicode
+
+This chapter uses the following unicode:
+
+    σ  U+03C3  GREEK SMALL LETTER SIGMA (\Gs or \sigma)
+    †  U+2020  DAGGER (\dag)
+    ‡  U+2021  DOUBLE DAGGER (\ddag)
