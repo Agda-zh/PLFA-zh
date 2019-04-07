@@ -58,7 +58,7 @@ Part 1: Logical Foundations
   - [Lists](/Lists/): Lists and higher-order functions
 --->
 
-## 第一卷：逻辑基础
+## 第一分册：逻辑基础
 
   - [Naturals]({{ site.baseurl }}/Naturals/): 自然数
   - [Induction]({{ site.baseurl }}/Induction/): 归纳证明
@@ -83,7 +83,7 @@ Part 2: Programming Language Foundations
   - [Untyped]({{ site.baseurl }}/Untyped/): Untyped lambda calculus with full normalisation
 --->
 
-## 第二卷：编程语言基础
+## 第二分册：编程语言基础
 
   - [Lambda]({{ site.baseurl }}/Lambda/): λ-演算简介
   - [Properties]({{ site.baseurl }}/Properties/): 可进性与保型性
