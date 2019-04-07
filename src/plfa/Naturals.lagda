@@ -1,5 +1,5 @@
 ---
-title     : "自然数：自然数"
+title     : "Naturals：自然数"
 layout    : page
 prev      : /Preface/
 permalink : /Naturals/
@@ -477,7 +477,7 @@ open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _∎)
 证据 `refl`。第三行选取了一个提供用于等价关系推理的操作符的模块，并将
 在 `using` 从句中指定的名称添加到当前作用域。在这里被添加的名称有 `begin_`，
 `_≡⟨⟩_`，以及 `_∎`。我们会在下文中看到这些操作符的使用方法。我们目前把这些
-名称都当作现成的工具来使用，不深究其细节，但我们会在 [相等性][plfa.Equality] 
+名称都当作现成的工具来使用，不深究其细节，但我们会在 [相等性][plfa.Equality]
 一章学习它们的具体定义。
 {::comment}
 The first line brings the standard library module that defines
@@ -504,7 +504,7 @@ between two terms), while `begin_` is prefix (it is written before a
 term), and `_∎` is postfix (it is written after a term).
 {:/}
 
-括号和分号属于少有的几个不能在名称中出现的的字符，所以我们在 `using` 
+括号和分号属于少有的几个不能在名称中出现的的字符，所以我们在 `using`
 列表中不需要额外的空白（以消除歧义）。
 {::comment}
 Parentheses and semicolons are among the few characters that cannot
