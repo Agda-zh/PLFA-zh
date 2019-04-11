@@ -1,19 +1,27 @@
 ---
-title     : "Relations: Inductive definition of relations"
+title     : "Relations: 关系的归纳定义"
 layout    : page
 prev      : /Induction/
 permalink : /Relations/
 next      : /Equality/
+translators : ["Fangyi Zhou"]
+progress  : 20
 ---
 
 \begin{code}
 module plfa.Relations where
 \end{code}
 
+在定义了加法和乘法等运算以后，下一步我们来定义关系（Relation），比如说*小于等于*。
+{::comment}
 After having defined operations such as addition and multiplication,
 the next step is to define relations, such as _less than or equal_.
+{:/}
 
+## 导入
+{::comment}
 ## Imports
+{:/}
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
@@ -26,11 +34,16 @@ open import Relation.Nullary using (¬_)
 open import Data.Empty using (⊥; ⊥-elim)
 \end{code}
 
-
+## 定义关系
+{::comment}
 ## Defining relations
+{:/}
 
+小于等于这个关系有无穷个实例，如下所示：
+{::comment}
 The relation _less than or equal_ has an infinite number of
 instances.  Here are a few of them:
+{:/}
 
     0 ≤ 0     0 ≤ 1     0 ≤ 2     0 ≤ 3     ...
               1 ≤ 1     1 ≤ 2     1 ≤ 3     ...
@@ -38,9 +51,12 @@ instances.  Here are a few of them:
                                   3 ≤ 3     ...
                                             ...
 
+但是，我们仍然可以用几行有限的定义来表示所有的实例，如下文所示的一对推理规则：
+{::comment}
 And yet, we can write a finite definition that encompasses
 all of these instances in just a few lines.  Here is the
 definition as a pair of inference rules:
+{:/}
 
     z≤n --------
         zero ≤ n
@@ -49,7 +65,10 @@ definition as a pair of inference rules:
     s≤s -------------
         suc m ≤ suc n
 
+以及其 Agda 定义：
+{::comment}
 And here is the definition in Agda:
+{:/}
 \begin{code}
 data _≤_ : ℕ → ℕ → Set where
 
@@ -62,6 +81,12 @@ data _≤_ : ℕ → ℕ → Set where
       -------------
     → suc m ≤ suc n
 \end{code}
+在这里，`z≤n` 和 `s≤s`（无空格）是构造器的名称，`zero ≤ n`、`m ≤ n` 和
+`suc m ≤ suc n` （带空格）是类型。在这里我们第一次用到了 *索引数据类型*
+(Indexed datatype）。我们使用 `m` 和 `n` 这两个自然数来索引 `m ≤ n` 这个类型。
+在 Agda 里，由两个及以上短横线开始的行是注释行，我们巧妙利用这一语法特性，用上述形式
+来表示相应的推理规则。在后文中，我们还会继续使用这一形式。
+{::comment}
 Here `z≤n` and `s≤s` (with no spaces) are constructor names, while
 `zero ≤ n`, and `m ≤ n` and `suc m ≤ suc n` (with spaces) are types.
 This is our first use of an _indexed_ datatype, where the type `m ≤ n`
@@ -69,23 +94,47 @@ is indexed by two naturals, `m` and `n`.  In Agda any line beginning
 with two or more dashes is a comment, and here we have exploited that
 convention to write our Agda code in a form that resembles the
 corresponding inference rules, a trick we will use often from now on.
+{:/}
 
+这两条定义告诉我们相同的两件事：
+{::comment}
 Both definitions above tell us the same two things:
+{:/}
 
+* *起始步骤*: 对于所有的自然数 `n`，命题 `zero ≤ n` 成立。
+* *归纳步骤*：对于所有的自然数 `m` 和 `n`，如果命题 `m ≤ n` 成立，
+  那么命题 `suc m ≤ suc n` 成立。
+
+{::comment}
 * _Base case_: for all naturals `n`, the proposition `zero ≤ n` holds.
 * _Inductive case_: for all naturals `m` and `n`, if the proposition
   `m ≤ n` holds, then the proposition `suc m ≤ suc n` holds.
+{:/}
 
+实际上，他们分别给我们更多的信息：
+
+{::comment}
 In fact, they each give us a bit more detail:
+{:/}
 
+* *起始步骤*: 对于所有的自然数 `n`，构造器 `z≤n` 提供了 `zero ≤ n` 成立的证明。
+* *归纳步骤*：对于所有的自然数 `m` 和 `n`，构造器 `s≤s` 将 `m ≤ n` 成立的证明
+  转化为 `suc m ≤ suc n` 成立的证明。
+
+{::comment}
 * _Base case_: for all naturals `n`, the constructor `z≤n`
   produces evidence that `zero ≤ n` holds.
 * _Inductive case_: for all naturals `m` and `n`, the constructor
   `s≤s` takes evidence that `m ≤ n` holds into evidence that
   `suc m ≤ suc n` holds.
+{:/}
 
+例如，我们在这里以推理规则的形式写出 `2 ≤ 4` 的证明：
+
+{::comment}
 For example, here in inference rule notation is the proof that
 `2 ≤ 4`:
+{:/}
 
       z≤n -----
           0 ≤ 2
@@ -94,23 +143,38 @@ For example, here in inference rule notation is the proof that
     s≤s ---------
           2 ≤ 4
 
+下面是对应的 Agda 证明：
+
+{::comment}
 And here is the corresponding Agda proof:
+{:/}
 \begin{code}
 _ : 2 ≤ 4
 _ = s≤s (s≤s z≤n)
 \end{code}
 
 
-
-
+## 隐式参数
+{::comment}
 ## Implicit arguments
+{:/}
 
+这是我们第一次使用隐式参数。定义不等式时，构造器的定义中使用了 `∀`，
+就像我们在下面的命题中使用 `∀` 一样：
+{::comment}
 This is our first use of implicit arguments.  In the definition of
 inequality, the two lines defining the constructors use `∀`, very
 similar to our use of `∀` in propositions such as:
+{:/}
 
     +-comm : ∀ (m n : ℕ) → m + n ≡ n + m
 
+但是我们这里的定义使用了花括号 `{ }`，而不是小括号 `( )`。
+这意味着参数是 *隐式的* （Implicit），不需要额外声明。实际上，Agda 的类型检查器
+会 *推导* 出它们。因此，我们在 `m + n ≡ n + m` 的证明中需要写出 `+-comm m n`，
+在 `zero ≤ n` 的证明中可以省略 `n`。同理，如果 `m≤n` 是 `m ≤ n`的证明，
+那么我们写出 `s≤s m≤n` 作为 `suc m ≤ suc n` 的证明，无需声明 `m` 和 `n`。
+{::comment}
 However, here the declarations are surrounded by curly braces `{ }`
 rather than parentheses `( )`.  This means that the arguments are
 _implicit_ and need not be written explicitly; instead, they are
@@ -119,26 +183,40 @@ proof that `m + n ≡ n + m`, but `z≤n` for the proof that `zero ≤ n`,
 leaving `n` implicit.  Similarly, if `m≤n` is evidence that `m ≤ n`,
 we write `s≤s m≤n` for evidence that `suc m ≤ suc n`, leaving both `m`
 and `n` implicit.
+{:/}
 
+如果有希望的话，我们也可以在大括号里显式声明隐式参数。例如，下面是 `2 ≤ 4` 的 Agda
+证明，包括了显式声明了的隐式参数：
+{::comment}
 If we wish, it is possible to provide implicit arguments explicitly by
 writing the arguments inside curly braces.  For instance, here is the
 Agda proof that `2 ≤ 4` repeated, with the implicit arguments made
 explicit:
+{:/}
 \begin{code}
 _ : 2 ≤ 4
 _ = s≤s {1} {3} (s≤s {0} {2} (z≤n {2}))
 \end{code}
+也可以额外加上参数的名字：
+{::comment}
 One may also identify implicit arguments by name:
+{:/}
 \begin{code}
 _ : 2 ≤ 4
 _ = s≤s {m = 1} {n = 3} (s≤s {m = 0} {n = 2} (z≤n {n = 2}))
 \end{code}
+在后者的形式中，也可以只声明一部分隐式参数：
+{::comment}
 In the latter format, you may only supply some implicit arguments:
+{:/}
 \begin{code}
 _ : 2 ≤ 4
 _ = s≤s {n = 3} (s≤s {n = 2} z≤n)
 \end{code}
+但是不可以改变隐式参数的顺序，即便加上了名字。
+{::comment}
 It is not permitted to swap implicit arguments, even when named.
+{:/}
 
 
 ## Precedence
@@ -278,7 +356,7 @@ length obscures the essence of the proof.  We will usually opt for
 shorter proofs.
 
 The technique of induction on evidence that a property holds (e.g.,
-inducting on evidence that `m ≤ n`)---rather than induction on 
+inducting on evidence that `m ≤ n`)---rather than induction on
 values of which the property holds (e.g., inducting on `m`)---will turn
 out to be immensely valuable, and one that we use often.
 
@@ -314,7 +392,7 @@ and `suc n ≤ suc m` and must show `suc m ≡ suc n`.  The inductive
 hypothesis `≤-antisym m≤n n≤m` establishes that `m ≡ n`, and our goal
 follows by congruence.
 
-#### Exercise `≤-antisym-cases` {#leq-antisym-cases} 
+#### Exercise `≤-antisym-cases` {#leq-antisym-cases}
 
 The above proof omits cases where one argument is `z≤n` and one
 argument is `s≤s`.  Why is it ok to omit them?
@@ -714,7 +792,7 @@ Show that the sum of two odd numbers is even.
 
 #### Exercise `Bin-predicates` (stretch) {#Bin-predicates}
 
-Recall that 
+Recall that
 Exercise [Bin][plfa.Naturals#Bin]
 defines a datatype `Bin` of bitstrings representing natural numbers.
 Representations are not unique due to leading zeros.
