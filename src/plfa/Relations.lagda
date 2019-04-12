@@ -5,7 +5,7 @@ prev      : /Induction/
 permalink : /Relations/
 next      : /Equality/
 translators : ["Fangyi Zhou"]
-progress  : 40
+progress  : 60
 ---
 
 \begin{code}
@@ -348,12 +348,19 @@ Give an example of a partial order that is not a total order.
 -- 在此处书写你的代码
 \end{code}
 
+## 自反性
+{::comment}
 ## Reflexivity
+{:/}
 
+我们第一个来证明的性质是自反性：对于任意自然数 `n`，关系 `n ≤ n` 成立。我们使用标准库
+的惯例来隐式申明参数，在使用自反性的证明时这样可以更加方便。
+{::comment}
 The first property to prove about comparison is that it is reflexive:
 for any natural `n`, the relation `n ≤ n` holds.  We follow the
 convention in the standard library and make the argument implicit,
 as that will make it easier to invoke reflexivity:
+{:/}
 \begin{code}
 ≤-refl : ∀ {n : ℕ}
     -----
@@ -361,20 +368,36 @@ as that will make it easier to invoke reflexivity:
 ≤-refl {zero}   =  z≤n
 ≤-refl {suc n}  =  s≤s (≤-refl {n})
 \end{code}
+
+这个证明直接在 `n` 上进行归纳。在起始步骤中，`zero ≤ zero` 由 `z≤n` 证明；在归纳步骤中，
+归纳假设 `≤-refl {n}` 给我们带来了 `n ≤ n` 的证明，我们只需要使用 `s≤s`，就可以获得
+`suc n ≤ suc n` 的证明。
+{::comment}
 The proof is a straightforward induction on the implicit argument `n`.
 In the base case, `zero ≤ zero` holds by `z≤n`.  In the inductive
 case, the inductive hypothesis `≤-refl {n}` gives us a proof of `n ≤
 n`, and applying `s≤s` to that yields a proof of `suc n ≤ suc n`.
+{:/}
 
+在 Emacs 中来交互式地证明自反性是一个很好的练习，可以使用洞，以及 `C-c C-c`、
+`C-c C-,` 和 `C-c C-r` 命令。
+{::comment}
 It is a good exercise to prove reflexivity interactively in Emacs,
 using holes and the `C-c C-c`, `C-c C-,`, and `C-c C-r` commands.
+{:/}
 
-
+## 传递性
+{::comment}
 ## Transitivity
+{:/}
 
+我们第二个证明的性质是传递性：对于任意自然数 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ p`
+成立，那么 `m ≤ p` 成立。同样，`m`、`n` 和 `p` 是隐式参数：
+{::comment}
 The second property to prove about comparison is that it is
 transitive: for any naturals `m`, `n`, and `p`, if `m ≤ n` and `n ≤ p`
 hold, then `m ≤ p` holds.  Again, `m`, `n`, and `p` are implicit:
+{:/}
 \begin{code}
 ≤-trans : ∀ {m n p : ℕ}
   → m ≤ n
@@ -384,24 +407,42 @@ hold, then `m ≤ p` holds.  Again, `m`, `n`, and `p` are implicit:
 ≤-trans z≤n       _          =  z≤n
 ≤-trans (s≤s m≤n) (s≤s n≤p)  =  s≤s (≤-trans m≤n n≤p)
 \end{code}
+这里我们在 `m ≤ n` 的 *证据* 上进行归纳。在起始步骤里，第一个不等式因为 `z≤n` 而成立，
+那么结论亦可由 `z≤n` 而得出。在这里，`n ≤ p` 的证明是不需要的，我们用 `_` 来表示这个
+证明没有被使用。
+{::comment}
 Here the proof is by induction on the _evidence_ that `m ≤ n`.  In the
 base case, the first inequality holds by `z≤n` and must show `zero ≤
 p`, which follows immediately by `z≤n`.  In this case, the fact that
 `n ≤ p` is irrelevant, and we write `_` as the pattern to indicate
 that the corresponding evidence is unused.
+{:/}
 
+在归纳步骤中，第一个不等式因为 `s≤s m≤n` 而成立，第二个不等式因为 `s≤s n≤p` 而成立，
+所以我们已知 `suc m ≤ suc n` 和 `suc n ≤ suc p`，求证 `suc m ≤ suc p`。
+通过归纳假设 `≤-trans m≤n n≤p`，我们得知 `m ≤ p`，在此之上使用 `s≤s` 即可证。
+{::comment}
 In the inductive case, the first inequality holds by `s≤s m≤n`
 and the second inequality by `s≤s n≤p`, and so we are given
 `suc m ≤ suc n` and `suc n ≤ suc p`, and must show `suc m ≤ suc p`.
 The inductive hypothesis `≤-trans m≤n n≤p` establishes
 that `m ≤ p`, and our goal follows by applying `s≤s`.
+{:/}
 
+`≤-trans (s≤s m≤n) z≤n` 不可能发生，因为第一个不等式告诉我们中间的数是一个 `suc n`，
+而第二个不等式告诉我们中间的书是 `zero`。Agda 可以推断这样的情况不可能发现，所以我们不需要
+（也不可以）列出这种情况。
+{::comment}
 The case `≤-trans (s≤s m≤n) z≤n` cannot arise, since the first
 inequality implies the middle value is `suc n` while the second
 inequality implies that it is `zero`.  Agda can determine that such a
 case cannot arise, and does not require (or permit) it to be listed.
+{:/}
 
+我们也可以将隐式参数显式地声明。
+{::comment}
 Alternatively, we could make the implicit parameters explicit:
+{:/}
 \begin{code}
 ≤-trans′ : ∀ (m n p : ℕ)
   → m ≤ n
@@ -411,24 +452,42 @@ Alternatively, we could make the implicit parameters explicit:
 ≤-trans′ zero    _       _       z≤n       _          =  z≤n
 ≤-trans′ (suc m) (suc n) (suc p) (s≤s m≤n) (s≤s n≤p)  =  s≤s (≤-trans′ m n p m≤n n≤p)
 \end{code}
+有人说这样的证明更加的清晰，也有人说这个更长的证明让人难以抓住证明的重点。
+我们一般选择使用简短的证明。
+{::comment}
 One might argue that this is clearer or one might argue that the extra
 length obscures the essence of the proof.  We will usually opt for
 shorter proofs.
+{:/}
 
+对于性质成立证明进行的归纳（如上文中对于 `m ≤ n` 的证明进行归纳），相比于对于性质成立的值进行的归纳
+（如对于 `m` 进行归纳），有非常大的价值。我们会经常使用这样的方法。
+{::comment}
 The technique of induction on evidence that a property holds (e.g.,
 inducting on evidence that `m ≤ n`)---rather than induction on
 values of which the property holds (e.g., inducting on `m`)---will turn
 out to be immensely valuable, and one that we use often.
+{:/}
 
+同样，在 Emacs 中来交互式地证明传递性是一个很好的练习，可以使用洞，以及 `C-c C-c`、
+`C-c C-,` 和 `C-c C-r` 命令。
+{::comment}
 Again, it is a good exercise to prove transitivity interactively in Emacs,
 using holes and the `C-c C-c`, `C-c C-,`, and `C-c C-r` commands.
+{:/}
 
-
+## 反对称性
+{::comment}
 ## Anti-symmetry
+{:/}
 
+我们证明的第三个性质是反对称性：对于所有的自然数 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ m`
+同时成立，那么 `m ≡ n` 成立：
+{::comment}
 The third property to prove about comparison is that it is
 antisymmetric: for all naturals `m` and `n`, if both `m ≤ n` and `n ≤
 m` hold, then `m ≡ n` holds:
+{:/}
 \begin{code}
 ≤-antisym : ∀ {m n : ℕ}
   → m ≤ n
@@ -438,37 +497,65 @@ m` hold, then `m ≡ n` holds:
 ≤-antisym z≤n       z≤n        =  refl
 ≤-antisym (s≤s m≤n) (s≤s n≤m)  =  cong suc (≤-antisym m≤n n≤m)
 \end{code}
+同样，我们对于 `m ≤ n` 和 `n ≤ m` 的证明进行归纳。
+{::comment}
 Again, the proof is by induction over the evidence that `m ≤ n`
 and `n ≤ m` hold.
+{:/}
 
+在起始步骤中，两个不等式都因为 `z≤n` 而成立。因此我们已知 `zero ≤ zero` 和 `zero ≤ zero`，
+求证 `zero ≡ zero`，由自反性可证。（注：由等式的自反性可证，而不是不等式的自反性）
+{::comment}
 In the base case, both inequalities hold by `z≤n`, and so we are given
 `zero ≤ zero` and `zero ≤ zero` and must show `zero ≡ zero`, which
 follows by reflexivity.  (Reflexivity of equality, that is, not
 reflexivity of inequality.)
+{:/}
 
+在归纳步骤中，第一个不等式因为 `s≤s m≤n` 而成立，第二个等式因为 `s≤s n≤m` 而成立。因此我们已知
+`suc m ≤ suc n` 和 `suc n ≤ suc m`，求证 `suc m ≡ suc n`。归纳假设 `≤-antisym m≤n n≤m`
+可以证明 `m ≡ n`，因此我们可以使用同余性完成证明。
+
+{::comment}
 In the inductive case, the first inequality holds by `s≤s m≤n` and the
 second inequality holds by `s≤s n≤m`, and so we are given `suc m ≤ suc n`
 and `suc n ≤ suc m` and must show `suc m ≡ suc n`.  The inductive
 hypothesis `≤-antisym m≤n n≤m` establishes that `m ≡ n`, and our goal
 follows by congruence.
+{::comment}
 
+#### 练习 `≤-antisym-cases` {#leq-antisym-cases}
+{::comment}
 #### Exercise `≤-antisym-cases` {#leq-antisym-cases}
+{:/}
 
+上面的证明中省略了一个参数是 `z≤n`，另一个参数是 `s≤s` 的情况。为什么可以省略这种情况？
+{::comment}
 The above proof omits cases where one argument is `z≤n` and one
 argument is `s≤s`.  Why is it ok to omit them?
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
-
+## 完全性
+{::comment}
 ## Total
+{:/}
 
+我们证明的第四个性质是完全性：对于任何自然数 `m` 和 `n`，`m ≤ n` 或者 `n ≤ m` 成立。
+在 `m` 和 `n` 相等时，两者同时成立。
+{::comment}
 The fourth property to prove about comparison is that it is total:
 for any naturals `m` and `n` either `m ≤ n` or `n ≤ m`, or both if
 `m` and `n` are equal.
+{:/}
 
+我们首先来说明怎么样不等式才是完全的：
+{::comment}
 We specify what it means for inequality to be total:
+{:/}
 \begin{code}
 data Total (m n : ℕ) : Set where
 
@@ -482,17 +569,28 @@ data Total (m n : ℕ) : Set where
       ---------
     → Total m n
 \end{code}
+`Total m n` 成立的证明有两种形式：`forward m≤n` 或者 `flipped n≤m`，其中
+`m≤n` 和 `n≤m` 分别是 `m ≤ n` 和 `n ≤ m` 的证明。
+{::comment}
 Evidence that `Total m n` holds is either of the form
 `forward m≤n` or `flipped n≤m`, where `m≤n` and `n≤m` are
 evidence of `m ≤ n` and `n ≤ m` respectively.
+{:/}
 
+（如果你对于逻辑学有所了解，上面的定义可以由析取（Disjunction）表示。
+我们会在 [Connectives][plfa.Connectives] 章节介绍析取。）
+{::comment}
 (For those familiar with logic, the above definition
 could also be written as a disjunction. Disjunctions will
 be introduced in Chapter [Connectives][plfa.Connectives].)
+{:/}
 
+这是我们第一次使用带*参数*的数据类型，这里 `m` 和 `n` 是参数。这等同于下面的索引数据类型：
+{::comment}
 This is our first use of a datatype with _parameters_,
 in this case `m` and `n`.  It is equivalent to the following
 indexed datatype:
+{:/}
 \begin{code}
 data Total′ : ℕ → ℕ → Set where
 
@@ -506,6 +604,12 @@ data Total′ : ℕ → ℕ → Set where
       ----------
     → Total′ m n
 \end{code}
+类型里的每个参数都转换成构造器的一个隐式参数。索引数据类型中的索引可以变化，正如在
+`zero ≤ n` 和 `suc m ≤ suc n` 中那样，而参数化数据类型不一样，其参数必须保持相同，
+正如在 `Total m n` 中那样。参数化的声明更短，更易于阅读，而且有时可以帮助到 Agda 的
+终结检查器，所以我们尽可能地使用它们，而不是索引数据类型。
+
+{::comment}
 Each parameter of the type translates as an implicit parameter of each
 constructor.  Unlike an indexed datatype, where the indexes can vary
 (as in `zero ≤ n` and `suc m ≤ suc n`), in a parameterised datatype
@@ -513,8 +617,12 @@ the parameters must always be the same (as in `Total m n`).
 Parameterised declarations are shorter, easier to read, and
 occasionally aid Agda's termination checker, so we will use them in
 preference to indexed types when possible.
+{:/}
 
+在上述准备工作完成后，我们定义并证明完全性。
+{::comment}
 With that preliminary out of the way, we specify and prove totality:
+{:/}
 \begin{code}
 ≤-total : ∀ (m n : ℕ) → Total m n
 ≤-total zero    n                         =  forward z≤n
@@ -523,9 +631,28 @@ With that preliminary out of the way, we specify and prove totality:
 ...                        | forward m≤n  =  forward (s≤s m≤n)
 ...                        | flipped n≤m  =  flipped (s≤s n≤m)
 \end{code}
+这里，我们的证明在两个参数上进行归纳，并按照情况分析：
+{::comment}
 In this case the proof is by induction over both the first
 and second arguments.  We perform a case analysis:
+{:/}
 
+* *第一起始步骤*：如果第一个参数是 `zero`，第二个参数是 `n`，那么 forward
+  条件成立，我们使用 `z≤n` 作为 `zero ≤ n` 的证明。
+
+* *第二起始步骤*：如果第一个参数是 `suc m`，第二个参数是 `zero`，那么 flipped
+  条件成立，我们使用 `z≤n` 作为 `zero ≤ suc m` 的证明。
+
+* *归纳步骤*：如果第一个参数是 `suc m`，第二个参数是 `suc n`，那么归纳假设
+  `≤-total m n` 可以给出如下推断：
+
+  + 归纳假设的 forward 条件成立，以 `m≤n` 作为 `m ≤ n` 的证明。以此我们可以使用
+    `s≤s m≤n` 作为 `suc m ≤ suc n` 来证明 forward 条件成立。
+
+  + 归纳假设的 flipped 条件成立，以 `n≤m` 作为 `n ≤ m` 的证明。以此我们可以使用
+    `s≤s n≤m` 作为 `suc n ≤ suc m` 来证明 flipped 条件成立。
+
+{::comment}
 * _First base case_: If the first argument is `zero` and the
   second argument is `n` then the forward case holds,
   with `z≤n` as evidence that `zero ≤ n`.
@@ -545,15 +672,23 @@ and second arguments.  We perform a case analysis:
   + The flipped case of the inductive hypothesis holds with `n≤m` as
     evidence that `n ≤ m`, from which it follows that the flipped case of the
     proposition holds with `s≤s n≤m` as evidence that `suc n ≤ suc m`.
+{:/}
 
+这是我们第一次在 Agda 中使用 `with` 语句。`with` 关键字后面有一个表达式和一或多行。
+每行以省略号（`...`）和一个竖线（`|`）开头，后面跟着用来匹配表达式的模式，和等式的右手边。
+{::comment}
 This is our first use of the `with` clause in Agda.  The keyword
 `with` is followed by an expression and one or more subsequent lines.
 Each line begins with an ellipsis (`...`) and a vertical bar (`|`),
 followed by a pattern to be matched against the expression
 and the right-hand side of the equation.
+{:/}
 
+使用 `with` 语句等同于定义一个辅助函数。比如说，上面的定义和下面的等价：
+{::comment}
 Every use of `with` is equivalent to defining a helper function.  For
 example, the definition above is equivalent to the following:
+{:/}
 \begin{code}
 ≤-total′ : ∀ (m n : ℕ) → Total m n
 ≤-total′ zero    n        =  forward z≤n
@@ -564,16 +699,26 @@ example, the definition above is equivalent to the following:
   helper (forward m≤n)  =  forward (s≤s m≤n)
   helper (flipped n≤m)  =  flipped (s≤s n≤m)
 \end{code}
+
+这也是我们第一次在 Agda 中使用 `where` 语句。`where` 关键字后面有一或多条定义，其必须被缩进。
+之前等式左手边的约束变量（此例中的 `m` 和 `n`）在嵌套的定义中仍然在作用域内。
+在嵌套定义中的约束标识符（此例中的 `helper` ）在等式的右手边的作用域内。
+{::comment}
 This is also our first use of a `where` clause in Agda.  The keyword `where` is
 followed by one or more definitions, which must be indented.  Any variables
 bound on the left-hand side of the preceding equation (in this case, `m` and
 `n`) are in scope within the nested definition, and any identifiers bound in the
 nested definition (in this case, `helper`) are in scope in the right-hand side
 of the preceding equation.
+{:/}
 
+如果两个参数相同，那么两个情况同时成立，我们可以返回任一证明。上面的代码中我们返回 forward 条件，
+但是我们也可以返回 flipped 条件，如下：
+{::comment}
 If both arguments are equal, then both cases hold and we could return evidence
 of either.  In the code above we return the forward case, but there is a
 variant that returns the flipped case:
+{:/}
 \begin{code}
 ≤-total″ : ∀ (m n : ℕ) → Total m n
 ≤-total″ m       zero                      =  flipped z≤n
@@ -582,8 +727,11 @@ variant that returns the flipped case:
 ...                        | forward m≤n   =  forward (s≤s m≤n)
 ...                        | flipped n≤m   =  flipped (s≤s n≤m)
 \end{code}
+两者的区别在于上述代码在对于第一个参数进行模式匹配之前先对于第二个参数先进行模式匹配。
+{::comment}
 It differs from the original code in that it pattern
 matches on the second argument before the first argument.
+{:/}
 
 
 ## Monotonicity
