@@ -5,7 +5,7 @@ prev      : /Induction/
 permalink : /Relations/
 next      : /Equality/
 translators : ["Fangyi Zhou"]
-progress  : 20
+progress  : 40
 ---
 
 \begin{code}
@@ -219,32 +219,62 @@ It is not permitted to swap implicit arguments, even when named.
 {:/}
 
 
+## 优先级
+{::comment}
 ## Precedence
+{:/}
 
+我们如下定义比较的优先级：
+{::comment}
 We declare the precedence for comparison as follows:
+{:/}
 \begin{code}
 infix 4 _≤_
 \end{code}
+我们将 `_≤_` 的优先级设置为 4，所以它比优先级为 6 的 `_+_` 结合的更紧，此外，
+`1 + 2 ≤ 3` 将被解析为 `(1 + 2) ≤ 3`。我们用 `infix` 来表示运算符既不是左结合的，
+也不是右结合的。因为 `1 ≤ 2 ≤ 3` 解析为 `(1 ≤ 2) ≤ 3` 或者 `1 ≤ (2 ≤ 3)` 都没有意义。
+{::comment}
 We set the precedence of `_≤_` at level 4, so it binds less tightly
 that `_+_` at level 6 and hence `1 + 2 ≤ 3` parses as `(1 + 2) ≤ 3`.
 We write `infix` to indicate that the operator does not associate to
 either the left or right, as it makes no sense to parse `1 ≤ 2 ≤ 3` as
 either `(1 ≤ 2) ≤ 3` or `1 ≤ (2 ≤ 3)`.
+{:/}
 
-
+## 可决定性
+{::comment}
 ## Decidability
+{:/}
 
+给定两个数，我们可以很直接地决定第一个数是不是小于等于第二个数。我们在此处不给出说明的代码，
+但我们会在 [Decidable][plfa.Decidable] 章节重新讨论这个问题。
+{::comment}
 Given two numbers, it is straightforward to compute whether or not the
 first is less than or equal to the second.  We don't give the code for
 doing so here, but will return to this point in
 Chapter [Decidable][plfa.Decidable].
+{:/}
 
-
+## 序关系的性质
+{::comment}
 ## Properties of ordering relations
+{:/}
 
+数学家对于关系的常见性质给出了约定的名称。
+{::comment}
 Relations pop up all the time, and mathematicians have agreed
 on names for some of the most common properties.
+{:/}
 
+* *自反*（Reflexive）：对于所有的 `n`，关系 `n ≤ n` 成立。
+* *传递*（Transitive）：对于所有的 `m`、 `n` 和 `p`，如果 `m ≤ n` 和 `n ≤ p`
+  成立，那么 `m ≤ p` 也成立。
+* *反对称*（Anti-symmetric）：对于所有的 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ m`
+  同时成立，那么 `m ≡ n` 成立。
+* *完全*（Total）：对于所有的 `m` 和 `n`，`m ≤ n` 或者 `n ≤ m` 成立。
+
+{::comment}
 * _Reflexive_. For all `n`, the relation `n ≤ n` holds.
 * _Transitive_. For all `m`, `n`, and `p`, if `m ≤ n` and
 `n ≤ p` hold, then `m ≤ p` holds.
@@ -252,40 +282,70 @@ on names for some of the most common properties.
 `n ≤ m` hold, then `m ≡ n` holds.
 * _Total_. For all `m` and `n`, either `m ≤ n` or `n ≤ m`
 holds.
+{:/}
 
+`_≤_` 关系满足上述四条性质。
+{::comment}
 The relation `_≤_` satisfies all four of these properties.
+{:/}
 
+对于上述性质的组合也有约定的名称。
+{::comment}
 There are also names for some combinations of these properties.
+{:/}
 
+* *预序*（Preorder）：满足自反和传递的关系。
+* *偏序*（Partial Order）：满足反对称的预序。
+* *全序*（Total Order）：满足完全的偏序。
+
+{::comment}
 * _Preorder_. Any relation that is reflexive and transitive.
 * _Partial order_. Any preorder that is also anti-symmetric.
 * _Total order_. Any partial order that is also total.
+{:/}
 
+如果你进入了关于关系的聚会，你现在知道怎么样和人讨论了，可以讨论关于自反、传递、反对称和完全，
+或者问一问这是不是预序、偏序或者全序。
+{::comment}
 If you ever bump into a relation at a party, you now know how
 to make small talk, by asking it whether it is reflexive, transitive,
 anti-symmetric, and total. Or instead you might ask whether it is a
 preorder, partial order, or total order.
+{:/}
 
+更认真的来说，如果你在阅读论文时碰到了一个关系，本文的介绍让你可以对关系有基本的了解和判断，
+来判断这个关系是不是预序、偏序或者全序。一个认真的作者一般会在文章指出这个关系具有（或者缺少）
+上述性质，比如说指出新定义的关系是一个偏序而不是全序。
+{::comment}
 Less frivolously, if you ever bump into a relation while reading a
 technical paper, this gives you a way to orient yourself, by checking
 whether or not it is a preorder, partial order, or total order.  A
 careful author will often call out these properties---or their
 lack---for instance by saying that a newly introduced relation is a
 partial order but not a total order.
+{:/}
 
-
+#### 练习 `orderings` {#orderings}
+{::comment}
 #### Exercise `orderings` {#orderings}
+{:/}
 
+给出一个不是偏序的预序的例子。
+{::comment}
 Give an example of a preorder that is not a partial order.
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
+给出一个不是全序的偏序的例子。
+{::comment}
 Give an example of a partial order that is not a total order.
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
 ## Reflexivity
