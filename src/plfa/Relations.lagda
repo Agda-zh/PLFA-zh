@@ -5,7 +5,7 @@ prev      : /Induction/
 permalink : /Relations/
 next      : /Equality/
 translators : ["Fangyi Zhou"]
-progress  : 60
+progress  : 100
 ---
 
 \begin{code}
@@ -733,18 +733,28 @@ It differs from the original code in that it pattern
 matches on the second argument before the first argument.
 {:/}
 
-
+## 单调性
+{::comment}
 ## Monotonicity
+{:/}
 
+如果在聚会中碰到了一个运算符和一个序，那么有人可能会问这个运算符对于这个序是不是 *单调的* （Monotonic）。
+比如说，加法对于小于等于是单调的，这意味着：
+{::comment}
 If one bumps into both an operator and an ordering at a party, one may ask if
 the operator is _monotonic_ with regard to the ordering.  For example, addition
 is monotonic with regard to inequality, meaning:
+{:/}
 
     ∀ {m n p q : ℕ} → m ≤ n → p ≤ q → m + p ≤ n + q
 
+这个证明可以用我们学会的方法，很直接的来完成。我们最好把它分成三个部分，首先我们证明加法对于
+小于等于在右手边是单调的：
+{::comment}
 The proof is straightforward using the techniques we have learned, and is best
 broken into three parts. First, we deal with the special case of showing
 addition is monotonic on the right:
+{:/}
 \begin{code}
 +-monoʳ-≤ : ∀ (m p q : ℕ)
   → p ≤ q
@@ -753,6 +763,17 @@ addition is monotonic on the right:
 +-monoʳ-≤ zero    p q p≤q  =  p≤q
 +-monoʳ-≤ (suc m) p q p≤q  =  s≤s (+-monoʳ-≤ m p q p≤q)
 \end{code}
+
+我们对于第一个参数进行归纳。
+
+* *起始步骤*：第一个参数是 `zero`，那么 `zero + p ≤ zero + q` 可以化简为 `p ≤ q`，
+  其证明由 `p≤q` 给出。
+
+* *归纳步骤*：第一个参数是 `suc m`，那么 `suc m + p ≤ suc m + q` 可以化简为
+  `suc (m + p) ≤ suc (m + q)`。归纳假设 `+-monoʳ-≤ m p q p≤q` 可以证明
+  `m + p ≤ m + q`，我们在此之上使用 `s≤s` 即可得证。
+
+{::comment}
 The proof is by induction on the first argument.
 
 * _Base case_: The first argument is `zero` in which case
@@ -763,10 +784,14 @@ The proof is by induction on the first argument.
   `suc m + p ≤ suc m + q` simplifies to `suc (m + p) ≤ suc (m + q)`.
   The inductive hypothesis `+-monoʳ-≤ m p q p≤q` establishes that
   `m + p ≤ m + q`, and our goal follows by applying `s≤s`.
+{:/}
 
+接下来，我们证明加法对于小于等于在左手边是单调的。我们可以用之前的结论和加法的交换律来证明：
+{::comment}
 Second, we deal with the special case of showing addition is
 monotonic on the left. This follows from the previous
 result and the commutativity of addition:
+{:/}
 \begin{code}
 +-monoˡ-≤ : ∀ (m n p : ℕ)
   → m ≤ n
@@ -774,10 +799,17 @@ result and the commutativity of addition:
   → m + p ≤ n + p
 +-monoˡ-≤ m n p m≤n  rewrite +-comm m p | +-comm n p  = +-monoʳ-≤ p m n m≤n
 \end{code}
+用 `+-comm m p` 和 `+-comm n p` 来重写，可以让 `m + p ≤ n + p` 转换成 `p + n ≤ p + m`，
+而我们可以用 `+-moroʳ-≤ p m n m≤n` 来证明。
+{::comment}
 Rewriting by `+-comm m p` and `+-comm n p` converts `m + p ≤ n + p` into
 `p + m ≤ p + n`, which is proved by invoking `+-monoʳ-≤ p m n m≤n`.
+{:/}
 
+最后，我们把前两步的结论结合起来：
+{::comment}
 Third, we combine the two previous results:
+{:/}
 \begin{code}
 +-mono-≤ : ∀ (m n p q : ℕ)
   → m ≤ n
@@ -786,23 +818,38 @@ Third, we combine the two previous results:
   → m + p ≤ n + q
 +-mono-≤ m n p q m≤n p≤q  =  ≤-trans (+-monoˡ-≤ m n p m≤n) (+-monoʳ-≤ n p q p≤q)
 \end{code}
+使用 `+-monoˡ-≤ m n p m≤n` 可以证明 `m + p ≤ n + p`，
+使用 `+-monoʳ-≤ n p q p≤q` 可以证明 `n + p ≤ n + q`，用传递性把两者连接起来，
+我们可以获得 `m + p ≤ n + q` 的证明，如上所示。
+{::comment}
 Invoking `+-monoˡ-≤ m n p m≤n` proves `m + p ≤ n + p` and invoking
 `+-monoʳ-≤ n p q p≤q` proves `n + p ≤ n + q`, and combining these with
 transitivity proves `m + p ≤ n + q`, as was to be shown.
+{:/}
 
-
+#### 练习 `*-mono-≤` （延伸）
+{::comment}
 #### Exercise `*-mono-≤` (stretch)
+{:/}
 
+证明乘法对于小于等于是单调的。
+{::comment}
 Show that multiplication is monotonic with regard to inequality.
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
-
+## 严格不等关系 {#strict-inequality}
+{::comment}
 ## Strict inequality {#strict-inequality}
+{:/}
 
+我们可以用类似于定义不等关系的方法来定义严格不等关系。
+{::comment}
 We can define strict inequality similarly to inequality:
+{:/}
 \begin{code}
 infix 4 _<_
 
@@ -817,9 +864,18 @@ data _<_ : ℕ → ℕ → Set where
       -------------
     → suc m < suc n
 \end{code}
+严格不等关系与不等关系最重要的区别在于，0 小于任何数的后继，而不小于 0。
+{::comment}
 The key difference is that zero is less than the successor of an
 arbitrary number, but is not less than zero.
+{:/}
 
+显然，严格不等关系不是自反的。但它是 *非自反的* （Irreflexive），表示 `n < n` 对于
+任何值 `n` 都不成立。和不等关系一样，严格不等关系是传递的。严格不等关系不是完全的，但是满足
+一个相似的性质：*三分律*（Trichotomy）：对于任意的 `m` 和 `n`，`m < n`、`m ≡ n` 或者
+`m > n` 三者有且仅有一者成立。（我们定义 `m > n` 当且仅当 `n < m` 成立时成立）
+严格不等关系对于加法和乘法也是单调的。
+{::comment}
 Clearly, strict inequality is not reflexive. However it is
 _irreflexive_ in that `n < n` never holds for any value of `n`.
 Like inequality, strict inequality is transitive.
@@ -827,76 +883,130 @@ Strict inequality is not total, but satisfies the closely related property of
 _trichotomy_: for any `m` and `n`, exactly one of `m < n`, `m ≡ n`, or `m > n`
 holds (where we define `m > n` to hold exactly when `n < m`).
 It is also monotonic with regards to addition and multiplication.
+{:/}
 
+我们把一部分上述性质作为习题。非自反性需要逻辑非，三分律需要证明三者是互斥的，因此这两个性质
+暂不做为习题。我们会在 [Negation][plfa.Negation] 章节来重新讨论。
+{::comment}
 Most of the above are considered in exercises below.  Irreflexivity
 requires negation, as does the fact that the three cases in
 trichotomy are mutually exclusive, so those points are deferred to
 Chapter [Negation][plfa.Negation].
+{:/}
 
+我们可以直接地来证明 `suc m ≤ n` 蕴含了 `m < n`，及其逆命题。
+因此我们亦可从不等关系的性质中，使用此性质来证明严格不等关系的性质。
+{::comment}
 It is straightforward to show that `suc m ≤ n` implies `m < n`,
 and conversely.  One can then give an alternative derivation of the
 properties of strict inequality, such as transitivity, by
 exploiting the corresponding properties of inequality.
+{:/}
 
+#### 练习 `<-trans` （推荐） {#less-trans}
+{::comment}
 #### Exercise `<-trans` (recommended) {#less-trans}
+{:/}
 
+证明严格不等是传递的。
+{::comment}
 Show that strict inequality is transitive.
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
+#### 练习 `trichotomy` {#trichotomy}
+{::comment}
 #### Exercise `trichotomy` {#trichotomy}
+{:/}
 
+证明严格不等关系满足弱化的三元律，证明对于任意 `m` 和 `n`，下列命题有一条成立：
+  * `m < n`，
+  * `m ≡ n`，或者
+  * `m > n`。
+
+{::comment}
 Show that strict inequality satisfies a weak version of trichotomy, in
 the sense that for any `m` and `n` that one of the following holds:
   * `m < n`,
   * `m ≡ n`, or
   * `m > n`.
+{:/}
 
+定义 `m > n` 为 `n < m`。你需要一个合适的数据类型声明，如同我们在证明完全性中使用的那样。
+（我们会在介绍[逻辑非][plfa.Negation]以后证明三者是互斥的）
+{::comment}
 Define `m > n` to be the same as `n < m`.
 You will need a suitable data declaration,
 similar to that used for totality.
 (We will show that the three cases are exclusive after we introduce
 [negation][plfa.Negation].)
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
+#### 练习 `+-mono-<` {#plus-mono-less}
+{::comment}
 #### Exercise `+-mono-<` {#plus-mono-less}
+{:/}
 
+证明加法对于严格不等关系是单调的。正如不等关系中那样，你可以需要额外的定义。
+{::comment}
 Show that addition is monotonic with respect to strict inequality.
 As with inequality, some additional definitions may be required.
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
+#### 练习 `≤-iff-<` (推荐) {#leq-iff-less}
+{::comment}
 #### Exercise `≤-iff-<` (recommended) {#leq-iff-less}
+{:/}
 
+证明 `suc m ≤ n` 蕴含了 `m < n`，及其逆命题。
+{::comment}
 Show that `suc m ≤ n` implies `m < n`, and conversely.
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
+#### 练习 `<-trans-revisited` {#less-trans-revisited}
+{::comment}
 #### Exercise `<-trans-revisited` {#less-trans-revisited}
+{:/}
 
+用另外一种方法证明严格不等是传递的，使用之前证明的不等关系和严格不等关系的联系，
+以及不等关系的传递性。
+{::comment}
 Give an alternative proof that strict inequality is transitive,
 using the relating between strict inequality and inequality and
 the fact that inequality is transitive.
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
-
+## 奇和偶
+{::comment}
 ## Even and odd
+{:/}
 
+作为一个额外的例子，我们来定义奇数和偶数。不等关系和严格不等关系是 *二元关系*，而奇偶性
+是 *一元关系*，有时也被叫做 *谓词* （Predicate）：
+{::comment}
 As a further example, let's specify even and odd numbers.  Inequality
 and strict inequality are _binary relations_, while even and odd are
 _unary relations_, sometimes called _predicates_:
+{:/}
 \begin{code}
 data even : ℕ → Set
 data odd  : ℕ → Set
@@ -919,19 +1029,31 @@ data odd where
       -----------
     → odd (suc n)
 \end{code}
+一个数是偶数，如果它是 0，或者是奇数的后继。一个数是奇数，如果它是偶数的后继。
+{::comment}
 A number is even if it is zero or the successor of an odd number,
 and odd if it is the successor of an even number.
+{:/}
 
+这是我们第一次定义一个相互递归的数据类型。因为每个标识符必须在使用前声明，所以
+我们首先声明索引数据类型 `even` 和 `odd` （省略 `where` 关键字和其构造器的定义），
+然后声明其构造器（省略其签名 `ℕ → Set`，因为在之前已经给出）。
+{::comment}
 This is our first use of a mutually recursive datatype declaration.
 Since each identifier must be defined before it is used, we first
 declare the indexed types `even` and `odd` (omitting the `where`
 keyword and the declarations of the constructors) and then
 declare the constructors (omitting the signatures `ℕ → Set`
 which were given earlier).
+{:/}
 
+这也是我们第一次使用 *重载* （Overloaded）的构造器。这意味着不同类型的构造器
+拥有相同的名字。在这里 `suc` 表示下面三种构造器其中之一：
+{::comment}
 This is also our first use of _overloaded_ constructors,
 that is, using the same name for constructors of different types.
 Here `suc` means one of three constructors:
+{:/}
 
     suc : ℕ → ℕ
 
@@ -945,13 +1067,20 @@ Here `suc` means one of three constructors:
         -----------
       → odd (suc n)
 
+同理，`zero` 表示两种构造器的一种。因为类型推导的限制，Agda 不允许重载已定义的名字，
+但是允许重载构造器。我们推荐将重载限制在有关联的定义中，如我们所做的这样，但这不是必须的。
+{::comment}
 Similarly, `zero` refers to one of two constructors. Due to how it
 does type inference, Agda does not allow overloading of defined names,
 but does allow overloading of constructors.  It is recommended that
 one restrict overloading to related meanings, as we have done here,
 but it is not required.
+{:/}
 
+我们证明两个偶数之和是偶数：
+{::comment}
 We show that the sum of two even numbers is even:
+{:/}
 \begin{code}
 e+e≡e : ∀ {m n : ℕ}
   → even m
@@ -970,109 +1099,180 @@ e+e≡e (suc om) en  =  suc (o+e≡o om en)
 
 o+e≡o (suc em) en  =  suc (e+e≡e em en)
 \end{code}
+与相互递归的定义对应，我们用两个相互递归的函数，一个证明两个偶数之和是偶数，另一个证明
+一个奇数与一个偶数之和是奇数。
+{::comment}
 Corresponding to the mutually recursive types, we use two mutually recursive
 functions, one to show that the sum of two even numbers is even, and the other
 to show that the sum of an odd and an even number is odd.
+{:/}
 
+这是我们第一次使用相互递归的函数。因为每个标识符必须在使用前声明，我们先给出两个函数的签名，
+然后再给出其定义。
+{::comment}
 This is our first use of mutually recursive functions.  Since each identifier
 must be defined before it is used, we first give the signatures for both
 functions and then the equations that define them.
+{:/}
 
+要证明两个偶数之和为偶，我们考虑第一个数为偶数的证明。如果是因为第一个数为 0，
+那么第二个数为偶数的证明即为和为偶数的证明。如果是因为第一个数为奇数的后继，
+那么和为偶数是因为他是一个奇数和一个偶数的和的后续，而这个和是一个奇数。
+{::comment}
 To show that the sum of two even numbers is even, consider the
 evidence that the first number is even. If it is because it is zero,
 then the sum is even because the second number is even.  If it is
 because it is the successor of an odd number, then the result is even
 because it is the successor of the sum of an odd and an even number,
 which is odd.
+{:/}
 
+要证明一个奇数和一个偶数的和是奇数，我们考虑第一个数是奇数的证明。
+如果是因为它是一个偶数的后继，那么和为奇数，因为它是两个偶数之和的后继，
+而这个和是一个偶数。
+
+{::comment}
 To show that the sum of an odd and even number is odd, consider the
 evidence that the first number is odd. If it is because it is the
 successor of an even number, then the result is odd because it is the
 successor of the sum of two even numbers, which is even.
+{:/}
 
+#### 练习 `o+o≡e` (延伸) {#odd-plus-odd}
+{::comment}
 #### Exercise `o+o≡e` (stretch) {#odd-plus-odd}
+{:/}
 
+证明两个奇数之和为偶数。
+{::comment}
 Show that the sum of two odd numbers is even.
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
+#### 练习 `Bin-predicates` (延伸) {#Bin-predicates}
+{::comment}
 #### Exercise `Bin-predicates` (stretch) {#Bin-predicates}
+{:/}
 
+回忆我们在练习 [Bin][plfa.Naturals#Bin] 中定义了一个数据类型 `Bin` 来用二进制字符串表示自然数。
+这个表达方法不是唯一的，因为我们在开头加任意个 0。因此，11 可以由以下方法表示：
+{::comment}
 Recall that
 Exercise [Bin][plfa.Naturals#Bin]
 defines a datatype `Bin` of bitstrings representing natural numbers.
 Representations are not unique due to leading zeros.
 Hence, eleven may be represented by both of the following:
+{:/}
 
     x1 x1 x0 x1 nil
     x1 x1 x0 x1 x0 x0 nil
 
+定义一个谓词
+{::comment}
 Define a predicate
+{:/}
 
     Can : Bin → Set
 
+其在一个二进制字符串的表示是标准的（Canonical）时成立，表示它没有开头的 0。在两个 11 的表达方式中，
+第一个是标准的，而第二个不是。在定义这个谓词时，你需要一个辅助谓词：
+{::comment}
 over all bitstrings that holds if the bitstring is canonical, meaning
 it has no leading zeros; the first representation of eleven above is
 canonical, and the second is not.  To define it, you will need an
 auxiliary predicate
+{:/}
 
     One : Bin → Set
 
+其仅在一个二进制字符串开头为 1 时成立。一个二进制字符串是标准的，如果它开头是 1 （表示一个正数），
+或者它仅是一个 0 （表示 0）。
+{::comment}
 that holds only if the bistring has a leading one.  A bitstring is
 canonical if it has a leading one (representing a positive number) or
 if it consists of a single zero (representing zero).
+{:/}
 
+证明递增可以保持标准性。
+{::comment}
 Show that increment preserves canonical bitstrings:
+{:/}
 
     Can x
     ------------
     Can (inc x)
 
+证明从自然数转换成的二进制字符串是标准的。
+{::comment}
 Show that converting a natural to a bitstring always yields a
 canonical bitstring:
+{:/}
 
     ----------
     Can (to n)
 
+证明将一个标准的二进制字符串转换成自然数之后，再转换回二进制字符串与原二进制字符串相同。
+{::comment}
 Show that converting a canonical bitstring to a natural
 and back is the identity:
+{:/}
 
     Can x
     ---------------
     to (from x) ≡ x
 
+（提示：对于每一条习题，先从 `One` 的性质开始）
+{::comment}
 (Hint: For each of these, you may first need to prove related
 properties of `One`.)
+{:/}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
+## 标准库
+{::comment}
 ## Standard library
+{:/}
 
+标准库中有类似于本章介绍的定义：
+{::comment}
 Definitions similar to those in this chapter can be found in the standard library:
+{:/}
 \begin{code}
 import Data.Nat using (_≤_; z≤n; s≤s)
 import Data.Nat.Properties using (≤-refl; ≤-trans; ≤-antisym; ≤-total;
                                   +-monoʳ-≤; +-monoˡ-≤; +-mono-≤)
 \end{code}
+在标准库中，`≤-total` 是使用析取定义的（我们将在 [Connectives][plfa.Connectives] 章节定义）。
+`+-monoʳ-≤`、`+-monoˡ-≤` 和 `+-mono-≤` 的证明方法和本书不同。
+更多的参数是隐式申明的。
+{::comment}
 In the standard library, `≤-total` is formalised in terms of
 disjunction (which we define in
 Chapter [Connectives][plfa.Connectives]),
 and `+-monoʳ-≤`, `+-monoˡ-≤`, `+-mono-≤` are proved differently than here,
 and more arguments are implicit.
-
+{:/}
 
 ## Unicode
 
+本章使用了如下 Unicode 符号：
+{::comment}
 This chapter uses the following unicode:
+{:/}
 
-    ≤  U+2264  LESS-THAN OR EQUAL TO (\<=, \le)
-    ≥  U+2265  GREATER-THAN OR EQUAL TO (\>=, \ge)
-    ˡ  U+02E1  MODIFIER LETTER SMALL L (\^l)
-    ʳ  U+02B3  MODIFIER LETTER SMALL R (\^r)
+    ≤  U+2264  小于等于 (\<=, \le)
+    ≥  U+2265  大于等于 (\>=, \ge)
+    ˡ  U+02E1  小写字母 L 标识符 (\^l)
+    ʳ  U+02B3  小写字母 R 标识符 (\^r)
 
+`\^l` 和 `\^r` 命令给出了左右箭头，以及上标字母 `l` 和 `r`。
+{::comment}
 The commands `\^l` and `\^r` give access to a variety of superscript
 leftward and rightward arrows in addition to superscript letters `l` and `r`.
+{:/}
