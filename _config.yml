@@ -38,3 +38,4 @@ exclude:
   - "*.lagda"
   - "Gemfile"
   - "Gemfile.lock"
+  - "scripts/"
