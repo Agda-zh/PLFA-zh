@@ -1,35 +1,64 @@
 ---
-title     : "Equality: Equality and equational reasoning"
+title     : "Equality: 相等性与等式推理"
 layout    : page
 prev      : /Relations/
 permalink : /Equality/
 next      : /Isomorphism/
+translators : ["Fangyi Zhou"]
+progress  : 25
 ---
 
 \begin{code}
 module plfa.Equality where
 \end{code}
 
+我们在论证的过程中经常会使用相等性。给定两个都为 `A` 类型的项 `M` 和 `N`，
+我们用 `M ≡ N` 来表示 `M` 和 `N` 可以相互替换。在此之前，
+我们将相等性作为一个基础运算，而现在我们来说明如果将其定义为一个归纳的数据类型。
+
+{::comment}
 Much of our reasoning has involved equality.  Given two terms `M`
 and `N`, both of type `A`, we write `M ≡ N` to assert that `M` and `N`
 are interchangeable.  So far we have treated equality as a primitive,
 here we show how to define it as an inductive datatype.
+{:/}
 
-
+## 导入
+{::comment}
 ## Imports
+{:/}
 
+本章节没有导入的内容。本书的每一章节，以及 Agda 标准库的每个模块都导入了相等性。
+我们在此定义相等性，导入其他内容将会产生冲突。
+
+{::comment}
 This chapter has no imports.  Every chapter in this book, and nearly
 every module in the Agda standard library, imports equality.
 Since we define equality here, any import would create a conflict.
+{:/}
 
-
+## 相等性
+{::comment}
 ## Equality
+{:/}
 
+我们如下定义相等性：
+{::comment}
 We declare equality as follows:
+{:/}
 \begin{code}
 data _≡_ {A : Set} (x : A) : A → Set where
   refl : x ≡ x
 \end{code}
+
+用其他的话来说，对于任意类型 `A` 和任意 `A` 类型的 `x`，构造器 `refl` 提供了
+`x ≡ x` 的证明。所以，每个值等同于它本身，我们并没有其他办法来证明值的相等性。
+这个定义里有不对称的地方，`_≡_` 的第一个参数（Argument）由 `x : A` 给出，
+而第二个参数（Argument）则是由 `A → Set` 的索引给出。
+这和我们尽可能多的使用参数（Parameter）的理念相符。`_≡_` 的第一个参数（Argument）
+可以作为一个参数（Parameter），因为它不会变，而第二个参数（Argument）则必须是一个索引，
+这样它才可以等用于第一个。
+{::comment}
 In other words, for any type `A` and for any `x` of type `A`, the
 constructor `refl` provides evidence that `x ≡ x`. Hence, every value
 is equal to itself, and we have no other way of showing values
@@ -39,22 +68,36 @@ second is given by an index in `A → Set`.  This follows our policy
 of using parameters wherever possible.  The first argument to `_≡_`
 can be a parameter because it doesn't vary, while the second must be
 an index, so it can be required to be equal to the first.
+{:/}
 
+我们如下定义相等性的优先级：
+{::comment}
 We declare the precedence of equality as follows:
+{:/}
 \begin{code}
 infix 4 _≡_
 \end{code}
+我们将 `_≡_` 的优先级设置为 4，与 `_≤_` 相同，所以它没有算术运算符相比结合的紧密。
+它既不是左结合，也不是右结合的，因此 `x ≡ y ≡ z` 是不合法的。
+{::comment}
 We set the precedence of `_≡_` at level 4, the same as `_≤_`,
 which means it binds less tightly than any arithmetic operator.
 It associates neither to left nor right; writing `x ≡ y ≡ z`
 is illegal.
+{:/}
 
-
+## 相等性是一个等价关系（Equivalence Relation）
+{::comment}
 ## Equality is an equivalence relation
+{:/}
 
+一个等价关系是自反、对称和传递的。其中自反性可以通过构造器 `refl` 直接从相等性的定义中得来。
+我们可以直接地证明其对称性：
+{::comment}
 An equivalence relation is one which is reflexive, symmetric, and transitive.
 Reflexivity is built-in to the definition of equality, via the
 constructor `refl`.  It is straightforward to show symmetry:
+{:/}
 \begin{code}
 sym : ∀ {A : Set} {x y : A}
   → x ≡ y
@@ -62,15 +105,22 @@ sym : ∀ {A : Set} {x y : A}
   → y ≡ x
 sym refl = refl
 \end{code}
+这个证明是怎么运作的呢？`sym` 参数的类型是 `x ≡ y`，但是等式的左手边被 `refl` 模式实例化了，
+这要求 `x` 和 `y` 相等。因此，等式的右手边需要一个类型为 `x ≡ x` 的项，用 `refl` 即可。
+{::comment}
 How does this proof work? The argument to `sym` has type `x ≡ y`, but
 on the left-hand side of the equation the argument has been
 instantiated to the pattern `refl`, which requires that `x` and `y`
 are the same.  Hence, for the right-hand side of the equation we need
 a term of type `x ≡ x`, and `refl` will do.
+{:/}
 
+交互式地证明 `sym` 很有教育意义。首先，我们在左手边使用一个变量来表示参数，在右手边使用一个洞：
+{::comment}
 It is instructive to develop `sym` interactively.  To start, we supply
 a variable for the argument on the left, and a hole for the body on
 the right:
+{:/}
 
     sym : ∀ {A : Set} {x y : A}
       → x ≡ y
@@ -78,7 +128,10 @@ the right:
       → y ≡ x
     sym e = {! !}
 
+如果我们进入这个洞，使用 `C-c C-,`，Agda 会告诉我们：
+{::comment}
 If we go into the hole and type `C-c C-,` then Agda reports:
+{:/}
 
     Goal: .y ≡ .x
     ————————————————————————————————————————————————————————————
@@ -87,9 +140,13 @@ If we go into the hole and type `C-c C-,` then Agda reports:
     .x : .A
     .A : Set
 
+在这个洞里，我们使用 `C-c C-c e`，Agda 会将 `e` 逐一展开为其所有可能的构造器。
+此处只有一个构造器：
+{::comment}
 If in the hole we type `C-c C-c e` then Agda will instantiate `e` to
 all possible constructors, with one equation for each. There is only
 one possible constructor:
+{:/}
 
     sym : ∀ {A : Set} {x y : A}
       → x ≡ y
@@ -97,19 +154,28 @@ one possible constructor:
       → y ≡ x
     sym refl = {! !}
 
+如果我们再次进入这个洞，重新使用 `C-c C-,`，然后 Agda 现在会告诉我们：
+{::comment}
 If we go into the hole again and type `C-c C-,` then Agda now reports:
+{:/}
 
      Goal: .x ≡ .x
      ————————————————————————————————————————————————————————————
      .x : .A
      .A : Set
 
+这是一个重要的步骤—— Agda 发现了 `x` 和 `y` 必须相等，才能与模式 `refl` 相匹配。
+{::comment}
 This is the key step---Agda has worked out that `x` and `y` must be
 the same to match the pattern `refl`!
+{:/}
 
+最后，我们回到洞里，使用 `C-c C-r`，Agda 将会把洞变成一个可以满足给定类型的构造器实例。
+{::comment}
 Finally, if we go back into the hole and type `C-c C-r` it will
 instantiate the hole with the one constructor that yields a value of
 the expected type:
+{:/}
 
     sym : ∀ {A : Set} {x y : A}
       → x ≡ y
@@ -117,9 +183,15 @@ the expected type:
       → y ≡ x
     sym refl = refl
 
+我们至此完成了与之前给出证明相同的证明。
+{::comment}
 This completes the definition as given above.
+{:/}
 
+传递性亦是很直接：
+{::comment}
 Transitivity is equally straightforward:
+{:/}
 \begin{code}
 trans : ∀ {A : Set} {x y z : A}
   → x ≡ y
@@ -128,9 +200,12 @@ trans : ∀ {A : Set} {x y z : A}
   → x ≡ z
 trans refl refl  =  refl
 \end{code}
+同样，交互式地证明这个特性是一个很好的练习，尤其是观察 Agda 的已知内容根据参数的实例而变化的过程。
+{::comment}
 Again, a useful exercise is to carry out an interactive development,
 checking how Agda's knowledge changes as each of the two arguments is
 instantiated.
+{:/}
 
 ## Congruence and substitution {#cong}
 
@@ -354,7 +429,7 @@ it to write out an alternative proof that addition is monotonic with
 regard to inequality.  Rewrite both `+-monoˡ-≤` and `+-mono-≤`.
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
 
