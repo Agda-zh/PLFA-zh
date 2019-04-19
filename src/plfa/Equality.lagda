@@ -5,7 +5,7 @@ prev      : /Relations/
 permalink : /Equality/
 next      : /Isomorphism/
 translators : ["Fangyi Zhou"]
-progress  : 25
+progress  : 50
 ---
 
 \begin{code}
@@ -207,10 +207,17 @@ checking how Agda's knowledge changes as each of the two arguments is
 instantiated.
 {:/}
 
+## 同余性和替换性 {#cong}
+{::comment}
 ## Congruence and substitution {#cong}
+{:/}
 
+相等性满足 *同余性*（Congurence）。如果两个项相等，那么对它们使用相同的函数，
+其结果仍然相等：
+{::comment}
 Equality satisfies _congruence_.  If two terms are equal,
 they remain so after the same function is applied to both:
+{:/}
 \begin{code}
 cong : ∀ {A B : Set} (f : A → B) {x y : A}
   → x ≡ y
@@ -219,7 +226,10 @@ cong : ∀ {A B : Set} (f : A → B) {x y : A}
 cong f refl  =  refl
 \end{code}
 
+两个参数的函数也满足同余性：
+{::comment}
 Congruence of functions with two arguments is similar:
+{:/}
 \begin{code}
 cong₂ : ∀ {A B C : Set} (f : A → B → C) {u x : A} {v y : B}
   → u ≡ x
@@ -229,9 +239,12 @@ cong₂ : ∀ {A B C : Set} (f : A → B → C) {u x : A} {v y : B}
 cong₂ f refl refl  =  refl
 \end{code}
 
+在函数上的等价性也满足同余性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
+{::comment}
 Equality is also a congruence in the function position of an application.
 If two functions are equal, then applying them to the same term
 yields equal terms:
+{:/}
 \begin{code}
 cong-app : ∀ {A B : Set} {f g : A → B}
   → f ≡ g
@@ -240,8 +253,12 @@ cong-app : ∀ {A B : Set} {f g : A → B}
 cong-app refl x = refl
 \end{code}
 
+相等性也满足*替换性*（Substitution）。
+如果两个值相等，其中一个满足某谓词，那么另一个也满足此谓词。
+{::comment}
 Equality also satisfies *substitution*.
 If two values are equal and a predicate holds of the first then it also holds of the second:
+{:/}
 \begin{code}
 subst : ∀ {A : Set} {x y : A} (P : A → Set)
   → x ≡ y
@@ -250,13 +267,19 @@ subst : ∀ {A : Set} {x y : A} (P : A → Set)
 subst P refl px = px
 \end{code}
 
-
+## 等式串
+{::comment}
 ## Chains of equations
+{:/}
 
+我们在此演示如何使用等式串来论证，正如本书中使用证明形式。我们讲声明放在一个叫做
+`≡-Reasoning` 的模块里，与 Agda 标准库中的格式相对应。
+{::comment}
 Here we show how to support reasoning with chains of equations, as
 used throughout the book.  We package the declarations into a module,
 named `≡-Reasoning`, to match the format used in Agda's standard
 library:
+{:/}
 \begin{code}
 module ≡-Reasoning {A : Set} where
 
@@ -290,6 +313,12 @@ module ≡-Reasoning {A : Set} where
 
 open ≡-Reasoning
 \end{code}
+这是我们第一次使用嵌套的模块。它包括了关键字 `module` 和后续的模块名、隐式或显式参数，
+关键字 `where`，和模块中的内容（在缩进内）。模块里可以包括任何形式的声明，也可以包括其他模块。
+嵌套的模块和本书每章节所定义的顶层模块相似，只是顶层模块不需要缩进。
+打开（Open）一个模块会把模块内的所有定义导入进当前的环境中。
+
+{::comment}
 This is our first use of a nested module. It consists of the keyword
 `module` followed by the module name and any parameters, explicit or
 implicit, the keyword `where`, and the contents of the module indented.
@@ -298,9 +327,13 @@ Nested modules are similar to the top-level modules that constitute
 each chapter of this book, save that the body of a top-level module
 need not be indented.  Opening the module makes all of the definitions
 available in the current environment.
+{:/}
 
+举个例子，我们来看看如何用等式串证明传递性：
+{::comment}
 As an example, let's look at a proof of transitivity
 as a chain of equations:
+{:/}
 \begin{code}
 trans′ : ∀ {A : Set} {x y z : A}
   → x ≡ y
@@ -316,10 +349,21 @@ trans′ {A} {x} {y} {z} x≡y y≡z =
     z
   ∎
 \end{code}
+根据其定义，等式右边会被解析成如下：
+{::comment}
 According to the fixity declarations, the body parses as follows:
+{:/}
 
     begin (x ≡⟨ x≡y ⟩ (y ≡⟨ y≡z ⟩ (z ∎)))
 
+这里 `begin` 的使用纯粹是装饰性的，因为它直接返回了其参数。其参数包括了
+`_≡⟨_⟩_` 作用于 `x`、`x≡y` 和 `y ≡⟨ y≡z ⟩ (z ∎)`。第一个参数是一个项 `x`，
+而第二、第三个参数分别是等式 `x ≡ y`、`y ≡ z` 的证明，它们在 `_≡⟨_⟩_` 的定义中用
+`trans` 连接起来，形成 `x ≡ z` 的证明。`y ≡ z` 的证明包括了 `_≡⟨_⟩_` 作用于 `y`、
+`y≡z` 和 `z ∎`。第一个参数是一个项 `y`，而第二、第三个参数分别是等式 `y ≡ z`、`z ≡ z` 的证明，
+它们在 `_≡⟨_⟩_` 的定义中用 `trans` 连接起来，形成 `y ≡ z` 的证明。最后，`z ≡ z`
+的证明包括了 `_∎` 作用于 `z` 之上，使用了 `refl`。经过化简，上述定义等同于：
+{::comment}
 The application of `begin` is purely cosmetic, as it simply returns
 its argument.  That argument consists of `_≡⟨_⟩_` applied to `x`,
 `x≡y`, and `y ≡⟨ y≡z ⟩ (z ∎)`.  The first argument is a term, `x`,
@@ -333,15 +377,21 @@ third arguments are both proofs of equations, in particular proofs of
 body of `_≡⟨_⟩_` to yield a proof of `y ≡ z`.  Finally, the proof of
 `z ≡ z` consists of `_∎` applied to the term `z`, which yields `refl`.
 After simplification, the body is equivalent to the term:
+{:/}
 
     trans x≡y (trans y≡z refl)
 
+我们可以把任意等式串转化成一系列的 `trans` 的使用。这样的证明更加精简，但是更难以阅读。
+`∎` 的小窍门意味着等式串化简成为的一系列 `trans` 会以 `trans e refl` 结尾，尽管只需要 `e`
+就足够了，这里的 `e` 是等式的证明。
+{::comment}
 We could replace any use of a chain of equations by a chain of
 applications of `trans`; the result would be more compact but harder
 to read.  The trick behind `∎` means that a chain of equalities
 simplifies to a chain of applications of `trans` than ends in `trans e
 refl`, where `e` is a term that proves some equality, even though `e`
 alone would do.
+{:/}
 
 
 ## Chains of equations, another example
