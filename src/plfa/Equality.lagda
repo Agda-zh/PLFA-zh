@@ -5,7 +5,7 @@ prev      : /Relations/
 permalink : /Equality/
 next      : /Isomorphism/
 translators : ["Fangyi Zhou"]
-progress  : 50
+progress  : 75
 ---
 
 \begin{code}
@@ -393,13 +393,19 @@ refl`, where `e` is a term that proves some equality, even though `e`
 alone would do.
 {:/}
 
-
+## 等式串的另外一个例子
+{::comment}
 ## Chains of equations, another example
+{:/}
 
+我们重新证明加法的交换律来作为等式串的第二个例子。我们首先重复自然数和加法的定义。
+我们不能导入它们（正如本章节开头中所解释的那样），因为那样会产生一个冲突：
+{::comment}
 As a second example of chains of equations, we repeat the proof that addition
 is commutative.  We first repeat the definitions of naturals and addition.
 We cannot import them because (as noted at the beginning of this chapter)
 it would cause a conflict:
+{:/}
 \begin{code}
 data ℕ : Set where
   zero : ℕ
@@ -410,19 +416,30 @@ zero    + n  =  n
 (suc m) + n  =  suc (m + n)
 \end{code}
 
+为了节约空间，我们假设两条引理（而不是证明它们）：
+{::comment}
 To save space we postulate (rather than prove in full) two lemmas:
+{:/}
 \begin{code}
 postulate
   +-identity : ∀ (m : ℕ) → m + zero ≡ m
   +-suc : ∀ (m n : ℕ) → m + suc n ≡ suc (m + n)
 \end{code}
+这是我们第一次使用*假设*（Postulate）。假设为一个标识符指定一个签名，但是不提供定义。
+我们在这里假设之前证明过的东西，来节约空间。假设在使用时必须加以注意。如果假设的内容为假，
+那么我们可以证明出任何东西。
+{::comment}
 This is our first use of a _postulate_.  A postulate specifies a
 signature for an identifier but no definition.  Here we postulate
 something proved earlier to save space.  Postulates must be used with
 caution.  If we postulate something false then we could use Agda to
 prove anything whatsoever.
+{:/}
 
+我们接下来重复交换律的证明：
+{::comment}
 We then repeat the proof of commutativity:
+{:/}
 \begin{code}
 +-comm : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm m zero =
@@ -444,50 +461,76 @@ We then repeat the proof of commutativity:
     suc n + m
   ∎
 \end{code}
+论证的过程和之前的相似。我们在不需要解释的地方使用 `_≡⟨⟩_`，我们可以认为
+`_≡⟨⟩_` 和 `_≡⟨ refl ⟩_` 是等价的。
+{::comment}
 The reasoning here is similar to that in the
 preceding section.  We use
 `_≡⟨⟩_` when no justification is required.
 One can think of `_≡⟨⟩_` as equivalent to `_≡⟨ refl ⟩_`.
+{:/}
 
+Agda 总是认为一个项与其化简的项是等价的。我们之所以可以写出
+{::comment}
 Agda always treats a term as equivalent to its
 simplified term.  The reason that one can write
+{:/}
 
       suc (n + m)
     ≡⟨⟩
       suc n + m
 
+是因为 Agda 认为它们是一样的。这也意味着我们可以交换两行的顺序，写出
+{::comment}
 is because Agda treats both terms as the same.
 This also means that one could instead interchange
 the lines and write
+{:/}
 
       suc n + m
     ≡⟨⟩
       suc (n + m)
 
+而 Agda 并不会反对。Agda 只会检查由 `≡⟨⟩` 隔开的项是否化简后相同。
+而书写的顺序合不合理则是由我们自行决定。
+{::comment}
 and Agda would not object. Agda only checks that the terms separated
 by `≡⟨⟩` have the same simplified form; it's up to us to write them in
 an order that will make sense to the reader.
+{:/}
 
 
+#### 练习 `≤-reasoning` (延伸)
+{::comment}
 #### Exercise `≤-reasoning` (stretch)
+{:/}
 
+[Relations][plfa.Relations] 章节中的单调性证明亦可以用相似于 `≡-reasoning` 的，更易于理解的形式给出。
+相似地来定义 `≤-reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤` 和 `+-mono-≤`。
+{::comment}
 The proof of monotonicity from
 Chapter [Relations][plfa.Relations]
 can be written in a more readable form by using an analogue of our
 notation for `≡-reasoning`.  Define `≤-reasoning` analogously, and use
 it to write out an alternative proof that addition is monotonic with
 regard to inequality.  Rewrite both `+-monoˡ-≤` and `+-mono-≤`.
+{:/}
 
 \begin{code}
 -- 在此处书写你的代码
 \end{code}
 
 
-
+## 重写
+{::comment}
 ## Rewriting
+{:/}
 
+考虑一个自然数的性质，比如说一个数是偶数。我们重复之前给出的定义：
+{::comment}
 Consider a property of natural numbers, such as being even.
 We repeat the earlier definition:
+{:/}
 \begin{code}
 data even : ℕ → Set
 data odd  : ℕ → Set
@@ -507,19 +550,30 @@ data odd where
       -----------
     → odd (suc n)
 \end{code}
+在前面的部分中，我们证明了加法满足交换律。给定 `even (m + n)` 成立的证据，我们应当可以用它来做
+`even (n + m)` 成立的证据。
+{::comment}
 In the previous section, we proved addition is commutative.  Given
 evidence that `even (m + n)` holds, we ought also to be able to take
 that as evidence that `even (n + m)` holds.
+{:/}
 
+Agda 对这种论证有特殊记法的支持——我们之前提到过的 `rewrite` 记法。来启用这种记法，
+我们只用编译程序指令来告诉 Agda 什么类型对应相等性：
+{::comment}
 Agda includes special notation to support just this kind of reasoning,
 the `rewrite` notation we encountered earlier.
 To enable this notation, we use pragmas to tell Agda which type
 corresponds to equality:
+{:/}
 \begin{code}
 {-# BUILTIN EQUALITY _≡_ #-}
 \end{code}
 
+我们然后就可以如下证明求证的性质：
+{::comment}
 We can then prove the desired property as follows:
+{:/}
 \begin{code}
 even-comm : ∀ (m n : ℕ)
   → even (m + n)
@@ -527,15 +581,24 @@ even-comm : ∀ (m n : ℕ)
   → even (n + m)
 even-comm m n ev  rewrite +-comm n m  =  ev
 \end{code}
+
+在这里，`ev` 包括了所有 `even (m + n)` 成立的证据，我们证明它亦可作为 `even (n + m)`
+成立的证据。一般来说，关键字 `rewrite` 之后跟着一个等式的证明，这个等式被用于重写目标和任意作用域内变量的类型。
+
+{::comment}
 Here `ev` ranges over evidence that `even (m + n)` holds, and we show
 that it also provides evidence that `even (n + m)` holds.  In
 general, the keyword `rewrite` is followed by evidence of an
 equality, and that equality is used to rewrite the type of the
 goal and of any variable in scope.
+{:/}
 
+交互性地证明 `even-comm` 是很有帮助的。一开始，我们先给左边的参数赋予变量，给右手边放上一个洞：
+{::comment}
 It is instructive to develop `even-comm` interactively.  To start, we
 supply variables for the arguments on the left, and a hole for the
 body on the right:
+{:/}
 
     even-comm : ∀ (m n : ℕ)
       → even (m + n)
@@ -543,7 +606,10 @@ body on the right:
       → even (n + m)
     even-comm m n ev = {! !}
 
+如果我们进入洞里，输入 `C-c C-,`，Agda 会报告：
+{::comment}
 If we go into the hole and type `C-c C-,` then Agda reports:
+{:/}
 
     Goal: even (n + m)
     ————————————————————————————————————————————————————————————
@@ -551,7 +617,10 @@ If we go into the hole and type `C-c C-,` then Agda reports:
     n  : ℕ
     m  : ℕ
 
+现在我们加入重写：
+{::comment}
 Now we add the rewrite:
+{:/}
 
     even-comm : ∀ (m n : ℕ)
       → even (m + n)
@@ -559,7 +628,10 @@ Now we add the rewrite:
       → even (n + m)
     even-comm m n ev rewrite +-comm n m = {! !}
 
+如果我们再次进入洞里，并输入 `C-c C-,`，Agda 现在会报告：
+{::comment}
 If we go into the hole again and type `C-c C-,` then Agda now reports:
+{:/}
 
     Goal: even (m + n)
     ————————————————————————————————————————————————————————————
@@ -567,23 +639,36 @@ If we go into the hole again and type `C-c C-,` then Agda now reports:
     n  : ℕ
     m  : ℕ
 
+目标里的参数被交换了。现在 `ev` 显然满足目标条件，输入 `C-c C-a` 会用 `ev` 来填充这个洞。
+命令 `C-c C-a` 可以进行自动搜索，检查作用域内的变量是否和目标有相同的类型。
+{::comment}
 The arguments have been swapped in the goal.  Now it is trivial to see
 that `ev` satisfies the goal, and typing `C-c C-a` in the hole causes
 it to be filled with `ev`.  The command `C-c C-a` performs an
 automated search, including checking whether a variable in scope has
 the same type as the goal.
+{:/}
 
-
+## 多重重写
+{::comment}
 ## Multiple rewrites
+{:/}
 
+我们可以多次使用重写，以竖线隔开。举个例子，这里是加法交换律的第二个证明，使用重写而不是等式串：
+{::comment}
 One may perform multiple rewrites, each separated by a vertical bar.  For instance,
 here is a second proof that addition is commutative, relying on rewrites rather
 than chains of equalities:
+{:/}
 \begin{code}
 +-comm′ : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm′ zero    n  rewrite +-identity n             =  refl
 +-comm′ (suc m) n  rewrite +-suc n m | +-comm′ m n  =  refl
 \end{code}
+这个证明更加的简短。之前的证明用 `cong suc (+-comm m n)` 作为使用归纳假设的说明，
+而这里我们使用 `+-comm m n` 来重写就足够了，因为重写可以将同余性考虑在其中。尽管使用重写的证明更加的简短，
+使用等式串的证明能容易理解，我们将尽可能的使用后者。
+{::comment}
 This is far more compact.  Among other things, whereas the previous
 proof required `cong suc (+-comm m n)` as the justification to invoke
 the inductive hypothesis, here it is sufficient to rewrite with
@@ -591,12 +676,18 @@ the inductive hypothesis, here it is sufficient to rewrite with
 account.  Although proofs with rewriting are shorter, proofs as chains
 of equalities are easier to follow, and we will stick with the latter
 when feasible.
+{:/}
 
-
+## 深入重写
+{::comment}
 ## Rewriting expanded
+{:/}
 
+`rewrite` 记法实际上是 `with` 抽象的一种应用：
+{::comment}
 The `rewrite` notation is in fact shorthand for an appropriate use of `with`
 abstraction:
+{:/}
 \begin{code}
 even-comm′ : ∀ (m n : ℕ)
   → even (m + n)
@@ -605,6 +696,13 @@ even-comm′ : ∀ (m n : ℕ)
 even-comm′ m n ev with   m + n  | +-comm m n
 ...                  | .(n + m) | refl       = ev
 \end{code}
+总的来着，我们可以在 `with` 后面跟上任何数量的表达式，用竖线分隔开，并且在每个等式中使用相同个数的模式。
+我们经常将表达式和模式如上对齐。这个第一列表明了 `m + n` 和 `n + m` 是相同的，第二列使用相应等式来证明的前述的断言。
+注意在这里使用的*点模式*（Dot Pattern），`.(n + m)`。点模式由一个点和一个表达式组成，
+在其他信息迫使这个值和点模式中的值相等时使用。在这里，`m + n` 和 `n + m` 由后续的
+`+-comm m n` 与 `refl` 的匹配来识别。我们可能会认为第一种情况是多余的，因为第二种情况中才蕴含了需要的信息。
+但实际上 Agda 在这件事上很挑剔——省略第一条或者更换顺序会让 Agda 报告一个错误。（试一试你就知道！）
+{::comment}
 In general, one can follow `with` by any number of expressions,
 separated by bars, where each following equation has the same number
 of patterns.  We often write expressions and the corresponding
@@ -621,9 +719,13 @@ redundant as the information is inherent in the second clause, but in
 fact Agda is rather picky on this point: omitting the first clause or
 reversing the order of the clauses will cause Agda to report an error.
 (Try it and see!)
+{:/}
 
+在这种情况中，我们也可以使用之前定义的替换函数来避免使用重写：
+{::comment}
 In this case, we can avoid rewrite by simply applying the substitution
 function defined earlier:
+{:/}
 \begin{code}
 even-comm″ : ∀ (m n : ℕ)
   → even (m + n)
@@ -631,8 +733,11 @@ even-comm″ : ∀ (m n : ℕ)
   → even (n + m)
 even-comm″ m n  =  subst even (+-comm m n)
 \end{code}
+尽管如此，重写是 Agda 工具箱中很重要的一部分。我们会偶尔使用它，但是它有的时候是必要的。
+{::comment}
 Nonetheless, rewrite is a vital part of the Agda toolkit.  We will use
 it sparingly, but it is occasionally essential.
+{:/}
 
 
 ## Leibniz equality
