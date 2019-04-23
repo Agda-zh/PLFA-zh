@@ -5,7 +5,7 @@ prev      : /Equality/
 permalink : /Isomorphism/
 next      : /Connectives/
 translators : ["Fangyi Zhou"]
-progress  : 67
+progress  : 100
 ---
 
 \begin{code}
@@ -441,15 +441,25 @@ open ≃-Reasoning
 \end{code}
 
 
+## 嵌入（Embedding）
+{::comment}
 ## Embedding
+{:/}
 
+我们同时也需要*嵌入*的概念，它是同构的弱化概念。同构要求证明两个类型之间的一一对应，
+而嵌入只需要第一种类型涵盖在第二种类型内，所以两个类型之间有一对多的对应关系。
+{::comment}
 We also need the notion of _embedding_, which is a weakening of
 isomorphism.  While an isomorphism shows that two types are in
 one-to-one correspondence, an embedding shows that the first type is
 included in the second; or, equivalently, that there is a many-to-one
 correspondence between the second type and the first.
+{:/}
 
+嵌入的正式定义如下：
+{::comment}
 Here is the formal definition of embedding:
+{:/}
 \begin{code}
 infix 0 _≲_
 record _≲_ (A B : Set) : Set where
@@ -459,12 +469,19 @@ record _≲_ (A B : Set) : Set where
     from∘to : ∀ (x : A) → from (to x) ≡ x
 open _≲_
 \end{code}
+除了它缺少了 `to∘from` 字段以外，嵌入的定义和同构是一样的。因此，我们可以得知 `from` 是 `to`
+的左逆，但是 `from` 不是 `to` 的右逆。
+{::comment}
 It is the same as an isomorphism, save that it lacks the `to∘from` field.
 Hence, we know that `from` is left-inverse to `to`, but not that `from`
 is right-inverse to `to`.
+{:/}
 
+嵌入是自反和传递的，但不是对称的。证明与同构类似，不过去除了不需要的部分：
+{::comment}
 Embedding is reflexive and transitive, but not symmetric.  The proofs
 are cut down versions of the similar proofs for isomorphism:
+{:/}
 \begin{code}
 ≲-refl : ∀ {A : Set} → A ≲ A
 ≲-refl =
@@ -490,9 +507,13 @@ are cut down versions of the similar proofs for isomorphism:
      }
 \end{code}
 
+显而易见的是，如果两个类型相互嵌入，且其嵌入函数相互对应，那么它们是同构的。
+这个一种反对称性的弱化形式：
+{::comment}
 It is also easy to see that if two types embed in each other, and the
 embedding functions correspond, then they are isomorphic.  This is a
 weak form of anti-symmetry:
+{:/}
 \begin{code}
 ≲-antisym : ∀ {A B : Set}
   → (A≲B : A ≲ B)
@@ -518,15 +539,26 @@ weak form of anti-symmetry:
         ∎}
     }
 \end{code}
+前三部分可以直接从嵌入中得来，最后一部分我们可以把 `B ≲ A` 中的左逆和
+两个嵌入中的 `to` 与 `from` 部分的相等性来获得同构中的右逆。
+{::comment}
 The first three components are copied from the embedding, while the
 last combines the left inverse of `B ≲ A` with the equivalences of
 the `to` and `from` components from the two embeddings to obtain
 the right inverse of the isomorphism.
+{:/}
 
+
+## 嵌入的相等性论证
+{::comment}
 ## Equational reasoning for embedding
+{:/}
 
+和同构类似，我们亦支持嵌入的相等性论证：
+{::comment}
 We can also support tabular reasoning for embedding,
 analogous to that used for isomorphism:
+{:/}
 
 \begin{code}
 module ≲-Reasoning where
@@ -556,9 +588,15 @@ module ≲-Reasoning where
 open ≲-Reasoning
 \end{code}
 
+#### 练习 `≃-implies-≲`
+{::comment}
 #### Exercise `≃-implies-≲`
+{:/}
 
+证明每个同构蕴含了一个嵌入。
+{::comment}
 Show that every isomorphism implies an embedding.
+{:/}
 \begin{code}
 postulate
   ≃-implies-≲ : ∀ {A B : Set}
@@ -571,68 +609,110 @@ postulate
 -- 在此处书写你的代码
 \end{code}
 
+#### 练习 `_⇔_` {#iff}
+{::comment}
 #### Exercise `_⇔_` {#iff}
+{:/}
 
+按下列形式定义命题的等价性（又名“当且仅当“）：
+{::comment}
 Define equivalence of propositions (also known as "if and only if") as follows:
+{:/}
 \begin{code}
 record _⇔_ (A B : Set) : Set where
   field
     to   : A → B
     from : B → A
 \end{code}
+证明等价性是自反、对称和传递的。
+{::comment}
 Show that equivalence is reflexive, symmetric, and transitive.
+{:/}
 
 \begin{code}
 -- 在此处书写你的代码
 \end{code}
 
+#### 练习 `Bin-embedding` （延伸） {#Bin-embedding}
+{::comment}
 #### Exercise `Bin-embedding` (stretch) {#Bin-embedding}
+{:/}
 
+回忆练习 [Bin][plfa.Naturals#Bin] 和 [Bin-laws][plfa.Induction#Bin-laws] 中，
+我们定义了一个数据类型来表示二进制比特串来表示自然数：
+{::comment}
 Recall that Exercises
 [Bin][plfa.Naturals#Bin] and
 [Bin-laws][plfa.Induction#Bin-laws]
 define a datatype of bitstrings representing natural numbers:
+{:/}
 \begin{code}
 data Bin : Set where
   nil : Bin
   x0_ : Bin → Bin
   x1_ : Bin → Bin
 \end{code}
+我们要求你来定义下列函数：
+{::comment}
 And ask you to define the following functions
+{:/}
 
     to : ℕ → Bin
     from : Bin → ℕ
 
+其满足如下性质：
+{::comment}
 which satisfy the following property:
+{:/}
 
     from (to n) ≡ n
 
+使用上述条件，证明存在一个从 `ℕ` 到 `Bin` 的嵌入。
+{::comment}
 Using the above, establish that there is an embedding of `ℕ` into `Bin`.
+{:/}
 \begin{code}
 -- 在此处书写你的代码
 \end{code}
 
+为什么 `to` 和 `from` 不能构造一个同构？
+{::comment}
 Why do `to` and `from` not form an isomorphism?
+{:/}
 
+## 标准库
+{::comment}
 ## Standard library
+{:/}
 
+标准库中可以找到与本章节中相似的定义：
+{::comment}
 Definitions similar to those in this chapter can be found in the standard library:
+{:/}
 \begin{code}
 import Function using (_∘_)
 import Function.Inverse using (_↔_)
 import Function.LeftInverse using (_↞_)
 \end{code}
+标准库中的 `_↔_` 和 `_↞_` 分别对应了我们定义的 `_≃_` 和 `_≲_`，
+但是标准库中的定义使用起来不如我们的定义方便，因为标准库中的定义依赖于一个嵌套的记录结构，
+并可以由任何相等性的记法来参数化。
+{::comment}
 The standard library `_↔_` and `_↞_` correspond to our `_≃_` and
 `_≲_`, respectively, but those in the standard library are less
 convenient, since they depend on a nested record structure and are
 parameterised with regard to an arbitrary notion of equivalence.
+{:/}
 
 ## Unicode
 
+本章节使用了如下 Unicode：
+{::comment}
 This chapter uses the following unicode:
+{:/}
 
-    ∘  U+2218  RING OPERATOR (\o, \circ, \comp)
-    λ  U+03BB  GREEK SMALL LETTER LAMBDA (\lambda, \Gl)
-    ≃  U+2243  ASYMPTOTICALLY EQUAL TO (\~-)
-    ≲  U+2272  LESS-THAN OR EQUIVALENT TO (\<~)
-    ⇔  U+21D4  LEFT RIGHT DOUBLE ARROW (\<=>)
+    ∘  U+2218  环运算符 (\o, \circ, \comp)
+    λ  U+03BB  小写希腊字母 LAMBDA (\lambda, \Gl)
+    ≃  U+2243  渐进相等 (\~-)
+    ≲  U+2272  小于或等价于 (\<~)
+    ⇔  U+21D4  左右双箭头 (\<=>)
