@@ -5,7 +5,7 @@ prev      : /Equality/
 permalink : /Isomorphism/
 next      : /Connectives/
 translators : ["Fangyi Zhou"]
-progress  : 33
+progress  : 67
 ---
 
 \begin{code}
@@ -207,10 +207,17 @@ We occasionally need to postulate extensionality in what follows.
 {:/}
 
 
+## 同构（Isomorphism）
+{::comment}
 ## Isomorphism
+{:/}
 
+如果两个集合有一一对应的关系，那么它们是同构的。
+下面是同构的正式定义：
+{::comment}
 Two sets are isomorphic if they are in one-to-one correspondence.
 Here is a formal definition of isomorphism:
+{:/}
 \begin{code}
 infix 0 _≃_
 record _≃_ (A B : Set) : Set where
@@ -221,20 +228,36 @@ record _≃_ (A B : Set) : Set where
     to∘from : ∀ (y : B) → to (from y) ≡ y
 open _≃_
 \end{code}
+我们来一一展开这个定义。一个集合 `A` 和 `B` 之间的同构有四个要素：
++ 从 `A` 到 `B` 的函数 `to`
++ 从 `B` 回到 `A` 的函数 `from`
++ `from` 是 `to` 的*左逆*（left-inverse）的证明 `from∘to`
++ `from` 是 `to` 的*右逆*（right-inverse）的证明 `to∘from`
+
+{::comment}
 Let's unpack the definition. An isomorphism between sets `A` and `B` consists
 of four things:
 + A function `to` from `A` to `B`,
 + A function `from` from `B` back to `A`,
 + Evidence `from∘to` asserting that `from` is a *left-inverse* for `to`,
 + Evidence `to∘from` asserting that `from` is a *right-inverse* for `to`.
+{:/}
 
+具体来说，第三条断言了 `from ∘ to` 是恒等函数，第四条断言了 `to ∘ from` 是恒等函数，
+它们的名称由此得来。声明 `open _≃_` 使得 `to`、`from`、`from∘to` 和 `to∘from`
+在当前作用域内可用，否则我们需要使用类似 `_≃_.to` 的写法。
+{::comment}
 In particular, the third asserts that `from ∘ to` is the identity, and
 the fourth that `to ∘ from` is the identity, hence the names.
 The declaration `open _≃_` makes available the names `to`, `from`,
 `from∘to`, and `to∘from`, otherwise we would need to write `_≃_.to` and so on.
+{:/}
 
+这是我们第一次使用记录（Record）。记录声明等同于下面的归纳数据声明：
+{::comment}
 The above is our first use of records. A record declaration is equivalent
 to a corresponding inductive data declaration:
+{:/}
 \begin{code}
 data _≃′_ (A B : Set): Set where
   mk-≃′ : ∀ (to : A → B) →
@@ -256,7 +279,10 @@ to∘from′ : ∀ {A B : Set} → (A≃B : A ≃′ B) → (∀ (y : B) → to�
 to∘from′ (mk-≃′ f g g∘f f∘g) = f∘g
 \end{code}
 
+我们用下面的语法来构造一个记录类型的值：
+{::comment}
 We construct values of the record type with the syntax
+{:/}
 
     record
       { to    = f
@@ -265,19 +291,32 @@ We construct values of the record type with the syntax
       ; to∘from = f∘g
       }
 
+这与使用相应的归纳类型的构造器对应：
+{::comment}
 which corresponds to using the constructor of the corresponding
 inductive type
+{:/}
 
     mk-≃′ f g g∘f f∘g
 
+其中 `f`、`g`、`g∘f` 和 `f∘g` 是相应类型的值。
+{::comment}
 where `f`, `g`, `g∘f`, and `f∘g` are values of suitable types.
+{:/}
 
 
+## 同构是一个等价关系
+{::comment}
 ## Isomorphism is an equivalence
+{:/}
 
+同构是一个等价关系。这意味着它自反、对称、传递。要证明同构是自反的，我们用恒等函数
+作为 `to` 和 `from`：
+{::comment}
 Isomorphism is an equivalence, meaning that it is reflexive, symmetric,
 and transitive.  To show isomorphism is reflexive, we take both `to`
 and `from` to be the identity function:
+{:/}
 \begin{code}
 ≃-refl : ∀ {A : Set}
     -----
@@ -290,14 +329,22 @@ and `from` to be the identity function:
     ; to∘from = λ{y → refl}
     }
 \end{code}
+如上，`to` 和 `from` 都是恒等函数，`from∘to` 和 `to∘from` 都是丢弃参数、返回
+`refl` 的函数。在这样的情况下，`refl` 足够可以证明左逆，因为 `from (to x)`
+化简为 `x`。右逆的证明同理。
+{::comment}
 In the above, `to` and `from` are both bound to identity functions,
 and `from∘to` and `to∘from` are both bound to functions that discard
 their argument and return `refl`.  In this case, `refl` alone is an
 adequate proof since for the left inverse, `from (to x)`
 simplifies to `x`, and similarly for the right inverse.
+{:/}
 
+要证明同构是对称的，我们把 `to` 和 `from`、`from∘to` 和 `to∘from` 互换：
+{::comment}
 To show isomorphism is symmetric, we simply swap the roles of `to`
 and `from`, and `from∘to` and `to∘from`:
+{:/}
 \begin{code}
 ≃-sym : ∀ {A B : Set}
   → A ≃ B
@@ -312,8 +359,11 @@ and `from`, and `from∘to` and `to∘from`:
     }
 \end{code}
 
+要证明同构是传递的，我们将 `to` 和 `from` 函数进行组合，并使用相等性论证来结合左逆和右逆：
+{::comment}
 To show isomorphism is transitive, we compose the `to` and `from`
 functions, and use equational reasoning to combine the inverses:
+{:/}
 \begin{code}
 ≃-trans : ∀ {A B C : Set}
   → A ≃ B
@@ -348,12 +398,19 @@ functions, and use equational reasoning to combine the inverses:
 \end{code}
 
 
+## 同构的相等性论证
+{::comment}
 ## Equational reasoning for isomorphism
+{:/}
 
+我们可以直接的构造一种同构的相等性论证方法。我们对之前的相等性论证定义进行修改。
+我们省略 `_≡⟨⟩_` 的定义，因为简单的同构比简单的相等性出现的少很多：
+{::comment}
 It is straightforward to support a variant of equational reasoning for
 isomorphism.  We essentially copy the previous definition
 of equality for isomorphism.  We omit the form that corresponds to `_≡⟨⟩_`, since
 trivial isomorphisms arise far less often than trivial equalities:
+{:/}
 
 \begin{code}
 module ≃-Reasoning where
