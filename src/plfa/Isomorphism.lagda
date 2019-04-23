@@ -1,23 +1,33 @@
 ---
-title     : "Isomorphism: Isomorphism and Embedding"
+title     : "Isomorphism: 同构与嵌入"
 layout    : page
 prev      : /Equality/
 permalink : /Isomorphism/
 next      : /Connectives/
+translators : ["Fangyi Zhou"]
+progress  : 33
 ---
 
 \begin{code}
 module plfa.Isomorphism where
 \end{code}
 
+本部分介绍同构（Isomorphism）与嵌入（Embedding）。
+同构可以断言两个类型是相等的，嵌入可以断言一个类型比另一个类型小。
+我们会在下一章中使用同构来展示类型上的运算，例如积或者和，满足类似于交换律、结合律和分配律的性质。
+{::comment}
 This section introduces isomorphism as a way of asserting that two
 types are equal, and embedding as a way of asserting that one type is
 smaller than another.  We apply isomorphisms in the next chapter
 to demonstrate that operations on types such as product and sum
 satisfy properties akin to associativity, commutativity, and
 distributivity.
+{:/}
 
+## 导入
+{::comment}
 ## Imports
+{:/}
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
@@ -28,70 +38,118 @@ open import Data.Nat.Properties using (+-comm)
 \end{code}
 
 
+## Lambda 表达式
+{::comment}
 ## Lambda expressions
+{:/}
 
+本章节开头将补充一些有用的基础知识：lambda 表达式，函数组合，以及外延性。
+{::comment}
 The chapter begins with a few preliminaries that will be useful
 here and elsewhere: lambda expressions, function composition, and
 extensionality.
+{:/}
 
+*Lambda 表达式*提供了一种简洁的定义函数的方法，且不需要提供函数名。一个如同这样的项：
+{::comment}
 _Lambda expressions_ provide a compact way to define functions without
 naming them.  A term of the form
+{:/}
 
     λ{ P₁ → N₁; ⋯ ; Pₙ → Nₙ }
 
+等同于定义一个函数 `f`，使用下列等式：
+{::comment}
 is equivalent to a function `f` defined by the equations
+{:/}
 
     f P₁ = N₁
     ⋯
     f Pₙ = Nₙ
 
+其中 `Pₙ` 是模式（即等式的左手边），`Nₙ` 是表达式（即等式的右手边）。
+{::comment}
 where the `Pₙ` are patterns (left-hand sides of an equation) and the
 `Nₙ` are expressions (right-hand side of an equation).
+{:/}
 
+如果只有一个等式，且模式是一个变量，我们亦可使用下面的语法：
+{::comment}
 In the case that there is one equation and the pattern is a variable,
 we may also use the syntax
+{:/}
 
     λ x → N
 
+或者
+{::comment}
 or
+{:/}
 
     λ (x : A) → N
 
+两个都与 `λ{x → N}` 等价。后者可以指定函数的作用域。
+{::comment}
 both of which are equivalent to `λ{x → N}`. The latter allows one to
 specify the domain of the function.
+{:/}
 
+往往使用匿名的 lambda 表达式比使用带名字的函数要方便：它避免了冗长的类型声明；
+其定义出现在其使用的地方，所以在书写时不需要记得提前声明，在阅读时不需要上下搜索函数定义。
+{::comment}
 Often using an anonymous lambda expression is more convenient than
 using a named function: it avoids a lengthy type declaration; and the
 definition appears exactly where the function is used, so there is no
 need for the writer to remember to declare it in advance, or for the
 reader to search for the definition in the code.
+{:/}
 
 
+## 函数组合 （Function Composition）
+{::comment}
 ## Function composition
+{:/}
 
+接下来，我们将使用函数组合：
+{::comment}
 In what follows, we will make use of function composition:
+{:/}
 \begin{code}
 _∘_ : ∀ {A B C : Set} → (B → C) → (A → B) → (A → C)
 (g ∘ f) x  = g (f x)
 \end{code}
+`g ∘ f` 是一个函数，先使用函数 `f`，再使用函数 `g`。
+一个等价的定义，使用 lambda 表达式，如下：
+{::comment}
 Thus, `g ∘ f` is the function that first applies `f` and
 then applies `g`.  An equivalent definition, exploiting lambda
 expressions, is as follows:
+{:/}
 \begin{code}
 _∘′_ : ∀ {A B C : Set} → (B → C) → (A → B) → (A → C)
 g ∘′ f  =  λ x → g (f x)
 \end{code}
 
 
+## 外延性（Extensionality） {#extensionality}
+{::comment}
 ## Extensionality {#extensionality}
+{:/}
 
+外延性断言了区分函数的唯一方法是应用它们。如果两个函数作用在相同的参数上永远返回相同的结果，
+那么两个函数相同。这是 `cong-app` 的逆命题，在[之前][plfa.Equality#cong]有所介绍。
+{::comment}
 Extensionality asserts that the only way to distinguish functions is
 by applying them; if two functions applied to the same argument always
 yield the same result, then they are the same function.  It is the
 converse of `cong-app`, as introduced
 [earlier][plfa.Equality#cong].
+{:/}
 
+Agda 并不预设外延性，但我们可以假设其成立：
+{::comment}
 Agda does not presume extensionality, but we can postulate that it holds:
+{:/}
 \begin{code}
 postulate
   extensionality : ∀ {A B : Set} {f g : A → B}
@@ -99,20 +157,31 @@ postulate
       -----------------------
     → f ≡ g
 \end{code}
+假设外延性不会造成困顿，因为我们知道它与 Agda 使用的理论是连贯一致的。
+{::comment}
 Postulating extensionality does not lead to difficulties, as it is
 known to be consistent with the theory that underlies Agda.
+{:/}
 
+举个例子，我们考虑两个库都定义了加法，一个按照我们在 [Naturals][plfa.Naturals]
+章节中那样定义，另一个如下，反过来定义：
+{::comment}
 As an example, consider that we need results from two libraries,
 one where addition is defined, as in
 Chapter [Naturals][plfa.Naturals],
 and one where it is defined the other way around.
+{:/}
 \begin{code}
 _+′_ : ℕ → ℕ → ℕ
 m +′ zero  = m
 m +′ suc n = suc (m +′ n)
 \end{code}
+通过使用交换律，我们可以简单地证明两个运算符在给定相同参数的情况下，
+会返回相同的值：
+{::comment}
 Applying commutativity, it is easy to show that both operators always
 return the same result given the same arguments:
+{:/}
 \begin{code}
 same-app : ∀ (m n : ℕ) → m +′ n ≡ m + n
 same-app m n rewrite +-comm m n = helper m n
@@ -121,14 +190,21 @@ same-app m n rewrite +-comm m n = helper m n
   helper m zero    = refl
   helper m (suc n) = cong suc (helper m n)
 \end{code}
+
+然而，有时断言两个运算符是无法区分的会更加方便。我们可以使用两次外延性：
+{::comment}
 However, it might be convenient to assert that the two operators are
 actually indistinguishable. This we can do via two applications of
 extensionality:
+{:/}
 \begin{code}
 same : _+′_ ≡ _+_
 same = extensionality (λ m → extensionality (λ n → same-app m n))
 \end{code}
+我们偶尔需要在之后的情况中假设外延性。
+{::comment}
 We occasionally need to postulate extensionality in what follows.
+{:/}
 
 
 ## Isomorphism
@@ -431,11 +507,11 @@ postulate
   ≃-implies-≲ : ∀ {A B : Set}
     → A ≃ B
       -----
-    → A ≲ B  
+    → A ≲ B
 \end{code}
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
 #### Exercise `_⇔_` {#iff}
@@ -450,7 +526,7 @@ record _⇔_ (A B : Set) : Set where
 Show that equivalence is reflexive, symmetric, and transitive.
 
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
 #### Exercise `Bin-embedding` (stretch) {#Bin-embedding}
@@ -476,7 +552,7 @@ which satisfy the following property:
 
 Using the above, establish that there is an embedding of `ℕ` into `Bin`.
 \begin{code}
--- Your code goes here
+-- 在此处书写你的代码
 \end{code}
 
 Why do `to` and `from` not form an isomorphism?
