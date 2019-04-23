@@ -5,7 +5,7 @@ prev      : /Relations/
 permalink : /Equality/
 next      : /Isomorphism/
 translators : ["Fangyi Zhou"]
-progress  : 75
+progress  : 100
 ---
 
 \begin{code}
@@ -739,9 +739,17 @@ Nonetheless, rewrite is a vital part of the Agda toolkit.  We will use
 it sparingly, but it is occasionally essential.
 {:/}
 
-
+## 莱布尼兹（Leibniz）相等性
+{::comment}
 ## Leibniz equality
+{:/}
 
+我们使用的相等性断言的形式源于 Martin Löf，于 1975 年发表。一个更早的形式源于莱布尼兹，
+于 1686 年发表。莱布尼兹断言的相等性表示*不可分辨的实体*（Identity of Indiscernibles）：
+两个对象相等当且仅当它们满足完全相同的性质。这条原理有时被称作莱布尼兹定律（Leibniz' Law），
+与史波克定律紧密相关：“一个不造成区别的区别不是区别”。我们在这里定义莱布尼兹相等性，
+并证明两个项满足莱布尼兹相等性当且仅当其满足 Martin Löf 相等性。
+{::comment}
 The form of asserting equality that we have used is due to Martin
 Löf, and was published in 1975.  An older form is due to Leibniz, and
 was published in 1686.  Leibniz asserted the _identity of
@@ -751,22 +759,40 @@ Law, and is closely related to Spock's Law, "A difference that makes
 no difference is no difference".  Here we define Leibniz equality,
 and show that two terms satisfy Leibniz equality if and only if they
 satisfy Martin Löf equality.
+{:/}
 
+莱布尼兹不等式一般如下来定义：`x ≐ y` 当每个对于 `x` 成立的性质 `P` 对于 `y` 也成立时成立。
+可能这有些出乎意料，但是这个定义亦足够保证其相反的命题：每个对于 `y` 成立的性质 `P` 对于 `x` 也成立。
+{::comment}
 Leibniz equality is usually formalised to state that `x ≐ y` holds if
 every property `P` that holds of `x` also holds of `y`.  Perhaps
 surprisingly, this definition is sufficient to also ensure the
 converse, that every property `P` that holds of `y` also holds of `x`.
+{:/}
 
+令 `x` 和 `y` 为类型 `A` 的对象。我们定义 `x ≐ y` 成立，当每个对于类型 `A` 成立的谓词 `P`，
+我们有 `P x` 蕴含了 `P y`：
+{::comment}
 Let `x` and `y` be objects of type `A`. We say that `x ≐ y` holds if
 for every predicate `P` over type `A` we have that `P x` implies `P y`:
+{:/}
 \begin{code}
 _≐_ : ∀ {A : Set} (x y : A) → Set₁
 _≐_ {A} x y = ∀ (P : A → Set) → P x → P y
 \end{code}
+我们不能在左手边使用 `x ≐ y`，取而代之我们使用 `_≐_ {A} x y` 来提供隐式参数 `A`，这样 `A`
+可以出现在右手边。
+{::comment}
 We cannot write the left-hand side of the equation as `x ≐ y`,
 and instead we write `_≐_ {A} x y` to provide access to the implicit
 parameter `A` which appears on the right-hand side.
+{:/}
 
+这是我们第一次使用*等级*（Levels）。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
+比如罗素悖论（Russell's Paradox）或者 Girard 悖论。不同的是，我们有一个阶级的类型：其中
+`Set : Set₁`，`Set₁ : Set₂`，以此类推。实际上，`Set` 本身就是 `Set₀` 的缩写。定义
+`_≐_` 的等式在右手边提到了 `Set`，因此签名中必须使用 `Set₁`。我们稍后将进一步介绍等级。
+{::comment}
 This is our first use of _levels_.  We cannot assign `Set` the type
 `Set`, since this would lead to contradictions such as Russell's
 Paradox and Girard's Paradox.  Instead, there is a hierarchy of types,
@@ -774,10 +800,14 @@ where `Set : Set₁`, `Set₁ : Set₂`, and so on.  In fact, `Set` itself
 is just an abbreviation for `Set₀`.  Since the equation defining `_≐_`
 mentions `Set` on the right-hand side, the corresponding signature
 must use `Set₁`.  We say a bit more about levels below.
+{:/}
 
+莱布尼兹相等性是自反和传递的。自反性由恒等函数的变种得来，传递性由函数组合的变种得来：
+{::comment}
 Leibniz equality is reflexive and transitive,
 where the first follows by a variant of the identity function
 and the second by a variant of function composition:
+{:/}
 \begin{code}
 refl-≐ : ∀ {A : Set} {x : A}
   → x ≐ x
@@ -791,9 +821,13 @@ trans-≐ : ∀ {A : Set} {x y z : A}
 trans-≐ x≐y y≐z P Px  =  y≐z P (x≐y P Px)
 \end{code}
 
+对称性就没有那么显然了。我们需要证明如果对于所有谓词 `P`，`P x` 蕴含 `P y`，
+那么反方向的蕴含也成立。
+{::comment}
 Symmetry is less obvious.  We have to show that if `P x` implies `P y`
 for all predicates `P`, then the implication holds the other way round
 as well:
+{:/}
 \begin{code}
 sym-≐ : ∀ {A : Set} {x y : A}
   → x ≐ y
@@ -808,18 +842,29 @@ sym-≐ {A} {x} {y} x≐y P  =  Qy
     Qy : Q y
     Qy = x≐y Q Qx
 \end{code}
+给定 `x ≐ y` 、一个特定的 `P` 和一个 `P y` 的证明，我们需要构造一个 `P x` 的证明。
+我们首先用一个谓词 `Q` 将相等性实例化，使得 `Q z` 在 `P z` 蕴含 `P x` 时成立。
+`Q x` 这个性质是显然的，由自反性可以得出，因为 `Q y` 因为 `x ≐ y` 成立。然而 `Q y`
+亦是我们需要的证明，即 `P y` 蕴含 `P x`。
+{::comment}
 Given `x ≐ y`, a specific `P`, and a proof of `P y`, we have to
 construct a proof of `P x`.  To do so, we instantiate the equality
 with a predicate `Q` such that `Q z` holds if `P z` implies `P x`.
 The property `Q x` is trivial by reflexivity, and hence `Q y` follows
 from `x ≐ y`.  But `Q y` is exactly a proof of what we require, that
 `P y` implies `P x`.
+{:/}
 
+我们现在来证明 Martin Löf 相等性蕴含了莱布尼兹相等性，以及其逆命题。在正方向上，
+如果我们已知 `x ≡ y`，我们需要对于任意的 `P`，将 `P x` 的证明转换为 `P y` 的证明。
+我们很容易就可以做到这一点，因为 `x` 与 `y` 相等意味着任何 `P x` 的证明即是 `P y` 的证明。
+{::comment}
 We now show that Martin Löf equality implies
 Leibniz equality, and vice versa.  In the forward direction, if we know
 `x ≡ y` we need for any `P` to take evidence of `P x` to evidence of `P y`,
 which is easy since equality of `x` and `y` implies that any proof
 of `P x` is also a proof of `P y`:
+{:/}
 \begin{code}
 ≡-implies-≐ : ∀ {A : Set} {x y : A}
   → x ≡ y
@@ -827,10 +872,17 @@ of `P x` is also a proof of `P y`:
   → x ≐ y
 ≡-implies-≐ x≡y P  =  subst P x≡y
 \end{code}
+因为这个方向由替换性可以得来，如之前证明的那样。
+{::comment}
 This direction follows from substitution, which we showed earlier.
+{:/}
 
+在反方向上，我们已知对于任何 `P`，我们可以将 `P x` 的证明转换成 `P y` 的证明，
+我们需要证明 `x ≡ y`：
+{::comment}
 In the reverse direction, given that for any `P` we can take a proof of `P x`
 to a proof of `P y` we need to show `x ≡ y`:
+{:/}
 \begin{code}
 ≐-implies-≡ : ∀ {A : Set} {x y : A}
   → x ≐ y
@@ -845,59 +897,104 @@ to a proof of `P y` we need to show `x ≡ y`:
     Qy : Q y
     Qy = x≐y Q Qx
 \end{code}
+此证明与莱布尼兹相等性的对称性证明相似。我们取谓词 `Q`，使得 `Q z` 在 `x ≡ z` 成立时成立。
+那么 `Q x` 是显然的，由 Martin Löf 相等性的自反性得来。从而 `Q y` 由 `x ≐ y` 可得，
+而 `Q y` 即是我们所需要的 `x ≡ y` 的证明。
+{::comment}
 The proof is similar to that for symmetry of Leibniz equality. We take
 `Q` to be the predicate that holds of `z` if `x ≡ z`. Then `Q x` is
 trivial by reflexivity of Martin Löf equality, and hence `Q y`
 follows from `x ≐ y`.  But `Q y` is exactly a proof of what we
 require, that `x ≡ y`.
+{:/}
 
+（本部分的内容由此处改编得来：
+*≐≃≡: Leibniz Equality is
+Isomorphic to Martin-Löf Identity, Parametrically*
+作者：Andreas Abel、Jesper Cockx、Dominique Devries、Andreas Nuyts 与 Philip Wadler，
+草稿，2017）
+{::comment}
 (Parts of this section are adapted from *≐≃≡: Leibniz Equality is
 Isomorphic to Martin-Löf Identity, Parametrically*, by Andreas Abel,
 Jesper Cockx, Dominique Devries, Andreas Nuyts, and Philip Wadler,
 draft, 2017.)
+{:/}
 
-
+## 全体多态 {#unipoly}
+{::comment}
 ## Universe polymorphism {#unipoly}
+{:/}
 
+正如我们之前看到的那样，不是每个类型都属于 `Set`，但是每个类型都属于类型阶级的某处，
+`Set₀`、`Set₁`、`Set₂`等等。其中 `Set` 是 `Set₀` 的缩写，此外 `Set₀ : Set₁`，`Set₁ : Set₂`，以此类推。
+当我们需要比较两个属于 `Set` 的类型的值时，我们之前给出的定义是足够的，
+但如果我们需要比较对于任何等级 `ℓ`，两个属于 `Set ℓ` 的类型的值该怎么办呢？
+{::comment}
 As we have seen, not every type belongs to `Set`, but instead every
 type belongs somewhere in the hierarchy `Set₀`, `Set₁`, `Set₂`, and so on,
 where `Set` abbreviates `Set₀`, and `Set₀ : Set₁`, `Set₁ : Set₂`, and so on.
 The definition of equality given above is fine if we want to compare two
 values of a type that belongs to `Set`, but what if we want to compare
 two values of a type that belongs to `Set ℓ` for some arbitrary level `ℓ`?
+{:/}
 
+答案是*全体多态*（Universe Polymorphism），一个定义可以根据任何等级 `ℓ` 来做出。
+为了使用等级，我们首先导入下列内容：
+{::comment}
 The answer is _universe polymorphism_, where a definition is made
 with respect to an arbitrary level `ℓ`. To make use of levels, we
 first import the following:
+{:/}
 \begin{code}
 open import Level using (Level; _⊔_) renaming (zero to lzero; suc to lsuc)
 \end{code}
+我们将构造器 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和等级之间的混淆。
+{::comment}
 We rename constructors `zero` and `suc` to `lzero` and `lsuc` to avoid confusion
 between levels and naturals.
+{:/}
 
+等级与自然数是同构的，有相似的构造器：
+{::comment}
 Levels are isomorphic to natural numbers, and have similar constructors:
+{:/}
 
     lzero : Level
     lsuc  : Level → Level
 
+`Set₀`、`Set₁`、`Set₂` 等名称，是下列的简写：
+{::comment}
 The names `Set₀`, `Set₁`, `Set₂`, and so on, are abbreviations for
+{:/}
 
     Set lzero
     Set (lsuc lzero)
     Set (lsuc (lsuc lzero))
 
+以此类推。我们还有一个运算符：
+{::comment}
 and so on. There is also an operator
+{:/}
 
     _⊔_ : Level → Level → Level
 
+给定两个等级，返回两者中较大的那个。
+{::comment}
 that given two levels returns the larger of the two.
+{:/}
 
+下面是相等性的定义，推广到任意等级：
+{::comment}
 Here is the definition of equality, generalised to an arbitrary level:
+{:/}
 \begin{code}
 data _≡′_ {ℓ : Level} {A : Set ℓ} (x : A) : A → Set ℓ where
   refl′ : x ≡′ x
 \end{code}
+相似的，下面是对称性的推广定义：
+{::comment}
 Similarly, here is the generalised definition of symmetry:
+{:/}
 \begin{code}
 sym′ : ∀ {ℓ : Level} {A : Set ℓ} {x y : A}
   → x ≡′ y
@@ -905,48 +1002,74 @@ sym′ : ∀ {ℓ : Level} {A : Set ℓ} {x y : A}
   → y ≡′ x
 sym′ refl′ = refl′
 \end{code}
+为了简介，我们在本书中给出的定义将避免使用全体多态，但是大多数标准库中的定义，
+包括相等性的定义，都推广到了任意等级，如上所示。
+{::comment}
 For simplicity, we avoid universe polymorphism in the definitions given in
 the text, but most definitions in the standard library, including those for
 equality, are generalised to arbitrary levels as above.
+{:/}
 
+下面是莱布尼兹相等性的推广定义：
+{::comment}
 Here is the generalised definition of Leibniz equality:
+{:/}
 \begin{code}
 _≐′_ : ∀ {ℓ : Level} {A : Set ℓ} (x y : A) → Set (lsuc ℓ)
 _≐′_ {ℓ} {A} x y = ∀ (P : A → Set ℓ) → P x → P y
 \end{code}
+之前，签名中使用了 `Set₁` 来作为一个值包括了 `Set` 的类型；而此处，我们使用
+`Set (lsuc ℓ)` 来作为一个值包括了 `Set ℓ` 的类型。
+{::comment}
 Before the signature used `Set₁` as the type of a term that includes
 `Set`, whereas here the signature uses `Set (lsuc ℓ)` as the type of a
 term that includes `Set ℓ`.
+{:/}
 
+更多的关于等级的信息可以从[Agda 维基（英文）][wiki]中查询。
+{::comment}
 Further information on levels can be found in the [Agda Wiki][wiki].
+{:/}
 
 [wiki]: http://wiki.portal.chalmers.se/agda/pmwiki.php?n=ReferenceManual.UniversePolymorphism
 
 
+## 标准库
+{::comment}
 ## Standard library
+{:/}
 
+标准库中可以找到与本章节中相似的定义：
+{::comment}
 Definitions similar to those in this chapter can be found in the
 standard library:
+{:/}
 \begin{code}
 -- import Relation.Binary.PropositionalEquality as Eq
 -- open Eq using (_≡_; refl; trans; sym; cong; cong-app; subst)
 -- open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _≡⟨_⟩_; _∎)
 \end{code}
+这里的导入以注释的形式给出，以防止冲突，如引言中解释的那样。
+{::comment}
 Here the imports are shown as comments rather than code to avoid
 collisions, as mentioned in the introduction.
+{:/}
 
 
 ## Unicode
 
+本章节使用下列 Unicode：
+{::comment}
 This chapter uses the following unicode:
+{:/}
 
-    ≡  U+2261  IDENTICAL TO (\==, \equiv)
-    ⟨  U+27E8  MATHEMATICAL LEFT ANGLE BRACKET (\<)
-    ⟩  U+27E9  MATHEMATICAL RIGHT ANGLE BRACKET (\>)
-    ∎  U+220E  END OF PROOF (\qed)
-    ≐  U+2250  APPROACHES THE LIMIT (\.=)
-    ℓ  U+2113  SCRIPT SMALL L (\ell)
-    ⊔  U+2294  SQUARE CUP (\lub)
-    ₀  U+2080  SUBSCRIPT ZERO (\_0)
-    ₁  U+2081  SUBSCRIPT ONE (\_1)
-    ₂  U+2082  SUBSCRIPT TWO (\_2)
+    ≡  U+2261  等同于 (\==, \equiv)
+    ⟨  U+27E8  数学左尖括号 (\<)
+    ⟩  U+27E9  数学右尖括号 (\>)
+    ∎  U+220E  证毕 (\qed)
+    ≐  U+2250  接近于极限 (\.=)
+    ℓ  U+2113  手写小写 L (\ell)
+    ⊔  U+2294  正方形向上开口 (\lub)
+    ₀  U+2080  下标 0 (\_0)
+    ₁  U+2081  下标 1 (\_1)
+    ₂  U+2082  下标 2 (\_2)
