@@ -34,12 +34,7 @@
     {%- endif -%}
     {%- endfor -%}
     
-    {%- if page.title == '使用说明' -%}
-      {%- if page.translators -%}
-        <h3 class="footer-heading">译者：</h3>
-        <p>{{ page.translators | join: "，" | escape }}</p>
-      {%- endif -%}
-    {%- elsif page.title == '目录' -%}
+    {%- if page.title == '使用说明' or page.title == '目录' -%}
       <h3 class="footer-heading">译者：</h3>
       <p>{{ site.pages | map: "translators" | compact | uniq | sort_natural | join: ", " | escape }}</p>
     {%- else -%}

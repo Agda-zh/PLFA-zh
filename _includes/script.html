@@ -1,6 +1,25 @@
 <!-- Import jQuery -->
 <script type="text/javascript" src="{{ "/assets/jquery.js" | prepend: site.baseurl }}"></script>
 
+<!-- Script which draws background for progress tags -->
+<script type="text/javascript">
+$('span.progress').each(function(){
+    const progress = parseInt($(this).text());
+    $(this).css({
+        'border-style': 'solid',
+        'border-radius': '5px',
+        'border-width': 'thin',
+        'border-color': progress === 100 ? 'limegreen' : 'dimgray',
+        'font-size': '70%',
+        'padding': '0.1em 0.2em 0.1em 0.2em',
+        'margin': '0em 0em 0em 0.5em',
+        'box-sizing': 'border-box',
+        'vertical-align': 'text-top'
+    });
+    $(this).text(progress.toString() + " %");
+})
+</script>
+
 <!-- Script which allows for foldable code blocks -->
 <script type="text/javascript">
  $('div.foldable pre').each(function(){
