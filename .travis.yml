@@ -44,6 +44,9 @@ before_deploy:
     acknowledgements -i _config.yml >> _config.yml &&
     make clean &&
     rm -rf .bundle/ vendor/ hs/ src/ extra/ .gitignore .travis.yml Gemfile Gemfile.lock Makefile;
+  else
+    echo -e "\nbaseurl: \"\"\nurl: \"https://plfa-zh.github.io\"" >> _config.yml &&
+    make build-offline
   fi
 
 branches:
