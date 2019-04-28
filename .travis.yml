@@ -39,9 +39,12 @@ script:
 - make build-offline
 
 before_deploy:
-- acknowledgements -i _config.yml >> _config.yml
-- make clean
-- rm -rf .bundle/ vendor/ hs/ src/ extra/ .gitignore .travis.yml Gemfile Gemfile.lock Makefile
+  if ! [[ $BEFORE_DEPLOY_RUN ]]; then
+    export BEFORE_DEPLOY_RUN = 1 &&
+    acknowledgements -i _config.yml >> _config.yml &&
+    make clean &&
+    rm -rf .bundle/ vendor/ hs/ src/ extra/ .gitignore .travis.yml Gemfile Gemfile.lock Makefile;
+  fi
 
 branches:
   only:
