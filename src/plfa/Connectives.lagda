@@ -10,6 +10,12 @@ next      : /Negation/
 module plfa.Connectives where
 \end{code}
 
+<!-- The ⊥ ⊎ A ≅ A exercise requires a (inj₁ ()) pattern,
+     which the reader will not have seen. Restore this
+     exercise, and possibly also associativity? Take the
+     exercises from the final sections on distributivity
+     and exponentials? -->
+
 This chapter introduces the basic logical connectives, by observing a
 correspondence between connectives of logic and data types, a
 principle known as _Propositions as Types_:
@@ -25,12 +31,11 @@ principle known as _Propositions as Types_:
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; refl; sym; trans; cong)
+open Eq using (_≡_; refl)
 open Eq.≡-Reasoning
-open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
-open import Data.Nat.Properties using (+-suc)
+open import Data.Nat using (ℕ)
 open import Function using (_∘_)
-open import plfa.Isomorphism using (_≃_; ≃-sym; ≃-trans; _≲_; extensionality)
+open import plfa.Isomorphism using (_≃_; _≲_; extensionality)
 open plfa.Isomorphism.≃-Reasoning
 \end{code}
 
@@ -41,7 +46,7 @@ Given two propositions `A` and `B`, the conjunction `A × B` holds
 if both `A` holds and `B` holds.  We formalise this idea by
 declaring a suitable inductive type:
 \begin{code}
-data _×_ (A : Set) (B : Set) : Set where
+data _×_ (A B : Set) : Set where
 
   ⟨_,_⟩ : 
       A
@@ -172,8 +177,8 @@ that there is a sense in which it is commutative and associative.  In
 particular, product is commutative and associative _up to
 isomorphism_.
 
-For commutativity, the `to` function swaps a pair, taking `(x , y)` to
-`(y , x)`, and the `from` function does the same (up to renaming).
+For commutativity, the `to` function swaps a pair, taking `⟨ x , y ⟩` to
+`⟨ y , x ⟩`, and the `from` function does the same (up to renaming).
 Instantiating the patterns correctly in `from∘to` and `to∘from` is essential.
 Replacing the definition of `from∘to` by `λ w → refl` will not work;
 and similarly for `to∘from`:
@@ -198,11 +203,11 @@ In the first case, we might have that `m` is `2` and `n` is `3`, and
 both `m * n` and `n * m` are equal to `6`.  In the second case, we
 might have that `A` is `Bool` and `B` is `Tri`, and `Bool × Tri` is
 _not_ the same as `Tri × Bool`.  But there is an isomorphism between
-the two types.  For instance, `(true , aa)`, which is a member of the
-former, corresponds to `(aa , true)`, which is a member of the latter.
+the two types.  For instance, `⟨ true , aa ⟩`, which is a member of the
+former, corresponds to `⟨ aa , true ⟩`, which is a member of the latter.
 
 For associativity, the `to` function reassociates two uses of pairing,
-taking `((x , y) , z)` to `(x , (y , z))`, and the `from` function does
+taking `⟨ ⟨ x , y ⟩ , z ⟩` to `⟨ x , ⟨ y , z ⟩ ⟩`, and the `from` function does
 the inverse.  Again, the evidence of left and right inverse requires
 matching against a suitable pattern to enable simplification:
 \begin{code}
@@ -224,8 +229,8 @@ up to isomorphism_.  Compare the two statements:
 
 For example, the type `(ℕ × Bool) × Tri` is _not_ the same as `ℕ ×
 (Bool × Tri)`. But there is an isomorphism between the two types. For
-instance `((1 , true) , aa)`, which is a member of the former,
-corresponds to `(1 , (true , aa))`, which is a member of the latter.
+instance `⟨ ⟨ 1 , true ⟩ , aa ⟩`, which is a member of the former,
+corresponds to `⟨ 1 , ⟨ true , aa ⟩ ⟩`, which is a member of the latter.
 
 #### Exercise `⇔≃×` (recommended)
 
@@ -275,7 +280,7 @@ function enumerates all possible arguments of type `⊤`:
 
 For numbers, one is the identity of multiplication. Correspondingly,
 unit is the identity of product _up to isomorphism_.  For left
-identity, the `to` function takes `(tt , x)` to `x`, and the `from`
+identity, the `to` function takes `⟨ tt , x ⟩` to `x`, and the `from`
 function does the inverse.  The evidence of left inverse requires
 matching against a suitable pattern to enable simplification:
 \begin{code}
@@ -299,7 +304,7 @@ In the first case, we might have that `m` is `2`, and both
 `1 * m` and `m` are equal to `2`.  In the second
 case, we might have that `A` is `Bool`, and `⊤ × Bool` is _not_ the
 same as `Bool`.  But there is an isomorphism between the two types.
-For instance, `(tt, true)`, which is a member of the former,
+For instance, `⟨ tt , true ⟩`, which is a member of the former,
 corresponds to `true`, which is a member of the latter.
 
 Right identity follows from commutativity of product and left identity:
@@ -324,15 +329,15 @@ Given two propositions `A` and `B`, the disjunction `A ⊎ B` holds
 if either `A` holds or `B` holds.  We formalise this idea by
 declaring a suitable inductive type:
 \begin{code}
-data _⊎_ : Set → Set → Set where
+data _⊎_ (A B : Set) : Set where
 
-  inj₁ : ∀ {A B : Set}
-    → A
+  inj₁ :
+      A
       -----
     → A ⊎ B
 
-  inj₂ : ∀ {A B : Set}
-    → B
+  inj₂ :
+      B
       -----
     → A ⊎ B
 \end{code}

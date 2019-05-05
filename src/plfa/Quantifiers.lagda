@@ -16,15 +16,12 @@ This chapter introduces universal and existential quantification.
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; refl; sym; trans; cong)
-open Eq.≡-Reasoning
+open Eq using (_≡_; refl)
 open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
-open import Data.Nat.Properties.Simple using (+-suc)
 open import Relation.Nullary using (¬_)
-open import Function using (_∘_)
-open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
-open import Data.Sum using (_⊎_; inj₁; inj₂)
-open import plfa.Isomorphism using (_≃_; ≃-sym; ≃-trans; _≲_; extensionality)
+open import Data.Product using (_×_; proj₁) renaming (_,_ to ⟨_,_⟩)
+open import Data.Sum using (_⊎_)
+open import plfa.Isomorphism using (_≃_; extensionality)
 \end{code}
 
 
@@ -104,6 +101,19 @@ postulate
     (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x)  →  ∀ (x : A) → B x ⊎ C x
 \end{code}
 Does the converse hold? If so, prove; if not, explain why.
+
+
+#### Exercise `∀-×`
+
+Consider the following type.
+\begin{code}
+data Tri : Set where
+  aa : Tri
+  bb : Tri
+  cc : Tri
+\end{code}
+Let `B` be a type indexed by `Tri`, that is `B : Tri → Set`.
+Show that `∀ (x : Tri) → B x` is isomorphic to `B aa × B bb × B cc`.
 
 
 ## Existentials
@@ -243,6 +253,11 @@ postulate
     ∃[ x ] (B x × C x) → (∃[ x ] B x) × (∃[ x ] C x)
 \end{code}
 Does the converse hold? If so, prove; if not, explain why.
+
+#### Exercise `∃-⊎`
+
+Let `Tri` and `B` be as in Exercise `∀-×`.
+Show that `∃[ x ] B x` is isomorphic to `B aa ⊎ B bb ⊎ B cc`.
 
 
 ## An existential example

@@ -25,13 +25,9 @@ the next step is to define relations, such as _less than or equal_.
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; refl; cong; sym)
-open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_)
-open import Data.Nat.Properties using (+-comm; +-suc)
-open import Data.List using (List; []; _∷_)
-open import Function using (id; _∘_)
-open import Relation.Nullary using (¬_)
-open import Data.Empty using (⊥; ⊥-elim)
+open Eq using (_≡_; refl; cong)
+open import Data.Nat using (ℕ; zero; suc; _+_)
+open import Data.Nat.Properties using (+-comm)
 \end{code}
 
 ## 定义关系
@@ -236,7 +232,7 @@ infix 4 _≤_
 也不是右结合的。因为 `1 ≤ 2 ≤ 3` 解析为 `(1 ≤ 2) ≤ 3` 或者 `1 ≤ (2 ≤ 3)` 都没有意义。
 {::comment}
 We set the precedence of `_≤_` at level 4, so it binds less tightly
-that `_+_` at level 6 and hence `1 + 2 ≤ 3` parses as `(1 + 2) ≤ 3`.
+than `_+_` at level 6 and hence `1 + 2 ≤ 3` parses as `(1 + 2) ≤ 3`.
 We write `infix` to indicate that the operator does not associate to
 either the left or right, as it makes no sense to parse `1 ≤ 2 ≤ 3` as
 either `(1 ≤ 2) ≤ 3` or `1 ≤ (2 ≤ 3)`.
@@ -256,10 +252,71 @@ doing so here, but will return to this point in
 Chapter [Decidable][plfa.Decidable].
 {:/}
 
-## 序关系的性质
+
+{::comment}
+## Inversion
+{:/}
+
+## 反演
+
+{::comment}
+In our defintions, we go from smaller things to larger things.
+For instance, form `m ≤ n` we can conclude `suc m ≤ suc n`,
+where `suc m` is bigger than `m` (that is, the former contains
+the latter), and `suc n` is bigger than `n`. But sometimes we
+want to go from bigger things to smaller things.
+{:/}
+
+在我们的定义中，我们从更小的东西得到更大的东西。例如，我们可以从
+`m ≤ n` 得出 `suc m ≤ suc n` 的结论，这里的 `suc m` 比 `m` 更大
+（也就是说，前者包含后者），`suc n` 也比 `n` 更大。但有时我们也
+需要从更大的东西得到更小的东西。
+
+{::comment}
+There is only one way to prove that `suc m ≤ suc n`, for any `m`
+and `n`.  This lets us invert our previous rule.
+{:/}
+
+只有一种方式能够证明对于任意 `m` 和 `n` 有 `suc m ≤ suc n`。
+这让我们能够反演（invert）之前的规则。
+
+\begin{code}
+inv-s≤s : ∀ {m n : ℕ}
+  → suc m ≤ suc n
+    -------------
+  → m ≤ n
+inv-s≤s (s≤s m≤n) = m≤n
+\end{code}
+
+{::comment}
+Not every rule is invertible; indeed, the rule for `z≤n` has
+no non-implicit hypotheses, so there is nothing to invert.
+But often inversions of this kind hold.
+{:/}
+
+并不是所有规则都可以反演。实际上，`z≤n` 的规则没有非隐式的假设，
+因此它没有可以被反演的规则。但这种反演通常是成立的。
+
+{::comment}
+Another example of inversion is showing that there is
+only one way a number can be less than or equal to zero.
+{:/}
+
+反演的另一个例子是证明只存在一种情况使得一个数字能够小于或等于零。
+
+\begin{code}
+inv-z≤n : ∀ {m : ℕ}
+  → m ≤ zero
+    --------
+  → m ≡ zero
+inv-z≤n z≤n = refl
+\end{code}
+
 {::comment}
 ## Properties of ordering relations
 {:/}
+
+## 序关系的性质
 
 数学家对于关系的常见性质给出了约定的名称。
 {::comment}
@@ -365,8 +422,8 @@ as that will make it easier to invoke reflexivity:
 ≤-refl : ∀ {n : ℕ}
     -----
   → n ≤ n
-≤-refl {zero}   =  z≤n
-≤-refl {suc n}  =  s≤s (≤-refl {n})
+≤-refl {zero} = z≤n
+≤-refl {suc n} = s≤s (≤-refl {n})
 \end{code}
 
 这个证明直接在 `n` 上进行归纳。在起始步骤中，`zero ≤ zero` 由 `z≤n` 证明；在归纳步骤中，
@@ -756,12 +813,12 @@ broken into three parts. First, we deal with the special case of showing
 addition is monotonic on the right:
 {:/}
 \begin{code}
-+-monoʳ-≤ : ∀ (m p q : ℕ)
++-monoʳ-≤ : ∀ (n p q : ℕ)
   → p ≤ q
     -------------
-  → m + p ≤ m + q
+  → n + p ≤ n + q
 +-monoʳ-≤ zero    p q p≤q  =  p≤q
-+-monoʳ-≤ (suc m) p q p≤q  =  s≤s (+-monoʳ-≤ m p q p≤q)
++-monoʳ-≤ (suc n) p q p≤q  =  s≤s (+-monoʳ-≤ n p q p≤q)
 \end{code}
 
 我们对于第一个参数进行归纳。
@@ -769,9 +826,9 @@ addition is monotonic on the right:
 * *起始步骤*：第一个参数是 `zero`，那么 `zero + p ≤ zero + q` 可以化简为 `p ≤ q`，
   其证明由 `p≤q` 给出。
 
-* *归纳步骤*：第一个参数是 `suc m`，那么 `suc m + p ≤ suc m + q` 可以化简为
-  `suc (m + p) ≤ suc (m + q)`。归纳假设 `+-monoʳ-≤ m p q p≤q` 可以证明
-  `m + p ≤ m + q`，我们在此之上使用 `s≤s` 即可得证。
+* *归纳步骤*：第一个参数是 `suc n`，那么 `suc n + p ≤ suc n + q` 可以化简为
+  `suc (n + p) ≤ suc (n + q)`。归纳假设 `+-monoʳ-≤ n p q p≤q` 可以证明
+  `n + p ≤ n + q`，我们在此之上使用 `s≤s` 即可得证。
 
 {::comment}
 The proof is by induction on the first argument.
@@ -780,10 +837,10 @@ The proof is by induction on the first argument.
   `zero + p ≤ zero + q` simplifies to `p ≤ q`, the evidence
   for which is given by the argument `p≤q`.
 
-* _Inductive case_: The first argument is `suc m`, in which case
-  `suc m + p ≤ suc m + q` simplifies to `suc (m + p) ≤ suc (m + q)`.
-  The inductive hypothesis `+-monoʳ-≤ m p q p≤q` establishes that
-  `m + p ≤ m + q`, and our goal follows by applying `s≤s`.
+* _Inductive case_: The first argument is `suc n`, in which case
+  `suc n + p ≤ suc n + q` simplifies to `suc (n + p) ≤ suc (n + q)`.
+  The inductive hypothesis `+-monoʳ-≤ n p q p≤q` establishes that
+  `n + p ≤ n + q`, and our goal follows by applying `s≤s`.
 {:/}
 
 接下来，我们证明加法对于小于等于在左手边是单调的。我们可以用之前的结论和加法的交换律来证明：

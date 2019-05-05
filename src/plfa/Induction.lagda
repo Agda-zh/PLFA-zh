@@ -1229,8 +1229,8 @@ which is left as an exercise for the reader.
 #### 练习 `finite-+-assoc`（延伸） {#finite-plus-assoc}
 
 {::comment}
-Write out what is known about associativity of addition on each of the first four
-days using a finite story of creation, as
+Write out what is known about associativity of addition on each of the
+first four days using a finite story of creation, as
 [earlier][plfa.Naturals#finite-creation].
 {:/}
 
@@ -1525,16 +1525,6 @@ Show
 
 请证明对于所有的自然数 `m`、`n` 和 `p`，
 
-{::comment}
-\begin{code}
--- Your code goes here
-\end{code}
-{:/}
-
-\begin{code}
--- 请将代码写在此处。
-\end{code}
-
     m + (n + p) ≡ n + (m + p)
 
 {::comment}
@@ -1544,6 +1534,15 @@ is associative and commutative.
 {:/}
 
 成立。无需归纳证明，只需应用前面满足结合律和交换律的结果即可。
+
+\begin{code}
+-- Your code goes here
+\end{code}
+{:/}
+
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
 {::comment}
 #### Exercise `*-distrib-+` (recommended) {#times-distrib-plus}
@@ -1555,7 +1554,15 @@ is associative and commutative.
 Show multiplication distributes over addition, that is,
 {:/}
 
-请证明乘法对加法满足分配率，即对于所有的 `m`、`n` 和 `p`，
+请证明乘法满足结合律，即对于所有的自然数 `m`、`n` 和 `p`，
+
+    (m + n) * p ≡ m * p + n * p
+
+{::comment}
+for all naturals `m`, `n`, and `p`.
+{:/}
+
+成立。
 
 {::comment}
 \begin{code}
@@ -1566,14 +1573,6 @@ Show multiplication distributes over addition, that is,
 \begin{code}
 -- 请将代码写在此处。
 \end{code}
-
-    (m + n) * p ≡ m * p + n * p
-
-{::comment}
-for all naturals `m`, `n`, and `p`.
-{:/}
-
-成立。
 
 {::comment}
 #### Exercise `*-assoc` (recommended) {#times-assoc}
@@ -1587,6 +1586,14 @@ Show multiplication is associative, that is,
 
 请证明乘法满足结合律，即对于所有的自然数 `m`、`n` 和 `p`，
 
+    (m * n) * p ≡ m * (n * p)
+
+{::comment}
+for all naturals `m`, `n`, and `p`.
+{:/}
+
+成立。
+
 {::comment}
 \begin{code}
 -- Your code goes here
@@ -1596,14 +1603,6 @@ Show multiplication is associative, that is,
 \begin{code}
 -- 请将代码写在此处。
 \end{code}
-
-    (m * n) * p ≡ m * (n * p)
-
-{::comment}
-for all naturals `m`, `n`, and `p`.
-{:/}
-
-成立。
 
 {::comment}
 #### Exercise `*-comm` {#times-comm}
@@ -1742,6 +1741,12 @@ over bitstrings:
     from (to n) ≡ n
 
 {::comment}
+For each law: if it holds, prove; if not, give a counterexample.
+{:/}
+
+对于每一条定律：若它成立，请证明；若不成立，请给出一个反例。
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
@@ -1750,12 +1755,6 @@ over bitstrings:
 \begin{code}
 -- 请将代码写在此处。
 \end{code}
-
-{::comment}
-For each law: if it holds, prove; if not, give a counterexample.
-{:/}
-
-对于每一条定律：若它成立，请证明；若不成立，请给出一个反例。
 
 
 {::comment}

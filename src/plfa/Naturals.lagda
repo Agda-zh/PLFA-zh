@@ -71,11 +71,13 @@ as a pair of inference rules:
 {::comment}
 And here is the definition in Agda:
 {:/}
+
 \begin{code}
 data ℕ : Set where
   zero : ℕ
   suc  : ℕ → ℕ
 \end{code}
+
 这里 `ℕ` 是我们所定义的*数据类型（Datatype）*的名字，而 `zero`（零）和 `suc`
 （*successor*，即*后继数*，的缩写）是该数据类型的*构造器（Constructors）*。
 {::comment}
@@ -542,8 +544,8 @@ Here is the definition of addition in Agda:
 {:/}
 \begin{code}
 _+_ : ℕ → ℕ → ℕ
-zero  + n  =  n
-suc m + n  =  suc (m + n)
+zero + n = n
+suc m + n = suc (m + n)
 \end{code}
 
 我们来分析一下这个定义。加法是一个中缀操作符，被命名为 `_+_`，其中参数的

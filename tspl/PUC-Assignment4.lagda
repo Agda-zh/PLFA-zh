@@ -1,11 +1,11 @@
 ---
-title     : "Assignment4: TSPL Assignment 4"
+title     : "PUC-Assignment4: PUC Assignment 4"
 layout    : page
-permalink : /Assignment4/
+permalink : /PUC-Assignment4/
 ---
 
 \begin{code}
-module Assignment4 where
+module PUC-Assignment4 where
 \end{code}
 
 ## YOUR NAME AND EMAIL GOES HERE

@@ -888,7 +888,7 @@ possible evidence for `3 ≡ 0`, `3 ≡ 1`, `3 ≡ 0`, `3 ≡ 2`, and
 ## All and append
 
 A predicate holds for every element of one list appended to another if and
-only if it holds for every element of each list:
+only if it holds for every element of both lists:
 \begin{code}
 All-++-⇔ : ∀ {A : Set} {P : A → Set} (xs ys : List A) →
   All P (xs ++ ys) ⇔ (All P xs × All P ys)
@@ -913,7 +913,7 @@ All-++-⇔ xs ys =
 
 #### Exercise `Any-++-⇔` (recommended)
 
-Prove a result similar to `All-++-↔`, but with `Any` in place of `All`, and a suitable
+Prove a result similar to `All-++-⇔`, but with `Any` in place of `All`, and a suitable
 replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 `_∈_` and `_++_`.
 
@@ -937,10 +937,6 @@ First generalise composition to arbitrary levels, using
 _∘′_ : ∀ {ℓ₁ ℓ₂ ℓ₃ : Level} {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃}
   → (B → C) → (A → B) → A → C
 (g ∘′ f) x  =  g (f x)
-\end{code}
-
-\begin{code}
--- Your code goes here
 \end{code}
 
 Show that `Any` and `All` satisfy a version of De Morgan's Law:
@@ -999,9 +995,9 @@ the head and tail of the list.
 
 #### Exercise `any?` (stretch)
 
-Just as `All` has analogues `all` and `all?` which determine whether a
+Just as `All` has analogues `all` and `All?` which determine whether a
 predicate holds for every element of a list, so does `Any` have
-analogues `any` and `any?` which determine whether a predicates holds
+analogues `any` and `Any?` which determine whether a predicate holds
 for some element of a list.  Give their definitions.
 
 \begin{code}
@@ -1009,10 +1005,28 @@ for some element of a list.  Give their definitions.
 \end{code}
 
 
+#### Exercise `All-∀`
+
+Show that `All P xs` is isomorphic to `∀ {x} → x ∈ xs → P x`.
+
+\begin{code}
+-- You code goes here
+\end{code}
+
+
+#### Exercise `Any-∃`
+
+Show that `Any P xs` is isomorphic to `∃[ x ∈ xs ] P x`.
+
+\begin{code}
+-- You code goes here
+\end{code}
+
+
 #### Exercise `filter?` (stretch)
 
 Define the following variant of the traditional `filter` function on lists,
-which given a list and a decidable predicate returns all elements of the
+which given a decidable predicate and a list returns all elements of the
 list satisfying the predicate:
 \begin{code}
 postulate

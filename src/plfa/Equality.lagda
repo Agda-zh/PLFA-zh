@@ -388,7 +388,7 @@ After simplification, the body is equivalent to the term:
 We could replace any use of a chain of equations by a chain of
 applications of `trans`; the result would be more compact but harder
 to read.  The trick behind `∎` means that a chain of equalities
-simplifies to a chain of applications of `trans` than ends in `trans e
+simplifies to a chain of applications of `trans` that ends in `trans e
 refl`, where `e` is a term that proves some equality, even though `e`
 alone would do.
 {:/}
@@ -500,21 +500,21 @@ an order that will make sense to the reader.
 {:/}
 
 
-#### 练习 `≤-reasoning` (延伸)
+#### 练习 `≤-Reasoning` (延伸)
 {::comment}
-#### Exercise `≤-reasoning` (stretch)
+#### Exercise `≤-Reasoning` (stretch)
 {:/}
 
 [Relations][plfa.Relations] 章节中的单调性证明亦可以用相似于 `≡-reasoning` 的，更易于理解的形式给出。
-相似地来定义 `≤-reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤` 和 `+-mono-≤`。
+相似地来定义 `≤-reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤`、`+-monoʳ-≤`
+和 `+-mono-≤`。
 {::comment}
 The proof of monotonicity from
 Chapter [Relations][plfa.Relations]
 can be written in a more readable form by using an analogue of our
-notation for `≡-reasoning`.  Define `≤-reasoning` analogously, and use
+notation for `≡-Reasoning`.  Define `≤-Reasoning` analogously, and use
 it to write out an alternative proof that addition is monotonic with
-regard to inequality.  Rewrite both `+-monoˡ-≤` and `+-mono-≤`.
-{:/}
+regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mono-≤`.
 
 \begin{code}
 -- 在此处书写你的代码
@@ -842,17 +842,17 @@ sym-≐ {A} {x} {y} x≐y P  =  Qy
     Qy : Q y
     Qy = x≐y Q Qx
 \end{code}
-给定 `x ≐ y` 、一个特定的 `P` 和一个 `P y` 的证明，我们需要构造一个 `P x` 的证明。
+
+给定 `x ≐ y` 和一个特定的 `P`，我们需要构造一个 `P y` 蕴含 `P x` 的证明。
 我们首先用一个谓词 `Q` 将相等性实例化，使得 `Q z` 在 `P z` 蕴含 `P x` 时成立。
 `Q x` 这个性质是显然的，由自反性可以得出，因为 `Q y` 因为 `x ≐ y` 成立。然而 `Q y`
 亦是我们需要的证明，即 `P y` 蕴含 `P x`。
 {::comment}
-Given `x ≐ y`, a specific `P`, and a proof of `P y`, we have to
-construct a proof of `P x`.  To do so, we instantiate the equality
-with a predicate `Q` such that `Q z` holds if `P z` implies `P x`.
-The property `Q x` is trivial by reflexivity, and hence `Q y` follows
-from `x ≐ y`.  But `Q y` is exactly a proof of what we require, that
-`P y` implies `P x`.
+Given `x ≐ y`, a specific `P`, we have to construct a proof that `P y`
+implies `P x`.  To do so, we instantiate the equality with a predicate
+`Q` such that `Q z` holds if `P z` implies `P x`.  The property `Q x`
+is trivial by reflexivity, and hence `Q y` follows from `x ≐ y`.  But
+`Q y` is exactly a proof of what we require, that `P y` implies `P x`.
 {:/}
 
 我们现在来证明 Martin Löf 相等性蕴含了莱布尼兹相等性，以及其逆命题。在正方向上，
