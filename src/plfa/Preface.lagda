@@ -5,6 +5,7 @@ prev      : /Dedication/
 permalink : /Preface/
 next      : /Naturals/
 translators : ["Oling Cat"]
+progress  : 100
 ---
 
 {::comment}
