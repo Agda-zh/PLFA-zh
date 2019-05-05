@@ -5,7 +5,7 @@ prev      : /Preface/
 permalink : /Naturals/
 next      : /Induction/
 translators : ["Rongxiao Fu"]
-progress: 100
+progress  : 100
 ---
 
 \begin{code}
