@@ -342,7 +342,7 @@ held yesterday, then `P (suc zero)` holds today:
 
 然后我们重复此过程。在接下来的一天我们知道今天之前的所有性质，
 以及任何通过此规则添加的性质。起始步骤告诉我们 `P zero`
-成立，当然我们已经知道质检室了。而如今归纳步骤告诉我们，由于 `P zero`
+成立，当然我们已经知道这件事了。而如今归纳步骤告诉我们，由于 `P zero`
 在昨天成立，那么 `P (suc zero)` 今天也成立。
 
 {::comment}
@@ -364,7 +364,7 @@ the first of these, but the second is new:
 
 我们再重复此过程。现在归纳步骤告诉我们由于 `P zero` 和 `P (suc zero)` 都成立，
 因此 `P (suc zero)` 和 `P (suc (suc zero))` 也成立。我们已经知道第一个成立了，
-但第二个是新建入的：
+但第二个是新引入的：
 
 {::comment}
     -- On the third day, three properties are known.
@@ -420,7 +420,7 @@ day _n+1_.
 To prove associativity, we take `P m` to be the property:
 {:/}
 
-要证明结合律，我们将 `P m` 看做以下性质：
+要证明结合律，我们需要将 `P m` 看做以下性质：
 
     (m + n) + p ≡ m + (n + p)
 
@@ -491,8 +491,8 @@ defining the identifier `+-assoc` which provides evidence for the
 proposition:
 {:/}
 
-我们来分析一段这段代码。其签名（Signature）描述了我们定义的标识符 `+-assoc`
-提供了以下命题的证据（Evidence）：
+我们来分析一下这段代码。其签名（Signature）描述了我们定义的标识符 `+-assoc`
+为以下命题提供了证据（Evidence）：
 
     ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
 
@@ -520,7 +520,7 @@ For the base case, we must show:
 Simplifying both sides with the base case of addition yields the equation:
 {:/}
 
-用加法的起始步骤简化等式两边会得到：
+用加法的起始步骤化简等式两边会得到：
 
     n + p ≡ n + p
 
@@ -572,8 +572,8 @@ within angle brackets.  The justification given is:
 {:/}
 
 阅读此证明中归纳步骤的等式链，其最初和最末的式子分别匹配待证等式的两边，
-从上到下或从下到上读都会让我们到达上面简化等式的地方。剩下的等式，
-不止用简化就行，因此我们需要为推理链使用一个附加的运算符 `_≡⟨_⟩_`，
+从上到下或从下到上读都会让我们到达上面化简等式的地方。剩下的等式，
+不止用化简就行，因此我们需要为推理链使用一个附加的运算符 `_≡⟨_⟩_`，
 为等式给出的依据会放在尖括号中。这里给出的依据是：
 
     ⟨ cong suc (+-assoc m n p) ⟩
@@ -745,7 +745,7 @@ takes us to the simplified equation above.  The remaining
 equation has the justification:
 {:/}
 
-阅读此等式链，从上到下和从下到上读都会让我们到达上面简化等式的地方。
+阅读此等式链，从上到下和从下到上读都会让我们到达上面化简等式的地方。
 剩下的等式可由以下依据得出：
 
     ⟨ cong suc (+-identityʳ m) ⟩
@@ -1226,7 +1226,7 @@ which is left as an exercise for the reader.
 #### Exercise `finite-+-assoc` (stretch) {#finite-plus-assoc}
 {:/}
 
-#### 练习 `finite-+-assoc`（延伸）{#finite-plus-assoc}
+#### 练习 `finite-+-assoc`（延伸） {#finite-plus-assoc}
 
 {::comment}
 Write out what is known about associativity of addition on each of the first four
@@ -1517,7 +1517,7 @@ typing `C-c C-r` will fill it in, completing the proof:
 #### Exercise `+-swap` (recommended) {#plus-swap}
 {:/}
 
-#### 练习：`+-swap`（推荐）{#plus-swap}
+#### 练习：`+-swap`（推荐） {#plus-swap}
 
 {::comment}
 Show
@@ -1549,7 +1549,7 @@ is associative and commutative.
 #### Exercise `*-distrib-+` (recommended) {#times-distrib-plus}
 {:/}
 
-#### 练习 `*-distrib-+`（推荐）{#times-distrib-plus}
+#### 练习 `*-distrib-+`（推荐） {#times-distrib-plus}
 
 {::comment}
 Show multiplication distributes over addition, that is,
@@ -1579,7 +1579,7 @@ for all naturals `m`, `n`, and `p`.
 #### Exercise `*-assoc` (recommended) {#times-assoc}
 {:/}
 
-#### 练习 `*-assoc`（推荐）{#times-assoc}
+#### 练习 `*-assoc`（推荐） {#times-assoc}
 
 {::comment}
 Show multiplication is associative, that is,
@@ -1703,7 +1703,7 @@ for all naturals `m`, `n`, and `p`.
 #### Exercise `Bin-laws` (stretch) {#Bin-laws}
 {:/}
 
-#### 练习 `Bin-laws`（延伸）{#Bin-laws}
+#### 练习 `Bin-laws`（延伸） {#Bin-laws}
 
 {::comment}
 Recall that
