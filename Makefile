@@ -12,7 +12,7 @@ test: build
 
 # Build PLFA and test hyperlinks offline
 test-offline: build
-	ruby -S bundle exec htmlproofer _site --disable-external
+	ruby -S bundle exec htmlproofer _site --disable-external --url-swap \/PLFA-zh:
 
 
 statistics:

@@ -36,7 +36,7 @@ script:
 - agda --version
 - agda2html --version
 - acknowledgements --version
-- make build-offline
+- make test-offline
 
 before_deploy:
   "if ! [[ $BEFORE_DEPLOY_RUN ]]; then\n\
