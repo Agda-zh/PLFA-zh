@@ -52,6 +52,7 @@ open import plfa.Isomorphism using (_≃_; _∘_; ≃-sym; ≃-trans; _≲_; ext
 open plfa.Isomorphism.≃-Reasoning
 open import plfa.Lists using (List; []; _∷_; [_]; [_,_]; [_,_,_]; [_,_,_,_];
   _++_; reverse; map; foldr; sum; All; Any; here; there; _∈_)
+open import Agda.Primitive using (Level)
 \end{code}
 
 ## Equality
