@@ -1020,6 +1020,7 @@ Agda 要求标识符必须在使用前定义，因此我们必须在主命题之
 
 {::comment}
 ## Our first corollary: rearranging {#sections}
+{:/}
 
 ## 第一个推论：重排定理 {#sections}
 
