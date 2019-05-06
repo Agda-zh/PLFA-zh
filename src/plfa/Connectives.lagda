@@ -5,7 +5,7 @@ prev      : /Isomorphism/
 permalink : /Connectives/
 next      : /Negation/
 translators : ["Fangyi Zhou"]
-progress  : 0
+progress  : 50
 ---
 
 \begin{code}
@@ -56,7 +56,7 @@ open plfa.Isomorphism.≃-Reasoning
 \end{code}
 
 
-## *合取*（Conjunction）即是*积*（Product）
+## 合取即是积
 {::comment}
 ## Conjunction is product
 {:/}
@@ -374,10 +374,16 @@ is isomorphic to `(A → B) × (B → A)`.
 {:/}
 
 
+## 真即是单元类型
+{::comment}
 ## Truth is unit
+{:/}
 
+恒真 `⊤` 恒成立。我们将这个概念用合适的归纳类型来形式化：
+{::comment}
 Truth `⊤` always holds. We formalise this idea by
 declaring a suitable inductive type:
+{:/}
 \begin{code}
 data ⊤ : Set where
 
@@ -385,36 +391,58 @@ data ⊤ : Set where
     --
     ⊤
 \end{code}
+`⊤` 成立的证明由 `tt` 的形式构成。
+{::comment}
 Evidence that `⊤` holds is of the form `tt`.
+{:/}
 
+恒真有引入规则，但没有消去规则。给定一个 `⊤` 成立的证明，我们不能得出任何有趣的结论。
+因为恒真恒成立，知道恒真成立不会给我们带来新的知识。
+{::comment}
 There is an introduction rule, but no elimination rule.
 Given evidence that `⊤` holds, there is nothing more of interest we
 can conclude.  Since truth always holds, knowing that it holds tells
 us nothing new.
+{:/}
 
+`η-×` 的 零元形式是 `η-⊤`，其断言了任何 `⊤` 类型的值一定等于 `tt`：
+{::comment}
 The nullary case of `η-×` is `η-⊤`, which asserts that any
 value of type `⊤` must be equal to `tt`:
+{:/}
 \begin{code}
 η-⊤ : ∀ (w : ⊤) → tt ≡ w
 η-⊤ tt = refl
 \end{code}
+左手边的模式匹配是必要的。将 `w` 替换为 `tt` 让等式两边可以化简为相同的值。
+{::comment}
 The pattern matching on the left-hand side is essential.  Replacing
 `w` by `tt` allows both sides of the propositional equality to
 simplify to the same term.
+{:/}
 
+我们将 `⊤` 称为*单元*类型（Unit Type）。实际上，`⊤` 类型只有一个成员 `tt`。
+例如，下面的函数枚举了所有 `⊤` 类型的参数：
+{::comment}
 We refer to `⊤` as the _unit_ type. And, indeed,
 type `⊤` has exactly one member, `tt`.  For example, the following
 function enumerates all possible arguments of type `⊤`:
+{:/}
 \begin{code}
 ⊤-count : ⊤ → ℕ
 ⊤-count tt = 1
 \end{code}
 
+对于数来说，1 是乘法的幺元。对应地，单元是积的幺元（*忽略同构*）。对于左幺元来说，
+`to` 函数将 `⟨ tt , x ⟩` 转换成 `x`， `from` 函数则是其反函数。左逆的证明需要
+匹配一个合适的模式来化简：
+{::comment}
 For numbers, one is the identity of multiplication. Correspondingly,
 unit is the identity of product _up to isomorphism_.  For left
 identity, the `to` function takes `⟨ tt , x ⟩` to `x`, and the `from`
 function does the inverse.  The evidence of left inverse requires
 matching against a suitable pattern to enable simplification:
+{:/}
 \begin{code}
 ⊤-identityˡ : ∀ {A : Set} → ⊤ × A ≃ A
 ⊤-identityˡ =
@@ -426,20 +454,31 @@ matching against a suitable pattern to enable simplification:
     }
 \end{code}
 
+*幺元*和*忽略同构*的*幺元*是不一样的。比较下列两个命题：
+{::comment}
 Having an _identity_ is different from having an identity
 _up to isomorphism_.  Compare the two statements:
+{:/}
 
     1 * m ≡ m
     ⊤ × A ≃ A
 
+在第一种情况下，我们可能有 `m` 是 `2`，那么 `1 * m` 和 `m` 都为 `2`。
+在第二种情况下，我们可能有 `A` 是 `Bool`，但是 `⊤ × Bool` 和 `Bool` 是不同的。
+例如：`⟨ tt , true ⟩` 是前者的成员，其对应后者的成员 `true`。
+{::comment}
 In the first case, we might have that `m` is `2`, and both
 `1 * m` and `m` are equal to `2`.  In the second
 case, we might have that `A` is `Bool`, and `⊤ × Bool` is _not_ the
 same as `Bool`.  But there is an isomorphism between the two types.
 For instance, `⟨ tt , true ⟩`, which is a member of the former,
 corresponds to `true`, which is a member of the latter.
+{:/}
 
+右幺元可以由积的交换律得来：
+{::comment}
 Right identity follows from commutativity of product and left identity:
+{:/}
 \begin{code}
 ⊤-identityʳ : ∀ {A : Set} → (A × ⊤) ≃ A
 ⊤-identityʳ {A} =
@@ -451,8 +490,11 @@ Right identity follows from commutativity of product and left identity:
     A
   ≃-∎
 \end{code}
+我们在此使用了同构链，与等式链相似。
+{::comment}
 Here we have used a chain of isomorphisms, analogous to that used for
 equality.
+{:/}
 
 
 ## Disjunction is sum
