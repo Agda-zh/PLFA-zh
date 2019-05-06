@@ -12,10 +12,6 @@ progress  : 100
 module plfa.Equality where
 \end{code}
 
-我们在论证的过程中经常会使用相等性。给定两个都为 `A` 类型的项 `M` 和 `N`，
-我们用 `M ≡ N` 来表示 `M` 和 `N` 可以相互替换。在此之前，
-我们将相等性作为一个基础运算，而现在我们来说明如果将其定义为一个归纳的数据类型。
-
 {::comment}
 Much of our reasoning has involved equality.  Given two terms `M`
 and `N`, both of type `A`, we write `M ≡ N` to assert that `M` and `N`
@@ -23,13 +19,16 @@ are interchangeable.  So far we have treated equality as a primitive,
 here we show how to define it as an inductive datatype.
 {:/}
 
-## 导入
+我们在论证的过程中经常会使用相等性。给定两个都为 `A` 类型的项 `M` 和 `N`，
+我们用 `M ≡ N` 来表示 `M` 和 `N` 可以相互替换。在此之前，
+我们将相等性作为一个基础运算，而现在我们来说明如果将其定义为一个归纳的数据类型。
+
+
 {::comment}
 ## Imports
 {:/}
 
-本章节没有导入的内容。本书的每一章节，以及 Agda 标准库的每个模块都导入了相等性。
-我们在此定义相等性，导入其他内容将会产生冲突。
+## 导入
 
 {::comment}
 This chapter has no imports.  Every chapter in this book, and nearly
@@ -37,27 +36,27 @@ every module in the Agda standard library, imports equality.
 Since we define equality here, any import would create a conflict.
 {:/}
 
-## 相等性
+本章节没有导入的内容。本书的每一章节，以及 Agda 标准库的每个模块都导入了相等性。
+我们在此定义相等性，导入其他内容将会产生冲突。
+
+
 {::comment}
 ## Equality
 {:/}
 
-我们如下定义相等性：
+## 相等性
+
 {::comment}
 We declare equality as follows:
 {:/}
+
+我们如下定义相等性：
+
 \begin{code}
 data _≡_ {A : Set} (x : A) : A → Set where
   refl : x ≡ x
 \end{code}
 
-用其他的话来说，对于任意类型 `A` 和任意 `A` 类型的 `x`，构造器 `refl` 提供了
-`x ≡ x` 的证明。所以，每个值等同于它本身，我们并没有其他办法来证明值的相等性。
-这个定义里有不对称的地方，`_≡_` 的第一个参数（Argument）由 `x : A` 给出，
-而第二个参数（Argument）则是由 `A → Set` 的索引给出。
-这和我们尽可能多的使用参数（Parameter）的理念相符。`_≡_` 的第一个参数（Argument）
-可以作为一个参数（Parameter），因为它不会变，而第二个参数（Argument）则必须是一个索引，
-这样它才可以等用于第一个。
 {::comment}
 In other words, for any type `A` and for any `x` of type `A`, the
 constructor `refl` provides evidence that `x ≡ x`. Hence, every value
@@ -70,15 +69,24 @@ can be a parameter because it doesn't vary, while the second must be
 an index, so it can be required to be equal to the first.
 {:/}
 
-我们如下定义相等性的优先级：
+用其他的话来说，对于任意类型 `A` 和任意 `A` 类型的 `x`，构造器 `refl` 提供了
+`x ≡ x` 的证明。所以，每个值等同于它本身，我们并没有其他办法来证明值的相等性。
+这个定义里有不对称的地方，`_≡_` 的第一个参数（Argument）由 `x : A` 给出，
+而第二个参数（Argument）则是由 `A → Set` 的索引给出。
+这和我们尽可能多的使用参数（Parameter）的理念相符。`_≡_` 的第一个参数（Argument）
+可以作为一个参数（Parameter），因为它不会变，而第二个参数（Argument）则必须是一个索引，
+这样它才可以等用于第一个。
+
 {::comment}
 We declare the precedence of equality as follows:
 {:/}
+
+我们如下定义相等性的优先级：
+
 \begin{code}
 infix 4 _≡_
 \end{code}
-我们将 `_≡_` 的优先级设置为 4，与 `_≤_` 相同，所以它没有算术运算符相比结合的紧密。
-它既不是左结合，也不是右结合的，因此 `x ≡ y ≡ z` 是不合法的。
+
 {::comment}
 We set the precedence of `_≡_` at level 4, the same as `_≤_`,
 which means it binds less tightly than any arithmetic operator.
@@ -86,18 +94,25 @@ It associates neither to left nor right; writing `x ≡ y ≡ z`
 is illegal.
 {:/}
 
-## 相等性是一个等价关系（Equivalence Relation）
+我们将 `_≡_` 的优先级设置为 4，与 `_≤_` 相同，所以它没有算术运算符相比结合的紧密。
+它既不是左结合，也不是右结合的，因此 `x ≡ y ≡ z` 是不合法的。
+
+
 {::comment}
 ## Equality is an equivalence relation
 {:/}
 
-一个等价关系是自反、对称和传递的。其中自反性可以通过构造器 `refl` 直接从相等性的定义中得来。
-我们可以直接地证明其对称性：
+## 相等性是一个等价关系（Equivalence Relation）
+
 {::comment}
 An equivalence relation is one which is reflexive, symmetric, and transitive.
 Reflexivity is built-in to the definition of equality, via the
 constructor `refl`.  It is straightforward to show symmetry:
 {:/}
+
+一个等价关系是自反、对称和传递的。其中自反性可以通过构造器 `refl` 直接从相等性的定义中得来。
+我们可以直接地证明其对称性：
+
 \begin{code}
 sym : ∀ {A : Set} {x y : A}
   → x ≡ y
@@ -105,8 +120,7 @@ sym : ∀ {A : Set} {x y : A}
   → y ≡ x
 sym refl = refl
 \end{code}
-这个证明是怎么运作的呢？`sym` 参数的类型是 `x ≡ y`，但是等式的左手边被 `refl` 模式实例化了，
-这要求 `x` 和 `y` 相等。因此，等式的右手边需要一个类型为 `x ≡ x` 的项，用 `refl` 即可。
+
 {::comment}
 How does this proof work? The argument to `sym` has type `x ≡ y`, but
 on the left-hand side of the equation the argument has been
@@ -115,12 +129,16 @@ are the same.  Hence, for the right-hand side of the equation we need
 a term of type `x ≡ x`, and `refl` will do.
 {:/}
 
-交互式地证明 `sym` 很有教育意义。首先，我们在左手边使用一个变量来表示参数，在右手边使用一个洞：
+这个证明是怎么运作的呢？`sym` 参数的类型是 `x ≡ y`，但是等式的左手边被 `refl` 模式实例化了，
+这要求 `x` 和 `y` 相等。因此，等式的右手边需要一个类型为 `x ≡ x` 的项，用 `refl` 即可。
+
 {::comment}
 It is instructive to develop `sym` interactively.  To start, we supply
 a variable for the argument on the left, and a hole for the body on
 the right:
 {:/}
+
+交互式地证明 `sym` 很有教育意义。首先，我们在左手边使用一个变量来表示参数，在右手边使用一个洞：
 
     sym : ∀ {A : Set} {x y : A}
       → x ≡ y
@@ -128,10 +146,11 @@ the right:
       → y ≡ x
     sym e = {! !}
 
-如果我们进入这个洞，使用 `C-c C-,`，Agda 会告诉我们：
 {::comment}
 If we go into the hole and type `C-c C-,` then Agda reports:
 {:/}
+
+如果我们进入这个洞，使用 `C-c C-,`，Agda 会告诉我们：
 
     Goal: .y ≡ .x
     ————————————————————————————————————————————————————————————
@@ -140,13 +159,14 @@ If we go into the hole and type `C-c C-,` then Agda reports:
     .x : .A
     .A : Set
 
-在这个洞里，我们使用 `C-c C-c e`，Agda 会将 `e` 逐一展开为其所有可能的构造器。
-此处只有一个构造器：
 {::comment}
 If in the hole we type `C-c C-c e` then Agda will instantiate `e` to
 all possible constructors, with one equation for each. There is only
 one possible constructor:
 {:/}
+
+在这个洞里，我们使用 `C-c C-c e`，Agda 会将 `e` 逐一展开为其所有可能的构造器。
+此处只有一个构造器：
 
     sym : ∀ {A : Set} {x y : A}
       → x ≡ y
@@ -154,28 +174,31 @@ one possible constructor:
       → y ≡ x
     sym refl = {! !}
 
-如果我们再次进入这个洞，重新使用 `C-c C-,`，然后 Agda 现在会告诉我们：
 {::comment}
 If we go into the hole again and type `C-c C-,` then Agda now reports:
 {:/}
+
+如果我们再次进入这个洞，重新使用 `C-c C-,`，然后 Agda 现在会告诉我们：
 
      Goal: .x ≡ .x
      ————————————————————————————————————————————————————————————
      .x : .A
      .A : Set
 
-这是一个重要的步骤—— Agda 发现了 `x` 和 `y` 必须相等，才能与模式 `refl` 相匹配。
 {::comment}
 This is the key step---Agda has worked out that `x` and `y` must be
 the same to match the pattern `refl`!
 {:/}
 
-最后，我们回到洞里，使用 `C-c C-r`，Agda 将会把洞变成一个可以满足给定类型的构造器实例。
+这是一个重要的步骤—— Agda 发现了 `x` 和 `y` 必须相等，才能与模式 `refl` 相匹配。
+
 {::comment}
 Finally, if we go back into the hole and type `C-c C-r` it will
 instantiate the hole with the one constructor that yields a value of
 the expected type:
 {:/}
+
+最后，我们回到洞里，使用 `C-c C-r`，Agda 将会把洞变成一个可以满足给定类型的构造器实例。
 
     sym : ∀ {A : Set} {x y : A}
       → x ≡ y
@@ -183,15 +206,18 @@ the expected type:
       → y ≡ x
     sym refl = refl
 
-我们至此完成了与之前给出证明相同的证明。
 {::comment}
 This completes the definition as given above.
 {:/}
 
-传递性亦是很直接：
+我们至此完成了与之前给出证明相同的证明。
+
 {::comment}
 Transitivity is equally straightforward:
 {:/}
+
+传递性亦是很直接：
+
 \begin{code}
 trans : ∀ {A : Set} {x y z : A}
   → x ≡ y
@@ -200,24 +226,30 @@ trans : ∀ {A : Set} {x y z : A}
   → x ≡ z
 trans refl refl  =  refl
 \end{code}
-同样，交互式地证明这个特性是一个很好的练习，尤其是观察 Agda 的已知内容根据参数的实例而变化的过程。
+
 {::comment}
 Again, a useful exercise is to carry out an interactive development,
 checking how Agda's knowledge changes as each of the two arguments is
 instantiated.
 {:/}
 
-## 同余性和替换性 {#cong}
+同样，交互式地证明这个特性是一个很好的练习，尤其是观察 Agda 的已知内容根据参数的实例而变化的过程。
+
+
 {::comment}
 ## Congruence and substitution {#cong}
 {:/}
 
-相等性满足 *同余性*（Congurence）。如果两个项相等，那么对它们使用相同的函数，
-其结果仍然相等：
+## 同余性和替换性 {#cong}
+
 {::comment}
 Equality satisfies _congruence_.  If two terms are equal,
 they remain so after the same function is applied to both:
 {:/}
+
+相等性满足 *同余性*（Congurence）。如果两个项相等，那么对它们使用相同的函数，
+其结果仍然相等：
+
 \begin{code}
 cong : ∀ {A B : Set} (f : A → B) {x y : A}
   → x ≡ y
@@ -226,10 +258,12 @@ cong : ∀ {A B : Set} (f : A → B) {x y : A}
 cong f refl  =  refl
 \end{code}
 
-两个参数的函数也满足同余性：
 {::comment}
 Congruence of functions with two arguments is similar:
 {:/}
+
+两个参数的函数也满足同余性：
+
 \begin{code}
 cong₂ : ∀ {A B C : Set} (f : A → B → C) {u x : A} {v y : B}
   → u ≡ x
@@ -239,12 +273,14 @@ cong₂ : ∀ {A B C : Set} (f : A → B → C) {u x : A} {v y : B}
 cong₂ f refl refl  =  refl
 \end{code}
 
-在函数上的等价性也满足同余性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
 {::comment}
 Equality is also a congruence in the function position of an application.
 If two functions are equal, then applying them to the same term
 yields equal terms:
 {:/}
+
+在函数上的等价性也满足同余性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
+
 \begin{code}
 cong-app : ∀ {A B : Set} {f g : A → B}
   → f ≡ g
@@ -253,12 +289,14 @@ cong-app : ∀ {A B : Set} {f g : A → B}
 cong-app refl x = refl
 \end{code}
 
-相等性也满足*替换性*（Substitution）。
-如果两个值相等，其中一个满足某谓词，那么另一个也满足此谓词。
 {::comment}
 Equality also satisfies *substitution*.
 If two values are equal and a predicate holds of the first then it also holds of the second:
 {:/}
+
+相等性也满足*替换性*（Substitution）。
+如果两个值相等，其中一个满足某谓词，那么另一个也满足此谓词。
+
 \begin{code}
 subst : ∀ {A : Set} {x y : A} (P : A → Set)
   → x ≡ y
@@ -267,19 +305,23 @@ subst : ∀ {A : Set} {x y : A} (P : A → Set)
 subst P refl px = px
 \end{code}
 
-## 等式串
+
 {::comment}
 ## Chains of equations
 {:/}
 
-我们在此演示如何使用等式串来论证，正如本书中使用证明形式。我们讲声明放在一个叫做
-`≡-Reasoning` 的模块里，与 Agda 标准库中的格式相对应。
+## 等式串
+
 {::comment}
 Here we show how to support reasoning with chains of equations, as
 used throughout the book.  We package the declarations into a module,
 named `≡-Reasoning`, to match the format used in Agda's standard
 library:
 {:/}
+
+我们在此演示如何使用等式串来论证，正如本书中使用证明形式。我们讲声明放在一个叫做
+`≡-Reasoning` 的模块里，与 Agda 标准库中的格式相对应。
+
 \begin{code}
 module ≡-Reasoning {A : Set} where
 
@@ -313,10 +355,6 @@ module ≡-Reasoning {A : Set} where
 
 open ≡-Reasoning
 \end{code}
-这是我们第一次使用嵌套的模块。它包括了关键字 `module` 和后续的模块名、隐式或显式参数，
-关键字 `where`，和模块中的内容（在缩进内）。模块里可以包括任何形式的声明，也可以包括其他模块。
-嵌套的模块和本书每章节所定义的顶层模块相似，只是顶层模块不需要缩进。
-打开（Open）一个模块会把模块内的所有定义导入进当前的环境中。
 
 {::comment}
 This is our first use of a nested module. It consists of the keyword
@@ -329,11 +367,18 @@ need not be indented.  Opening the module makes all of the definitions
 available in the current environment.
 {:/}
 
-举个例子，我们来看看如何用等式串证明传递性：
+这是我们第一次使用嵌套的模块。它包括了关键字 `module` 和后续的模块名、隐式或显式参数，
+关键字 `where`，和模块中的内容（在缩进内）。模块里可以包括任何形式的声明，也可以包括其他模块。
+嵌套的模块和本书每章节所定义的顶层模块相似，只是顶层模块不需要缩进。
+打开（Open）一个模块会把模块内的所有定义导入进当前的环境中。
+
 {::comment}
 As an example, let's look at a proof of transitivity
 as a chain of equations:
 {:/}
+
+举个例子，我们来看看如何用等式串证明传递性：
+
 \begin{code}
 trans′ : ∀ {A : Set} {x y z : A}
   → x ≡ y
@@ -349,20 +394,15 @@ trans′ {A} {x} {y} {z} x≡y y≡z =
     z
   ∎
 \end{code}
-根据其定义，等式右边会被解析成如下：
+
 {::comment}
 According to the fixity declarations, the body parses as follows:
 {:/}
 
+根据其定义，等式右边会被解析成如下：
+
     begin (x ≡⟨ x≡y ⟩ (y ≡⟨ y≡z ⟩ (z ∎)))
 
-这里 `begin` 的使用纯粹是装饰性的，因为它直接返回了其参数。其参数包括了
-`_≡⟨_⟩_` 作用于 `x`、`x≡y` 和 `y ≡⟨ y≡z ⟩ (z ∎)`。第一个参数是一个项 `x`，
-而第二、第三个参数分别是等式 `x ≡ y`、`y ≡ z` 的证明，它们在 `_≡⟨_⟩_` 的定义中用
-`trans` 连接起来，形成 `x ≡ z` 的证明。`y ≡ z` 的证明包括了 `_≡⟨_⟩_` 作用于 `y`、
-`y≡z` 和 `z ∎`。第一个参数是一个项 `y`，而第二、第三个参数分别是等式 `y ≡ z`、`z ≡ z` 的证明，
-它们在 `_≡⟨_⟩_` 的定义中用 `trans` 连接起来，形成 `y ≡ z` 的证明。最后，`z ≡ z`
-的证明包括了 `_∎` 作用于 `z` 之上，使用了 `refl`。经过化简，上述定义等同于：
 {::comment}
 The application of `begin` is purely cosmetic, as it simply returns
 its argument.  That argument consists of `_≡⟨_⟩_` applied to `x`,
@@ -379,11 +419,16 @@ body of `_≡⟨_⟩_` to yield a proof of `y ≡ z`.  Finally, the proof of
 After simplification, the body is equivalent to the term:
 {:/}
 
+这里 `begin` 的使用纯粹是装饰性的，因为它直接返回了其参数。其参数包括了
+`_≡⟨_⟩_` 作用于 `x`、`x≡y` 和 `y ≡⟨ y≡z ⟩ (z ∎)`。第一个参数是一个项 `x`，
+而第二、第三个参数分别是等式 `x ≡ y`、`y ≡ z` 的证明，它们在 `_≡⟨_⟩_` 的定义中用
+`trans` 连接起来，形成 `x ≡ z` 的证明。`y ≡ z` 的证明包括了 `_≡⟨_⟩_` 作用于 `y`、
+`y≡z` 和 `z ∎`。第一个参数是一个项 `y`，而第二、第三个参数分别是等式 `y ≡ z`、`z ≡ z` 的证明，
+它们在 `_≡⟨_⟩_` 的定义中用 `trans` 连接起来，形成 `y ≡ z` 的证明。最后，`z ≡ z`
+的证明包括了 `_∎` 作用于 `z` 之上，使用了 `refl`。经过化简，上述定义等同于：
+
     trans x≡y (trans y≡z refl)
 
-我们可以把任意等式串转化成一系列的 `trans` 的使用。这样的证明更加精简，但是更难以阅读。
-`∎` 的小窍门意味着等式串化简成为的一系列 `trans` 会以 `trans e refl` 结尾，尽管只需要 `e`
-就足够了，这里的 `e` 是等式的证明。
 {::comment}
 We could replace any use of a chain of equations by a chain of
 applications of `trans`; the result would be more compact but harder
@@ -393,19 +438,27 @@ refl`, where `e` is a term that proves some equality, even though `e`
 alone would do.
 {:/}
 
-## 等式串的另外一个例子
+我们可以把任意等式串转化成一系列的 `trans` 的使用。这样的证明更加精简，但是更难以阅读。
+`∎` 的小窍门意味着等式串化简成为的一系列 `trans` 会以 `trans e refl` 结尾，尽管只需要 `e`
+就足够了，这里的 `e` 是等式的证明。
+
+
 {::comment}
 ## Chains of equations, another example
 {:/}
 
-我们重新证明加法的交换律来作为等式串的第二个例子。我们首先重复自然数和加法的定义。
-我们不能导入它们（正如本章节开头中所解释的那样），因为那样会产生一个冲突：
+## 等式串的另外一个例子
+
 {::comment}
 As a second example of chains of equations, we repeat the proof that addition
 is commutative.  We first repeat the definitions of naturals and addition.
 We cannot import them because (as noted at the beginning of this chapter)
 it would cause a conflict:
 {:/}
+
+我们重新证明加法的交换律来作为等式串的第二个例子。我们首先重复自然数和加法的定义。
+我们不能导入它们（正如本章节开头中所解释的那样），因为那样会产生一个冲突：
+
 \begin{code}
 data ℕ : Set where
   zero : ℕ
@@ -416,18 +469,18 @@ zero    + n  =  n
 (suc m) + n  =  suc (m + n)
 \end{code}
 
-为了节约空间，我们假设两条引理（而不是证明它们）：
 {::comment}
 To save space we postulate (rather than prove in full) two lemmas:
 {:/}
+
+为了节约空间，我们假设两条引理（而不是证明它们）：
+
 \begin{code}
 postulate
   +-identity : ∀ (m : ℕ) → m + zero ≡ m
   +-suc : ∀ (m n : ℕ) → m + suc n ≡ suc (m + n)
 \end{code}
-这是我们第一次使用*假设*（Postulate）。假设为一个标识符指定一个签名，但是不提供定义。
-我们在这里假设之前证明过的东西，来节约空间。假设在使用时必须加以注意。如果假设的内容为假，
-那么我们可以证明出任何东西。
+
 {::comment}
 This is our first use of a _postulate_.  A postulate specifies a
 signature for an identifier but no definition.  Here we postulate
@@ -436,10 +489,16 @@ caution.  If we postulate something false then we could use Agda to
 prove anything whatsoever.
 {:/}
 
-我们接下来重复交换律的证明：
+这是我们第一次使用*假设*（Postulate）。假设为一个标识符指定一个签名，但是不提供定义。
+我们在这里假设之前证明过的东西，来节约空间。假设在使用时必须加以注意。如果假设的内容为假，
+那么我们可以证明出任何东西。
+
 {::comment}
 We then repeat the proof of commutativity:
 {:/}
+
+我们接下来重复交换律的证明：
+
 \begin{code}
 +-comm : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm m zero =
@@ -461,8 +520,7 @@ We then repeat the proof of commutativity:
     suc n + m
   ∎
 \end{code}
-论证的过程和之前的相似。我们在不需要解释的地方使用 `_≡⟨⟩_`，我们可以认为
-`_≡⟨⟩_` 和 `_≡⟨ refl ⟩_` 是等价的。
+
 {::comment}
 The reasoning here is similar to that in the
 preceding section.  We use
@@ -470,44 +528,48 @@ preceding section.  We use
 One can think of `_≡⟨⟩_` as equivalent to `_≡⟨ refl ⟩_`.
 {:/}
 
-Agda 总是认为一个项与其化简的项是等价的。我们之所以可以写出
+论证的过程和之前的相似。我们在不需要解释的地方使用 `_≡⟨⟩_`，我们可以认为
+`_≡⟨⟩_` 和 `_≡⟨ refl ⟩_` 是等价的。
+
 {::comment}
 Agda always treats a term as equivalent to its
 simplified term.  The reason that one can write
 {:/}
 
+Agda 总是认为一个项与其化简的项是等价的。我们之所以可以写出
+
       suc (n + m)
     ≡⟨⟩
       suc n + m
 
-是因为 Agda 认为它们是一样的。这也意味着我们可以交换两行的顺序，写出
 {::comment}
 is because Agda treats both terms as the same.
 This also means that one could instead interchange
 the lines and write
 {:/}
 
+是因为 Agda 认为它们是一样的。这也意味着我们可以交换两行的顺序，写出
+
       suc n + m
     ≡⟨⟩
       suc (n + m)
 
-而 Agda 并不会反对。Agda 只会检查由 `≡⟨⟩` 隔开的项是否化简后相同。
-而书写的顺序合不合理则是由我们自行决定。
 {::comment}
 and Agda would not object. Agda only checks that the terms separated
 by `≡⟨⟩` have the same simplified form; it's up to us to write them in
 an order that will make sense to the reader.
 {:/}
 
+而 Agda 并不会反对。Agda 只会检查由 `≡⟨⟩` 隔开的项是否化简后相同。
+而书写的顺序合不合理则是由我们自行决定。
 
-#### 练习 `≤-Reasoning` (延伸)
+
 {::comment}
 #### Exercise `≤-Reasoning` (stretch)
 {:/}
 
-[Relations][plfa.Relations] 章节中的单调性证明亦可以用相似于 `≡-reasoning` 的，更易于理解的形式给出。
-相似地来定义 `≤-reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤`、`+-monoʳ-≤`
-和 `+-mono-≤`。
+#### 练习 `≤-Reasoning` (延伸)
+
 {::comment}
 The proof of monotonicity from
 Chapter [Relations][plfa.Relations]
@@ -515,22 +577,36 @@ can be written in a more readable form by using an analogue of our
 notation for `≡-Reasoning`.  Define `≤-Reasoning` analogously, and use
 it to write out an alternative proof that addition is monotonic with
 regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mono-≤`.
+{:/}
+
+[Relations][plfa.Relations] 章节中的单调性证明亦可以用相似于 `≡-reasoning` 的，更易于理解的形式给出。
+相似地来定义 `≤-reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤`、`+-monoʳ-≤`
+和 `+-mono-≤`。
+
+{::comment}
+\begin{code}
+-- Your code goes here
+\end{code}
+{:/}
 
 \begin{code}
--- 在此处书写你的代码
+-- 请将代码写在此处。
 \end{code}
 
 
-## 重写
 {::comment}
 ## Rewriting
 {:/}
 
-考虑一个自然数的性质，比如说一个数是偶数。我们重复之前给出的定义：
+## 重写
+
 {::comment}
 Consider a property of natural numbers, such as being even.
 We repeat the earlier definition:
 {:/}
+
+考虑一个自然数的性质，比如说一个数是偶数。我们重复之前给出的定义：
+
 \begin{code}
 data even : ℕ → Set
 data odd  : ℕ → Set
@@ -550,30 +626,36 @@ data odd where
       -----------
     → odd (suc n)
 \end{code}
-在前面的部分中，我们证明了加法满足交换律。给定 `even (m + n)` 成立的证据，我们应当可以用它来做
-`even (n + m)` 成立的证据。
+
 {::comment}
 In the previous section, we proved addition is commutative.  Given
 evidence that `even (m + n)` holds, we ought also to be able to take
 that as evidence that `even (n + m)` holds.
 {:/}
 
-Agda 对这种论证有特殊记法的支持——我们之前提到过的 `rewrite` 记法。来启用这种记法，
-我们只用编译程序指令来告诉 Agda 什么类型对应相等性：
+在前面的部分中，我们证明了加法满足交换律。给定 `even (m + n)` 成立的证据，我们应当可以用它来做
+`even (n + m)` 成立的证据。
+
 {::comment}
 Agda includes special notation to support just this kind of reasoning,
 the `rewrite` notation we encountered earlier.
 To enable this notation, we use pragmas to tell Agda which type
 corresponds to equality:
 {:/}
+
+Agda 对这种论证有特殊记法的支持——我们之前提到过的 `rewrite` 记法。来启用这种记法，
+我们只用编译程序指令来告诉 Agda 什么类型对应相等性：
+
 \begin{code}
 {-# BUILTIN EQUALITY _≡_ #-}
 \end{code}
 
-我们然后就可以如下证明求证的性质：
 {::comment}
 We can then prove the desired property as follows:
 {:/}
+
+我们然后就可以如下证明求证的性质：
+
 \begin{code}
 even-comm : ∀ (m n : ℕ)
   → even (m + n)
@@ -581,9 +663,6 @@ even-comm : ∀ (m n : ℕ)
   → even (n + m)
 even-comm m n ev  rewrite +-comm n m  =  ev
 \end{code}
-
-在这里，`ev` 包括了所有 `even (m + n)` 成立的证据，我们证明它亦可作为 `even (n + m)`
-成立的证据。一般来说，关键字 `rewrite` 之后跟着一个等式的证明，这个等式被用于重写目标和任意作用域内变量的类型。
 
 {::comment}
 Here `ev` ranges over evidence that `even (m + n)` holds, and we show
@@ -593,12 +672,16 @@ equality, and that equality is used to rewrite the type of the
 goal and of any variable in scope.
 {:/}
 
-交互性地证明 `even-comm` 是很有帮助的。一开始，我们先给左边的参数赋予变量，给右手边放上一个洞：
+在这里，`ev` 包括了所有 `even (m + n)` 成立的证据，我们证明它亦可作为 `even (n + m)`
+成立的证据。一般来说，关键字 `rewrite` 之后跟着一个等式的证明，这个等式被用于重写目标和任意作用域内变量的类型。
+
 {::comment}
 It is instructive to develop `even-comm` interactively.  To start, we
 supply variables for the arguments on the left, and a hole for the
 body on the right:
 {:/}
+
+交互性地证明 `even-comm` 是很有帮助的。一开始，我们先给左边的参数赋予变量，给右手边放上一个洞：
 
     even-comm : ∀ (m n : ℕ)
       → even (m + n)
@@ -606,10 +689,11 @@ body on the right:
       → even (n + m)
     even-comm m n ev = {! !}
 
-如果我们进入洞里，输入 `C-c C-,`，Agda 会报告：
 {::comment}
 If we go into the hole and type `C-c C-,` then Agda reports:
 {:/}
+
+如果我们进入洞里，输入 `C-c C-,`，Agda 会报告：
 
     Goal: even (n + m)
     ————————————————————————————————————————————————————————————
@@ -617,10 +701,11 @@ If we go into the hole and type `C-c C-,` then Agda reports:
     n  : ℕ
     m  : ℕ
 
-现在我们加入重写：
 {::comment}
 Now we add the rewrite:
 {:/}
+
+现在我们加入重写：
 
     even-comm : ∀ (m n : ℕ)
       → even (m + n)
@@ -628,10 +713,11 @@ Now we add the rewrite:
       → even (n + m)
     even-comm m n ev rewrite +-comm n m = {! !}
 
-如果我们再次进入洞里，并输入 `C-c C-,`，Agda 现在会报告：
 {::comment}
 If we go into the hole again and type `C-c C-,` then Agda now reports:
 {:/}
+
+如果我们再次进入洞里，并输入 `C-c C-,`，Agda 现在会报告：
 
     Goal: even (m + n)
     ————————————————————————————————————————————————————————————
@@ -639,8 +725,6 @@ If we go into the hole again and type `C-c C-,` then Agda now reports:
     n  : ℕ
     m  : ℕ
 
-目标里的参数被交换了。现在 `ev` 显然满足目标条件，输入 `C-c C-a` 会用 `ev` 来填充这个洞。
-命令 `C-c C-a` 可以进行自动搜索，检查作用域内的变量是否和目标有相同的类型。
 {::comment}
 The arguments have been swapped in the goal.  Now it is trivial to see
 that `ev` satisfies the goal, and typing `C-c C-a` in the hole causes
@@ -649,25 +733,30 @@ automated search, including checking whether a variable in scope has
 the same type as the goal.
 {:/}
 
-## 多重重写
+目标里的参数被交换了。现在 `ev` 显然满足目标条件，输入 `C-c C-a` 会用 `ev` 来填充这个洞。
+命令 `C-c C-a` 可以进行自动搜索，检查作用域内的变量是否和目标有相同的类型。
+
+
 {::comment}
 ## Multiple rewrites
 {:/}
 
-我们可以多次使用重写，以竖线隔开。举个例子，这里是加法交换律的第二个证明，使用重写而不是等式串：
+## 多重重写
+
 {::comment}
 One may perform multiple rewrites, each separated by a vertical bar.  For instance,
 here is a second proof that addition is commutative, relying on rewrites rather
 than chains of equalities:
 {:/}
+
+我们可以多次使用重写，以竖线隔开。举个例子，这里是加法交换律的第二个证明，使用重写而不是等式串：
+
 \begin{code}
 +-comm′ : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm′ zero    n  rewrite +-identity n             =  refl
 +-comm′ (suc m) n  rewrite +-suc n m | +-comm′ m n  =  refl
 \end{code}
-这个证明更加的简短。之前的证明用 `cong suc (+-comm m n)` 作为使用归纳假设的说明，
-而这里我们使用 `+-comm m n` 来重写就足够了，因为重写可以将同余性考虑在其中。尽管使用重写的证明更加的简短，
-使用等式串的证明能容易理解，我们将尽可能的使用后者。
+
 {::comment}
 This is far more compact.  Among other things, whereas the previous
 proof required `cong suc (+-comm m n)` as the justification to invoke
@@ -678,16 +767,24 @@ of equalities are easier to follow, and we will stick with the latter
 when feasible.
 {:/}
 
-## 深入重写
+这个证明更加的简短。之前的证明用 `cong suc (+-comm m n)` 作为使用归纳假设的说明，
+而这里我们使用 `+-comm m n` 来重写就足够了，因为重写可以将同余性考虑在其中。尽管使用重写的证明更加的简短，
+使用等式串的证明能容易理解，我们将尽可能的使用后者。
+
+
 {::comment}
 ## Rewriting expanded
 {:/}
 
-`rewrite` 记法实际上是 `with` 抽象的一种应用：
+## 深入重写
+
 {::comment}
 The `rewrite` notation is in fact shorthand for an appropriate use of `with`
 abstraction:
 {:/}
+
+`rewrite` 记法实际上是 `with` 抽象的一种应用：
+
 \begin{code}
 even-comm′ : ∀ (m n : ℕ)
   → even (m + n)
@@ -696,12 +793,7 @@ even-comm′ : ∀ (m n : ℕ)
 even-comm′ m n ev with   m + n  | +-comm m n
 ...                  | .(n + m) | refl       = ev
 \end{code}
-总的来着，我们可以在 `with` 后面跟上任何数量的表达式，用竖线分隔开，并且在每个等式中使用相同个数的模式。
-我们经常将表达式和模式如上对齐。这个第一列表明了 `m + n` 和 `n + m` 是相同的，第二列使用相应等式来证明的前述的断言。
-注意在这里使用的*点模式*（Dot Pattern），`.(n + m)`。点模式由一个点和一个表达式组成，
-在其他信息迫使这个值和点模式中的值相等时使用。在这里，`m + n` 和 `n + m` 由后续的
-`+-comm m n` 与 `refl` 的匹配来识别。我们可能会认为第一种情况是多余的，因为第二种情况中才蕴含了需要的信息。
-但实际上 Agda 在这件事上很挑剔——省略第一条或者更换顺序会让 Agda 报告一个错误。（试一试你就知道！）
+
 {::comment}
 In general, one can follow `with` by any number of expressions,
 separated by bars, where each following equation has the same number
@@ -721,11 +813,20 @@ reversing the order of the clauses will cause Agda to report an error.
 (Try it and see!)
 {:/}
 
-在这种情况中，我们也可以使用之前定义的替换函数来避免使用重写：
+总的来着，我们可以在 `with` 后面跟上任何数量的表达式，用竖线分隔开，并且在每个等式中使用相同个数的模式。
+我们经常将表达式和模式如上对齐。这个第一列表明了 `m + n` 和 `n + m` 是相同的，第二列使用相应等式来证明的前述的断言。
+注意在这里使用的*点模式*（Dot Pattern），`.(n + m)`。点模式由一个点和一个表达式组成，
+在其他信息迫使这个值和点模式中的值相等时使用。在这里，`m + n` 和 `n + m` 由后续的
+`+-comm m n` 与 `refl` 的匹配来识别。我们可能会认为第一种情况是多余的，因为第二种情况中才蕴含了需要的信息。
+但实际上 Agda 在这件事上很挑剔——省略第一条或者更换顺序会让 Agda 报告一个错误。（试一试你就知道！）
+
 {::comment}
 In this case, we can avoid rewrite by simply applying the substitution
 function defined earlier:
 {:/}
+
+在这种情况中，我们也可以使用之前定义的替换函数来避免使用重写：
+
 \begin{code}
 even-comm″ : ∀ (m n : ℕ)
   → even (m + n)
@@ -733,22 +834,21 @@ even-comm″ : ∀ (m n : ℕ)
   → even (n + m)
 even-comm″ m n  =  subst even (+-comm m n)
 \end{code}
-尽管如此，重写是 Agda 工具箱中很重要的一部分。我们会偶尔使用它，但是它有的时候是必要的。
+
 {::comment}
 Nonetheless, rewrite is a vital part of the Agda toolkit.  We will use
 it sparingly, but it is occasionally essential.
 {:/}
 
-## 莱布尼兹（Leibniz）相等性
+尽管如此，重写是 Agda 工具箱中很重要的一部分。我们会偶尔使用它，但是它有的时候是必要的。
+
+
 {::comment}
 ## Leibniz equality
 {:/}
 
-我们使用的相等性断言的形式源于 Martin Löf，于 1975 年发表。一个更早的形式源于莱布尼兹，
-于 1686 年发表。莱布尼兹断言的相等性表示*不可分辨的实体*（Identity of Indiscernibles）：
-两个对象相等当且仅当它们满足完全相同的性质。这条原理有时被称作莱布尼兹定律（Leibniz' Law），
-与史波克定律紧密相关：“一个不造成区别的区别不是区别”。我们在这里定义莱布尼兹相等性，
-并证明两个项满足莱布尼兹相等性当且仅当其满足 Martin Löf 相等性。
+## 莱布尼兹（Leibniz）相等性
+
 {::comment}
 The form of asserting equality that we have used is due to Martin
 Löf, and was published in 1975.  An older form is due to Leibniz, and
@@ -761,8 +861,12 @@ and show that two terms satisfy Leibniz equality if and only if they
 satisfy Martin Löf equality.
 {:/}
 
-莱布尼兹不等式一般如下来定义：`x ≐ y` 当每个对于 `x` 成立的性质 `P` 对于 `y` 也成立时成立。
-可能这有些出乎意料，但是这个定义亦足够保证其相反的命题：每个对于 `y` 成立的性质 `P` 对于 `x` 也成立。
+我们使用的相等性断言的形式源于 Martin Löf，于 1975 年发表。一个更早的形式源于莱布尼兹，
+于 1686 年发表。莱布尼兹断言的相等性表示*不可分辨的实体*（Identity of Indiscernibles）：
+两个对象相等当且仅当它们满足完全相同的性质。这条原理有时被称作莱布尼兹定律（Leibniz' Law），
+与史波克定律紧密相关：“一个不造成区别的区别不是区别”。我们在这里定义莱布尼兹相等性，
+并证明两个项满足莱布尼兹相等性当且仅当其满足 Martin Löf 相等性。
+
 {::comment}
 Leibniz equality is usually formalised to state that `x ≐ y` holds if
 every property `P` that holds of `x` also holds of `y`.  Perhaps
@@ -770,28 +874,31 @@ surprisingly, this definition is sufficient to also ensure the
 converse, that every property `P` that holds of `y` also holds of `x`.
 {:/}
 
-令 `x` 和 `y` 为类型 `A` 的对象。我们定义 `x ≐ y` 成立，当每个对于类型 `A` 成立的谓词 `P`，
-我们有 `P x` 蕴含了 `P y`：
+莱布尼兹不等式一般如下来定义：`x ≐ y` 当每个对于 `x` 成立的性质 `P` 对于 `y` 也成立时成立。
+可能这有些出乎意料，但是这个定义亦足够保证其相反的命题：每个对于 `y` 成立的性质 `P` 对于 `x` 也成立。
+
 {::comment}
 Let `x` and `y` be objects of type `A`. We say that `x ≐ y` holds if
 for every predicate `P` over type `A` we have that `P x` implies `P y`:
 {:/}
+
+令 `x` 和 `y` 为类型 `A` 的对象。我们定义 `x ≐ y` 成立，当每个对于类型 `A` 成立的谓词 `P`，
+我们有 `P x` 蕴含了 `P y`：
+
 \begin{code}
 _≐_ : ∀ {A : Set} (x y : A) → Set₁
 _≐_ {A} x y = ∀ (P : A → Set) → P x → P y
 \end{code}
-我们不能在左手边使用 `x ≐ y`，取而代之我们使用 `_≐_ {A} x y` 来提供隐式参数 `A`，这样 `A`
-可以出现在右手边。
+
 {::comment}
 We cannot write the left-hand side of the equation as `x ≐ y`,
 and instead we write `_≐_ {A} x y` to provide access to the implicit
 parameter `A` which appears on the right-hand side.
 {:/}
 
-这是我们第一次使用*等级*（Levels）。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
-比如罗素悖论（Russell's Paradox）或者 Girard 悖论。不同的是，我们有一个阶级的类型：其中
-`Set : Set₁`，`Set₁ : Set₂`，以此类推。实际上，`Set` 本身就是 `Set₀` 的缩写。定义
-`_≐_` 的等式在右手边提到了 `Set`，因此签名中必须使用 `Set₁`。我们稍后将进一步介绍等级。
+我们不能在左手边使用 `x ≐ y`，取而代之我们使用 `_≐_ {A} x y` 来提供隐式参数 `A`，这样 `A`
+可以出现在右手边。
+
 {::comment}
 This is our first use of _levels_.  We cannot assign `Set` the type
 `Set`, since this would lead to contradictions such as Russell's
@@ -802,12 +909,19 @@ mentions `Set` on the right-hand side, the corresponding signature
 must use `Set₁`.  We say a bit more about levels below.
 {:/}
 
-莱布尼兹相等性是自反和传递的。自反性由恒等函数的变种得来，传递性由函数组合的变种得来：
+这是我们第一次使用*等级*（Levels）。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
+比如罗素悖论（Russell's Paradox）或者 Girard 悖论。不同的是，我们有一个阶级的类型：其中
+`Set : Set₁`，`Set₁ : Set₂`，以此类推。实际上，`Set` 本身就是 `Set₀` 的缩写。定义
+`_≐_` 的等式在右手边提到了 `Set`，因此签名中必须使用 `Set₁`。我们稍后将进一步介绍等级。
+
 {::comment}
 Leibniz equality is reflexive and transitive,
 where the first follows by a variant of the identity function
 and the second by a variant of function composition:
 {:/}
+
+莱布尼兹相等性是自反和传递的。自反性由恒等函数的变种得来，传递性由函数组合的变种得来：
+
 \begin{code}
 refl-≐ : ∀ {A : Set} {x : A}
   → x ≐ x
@@ -821,13 +935,15 @@ trans-≐ : ∀ {A : Set} {x y z : A}
 trans-≐ x≐y y≐z P Px  =  y≐z P (x≐y P Px)
 \end{code}
 
-对称性就没有那么显然了。我们需要证明如果对于所有谓词 `P`，`P x` 蕴含 `P y`，
-那么反方向的蕴含也成立。
 {::comment}
 Symmetry is less obvious.  We have to show that if `P x` implies `P y`
 for all predicates `P`, then the implication holds the other way round
 as well:
 {:/}
+
+对称性就没有那么显然了。我们需要证明如果对于所有谓词 `P`，`P x` 蕴含 `P y`，
+那么反方向的蕴含也成立。
+
 \begin{code}
 sym-≐ : ∀ {A : Set} {x y : A}
   → x ≐ y
@@ -843,10 +959,6 @@ sym-≐ {A} {x} {y} x≐y P  =  Qy
     Qy = x≐y Q Qx
 \end{code}
 
-给定 `x ≐ y` 和一个特定的 `P`，我们需要构造一个 `P y` 蕴含 `P x` 的证明。
-我们首先用一个谓词 `Q` 将相等性实例化，使得 `Q z` 在 `P z` 蕴含 `P x` 时成立。
-`Q x` 这个性质是显然的，由自反性可以得出，因为 `Q y` 因为 `x ≐ y` 成立。然而 `Q y`
-亦是我们需要的证明，即 `P y` 蕴含 `P x`。
 {::comment}
 Given `x ≐ y`, a specific `P`, we have to construct a proof that `P y`
 implies `P x`.  To do so, we instantiate the equality with a predicate
@@ -855,9 +967,11 @@ is trivial by reflexivity, and hence `Q y` follows from `x ≐ y`.  But
 `Q y` is exactly a proof of what we require, that `P y` implies `P x`.
 {:/}
 
-我们现在来证明 Martin Löf 相等性蕴含了莱布尼兹相等性，以及其逆命题。在正方向上，
-如果我们已知 `x ≡ y`，我们需要对于任意的 `P`，将 `P x` 的证明转换为 `P y` 的证明。
-我们很容易就可以做到这一点，因为 `x` 与 `y` 相等意味着任何 `P x` 的证明即是 `P y` 的证明。
+给定 `x ≐ y` 和一个特定的 `P`，我们需要构造一个 `P y` 蕴含 `P x` 的证明。
+我们首先用一个谓词 `Q` 将相等性实例化，使得 `Q z` 在 `P z` 蕴含 `P x` 时成立。
+`Q x` 这个性质是显然的，由自反性可以得出，因为 `Q y` 因为 `x ≐ y` 成立。然而 `Q y`
+亦是我们需要的证明，即 `P y` 蕴含 `P x`。
+
 {::comment}
 We now show that Martin Löf equality implies
 Leibniz equality, and vice versa.  In the forward direction, if we know
@@ -865,6 +979,11 @@ Leibniz equality, and vice versa.  In the forward direction, if we know
 which is easy since equality of `x` and `y` implies that any proof
 of `P x` is also a proof of `P y`:
 {:/}
+
+我们现在来证明 Martin Löf 相等性蕴含了莱布尼兹相等性，以及其逆命题。在正方向上，
+如果我们已知 `x ≡ y`，我们需要对于任意的 `P`，将 `P x` 的证明转换为 `P y` 的证明。
+我们很容易就可以做到这一点，因为 `x` 与 `y` 相等意味着任何 `P x` 的证明即是 `P y` 的证明。
+
 \begin{code}
 ≡-implies-≐ : ∀ {A : Set} {x y : A}
   → x ≡ y
@@ -872,17 +991,21 @@ of `P x` is also a proof of `P y`:
   → x ≐ y
 ≡-implies-≐ x≡y P  =  subst P x≡y
 \end{code}
-因为这个方向由替换性可以得来，如之前证明的那样。
+
 {::comment}
 This direction follows from substitution, which we showed earlier.
 {:/}
 
-在反方向上，我们已知对于任何 `P`，我们可以将 `P x` 的证明转换成 `P y` 的证明，
-我们需要证明 `x ≡ y`：
+因为这个方向由替换性可以得来，如之前证明的那样。
+
 {::comment}
 In the reverse direction, given that for any `P` we can take a proof of `P x`
 to a proof of `P y` we need to show `x ≡ y`:
 {:/}
+
+在反方向上，我们已知对于任何 `P`，我们可以将 `P x` 的证明转换成 `P y` 的证明，
+我们需要证明 `x ≡ y`：
+
 \begin{code}
 ≐-implies-≡ : ∀ {A : Set} {x y : A}
   → x ≐ y
@@ -897,9 +1020,7 @@ to a proof of `P y` we need to show `x ≡ y`:
     Qy : Q y
     Qy = x≐y Q Qx
 \end{code}
-此证明与莱布尼兹相等性的对称性证明相似。我们取谓词 `Q`，使得 `Q z` 在 `x ≡ z` 成立时成立。
-那么 `Q x` 是显然的，由 Martin Löf 相等性的自反性得来。从而 `Q y` 由 `x ≐ y` 可得，
-而 `Q y` 即是我们所需要的 `x ≡ y` 的证明。
+
 {::comment}
 The proof is similar to that for symmetry of Leibniz equality. We take
 `Q` to be the predicate that holds of `z` if `x ≡ z`. Then `Q x` is
@@ -908,11 +1029,10 @@ follows from `x ≐ y`.  But `Q y` is exactly a proof of what we
 require, that `x ≡ y`.
 {:/}
 
-（本部分的内容由此处改编得来：
-*≐≃≡: Leibniz Equality is
-Isomorphic to Martin-Löf Identity, Parametrically*
-作者：Andreas Abel、Jesper Cockx、Dominique Devries、Andreas Nuyts 与 Philip Wadler，
-草稿，2017）
+此证明与莱布尼兹相等性的对称性证明相似。我们取谓词 `Q`，使得 `Q z` 在 `x ≡ z` 成立时成立。
+那么 `Q x` 是显然的，由 Martin Löf 相等性的自反性得来。从而 `Q y` 由 `x ≐ y` 可得，
+而 `Q y` 即是我们所需要的 `x ≡ y` 的证明。
+
 {::comment}
 (Parts of this section are adapted from *≐≃≡: Leibniz Equality is
 Isomorphic to Martin-Löf Identity, Parametrically*, by Andreas Abel,
@@ -920,15 +1040,19 @@ Jesper Cockx, Dominique Devries, Andreas Nuyts, and Philip Wadler,
 draft, 2017.)
 {:/}
 
-## 全体多态 {#unipoly}
+（本部分的内容由此处改编得来：
+*≐≃≡: Leibniz Equality is
+Isomorphic to Martin-Löf Identity, Parametrically*
+作者：Andreas Abel、Jesper Cockx、Dominique Devries、Andreas Nuyts 与 Philip Wadler，
+草稿，2017）
+
+
 {::comment}
 ## Universe polymorphism {#unipoly}
 {:/}
 
-正如我们之前看到的那样，不是每个类型都属于 `Set`，但是每个类型都属于类型阶级的某处，
-`Set₀`、`Set₁`、`Set₂`等等。其中 `Set` 是 `Set₀` 的缩写，此外 `Set₀ : Set₁`，`Set₁ : Set₂`，以此类推。
-当我们需要比较两个属于 `Set` 的类型的值时，我们之前给出的定义是足够的，
-但如果我们需要比较对于任何等级 `ℓ`，两个属于 `Set ℓ` 的类型的值该怎么办呢？
+## 全体多态 {#unipoly}
+
 {::comment}
 As we have seen, not every type belongs to `Set`, but instead every
 type belongs somewhere in the hierarchy `Set₀`, `Set₁`, `Set₂`, and so on,
@@ -938,63 +1062,81 @@ values of a type that belongs to `Set`, but what if we want to compare
 two values of a type that belongs to `Set ℓ` for some arbitrary level `ℓ`?
 {:/}
 
-答案是*全体多态*（Universe Polymorphism），一个定义可以根据任何等级 `ℓ` 来做出。
-为了使用等级，我们首先导入下列内容：
+正如我们之前看到的那样，不是每个类型都属于 `Set`，但是每个类型都属于类型阶级的某处，
+`Set₀`、`Set₁`、`Set₂`等等。其中 `Set` 是 `Set₀` 的缩写，此外 `Set₀ : Set₁`，`Set₁ : Set₂`，以此类推。
+当我们需要比较两个属于 `Set` 的类型的值时，我们之前给出的定义是足够的，
+但如果我们需要比较对于任何等级 `ℓ`，两个属于 `Set ℓ` 的类型的值该怎么办呢？
+
 {::comment}
 The answer is _universe polymorphism_, where a definition is made
 with respect to an arbitrary level `ℓ`. To make use of levels, we
 first import the following:
 {:/}
+
+答案是*全体多态*（Universe Polymorphism），一个定义可以根据任何等级 `ℓ` 来做出。
+为了使用等级，我们首先导入下列内容：
+
 \begin{code}
 open import Level using (Level; _⊔_) renaming (zero to lzero; suc to lsuc)
 \end{code}
-我们将构造器 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和等级之间的混淆。
+
 {::comment}
 We rename constructors `zero` and `suc` to `lzero` and `lsuc` to avoid confusion
 between levels and naturals.
 {:/}
 
-等级与自然数是同构的，有相似的构造器：
+我们将构造器 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和等级之间的混淆。
+
 {::comment}
 Levels are isomorphic to natural numbers, and have similar constructors:
 {:/}
 
+等级与自然数是同构的，有相似的构造器：
+
     lzero : Level
     lsuc  : Level → Level
 
-`Set₀`、`Set₁`、`Set₂` 等名称，是下列的简写：
 {::comment}
 The names `Set₀`, `Set₁`, `Set₂`, and so on, are abbreviations for
 {:/}
+
+`Set₀`、`Set₁`、`Set₂` 等名称，是下列的简写：
 
     Set lzero
     Set (lsuc lzero)
     Set (lsuc (lsuc lzero))
 
-以此类推。我们还有一个运算符：
 {::comment}
 and so on. There is also an operator
 {:/}
 
+以此类推。我们还有一个运算符：
+
     _⊔_ : Level → Level → Level
 
-给定两个等级，返回两者中较大的那个。
 {::comment}
 that given two levels returns the larger of the two.
 {:/}
 
-下面是相等性的定义，推广到任意等级：
+给定两个等级，返回两者中较大的那个。
+
 {::comment}
 Here is the definition of equality, generalised to an arbitrary level:
 {:/}
+
+下面是相等性的定义，推广到任意等级：
+
 \begin{code}
 data _≡′_ {ℓ : Level} {A : Set ℓ} (x : A) : A → Set ℓ where
   refl′ : x ≡′ x
 \end{code}
-相似的，下面是对称性的推广定义：
+
 {::comment}
 Similarly, here is the generalised definition of symmetry:
 {:/}
+
+相似的，下面是对称性的推广定义：
+
 \begin{code}
 sym′ : ∀ {ℓ : Level} {A : Set ℓ} {x y : A}
   → x ≡′ y
@@ -1002,66 +1144,90 @@ sym′ : ∀ {ℓ : Level} {A : Set ℓ} {x y : A}
   → y ≡′ x
 sym′ refl′ = refl′
 \end{code}
-为了简介，我们在本书中给出的定义将避免使用全体多态，但是大多数标准库中的定义，
-包括相等性的定义，都推广到了任意等级，如上所示。
+
 {::comment}
 For simplicity, we avoid universe polymorphism in the definitions given in
 the text, but most definitions in the standard library, including those for
 equality, are generalised to arbitrary levels as above.
 {:/}
 
-下面是莱布尼兹相等性的推广定义：
+为了简介，我们在本书中给出的定义将避免使用全体多态，但是大多数标准库中的定义，
+包括相等性的定义，都推广到了任意等级，如上所示。
+
 {::comment}
 Here is the generalised definition of Leibniz equality:
 {:/}
+
+下面是莱布尼兹相等性的推广定义：
+
 \begin{code}
 _≐′_ : ∀ {ℓ : Level} {A : Set ℓ} (x y : A) → Set (lsuc ℓ)
 _≐′_ {ℓ} {A} x y = ∀ (P : A → Set ℓ) → P x → P y
 \end{code}
-之前，签名中使用了 `Set₁` 来作为一个值包括了 `Set` 的类型；而此处，我们使用
-`Set (lsuc ℓ)` 来作为一个值包括了 `Set ℓ` 的类型。
+
 {::comment}
 Before the signature used `Set₁` as the type of a term that includes
 `Set`, whereas here the signature uses `Set (lsuc ℓ)` as the type of a
 term that includes `Set ℓ`.
 {:/}
 
-更多的关于等级的信息可以从[Agda 维基（英文）][wiki]中查询。
+之前，签名中使用了 `Set₁` 来作为一个值包括了 `Set` 的类型；而此处，我们使用
+`Set (lsuc ℓ)` 来作为一个值包括了 `Set ℓ` 的类型。
+
 {::comment}
 Further information on levels can be found in the [Agda Wiki][wiki].
 {:/}
 
+更多的关于等级的信息可以从[Agda 维基（英文）][wiki]中查询。
+
 [wiki]: http://wiki.portal.chalmers.se/agda/pmwiki.php?n=ReferenceManual.UniversePolymorphism
 
 
-## 标准库
 {::comment}
 ## Standard library
 {:/}
 
-标准库中可以找到与本章节中相似的定义：
+## 标准库
+
 {::comment}
 Definitions similar to those in this chapter can be found in the
 standard library:
 {:/}
+
+标准库中可以找到与本章节中相似的定义：
+
 \begin{code}
 -- import Relation.Binary.PropositionalEquality as Eq
 -- open Eq using (_≡_; refl; trans; sym; cong; cong-app; subst)
 -- open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _≡⟨_⟩_; _∎)
 \end{code}
-这里的导入以注释的形式给出，以防止冲突，如引言中解释的那样。
+
 {::comment}
 Here the imports are shown as comments rather than code to avoid
 collisions, as mentioned in the introduction.
 {:/}
 
+这里的导入以注释的形式给出，以防止冲突，如引言中解释的那样。
+
 
 ## Unicode
 
-本章节使用下列 Unicode：
 {::comment}
 This chapter uses the following unicode:
+
+    ≡  U+2261  IDENTICAL TO (\==, \equiv)
+    ⟨  U+27E8  MATHEMATICAL LEFT ANGLE BRACKET (\<)
+    ⟩  U+27E9  MATHEMATICAL RIGHT ANGLE BRACKET (\>)
+    ∎  U+220E  END OF PROOF (\qed)
+    ≐  U+2250  APPROACHES THE LIMIT (\.=)
+    ℓ  U+2113  SCRIPT SMALL L (\ell)
+    ⊔  U+2294  SQUARE CUP (\lub)
+    ₀  U+2080  SUBSCRIPT ZERO (\_0)
+    ₁  U+2081  SUBSCRIPT ONE (\_1)
+    ₂  U+2082  SUBSCRIPT TWO (\_2)
 {:/}
+
+本章节使用下列 Unicode：
 
     ≡  U+2261  等同于 (\==, \equiv)
     ⟨  U+27E8  数学左尖括号 (\<)
