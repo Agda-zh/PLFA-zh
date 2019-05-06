@@ -218,7 +218,7 @@ Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
 例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型：
 
 {::comment}
-Given two types `A` and `B`, we refer to `A x B` as the
+Given two types `A` and `B`, we refer to `A × B` as the
 _product_ of `A` and `B`.  In set theory, it is also sometimes
 called the _Cartesian product_, and in computing it corresponds
 to a _record_ type. Among other reasons for
