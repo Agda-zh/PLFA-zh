@@ -1,9 +1,11 @@
 ---
-title     : "Connectives: Conjunction, disjunction, and implication"
+title     : "Connectives: 合取、析取与蕴含"
 layout    : page
 prev      : /Isomorphism/
 permalink : /Connectives/
 next      : /Negation/
+translators : ["Fangyi Zhou"]
+progress  : 0
 ---
 
 \begin{code}
@@ -16,18 +18,32 @@ module plfa.Connectives where
      exercises from the final sections on distributivity
      and exponentials? -->
 
+本章节介绍基础的逻辑运算符。我们使用逻辑运算符与数据类型之间的对应关系，即*命题即类型*原理（Propositions as Types）。
+{::comment}
 This chapter introduces the basic logical connectives, by observing a
 correspondence between connectives of logic and data types, a
 principle known as _Propositions as Types_:
+{:/}
 
+  * *合取*（Conjunction）即是*积*（Product）
+  * *析取*（Disjunction）即是*和*（Sum）
+  * *真*（True）即是*单元类型*（Unit Type）
+  * *假*（False）即是*空类型*（Empty Type）
+  * *蕴含*（Implication）即是*函数空间*（Function Space）
+
+{::comment}
   * _conjunction_ is _product_,
   * _disjunction_ is _sum_,
   * _true_ is _unit type_,
   * _false_ is _empty type_,
   * _implication_ is _function space_.
+{:/}
 
 
+## 导入
+{::comment}
 ## Imports
+{:/}
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
@@ -40,26 +56,40 @@ open plfa.Isomorphism.≃-Reasoning
 \end{code}
 
 
+## *合取*（Conjunction）即是*积*（Product）
+{::comment}
 ## Conjunction is product
+{:/}
 
+给定两个命题 `A` 和 `B`，其合取 `A × B` 成立当 `A` 成立和 `B` 成立。
+我们将这样的概念形式化，使用如下的归纳类型：
+{::comment}
 Given two propositions `A` and `B`, the conjunction `A × B` holds
 if both `A` holds and `B` holds.  We formalise this idea by
 declaring a suitable inductive type:
+{:/}
 \begin{code}
 data _×_ (A B : Set) : Set where
 
-  ⟨_,_⟩ : 
+  ⟨_,_⟩ :
       A
     → B
       -----
     → A × B
 \end{code}
+`A × B` 成立的证明由 `⟨ M , N ⟩` 的形式表现，其中 `M` 是 `A` 成立的证明，
+`N` 是 `B` 成立的证明。
+{::comment}
 Evidence that `A × B` holds is of the form `⟨ M , N ⟩`, where `M`
 provides evidence that `A` holds and `N` provides evidence that `B`
 holds.
+{:/}
 
+给定 `A × B` 成立的证明，我们可以得出 `A` 成立或者 `B` 成立。
+{::comment}
 Given evidence that `A × B` holds, we can conclude that either
 `A` holds or `B` holds:
+{:/}
 \begin{code}
 proj₁ : ∀ {A B : Set}
   → A × B
@@ -73,10 +103,18 @@ proj₂ : ∀ {A B : Set}
   → B
 proj₂ ⟨ x , y ⟩ = y
 \end{code}
+
+如果 `L` 是 `A × B` 成立的证据, 那么 `proj₁ L` 是 `A` 成立的证据，
+`proj₂ L` 是 `B` 成立的证据。
+{::comment}
 If `L` provides evidence that `A × B` holds, then `proj₁ L` provides evidence
 that `A` holds, and `proj₂ L` provides evidence that `B` holds.
+{:/}
 
+等价地，我们亦可以将合取定义为一个记录类型：
+{::comment}
 Equivalently, we could also declare conjunction as a record type:
+{:/}
 \begin{code}
 record _×′_ (A B : Set) : Set where
   field
@@ -84,25 +122,46 @@ record _×′_ (A B : Set) : Set where
     proj₂′ : B
 open _×′_
 \end{code}
+在这里，记录的构造
+{::comment}
 Here record construction
+{:/}
 
     record
       { proj₁′ = M
       ; proj₂′ = N
       }
 
+对应
+{::comment}
 corresponds to the term
+{:/}
 
     ⟨ M , N ⟩
 
+其中 `M` 是 `A` 类型的项，`N` 是 `B` 类型的项。
+{::comment}
 where `M` is a term of type `A` and `N` is a term of type `B`.
+{:/}
 
+当 `⟨_,_⟩` 在等式右手边的项中出现的时候，我们将其称作*构造器*（Constructor），
+当它出现在等式左边时，我们将其称作*析构器*（Destructor）。我们亦可将 `proj₁` 和 `proj₂`
+称作析构器，因为它们起到相似的效果。
+{::comment}
 When `⟨_,_⟩` appears in a term on the right-hand side of an equation
 we refer to it as a _constructor_, and when it appears in a pattern on
 the left-hand side of an equation we refer to it as a _destructor_.
 We may also refer to `proj₁` and `proj₂` as destructors, since they
 play a similar role.
+{:/}
 
+其他的术语将 `⟨_,_⟩` 称作*引入*合取，将 `proj₁` 和 `proj₂` 称作*消去*合取。
+前者亦记作 `×-I`，后者 `×-E₁` 和 `×-E₂`。如果我们从上到下来阅读这些规则，引入和消去
+正如其名字所说的那样：第一条*引入*一个运算符，所以运算符出现在结论中，而不是假设中；
+第二条*消去*一个带有运算符的式子，而运算符出现在假设中，而不是结论中。引入规则描述了
+运算符在什么情况下成立——即怎么样*定义*一个运算符。消去规则描述了运算符成立时，可以得出
+什么样的结论——即怎么样*使用*一个运算符。
+{::comment}
 Other terminology refers to `⟨_,_⟩` as _introducing_ a conjunction, and
 to `proj₁` and `proj₂` as _eliminating_ a conjunction; indeed, the
 former is sometimes given the name `×-I` and the latter two the names
@@ -115,27 +174,50 @@ the conclusion. An introduction rule describes under what conditions
 we say the connective holds---how to _define_ the connective. An
 elimination rule describes what we may conclude when the connective
 holds---how to _use_ the connective.
+{:/}
 
+（上面一段内容由此处改编得来：*Propositions as Types*，作者：Philip Wadler，发表于 《ACM 通讯》，2015 年 9 月）
+{::comment}
 (The paragraph above was adopted from "Propositions as Types", Philip Wadler,
 _Communications of the ACM_, December 2015.)
+{:/}
 
+在这样的情况下，先使用析构器，再使用构造器将结果重组，得到还是原来的积。
+{::comment}
 In this case, applying each destructor and reassembling the results with the
 constructor is the identity over products:
+{:/}
 \begin{code}
 η-× : ∀ {A B : Set} (w : A × B) → ⟨ proj₁ w , proj₂ w ⟩ ≡ w
 η-× ⟨ x , y ⟩ = refl
 \end{code}
+左手边的模式匹配是必要的。用 `⟨ x , y ⟩` 来替换 `w` 让等式的两边可以化简成相同的项。
+{::comment}
 The pattern matching on the left-hand side is essential, since
 replacing `w` by `⟨ x , y ⟩` allows both sides of the
 propositional equality to simplify to the same term.
+{:/}
 
+我们设置合取的优先级，使它与除了析取之外结合的都不紧密：
+{::comment}
 We set the precedence of conjunction so that it binds less
 tightly than anything save disjunction:
+{:/}
 \begin{code}
 infixr 2 _×_
 \end{code}
+因此，`m ≤ n × n ≤ p` 解析为 `(m ≤ n) × (n ≤ p)`。
+{::comment}
 Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
+{:/}
 
+给定两个类型 `A` 和 `B`，我们将 `A × B` 称为 `A` 与 `B` 的*积*。
+在集合论中它也被称作*笛卡尔积*（Cartesian Product），在计算机科学中它对应*记录*类型。
+如果类型 `A` 有 `m` 个不同的成员，类型 `B` 有 `n` 个不同的成员，
+那么类型 `A × B` 有 `m * n` 个不同的成员。这也是它被称为积的原因之一。
+例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型：
+
+{::comment}
 Given two types `A` and `B`, we refer to `A x B` as the
 _product_ of `A` and `B`.  In set theory, it is also sometimes
 called the _Cartesian product_, and in computing it corresponds
@@ -145,6 +227,7 @@ distinct members, and type `B` has `n` distinct members,
 then the type `A × B` has `m * n` distinct members.
 For instance, consider a type `Bool` with two members, and
 a type `Tri` with three members:
+{:/}
 \begin{code}
 data Bool : Set where
   true  : Bool
@@ -155,13 +238,19 @@ data Tri : Set where
   bb : Tri
   cc : Tri
 \end{code}
+那么，`Bool × Tri` 类型有如下的六个成员：
+{::comment}
 Then the type `Bool × Tri` has six members:
+{:/}
 
     ⟨ true  , aa ⟩    ⟨ true  , bb ⟩    ⟨ true ,  cc ⟩
     ⟨ false , aa ⟩    ⟨ false , bb ⟩    ⟨ false , cc ⟩
 
+下面的函数枚举了所有类型为 `Bool × Tri` 的参数：
+{::comment}
 For example, the following function enumerates all
 possible arguments of type `Bool × Tri`:
+{:/}
 \begin{code}
 ×-count : Bool × Tri → ℕ
 ×-count ⟨ true  , aa ⟩  =  1
@@ -172,16 +261,26 @@ possible arguments of type `Bool × Tri`:
 ×-count ⟨ false , cc ⟩  =  6
 \end{code}
 
+类型上的积与数的积有相似的性质——它们满足交换律和结合律。
+更确切地说，积在*忽略同构*的情况下是交换和结合的。
+{::comment}
 Product on types also shares a property with product on numbers in
 that there is a sense in which it is commutative and associative.  In
 particular, product is commutative and associative _up to
 isomorphism_.
+{:/}
 
+对于交换律，`to` 函数将有序对交换，将 `⟨ x , y ⟩` 变为 `⟨ y , x ⟩`，`from`
+函数亦是如此（忽略命名）。
+在 `from∘to` 和 `to∘from` 中正确地实例化要匹配的模式是很重要的。
+使用 `λ w → refl` 作为 `from∘to` 的定义是不可行的，`to∘from` 同理。
+{::comment}
 For commutativity, the `to` function swaps a pair, taking `⟨ x , y ⟩` to
 `⟨ y , x ⟩`, and the `from` function does the same (up to renaming).
 Instantiating the patterns correctly in `from∘to` and `to∘from` is essential.
 Replacing the definition of `from∘to` by `λ w → refl` will not work;
 and similarly for `to∘from`:
+{:/}
 \begin{code}
 ×-comm : ∀ {A B : Set} → A × B ≃ B × A
 ×-comm =
@@ -193,23 +292,36 @@ and similarly for `to∘from`:
     }
 \end{code}
 
+满足*交换律*和*忽略同构*下满足*交换律*是不一样的。比较下列两个命题：
+{::comment}
 Being _commutative_ is different from being _commutative up to
 isomorphism_.  Compare the two statements:
+{:/}
 
     m * n ≡ n * m
     A × B ≃ B × A
 
+在第一个情况下，我们可能有 `m` 是 `2`、`n` 是 `3`，那么 `m * n` 和 `n * m` 都是 `6`。
+在第二个情况下，我们可能有 `A` 是 `Bool` 和 `B` 是 `Tri`，但是 `Bool × Tri` 和
+`Tri × Bool` *不是*一样的。但是存在一个两者之间的同构。例如：`⟨ true , aa ⟩` 是前者的成员，
+其对应后者的成员 `⟨ aa , true ⟩`。
+{::comment}
 In the first case, we might have that `m` is `2` and `n` is `3`, and
 both `m * n` and `n * m` are equal to `6`.  In the second case, we
 might have that `A` is `Bool` and `B` is `Tri`, and `Bool × Tri` is
 _not_ the same as `Tri × Bool`.  But there is an isomorphism between
 the two types.  For instance, `⟨ true , aa ⟩`, which is a member of the
 former, corresponds to `⟨ aa , true ⟩`, which is a member of the latter.
+{:/}
 
+对于结合律来说，`to` 函数将两个有序对进行重组：将 `⟨ ⟨ x , y ⟩ , z ⟩` 转换为 `⟨ x , ⟨ y , z ⟩ ⟩`，
+`from` 函数则为其逆。同样，左逆和右逆的证明需要在一个合适的模式来匹配，从而可以直接化简：
+{::comment}
 For associativity, the `to` function reassociates two uses of pairing,
 taking `⟨ ⟨ x , y ⟩ , z ⟩` to `⟨ x , ⟨ y , z ⟩ ⟩`, and the `from` function does
 the inverse.  Again, the evidence of left and right inverse requires
 matching against a suitable pattern to enable simplification:
+{:/}
 \begin{code}
 ×-assoc : ∀ {A B C : Set} → (A × B) × C ≃ A × (B × C)
 ×-assoc =
@@ -221,25 +333,45 @@ matching against a suitable pattern to enable simplification:
     }
 \end{code}
 
+满足*结合律*和*忽略同构*下满足*结合律*是不一样的。比较下列两个命题：
+{::comment}
 Being _associative_ is not the same as being _associative
 up to isomorphism_.  Compare the two statements:
+{:/}
 
     (m * n) * p ≡ m * (n * p)
     (A × B) × C ≃ A × (B × C)
 
+举个例子，`(ℕ × Bool) × Tri` 与 `ℕ × (Bool × Tri)` *不同*，但是两个类型之间
+存在同构。例如 `⟨ ⟨ 1 , true ⟩ , aa ⟩`，一个前者的成员，与 `⟨ 1 , ⟨ true , aa ⟩ ⟩`，
+一个后者的成员，相对应。
+{::comment}
 For example, the type `(ℕ × Bool) × Tri` is _not_ the same as `ℕ ×
 (Bool × Tri)`. But there is an isomorphism between the two types. For
 instance `⟨ ⟨ 1 , true ⟩ , aa ⟩`, which is a member of the former,
 corresponds to `⟨ 1 , ⟨ true , aa ⟩ ⟩`, which is a member of the latter.
+{:/}
 
+#### 练习 `⇔≃×` （推荐）
+{::comment}
 #### Exercise `⇔≃×` (recommended)
+{:/}
 
+证明[之前][plfa.Isomorphism#iff]定义的 `A ⇔ B` 与 `(A → B) × (B → A)` 同构。
+{::comment}
 Show that `A ⇔ B` as defined [earlier][plfa.Isomorphism#iff]
 is isomorphic to `(A → B) × (B → A)`.
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
 
 ## Truth is unit
@@ -718,7 +850,7 @@ an embedding rather than an isomorphism because the
 In the usual approach to logic, both of the distribution laws
 are given as equivalences, where each side implies the other:
 
-    A × (B ⊎ C) ⇔ (A × B) ⊎ (A × C)  
+    A × (B ⊎ C) ⇔ (A × B) ⊎ (A × C)
     A ⊎ (B × C) ⇔ (A ⊎ B) × (A ⊎ C)
 
 But when we consider the functions that provide evidence for these
