@@ -79,7 +79,7 @@ Part 1: Logical Foundations
   - [Relations]({{ site.baseurl }}/Relations/): 关系的归纳定义 <span class = "progress" >{{ Relations.progress | ceil }}</span>
   - [Equality]({{ site.baseurl }}/Equality/): 相等性与等式推理 <span class = "progress" >{{ Equality.progress | ceil }}</span>
   - [Isomorphism]({{ site.baseurl }}/Isomorphism/): 同构与嵌入 <span class = "progress" >{{ Isomorphism.progress | ceil }}</span>
-  - [Connectives]({{ site.baseurl }}/Connectives/): 合取、析取和蕴含 <span class = "progress" >{{ Connectives.progress | ceil }}</span>
+  - [Connectives]({{ site.baseurl }}/Connectives/): 合取、析取与蕴含 <span class = "progress" >{{ Connectives.progress | ceil }}</span>
   - [Negation]({{ site.baseurl }}/Negation/): 直觉逻辑与命题逻辑中的否定 <span class = "progress" >{{ Negation.progress | ceil }}</span>
   - [Quantifiers]({{ site.baseurl }}/Quantifiers/): 全称量词与存在量词 <span class = "progress" >{{ Quantifiers.progress | ceil }}</span>
   - [Decidable]({{ site.baseurl }}/Decidable/): 布尔值与判定过程 <span class = "progress" >{{ Decidable.progress | ceil }}</span>
