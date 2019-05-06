@@ -51,7 +51,7 @@ open import plfa.Relations using (_<_; z<s; s<s)
 open import plfa.Isomorphism using (_≃_; _∘_; ≃-sym; ≃-trans; _≲_; extensionality)
 open plfa.Isomorphism.≃-Reasoning
 open import plfa.Lists using (List; []; _∷_; [_]; [_,_]; [_,_,_]; [_,_,_,_];
-  _++_; reverse; map; foldr; sum; All; Any; here; there; _∈_)
+  _++_; reverse; map; foldr; sum; All; Any; here; there; _∈_; Decidable)
 open import Agda.Primitive using (Level)
 \end{code}
 
