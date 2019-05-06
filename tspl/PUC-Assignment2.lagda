@@ -46,7 +46,6 @@ open import Relation.Nullary.Negation using (¬?)
 open import Relation.Nullary.Product using (_×-dec_)
 open import Relation.Nullary.Sum using (_⊎-dec_)
 open import Relation.Nullary.Negation using (contraposition)
--- open import Data.Product using (Σ; _,_; ∃; Σ-syntax; ∃-syntax)
 open import plfa.Relations using (_<_; z<s; s<s)
 open import plfa.Isomorphism using (_≃_; _∘_; ≃-sym; ≃-trans; _≲_; extensionality)
 open plfa.Isomorphism.≃-Reasoning
