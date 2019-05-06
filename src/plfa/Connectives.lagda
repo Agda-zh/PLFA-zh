@@ -5,7 +5,7 @@ prev      : /Isomorphism/
 permalink : /Connectives/
 next      : /Negation/
 translators : ["Fangyi Zhou"]
-progress  : 50
+progress  : 70
 ---
 
 \begin{code}
@@ -155,7 +155,7 @@ We may also refer to `proj₁` and `proj₂` as destructors, since they
 play a similar role.
 {:/}
 
-其他的术语将 `⟨_,_⟩` 称作*引入*合取，将 `proj₁` 和 `proj₂` 称作*消去*合取。
+其他的术语将 `⟨_,_⟩` 称作*引入*（Introduce）合取，将 `proj₁` 和 `proj₂` 称作*消去*（Eliminate）合取。
 前者亦记作 `×-I`，后者 `×-E₁` 和 `×-E₂`。如果我们从上到下来阅读这些规则，引入和消去
 正如其名字所说的那样：第一条*引入*一个运算符，所以运算符出现在结论中，而不是假设中；
 第二条*消去*一个带有运算符的式子，而运算符出现在假设中，而不是结论中。引入规则描述了
@@ -497,11 +497,18 @@ equality.
 {:/}
 
 
+## 析取即是和
+{::comment}
 ## Disjunction is sum
+{:/}
 
+给定两个命题 `A` 和 `B`，析取 `A ⊎ B` 在 `A` 成立或者 `B` 成立时成立。
+我们将这个概念用合适的归纳类型来形式化：
+{::comment}
 Given two propositions `A` and `B`, the disjunction `A ⊎ B` holds
 if either `A` holds or `B` holds.  We formalise this idea by
 declaring a suitable inductive type:
+{:/}
 \begin{code}
 data _⊎_ (A B : Set) : Set where
 
@@ -515,12 +522,19 @@ data _⊎_ (A B : Set) : Set where
       -----
     → A ⊎ B
 \end{code}
+`A ⊎ B` 成立的证明有两个形式： `inj₁ M`，其中 `M` 是 `A` 成立的证明，或者
+`inj₂ N`，其中 `N` 是 `B` 成立的证明。
+{::comment}
 Evidence that `A ⊎ B` holds is either of the form `inj₁ M`, where `M`
 provides evidence that `A` holds, or `inj₂ N`, where `N` provides
 evidence that `B` holds.
+{:/}
 
+给定 `A → C` 和 `B → C` 成立的证明，那么给定一个 `A ⊎ B` 的证明，我们可以得出 `C` 成立：
+{::comment}
 Given evidence that `A → C` and `B → C` both hold, then given
 evidence that `A ⊎ B` holds we can conclude that `C` holds:
+{:/}
 \begin{code}
 case-⊎ : ∀ {A B C : Set}
   → (A → C)
@@ -531,9 +545,17 @@ case-⊎ : ∀ {A B C : Set}
 case-⊎ f g (inj₁ x) = f x
 case-⊎ f g (inj₂ y) = g y
 \end{code}
+对 `inj₁` 和 `inj₂` 进行模式匹配，是我们使用析取成立的证明的常见方法。
+{::comment}
 Pattern matching against `inj₁` and `inj₂` is typical of how we exploit
 evidence that a disjunction holds.
+{:/}
 
+当 `inj₁` 和 `inj₂` 在等式右手边出现的时候，我们将其称作*构造器*，
+当它出现在等式左边时，我们将其称作*析构器*。我们亦可将 `case-⊎`
+称作析构器，因为它们起到相似的效果。其他术语将 `inj₁` 和 `inj₂` 称为*引入*析取，
+将 `case-⊎` 称为*消去*析取。前者亦被称为 `⊎-I₁` 和 `⊎-I₂`，后者 `⊎-E`。
+{::comment}
 When `inj₁` and `inj₂` appear on the right-hand side of an equation we
 refer to them as _constructors_, and when they appear on the
 left-hand side we refer to them as _destructors_.  We also refer to
@@ -542,31 +564,55 @@ terminology refers to `inj₁` and `inj₂` as _introducing_ a
 disjunction, and to `case-⊎` as _eliminating_ a disjunction; indeed
 the former are sometimes given the names `⊎-I₁` and `⊎-I₂` and the
 latter the name `⊎-E`.
+{:/}
 
+对每个构造器使用析构器得到的是原来的值：
+{::comment}
 Applying the destructor to each of the constructors is the identity:
+{:/}
 \begin{code}
 η-⊎ : ∀ {A B : Set} (w : A ⊎ B) → case-⊎ inj₁ inj₂ w ≡ w
 η-⊎ (inj₁ x) = refl
 η-⊎ (inj₂ y) = refl
 \end{code}
+更普遍地来说，我们亦可对于析取使用一个任意的函数：
+{::comment}
 More generally, we can also throw in an arbitrary function from a disjunction:
+{:/}
 \begin{code}
 uniq-⊎ : ∀ {A B C : Set} (h : A ⊎ B → C) (w : A ⊎ B) →
   case-⊎ (h ∘ inj₁) (h ∘ inj₂) w ≡ h w
 uniq-⊎ h (inj₁ x) = refl
 uniq-⊎ h (inj₂ y) = refl
 \end{code}
+左手边的模式匹配是必要的。用 `inj₁ x` 来替换 `w` 让等式的两边可以化简成相同的项，
+`inj₂ y` 同理。
+{::comment}
 The pattern matching on the left-hand side is essential.  Replacing
 `w` by `inj₁ x` allows both sides of the propositional equality to
 simplify to the same term, and similarly for `inj₂ y`.
+{:/}
 
+我们设置析取的优先级，使它与任何已经定义的运算符都结合的不紧密：
+{::comment}
 We set the precedence of disjunction so that it binds less tightly
 than any other declared operator:
+{:/}
 \begin{code}
 infix 1 _⊎_
 \end{code}
+因此 `A × C ⊎ B × C` 解析为 `(A × C) ⊎ (B × C)`。
+{::comment}
 Thus, `A × C ⊎ B × C` parses as `(A × C) ⊎ (B × C)`.
+{:/}
 
+给定两个类型 `A` 和 `B`，我们将 `A ⊎ B` 称为 `A` 与 `B` 的*和*。
+在集合论中它也被称作*不交并*（Disjoint Union），在计算机科学中它对应*变体记录*类型。
+如果类型 `A` 有 `m` 个不同的成员，类型 `B` 有 `n` 个不同的成员，
+那么类型 `A ⊎ B` 有 `m + n` 个不同的成员。这也是它被称为和的原因之一。
+例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型，如之前的定义。
+那么，`Bool ⊎ Tri` 类型有如下的五个成员：
+{::comment}
 Given two types `A` and `B`, we refer to `A ⊎ B` as the
 _sum_ of `A` and `B`.  In set theory, it is also sometimes
 called the _disjoint union_, and in computing it corresponds
@@ -578,13 +624,17 @@ For instance, consider a type `Bool` with two members, and
 a type `Tri` with three members, as defined earlier.
 Then the type `Bool ⊎ Tri` has five
 members:
+{:/}
 
     inj₁ true     inj₂ aa
     inj₁ false    inj₂ bb
                   inj₂ cc
 
+下面的函数枚举了所有类型为 `Bool ⊎ Tri` 的参数：
+{::comment}
 For example, the following function enumerates all
 possible arguments of type `Bool ⊎ Tri`:
+{:/}
 \begin{code}
 ⊎-count : Bool ⊎ Tri → ℕ
 ⊎-count (inj₁ true)   =  1
@@ -594,24 +644,52 @@ possible arguments of type `Bool ⊎ Tri`:
 ⊎-count (inj₂ cc)     =  5
 \end{code}
 
+类型上的和与数的和有相似的性质——它们满足交换律和结合律。
+更确切地说，和在*忽略同构*的情况下是交换和结合的。
+{::comment}
 Sum on types also shares a property with sum on numbers in that it is
 commutative and associative _up to isomorphism_.
+{:/}
 
+#### 练习 `⊎-comm` （推荐）
+{::comment}
 #### Exercise `⊎-comm` (recommended)
+{:/}
 
+证明和类型在忽略同构下满足交换律。
+{::comment}
 Show sum is commutative up to isomorphism.
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+#### 练习 `⊎-assoc`
+{::comment}
 #### Exercise `⊎-assoc`
+{:/}
 
+证明和类型在忽略同构下满足结合律。
+{::comment}
 Show sum is associative up to isomorphism.
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
 ## False is empty
 
@@ -673,16 +751,28 @@ is the identity of sums _up to isomorphism_.
 Show empty is the left identity of sums up to isomorphism.
 
 \begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
+\begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
 #### Exercise `⊥-identityʳ`
 
 Show empty is the right identity of sums up to isomorphism.
 
 \begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
+\begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
 ## Implication is function {#implication}
 
