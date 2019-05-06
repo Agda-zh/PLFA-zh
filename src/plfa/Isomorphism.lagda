@@ -638,7 +638,8 @@ Show that equivalence is reflexive, symmetric, and transitive.
 #### Exercise `Bin-embedding` (stretch) {#Bin-embedding}
 {:/}
 
-回忆练习 [Bin][plfa.Naturals#Bin] 和 [Bin-laws][plfa.Induction#Bin-laws] 中，
+回忆练习 [Bin][plfa.Naturals#Bin] 和 
+[Bin-laws][plfa.Induction#Bin-laws] 中，
 我们定义了一个数据类型来表示二进制比特串来表示自然数：
 {::comment}
 Recall that Exercises
