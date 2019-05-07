@@ -833,24 +833,43 @@ Show empty is the right identity of sums up to isomorphism.
 \end{code}
 {:/}
 
+## 蕴含即是函数 {#implication}
+{::comment}
 ## Implication is function {#implication}
+{:/}
 
+给定两个命题 `A` 和 `B`，其蕴含 `A → B` 在任何 `A` 成立的时候，`B` 也成立时成立。
+我们用函数类型来形式化蕴含，如本书中通篇出现的那样。
+{::comment}
 Given two propositions `A` and `B`, the implication `A → B` holds if
 whenever `A` holds then `B` must also hold.  We formalise implication using
 the function type, which has appeared throughout this book.
+{:/}
 
+`A → B` 成立的证据由下面的形式组成：
+
+{::comment}
 Evidence that `A → B` holds is of the form
+{:/}
 
     λ (x : A) → N
 
+其中 `N` 是一个类型为 `B` 的项，其包括了一个类型为 `A` 的自由变量 `x`。
+给定一个 `A → B` 成立的证明 `L`，和一个 `A` 成立的证明 `M`，那么 `L M` 是 `B` 成立的证明。
+也就是说，`A → B` 成立的证明是一个函数，将 `A` 成立的证明转换成 `B` 成立的证明。
+{::comment}
 where `N` is a term of type `B` containing as a free variable `x` of type `A`.
 Given a term `L` providing evidence that `A → B` holds, and a term `M`
 providing evidence that `A` holds, the term `L M` provides evidence that
 `B` holds.  In other words, evidence that `A → B` holds is a function that
 converts evidence that `A` holds into evidence that `B` holds.
+{:/}
 
+换句话说，如果知道 `A → B` 和 `A` 同时成立，那么我们可以推出 `B` 成立：
+{::comment}
 Put another way, if we know that `A → B` and `A` both hold,
 then we may conclude that `B` holds:
+{:/}
 \begin{code}
 →-elim : ∀ {A B : Set}
   → (A → B)
@@ -859,22 +878,42 @@ then we may conclude that `B` holds:
   → B
 →-elim L M = L M
 \end{code}
+在中世纪，这条规则被叫做 _modus ponens_，它与函数应用相对应。
+{::comment}
 In medieval times, this rule was known by the name _modus ponens_.
 It corresponds to function application.
+{:/}
 
+定义一个函数，不管是带名字的定义或是使用 Lambda 抽象，被称为*引入*一个函数，
+使用一个函数被称为*消去*一个函数。
+{::comment}
 Defining a function, with a named definition or a lambda abstraction,
 is referred to as _introducing_ a function,
 while applying a function is referred to as _eliminating_ the function.
+{:/}
 
+引入后接着消去，得到的还是原来的值：
+{::comment}
 Elimination followed by introduction is the identity:
+{:/}
 \begin{code}
 η-→ : ∀ {A B : Set} (f : A → B) → (λ (x : A) → f x) ≡ f
 η-→ f = refl
 \end{code}
 
+蕴含比其他的运算符结合得都不紧密。因此 `A ⊎ B → B ⊎ A` 被解析为 `(A ⊎ B) → (B ⊎ A)`。
+{::comment}
 Implication binds less tightly than any other operator. Thus, `A ⊎ B →
 B ⊎ A` parses as `(A ⊎ B) → (B ⊎ A)`.
+{:/}
 
+给定两个类型 `A` 和 `B`，我们将 `A → B` 称为从 `A` 到 `B` 的*函数*空间。
+它有时也被称作以 `B` 为底，`A` 为次数的*幂*。如果类型 `A` 有 `m` 个不同的成员，
+类型 `B` 有 `n` 个不同的成员，那么类型 `A × B` 有 `nᵐ` 个不同的成员。
+这也是它被称为幂的原因之一。例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型，
+如之前的定义。那么，`Bool → Tri` 类型有如下的九个成员（三的平方）：
+
+{::comment}
 Given two types `A` and `B`, we refer to `A → B` as the _function_
 space from `A` to `B`.  It is also sometimes called the _exponential_,
 with `B` raised to the `A` power.  Among other reasons for calling
@@ -889,8 +928,11 @@ three squared) members:
     λ{true → bb; false → aa}  λ{true → bb; false → bb}  λ{true → bb; false → cc}
     λ{true → cc; false → aa}  λ{true → cc; false → bb}  λ{true → cc; false → cc}
 
+下面的函数枚举了所有类型为 `Bool → Tri` 的参数：
+{::comment}
 For example, the following function enumerates all possible
 arguments of the type `Bool → Tri`:
+{:/}
 \begin{code}
 →-count : (Bool → Tri) → ℕ
 →-count f with f true | f false
@@ -905,22 +947,35 @@ arguments of the type `Bool → Tri`:
 ...          | cc     | cc      =   9
 \end{code}
 
+类型上的幂与数的幂有相似的性质，很多数上成立的关系式也可以在类型上成立。
+{::comment}
 Exponential on types also share a property with exponential on
 numbers in that many of the standard identities for numbers carry
 over to the types.
+{:/}
 
+对应如下的定律：
+{::comment}
 Corresponding to the law
+{:/}
 
     (p ^ n) ^ m  ≡  p ^ (n * m)
 
+我们有如下的同构：
+{::comment}
 we have the isomorphism
+{:/}
 
     A → (B → C)  ≃  (A × B) → C
 
+两个类型可以被看作给定 `A` 成立的证据和 `B` 成立的证据，返回 `C` 成立的证据。
+这个同构有时也被称作*柯里化*（Currying）。右逆的证明需要外延性：
+{::comment}
 Both types can be viewed as functions that given evidence that `A` holds
 and evidence that `B` holds can return evidence that `C` holds.
 This isomorphism sometimes goes by the name *currying*.
 The proof of the right inverse requires extensionality:
+{:/}
 \begin{code}
 currying : ∀ {A B C : Set} → (A → B → C) ≃ (A × B → C)
 currying =
@@ -932,31 +987,52 @@ currying =
     }
 \end{code}
 
+柯里化告诉我们，如果一个函数有一对参数，我们可以构造一个函数，取第一个参数，返回一个取第二个参数，
+返回最终结果的函数。因此，举例来说，下面表示加法的形式：
+{::comment}
 Currying tells us that instead of a function that takes a pair of arguments,
 we can have a function that takes the first argument and returns a function that
 expects the second argument.  Thus, for instance, our way of writing addition
+{:/}
 
     _+_ : ℕ → ℕ → ℕ
 
+和下面的一个带有一对参数的函数是同构的：
+{::comment}
 is isomorphic to a function that accepts a pair of arguments:
+{:/}
 
     _+′_ : (ℕ × ℕ) → ℕ
 
+Agda 对柯里化进行了优化，因此 `2 + 3` 是 `_+_ 2 3` 的简写。在一个对有序对进行优化的语言里，
+`2 +′ 3` 可能是 `_+′_ ⟨ 2 , 3 ⟩` 的简写。
+{::comment}
 Agda is optimised for currying, so `2 + 3` abbreviates `_+_ 2 3`.
 In a language optimised for pairing, we would instead take `2 +′ 3` as
 an abbreviation for `_+′_ ⟨ 2 , 3 ⟩`.
+{:/}
 
+对应如下的定律：
+{::comment}
 Corresponding to the law
+{:/}
 
     p ^ (n + m) = (p ^ n) * (p ^ m)
 
+我们有如下的同构：
+{::comment}
 we have the isomorphism:
+{:/}
 
     (A ⊎ B) → C  ≃  (A → C) × (B → C)
 
+命题如果 `A` 成立或者 `B` 成立，那么 `C` 成立，和命题如果 `A` 成立，那么 `C` 成立以及
+如果 `B` 成立，那么 `C` 成立，是一样的。左逆的证明需要外延性：
+{::comment}
 That is, the assertion that if either `A` holds or `B` holds then `C` holds
 is the same as the assertion that if `A` holds then `C` holds and if
 `B` holds then `C` holds.  The proof of the left inverse requires extensionality:
+{:/}
 \begin{code}
 →-distrib-⊎ : ∀ {A B C : Set} → (A ⊎ B → C) ≃ ((A → C) × (B → C))
 →-distrib-⊎ =
@@ -968,18 +1044,28 @@ is the same as the assertion that if `A` holds then `C` holds and if
     }
 \end{code}
 
+对应如下的定律：
+{::comment}
 Corresponding to the law
+{:/}
 
     (p * n) ^ m = (p ^ m) * (n ^ m)
 
+我们有如下的同构：
+{::comment}
 we have the isomorphism:
+{:/}
 
     A → B × C  ≃  (A → B) × (A → C)
 
+命题如果 `A` 成立，那么 `B` 成立和 `C` 成立，和命题如果 `A` 成立，那么 `B` 成立以及
+如果 `A` 成立，那么 `C` 成立，是一样的。左逆的证明需要外延性和积的 `η-×` 规则：
+{::comment}
 That is, the assertion that if `A` holds then `B` holds and `C` holds
 is the same as the assertion that if `A` holds then `B` holds and if
 `A` holds then `C` holds.  The proof of left inverse requires both extensionality
 and the rule `η-×` for products:
+{:/}
 \begin{code}
 →-distrib-× : ∀ {A B C : Set} → (A → B × C) ≃ (A → B) × (A → C)
 →-distrib-× =
