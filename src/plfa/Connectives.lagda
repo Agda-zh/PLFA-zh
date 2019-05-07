@@ -5,7 +5,7 @@ prev      : /Isomorphism/
 permalink : /Connectives/
 next      : /Negation/
 translators : ["Fangyi Zhou"]
-progress  : 70
+progress  : 100
 ---
 
 \begin{code}
@@ -1078,10 +1078,16 @@ and the rule `η-×` for products:
 \end{code}
 
 
+## 分配律
+{::comment}
 ## Distribution
+{:/}
 
+在忽略同构的情况下，积对于和满足分配律。验证这条形式的代码和之前的证明相似：
+{::comment}
 Products distribute over sum, up to isomorphism.  The code to validate
 this fact is similar in structure to our previous results:
+{:/}
 \begin{code}
 ×-distrib-⊎ : ∀ {A B C : Set} → (A ⊎ B) × C ≃ (A × C) ⊎ (B × C)
 ×-distrib-⊎ =
@@ -1101,7 +1107,10 @@ this fact is similar in structure to our previous results:
     }
 \end{code}
 
+和对于积不满足分配律，但满足嵌入：
+{::comment}
 Sums do not distribute over products up to isomorphism, but it is an embedding:
+{:/}
 \begin{code}
 ⊎-distrib-× : ∀ {A B C : Set} → (A × B) ⊎ C ≲ (A ⊎ C) × (B ⊎ C)
 ⊎-distrib-× =
@@ -1118,56 +1127,103 @@ Sums do not distribute over products up to isomorphism, but it is an embedding:
                  }
     }
 \end{code}
+我们在定义 `from` 函数的时候可以有选择。给定的定义中，它将 `⟨ inj₂ z , inj₂ z′ ⟩`
+转换为 `inj₂ z`，但我们也可以返回 `inj₂ z′` 作为嵌入证明的变种。我们在这里只能证明嵌入，
+而不能证明同构，因为 `from` 函数必须丢弃 `z` 或者 `z′` 其中的一个。
+{::comment}
 Note that there is a choice in how we write the `from` function.
 As given, it takes `⟨ inj₂ z , inj₂ z′ ⟩` to `inj₂ z`, but it is
 easy to write a variant that instead returns `inj₂ z′`.  We have
 an embedding rather than an isomorphism because the
 `from` function must discard either `z` or `z′` in this case.
+{:/}
 
+在一般的逻辑学方法中，两条分配律都以等价的形式给出，每一边都蕴含了另一边：
+{::comment}
 In the usual approach to logic, both of the distribution laws
 are given as equivalences, where each side implies the other:
+{:/}
 
     A × (B ⊎ C) ⇔ (A × B) ⊎ (A × C)
     A ⊎ (B × C) ⇔ (A ⊎ B) × (A ⊎ C)
 
+但当我们考虑提供上述蕴含证明的函数时，第一条对应同构而第二条只能对应嵌入，
+揭示了有些定理比另一个更加的”正确“。
+{::comment}
 But when we consider the functions that provide evidence for these
 implications, then the first corresponds to an isomorphism while the
 second only corresponds to an embedding, revealing a sense in which
 one of these laws is "more true" than the other.
+{:/}
 
 
+#### 练习 `⊎-weak-×` （推荐）
+{::comment}
 #### Exercise `⊎-weak-×` (recommended)
+{:/}
 
+证明如下性质成立：
+{::comment}
 Show that the following property holds:
+{:/}
 \begin{code}
 postulate
   ⊎-weak-× : ∀ {A B C : Set} → (A ⊎ B) × C → A ⊎ (B × C)
 \end{code}
+这被称为*弱分配律*。给出相对应的分配律，并解释分配律与弱分配律的关系。
+{::comment}
 This is called a _weak distributive law_. Give the corresponding
 distributive law, and explain how it relates to the weak version.
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
 
+#### 练习 `⊎×-implies-×⊎`
+{::comment}
 #### Exercise `⊎×-implies-×⊎`
+{:/}
 
+证明合取的析取蕴含了析取的合取：
+{::comment}
 Show that a disjunct of conjuncts implies a conjunct of disjuncts:
+{:/}
 \begin{code}
 postulate
   ⊎×-implies-×⊎ : ∀ {A B C D : Set} → (A × B) ⊎ (C × D) → (A ⊎ C) × (B ⊎ D)
 \end{code}
+反命题成立吗？如果成立，给出证明；如果不成立，给出反例。
+{::comment}
 Does the converse hold? If so, prove; if not, give a counterexample.
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
-
+## 标准库
+{::comment}
 ## Standard library
+{:/}
 
+标准库中可以找到与本章节中相似的定义：
+{::comment}
 Definitions similar to those in this chapter can be found in the standard library:
+{:/}
 \begin{code}
 import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
 import Data.Unit using (⊤; tt)
@@ -1175,6 +1231,12 @@ import Data.Sum using (_⊎_; inj₁; inj₂) renaming ([_,_] to case-⊎)
 import Data.Empty using (⊥; ⊥-elim)
 import Function.Equivalence using (_⇔_)
 \end{code}
+标准库中使用 `_,_` 构造数据对，而我们使用 `⟨_,_⟩`。前者在从数据对构造三元对或者更大的
+元组时更加的方便，允许 `a , b , c` 作为 `(a, (b , c))` 的记法。但它与其他有用的记法相冲突，
+比如说 [Lists][plfa.Lists] 中的 `[_,_]` 记法表示两个元素的列表，或者 [DeBruijn][plfa.DeBruijn]
+章节中的 `Γ , A` 来表示环境的扩展。标准库中的 `_⇔_` 和我们的相似，但使用起来比较不便，
+因为它可以根据任意的相等性定义进行参数化。
+{::comment}
 The standard library constructs pairs with `_,_` whereas we use `⟨_,_⟩`.
 The former makes it convenient to build triples or larger tuples from pairs,
 permitting `a , b , c` to stand for `(a , (b , c))`.  But it conflicts with
@@ -1185,10 +1247,12 @@ Chapter [DeBruijn][plfa.DeBruijn].
 The standard library `_⇔_` is similar to ours, but the one in the
 standard library is less convenient, since it is parameterised with
 respect to an arbitrary notion of equivalence.
+{:/}
 
 
 ## Unicode
 
+{::comment}
 This chapter uses the following unicode:
 
     ×  U+00D7  MULTIPLICATION SIGN (\x)
@@ -1199,3 +1263,15 @@ This chapter uses the following unicode:
     ₁  U+2081  SUBSCRIPT ONE (\_1)
     ₂  U+2082  SUBSCRIPT TWO (\_2)
     ⇔  U+21D4  LEFT RIGHT DOUBLE ARROW (\<=>)
+{:/}
+
+本章节使用下列 Unicode：
+
+    ×  U+00D7  乘法符号 (\x)
+    ⊎  U+228E  多重集并集 (\u+)
+    ⊤  U+22A4  向下图钉 (\top)
+    ⊥  U+22A5  向上图钉 (\bot)
+    η  U+03B7  希腊小写字母 ETA (\eta)
+    ₁  U+2081  下标 1 (\_1)
+    ₂  U+2082  下标 2 (\_2)
+    ⇔  U+21D4  左右双箭头 (\<=>)
