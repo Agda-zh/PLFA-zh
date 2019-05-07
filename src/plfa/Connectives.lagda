@@ -691,16 +691,38 @@ Show sum is associative up to isomorphism.
 \end{code}
 {:/}
 
+## 假即是空类型
+{::comment}
 ## False is empty
+{:/}
 
+恒假 `⊥` 从不成立。我们将这个概念用合适的归纳类型来形式化：
+{::comment}
 False `⊥` never holds.  We formalise this idea by declaring
 a suitable inductive type:
+{:/}
+
 \begin{code}
 data ⊥ : Set where
-  -- no clauses!
+  -- 没有语句！
 \end{code}
-There is no possible evidence that `⊥` holds.
 
+{::comment}
+FIXME: the code block is removed to make Agda not recognise this as code.
+data ⊥ : Set where
+  -- no clauses!
+{:/}
+
+没有 `⊥` 成立的证明。
+{::comment}
+There is no possible evidence that `⊥` holds.
+{:/}
+
+与 `⊤` 相对偶，`⊥` 没有引入规则，但是有消去规则。因为恒假从不成立，
+如果它一旦成立，我们就进入了矛盾之中。给定 `⊥` 成立的证明，我们可以得出任何结论！
+这是逻辑学的基本原理，又由中世纪的拉丁文词组 _ex falso_ 为名。小孩子也由诸如
+“如果猪有翅膀，那我就是示巴女王”的词组中知晓。我们如下将它形式化：
+{::comment}
 Dual to `⊤`, for `⊥` there is no introduction rule but an elimination rule.
 Since false never holds, knowing that it holds tells us we are in a
 paradoxical situation.  Given evidence that `⊥` holds, we might
@@ -708,6 +730,7 @@ conclude anything!  This is a basic principle of logic, known in
 medieval times by the Latin phrase _ex falso_, and known to children
 through phrases such as "if pigs had wings, then I'd be the Queen of
 Sheba".  We formalise it as follows:
+{:/}
 \begin{code}
 ⊥-elim : ∀ {A : Set}
   → ⊥
@@ -715,40 +738,70 @@ Sheba".  We formalise it as follows:
   → A
 ⊥-elim ()
 \end{code}
+这是我们第一次使用*荒谬模式*（Absurd Pattern） `()`。在这里，因为 `⊥`
+是一个没有成员的类型，我们用 `()` 模式来指明这里不可能匹配任何这个类型的值。
+{::comment}
 This is our first use of the _absurd pattern_ `()`.
 Here since `⊥` is a type with no members, we indicate that it is
 _never_ possible to match against a value of this type by using
 the pattern `()`.
+{:/}
 
+`case-⊎` 的零元形式是 `⊥-elim`。类比的来说，它应该叫做 `case-⊥`，
+但是我们在此使用标准库中使用的名字。
+{::comment}
 The nullary case of `case-⊎` is `⊥-elim`.  By analogy,
 we might have called it `case-⊥`, but chose to stick with the name
 in the standard library.
+{:/}
 
+`uniq-⊎` 的零元形式是 `uniq-⊥`，其断言了 `⊥-elim` 和任何取 `⊥` 的函数是等价的。
+{::comment}
 The nullary case of `uniq-⊎` is `uniq-⊥`, which asserts that `⊥-elim`
 is equal to any arbitrary function from `⊥`:
+{:/}
 \begin{code}
 uniq-⊥ : ∀ {C : Set} (h : ⊥ → C) (w : ⊥) → ⊥-elim w ≡ h w
 uniq-⊥ h ()
 \end{code}
+使用荒谬模式断言了 `w` 没有任何可能的值，因此等式显然成立。
+{::comment}
 Using the absurd pattern asserts there are no possible values for `w`,
 so the equation holds trivially.
+{:/}
 
+我们将 `⊥` 成为*空*类型（Empty Type）。实际上，`⊥` 类型没有成员。
+例如，下面的函数枚举了所有 `⊥` 类型的参数：
+{::comment}
 We refer to `⊥` as the _empty_ type. And, indeed,
 type `⊥` has no members. For example, the following function
 enumerates all possible arguments of type `⊥`:
+{:/}
 \begin{code}
 ⊥-count : ⊥ → ℕ
 ⊥-count ()
 \end{code}
+同样，荒谬模式告诉我们没有值可以来匹配类型 `⊥`。
+{::comment}
 Here again the absurd pattern `()` indicates that no value can match
 type `⊥`.
+{:/}
 
+对于数来说，0 是加法的幺元。对应地，空是和的幺元（*忽略同构*）。
+{::comment}
 For numbers, zero is the identity of addition. Correspondingly, empty
 is the identity of sums _up to isomorphism_.
+{:/}
 
+#### 练习 `⊥-identityˡ` （推荐）
+{::comment}
 #### Exercise `⊥-identityˡ` (recommended)
+{:/}
 
+证明空在忽略同构下是和的左幺元。
+{::comment}
 Show empty is the left identity of sums up to isomorphism.
+{:/}
 
 \begin{code}
 -- 请将代码写在此处。
@@ -760,9 +813,15 @@ Show empty is the left identity of sums up to isomorphism.
 \end{code}
 {:/}
 
+#### 练习 `⊥-identityʳ`
+{::comment}
 #### Exercise `⊥-identityʳ`
+{:/}
 
+证明空在忽略同构下是和的右幺元。
+{::comment}
 Show empty is the right identity of sums up to isomorphism.
+{:/}
 
 \begin{code}
 -- 请将代码写在此处。
