@@ -38,15 +38,15 @@ script:
 - acknowledgements --version
 - make test-offline
 
-before_deploy:
-  "if ! [[ $BEFORE_DEPLOY_RUN ]]; then\n\
-    export BEFORE_DEPLOY_RUN=1 &&\n\
-    acknowledgements -i _config.yml >> _config.yml &&\n\
-    make clean &&\n\
-    rm -rf .bundle/ vendor/ hs/ src/ extra/ .gitignore .travis.yml Gemfile Gemfile.lock Makefile;\n\
-  else\n\
-    echo -e \"\\nbaseurl: \\\"\\\"\\nurl: \\\"https://plfa-zh.github.io\\\"\" >> _config.yml;\n\
-  fi"
+before_deploy: |
+  if ! [[ $BEFORE_DEPLOY_RUN ]]; then
+    export BEFORE_DEPLOY_RUN=1 &&
+    acknowledgements -i _config.yml >> _config.yml &&
+    make clean &&
+    rm -rf .bundle/ vendor/ hs/ src/ extra/ .gitignore .travis.yml Gemfile Gemfile.lock Makefile;
+  else
+    sed -i 's/^baseurl\:\s*".*"$/baseurl: ""/g ; s/^url\:\s*".*"$/url: "https:\/\/plfa-zh.github.io"/g' _config.yml;
+  fi
 
 branches:
   only:
