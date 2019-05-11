@@ -94,8 +94,8 @@ It associates neither to left nor right; writing `x ≡ y ≡ z`
 is illegal.
 {:/}
 
-我们将 `_≡_` 的优先级设置为 4，与 `_≤_` 相同，所以它没有算术运算符相比结合的紧密。
-它既不是左结合，也不是右结合的，因此 `x ≡ y ≡ z` 是不合法的。
+我们将 `_≡_` 的优先级设置为 4，与 `_≤_` 相同，所以其它算术运算符的结合都比它紧密。
+由于它既不是左结合，也不是右结合的，因此 `x ≡ y ≡ z` 是不合法的。
 
 
 {::comment}
@@ -969,8 +969,8 @@ is trivial by reflexivity, and hence `Q y` follows from `x ≐ y`.  But
 
 给定 `x ≐ y` 和一个特定的 `P`，我们需要构造一个 `P y` 蕴含 `P x` 的证明。
 我们首先用一个谓词 `Q` 将相等性实例化，使得 `Q z` 在 `P z` 蕴含 `P x` 时成立。
-`Q x` 这个性质是显然的，由自反性可以得出，因为 `Q y` 因为 `x ≐ y` 成立。然而 `Q y`
-亦是我们需要的证明，即 `P y` 蕴含 `P x`。
+`Q x` 这个性质是显然的，由自反性可以得出，由此通过 `x ≐ y` 就能推出 `Q y` 成立。而 `Q y`
+正是我们需要的证明，即 `P y` 蕴含 `P x`。
 
 {::comment}
 We now show that Martin Löf equality implies
