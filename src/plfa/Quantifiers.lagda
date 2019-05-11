@@ -1,18 +1,28 @@
 ---
-title     : "Quantifiers: Universals and existentials"
+title     : "Quantifiers: 全称量词与存在量词"
 layout    : page
 prev      : /Negation/
 permalink : /Quantifiers/
 next      : /Decidable/
+translator: ["Fangyi Zhou"]
+progress  : 25
 ---
 
 \begin{code}
 module plfa.Quantifiers where
 \end{code}
 
+{::comment}
 This chapter introduces universal and existential quantification.
+{:/}
 
+本章节介绍全称量化（Universal Quantification）和存在量化（Existential Quantification）。
+
+{::comment}
 ## Imports
+{:/}
+
+## 导入
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
@@ -25,32 +35,65 @@ open import plfa.Isomorphism using (_≃_; extensionality)
 \end{code}
 
 
+{::comment}
 ## Universals
+{:/}
 
+## 全称量化
+
+{::comment}
 We formalise universal quantification using the
 dependent function type, which has appeared throughout this book.
+{:/}
 
+我们用依赖函数类型（Dependent Function Type）来形式化全称量化。
+这样的形式贯穿全书地出现。
+
+
+{::comment}
 Given a variable `x` of type `A` and a proposition `B x` which
 contains `x` as a free variable, the universally quantified
 proposition `∀ (x : A) → B x` holds if for every term `M` of type
 `A` the proposition `B M` holds.  Here `B M` stands for
 the proposition `B x` with each free occurrence of `x` replaced by
 `M`.  Variable `x` appears free in `B x` but bound in
-`∀ (x : A) → B x`.  
+`∀ (x : A) → B x`.
+{:/}
 
+给定一个 `A` 类型的变量 `x` 和一个带有 `x` 自由变量的命题 `B x`，全称量化
+的命题 `∀ (x : A) → B x` 当对于所有类型为 `A` 的项 `M`，命题 `B M` 成立时成立。
+在这里，`B M` 代表了将 `B x` 中自由出现的变量 `x` 替换成 `M` 以后的命题。
+变量 `x` 在 `B x` 中以自由变量形式出现，但是在 `∀ (x : A) → B x` 中是约束的。
+
+{::comment}
 Evidence that `∀ (x : A) → B x` holds is of the form
+{:/}
+
+`∀ (x : A) → B x` 成立的证明由以下形式构成：
 
     λ (x : A) → N x
 
+{::comment}
 where `N x` is a term of type `B x`, and `N x` and `B x` both contain
 a free variable `x` of type `A`.  Given a term `L` providing evidence
 that `∀ (x : A) → B x` holds, and a term `M` of type `A`, the term `L
 M` provides evidence that `B M` holds.  In other words, evidence that
 `∀ (x : A) → B x` holds is a function that converts a term `M` of type
 `A` into evidence that `B M` holds.
+{:/}
 
+其中 `N x` 是一个 `B x` 类型的项，`N x` 和 `B x` 都包含了一个 `A` 类型的自由变量 `x`。
+给定一个项 `L`， 其提供 `∀ (x : A) → B x` 成立的证明，和一个类型为 `A` 的项 `M`，
+`L M` 这一项则是 `B M` 成立的证明。换句话说，`∀ (x : A) → B x` 成立的证明是一个函数，
+将类型为 `A` 的项 `M` 转换成 `B M` 成立的证明。
+
+{::comment}
 Put another way, if we know that `∀ (x : A) → B x` holds and that `M`
 is a term of type `A` then we may conclude that `B M` holds:
+{:/}
+
+再换句话说，如果我们知道 `∀ (x : A) → B x` 成立，又知道 `M` 是一个类型为 `A` 的项，
+那么我们可以推导出 `B M` 成立：
 \begin{code}
 ∀-elim : ∀ {A : Set} {B : A → Set}
   → (L : ∀ (x : A) → B x)
@@ -59,8 +102,13 @@ is a term of type `A` then we may conclude that `B M` holds:
   → B M
 ∀-elim L M = L M
 \end{code}
+{::comment}
 As with `→-elim`, the rule corresponds to function application.
+{:/}
 
+如 `→-elim` 那样，这条规则对应了函数应用。
+
+{::comment}
 Functions arise as a special case of dependent functions,
 where the range does not depend on a variable drawn from the domain.
 When a function is viewed as evidence of implication, both its
@@ -70,7 +118,15 @@ as an element of a data type and its result is viewed as evidence of
 a proposition that depends on the argument. This difference is largely
 a matter of interpretation, since in Agda a value of a type and
 evidence of a proposition are indistinguishable.
+{:/}
 
+函数是依赖函数的一种特殊形式，其值域不取决于定义域中的变量。当一个函数被视为
+蕴含的证明时，它的参数和结果都是证明，而当一个依赖函数被视为全称量词的证明时，
+它的参数被视为数据类型中的一个元素，而结果是一个依赖于参数的命题的证明。因为在
+Agda 中，一个数据类型中的一个值一个命题的证明是无法区别的，这样的区别很大程度上
+取决于如何来诠释。
+
+{::comment}
 Dependent function types are sometimes referred to as dependent
 products, because if `A` is a finite type with values `x₁ , ⋯ , xₙ`,
 and if each of the types `B x₁ , ⋯ , B xₙ` has `m₁ , ⋯ , mₙ` distinct
@@ -79,41 +135,87 @@ sometimes the notation `∀ (x : A) → B x` is replaced by a notation
 such as `Π[ x ∈ A ] (B x)`, where `Π` stands for product.  However, we
 will stick with the name dependent function, because (as we will see)
 dependent product is ambiguous.
+{:/}
 
+依赖函数类型也被叫做依赖积（Dependent Product），因为如果 `A` 是一个有限的数据类型，
+有值 `x₁ , ⋯ , xₙ`，如果每个类型 `B x₁ , ⋯ , B xₙ` 有 `m₁ , ⋯ , mₙ` 个不同的成员，
+那么 `∀ (x : A) → B x` 有 `m₁ * ⋯ * mₙ` 个成员。的确，`∀ (x : A) → B x` 的记法有时
+也被 `Π[ x ∈ A ] (B x)` 取代，其中 `Π` 代表积。然而，我们还是使用依赖函数这个名称，
+因为依赖积这个名称是有歧义的，我们后续会体会到歧义所在。
 
+{::comment}
 #### Exercise `∀-distrib-×` (recommended)
+{:/}
 
+#### 练习 `∀-distrib-×` （推荐）
+
+{::comment}
 Show that universals distribute over conjunction:
+{:/}
+
+证明全程量词对于合取满足分配律：
+
 \begin{code}
 postulate
   ∀-distrib-× : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x × C x) ≃ (∀ (x : A) → B x) × (∀ (x : A) → C x)
 \end{code}
+{::comment}
 Compare this with the result (`→-distrib-×`) in
 Chapter [Connectives][plfa.Connectives].
+{:/
 
+将这个结果与 [Connectives][plfa.Connectives] 章节中的 (`→-distrib-×`) 结果对比。
+
+{::comment}
 #### Exercise `⊎∀-implies-∀⊎`
+{:/}
 
+#### 练习 `⊎∀-implies-∀⊎`
+
+{::comment}
 Show that a disjunction of universals implies a universal of disjunctions:
+{:/}
+
+证明全称量词的析取蕴含了析取的全称量词：
+
 \begin{code}
 postulate
   ⊎∀-implies-∀⊎ : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x)  →  ∀ (x : A) → B x ⊎ C x
 \end{code}
+{::comment}
 Does the converse hold? If so, prove; if not, explain why.
+{:/}
+
+反命题成立么？如果成立，给出证明。如果不成立，解释为什么。
 
 
+{::comment}
 #### Exercise `∀-×`
+{:/}
 
+#### 练习 `∀-×`
+
+{::comment}
 Consider the following type.
+{:/}
+
+参考下面的类型：
+
 \begin{code}
 data Tri : Set where
   aa : Tri
   bb : Tri
   cc : Tri
 \end{code}
+{::comment}
 Let `B` be a type indexed by `Tri`, that is `B : Tri → Set`.
 Show that `∀ (x : Tri) → B x` is isomorphic to `B aa × B bb × B cc`.
+{:/}
+
+令 `B` 作为由 `Tri` 索引的一个类型，也就是说 `B : Tri → Set`。
+证明 `∀ (x : Tri) → B x` 和 `B aa × B bb × B cc` 是同构的。
 
 
 ## Existentials
