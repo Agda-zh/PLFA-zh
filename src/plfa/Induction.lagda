@@ -1778,13 +1778,13 @@ import Data.Nat.Properties using (+-assoc; +-identityʳ; +-suc; +-comm)
 ## Unicode
 {:/}
 
-## 统一码（Unicode）
+## Unicode
 
 {::comment}
 This chapter uses the following unicode:
 {:/}
 
-本章中使用了以下统一码：
+本章中使用了以下 Unicode：
 
 {::comment}
     ∀  U+2200  FOR ALL (\forall, \all)

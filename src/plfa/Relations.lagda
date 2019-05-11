@@ -16,7 +16,7 @@ After having defined operations such as addition and multiplication,
 the next step is to define relations, such as _less than or equal_.
 {:/}
 
-在定义了加法和乘法等运算以后，下一步我们来定义关系（Relation），比如说*小于等于*。
+在定义了加法和乘法等运算以后，下一步我们来定义**关系（Relation）**，比如说**小于等于**。
 
 
 {::comment}
@@ -98,10 +98,11 @@ corresponding inference rules, a trick we will use often from now on.
 {:/}
 
 在这里，`z≤n` 和 `s≤s`（无空格）是构造器的名称，`zero ≤ n`、`m ≤ n` 和
-`suc m ≤ suc n` （带空格）是类型。在这里我们第一次用到了 *索引数据类型*
-(Indexed datatype）。我们使用 `m` 和 `n` 这两个自然数来索引 `m ≤ n` 这个类型。
-在 Agda 里，由两个及以上短横线开始的行是注释行，我们巧妙利用这一语法特性，用上述形式
-来表示相应的推理规则。在后文中，我们还会继续使用这一形式。
+`suc m ≤ suc n` （带空格）是类型。在这里我们第一次用到了
+**索引数据类型（Indexed datatype）**。我们使用 `m` 和 `n` 这两个自然数来索引
+`m ≤ n` 这个类型。在 Agda 里，由两个及以上短横线开始的行是注释行，
+我们巧妙利用这一语法特性，用上述形式来表示相应的推理规则。
+在后文中，我们还会继续使用这一形式。
 
 {::comment}
 Both definitions above tell us the same two things:
@@ -113,8 +114,8 @@ Both definitions above tell us the same two things:
 
 这两条定义告诉我们相同的两件事：
 
-* *起始步骤*: 对于所有的自然数 `n`，命题 `zero ≤ n` 成立。
-* *归纳步骤*：对于所有的自然数 `m` 和 `n`，如果命题 `m ≤ n` 成立，
+* **起始步骤**: 对于所有的自然数 `n`，命题 `zero ≤ n` 成立。
+* **归纳步骤**：对于所有的自然数 `m` 和 `n`，如果命题 `m ≤ n` 成立，
   那么命题 `suc m ≤ suc n` 成立。
 
 {::comment}
@@ -129,8 +130,8 @@ In fact, they each give us a bit more detail:
 
 实际上，他们分别给我们更多的信息：
 
-* *起始步骤*: 对于所有的自然数 `n`，构造器 `z≤n` 提供了 `zero ≤ n` 成立的证明。
-* *归纳步骤*：对于所有的自然数 `m` 和 `n`，构造器 `s≤s` 将 `m ≤ n` 成立的证明
+* **起始步骤**: 对于所有的自然数 `n`，构造器 `z≤n` 提供了 `zero ≤ n` 成立的证明。
+* **归纳步骤**：对于所有的自然数 `m` 和 `n`，构造器 `s≤s` 将 `m ≤ n` 成立的证明
   转化为 `suc m ≤ suc n` 成立的证明。
 
 {::comment}
@@ -187,8 +188,8 @@ and `n` implicit.
 {:/}
 
 但是我们这里的定义使用了花括号 `{ }`，而不是小括号 `( )`。
-这意味着参数是 *隐式的* （Implicit），不需要额外声明。实际上，Agda 的类型检查器
-会 *推导* 出它们。因此，我们在 `m + n ≡ n + m` 的证明中需要写出 `+-comm m n`，
+这意味着参数是**隐式的（Implicit）**，不需要额外声明。实际上，Agda 的类型检查器
+会**推导（Infer）**出它们。因此，我们在 `m + n ≡ n + m` 的证明中需要写出 `+-comm m n`，
 在 `zero ≤ n` 的证明中可以省略 `n`。同理，如果 `m≤n` 是 `m ≤ n`的证明，
 那么我们写出 `s≤s m≤n` 作为 `suc m ≤ suc n` 的证明，无需声明 `m` 和 `n`。
 
@@ -361,12 +362,12 @@ holds.
 
 数学家对于关系的常见性质给出了约定的名称。
 
-* *自反*（Reflexive）：对于所有的 `n`，关系 `n ≤ n` 成立。
-* *传递*（Transitive）：对于所有的 `m`、 `n` 和 `p`，如果 `m ≤ n` 和 `n ≤ p`
+* **自反（Reflexive）**：对于所有的 `n`，关系 `n ≤ n` 成立。
+* **传递（Transitive）**：对于所有的 `m`、 `n` 和 `p`，如果 `m ≤ n` 和 `n ≤ p`
   成立，那么 `m ≤ p` 也成立。
-* *反对称*（Anti-symmetric）：对于所有的 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ m`
+* **反对称（Anti-symmetric）**：对于所有的 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ m`
   同时成立，那么 `m ≡ n` 成立。
-* *完全*（Total）：对于所有的 `m` 和 `n`，`m ≤ n` 或者 `n ≤ m` 成立。
+* **完全（Total）**：对于所有的 `m` 和 `n`，`m ≤ n` 或者 `n ≤ m` 成立。
 
 {::comment}
 The relation `_≤_` satisfies all four of these properties.
@@ -384,9 +385,9 @@ There are also names for some combinations of these properties.
 
 对于上述性质的组合也有约定的名称。
 
-* *预序*（Preorder）：满足自反和传递的关系。
-* *偏序*（Partial Order）：满足反对称的预序。
-* *全序*（Total Order）：满足完全的偏序。
+* **预序（Preorder）**：满足自反和传递的关系。
+* **偏序（Partial Order）**：满足反对称的预序。
+* **全序（Total Order）**：满足完全的偏序。
 
 {::comment}
 If you ever bump into a relation at a party, you now know how
@@ -527,7 +528,7 @@ p`, which follows immediately by `z≤n`.  In this case, the fact that
 that the corresponding evidence is unused.
 {:/}
 
-这里我们在 `m ≤ n` 的 *证据* 上进行归纳。在起始步骤里，第一个不等式因为 `z≤n` 而成立，
+这里我们在 `m ≤ n` 的**证据（Evidence）**上进行归纳。在起始步骤里，第一个不等式因为 `z≤n` 而成立，
 那么结论亦可由 `z≤n` 而得出。在这里，`n ≤ p` 的证明是不需要的，我们用 `_` 来表示这个
 证明没有被使用。
 
@@ -809,13 +810,13 @@ and second arguments.  We perform a case analysis:
 
 这里，我们的证明在两个参数上进行归纳，并按照情况分析：
 
-* *第一起始步骤*：如果第一个参数是 `zero`，第二个参数是 `n`，那么 forward
+* **第一起始步骤**：如果第一个参数是 `zero`，第二个参数是 `n`，那么 forward
   条件成立，我们使用 `z≤n` 作为 `zero ≤ n` 的证明。
 
-* *第二起始步骤*：如果第一个参数是 `suc m`，第二个参数是 `zero`，那么 flipped
+* **第二起始步骤**：如果第一个参数是 `suc m`，第二个参数是 `zero`，那么 flipped
   条件成立，我们使用 `z≤n` 作为 `zero ≤ suc m` 的证明。
 
-* *归纳步骤*：如果第一个参数是 `suc m`，第二个参数是 `suc n`，那么归纳假设
+* **归纳步骤**：如果第一个参数是 `suc m`，第二个参数是 `suc n`，那么归纳假设
   `≤-total m n` 可以给出如下推断：
 
   + 归纳假设的 forward 条件成立，以 `m≤n` 作为 `m ≤ n` 的证明。以此我们可以使用
@@ -904,8 +905,8 @@ the operator is _monotonic_ with regard to the ordering.  For example, addition
 is monotonic with regard to inequality, meaning:
 {:/}
 
-如果在聚会中碰到了一个运算符和一个序，那么有人可能会问这个运算符对于这个序是不是 *单调的* （Monotonic）。
-比如说，加法对于小于等于是单调的，这意味着：
+如果在聚会中碰到了一个运算符和一个序，那么有人可能会问这个运算符对于这个序是不是
+**单调的（Monotonic）**。比如说，加法对于小于等于是单调的，这意味着：
 
     ∀ {m n p q : ℕ} → m ≤ n → p ≤ q → m + p ≤ n + q
 
@@ -942,10 +943,10 @@ The proof is by induction on the first argument.
 
 我们对于第一个参数进行归纳。
 
-* *起始步骤*：第一个参数是 `zero`，那么 `zero + p ≤ zero + q` 可以化简为 `p ≤ q`，
+* **起始步骤**：第一个参数是 `zero`，那么 `zero + p ≤ zero + q` 可以化简为 `p ≤ q`，
   其证明由 `p≤q` 给出。
 
-* *归纳步骤*：第一个参数是 `suc n`，那么 `suc n + p ≤ suc n + q` 可以化简为
+* **归纳步骤**：第一个参数是 `suc n`，那么 `suc n + p ≤ suc n + q` 可以化简为
   `suc (n + p) ≤ suc (n + q)`。归纳假设 `+-monoʳ-≤ n p q p≤q` 可以证明
   `n + p ≤ n + q`，我们在此之上使用 `s≤s` 即可得证。
 
@@ -1065,7 +1066,7 @@ holds (where we define `m > n` to hold exactly when `n < m`).
 It is also monotonic with regards to addition and multiplication.
 {:/}
 
-显然，严格不等关系不是自反的。但它是 *非自反的* （Irreflexive），表示 `n < n` 对于
+显然，严格不等关系不是自反的，而是**非自反的（Irreflexive）**，表示 `n < n` 对于
 任何值 `n` 都不成立。和不等关系一样，严格不等关系是传递的。严格不等关系不是完全的，但是满足
 一个相似的性质：*三分律*（Trichotomy）：对于任意的 `m` 和 `n`，`m < n`、`m ≡ n` 或者
 `m > n` 三者有且仅有一者成立。（我们定义 `m > n` 当且仅当 `n < m` 成立时成立）
@@ -1242,8 +1243,8 @@ and strict inequality are _binary relations_, while even and odd are
 _unary relations_, sometimes called _predicates_:
 {:/}
 
-作为一个额外的例子，我们来定义奇数和偶数。不等关系和严格不等关系是 *二元关系*，而奇偶性
-是 *一元关系*，有时也被叫做 *谓词* （Predicate）：
+作为一个额外的例子，我们来定义奇数和偶数。不等关系和严格不等关系是**二元关系**，而奇偶性
+是**一元关系**，有时也被叫做**谓词（Predicate）**：
 
 \begin{code}
 data even : ℕ → Set
@@ -1294,7 +1295,7 @@ that is, using the same name for constructors of different types.
 Here `suc` means one of three constructors:
 {:/}
 
-这也是我们第一次使用 *重载* （Overloaded）的构造器。这意味着不同类型的构造器
+这也是我们第一次使用 **重载（Overloaded）**的构造器。这意味着不同类型的构造器
 拥有相同的名字。在这里 `suc` 表示下面三种构造器其中之一：
 
     suc : ℕ → ℕ
