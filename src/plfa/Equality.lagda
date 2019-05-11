@@ -240,14 +240,14 @@ instantiated.
 ## Congruence and substitution {#cong}
 {:/}
 
-## 同余性和替换性 {#cong}
+## 合同性和替换性 {#cong}
 
 {::comment}
 Equality satisfies _congruence_.  If two terms are equal,
 they remain so after the same function is applied to both:
 {:/}
 
-相等性满足 *同余性*（Congurence）。如果两个项相等，那么对它们使用相同的函数，
+相等性满足 *合同性*（Congurence）。如果两个项相等，那么对它们使用相同的函数，
 其结果仍然相等：
 
 \begin{code}
@@ -262,7 +262,7 @@ cong f refl  =  refl
 Congruence of functions with two arguments is similar:
 {:/}
 
-两个参数的函数也满足同余性：
+两个参数的函数也满足合同性：
 
 \begin{code}
 cong₂ : ∀ {A B C : Set} (f : A → B → C) {u x : A} {v y : B}
@@ -279,7 +279,7 @@ If two functions are equal, then applying them to the same term
 yields equal terms:
 {:/}
 
-在函数上的等价性也满足同余性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
+在函数上的等价性也满足合同性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
 
 \begin{code}
 cong-app : ∀ {A B : Set} {f g : A → B}
@@ -768,7 +768,7 @@ when feasible.
 {:/}
 
 这个证明更加的简短。之前的证明用 `cong suc (+-comm m n)` 作为使用归纳假设的说明，
-而这里我们使用 `+-comm m n` 来重写就足够了，因为重写可以将同余性考虑在其中。尽管使用重写的证明更加的简短，
+而这里我们使用 `+-comm m n` 来重写就足够了，因为重写可以将合同性考虑在其中。尽管使用重写的证明更加的简短，
 使用等式串的证明能容易理解，我们将尽可能的使用后者。
 
 
