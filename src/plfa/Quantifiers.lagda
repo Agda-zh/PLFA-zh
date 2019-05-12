@@ -5,7 +5,7 @@ prev      : /Negation/
 permalink : /Quantifiers/
 next      : /Decidable/
 translator: ["Fangyi Zhou"]
-progress  : 25
+progress  : 50
 ---
 
 \begin{code}
@@ -218,8 +218,13 @@ Show that `∀ (x : Tri) → B x` is isomorphic to `B aa × B bb × B cc`.
 证明 `∀ (x : Tri) → B x` 和 `B aa × B bb × B cc` 是同构的。
 
 
+{::comment}
 ## Existentials
+{:/}
 
+## 存在量化
+
+{::comment}
 Given a variable `x` of type `A` and a proposition `B x` which
 contains `x` as a free variable, the existentially quantified
 proposition `Σ[ x ∈ A ] B x` holds if for some term `M` of type
@@ -227,48 +232,94 @@ proposition `Σ[ x ∈ A ] B x` holds if for some term `M` of type
 the proposition `B x` with each free occurrence of `x` replaced by
 `M`.  Variable `x` appears free in `B x` but bound in
 `Σ[ x ∈ A ] B x`.
+{:/}
 
+给定一个 `A` 类型的变量 `x` 和一个带有 `x` 自由变量的命题 `B x`，存在量化
+的命题 `Σ[ x ∈ A ] B x` 当对于一些类型为 `A` 的项 `M`，命题 `B M` 成立时成立。
+在这里，`B M` 代表了将 `B x` 中自由出现的变量 `x` 替换成 `M` 以后的命题。
+变量 `x` 在 `B x` 中以自由变量形式出现，但是在 `Σ[ x ∈ A ] B x` 中是约束的。
+
+{::comment}
 We formalise existential quantification by declaring a suitable
 inductive type:
+{:/}
+
+我们定义一个合适的归纳数据类型来形式化存在量化：
+
 \begin{code}
 data Σ (A : Set) (B : A → Set) : Set where
   ⟨_,_⟩ : (x : A) → B x → Σ A B
 \end{code}
+{::comment}
 We define a convenient syntax for existentials as follows:
+{:/}
+
+我们为存在量词定义一个方便的语法：
+
 \begin{code}
 Σ-syntax = Σ
 infix 2 Σ-syntax
 syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
 \end{code}
+{::comment}
 This is our first use of a syntax declaration, which specifies that
 the term on the left may be written with the syntax on the right.
 The special syntax is available only when the identifier
 `Σ-syntax` is imported.
+{:/}
 
+这是我们第一次使用语法声明，其表示左手边的项可以以右手边的语法来书写。
+这种特殊语法只有在标识符 `Σ-syntax` 被导入时可用。
+
+{::comment}
 Evidence that `Σ[ x ∈ A ] B x` holds is of the form
 `⟨ M , N ⟩` where `M` is a term of type `A`, and `N` is evidence
 that `B M` holds.
+{:/}
 
+`Σ[ x ∈ A ] B x` 成立的证明由 `⟨ M , N ⟩` 组成，其中 `M` 是类型为 `A` 的项，
+`N` 是 `B M` 成立的证明。
+
+
+{::comment}
 Equivalently, we could also declare existentials as a record type:
+{:/}
+
+我们也可以用记录类型来等价地定义存在量化。
+
 \begin{code}
 record Σ′ (A : Set) (B : A → Set) : Set where
   field
     proj₁′ : A
     proj₂′ : B proj₁′
 \end{code}
+
+{::comment}
 Here record construction
+{:/}
+
+这里的记录构造
 
     record
       { proj₁′ = M
       ; proj₂′ = N
       }
 
+{::comment}
 corresponds to the term
+{:/}
+
+对应了项
 
     ⟨ M , N ⟩
 
+{::comment}
 where `M` is a term of type `A` and `N` is a term of type `B M`.
+{:/}
 
+其中 `M` 是类型为 `A` 的项，`N` 是类型为 `B M` 的项。
+
+{::comment}
 Products arise as a special case of existentials, where the second
 component does not depend on a variable drawn from the first
 component.  When a product is viewed as evidence of a conjunction,
@@ -278,21 +329,46 @@ an element of a datatype and the second component is viewed as
 evidence of a proposition that depends on the first component.  This
 difference is largely a matter of interpretation, since in Agda a value
 of a type and evidence of a proposition are indistinguishable.
+{:/}
 
+积是依赖积的一种特殊形式，其第二分量不取决于第一分量中的变量。当一个积被视为
+合取的证明时，它的两个分量都是证明，而当一个依赖积被视为存在量词的证明时，
+它的第一分量被视为数据类型中的一个元素，而第二分量是一个依赖于第一分量的命题的证明。因为在
+Agda 中，一个数据类型中的一个值一个命题的证明是无法区别的，这样的区别很大程度上
+取决于如何来诠释。
+
+{::comment}
 Existentials are sometimes referred to as dependent sums,
 because if `A` is a finite type with values `x₁ , ⋯ , xₙ`, and if
 each of the types `B x₁ , ⋯ B xₙ` has `m₁ , ⋯ , mₙ` distinct members,
 then `Σ[ x ∈ A ] B x` has `m₁ + ⋯ + mₙ` members, which explains the
 choice of notation for existentials, since `Σ` stands for sum.
+{:/}
 
+存在量化也被叫做依赖和（Dependent Sum），因为如果 `A` 是一个有限的数据类型，
+有值 `x₁ , ⋯ , xₙ`，如果每个类型 `B x₁ , ⋯ , B xₙ` 有 `m₁ , ⋯ , mₙ` 个不同的成员，
+那么 `Σ[ x ∈ A ] B x` 有 `m₁ + ⋯ + mₙ` 个成员，这也解释了选择使用这个记法的原因——
+`Σ` 代表和。
+
+{::comment}
 Existentials are sometimes referred to as dependent products, since
 products arise as a special case.  However, that choice of names is
 doubly confusing, since universals also have a claim to the name dependent
 product and since existentials also have a claim to the name dependent sum.
+{:/}
 
+存在量化有时也被叫做依赖积（Dependent Product），因为积是其中的一种特殊形式。但是，
+这样的叫法非常让人困扰，因为全程量化也被叫做依赖积，而存在量化已经有依赖和的叫法。
+
+{::comment}
 A common notation for existentials is `∃` (analogous to `∀` for universals).
 We follow the convention of the Agda standard library, and reserve this
 notation for the case where the domain of the bound variable is left implicit:
+{:/}
+
+存在量词的普通记法是 `∃` （与全程量词的 `∀` 记法相类似）。我们使用 Agda 标准库中的惯例，
+使用一种隐式申明约束变量定义域的记法。
+
 \begin{code}
 ∃ : ∀ {A : Set} (B : A → Set) → Set
 ∃ {A} B = Σ A B
@@ -300,12 +376,23 @@ notation for the case where the domain of the bound variable is left implicit:
 ∃-syntax = ∃
 syntax ∃-syntax (λ x → B) = ∃[ x ] B
 \end{code}
+{::comment}
 The special syntax is available only when the identifier `∃-syntax` is imported.
 We will tend to use this syntax, since it is shorter and more familiar.
+{:/}
 
+这种特殊的语法只有在 `∃-syntax` 标识符被导入时可用。我们将倾向于使用这种语法，因为它更短，
+而且看上去更熟悉。
+
+{::comment}
 Given evidence that `∀ x → B x → C` holds, where `C` does not contain
 `x` as a free variable, and given evidence that `∃[ x ] B x` holds, we
 may conclude that `C` holds:
+{:/}
+
+给定 `∀ x → B x → C` 成立的证明，其中 `C` 不包括自由变量 `x`，给定 `∃[ x ] B x` 成立的
+证明，我们可以推导出 `C` 成立。
+
 \begin{code}
 ∃-elim : ∀ {A : Set} {B : A → Set} {C : Set}
   → (∀ x → B x → C)
@@ -314,14 +401,26 @@ may conclude that `C` holds:
   → C
 ∃-elim f ⟨ x , y ⟩ = f x y
 \end{code}
+{::comment}
 In other words, if we know for every `x` of type `A` that `B x`
 implies `C`, and we know for some `x` of type `A` that `B x` holds,
 then we may conclude that `C` holds.  This is because we may
 instantiate that proof that `∀ x → B x → C` to any value `x` of type
 `A` and any `y` of type `B x`, and exactly such values are provided by
 the evidence for `∃[ x ] B x`.
+{:/}
 
+换句话说，如果我们知道对于任何 `A` 类型的 `x`，`B x` 蕴含了 `C`，还知道对于某个类型
+`A` 的 `x`，`B x` 成立，那么我们可以推导出 `C` 成立。这是因为我们可以先将 `∀ x → B x → C`
+的证明对于 `A` 类型的 `x` 和 `B x` 类型的 `y` 实例化，而这样的值恰好可以由 `∃[ x ] B x`
+的证明来提供。
+
+{::comment}
 Indeed, the converse also holds, and the two together form an isomorphism:
+{:/}
+
+的确，反命题也成立，两者合起来构成一个同构：
+
 \begin{code}
 ∀∃-currying : ∀ {A : Set} {B : A → Set} {C : Set}
   → (∀ x → B x → C) ≃ (∃[ x ] B x → C)
@@ -333,34 +432,69 @@ Indeed, the converse also holds, and the two together form an isomorphism:
     ; to∘from =  λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
     }
 \end{code}
+{::comment}
 The result can be viewed as a generalisation of currying.  Indeed, the code to
 establish the isomorphism is identical to what we wrote when discussing
 [implication][plfa.Connectives#implication].
+{:/}
 
+这可以被看做是将柯里化推广的结果。的确，建立这两者同构的证明与之前我们讨论
+[蕴含][plfa.Connectives#implication]时给出的证明是一样的。
+
+{::comment}
 #### Exercise `∃-distrib-⊎` (recommended)
+{:/}
 
+#### 练习 `∃-distrib-⊎` （推荐）
+
+{::comment}
 Show that existentials distribute over disjunction:
+{:/}
+
+证明存在量词对于析取满足分配律：
+
 \begin{code}
 postulate
   ∃-distrib-⊎ : ∀ {A : Set} {B C : A → Set} →
     ∃[ x ] (B x ⊎ C x) ≃ (∃[ x ] B x) ⊎ (∃[ x ] C x)
 \end{code}
 
+{::comment}
 #### Exercise `∃×-implies-×∃`
+{:/}
 
+#### 练习 `∃×-implies-×∃`
+
+{::comment}
 Show that an existential of conjunctions implies a conjunction of existentials:
+{:/}
+
+证明存在量词的合取蕴含了合取的存在量词：
+
 \begin{code}
 postulate
   ∃×-implies-×∃ : ∀ {A : Set} {B C : A → Set} →
     ∃[ x ] (B x × C x) → (∃[ x ] B x) × (∃[ x ] C x)
 \end{code}
+{::comment}
 Does the converse hold? If so, prove; if not, explain why.
+{:/}
 
+反命题成立么？如果成立，给出证明。如果不成立，解释为什么。
+
+{::comment}
 #### Exercise `∃-⊎`
+{:/}
 
+#### 练习 `∃-⊎`
+
+{::comment}
 Let `Tri` and `B` be as in Exercise `∀-×`.
 Show that `∃[ x ] B x` is isomorphic to `B aa ⊎ B bb ⊎ B cc`.
+{:/}
 
+沿用练习 `∀-×` 中的 `Tri` 和 `B` 。
+证明 `∃[ x ] B x` 与 `B aa ⊎ B bb ⊎ B cc` 是同构的。
 
 ## An existential example
 
