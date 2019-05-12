@@ -4,8 +4,8 @@ layout    : page
 prev      : /Negation/
 permalink : /Quantifiers/
 next      : /Decidable/
-translator: ["Fangyi Zhou"]
-progress  : 50
+translators: ["Fangyi Zhou"]
+progress  : 100
 ---
 
 \begin{code}
@@ -496,10 +496,19 @@ Show that `∃[ x ] B x` is isomorphic to `B aa ⊎ B bb ⊎ B cc`.
 沿用练习 `∀-×` 中的 `Tri` 和 `B` 。
 证明 `∃[ x ] B x` 与 `B aa ⊎ B bb ⊎ B cc` 是同构的。
 
+{::comment}
 ## An existential example
+{:/}
 
+## 一个存在量化的例子
+
+{::comment}
 Recall the definitions of `even` and `odd` from
 Chapter [Relations][plfa.Relations]:
+{:/}
+
+回忆我们在 [Relations][plfa.Relations] 章节中定义的 `even` 和 `odd`：
+
 \begin{code}
 data even : ℕ → Set
 data odd  : ℕ → Set
@@ -519,22 +528,48 @@ data odd where
       -----------
     → odd (suc n)
 \end{code}
+
+{::comment}
 A number is even if it is zero or the successor of an odd number, and
 odd if it is the successor of an even number.
+{:/}
 
+如果一个数是 0 或者它是奇数的后继，那么这个数是偶数。如果一个数是偶数的后继，那么这个数是奇数。
+
+{::comment}
 We will show that a number is even if and only if it is twice some
 other number, and odd if and only if it is one more than twice
 some other number.  In other words, we will show:
+{:/}
 
+我们接下来要证明，一个数是偶数当且仅当这个数是一个数的两倍，一个数是奇数当且仅当这个数
+是一个数的两倍多一。换句话说，我们要证明的是：
+
+{::comment}
 `even n`   iff   `∃[ m ] (    m * 2 ≡ n)`
 
 `odd  n`   iff   `∃[ m ] (1 + m * 2 ≡ n)`
+{:/}
 
+`even n`   当且仅当   `∃[ m ] (    m * 2 ≡ n)`
+
+`odd  n`   当且仅当   `∃[ m ] (1 + m * 2 ≡ n)`
+
+{::comment}
 By convention, one tends to write constant factors first and to put
 the constant term in a sum last. Here we've reversed each of those
 conventions, because doing so eases the proof.
+{:/}
 
+惯例来说，我们往往将常数因子写在前面、将和里的常数项写在后面。但是这里我们没有按照惯例，
+而是反了过来，因为这样可以让证明更简单：
+
+{::comment}
 Here is the proof in the forward direction:
+{:/}
+
+这是向前方向的证明：
+
 \begin{code}
 even-∃ : ∀ {n : ℕ} → even n → ∃[ m ] (    m * 2 ≡ n)
 odd-∃  : ∀ {n : ℕ} →  odd n → ∃[ m ] (1 + m * 2 ≡ n)
@@ -546,11 +581,18 @@ even-∃ (even-suc o) with odd-∃ o
 odd-∃  (odd-suc e)  with even-∃ e
 ...                    | ⟨ m , refl ⟩  =  ⟨ m , refl ⟩
 \end{code}
+{::comment}
 We define two mutually recursive functions. Given
 evidence that `n` is even or odd, we return a
 number `m` and evidence that `m * 2 ≡ n` or `1 + m * 2 ≡ n`.
 We induct over the evidence that `n` is even or odd:
+{:/}
 
+我们定义两个相互递归的函数。给定 `n` 是奇数或者是偶数的证明，我们返回一个数
+`m`，以及 `m * 2 ≡ n` 或者 `1 + m * 2 ≡ n` 的证明。我们根据 `n` 是奇数
+或者是偶数的证明进行归纳：
+
+{::comment}
 * If the number is even because it is zero, then we return a pair
 consisting of zero and the evidence that twice zero is zero.
 
@@ -565,10 +607,30 @@ then we apply the induction hypothesis to give a number `m` and
 evidence that `m * 2 ≡ n`. We return a pair consisting of `suc m` and
 evidence that `1 + m * 2 ≡ suc n`, which is immediate after
 substituting for `n`.
+{:/}
 
+* 如果这个数是偶数，因为它是 0，那么我们返回数据对 0 ，以及 0 的两倍是 0 的证明。
+
+* 如果这个数是偶数，因为它是比一个奇数多 1，那么我们可以使用归纳假设，来获得一个数 `m` 和
+`1 + m * 2 ≡ n` 的证明。我们返回数据对 `suc m` 以及 `suc m * 2 ≡ suc n` 的证明——
+我们可以直接通过替换 `n` 来得到证明。
+
+* 如果这个数是奇数，因为它是一个偶数的后继，那么我们可以使用归纳假设，来获得一个数 `m` 和
+`m * 2 ≡ n` 的证明。我们返回数据对 `suc m` 以及 `1 + m * 2 ≡ suc n` 的证明——
+我们可以直接通过替换 `n` 来得到证明。
+
+{::comment}
 This completes the proof in the forward direction.
+{:/}
 
+这样，我们就完成了向前方向的证明。
+
+{::comment}
 Here is the proof in the reverse direction:
+{:/}
+
+接下来是向后方向的证明：
+
 \begin{code}
 ∃-even : ∀ {n : ℕ} → ∃[ m ] (    m * 2 ≡ n) → even n
 ∃-odd  : ∀ {n : ℕ} → ∃[ m ] (1 + m * 2 ≡ n) →  odd n
@@ -578,12 +640,20 @@ Here is the proof in the reverse direction:
 
 ∃-odd  ⟨     m , refl ⟩  =  odd-suc (∃-even ⟨ m , refl ⟩)
 \end{code}
+
+{::comment}
 Given a number that is twice some other number we must show it is
 even, and a number that is one more than twice some other number we
 must show it is odd.  We induct over the evidence of the existential,
 and in the even case consider the two possibilities for the number
 that is doubled:
+{:/}
 
+给定一个是另一个数两倍的数，我们需要证明这个数是偶数。给定一个是另一个数两倍多一的数，
+我们需要证明这个数是奇数。我们对于存在量化的证明进行归纳。在偶数的情况，我们也需要考虑两种
+一个数是另一个数两倍的情况。
+
+{::comment}
 - In the even case for `zero`, we must show `zero * 2` is even, which
 follows by `even-zero`.
 
@@ -594,36 +664,87 @@ desired result follows by `even-suc`.
 - In the odd case, we must show `1 + m * 2` is odd.  The inductive
 hypothesis tell us that `m * 2` is even, from which the desired result
 follows by `odd-suc`.
+{:/}
 
+- 在偶数是 `zero` 的情况中，我们需要证明 `zero * 2` 是偶数，由 `even-zero` 可得。
+
+- 在偶数是 `suc n` 的情况中，我们需要证明 `suc m * 2` 是偶数。归纳假设告诉我们，
+`1 + m * 2` 是奇数，那么所求证的结果由 `even-suc` 可得。
+
+- 在偶数的情况中，我们需要证明 `1 + m * 2` 是奇数。归纳假设告诉我们，`m * 2` 是偶数，
+那么所求证的结果由 `odd-suc` 可得。
+
+{::comment}
 This completes the proof in the backward direction.
+{:/}
 
+这样，我们就完成了向后方向的证明。
+
+{::comment}
 #### Exercise `∃-even-odd`
+{:/}
 
+#### 练习 `∃-even-odd`
+
+{::comment}
 How do the proofs become more difficult if we replace `m * 2` and `1 + m * 2`
 by `2 * m` and `2 * m + 1`?  Rewrite the proofs of `∃-even` and `∃-odd` when
 restated in this way.
+{:/}
 
+如果我们用 `m * 2` 代替 `2 * m`，`1 + m * 2` 代替 `2 * m + 1`，上述证明会变得复杂多少呢？
+用这种方法来重写 `∃-even` 和 `∃-odd`。
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 #### Exercise `∃-+-≤`
+{:/}
 
+#### 练习 `∃-+-≤`
+
+{::comment}
 Show that `y ≤ z` holds if and only if there exists a `x` such that
 `x + y ≡ z`.
+{:/}
 
+证明 `y ≤ z` 当且仅当存在一个 `x` 使得 `x + y ≡ z` 成立时成立。
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
+{::comment}
 ## Existentials, Universals, and Negation
+{:/}
 
+## 存在量化、全程量化和否定
+
+{::comment}
 Negation of an existential is isomorphic to the universal
 of a negation.  Considering that existentials are generalised
 disjunction and universals are generalised conjunction, this
 result is analogous to the one which tells us that negation
 of a disjunction is isomorphic to a conjunction of negations:
+{:/}
+
+存在量化的否定与否定的全程量化是同构的。考虑到存在量化是析构的推广，全程量化是合构的推广，
+这样的结果与析构的否定与否定的合构是同构的结果相似。
+
 \begin{code}
 ¬∃≃∀¬ : ∀ {A : Set} {B : A → Set}
   → (¬ ∃[ x ] B x) ≃ ∀ x → ¬ B x
@@ -635,26 +756,50 @@ of a disjunction is isomorphic to a conjunction of negations:
     ; to∘from =  λ{ ∀¬xy → refl }
     }
 \end{code}
+{::comment}
 In the `to` direction, we are given a value `¬∃xy` of type
 `¬ ∃[ x ] B x`, and need to show that given a value
 `x` that `¬ B x` follows, in other words, from
 a value `y` of type `B x` we can derive false.  Combining
 `x` and `y` gives us a value `⟨ x , y ⟩` of type `∃[ x ] B x`,
 and applying `¬∃xy` to that yields a contradiction.
+{:/}
 
+在 `to` 的方向，给定了一个 `¬ ∃[ x ] B x` 类型的值 `¬∃xy`，需要证明给定一个 `x` 的值，
+可以推导出 `¬ B x`。换句话说，给定一个 `B x` 类型的值 `y`，我们可以推导出假。将 `x` 和 `y`
+合并起来我们就得到了 `∃[ x ] B x` 类型的值 `⟨ x , y ⟩`，对其使用 `¬∃xy` 即可获得矛盾。
+
+{::comment}
 In the `from` direction, we are given a value `∀¬xy` of type
 `∀ x → ¬ B x`, and need to show that from a value `⟨ x , y ⟩`
 of type `∃[ x ] B x` we can derive false.  Applying `∀¬xy`
 to `x` gives a value of type `¬ B x`, and applying that to `y` yields
 a contradiction.
+{:/}
 
+在 `from` 的方向，给定了一个 `∀ x → ¬ B x` 类型的值 `∀¬xy`，需要证明从一个类型为
+`∃[ x ] B x` 类型的值 `⟨ x , y ⟩` ，我们可以推导出假。将 `∀¬xy` 使用于 `x` 之上，
+可以得到类型为 `¬ B x` 的值，对其使用 `y` 即可获得矛盾。
+
+{::comment}
 The two inverse proofs are straightforward, where one direction
 requires extensionality.
+{:/}
 
+两个逆的证明很直接，其中有一个方向需要外延性。
 
+{::comment}
 #### Exercise `∃¬-implies-¬∀` (recommended)
+{:/}
 
+#### 练习 `∃¬-implies-¬∀` （推荐）
+
+{::comment}
 Show that existential of a negation implies negation of a universal:
+{:/}
+
+证明否定的存在量化蕴含了全程量化的否定：
+
 \begin{code}
 postulate
   ∃¬-implies-¬∀ : ∀ {A : Set} {B : A → Set}
@@ -662,29 +807,52 @@ postulate
       --------------
     → ¬ (∀ x → B x)
 \end{code}
+{::comment}
 Does the converse hold? If so, prove; if not, explain why.
+{:/}
 
+反命题成立吗？如果成立，给出证明；如果不成立，给出反例。
 
+{::comment}
 #### Exercise `Bin-isomorphism` (stretch) {#Bin-isomorphism}
+{:/}
 
+#### 练习 `Bin-isomorphism` （延伸） {#Bin-isomorphism}
+
+{::comment}
 Recall that Exercises
 [Bin][plfa.Naturals#Bin],
 [Bin-laws][plfa.Induction#Bin-laws], and
 [Bin-predicates][plfa.Relations#Bin-predicates]
 define a datatype of bitstrings representing natural numbers:
+{:/}
+
+回忆在练习 [Bin][plfa.Naturals#Bin]、
+[Bin-laws][plfa.Induction#Bin-laws] 和
+[Bin-predicates][plfa.Relations#Bin-predicates] 中，
+我们定义了比特串的数据类型来表示自然数：
+
 \begin{code}
 data Bin : Set where
   nil : Bin
   x0_ : Bin → Bin
   x1_ : Bin → Bin
 \end{code}
+{::comment}
 And ask you to define the following functions and predicates:
+{:/}
+
+并要求你来定义下列函数和谓词：
 
     to   : ℕ → Bin
     from : Bin → ℕ
     Can  : Bin → Set
 
+{::comment}
 And to establish the following properties:
+{:/}
+
+以及证明下列性质：
 
     from (to n) ≡ n
 
@@ -695,17 +863,35 @@ And to establish the following properties:
     ---------------
     to (from x) ≡ x
 
+{::comment}
 Using the above, establish that there is an isomorphism between `ℕ` and
 `∃[ x ](Can x)`.
+{:/}
 
+使用上述，证明 `ℕ` 与 `∃[ x ](Can x)` 之间存在同构。
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
+{::comment}
 ## Standard Prelude
+{:/}
 
+## 标准库
+
+{::comment}
 Definitions similar to those in this chapter can be found in the standard library:
+{:/}
+
+标准库中可以找到与本章节中相似的定义：
+
 \begin{code}
 import Data.Product using (Σ; _,_; ∃; Σ-syntax; ∃-syntax)
 \end{code}
@@ -713,8 +899,17 @@ import Data.Product using (Σ; _,_; ∃; Σ-syntax; ∃-syntax)
 
 ## Unicode
 
+{::comment}
 This chapter uses the following unicode:
 
     Π  U+03A0  GREEK CAPITAL LETTER PI (\Pi)
     Σ  U+03A3  GREEK CAPITAL LETTER SIGMA (\Sigma)
     ∃  U+2203  THERE EXISTS (\ex, \exists)
+
+{:/}
+
+本章节使用下列 Unicode：
+
+    Π  U+03A0  希腊大写字母 PI (\Pi)
+    Σ  U+03A3  希腊大写字母 SIGMA (\Sigma)
+    ∃  U+2203  存在 (\ex, \exists)
