@@ -5,7 +5,7 @@ prev      : /Quantifiers/
 permalink : /Decidable/
 next      : /Lists/
 translators : ["Fangyi Zhou"]
-progress  : 35
+progress  : 100
 ---
 
 \begin{code}
@@ -25,7 +25,7 @@ of a new notion of _decidable_.
 我们在如何表示关系上可以有所选择：表示为其成立的*证明*（Evidence）的数据类型，
 或者表示为一个*计算*（Compute）其是否成立的函数。我们在此探讨这两个选择直接的关系。
 我们首先研究大家熟悉的*布尔值*（Boolean）记法，但是我们之后会发现，我们最好避免布尔值的记法，
-而使用一种新的*可决定性*（Decidable）记法。
+而使用一种新的*可判定性*（Decidable）记法。
 
 {::comment}
 ## Imports
@@ -342,28 +342,54 @@ there is a way to get the benefits of both.
 可能使用电脑来计算出答案会更加方便。幸运的是，比起需要自行选择*证明*和*计算*，我们有一种方法来获得
 两种方法的优点。
 
+{::comment}
 ## The best of both worlds
+{:/}
 
+## 取二者之精华
+
+{::comment}
 A function that returns a boolean returns exactly a single bit of information:
 does the relation hold or does it not? Conversely, the evidence approach tells
 us exactly why the relation holds, but we are responsible for generating the
 evidence.  But it is easy to define a type that combines the benefits of
 both approaches.  It is called `Dec A`, where `Dec` is short for _decidable_:
+{:/}
+
+一个返回布尔值的函数提供恰好一比特的信息：这个关系成立或是不成立。相反地，证明的形式告诉我们
+为什么这个关系成立，但是我们需要自行完成这样的证明。但是我们可以简单地来定义一个类型来取二者之精华。
+我们把它叫做：`Dec A`，其中 `Dec` 是*可判定的*（Decidable）的意思。
+
 \begin{code}
 data Dec (A : Set) : Set where
   yes :   A → Dec A
   no  : ¬ A → Dec A
 \end{code}
+{::comment}
 Like booleans, the type has two constructors.  A value of type `Dec A`
 is either of the form `yes x`, where `x` provides evidence that `A` holds,
 or of the form `no ¬x`, where `¬x` provides evidence that `A` cannot hold
 (that is, `¬x` is a function which given evidence of `A` yields a contradiction).
+{:/}
 
+如果布尔值，这个类型有两个构造器。一个 `Dec A` 类型的值要么是以 `yes x` 的形式，其中 `x` 提供 `A`
+成立的证明，或者是以 `no ¬x` 的形式，其中 `x` 提供了 `A` 无法成立的证明。（也就是说，`¬x` 是一个给定
+`A` 成立的证据，返回矛盾的函数）
+
+{::comment}
 For example, we define a function `_≤?_` which given two numbers decides whether one
 is less than or equal to the other, and provides evidence to justify its conclusion.
+{:/}
 
+比如说，我们定义一个函数 `_≤?_`，给定两个数，判定是否一个数小于等于另一个，并提供证明来说明结论。
+
+{::comment}
 First, we introduce two functions useful for constructing evidence that
 an inequality does not hold:
+{:/}
+
+首先，我们使用两个有用的函数，用于构造不等式不成立的证明：
+
 \begin{code}
 ¬s≤z : ∀ {m : ℕ} → ¬ (suc m ≤ zero)
 ¬s≤z ()
@@ -371,6 +397,7 @@ an inequality does not hold:
 ¬s≤s : ∀ {m n : ℕ} → ¬ (m ≤ n) → ¬ (suc m ≤ suc n)
 ¬s≤s ¬m≤n (s≤s m≤n) = ¬m≤n m≤n
 \end{code}
+{::comment}
 The first of these asserts that `¬ (suc m ≤ zero)`, and follows by
 absurdity, since any evidence of inequality has the form `zero ≤ n`
 or `suc m ≤ suc n`, neither of which match `suc m ≤ zero`. The second
@@ -378,8 +405,20 @@ of these takes evidence `¬m≤n` of `¬ (m ≤ n)` and returns a proof of
 `¬ (suc m ≤ suc n)`.  Any evidence of `suc m ≤ suc n` must have the
 form `s≤s m≤n` where `m≤n` is evidence that `m ≤ n`.  Hence, we have
 a contradiction, evidenced by `¬m≤n m≤n`.
+{:/}
 
+第一个函数断言了 `¬ (suc m ≤ zero)`，由荒谬可得。因为每个不等式的成立证明必须是
+`zero ≤ n` 或者 `suc m ≤ suc n` 的形式，两者都无法匹配 `suc m ≤ zero`。
+第二个函数取 `¬ (m ≤ n)` 的证明 `¬m≤n`，返回 `¬ (suc m ≤ suc n)` 的证明。
+所有形如 `suc m ≤ suc n` 的证明必须是以 `s≤s m≤n` 的形式给出。因此我们可以构造一个
+矛盾，以 `¬m≤n m≤n` 来证明。
+
+{::comment}
 Using these, it is straightforward to decide an inequality:
+{:/}
+
+使用这些，我们可以直接的判定不等关系：
+
 \begin{code}
 _≤?_ : ∀ (m n : ℕ) → Dec (m ≤ n)
 zero  ≤? n                   =  yes z≤n
@@ -388,6 +427,7 @@ suc m ≤? suc n with m ≤? n
 ...               | yes m≤n  =  yes (s≤s m≤n)
 ...               | no ¬m≤n  =  no (¬s≤s ¬m≤n)
 \end{code}
+{::comment}
 As with `_≤ᵇ_`, the definition has three clauses.  In the first
 clause, it is immediate that `zero ≤ n` holds, and it is evidenced by
 `z≤n`.  In the second clause, it is immediate that `suc m ≤ zero` does
@@ -398,16 +438,35 @@ recursively invoke `m ≤? n`.  There are two possibilities.  In the
 provides evidence that `suc m ≤ suc n`.  In the `no` case it returns
 evidence `¬m≤n` that `¬ (m ≤ n)`, and `¬s≤s ¬m≤n` provides evidence
 that `¬ (suc m ≤ suc n)`.
+{:/}
 
+与 `_≤ᵇ_` 一样，定义有三条语句。第一条语句中，`zero ≤ n` 立即成立，由 `z≤n` 证明。
+第二条语句中，`suc m ≤ zero` 立即不成立，由 `¬s≤z` 证明。
+第三条语句中，我们需要递归地应用 `m ≤? n`。有两种可能性，在 `yes` 的情况中，它会返回
+`m ≤ n` 的证明 `m≤n`，所以 `s≤s m≤n` 即可作为 `suc m ≤ suc n` 的证明；在 `no` 的情况中，
+它会返回 `¬ (m ≤ n)` 的证明 `¬m≤n`，所以 `¬s≤s ¬m≤n` 即可作为 `¬ (suc m ≤ suc n)` 的证明。
+
+{::comment}
 When we wrote `_≤ᵇ_`, we had to write two other functions, `≤ᵇ→≤` and `≤→≤ᵇ`,
 in order to show that it was correct.  In contrast, the definition of `_≤?_`
 proves itself correct, as attested to by its type.  The code of `_≤?_`
 is far more compact than the combined code of `_≤ᵇ_`, `≤ᵇ→≤`, and `≤→≤ᵇ`.
 As we will later show, if you really want the latter three, it is easy
 to derive them from `_≤?_`.
+{:/}
 
+当我们写 `_≤ᵇ_` 时，我们必须写两个其他的函数 `≤ᵇ→≤` 和 `≤→≤ᵇ` 来证明其正确性。
+作为对比，`_≤?_` 的定义自身就证明了其正确性，由类型即可得知。`_≤?_` 的代码也比
+`_≤ᵇ_`、`≤ᵇ→≤` 和 `≤→≤ᵇ` 加起来要简洁的多。我们稍后将会证明，如果我们需要后三者，
+我们亦可简单地从 `_≤?_` 中派生出来。
+
+{::comment}
 We can use our new function to _compute_ the _evidence_ that earlier we had to
 think up on our own:
+{:/}
+
+我们可以使用我们新的函数来*计算*出我们之前需要自己想出来的*证明*。
+
 \begin{code}
 _ : 2 ≤? 4 ≡ yes (s≤s (s≤s z≤n))
 _ = refl
@@ -415,63 +474,126 @@ _ = refl
 _ : 4 ≤? 2 ≡ no (¬s≤s (¬s≤s ¬s≤z))
 _ = refl
 \end{code}
+{::comment}
 You can check that Agda will indeed compute these values.  Typing
 `C-c C-n` and providing `2 ≤? 4` or `4 ≤? 2` as the requested expression
 causes Agda to print the values given above.
+{:/}
 
+你可以验证 Agda 的确计算出了这些值。输入 `C-c C-n` 并给出 `2 ≤? 4` 或者 `4 ≤? 2` 作为
+需要的表达式，Agda 会输出如上的值。
+
+{::comment}
 (A subtlety: if we do not define `¬s≤z` and `¬s≤s` as top-level functions,
 but instead use inline anonymous functions then Agda may have
 trouble normalising evidence of negation.)
+{:/}
+
+（小细节：如果我们不把 `¬s≤z` 和 `¬s≤s` 作为顶层函数来定义，而是使用内嵌的匿名函数，
+Agda 可能会在规范化否定的证明中出现问题。）
 
 
+{::comment}
 #### Exercise `_<?_` (recommended)
+{:/}
 
+#### 练习 `_<?_` （推荐）
+
+{::comment}
 Analogous to the function above, define a function to decide strict inequality:
+{:/}
+
+与上面的函数相似，定义一个判定严格不等性的函数：
+
 \begin{code}
 postulate
   _<?_ : ∀ (m n : ℕ) → Dec (m < n)
 \end{code}
 
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 #### Exercise `_≡ℕ?_`
+{:/}
 
+#### 练习 `_≡ℕ?_`
+
+{::comment}
 Define a function to decide whether two naturals are equal:
+{:/}
+
+定义一个函数来判定两个自然数是否相等。
+
 \begin{code}
 postulate
   _≡ℕ?_ : ∀ (m n : ℕ) → Dec (m ≡ n)
 \end{code}
 
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
+
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
 
+{::comment}
 ## Decidables from booleans, and booleans from decidables
+{:/}
 
+## 从可判定的值到布尔值，从布尔值到可判定的值
+
+{::comment}
 Curious readers might wonder if we could reuse the definition of
 `m ≤ᵇ n`, together with the proofs that it is equivalent to `m ≤ n`, to show
 decidability.  Indeed, we can do so as follows:
+{:/}
+
+好奇的读者可能会思考能不能重用 `m ≤ᵇ n` 的定义，加上它与 `m ≤ n` 等价的证明，
+来证明可判定性。的确，我们是可以做到的：
+
 \begin{code}
 _≤?′_ : ∀ (m n : ℕ) → Dec (m ≤ n)
 m ≤?′ n with m ≤ᵇ n | ≤ᵇ→≤ m n | ≤→≤ᵇ {m} {n}
 ...        | true   | p        | _            = yes (p tt)
 ...        | false  | _        | ¬p           = no ¬p
 \end{code}
+{::comment}
 If `m ≤ᵇ n` is true then `≤ᵇ→≤` yields a proof that `m ≤ n` holds,
 while if it is false then `≤→≤ᵇ` takes a proof that `m ≤ n` holds into a contradiction.
+{:/}
 
+如果 `m ≤ᵇ n` 为真，那么 `≤ᵇ→≤` 会返回一个 `m ≤ n` 成立的证明。
+如果 `m ≤ᵇ n` 为假，那么 `≤→≤ᵇ` 会取一个 `m ≤ n` 成立的证明，将其转换为一个矛盾。
+
+{::comment}
 The triple binding of the `with` clause in this proof is essential.
 If instead we wrote:
+{:/}
+
+在这个证明中，`with` 语句的三重约束是必须的。如果我们取而代之的写：
 
     _≤?″_ : ∀ (m n : ℕ) → Dec (m ≤ n)
     m ≤?″ n with m ≤ᵇ n
     ... | true   =  yes (≤ᵇ→≤ m n tt)
     ... | false  =  no (≤→≤ᵇ {m} {n})
 
+{::comment}
 then Agda would make two complaints, one for each clause:
+{:/}
+
+那么 Agda 对于每条语句会有一个抱怨：
 
     ⊤ !=< (T (m ≤ᵇ n)) of type Set
     when checking that the expression tt has type T (m ≤ᵇ n)
@@ -479,28 +601,53 @@ then Agda would make two complaints, one for each clause:
     T (m ≤ᵇ n) !=< ⊥ of type Set
     when checking that the expression ≤→≤ᵇ {m} {n} has type ¬ m ≤ n
 
+{::comment}
 Putting the expressions into the `with` clause permits Agda to exploit
 the fact that `T (m ≤ᵇ n)` is `⊤` when `m ≤ᵇ n` is true, and that
 `T (m ≤ᵇ n)` is `⊥` when `m ≤ᵇ n` is false.
+{:/}
 
+将表达式放在 `with` 语句中能让 Agda 利用下列事实：当 `m ≤ᵇ n` 为真时，`T (m ≤ᵇ n)` 是
+`⊤`；当 `m ≤ᵇ n` 为假时，`T (m ≤ᵇ n)` 是 `⊥`。
+
+{::comment}
 However, overall it is simpler to just define `_≤?_` directly, as in the previous
 section.  If one really wants `_≤ᵇ_`, then it and its properties are easily derived
 from `_≤?_`, as we will now show.
+{:/}
 
+然而，总体来说还是直接定义 `_≤?_` 比较方便，正如之前部分中那样。如果有人真的很需要 `_≤ᵇ_`，
+那么它和它的性质可以简单地从 `_≤?_` 中派生出来，正如我们接下来要展示的一样。
+
+{::comment}
 Erasure takes a decidable value to a boolean:
+{:/}
+
+擦除（Erasure）将一个可判定的值转换为一个布尔值：
+
 \begin{code}
 ⌊_⌋ : ∀ {A : Set} → Dec A → Bool
 ⌊ yes x ⌋  =  true
 ⌊ no ¬x ⌋  =  false
 \end{code}
+{::comment}
 Using erasure, we can easily derive `_≤ᵇ_` from `_≤?_`:
+{:/}
+
+使用擦除，我们可以简单地从 `_≤?_` 中派生出 `_≤ᵇ_`：
+
 \begin{code}
 _≤ᵇ′_ : ℕ → ℕ → Bool
 m ≤ᵇ′ n  =  ⌊ m ≤? n ⌋
 \end{code}
 
+{::comment}
 Further, if `D` is a value of type `Dec A`, then `T ⌊ D ⌋` is
 inhabited exactly when `A` is inhabited:
+{:/}
+
+更进一步来说，如果 `D` 是一个类型为 `Dec A` 的值，那么 `T ⌊ D ⌋`
+当且仅当 `A` 成立时成立：
 \begin{code}
 toWitness : ∀ {A : Set} {D : Dec A} → T ⌊ D ⌋ → A
 toWitness {A} {yes x} tt  =  x
@@ -510,8 +657,13 @@ fromWitness : ∀ {A : Set} {D : Dec A} → A → T ⌊ D ⌋
 fromWitness {A} {yes x} _  =  tt
 fromWitness {A} {no ¬x} x  =  ¬x x
 \end{code}
+{::comment}
 Using these, we can easily derive that `T (m ≤ᵇ′ n)` is inhabited
 exactly when `m ≤ n` is inhabited:
+{:/}
+
+使用这些，我们可以简单地派生出 `T (m ≤ᵇ′ n)` 当且仅当 `m ≤ n` 成立时成立。
+
 \begin{code}
 ≤ᵇ′→≤ : ∀ {m n : ℕ} → T (m ≤ᵇ′ n) → m ≤ n
 ≤ᵇ′→≤  =  toWitness
@@ -520,18 +672,34 @@ exactly when `m ≤ n` is inhabited:
 ≤→≤ᵇ′  =  fromWitness
 \end{code}
 
+{::comment}
 In summary, it is usually best to eschew booleans and rely on decidables.
 If you need booleans, they and their properties are easily derived from the
 corresponding decidables.
+{:/}
+
+总结来说，最好避免直接使用布尔值，而使用可判定的值。如果有需要布尔值的时候，它们和它们的性质
+可以简单地从对应的可判定的值中派生而来。
 
 
+{::comment}
 ## Logical connectives
+{:/}
 
+{::comment}
 Most readers will be familiar with the logical connectives for booleans.
 Each of these extends to decidables.
+{:/}
 
+大多数读者对于布尔值的逻辑运算符很熟悉了。每个逻辑运算符都可以被延伸至可判定的值。
+
+{::comment}
 The conjunction of two booleans is true if both are true,
 and false if either is false:
+{:/}
+
+两个布尔值的合取当两者都为真时为真，当任一为假时为假：
+
 \begin{code}
 infixr 6 _∧_
 
@@ -540,13 +708,23 @@ true  ∧ true  = true
 false ∧ _     = false
 _     ∧ false = false
 \end{code}
+{::comment}
 In Emacs, the left-hand side of the third equation displays in grey,
 indicating that the order of the equations determines which of the
 second or the third can match.  However, regardless of which matches
 the answer is the same.
+{:/}
 
+在 Emacs 中，第三个等式的左手边显示为灰色，表示这些等式出现的顺序决定了是第二条还是第三条
+会被匹配到。然而，不管是哪一条被匹配到，结果都是一样的。
+
+{::comment}
 Correspondingly, given two decidable propositions, we can
 decide their conjunction:
+{:/}
+
+相应地，给定两个可判定的命题，我们可以判定它们的合取：
+
 \begin{code}
 infixr 6 _×-dec_
 
@@ -555,20 +733,36 @@ yes x ×-dec yes y = yes ⟨ x , y ⟩
 no ¬x ×-dec _     = no λ{ ⟨ x , y ⟩ → ¬x x }
 _     ×-dec no ¬y = no λ{ ⟨ x , y ⟩ → ¬y y }
 \end{code}
+{::comment}
 The conjunction of two propositions holds if they both hold,
 and its negation holds if the negation of either holds.
 If both hold, then we pair the evidence for each to yield
 evidence of the conjunct.  If the negation of either holds,
 assuming the conjunct will lead to a contradiction.
+{:/}
 
+两个命题的合取当两者都成立时成立，其否定则当任意一者否定成立时成立。如果两个都成立，
+我们将每一证明放入数据对中，作为合取的证明。如果任意一者的否定成立，假设整个合取将会引入一个矛盾。
+
+{::comment}
 Again in Emacs, the left-hand side of the third equation displays in grey,
 indicating that the order of the equations determines which of the
 second or the third can match.  This time the answer is different depending
 on which matches; if both conjuncts fail to hold we pick the first to
 yield the contradiction, but it would be equally valid to pick the second.
+{:/}
 
+同样地，在 Emacs 中，第三条等式在左手边以灰色显示，说明等式的顺序决定了第二条还是第三条会被匹配。
+这一次，我们给出的结果会因为是第二条还是第三条而不一样。如果两个命题都不成立，我们选择第一个来构造矛盾，
+但选择第二个也是同样正确的。
+
+{::comment}
 The disjunction of two booleans is true if either is true,
 and false if both are false:
+{:/}
+
+两个布尔值的析取当任意为真时为真，当两者为假时为假：
+
 \begin{code}
 infixr 5 _∨_
 
@@ -577,13 +771,23 @@ true  ∨ _      = true
 _     ∨ true   = true
 false ∨ false  = false
 \end{code}
+{::comment}
 In Emacs, the left-hand side of the second equation displays in grey,
 indicating that the order of the equations determines which of the
 first or the second can match.  However, regardless of which matches
 the answer is the same.
+{:/}
 
+在 Emacs 中，第三个等式的左手边显示为灰色，表示这些等式出现的顺序决定了是第二条还是第三条
+会被匹配到。然而，不管是哪一条被匹配到，结果都是一样的。
+
+{::comment}
 Correspondingly, given two decidable propositions, we can
 decide their disjunction:
+{:/}
+
+相应地，给定两个可判定的命题，我们可以判定它们的析取：
+
 \begin{code}
 infixr 5 _⊎-dec_
 
@@ -592,45 +796,77 @@ yes x ⊎-dec _     = yes (inj₁ x)
 _     ⊎-dec yes y = yes (inj₂ y)
 no ¬x ⊎-dec no ¬y = no λ{ (inj₁ x) → ¬x x ; (inj₂ y) → ¬y y }
 \end{code}
+{::comment}
 The disjunction of two propositions holds if either holds,
 and its negation holds if the negation of both hold.
 If either holds, we inject the evidence to yield
 evidence of the disjunct.  If the negation of both hold,
 assuming either disjunct will lead to a contradiction.
+{:/}
 
+两个命题的析取当任意一者成立时成立，其否定则当两者的否定成立时成立。如果任意一者成立，
+我们使用其证明来作为析取的证明。如果两个的否定都成立，假设任意一者都会引入一个矛盾。
+
+{::comment}
 Again in Emacs, the left-hand side of the second equation displays in grey,
 indicating that the order of the equations determines which of the
 first or the second can match.  This time the answer is different depending
 on which matches; if both disjuncts hold we pick the first,
 but it would be equally valid to pick the second.
+{:/}
 
+同样地，在 Emacs 中，第三条等式在左手边以灰色显示，说明等式的顺序决定了第二条还是第三条会被匹配。
+这一次，我们给出的结果会因为是第二条还是第三条而不一样。如果两个命题都成立，我们选择第一个来构造析取，
+但选择第二个也是同样正确的。
+
+{::comment}
 The negation of a boolean is false if its argument is true,
 and vice versa:
+{:/}
+
+一个布尔值的否定当值为真时为假，反之亦然：
+
 \begin{code}
 not : Bool → Bool
 not true  = false
 not false = true
 \end{code}
+{::comment}
 Correspondingly, given a decidable proposition, we
 can decide its negation:
+{:/}
+
+相应地，给定一个可判定的命题，我们可以判定它的否定：
+
 \begin{code}
 ¬? : ∀ {A : Set} → Dec A → Dec (¬ A)
 ¬? (yes x)  =  no (¬¬-intro x)
 ¬? (no ¬x)  =  yes ¬x
 \end{code}
+{::comment}
 We simply swap yes and no.  In the first equation,
 the right-hand side asserts that the negation of `¬ A` holds,
 in other words, that `¬ ¬ A` holds, which is an easy consequence
 of the fact that `A` holds.
+{:/}
 
+我们直接把 yes 和 no 交换。在第一个等式中，右手边断言了 `¬ A` 的否定成立，也就是说
+`¬ ¬ A` 成立——这是一个 `A` 成立时可以简单得到的推论。
+
+{::comment}
 There is also a slightly less familiar connective,
 corresponding to implication:
+{:/}
+
+还有一个与蕴含相对应，但是稍微不那么知名的运算符：
+
 \begin{code}
 _⊃_ : Bool → Bool → Bool
 _     ⊃ true   =  true
 false ⊃ _      =  true
 true  ⊃ false  =  false
 \end{code}
+{::comment}
 One boolean implies another if
 whenever the first is true then the second is true.
 Hence, the implication of two booleans is true if
@@ -640,15 +876,27 @@ In Emacs, the left-hand side of the second equation displays in grey,
 indicating that the order of the equations determines which of the
 first or the second can match.  However, regardless of which matches
 the answer is the same.
+{:/}
 
+当任何一个布尔值为真的时候，另一个布尔值恒为真，我们成为第一个布尔值蕴含第二个布尔值。
+因此，两者的蕴含在第二个为真或者第一个为假时为真，在第一个为真而第二个为假时为假。
+在 Emacs 中，第二个等式的左手边显示为灰色，表示这些等式出现的顺序决定了是第一条还是第二条
+会被匹配到。然而，不管是哪一条被匹配到，结果都是一样的。
+
+{::comment}
 Correspondingly, given two decidable propositions,
 we can decide if the first implies the second:
+{:/}
+
+相应地，给定两个可判定的命题，我们可以判定它们的析取：
+
 \begin{code}
 _→-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A → B)
 _     →-dec yes y  =  yes (λ _ → y)
 no ¬x →-dec _      =  yes (λ x → ⊥-elim (¬x x))
 yes x →-dec no ¬y  =  no (λ f → ¬y (f x))
 \end{code}
+{::comment}
 The implication holds if either the second holds or
 the negation of the first holds, and its negation
 holds if the first holds and the negation of the second holds.
@@ -662,39 +910,80 @@ given evidence of the implication we must derive a contradiction;
 we apply the evidence of the implication `f` to the evidence of the
 first `x`, yielding a contradiction with the evidence `¬y` of
 the negation of the second.
+{:/}
 
+两者的蕴含在第二者成立或者第一者的否定成立时成立，其否定在第一者成立而第二者否定成立时成立。
+蕴含成立的证明是一个从第一者成立的证明到第二者成立的证明的函数。如果第二者成立，那么这个函数
+直接返回第二者的证明。如果第一者的否定成立，那么使用第一者成立的证明，构造一个矛盾。
+如果第一者成立，第二者不成立，给定蕴含成立的证明，我们必须构造一个矛盾：我们将成立的证明 `f`
+应用于第一者成立的证明 `x`，再加以第二者否定成立的证明 `¬y` 来构造矛盾。
+
+{::comment}
 Again in Emacs, the left-hand side of the second equation displays in grey,
 indicating that the order of the equations determines which of the
 first or the second can match.  This time the answer is different depending
 on which matches; but either is equally valid.
+{:/}
 
+同样地，在 Emacs 中，第二条等式在左手边以灰色显示，说明等式的顺序决定了第一条还是第二条会被匹配。
+这一次，我们给出的结果会因为是哪一条被匹配而不一样，但两者都是同样正确的。
+
+{::comment}
 #### Exercise `erasure`
+{:/}
 
+#### 练习 `erasure`
+
+{::comment}
 Show that erasure relates corresponding boolean and decidable operations:
+{:/}
+
+证明擦除将对应的布尔值和可判定的值的操作联系了起来：
+
 \begin{code}
 postulate
   ∧-× : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∧ ⌊ y ⌋ ≡ ⌊ x ×-dec y ⌋
   ∨-× : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∨ ⌊ y ⌋ ≡ ⌊ x ⊎-dec y ⌋
   not-¬ : ∀ {A : Set} (x : Dec A) → not ⌊ x ⌋ ≡ ⌊ ¬? x ⌋
 \end{code}
-  
-#### Exercise `iff-erasure` (recommended)
 
-Give analogues of the `_⇔_` operation from 
+{::comment}
+#### Exercise `iff-erasure` (recommended)
+{:/}
+
+#### 练习 `iff-erasure` （推荐）
+
+{::comment}
+Give analogues of the `_⇔_` operation from
 Chapter [Isomorphism][plfa.Isomorphism#iff],
 operation on booleans and decidables, and also show the corresponding erasure:
+{:/}
+
+给出与 [Isomorphism][plfa.Isomorphism#iff] 章节中 `_↔_` 相对应的布尔值与可判定的值的操作，
+并证明其对应的擦除：
+
 \begin{code}
 postulate
   _iff_ : Bool → Bool → Bool
   _⇔-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⇔ B)
-  iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋  
+  iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋
 \end{code}
 
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 ## Standard Library
+{:/}
+
+## 标准库
 
 \begin{code}
 import Data.Bool.Base using (Bool; true; false; T; _∧_; _∨_; not)
@@ -709,9 +998,18 @@ import Relation.Nullary.Sum using (_⊎-dec_)
 
 ## Unicode
 
+{::comment}
     ∧  U+2227  LOGICAL AND (\and, \wedge)
     ∨  U+2228  LOGICAL OR (\or, \vee)
     ⊃  U+2283  SUPERSET OF (\sup)
     ᵇ  U+1D47  MODIFIER LETTER SMALL B  (\^b)
     ⌊  U+230A  LEFT FLOOR (\cll)
     ⌋  U+230B  RIGHT FLOOR (\clr)
+{:/}
+
+    ∧  U+2227  逻辑和 (\and, \wedge)
+    ∨  U+2228  逻辑或 (\or, \vee)
+    ⊃  U+2283  超集 (\sup)
+    ᵇ  U+1D47  修饰符小写 B  (\^b)
+    ⌊  U+230A  左向下取整 (\cll)
+    ⌋  U+230B  右向下取整 (\clr)
