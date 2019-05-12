@@ -881,7 +881,7 @@ Using the above, establish that there is an isomorphism between `ℕ` and
 \end{code}
 
 {::comment}
-## Standard Prelude
+## Standard library
 {:/}
 
 ## 标准库
