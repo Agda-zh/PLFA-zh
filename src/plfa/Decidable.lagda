@@ -136,13 +136,13 @@ The first and last clauses of this definition resemble the two
 constructors of the corresponding inductive datatype, while the
 middle clause arises because there is no possible evidence that
 `suc m ≤ zero` for any `m`.
-For example, we can compute that `2 ≤ 4` holds,
-and we can compute that `4 ≤ 2` does not hold:
+For example, we can compute that `2 ≤ᵇ 4` holds,
+and we can compute that `4 ≤ᵇ 2` does not hold:
 {:/}
 
 定义中的第一条与最后一条与归纳数据类型中的两个构造器相对应。因为对于任意的 `m`，不可能出现
 `suc m ≤ zero` 的证明，我们使用中间一条定义来表示。
-举个例子，我们可以计算 `2 ≤ 4` 成立，也可以计算 `4 ≤ 2` 不成立：
+举个例子，我们可以计算 `2 ≤ᵇ 4` 成立，也可以计算 `4 ≤ᵇ 2` 不成立：
 
 \begin{code}
 _ : (2 ≤ᵇ 4) ≡ true

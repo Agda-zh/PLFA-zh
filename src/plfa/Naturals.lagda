@@ -604,7 +604,7 @@ Here is the definition of addition in Agda:
 \begin{code}
 _+_ : ℕ → ℕ → ℕ
 zero + n = n
-suc m + n = suc (m + n)
+(suc m) + n = suc (m + n)
 \end{code}
 
 {::comment}

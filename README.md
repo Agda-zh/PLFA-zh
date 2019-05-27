@@ -8,7 +8,7 @@ translators : ["Rongxiao Fu"]
 [![Build Status](https://travis-ci.org/Agda-zh/PLFA-zh.svg?branch=dev)](https://travis-ci.org/Agda-zh/PLFA-zh)
 [![Agda](https://img.shields.io/badge/agda-2.5.4.2-blue.svg)](https://github.com/agda/agda/releases/tag/v2.5.4.2)
 [![agda-stdlib](https://img.shields.io/badge/agda--stdlib-0.17-blue.svg)](https://github.com/agda/agda-stdlib/releases/tag/v0.17)
-[![agda2html](https://img.shields.io/badge/agda2html-0.2.3.0-blue.svg)](https://github.com/wenkokke/agda2html/releases/tag/v0.2.3.0)
+[![agda2html](https://img.shields.io/badge/agda2html-0.2.4.0-blue.svg)](https://github.com/wenkokke/agda2html/releases/tag/v0.2.4.0)
 
 《编程语言基础：Agda 描述》的使用方法和《Programming Language Foundations in Agda》一致。
 
@@ -106,6 +106,14 @@ We advise installing agda2html using [Stack](https://docs.haskellstack.org/en/st
     git clone https://github.com/wenkokke/agda2html.git
     cd agda2html
     stack install
+
+<!---
+Finally, you must install the Ruby dependencies---[Jekyll](https://jekyllrb.com/), [html-proofer](https://github.com/gjtorikian/html-proofer), *etc.*---using Bundler:
+--->
+
+最后，你需要用 Bundler 安装 Ruby 依赖：[Jekyll](https://jekyllrb.com/)、 [html-proofer](https://github.com/gjtorikian/html-proofer) 等。
+
+    bundle install
 
 <!---
 Once you have installed these tools, you can build the book from source:
