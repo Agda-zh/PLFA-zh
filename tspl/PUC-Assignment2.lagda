@@ -48,11 +48,10 @@ open import Relation.Unary using (Decidable)
 open import Function using (_∘_)
 open import Level using (Level)
 open import plfa.Relations using (_<_; z<s; s<s)
-open import plfa.Isomorphism using (_≃_; _∘_; ≃-sym; ≃-trans; _≲_; extensionality)
+open import plfa.Isomorphism using (_≃_; ≃-sym; ≃-trans; _≲_; extensionality)
 open plfa.Isomorphism.≃-Reasoning
 open import plfa.Lists using (List; []; _∷_; [_]; [_,_]; [_,_,_]; [_,_,_,_];
-  _++_; reverse; map; foldr; sum; All; Any; here; there; _∈_; Decidable)
-open import Agda.Primitive using (Level)
+  _++_; reverse; map; foldr; sum; All; Any; here; there; _∈_)
 \end{code}
 
 ## Equality
