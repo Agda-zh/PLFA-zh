@@ -10,12 +10,6 @@ next      : /DeBruijn/
 module plfa.Properties where
 \end{code}
 
-[PLW:
-  Perhaps break this into three chapters:
-  The denotational semantics.
-  The proof that the semantics is compositional.
-  The proof that reduction preserves and reflects the semantics.]
-
 This chapter covers properties of the simply-typed lambda calculus, as
 introduced in the previous chapter.  The most important of these
 properties are progress and preservation.  We introduce these below,
@@ -28,8 +22,7 @@ sequences for us.
 \begin{code}
 open import Relation.Binary.PropositionalEquality
   using (_≡_; _≢_; refl; sym; cong; cong₂)
-open import Data.String using (String)
-open import Data.String.Unsafe using (_≟_)
+open import Data.String using (String; _≟_)
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Product
@@ -1275,7 +1268,7 @@ _ = refl
 And again, the example in the previous section was derived by editing the
 above.
 
-#### Exercise `mul-example` (recommended)
+#### Exercise `mul-eval` (recommended)
 
 Using the evaluator, confirm that two times two is four.
 

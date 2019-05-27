@@ -53,12 +53,12 @@ four.
 
 \begin{code}
 open import Relation.Binary.PropositionalEquality using (_≡_; _≢_; refl)
-open import Data.String using (String)
-open import Data.String.Unsafe using (_≟_)
+open import Data.String using (String; _≟_)
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Relation.Nullary using (Dec; yes; no; ¬_)
 open import Relation.Nullary.Negation using (¬?)
+open import Data.List using (List; _∷_; [])
 \end{code}
 
 ## Syntax of terms
@@ -136,9 +136,6 @@ plus = μ "+" ⇒ ƛ "m" ⇒ ƛ "n" ⇒
          case ` "m"
            [zero⇒ ` "n"
            |suc "m" ⇒ `suc (` "+" · ` "m" · ` "n") ]
-
-2+2 : Term
-2+2 = plus · two · two
 \end{code}
 The recursive definition of addition is similar to our original
 definition of `_+_` for naturals, as given in
@@ -171,9 +168,6 @@ plusᶜ =  ƛ "m" ⇒ ƛ "n" ⇒ ƛ "s" ⇒ ƛ "z" ⇒
 
 sucᶜ : Term
 sucᶜ = ƛ "n" ⇒ `suc (` "n")
-
-fourᶜ : Term
-fourᶜ = plusᶜ · twoᶜ · twoᶜ
 \end{code}
 The Church numeral for two takes two arguments `s` and `z`
 and applies `s` twice to `z`.
@@ -250,8 +244,8 @@ for a term that is a variable. Agda requires we distinguish.
 
 Similarly, informal presentation often use the same notation for
 function types, lambda abstraction, and function application in both
-the object language (the language one is describing) and the
-meta-language (the language in which the description is written),
+the _object language_ (the language one is describing) and the
+_meta-language_ (the language in which the description is written),
 trusting readers can use context to distinguish the two.  Agda is
 not quite so forgiving, so here we use `ƛ x ⇒ N` and `L · M` for the
 object language, as compared to `λ x → N` and `L M` in our
@@ -393,17 +387,18 @@ in the body of the function abstraction.
 
 We write substitution as `N [ x := V ]`, meaning
 "substitute term `V` for free occurrences of variable `x` in term `N`",
-or, more compactly, "substitute `V` for `x` in `N`".
+or, more compactly, "substitute `V` for `x` in `N`",
+or equivalently, "in `N` replace `x` by `V`".
 Substitution works if `V` is any closed term;
 it need not be a value, but we use `V` since in fact we
 usually substitute values.
 
 Here are some examples:
 
-* `` (sucᶜ · (sucᶜ · ` "z")) [ "z" := `zero ] `` yields
-  `` sucᶜ · (sucᶜ · `zero) ``
 * `` (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) [ "s" := sucᶜ ] `` yields
   `` ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z") ``
+* `` (sucᶜ · (sucᶜ · ` "z")) [ "z" := `zero ] `` yields
+  `` sucᶜ · (sucᶜ · `zero) ``
 * `` (ƛ "x" ⇒ ` "y") [ "y" := `zero ] `` yields `` ƛ "x" ⇒ `zero ``
 * `` (ƛ "x" ⇒ ` "x") [ "x" := `zero ] `` yields `` ƛ "x" ⇒ ` "x" ``
 * `` (ƛ "y" ⇒ ` "y") [ "x" := `zero ] `` yields `` ƛ "y" ⇒ ` "y" ``
@@ -423,7 +418,7 @@ substitution by terms that are _not_ closed may require renaming
 of bound variables. For example:
 
 * `` (ƛ "x" ⇒ ` "x" · ` "y") [ "y" := ` "x" · `zero] `` should not yield <br/>
-  `` (ƛ "x" ⇒ ` "x" · (` "x" · ` `zero)) ``
+  `` (ƛ "x" ⇒ ` "x" · (` "x" · `zero)) ``
 
 Instead, we should rename the bound variable to avoid capture:
 
@@ -481,10 +476,10 @@ simply push substitution recursively into the subterms.
 Here is confirmation that the examples above are correct:
 
 \begin{code}
-_ : (sucᶜ · (sucᶜ · ` "z")) [ "z" := `zero ] ≡  sucᶜ · (sucᶜ · `zero)
+_ : (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) [ "s" := sucᶜ ] ≡  ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z")
 _ = refl
 
-_ : (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) [ "s" := sucᶜ ] ≡  ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z")
+_ : (sucᶜ · (sucᶜ · ` "z")) [ "z" := `zero ] ≡  sucᶜ · (sucᶜ · `zero)
 _ = refl
 
 _ : (ƛ "x" ⇒ ` "y") [ "y" := `zero ] ≡ ƛ "x" ⇒ `zero
@@ -513,7 +508,7 @@ What is the result of the following substitution?
 #### Exercise `_[_:=_]′` (stretch)
 
 The definition of substitution above has three clauses (`ƛ`, `case`,
-and `μ`) that invoke a with clause to deal with bound variables.
+and `μ`) that invoke a `with` clause to deal with bound variables.
 Rewrite the definition to factor the common part of these three
 clauses into a single function, defined by mutual recursion with
 substitution.
@@ -551,6 +546,12 @@ Greek letter `ξ` (_xi_).  Once a term is sufficiently reduced, it will
 consist of a constructor and a deconstructor, in our case `ƛ` and `·`,
 which reduces directly.  We give them names starting with the Greek
 letter `β` (_beta_) and such rules are traditionally called _beta rules_.
+
+A bit of terminology: A term that matches the left-hand side of a
+reduction rule is called a _redex_. In the redex `(ƛ x ⇒ N) · V`, we
+may refer to `x` as the _formal parameter_` of the function, and `V`
+as the _actual parameter_ of the function application.  Beta reduction
+replaces the formal parameter by the actual parameter.
 
 If a term is a value, then no reduction applies; conversely,
 if a reduction applies to a term then it is not a value.
@@ -639,9 +640,10 @@ What does the following term step to?
 2.  `` (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") ``
 3.  `` (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") ``
 
-What does the following term step to?  (Where `two` and `sucᶜ` are as defined above.)
+What does the following term step to?  (Where `twoᶜ` and `sucᶜ` are as
+defined above.)
 
-    two · sucᶜ · `zero  —→  ???
+    twoᶜ · sucᶜ · `zero  —→  ???
 
 1.  `` sucᶜ · (sucᶜ · `zero) ``
 2.  `` (ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z")) · `zero ``
@@ -686,7 +688,7 @@ We can read this as follows:
 * From term `M`, we can take no steps, giving a step of type `M —↠ M`.
   It is written `M ∎`.
 
-* From term `L` we can take a single of type `L —→ M` followed by zero
+* From term `L` we can take a single step of type `L —→ M` followed by zero
   or more steps of type `M —↠ N`, giving a step of type `L —↠ N`. It is
   written `L —→⟨ L—→M ⟩ M—↠N`, where `L—→M` and `M—↠N` are steps of the
   appropriate type.
@@ -742,7 +744,7 @@ It can be illustrated as follows:
                P
 
 Here `L`, `M`, `N` are universally quantified while `P`
-is existentially quantified.  If each line stand for zero
+is existentially quantified.  If each line stands for zero
 or more reduction steps, this is called confluence,
 while if the top two lines stand for a single reduction
 step and the bottom two stand for zero or more reduction
@@ -840,7 +842,7 @@ _ =
 
 And here is a similar sample reduction for Church numerals:
 \begin{code}
-_ : fourᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero
+_ : plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero
 _ =
   begin
     (ƛ "m" ⇒ ƛ "n" ⇒ ƛ "s" ⇒ ƛ "z" ⇒ ` "m" · ` "s" · (` "n" · ` "s" · ` "z"))
@@ -970,6 +972,22 @@ infixl 5  _,_⦂_
 data Context : Set where
   ∅     : Context
   _,_⦂_ : Context → Id → Type → Context
+\end{code}
+
+
+#### Exercise `Context-≃`
+
+Show that `Context` is isomorphic to `List (Id × Type)`.
+For instance, the isomorphism relates the context
+
+    `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ``
+
+to the list
+
+    `` [ ⟨ "z" , `ℕ ⟩ , ⟨ "s" , `ℕ ⇒ `ℕ ⟩ ] ``.
+
+\begin{code}
+-- Your code goes here
 \end{code}
 
 ### Lookup judgment
@@ -1160,7 +1178,7 @@ where `∋s` and `∋z` abbreviate the two derivations,
     ----------------------------- S       ------------- Z
     Γ₂ ∋ "s" ⦂ A ⇒ A                       Γ₂ ∋ "z" ⦂ A
 
-and where `Γ₁ = Γ , s ⦂ A ⇒ A` and `Γ₂ = Γ , s ⦂ A ⇒ A , z ⦂ A`.
+and where `Γ₁ = Γ , "s" ⦂ A ⇒ A` and `Γ₂ = Γ , "s" ⦂ A ⇒ A , "z" ⦂ A`.
 The typing derivation is valid for any `Γ` and `A`, for instance,
 we might take `Γ` to be `∅` and `A` to be `` `ℕ ``.
 

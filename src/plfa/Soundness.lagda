@@ -10,28 +10,8 @@ next      : /Adequacy/
 module plfa.Soundness where
 \end{code}
 
-## Imports
 
-\begin{code}
-open import plfa.Untyped
-open import plfa.Denotational
-open import plfa.Compositional
-
-open import Relation.Binary.PropositionalEquality
-  using (_≡_; _≢_; refl; sym; cong; cong₂; cong-app)
-open import Data.Product using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
-  renaming (_,_ to ⟨_,_⟩)
-open import Data.Sum
-open import Agda.Primitive using (lzero)
-open import Relation.Nullary using (¬_)
-open import Relation.Nullary.Negation using (contradiction)
-open import Data.Empty using (⊥-elim)
-open import Data.Unit
-open import Relation.Nullary using (Dec; yes; no)
-open import Function using (_∘_)
--- open import plfa.Isomorphism using (extensionality)  -- causes a bug!
-\end{code}
-
+## Introduction
 
 In this chapter we prove that the reduction semantics is sound with
 respect to the denotational semantics, i.e., for any term L
@@ -50,6 +30,35 @@ called _subject expansion_. It is also well-known that subject
 expansion is false for most typed lambda calculi!
 
 
+## Imports
+
+\begin{code}
+open import plfa.Untyped
+  using (Context; _,_; _∋_; _⊢_; ★; Z; S_; `_; ƛ_; _·_;
+         subst; _[_]; subst-zero; ext; rename; exts)
+open import plfa.LambdaReduction
+  using (_—→_; ξ₁; ξ₂; β; ζ; _—↠_; _—→⟨_⟩_; _[])
+open import plfa.Substitution using (Rename; Subst; ids)  
+open import plfa.Denotational
+  using (Value; ⊥; Env; _⊢_↓_; _`,_; _⊑_; _`⊑_; `⊥; _`⊔_; init; last; init-last;
+         Refl⊑; Trans⊑; `Refl⊑; Env⊑; EnvConjR1⊑; EnvConjR2⊑; up-env;
+         var; ↦-elim; ↦-intro; ⊥-intro; ⊔-intro; sub;
+         rename-pres; ℰ; _≃_; ≃-trans)
+open import plfa.Compositional using (lambda-inversion; var-inv)
+
+open import Relation.Binary.PropositionalEquality
+  using (_≡_; _≢_; refl; sym; cong; cong₂; cong-app)
+open import Data.Product using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
+  renaming (_,_ to ⟨_,_⟩)
+open import Agda.Primitive using (lzero)
+open import Relation.Nullary using (¬_)
+open import Relation.Nullary.Negation using (contradiction)
+open import Data.Empty using (⊥-elim)
+open import Relation.Nullary using (Dec; yes; no)
+open import Function using (_∘_)
+-- open import plfa.Isomorphism using (extensionality)  -- causes a bug!
+\end{code}
+
 ## Forward reduction preserves denotations
 
 The proof of preservation in this section mixes techniques from
@@ -64,14 +73,6 @@ relation: substitution, renaming, and extension.
 
 
 ### Simultaneous substitution preserves denotations
-
-We introduce the following shorthand for the type of a substitution
-from variables in context `Γ` to terms in context `Δ`.
-
-\begin{code}
-Subst : Context → Context → Set
-Subst Γ Δ = ∀{A} → Γ ∋ A → Δ ⊢ A
-\end{code}
 
 Our next goal is to prove that simultaneous substitution preserves
 meaning.  That is, if `M` results in `v` in environment `γ`, then applying a
@@ -98,7 +99,7 @@ subst-ext : ∀ {Γ Δ v} {γ : Env Γ} {δ : Env Δ}
    --------------------------
   → δ `, v `⊢ exts σ ↓ γ `, v
 subst-ext σ d Z = var
-subst-ext σ d (S x) = rename-pres S_ (λ _ → Refl⊑) (d x)
+subst-ext σ d (S x′) = rename-pres S_ (λ _ → Refl⊑) (d x′)
 \end{code}
 
 The proof is by cases on the de Bruijn index `x`.
@@ -106,8 +107,8 @@ The proof is by cases on the de Bruijn index `x`.
 * If it is `Z`, then we need to show that `δ , v ⊢ # 0 ↓ v`,
   which we have by rule `var`.
 
-* If it is `S x'`,then we need to show that 
-  `δ , v ⊢ rename S_ (σ x') ↓ nth x' γ`,
+* If it is `S x′`,then we need to show that 
+  `δ , v ⊢ rename S_ (σ x′) ↓ nth x′ γ`,
   which we obtain by the `rename-pres` lemma.
 
 With the extension lemma in hand, the proof that simultaneous
@@ -192,8 +193,8 @@ preserve : ∀ {Γ} {γ : Env Γ} {M N v}
     ----------
   → γ ⊢ N ↓ v
 preserve (var) ()
-preserve (↦-elim d₁ d₂) (ξ₁ x r) = ↦-elim (preserve d₁ r) d₂ 
-preserve (↦-elim d₁ d₂) (ξ₂ x r) = ↦-elim d₁ (preserve d₂ r) 
+preserve (↦-elim d₁ d₂) (ξ₁ r) = ↦-elim (preserve d₁ r) d₂ 
+preserve (↦-elim d₁ d₂) (ξ₂ r) = ↦-elim d₁ (preserve d₂ r) 
 preserve (↦-elim d₁ d₂) β = substitution (lambda-inversion d₁) d₂
 preserve (↦-intro d) (ζ r) = ↦-intro (preserve d r)
 preserve ⊥-intro r = ⊥-intro
@@ -308,8 +309,8 @@ In the upcoming uses of `rename-reflect`, the renaming will always be
 the increment function. So we prove a corollary for that special case.
 
 \begin{code}
-rename-inc-reflect : ∀ {Γ v' v} {γ : Env Γ} { M : Γ ⊢ ★}
-  → (γ `, v') ⊢ rename S_ M ↓ v
+rename-inc-reflect : ∀ {Γ v′ v} {γ : Env Γ} { M : Γ ⊢ ★}
+  → (γ `, v′) ⊢ rename S_ M ↓ v
     ----------------------------
   → γ ⊢ M ↓ v
 rename-inc-reflect d = rename-reflect `Refl⊑ d
@@ -372,7 +373,7 @@ nth-const-env : ∀{Γ} {x : Γ ∋ ★} {v} → (const-env x v) x ≡ v
 nth-const-env {x = x} rewrite var≟-refl x = refl
 \end{code}
 
-The nth element of `const-env n' v` is the value `⊥, so long as `n ≢ n'`.
+The nth element of `const-env n′ v` is the value `⊥, so long as `n ≢ n′`.
 
 \begin{code}
 diff-nth-const-env : ∀{Γ} {x y : Γ ∋ ★} {v}
@@ -478,13 +479,13 @@ subst-reflect {M = M}{σ = σ} (var {x = y}) eqL with M
 ... | ` x  with var {x = y}
 ...           | yv  rewrite sym eqL = subst-reflect-var {σ = σ} yv
 subst-reflect {M = M} (var {x = y}) () | M₁ · M₂
-subst-reflect {M = M} (var {x = y}) () | ƛ M'
+subst-reflect {M = M} (var {x = y}) () | ƛ M′
 
 subst-reflect {M = M}{σ = σ} (↦-elim d₁ d₂) eqL
          with M 
 ...    | ` x with ↦-elim d₁ d₂ 
-...    | d' rewrite sym eqL = subst-reflect-var {σ = σ} d'
-subst-reflect (↦-elim d₁ d₂) () | ƛ M'
+...    | d′ rewrite sym eqL = subst-reflect-var {σ = σ} d′
+subst-reflect (↦-elim d₁ d₂) () | ƛ M′
 subst-reflect{Γ}{Δ}{γ}{σ = σ} (↦-elim d₁ d₂)
    refl | M₁ · M₂
      with subst-reflect {M = M₁} d₁ refl | subst-reflect {M = M₂} d₂ refl
@@ -495,8 +496,8 @@ subst-reflect{Γ}{Δ}{γ}{σ = σ} (↦-elim d₁ d₂)
 
 subst-reflect {M = M}{σ = σ} (↦-intro d) eqL with M
 ...    | ` x with (↦-intro d)
-...             | d' rewrite sym eqL = subst-reflect-var {σ = σ} d'
-subst-reflect {σ = σ} (↦-intro d) eq | ƛ M'
+...             | d′ rewrite sym eqL = subst-reflect-var {σ = σ} d′
+subst-reflect {σ = σ} (↦-intro d) eq | ƛ M′
       with subst-reflect {σ = exts σ} d (lambda-inj eq)
 ... | ⟨ δ′ , ⟨ exts-σ-δ′ , m′ ⟩ ⟩ = 
     ⟨ init δ′ , ⟨ ((λ x → rename-inc-reflect (exts-σ-δ′ (S x)))) ,
@@ -532,17 +533,17 @@ subst-reflect (sub d lt) eq
     We conclude this case by obtaining `γ ⊢ σ ↓ δ₁ ⊔ δ₂`
     by the `subst-⊔` lemma.
 
-* Case `↦-intro`: We have `subst σ M ≡ ƛ L'`. We proceed by cases on `M`.
+* Case `↦-intro`: We have `subst σ M ≡ ƛ L′`. We proceed by cases on `M`.
   * Case `M ≡ x`: We apply the `subst-reflect-var` lemma.
 
-  * Case `M ≡ ƛ M'`: By the induction hypothesis, we have
-    `(δ' , v') ⊢ M' ↓ v₂` and `(δ , v₁) ⊢ exts σ ↓ (δ' , v')`.
-    From the later we have `(δ , v₁) ⊢ # 0 ↓ v'`.
-    By the lemma `var-inv` we have `v' ⊑ v₁`, so by the `up-env` lemma we
-    have `(δ' , v₁) ⊢ M' ↓ v₂` and therefore `δ' ⊢ ƛ M' ↓ v₁ → v₂`.  We
-    also need to show that `δ `⊢ σ ↓ δ'`.  Fix `k`. We have
-    `(δ , v₁) ⊢ rename S_ σ k ↓ nth k δ'`.  We then apply the lemma
-    `rename-inc-reflect` to obtain `δ ⊢ σ k ↓ nth k δ'`, so this case is
+  * Case `M ≡ ƛ M′`: By the induction hypothesis, we have
+    `(δ′ , v′) ⊢ M′ ↓ v₂` and `(δ , v₁) ⊢ exts σ ↓ (δ′ , v′)`.
+    From the later we have `(δ , v₁) ⊢ # 0 ↓ v′`.
+    By the lemma `var-inv` we have `v′ ⊑ v₁`, so by the `up-env` lemma we
+    have `(δ′ , v₁) ⊢ M′ ↓ v₂` and therefore `δ′ ⊢ ƛ M′ ↓ v₁ → v₂`.  We
+    also need to show that `δ `⊢ σ ↓ δ′`.  Fix `k`. We have
+    `(δ , v₁) ⊢ rename S_ σ k ↓ nth k δ′`.  We then apply the lemma
+    `rename-inc-reflect` to obtain `δ ⊢ σ k ↓ nth k δ′`, so this case is
     complete.
 
 * Case `⊥-intro`: We choose `⊥` for `δ`.
@@ -563,53 +564,13 @@ Most of the work is now behind us. We have proved that simultaneous
 substitution reflects denotations. Of course, β reduction uses single
 substitution, so we need a corollary that proves that single
 substitution reflects denotations. That is,
-give terms `N : (Γ , ★ ⊢ ★)` and `M : (Γ ⊢ ★)`,
+given terms `N : (Γ , ★ ⊢ ★)` and `M : (Γ ⊢ ★)`,
 if `γ ⊢ N [ M ] ↓ w`, then `γ ⊢ M ↓ v` and `(γ , v) ⊢ N ↓ w`
 for some value `v`. We have `N [ M ] = subst (subst-zero M) N`.
-We apply the `subst-reflect` lemma to obtain
-`γ ⊢ subst-zero M ↓ (δ' , v')` and `(δ' , v') ⊢ N ↓ w`
-for some `δ'` and `v'`.
 
-Instantiating `γ ⊢ subst-zero M ↓ (δ' , v')` at `k = 0`
-gives us `γ ⊢ M ↓ v'`. We choose `w = v'`, so the first
-part of our conclusion is complete.
-
-It remains to prove `(γ , v') ⊢ N ↓ v`. First, we obtain 
-`(γ , v') ⊢ rename var-id N ↓ v` by the `rename-pres` lemma
-applied to `(δ' , v') ⊢ N ↓ v`, with the `var-id` renaming,
-`γ = (δ' , v')`, and `δ = (γ , v')`. To apply this lemma,
-we need to show that 
-`nth n (δ' , v') ⊑ nth (var-id n) (γ , v')` for any `n`.
-This is accomplished by the following lemma, which
-makes use of `γ ⊢ subst-zero M ↓ (δ' , v')`.
-
-\begin{code}
-nth-id-le : ∀{Γ}{δ'}{v'}{γ}{M}
-      → γ `⊢ subst-zero M ↓ (δ' `, v')
-        -----------------------------------------------------
-      → (x : Γ , ★ ∋ ★) → (δ' `, v') x ⊑ (γ `, v') (var-id x) 
-nth-id-le γ-sz-δ'v' Z = Refl⊑
-nth-id-le γ-sz-δ'v' (S n') = var-inv (γ-sz-δ'v' (S n'))
-\end{code}
-
-The above lemma proceeds by induction on `n`.
-
-* If it is `Z`, then we show that `v' ⊑ v'` by `Refl⊑`.
-* If it is `S n'`, then from the premise we obtain
-  `γ ⊢ # n' ↓ nth n' δ'`. By `var-inv` we have
-  `nth n' δ' ⊑ nth n' γ` from which we conclude that
-  `nth (S n') (δ' , v') ⊑ nth (var-id (S n')) (γ , v')`.
-
-Returning to the proof that single substitution reflects
-denotations, we have just proved that
-
-  (γ `, v') ⊢ rename var-id N ↓ v
-
-but we need to show `(γ `, v') ⊢ N ↓ v`.
-So we apply the `rename-id` lemma to obtain
-`rename var-id N ≡ N`.
-
-The following is the formal version of this proof.
+We first prove a lemma about `subst-zero`, that if
+`δ ⊢ subst-zero M ↓ γ`, then
+`γ ⊑ (δ , w) × δ ⊢ M ↓ w` for some `w`.
 
 \begin{code}
 subst-zero-reflect : ∀ {Δ} {δ : Env Δ} {γ : Env (Δ , ★)} {M : Δ ⊢ ★}
@@ -621,7 +582,19 @@ subst-zero-reflect {δ = δ} {γ = γ} δσγ = ⟨ last γ , ⟨ lemma , δσγ
   lemma : γ `⊑ (δ `, last γ)
   lemma Z  =  Refl⊑
   lemma (S x) = var-inv (δσγ (S x))
-  
+\end{code}
+
+We choose `w` to be the last value in `γ` and we obtain `δ ⊢ M ↓ w`
+by applying the premise to variable `Z`. Finally, to prove
+`γ ⊑ (δ , w)`, we prove a lemma by induction in the input variable.
+The base case is trivial because of our choice of `w`.
+In the induction case, `S x`, the premise
+`δ ⊢ subst-zero M ↓ γ` gives us `δ ⊢ x ↓ γ (S x)` and then
+using `var-inv` we conclude that `γ (S x) ⊑ (δ `, w) (S x)`.
+
+Now to prove that substitution reflects denotations.
+
+\begin{code}
 substitution-reflect : ∀ {Δ} {δ : Env Δ} {N : Δ , ★ ⊢ ★} {M : Δ ⊢ ★} {v}
   → δ ⊢ N [ M ] ↓ v
     ------------------------------------------------
@@ -630,6 +603,13 @@ substitution-reflect d with subst-reflect d refl
 ...  | ⟨ γ , ⟨ δσγ , γNv ⟩ ⟩ with subst-zero-reflect δσγ
 ...    | ⟨ w , ⟨ ineq , δMw ⟩ ⟩ = ⟨ w , ⟨ δMw , Env⊑ γNv ineq ⟩ ⟩
 \end{code}
+
+We apply the `subst-reflect` lemma to obtain
+`δ ⊢ subst-zero M ↓ γ` and `γ ⊢ N ↓ v` for some `γ`.
+Using the former, the `subst-zero-reflect` lemma gives
+us `γ ⊑ (δ , w)` and `δ ⊢ M ↓ w`. We conclude that
+`δ , w ⊢ N ↓ v` by applying the `Env⊑` lemma, using
+`γ ⊢ N ↓ v` and `γ ⊑ (δ , w)`.
 
 
 ### Reduction reflects denotations
@@ -643,30 +623,30 @@ reflect-beta : ∀{Γ}{γ : Env Γ}{M N}{v}
     → γ ⊢ (ƛ N) · M ↓ v
 reflect-beta d 
     with substitution-reflect d
-... | ⟨ v₂' , ⟨ d₁' , d₂' ⟩ ⟩ = ↦-elim (↦-intro d₂') d₁' 
+... | ⟨ v₂′ , ⟨ d₁′ , d₂′ ⟩ ⟩ = ↦-elim (↦-intro d₂′) d₁′ 
 
 
-reflect : ∀ {Γ} {γ : Env Γ} {M M' N v}
-  → γ ⊢ N ↓ v  →  M —→ M'  →   M' ≡ N
+reflect : ∀ {Γ} {γ : Env Γ} {M M′ N v}
+  → γ ⊢ N ↓ v  →  M —→ M′  →   M′ ≡ N
     ---------------------------------
   → γ ⊢ M ↓ v
-reflect var (ξ₁ x₁ r) ()
-reflect var (ξ₂ x₁ r) ()
+reflect var (ξ₁ r) ()
+reflect var (ξ₂ r) ()
 reflect{γ = γ} (var{x = x}) β mn
     with var{γ = γ}{x = x}
-... | d' rewrite sym mn = reflect-beta d' 
+... | d′ rewrite sym mn = reflect-beta d′ 
 reflect var (ζ r) ()
-reflect (↦-elim d₁ d₂) (ξ₁ x r) refl = ↦-elim (reflect d₁ r refl) d₂ 
-reflect (↦-elim d₁ d₂) (ξ₂ x r) refl = ↦-elim d₁ (reflect d₂ r refl) 
+reflect (↦-elim d₁ d₂) (ξ₁ r) refl = ↦-elim (reflect d₁ r refl) d₂ 
+reflect (↦-elim d₁ d₂) (ξ₂ r) refl = ↦-elim d₁ (reflect d₂ r refl) 
 reflect (↦-elim d₁ d₂) β mn
     with ↦-elim d₁ d₂
-... | d' rewrite sym mn = reflect-beta d'
+... | d′ rewrite sym mn = reflect-beta d′
 reflect (↦-elim d₁ d₂) (ζ r) ()
-reflect (↦-intro d) (ξ₁ x r) ()
-reflect (↦-intro d) (ξ₂ x r) ()
+reflect (↦-intro d) (ξ₁ r) ()
+reflect (↦-intro d) (ξ₂ r) ()
 reflect (↦-intro d) β mn
     with ↦-intro d
-... | d' rewrite sym mn = reflect-beta d'
+... | d′ rewrite sym mn = reflect-beta d′
 reflect (↦-intro d) (ζ r) refl = ↦-intro (reflect d r refl)
 reflect ⊥-intro r mn = ⊥-intro
 reflect (⊔-intro d₁ d₂) r mn rewrite sym mn =
@@ -697,10 +677,16 @@ soundness : ∀{Γ} {M : Γ ⊢ ★} {N : Γ , ★ ⊢ ★}
   → M —↠ ƛ N
     -----------------
   → ℰ M ≃ ℰ (ƛ N)
-soundness (.(ƛ _) ∎) γ v = ⟨ (λ x → x) , (λ x → x) ⟩
+soundness (.(ƛ _) []) γ v = ⟨ (λ x → x) , (λ x → x) ⟩
 soundness {Γ} (L —→⟨ r ⟩ M—↠N) γ v =
    let ih = soundness M—↠N in
    let e = reduce-equal r in
    ≃-trans {Γ} e ih γ v
 \end{code}
 
+
+## Unicode
+
+This chapter uses the following unicode:
+
+    ≟  U+225F  QUESTIONED EQUAL TO (\?=)

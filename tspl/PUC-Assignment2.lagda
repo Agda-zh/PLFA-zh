@@ -12,8 +12,6 @@ module PUC-Assignment2 where
 
 ## Introduction
 
-<!-- This assignment is due **4pm Thursday 18 October** (Week 5). -->
-
 You must do _all_ the exercises labelled "(recommended)".
 
 Exercises labelled "(stretch)" are there to provide an extra challenge.
@@ -22,7 +20,6 @@ You don't need to do all of these, but should attempt at least a few.
 Exercises without a label are optional, and may be done if you want
 some extra practice.
 
-<!-- Submit your homework using the "submit" command. -->
 Please ensure your files execute correctly under Agda!
 
 ## Imports
@@ -35,7 +32,8 @@ open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_; _≤_; z≤n; s≤s
 open import Data.Nat.Properties using (+-assoc; +-identityʳ; +-suc; +-comm;
   ≤-refl; ≤-trans; ≤-antisym; ≤-total; +-monoʳ-≤; +-monoˡ-≤; +-mono-≤)
 open import plfa.Relations using (_<_; z<s; s<s)
-open import Data.Product using (Σ; ∃; Σ-syntax; ∃-syntax; _×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
+open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
+open import Data.Product using (Σ; ∃; Σ-syntax; ∃-syntax)
 open import Data.Unit using (⊤; tt)
 open import Data.Sum using (_⊎_; inj₁; inj₂) renaming ([_,_] to case-⊎)
 open import Data.Empty using (⊥; ⊥-elim)
@@ -46,6 +44,9 @@ open import Relation.Nullary.Negation using (¬?)
 open import Relation.Nullary.Product using (_×-dec_)
 open import Relation.Nullary.Sum using (_⊎-dec_)
 open import Relation.Nullary.Negation using (contraposition)
+open import Relation.Unary using (Decidable)
+open import Function using (_∘_)
+open import Level using (Level)
 open import plfa.Relations using (_<_; z<s; s<s)
 open import plfa.Isomorphism using (_≃_; _∘_; ≃-sym; ≃-trans; _≲_; extensionality)
 open plfa.Isomorphism.≃-Reasoning
@@ -77,7 +78,7 @@ postulate
   ≃-implies-≲ : ∀ {A B : Set}
     → A ≃ B
       -----
-    → A ≲ B  
+    → A ≲ B
 \end{code}
 
 #### Exercise `_⇔_` (recommended) {#iff}
@@ -131,7 +132,7 @@ Show sum is commutative up to isomorphism.
 
 #### Exercise `⊎-assoc`
 
-Show sum is associative up to ismorphism. 
+Show sum is associative up to ismorphism.
 
 #### Exercise `⊥-identityˡ` (recommended)
 
@@ -139,7 +140,7 @@ Show zero is the left identity of addition.
 
 #### Exercise `⊥-identityʳ`
 
-Show zero is the right identity of addition. 
+Show zero is the right identity of addition.
 
 #### Exercise `⊎-weak-×` (recommended)
 
@@ -352,17 +353,17 @@ postulate
   ∨-× : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∨ ⌊ y ⌋ ≡ ⌊ x ⊎-dec y ⌋
   not-¬ : ∀ {A : Set} (x : Dec A) → not ⌊ x ⌋ ≡ ⌊ ¬? x ⌋
 \end{code}
-  
+
 #### Exercise `iff-erasure` (recommended)
 
-Give analogues of the `_⇔_` operation from 
+Give analogues of the `_⇔_` operation from
 Chapter [Isomorphism][plfa.Isomorphism#iff],
 operation on booleans and decidables, and also show the corresponding erasure.
 \begin{code}
 postulate
   _iff_ : Bool → Bool → Bool
   _⇔-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⇔ B)
-  iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋  
+  iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋
 \end{code}
 
 ## Lists

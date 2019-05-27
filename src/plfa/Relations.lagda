@@ -1213,7 +1213,7 @@ Show that `suc m ≤ n` implies `m < n`, and conversely.
 
 {::comment}
 Give an alternative proof that strict inequality is transitive,
-using the relating between strict inequality and inequality and
+using the relation between strict inequality and inequality and
 the fact that inequality is transitive.
 {:/}
 

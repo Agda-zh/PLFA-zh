@@ -3,36 +3,14 @@ title     : "Adequacy: of denotational semantics with respect to operational sem
 layout    : page
 prev      : /Soundness/
 permalink : /Adequacy/
-next      : /Acknowledgements/
+next      : /ContextualEquivalence/
 ---
 
 \begin{code}
 module plfa.Adequacy where
 \end{code}
 
-## Imports
-
-\begin{code}
-open import plfa.Untyped
-  using (Context; _⊢_; ★; _∋_; ∅; _,_; Z; S_; `_; ƛ_; _·_; rename; subst;
-         _—↠_; _—→⟨_⟩_; _—→_; ξ₁; ξ₂; β; ζ; ap; ext; exts; _[_]; subst-zero)
-  renaming (_∎ to _[])
-open import plfa.Denotational
-open import plfa.Soundness
-
-import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; _≢_; refl; trans; sym; cong; cong₂; cong-app)
-open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _≡⟨_⟩_; _∎)
-open import Data.Product using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
-  renaming (_,_ to ⟨_,_⟩)
-open import Data.Sum
-open import Relation.Nullary using (¬_)
-open import Relation.Nullary.Negation using (contradiction)
-open import Data.Empty using (⊥-elim) renaming (⊥ to Bot)
-open import Data.Unit
-open import Relation.Nullary using (Dec; yes; no)
-open import Function using (_∘_)
-\end{code}
+## Introduction
 
 Having proved a preservation property in the last chapter, a natural
 next step would be to prove progress. That is, to prove a property
@@ -87,6 +65,40 @@ The rest of this chapter is organized as follows.
   that if `𝔾 γ γ'` and `γ ⊢ M ↓ v`, then `𝔼 v (clos M γ')`.
 
 * We prove adequacy as a corollary to the main lemma.
+
+
+## Imports
+
+\begin{code}
+open import plfa.Untyped
+  using (Context; _⊢_; ★; _∋_; ∅; _,_; Z; S_; `_; ƛ_; _·_;
+         rename; subst; ext; exts; _[_]; subst-zero)
+open import plfa.LambdaReduction
+  using (_—↠_; _—→⟨_⟩_; _[]; _—→_; ξ₁; ξ₂; β; ζ)
+open import plfa.CallByName
+  using (Clos; clos; ClosEnv; ∅'; _,'_; _⊢_⇓_; ⇓-var; ⇓-lam; ⇓-app; ⇓-determ;
+         cbn→reduce)
+open import plfa.Denotational
+  using (Value; Env; `∅; _`,_; _↦_; _⊑_; _⊢_↓_; ⊥; Funs∈; _⊔_; ∈→⊑;
+         var; ↦-elim; ↦-intro; ⊔-intro; ⊥-intro; sub; ℰ; _≃_; _iff_;
+         Trans⊑; ConjR1⊑; ConjR2⊑; ConjL⊑; Refl⊑; Fun⊑; Bot⊑; Dist⊑;
+         sub-inv-fun)
+open import plfa.Soundness using (soundness)
+open import plfa.Substitution using (ids; sub-id)
+
+import Relation.Binary.PropositionalEquality as Eq
+open Eq using (_≡_; _≢_; refl; trans; sym; cong; cong₂; cong-app)
+open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _≡⟨_⟩_; _∎)
+open import Data.Product using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
+  renaming (_,_ to ⟨_,_⟩)
+open import Data.Sum
+open import Relation.Nullary using (¬_)
+open import Relation.Nullary.Negation using (contradiction)
+open import Data.Empty using (⊥-elim) renaming (⊥ to Bot)
+open import Data.Unit
+open import Relation.Nullary using (Dec; yes; no)
+open import Function using (_∘_)
+\end{code}
 
 
 ## The property of being greater or equal to a function
@@ -181,86 +193,6 @@ AboveFun? (u ⊔ u')
 ... | yes ⟨ v , ⟨ w , lt ⟩ ⟩ | _ = yes ⟨ v , ⟨ w , (ConjR1⊑ lt) ⟩ ⟩
 ... | no _ | yes ⟨ v , ⟨ w , lt ⟩ ⟩ = yes ⟨ v , ⟨ w , (ConjR2⊑ lt) ⟩ ⟩
 ... | no x | no y = no (not-AboveFun-⊔ x y)
-\end{code}
-
-
-## Big-step semantics for call-by-name lambda calculus
-
-To better align with the denotational semantics, we shall use an
-environment-passing big-step semantics. Because this is call-by-name,
-an environment maps each variable to a closure, that is, to a term
-paired with its environment. (Environments and closures are mutually
-recursive.) We define environments and closures as follows.
-
-\begin{code}
-ClosEnv : Context → Set
-
-data Clos : Set where
-  clos : ∀{Γ} → (M : Γ ⊢ ★) → ClosEnv Γ → Clos
-
-ClosEnv Γ = ∀ (x : Γ ∋ ★) → Clos
-\end{code}
-
-As usual, we have the empty environment, and we can extend an
-environment.
-\begin{code}
-∅' : ClosEnv ∅
-∅' ()
-
-_,'_ : ∀ {Γ} → ClosEnv Γ → Clos → ClosEnv (Γ , ★)
-(γ ,' c) Z = c
-(γ ,' c) (S x) = γ x
-\end{code}
-
-The following is the big-step semantics for call-by-name evaluation,
-which we describe below.
-
-\begin{code}
-data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
-
-  ⇓-var : ∀{Γ}{γ : ClosEnv Γ}{x : Γ ∋ ★}{Δ}{δ : ClosEnv Δ}{M : Δ ⊢ ★}{c}
-        → γ x ≡ clos M δ
-        → δ ⊢ M ⇓ c
-          -----------
-        → γ ⊢ ` x ⇓ c
-
-  ⇓-lam : ∀{Γ}{γ : ClosEnv Γ}{M : Γ , ★ ⊢ ★}
-        → γ ⊢ ƛ M ⇓ clos (ƛ M) γ
-
-  ⇓-app : ∀{Γ}{γ : ClosEnv Γ}{L M : Γ ⊢ ★}{Δ}{δ : ClosEnv Δ}{N : Δ , ★ ⊢ ★}{c}
-       → γ ⊢ L ⇓ clos (ƛ N) δ   →   (δ ,' clos M γ) ⊢ N ⇓ c
-         ----------------------------------------------------
-       → γ ⊢ L · M ⇓ c
-\end{code}
-
-* The `⇓-var` rule evaluates a variable by finding the associated
-  closure in the environment and then evaluating the closure.
-
-* The `⇓-lam` rule turns a lambda abstraction into a closure
-  by packaging it up with its environment.
-
-* The `⇓-app` rule performs function application by first evaluating
-  the term `L` in operator position. If that produces a closure containing
-  a lambda abstraction `ƛ N`, then we evaluate the body `N` in an
-  environment extended with the argument `M`. Note that `M` is not
-  evaluated in rule `⇓-app` because this is call-by-name and not
-  call-by-value.
-
-If the big-step semantics says that a term `M` evaluates to both `c` and
-`c'`, then `c` and `c'` are identical. In other words, the big-step relation
-is a partial function.
-
-\begin{code}
-⇓-determ : ∀{Γ}{γ : ClosEnv Γ}{M : Γ ⊢ ★}{c c' : Clos}
-         → γ ⊢ M ⇓ c → γ ⊢ M ⇓ c'
-         → c ≡ c'
-⇓-determ (⇓-var eq1 mc) (⇓-var eq2 mc')
-      with trans (sym eq1) eq2
-... | refl = ⇓-determ mc mc'
-⇓-determ ⇓-lam ⇓-lam = refl
-⇓-determ (⇓-app mc mc₁) (⇓-app mc' mc'') 
-    with ⇓-determ mc mc'
-... | refl = ⇓-determ mc₁ mc''
 \end{code}
 
 
@@ -655,13 +587,63 @@ kth-x{γ' = γ'}{x = x} with γ' x
 The adequacy property is a corollary of the main lemma.
 We have `∅ ⊢ ƛ N ↓ ⊥ ↦ ⊥`, so `ℰ M ≃ ℰ (ƛ N)`
 gives us `∅ ⊢ M ↓ ⊥ ↦ ⊥`. Then the main lemma gives us
-`∅ ⊢ M ⇓ c` for some `c`.
+`∅ ⊢ M ⇓ clos (ƛ N′) γ` for some `N′` and `γ`.
 
 \begin{code}
 adequacy : ∀{M : ∅ ⊢ ★}{N : ∅ , ★ ⊢ ★}  →  ℰ M ≃ ℰ (ƛ N)
-         →  Σ[ c ∈ Clos ] ∅' ⊢ M ⇓ c
+         →  Σ[ Γ ∈ Context ] Σ[ N′ ∈ (Γ , ★ ⊢ ★) ] Σ[ γ ∈ ClosEnv Γ ]
+            ∅' ⊢ M ⇓ clos (ƛ N′) γ
 adequacy{M}{N} eq
     with ↓→𝔼 𝔾-∅ ((proj₂ (eq `∅ (⊥ ↦ ⊥))) (↦-intro ⊥-intro))
                  ⟨ ⊥ , ⟨ ⊥ , Refl⊑ ⟩ ⟩
-... | ⟨ c , ⟨ M⇓c , Vc ⟩ ⟩ = ⟨ c , M⇓c ⟩
+... | ⟨ clos {Γ} M′ γ , ⟨ M⇓c , Vc ⟩ ⟩
+    with 𝕍→WHNF Vc
+... | ƛ_ {N = N′} = 
+    ⟨ Γ , ⟨ N′ , ⟨ γ , M⇓c ⟩  ⟩ ⟩
 \end{code}
+
+
+## Call-by-name is equivalent to beta reduction
+
+As promised, we return to the question of whether call-by-name
+evaluation is equivalent to beta reduction. In the chapter CallByName
+we established the forward direction: that if call-by-name produces a
+result, then the program beta reduces to a lambda abstraction.  We now
+prove the backward direction of the if-and-only-if, leveraging our
+results about the denotational semantics.
+
+\begin{code}
+reduce→cbn : ∀ {M : ∅ ⊢ ★} {N : ∅ , ★ ⊢ ★}
+           → M —↠ ƛ N
+           → Σ[ Δ ∈ Context ] Σ[ N′ ∈ Δ , ★ ⊢ ★ ] Σ[ δ ∈ ClosEnv Δ ] 
+             ∅' ⊢ M ⇓ clos (ƛ N′) δ
+reduce→cbn M—↠ƛN = adequacy (soundness M—↠ƛN)
+\end{code}
+
+Suppose `M —↠ ƛ N`. Soundness of the denotational semantics gives us
+`ℰ M ≃ ℰ (ƛ N)`. Then by adequacy we conclude that
+`∅' ⊢ M ⇓ clos (ƛ N′) δ` for some `N′` and `δ`.
+
+Putting the two directions of the if-and-only-if together, we
+establish that call-by-name evaluation is equivalent to beta reduction
+in the following sense.
+
+\begin{code}
+cbn↔reduce : ∀ {M : ∅ ⊢ ★}
+           → (Σ[ N ∈ ∅ , ★ ⊢ ★ ] (M —↠ ƛ N))
+             iff
+             (Σ[ Δ ∈ Context ] Σ[ N′ ∈ Δ , ★ ⊢ ★ ] Σ[ δ ∈ ClosEnv Δ ]
+               ∅' ⊢ M ⇓ clos (ƛ N′) δ)
+cbn↔reduce {M} = ⟨ (λ x → reduce→cbn (proj₂ x)) ,
+                   (λ x → cbn→reduce (proj₂ (proj₂ (proj₂ x)))) ⟩
+\end{code}
+
+
+## Unicode
+
+This chapter uses the following unicode:
+
+    𝔼  U+1D53C  MATHEMATICAL DOUBLE-STRUCK CAPITAL E (\bE)
+    𝔾  U+1D53E  MATHEMATICAL DOUBLE-STRUCK CAPITAL G (\bG)
+    𝕍  U+1D53E  MATHEMATICAL DOUBLE-STRUCK CAPITAL V (\bV)
+    
