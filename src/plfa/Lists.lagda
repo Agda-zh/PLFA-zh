@@ -1,20 +1,31 @@
 ---
-title     : "Lists: Lists and higher-order functions"
+title     : "Lists: 列表与高阶函数"
 layout    : page
 prev      : /Decidable/
 permalink : /Lists/
 next      : /Lambda/
+translators: ["Fangyi Zhou"]
+progress  : 20
 ---
 
 \begin{code}
 module plfa.Lists where
 \end{code}
 
+{::comment}
 This chapter discusses the list data type.  It gives further examples
 of many of the techniques we have developed so far, and provides
 examples of polymorphic types and higher-order functions.
+{:/}
 
+本章节讨论列表（List）数据类型。我们用列表作为例子，来使用我们之前学习的技巧。同时，
+列表也给我们带来多态类型（Polymorphic Types）和高阶函数（Higher-order Functions）的例子。
+
+{::comment}
 ## Imports
+{:/}
+
+## 导入
 
 \begin{code}
 import Relation.Binary.PropositionalEquality as Eq
@@ -32,9 +43,17 @@ open import plfa.Isomorphism using (_≃_; _⇔_)
 \end{code}
 
 
+{::comment}
 ## Lists
+{:/}
 
+## 列表
+
+{::comment}
 Lists are defined in Agda as follows:
+{:/}
+
+Agda 中的列表如下定义：
 \begin{code}
 data List (A : Set) : Set where
   []  : List A
@@ -42,52 +61,103 @@ data List (A : Set) : Set where
 
 infixr 5 _∷_
 \end{code}
+
+{::comment}
 Let's unpack this definition. If `A` is a set, then `List A` is a set.
 The next two lines tell us that `[]` (pronounced _nil_) is a list of
 type `A` (often called the _empty_ list), and that `_∷_` (pronounced
 _cons_, short for _constructor_) takes a value of type `A` and a value
 of type `List A` and returns a value of type `List A`.  Operator `_∷_`
 has precedence level 5 and associates to the right.
+{:/}
 
+我们来仔细研究这个定义。如果 `A` 是个集合，那么 `List A` 也是一个集合。接下来的两行告诉我们
+`[]` （读作 *nil*）是一个类型为 `A` 的列表（通常被叫做*空*列表），`_∷_`（读作 *cons*，是
+*constructor* 的简写）取一个类型为 `A` 的值，和一个类型为 `List A` 的值，返回一个类型为
+`List A` 的值。`_∷_` 运算符的优先级是 5，向右结合。
+
+{::comment}
 For example,
+{:/}
+
+例如：
+
 \begin{code}
 _ : List ℕ
 _ = 0 ∷ 1 ∷ 2 ∷ []
 \end{code}
+
+{::comment}
 denotes the list of the first three natural numbers.  Since `_∷_`
 associates to the right, the term parses as `0 ∷ (1 ∷ (2 ∷ []))`.
 Here `0` is the first element of the list, called the _head_,
 and `1 ∷ (2 ∷ [])` is a list of the remaining elements, called the
 _tail_. A list is a strange beast: it has a head and a tail,
 nothing in between, and the tail is itself another list!
+{:/}
 
+表示了一个三个自然数的列表。因为 `_∷_` 向右结合，这一项被解析成 `0 ∷ (1 ∷ (2 ∷ []))`。
+在这里，`0` 是列表的第一个元素，称之为*头*（Head），`1 ∷ (2 ∷ [])` 是剩下元素的列表，
+称之为*尾*（Tail）。列表是一个奇怪的怪兽：它有一头一尾，中间没有东西，然而它的尾巴又是一个列表！
+
+{::comment}
 As we've seen, parameterised types can be translated to
 indexed types. The definition above is equivalent to the following:
+{:/}
+
+正如我们所见，参数化的类型可以被转换成索引类型。上面的定义与下列等价：
+
 \begin{code}
 data List′ : Set → Set where
   []′  : ∀ {A : Set} → List′ A
   _∷′_ : ∀ {A : Set} → A → List′ A → List′ A
 \end{code}
+{::comment}
 Each constructor takes the parameter as an implicit argument.
 Thus, our example list could also be written:
+{:/}
+
+每个构造器将参数作为隐式参数。因此我们列表的例子也可以写作：
+
 \begin{code}
 _ : List ℕ
 _ = _∷_ {ℕ} 0 (_∷_ {ℕ} 1 (_∷_ {ℕ} 2 ([] {ℕ})))
 \end{code}
+{::comment}
 where here we have provided the implicit parameters explicitly.
+{:/}
 
+此处我们将隐式参数显式地声明。
+
+{::comment}
 Including the pragma:
+{:/}
+
+包含下面的编译器指令
 
     {-# BUILTIN LIST List #-}
 
+{::comment}
 tells Agda that the type `List` corresponds to the Haskell type
 list, and the constructors `[]` and `_∷_` correspond to nil and
 cons respectively, allowing a more efficient representation of lists.
+{:/}
 
+告诉 Agda，`List` 类型对应了 Haskell 的列表类型，构造器 `[]` 和 `_∷_`
+分别代表了 nil 和 cons，这可以让列表的表示更加的有效率。
 
+{::comment}
 ## List syntax
+{:/}
 
+## 列表语法
+
+{::comment}
 We can write lists more conveniently by introducing the following definitions:
+{:/}
+
+我们可以用下面的定义，更简便地表示列表：
+
 \begin{code}
 pattern [_] z = z ∷ []
 pattern [_,_] y z = y ∷ z ∷ []
@@ -96,17 +166,29 @@ pattern [_,_,_,_] w x y z = w ∷ x ∷ y ∷ z ∷ []
 pattern [_,_,_,_,_] v w x y z = v ∷ w ∷ x ∷ y ∷ z ∷ []
 pattern [_,_,_,_,_,_] u v w x y z = u ∷ v ∷ w ∷ x ∷ y ∷ z ∷ []
 \end{code}
+{::comment}
 This is our first use of pattern declarations.  For instance,
 the third line tells us that `[ x , y , z ]` is equivalent to
 `x ∷ y ∷ z ∷ []`, and permits the former to appear either in
 a pattern on the left-hand side of an equation, or a term
 on the right-hand side of an equation.
+{:/}
 
+这是我们第一次使用模式声明。举例来说，第三行告诉我们 `[ x , y , z ]` 等价于
+`x ∷ y ∷ z ∷ []`。前者可以在模式或者等式的左手边，或者是等式右手边的项中出现。
 
+{::comment}
 ## Append
+{:/}
 
+## 附加
+
+{::comment}
 Our first function on lists is written `_++_` and pronounced
 _append_:
+{:/}
+
+我们对于列表的第一个函数写作 `_++_`，读作*附加*（Append）：
 
 \begin{code}
 infixr 5 _++_
@@ -115,15 +197,26 @@ _++_ : ∀ {A : Set} → List A → List A → List A
 []       ++ ys  =  ys
 (x ∷ xs) ++ ys  =  x ∷ (xs ++ ys)
 \end{code}
+{::comment}
 The type `A` is an implicit argument to append, making it a
 _polymorphic_ function (one that can be used at many types).  The
 empty list appended to another list yields the other list.  A
 non-empty list appended to another list yields a list with head the
 same as the head of the first list and tail the same as the tail of
 the first list appended to the second list.
+{:/}
 
+`A` 类型是附加的隐式参数，这让这个函数变为一个*多态*（Polymorphic）函数
+（即可以用作多种类型）。空列表附加到另一个列表得到是第二个列表。非空列表附加到
+另一个列表，得到的列表的头是第一个列表的头，尾是第一个列表的尾附加至第二个列表的结果。
+
+{::comment}
 Here is an example, showing how to compute the result
 of appending two lists:
+{:/}
+
+我们举个例子，来展示将两个列表附加的计算过程：
+
 \begin{code}
 _ : [ 0 , 1 , 2 ] ++ [ 3 , 4 ] ≡ [ 0 , 1 , 2 , 3 , 4 ]
 _ =
@@ -139,14 +232,26 @@ _ =
     0 ∷ 1 ∷ 2 ∷ 3 ∷ 4 ∷ []
   ∎
 \end{code}
+{::comment}
 Appending two lists requires time linear in the
 number of elements in the first list.
+{:/}
+
+附加两个列表需要对于第一个列表元素个数线性的时间。
 
 
+{::comment}
 ## Reasoning about append
+{:/}
 
+## 论证附加
+
+{::comment}
 We can reason about lists in much the same way that we reason
 about numbers.  Here is the proof that append is associative:
+{:/}
+
+我们可以与用论证数几乎相同的方法来论证列表。下面是附加满足结合律的证明：
 \begin{code}
 ++-assoc : ∀ {A : Set} (xs ys zs : List A)
   → (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
@@ -171,26 +276,51 @@ about numbers.  Here is the proof that append is associative:
     x ∷ xs ++ (ys ++ zs)
   ∎
 \end{code}
+{::comment}
 The proof is by induction on the first argument. The base case instantiates
 to `[]`, and follows by straightforward computation.
 The inductive case instantiates to `x ∷ xs`,
 and follows by straightforward computation combined with the
 inductive hypothesis.  As usual, the inductive hypothesis is indicated by a recursive
 invocation of the proof, in this case `++-assoc xs ys zs`.
+{:/}
 
+证明对于第一个参数进行归纳。起始步骤将列表实例化为 `[]`，由直接的运算可证。
+归纳步骤将列表实例化为 `x ∷ xs`，由直接的运算配合归纳假设可证。
+与往常一样，归纳假设由递归使用证明函数来表明，此处为 `++-assoc xs ys zs`。
+
+{::comment}
 Recall that Agda supports [sections][plfa.Induction#sections].
 Applying `cong (x ∷_)` promotes the inductive hypothesis:
+{:/}
+
+回忆到 Agda 支持[片段][plfa.Induction#sections]。使用 `cong (x ∷_)`
+可以将归纳假设：
 
     (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
 
+{::comment}
 to the equality:
+{:/}
+
+提升至等式：
 
     x ∷ ((xs ++ ys) ++ zs) ≡ x ∷ (xs ++ (ys ++ zs))
 
+{::comment}
 which is needed in the proof.
+{:/}
 
+即证明中所需。
+
+{::comment}
 It is also easy to show that `[]` is a left and right identity for `_++_`.
 That it is a left identity is immediate from the definition:
+{:/}
+
+我们也可以简单地证明 `[]` 是 `_++_` 的左幺元和右幺元。
+左幺元的证明从定义中即可得：
+
 \begin{code}
 ++-identityˡ : ∀ {A : Set} (xs : List A) → [] ++ xs ≡ xs
 ++-identityˡ xs =
@@ -200,7 +330,11 @@ That it is a left identity is immediate from the definition:
     xs
   ∎
 \end{code}
+{::comment}
 That it is a right identity follows by simple induction:
+{:/}
+
+右幺元的证明可由简单的归纳得到：
 \begin{code}
 ++-identityʳ : ∀ {A : Set} (xs : List A) → xs ++ [] ≡ xs
 ++-identityʳ [] =
@@ -218,9 +352,13 @@ That it is a right identity follows by simple induction:
     x ∷ xs
   ∎
 \end{code}
+{::comment}
 As we will see later,
 these three properties establish that `_++_` and `[]` form
 a _monoid_ over lists.
+{:/}
+
+我们之后会了解到，这三条性质表明了 `_++_` 和 `[]` 在列表上构成了一个*幺半群*（Monoid）。
 
 ## Length
 
