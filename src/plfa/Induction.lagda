@@ -1555,7 +1555,7 @@ is associative and commutative.
 Show multiplication distributes over addition, that is,
 {:/}
 
-请证明乘法满足分配律，即对于所有的自然数 `m`、`n` 和 `p`，
+请证明乘法对加法满足分配律，即对于所有的自然数 `m`、`n` 和 `p`，
 
     (m + n) * p ≡ m * p + n * p
 
