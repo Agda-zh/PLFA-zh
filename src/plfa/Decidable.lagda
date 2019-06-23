@@ -946,11 +946,13 @@ postulate
   ∨-× : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∨ ⌊ y ⌋ ≡ ⌊ x ⊎-dec y ⌋
   not-¬ : ∀ {A : Set} (x : Dec A) → not ⌊ x ⌋ ≡ ⌊ ¬? x ⌋
 \end{code}
+<<<<<<< HEAD
 
 {::comment}
 #### Exercise `iff-erasure` (recommended)
 {:/}
 
+<<<<<<< HEAD
 #### 练习 `iff-erasure` （推荐）
 
 {::comment}

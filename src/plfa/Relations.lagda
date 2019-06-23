@@ -472,7 +472,7 @@ as that will make it easier to invoke reflexivity:
     -----
   → n ≤ n
 ≤-refl {zero} = z≤n
-≤-refl {suc n} = s≤s (≤-refl {n})
+≤-refl {suc n} = s≤s ≤-refl
 \end{code}
 
 {::comment}

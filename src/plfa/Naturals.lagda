@@ -861,8 +861,8 @@ as repeated addition:
 
 \begin{code}
 _*_ : ℕ → ℕ → ℕ
-zero  * n  =  zero
-suc m * n  =  n + (m * n)
+zero    * n  =  zero
+(suc m) * n  =  n + (m * n)
 \end{code}
 
 {::comment}
@@ -976,8 +976,8 @@ Define exponentiation, which is given by the following equations:
 
 根据如下等式写出乘方的定义。
 
-    n ^ 0        =  1
-    n ^ (1 + m)  =  n * (n ^ m)
+    m ^ 0        =  1
+    m ^ (1 + n)  =  m * (m ^ n)
 
 {::comment}
 Check that `3 ^ 4` is `81`.

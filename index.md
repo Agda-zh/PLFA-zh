@@ -1,6 +1,6 @@
 ---
 title          : 目录
-layout         : home
+layout         : page
 translators    : ["Rongxiao Fu"]
 ---
 
@@ -94,7 +94,7 @@ Part 2: Programming Language Foundations
 
   - [Lambda]({{ site.baseurl }}/Lambda/): Introduction to Lambda Calculus
   - [Properties]({{ site.baseurl }}/Properties/): Progress and Preservation
-  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): Inherently typed De Bruijn representation
+  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): Inherently typed de Bruijn representation
   - [More]({{ site.baseurl }}/More/): Additional constructs of simply-typed lambda calculus
   - [Bisimulation]({{ site.baseurl }}/Bisimulation/) : Relating reductions systems
   - [Inference]({{ site.baseurl }}/Inference/): Bidirectional type inference
@@ -113,7 +113,7 @@ Part 2: Programming Language Foundations
 
   - [Lambda]({{ site.baseurl }}/Lambda/): λ-演算简介 <span class = "progress" >{{ Lambda.progress | ceil }}</span>
   - [Properties]({{ site.baseurl }}/Properties/): 可进性与保型性 <span class = "progress" >{{ Properties.progress | ceil }}</span>
-  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): 固有类型的 De Bruijn 表示 <span class = "progress" >{{ DeBruijn.progress | ceil }}</span>
+  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): 固有类型的 de Bruijn 表示 <span class = "progress" >{{ DeBruijn.progress | ceil }}</span>
   - [More]({{ site.baseurl }}/More/): 简单类型 λ-演算的附加构造 <span class = "progress" >{{ More.progress | ceil }}</span>
   - [Bisimulation]({{ site.baseurl }}/Bisimulation/) : 关系归约系统 <span class = "progress" >{{ Bisimulation.progress | ceil }}</span>
   - [Inference]({{ site.baseurl }}/Inference/): 双向类型推断 <span class = "progress" >{{ Inference.progress | ceil }}</span>
@@ -143,7 +143,6 @@ Related
 
 ## 相关资源
 
-  - A paper describing the book appeared in [SBMF][sbmf].
   - Courses taught from the textbook:
     * Philip Wadler, University of Edinburgh,
       [2018](/TSPL/)
@@ -152,8 +151,7 @@ Related
     * John Leo, Google Seattle, 2018--2019
     * Philip Wadler, Pontifícia Universidade Católica do Rio de Janeiro (PUC-Rio),
       [2019](/PUC/)
-  - Translations:
-	* [Chinese](https://agda-zh.github.io/PLFA-zh/), ongoing
+  - A paper describing the book appeared in [SBMF][sbmf]
 
 [wen]: https://github.com/wenkokke
 [phil]: https://homepages.inf.ed.ac.uk/wadler/
