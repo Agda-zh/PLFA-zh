@@ -1,4 +1,5 @@
 _site/
 .sass-cache/
+.vscode/
 .jekyll-metadata
 *.agdai
