@@ -111,7 +111,7 @@ We advise installing agda2html using [Stack](https://docs.haskellstack.org/en/st
 Finally, you must install the Ruby dependencies---[Jekyll](https://jekyllrb.com/), [html-proofer](https://github.com/gjtorikian/html-proofer), *etc.*---using Bundler:
 --->
 
-最后，你需要用 Bundler 安装 Ruby 依赖：[Jekyll](https://jekyllrb.com/)、 [html-proofer](https://github.com/gjtorikian/html-proofer) 等。
+最后，你需要用 Bundler 安装 Ruby 依赖：[Jekyll](https://jekyllrb.com/)、 [html-proofer](https://github.com/gjtorikian/html-proofer) 等。
 
     bundle install
 

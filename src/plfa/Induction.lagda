@@ -611,11 +611,14 @@ recursion is one of the most appealing aspects of Agda.
 来证明。在此步骤中，`assoc (suc m) n p` 是用 `assoc m n p` 证明的。
 归纳证明和递归定义之间的这种对应是 Agda 中最吸引人的方面之一。
 
+{::comment}
 ## Induction as recursion
+{:/}
 
-As a concrete example of how induction corresponds to recursion, here
-is the computation that occurs when instantiating `m` to `2` in the
-proof of associativity.
+## 归纳即递归
+
+下面是归纳如何对应于递归的具体例子，它是在结合律的证明中，将 `m` 实例化为 `2`
+时出现的计算。
 
 \begin{code}
 +-assoc-2 : ∀ (n p : ℕ) → (2 + n) + p ≡ 2 + (n + p)
@@ -658,24 +661,48 @@ proof of associativity.
 \end{code}
 
 
+{::comment}
 ## Terminology and notation
+{:/}
 
+## 术语与记法
+
+{::comment}
 The symbol `∀` appears in the statement of associativity to indicate that
 it holds for all numbers `m`, `n`, and `p`.  We refer to `∀` as the _universal
 quantifier_, and it is discussed further in Chapter [Quantifiers][plfa.Quantifiers].
+{:/}
 
+在结合律的陈述中出现的符号 `∀` 表示它对于所有的 `m`、`n` 和 `p` 都成立。
+我们将 `∀` 称为**全称量词（universal quantifier），它会在
+[Quantifiers][plfa.Quantifiers] 中进一步讨论。
+
+{::comment}
 Evidence for a universal quantifier is a function.  The notations
+{:/}
+
+全称量词的证据是一个函数。记法
 
     +-assoc : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
 
+{::comment}
 and
+{:/}
+
+和
 
     +-assoc : ∀ (m : ℕ) → ∀ (n : ℕ) → ∀ (p : ℕ) → (m + n) + p ≡ m + (n + p)
 
+{::comment}
 are equivalent. They differ from a function type such as `ℕ → ℕ → ℕ`
 in that variables are associated with the each argument type, and the
 result type may mention (or depend upon) these variables; hence they
 are called _dependent functions_.
+{:/}
+
+是等价的。它们不同于像 `ℕ → ℕ → ℕ` 这样的函数类型，其中的变量
+与每一个实参类型相关联，其结果类型可能会涉及（或依赖于）这些变量，
+因此它们叫做**依赖函数（dependent function）**。
 
 
 {::comment}
