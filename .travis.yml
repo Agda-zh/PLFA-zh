@@ -68,6 +68,7 @@ deploy:
     github-token: $GITHUB_TOKEN
     repo: plfa-zh/plfa-zh.github.io
     target-branch: master
+    keep-history: true
     edge: true
     on:
       branch: dev
