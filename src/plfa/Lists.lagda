@@ -360,20 +360,38 @@ a _monoid_ over lists.
 
 我们之后会了解到，这三条性质表明了 `_++_` 和 `[]` 在列表上构成了一个*幺半群*（Monoid）。
 
+{::comment}
 ## Length
+{:/}
 
+## 长度
+
+{::comment}
 Our next function finds the length of a list:
+{:/}
+
+在下一个函数里，我们来寻找列表的长度：
+
 \begin{code}
 length : ∀ {A : Set} → List A → ℕ
 length []        =  zero
 length (x ∷ xs)  =  suc (length xs)
 \end{code}
+{::comment}
 Again, it takes an implicit parameter `A`.
 The length of the empty list is zero.
 The length of a non-empty list
 is one greater than the length of the tail of the list.
+{:/}
 
+同样，它取一个隐式参数 `A`。
+空列表的长度为零。非空列表的长度比其尾列表长度多一。
+
+{::comment}
 Here is an example showing how to compute the length of a list:
+{:/}
+
+我们用下面的例子来展示如何计算列表的长度：
 \begin{code}
 _ : length [ 0 , 1 , 2 ] ≡ 3
 _ =
@@ -389,18 +407,35 @@ _ =
     suc (suc (suc zero))
   ∎
 \end{code}
+{::comment}
 Computing the length of a list requires time
 linear in the number of elements in the list.
+{:/}
 
+计算列表的长度需要关于列表元素个数线性的时间。
+
+{::comment}
 In the second-to-last line, we cannot write simply `length []` but
 must instead write `length {ℕ} []`.  Since `[]` has no elements, Agda
 has insufficient information to infer the implicit parameter.
+{:/}
 
+在倒数第二行中，我们不可以直接写 `length []`，而需要写 `length {ℕ} []`。
+因为 `[]` 没有元素，Agda 没有足够的信息来推导其隐式参数。
 
+{::comment}
 ## Reasoning about length
+{:/}
 
+## 论证长度
+
+{::comment}
 The length of one list appended to another is the
 sum of the lengths of the lists:
+{:/}
+
+两个附加在一起的列表的长度是两列表长度之和：
+
 \begin{code}
 length-++ : ∀ {A : Set} (xs ys : List A)
   → length (xs ++ ys) ≡ length xs + length ys
@@ -423,6 +458,7 @@ length-++ (x ∷ xs) ys =
     length (x ∷ xs) + length ys
   ∎
 \end{code}
+{::comment}
 The proof is by induction on the first argument. The base case
 instantiates to `[]`, and follows by straightforward computation.  As
 before, Agda cannot infer the implicit type parameter to `length`, and
@@ -431,22 +467,45 @@ it must be given explicitly.  The inductive case instantiates to
 inductive hypothesis.  As usual, the inductive hypothesis is indicated
 by a recursive invocation of the proof, in this case `length-++ xs ys`,
 and it is promoted by the congruence `cong suc`.
+{:/}
 
+证明对于第一个参数进行归纳。起始步骤将列表实例化为 `[]`，由直接的运算可证。
+如同之前一样，Agda 无法推导 `length` 的隐式参数，所以我们必须显式地给出这个参数。
+归纳步骤将列表实例化为 `x ∷ xs`，由直接的运算配合归纳假设可证。
+与往常一样，归纳假设由递归使用证明函数来表明，此处为 `length-++ xs ys`，
+由 `cong suc` 来提升。
 
+{::comment}
 ## Reverse
+{:/}
 
+## 反转
+
+{::comment}
 Using append, it is easy to formulate a function to reverse a list:
+{:/}
+
+我们可以使用附加，来简单地构造一个函数来反转一个列表：
 \begin{code}
 reverse : ∀ {A : Set} → List A → List A
 reverse []        =  []
 reverse (x ∷ xs)  =  reverse xs ++ [ x ]
 \end{code}
+{::comment}
 The reverse of the empty list is the empty list.
 The reverse of a non-empty list
 is the reverse of its tail appended to a unit list
 containing its head.
+{:/}
 
+空列表的反转是空列表。
+非空列表的反转是其头元素构成的单元列表附加至其尾列表反转之后的结果。
+
+{::comment}
 Here is an example showing how to reverse a list:
+{:/}
+
+下面的例子展示了如何反转一个列表。
 \begin{code}
 _ : reverse [ 0 , 1 , 2 ] ≡ [ 2 , 1 , 0 ]
 _ =
@@ -478,27 +537,51 @@ _ =
     [ 2 , 1 , 0 ]
   ∎
 \end{code}
+{::comment}
 Reversing a list in this way takes time _quadratic_ in the length of
 the list. This is because reverse ends up appending lists of lengths
 `1`, `2`, up to `n - 1`, where `n` is the length of the list being
 reversed, append takes time linear in the length of the first
 list, and the sum of the numbers up to `n - 1` is `n * (n - 1) / 2`.
 (We will validate that last fact in an exercise later in this chapter.)
+{:/}
 
+这样子反转一个列表需要列表长度**二次**的时间。这是因为反转一个长度为 `n` 的列表需要
+将长度为 `1`、`2` 直到 `n - 1` 的列表附加起来，而附加两个列表需要第一个列表长度线性的时间，
+因此加起来就需要 `n * (n - 1) / 2` 的时间。（我们将在本章节后部分验证这一结果）
+
+{::comment}
 #### Exercise `reverse-++-commute` (recommended)
+{:/}
 
+#### 练习 `reverse-++-commute` （推荐）
+
+{::comment}
 Show that the reverse of one list appended to another is the
 reverse of the second appended to the reverse of the first:
+{:/}
+
+证明一个列表附加到另外一个列表的反转即是反转后的第二个列表附加至反转后的第一个列表：
 \begin{code}
 postulate
   reverse-++-commute : ∀ {A : Set} {xs ys : List A}
     → reverse (xs ++ ys) ≡ reverse ys ++ reverse xs
 \end{code}
 
+{::comment}
 #### Exercise `reverse-involutive` (recommended)
+{:/}
 
+#### 练习 `reverse-involutive` （推荐）
+
+{::comment}
 A function is an _involution_ if when applied twice it acts
 as the identity function.  Show that reverse is an involution:
+{:/}
+
+当一个函数应用两次后与恒等函数作用相同，那么这个函数是一个**对合**（Involution）。
+证明反转是一个对合：
+
 \begin{code}
 postulate
   reverse-involutive : ∀ {A : Set} {xs : List A}
@@ -506,21 +589,40 @@ postulate
 \end{code}
 
 
+{::comment}
 ## Faster reverse
+{:/}
 
+## 更快地反转
+
+{::comment}
 The definition above, while easy to reason about, is less efficient than
 one might expect since it takes time quadratic in the length of the list.
 The idea is that we generalise reverse to take an additional argument:
+{:/}
+
+上面的定义虽然论证起来方便，但是它比期望中的实现更低效，因为它的运行时间是关于列表长度的二次函数。
+我们可以将反转进行推广，使用一个额外的参数：
+
 \begin{code}
 shunt : ∀ {A : Set} → List A → List A → List A
 shunt []       ys  =  ys
 shunt (x ∷ xs) ys  =  shunt xs (x ∷ ys)
 \end{code}
+{::comment}
 The definition is by recursion on the first argument. The second argument
 actually becomes _larger_, but this is not a problem because the argument
 on which we recurse becomes _smaller_.
+{:/}
 
+这个定义对于第一个参数进行递归。第二个参数会变_大_，但这样做没有问题，因为我们递归的参数
+在变_小_。
+
+{::comment}
 Shunt is related to reverse as follows:
+{:/}
+
+转移（Shunt）与反转的关系如下：
 \begin{code}
 shunt-reverse : ∀ {A : Set} (xs ys : List A)
   → shunt xs ys ≡ reverse xs ++ ys
@@ -547,26 +649,47 @@ shunt-reverse (x ∷ xs) ys =
     reverse (x ∷ xs) ++ ys
   ∎
 \end{code}
+{::comment}
 The proof is by induction on the first argument.
 The base case instantiates to `[]`, and follows by straightforward computation.
 The inductive case instantiates to `x ∷ xs` and follows by the inductive
 hypothesis and associativity of append.  When we invoke the inductive hypothesis,
 the second argument actually becomes *larger*, but this is not a problem because
 the argument on which we induct becomes *smaller*.
+{:/}
 
+证明对于第一个参数进行归纳。起始步骤将列表实例化为 `[]`，由直接的运算可证。
+归纳步骤将列表实例化为 `x ∷ xs`，由归纳假设和附加的结合律可证。
+当我们使用归纳假设时，第二个参数实际上变**大**了，但是这样做没有问题，因为我们归纳的参数变**小**了。
+
+{::comment}
 Generalising on an auxiliary argument, which becomes larger as the argument on
 which we recurse or induct becomes smaller, is a common trick. It belongs in
 your quiver of arrows, ready to slay the right problem.
+{:/}
 
+使用一个会在归纳或递归的参数变小时，变大的辅助参数来进行推广，是一个常用的技巧。
+这个技巧在以后的证明中很有用。
+
+{::comment}
 Having defined shunt be generalisation, it is now easy to respecialise to
 give a more efficient definition of reverse:
+{:/}
+
+在定义了推广的转移之后，我们可以将其特化，作为一个更高效的反转的定义：
+
 \begin{code}
 reverse′ : ∀ {A : Set} → List A → List A
 reverse′ xs = shunt xs []
 \end{code}
 
+{::comment}
 Given our previous lemma, it is straightforward to show
 the two definitions equivalent:
+{:/}
+
+因为我们之前证明的引理，我们可以直接地证明两个定义是等价的：
+
 \begin{code}
 reverses : ∀ {A : Set} (xs : List A)
   → reverse′ xs ≡ reverse xs
@@ -582,7 +705,12 @@ reverses xs =
   ∎
 \end{code}
 
+{::comment}
 Here is an example showing fast reverse of the list `[ 0 , 1 , 2 ]`:
+{:/}
+
+下面的例子展示了如何快速反转列表 `[ 0 , 1 , 2 ]`：
+
 \begin{code}
 _ : reverse′ [ 0 , 1 , 2 ] ≡ [ 2 , 1 , 0 ]
 _ =
@@ -600,7 +728,12 @@ _ =
     2 ∷ 1 ∷ 0 ∷ []
   ∎
 \end{code}
+
+{::comment}
 Now the time to reverse a list is linear in the length of the list.
+{:/}
+
+现在反转一个列表需要的时间与列表的长度线性相关。
 
 ## Map {#Map}
 
