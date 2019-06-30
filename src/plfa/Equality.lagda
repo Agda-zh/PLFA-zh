@@ -579,8 +579,8 @@ it to write out an alternative proof that addition is monotonic with
 regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mono-≤`.
 {:/}
 
-[Relations][plfa.Relations] 章节中的单调性证明亦可以用相似于 `≡-reasoning` 的，更易于理解的形式给出。
-相似地来定义 `≤-reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤`、`+-monoʳ-≤`
+[Relations][plfa.Relations] 章节中的单调性证明亦可以用相似于 `≡-Reasoning` 的，更易于理解的形式给出。
+相似地来定义 `≤-Reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤`、`+-monoʳ-≤`
 和 `+-mono-≤`。
 
 {::comment}
