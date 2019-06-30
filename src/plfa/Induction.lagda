@@ -674,8 +674,8 @@ quantifier_, and it is discussed further in Chapter [Quantifiers][plfa.Quantifie
 {:/}
 
 在结合律的陈述中出现的符号 `∀` 表示它对于所有的 `m`、`n` 和 `p` 都成立。
-我们将 `∀` 称为**全称量词（universal quantifier），它会在
-[Quantifiers][plfa.Quantifiers] 中进一步讨论。
+我们将 `∀` 称为**全称量词**（Universal Quantifier），我们会在
+[Quantifiers][plfa.Quantifiers] 章节中进一步讨论。
 
 {::comment}
 Evidence for a universal quantifier is a function.  The notations
@@ -702,7 +702,7 @@ are called _dependent functions_.
 
 是等价的。它们不同于像 `ℕ → ℕ → ℕ` 这样的函数类型，其中的变量
 与每一个实参类型相关联，其结果类型可能会涉及（或依赖于）这些变量，
-因此它们叫做**依赖函数（dependent function）**。
+因此它们叫做**依赖函数**（Dependent Function）。
 
 
 {::comment}
