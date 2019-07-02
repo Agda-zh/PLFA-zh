@@ -5,7 +5,7 @@ prev      : /Decidable/
 permalink : /Lists/
 next      : /Lambda/
 translators: ["Fangyi Zhou"]
-progress  : 20
+progress  : 100
 ---
 
 \begin{code}
@@ -735,22 +735,41 @@ Now the time to reverse a list is linear in the length of the list.
 
 现在反转一个列表需要的时间与列表的长度线性相关。
 
+{::comment}
 ## Map {#Map}
+{:/}
 
+## 映射 {#Map}
+
+{::comment}
 Map applies a function to every element of a list to generate a corresponding list.
 Map is an example of a _higher-order function_, one which takes a function as an
 argument or returns a function as a result:
+{:/}
+
+映射将一个函数应用于列表中的所有元素，生成一个对应的列表。
+映射是一个**高阶函数**（Higher-Order Function）的例子，它取一个函数作为参数，返回一个函数作为结果：
 \begin{code}
 map : ∀ {A B : Set} → (A → B) → List A → List B
 map f []        =  []
 map f (x ∷ xs)  =  f x ∷ map f xs
 \end{code}
+{::comment}
 Map of the empty list is the empty list.
 Map of a non-empty list yields a list
 with head the same as the function applied to the head of the given list,
 and tail the same as map of the function applied to the tail of the given list.
+{:/}
 
+空列表的映射是空列表。
+非空列表的映射生成一个列表，其头元素是原列表的头元素在应用函数之后的结果，
+其尾列表是原列表的尾列表映射后的结果。
+
+{::comment}
 Here is an example showing how to use map to increment every element of a list:
+{:/}
+
+下面的例子展示了如何使用映射来增加列表中的每一个元素：
 \begin{code}
 _ : map suc [ 0 , 1 , 2 ] ≡ [ 1 , 2 , 3 ]
 _ =
@@ -768,11 +787,19 @@ _ =
     1 ∷ 2 ∷ 3 ∷ []
   ∎
 \end{code}
+{::comment}
 Map requires time linear in the length of the list.
+{:/}
 
+映射需要关于列表长度线性的时间。
+
+{::comment}
 It is often convenient to exploit currying by applying
 map to a function to yield a new function, and at a later
 point applying the resulting function:
+{:/}
+
+我们常常可以利用柯里化，将映射作用于一个函数，获得另一个函数，然后在之后的时候应用获得的函数：
 \begin{code}
 sucs : List ℕ → List ℕ
 sucs = map suc
@@ -788,43 +815,80 @@ _ =
   ∎
 \end{code}
 
+{::comment}
 Any type that is parameterised on another type, such as lists, has a
 corresponding map, which accepts a function and returns a function
 from the type parameterised on the domain of the function to the type
 parameterised on the range of the function. Further, a type that is
 parameterised on _n_ types will have a map that is parameterised on
 _n_ functions.
+{:/}
 
+任何对于另外一个类型参数化的类型，例如列表，都有对应的映射，其接受一个函数，并返回另一个
+从由给定函数定义域参数化的类型，到由给定函数值域参数化的函数。除此之外，一个对于 _n_ 个类型
+参数化的类型会有一个对于 _n_ 个函数参数化的映射。
 
+{::comment}
 #### Exercise `map-compose`
+{:/}
 
+#### 练习 `map-compose`
+
+{::comment}
 Prove that the map of a composition is equal to the composition of two maps:
+{:/}
+
+证明函数组合的映射是两个映射的组合：
 \begin{code}
 postulate
   map-compose : ∀ {A B C : Set} {f : A → B} {g : B → C}
     → map (g ∘ f) ≡ map g ∘ map f
 \end{code}
+{::comment}
 The last step of the proof requires extensionality.
+{:/}
 
+证明的最后一步需要外延性。
+
+{::comment}
 #### Exercise `map-++-commute`
+{:/}
 
+#### 练习 `map-++-commute`
+
+{::comment}
 Prove the following relationship between map and append:
+{:/}
+
+证明下列关于映射与附加的关系：
 \begin{code}
 postulate
   map-++-commute : ∀ {A B : Set} {f : A → B} {xs ys : List A}
    →  map f (xs ++ ys) ≡ map f xs ++ map f ys
 \end{code}
 
+{::comment}
 #### Exercise `map-Tree`
+{:/}
 
+#### 练习 `map-Tree`
+
+{::comment}
 Define a type of trees with leaves of type `A` and internal
 nodes of type `B`:
+{:/}
+
+定义一个树数据类型，其叶节点类型为 `A`，内部节点类型为 `B`：
 \begin{code}
 data Tree (A B : Set) : Set where
   leaf : A → Tree A B
   node : Tree A B → B → Tree A B → Tree A B
 \end{code}
+{::comment}
 Define a suitable map operator over trees:
+{:/}
+
+定义一个对于树的映射运算符：
 \begin{code}
 postulate
   map-Tree : ∀ {A B C D : Set}
@@ -832,21 +896,39 @@ postulate
 \end{code}
 
 
+{::comment}
 ## Fold {#Fold}
+{:/}
 
+## 折叠 {#Fold}
+
+{::comment}
 Fold takes an operator and a value, and uses the operator to combine
 each of the elements of the list, taking the given value as the result
 for the empty list:
+{:/}
+
+折叠取一个运算符和一个值，并使用运算符将列表中的元素合并至一个值，如果给定的列表为空，
+则使用给定的值：
 \begin{code}
 foldr : ∀ {A B : Set} → (A → B → B) → B → List A → B
 foldr _⊗_ e []        =  e
 foldr _⊗_ e (x ∷ xs)  =  x ⊗ foldr _⊗_ e xs
 \end{code}
+{::comment}
 Fold of the empty list is the given value.
 Fold of a non-empty list uses the operator to combine
 the head of the list and the fold of the tail of the list.
+{:/}
 
+空列表的折叠是给定的值。
+非空列表的折叠使用给定的运算符，将头元素和尾列表的折叠合并起来。
+
+{::comment}
 Here is an example showing how to use fold to find the sum of a list:
+{:/}
+
+下面的例子展示了如何使用折叠来对一个列表求和：
 \begin{code}
 _ : foldr _+_ 0 [ 1 , 2 , 3 , 4 ] ≡ 10
 _ =
@@ -864,11 +946,20 @@ _ =
     1 + (2 + (3 + (4 + 0)))
   ∎
 \end{code}
+{::comment}
 Fold requires time linear in the length of the list.
+{:/}
 
+折叠需要关于列表长度线性的时间。
+
+{::comment}
 It is often convenient to exploit currying by applying
 fold to an operator and a value to yield a new function,
 and at a later point applying the resulting function:
+{:/}
+
+我们常常可以利用柯里化，将折叠作用于一个运算符和一个值，获得另一个函数，
+然后在之后的时候应用获得的函数：
 \begin{code}
 sum : List ℕ → ℕ
 sum = foldr _+_ 0
@@ -884,26 +975,54 @@ _ =
   ∎
 \end{code}
 
+{::comment}
 Just as the list type has two constructors, `[]` and `_∷_`,
 so the fold function takes two arguments, `e` and `_⊗_`
 (in addition to the list argument).
 In general, a data type with _n_ constructors will have
 a corresponding fold function that takes _n_ arguments.
+{:/}
 
+正如列表由两个构造器 `[]` 和 `_∷_`，折叠函数取两个参数 `e` 和 `_⊗_`
+（除去列表参数）。推广来说，一个有 _n_ 个构造器的数据类型，会有对应的
+取 _n_ 个参数的折叠函数。
+
+{::comment}
 #### Exercise `product` (recommended)
+{:/}
 
+#### 练习 `product` （推荐）
+
+{::comment}
 Use fold to define a function to find the product of a list of numbers.
 For example:
+{:/}
+
+使用折叠来定义一个计算列表数字之积的函数。例如：
 
     product [ 1 , 2 , 3 , 4 ] ≡ 24
 
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 #### Exercise `foldr-++` (recommended)
+{:/}
 
+#### 练习 `foldr-++` （推荐）
+
+{::comment}
 Show that fold and append are related as follows:
+{:/}
+
+证明折叠和附加有如下的关系：
 \begin{code}
 postulate
   foldr-++ : ∀ {A B : Set} (_⊗_ : A → B → B) (e : B) (xs ys : List A) →
@@ -911,52 +1030,109 @@ postulate
 \end{code}
 
 
+{::comment}
 #### Exercise `map-is-foldr`
+{:/}
 
+#### 练习 `map-is-foldr`
+
+{::comment}
 Show that map can be defined using fold:
+{:/}
+
+证明映射可以用折叠定义：
 \begin{code}
 postulate
   map-is-foldr : ∀ {A B : Set} {f : A → B} →
     map f ≡ foldr (λ x xs → f x ∷ xs) []
 \end{code}
+{::comment}
 This requires extensionality.
+{:/}
 
+此证明需要外延性。
+
+{::comment}
 #### Exercise `fold-Tree`
+{:/}
 
+#### 练习 `fold-Tree`
+
+{::comment}
 Define a suitable fold function for the type of trees given earlier:
+{:/}
+
+为之前给出的树数据类型定义一个折叠函数：
 \begin{code}
 postulate
   fold-Tree : ∀ {A B C : Set}
     → (A → C) → (C → B → C → C) → Tree A B → C
 \end{code}
 
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 #### Exercise `map-is-fold-Tree`
+{:/}
 
+#### 练习 `map-is-fold-Tree`
+
+{::comment}
 Demonstrate an analogue of `map-is-foldr` for the type of trees.
+{:/}
 
+对于树数据类型，证明与 `map-is-foldr` 相似的性质。
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 #### Exercise `sum-downFrom` (stretch)
+{:/}
 
+#### 证明 `sum-downFrom` （延伸）
+
+{::comment}
 Define a function that counts down as follows:
+{:/}
+
+定义一个向下数数的函数：
 \begin{code}
 downFrom : ℕ → List ℕ
 downFrom zero     =  []
 downFrom (suc n)  =  n ∷ downFrom n
 \end{code}
+{::comment}
 For example:
+{:/}
+
+例如：
 \begin{code}
 _ : downFrom 3 ≡ [ 2 , 1 , 0 ]
 _ = refl
 \end{code}
+{::comment}
 Prove that the sum of the numbers `(n - 1) + ⋯ + 0` is
 equal to `n * (n ∸ 1) / 2`:
+{:/}
+
+证明数列之和 `(n - 1) + ⋯ + 0` 等于 `n * (n ∸ 1) / 2`：
+
 \begin{code}
 postulate
   sum-downFrom : ∀ (n : ℕ)
@@ -964,13 +1140,26 @@ postulate
 \end{code}
 
 
+{::comment}
 ## Monoids
+{:/}
 
+## 幺半群
+
+{::comment}
 Typically when we use a fold the operator is associative and the
 value is a left and right identity for the value, meaning that the
 operator and the value form a _monoid_.
+{:/}
 
+一般来说，我们会对于折叠函数使用一个满足结合律的运算符，和这个运算符的左右幺元。
+这意味着这个运算符和这个值形成了一个**幺半群**（Monoid）。
+
+{::comment}
 We can define a monoid as a suitable record type:
+{:/}
+
+我们可以用一个合适的记录类型来定义幺半群：
 \begin{code}
 record IsMonoid {A : Set} (_⊗_ : A → A → A) (e : A) : Set where
   field
@@ -981,8 +1170,12 @@ record IsMonoid {A : Set} (_⊗_ : A → A → A) (e : A) : Set where
 open IsMonoid
 \end{code}
 
+{::comment}
 As examples, sum and zero, multiplication and one, and append and the empty
 list, are all examples of monoids:
+{:/}
+
+举例来说，加法和零，乘法和一，附加和空列表，都是幺半群：
 \begin{code}
 +-monoid : IsMonoid _+_ 0
 +-monoid =
@@ -1009,8 +1202,13 @@ list, are all examples of monoids:
     }
 \end{code}
 
+{::comment}
 If `_⊗_` and `e` form a monoid, then we can re-express fold on the
 same operator and an arbitrary value:
+{:/}
+
+
+如果 `_⊗_` 和 `e` 构成一个幺半群，那么我们可以用相同的运算符和一个任意的值来表示折叠：
 \begin{code}
 foldr-monoid : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) → IsMonoid _⊗_ e →
   ∀ (xs : List A) (y : A) → foldr _⊗_ y xs ≡ foldr _⊗_ e xs ⊗ y
@@ -1038,7 +1236,11 @@ foldr-monoid _⊗_ e ⊗-monoid (x ∷ xs) y =
   ∎
 \end{code}
 
+{::comment}
 As a consequence, using a previous exercise, we have the following:
+{:/}
+
+使用之前练习中的一个结论，我们可以得到如下：
 \begin{code}
 foldr-monoid-++ : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) → IsMonoid _⊗_ e →
   ∀ (xs ys : List A) → foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ e xs ⊗ foldr _⊗_ e ys
@@ -1052,77 +1254,155 @@ foldr-monoid-++ _⊗_ e monoid-⊗ xs ys =
   ∎
 \end{code}
 
+{::comment}
 #### Exercise `foldl`
+{:/}
 
+#### 练习 `foldl`
+
+{::comment}
 Define a function `foldl` which is analogous to `foldr`, but where
 operations associate to the left rather than the right.  For example:
+{:/}
+
+定义一个函数 `foldl`，与 `foldr` 相似，但是运算符向左结合，而不是向右。例如：
 
     foldr _⊗_ e [ x , y , z ]  =  x ⊗ (y ⊗ (z ⊗ e))
     foldl _⊗_ e [ x , y , z ]  =  ((e ⊗ x) ⊗ y) ⊗ z
 
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
+
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
 
+{::comment}
 #### Exercise `foldr-monoid-foldl`
+{:/}
 
+#### 练习 `foldr-monoid-foldl`
+
+{::comment}
 Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 `foldl _⊗_ e` always compute the same result.
+{:/}
 
+证明如果 `_⊗_` 和 `e` 构成幺半群，那么 `foldr _⊗_ e` 和 `foldl _⊗_ e` 的结果
+永远是相同的。
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
+
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
 
+{::comment}
 ## All {#All}
+{:/}
 
+## 所有 {#All}
+
+{::comment}
 We can also define predicates over lists. Two of the most important
 are `All` and `Any`.
+{:/}
 
+我们也可以定义关于列表的谓词。最重要的两个谓词是 `All` 和 `Any`。
+
+{::comment}
 Predicate `All P` holds if predicate `P` is satisfied by every element of a list:
+{:/}
+
+谓词 `All P` 当列表里的所有元素满足 `P` 时成立：
 \begin{code}
 data All {A : Set} (P : A → Set) : List A → Set where
   []  : All P []
   _∷_ : ∀ {x : A} {xs : List A} → P x → All P xs → All P (x ∷ xs)
 \end{code}
+{::comment}
 The type has two constructors, reusing the names of the same constructors for lists.
 The first asserts that `P` holds for every element of the empty list.
 The second asserts that if `P` holds of the head of a list and for every
 element of the tail of a list, then `P` holds for every element of the list.
 Agda uses types to disambiguate whether the constructor is building
 a list or evidence that `All P` holds.
+{:/}
 
+这个类型有两个构造器，使用了与列表构造器相同的名称。第一个断言了 `P` 对于空列表的任何元素成立。
+第二个断言了如果 `P` 对于列表的头元素和尾列表的所有元素成立，那么 `P` 对于这个列表的任何元素成立。
+Agda 使用类型来区分构造器是用于构造一个列表，还是构造 `All P` 成立的证明。
+
+{::comment}
 For example, `All (_≤ 2)` holds of a list where every element is less
 than or equal to two.  Recall that `z≤n` proves `zero ≤ n` for any
 `n`, and that if `m≤n` proves `m ≤ n` then `s≤s m≤n` proves `suc m ≤
 suc n`, for any `m` and `n`:
+{:/}
+
+比如说，`All (_≤ 2)` 对于一个每一个元素都小于等于二的列表成立。
+回忆 `z≤n` 证明了对于任意 `n`， `zero ≤ n` 成立；
+对于任意 `m` 和 `n`，如果 `m≤n` 证明了 `m ≤ n`，那么 `s≤s m≤n` 证明了 `suc m ≤
+suc n`:
 \begin{code}
 _ : All (_≤ 2) [ 0 , 1 , 2 ]
 _ = z≤n ∷ s≤s z≤n ∷ s≤s (s≤s z≤n) ∷ []
 \end{code}
+{::comment}
 Here `_∷_` and `[]` are the constructors of `All P` rather than of `List A`.
 The three items are proofs of `0 ≤ 2`, `1 ≤ 2`, and `2 ≤ 2`, respectively.
+{:/}
 
+这里 `_∷_` 和 `[]` 是 `All P` 的构造器，而不是 `List A` 的。
+这三项分别是 `0 ≤ 2`、 `1 ≤ 2` 和 `2 ≤ 2` 的证明。
+
+{::comment}
 (One might wonder whether a pattern such as `[_,_,_]` can be used to
 construct values of type `All` as well as type `List`, since both use
 the same constructors. Indeed it can, so long as both types are in
 scope when the pattern is declared.  That's not the case here, since
 `List` is defined before `[_,_,_]`, but `All` is defined later.)
+{:/}
 
+（读者可能会思考诸如 `[_,_,_]` 的模式是否可以用于构造 `All` 类型的值，
+像构造 `List` 类型的一样，因为两者使用了相同的构造器。事实上这样做是可以的，只要两个类型
+在模式声明时在作用域内。然而现在不是这样的情况，因为 `List` 先于 `[_,_,_]` 定义，而 `All` 在
+之后定义。）
 
+{::comment}
 ## Any
+{:/}
 
+## 任意
+
+{::comment}
 Predicate `Any P` holds if predicate `P` is satisfied by some element of a list:
+{:/}
+
+谓词 `Any P` 当列表里的一些元素满足 `P` 时成立：
 \begin{code}
 data Any {A : Set} (P : A → Set) : List A → Set where
   here  : ∀ {x : A} {xs : List A} → P x → Any P (x ∷ xs)
   there : ∀ {x : A} {xs : List A} → Any P xs → Any P (x ∷ xs)
 \end{code}
+{::comment}
 The first constructor provides evidence that the head of the list
 satisfies `P`, while the second provides evidence that some element of
 the tail of the list satisfies `P`.  For example, we can define list
 membership as follows:
+{:/}
+
+第一个构造器证明了列表的头元素满足 `P`，第二个构造器证明的列表的尾列表中的一些元素满足 `P`。
+举例来说，我们可以如下定义列表的成员关系：
 \begin{code}
 infix 4 _∈_ _∉_
 
@@ -1132,9 +1412,15 @@ x ∈ xs = Any (x ≡_) xs
 _∉_ : ∀ {A : Set} (x : A) (xs : List A) → Set
 x ∉ xs = ¬ (x ∈ xs)
 \end{code}
+{::comment}
 For example, zero is an element of the list `[ 0 , 1 , 0 , 2 ]`.  Indeed, we can demonstrate
 this fact in two different ways, corresponding to the two different
 occurrences of zero in the list, as the first element and as the third element:
+{:/}
+
+比如说，零是列表 `[ 0 , 1 , 0 , 2 ]` 中的一个元素。
+我们可以用两种方法来展示这个事实，对应零在列表中出现了两次：第一个元素和第三个元素：
+
 \begin{code}
 _ : 0 ∈ [ 0 , 1 , 0 , 2 ]
 _ = here refl
@@ -1142,8 +1428,12 @@ _ = here refl
 _ : 0 ∈ [ 0 , 1 , 0 , 2 ]
 _ = there (there (here refl))
 \end{code}
+{::comment}
 Further, we can demonstrate that three is not in the list, because
 any possible proof that it is in the list leads to contradiction:
+{:/}
+
+除此之外，我们可以展示三不在列表之中，因为任何它在列表中的证明会推导出矛盾：
 \begin{code}
 not-in : 3 ∉ [ 0 , 1 , 0 , 2 ]
 not-in (here ())
@@ -1152,14 +1442,27 @@ not-in (there (there (here ())))
 not-in (there (there (there (here ()))))
 not-in (there (there (there (there ()))))
 \end{code}
+{::comment}
 The five occurrences of `()` attest to the fact that there is no
 possible evidence for `3 ≡ 0`, `3 ≡ 1`, `3 ≡ 0`, `3 ≡ 2`, and
 `3 ∈ []`, respectively.
+{:/}
 
+`()` 出现了五次，分别表示没有 `3 ≡ 0`、 `3 ≡ 1`、 `3 ≡ 0`、 `3 ≡ 2` 和
+`3 ∈ []` 的证明。
+
+{::comment}
 ## All and append
+{:/}
 
+## 所有和附加
+
+{::comment}
 A predicate holds for every element of one list appended to another if and
 only if it holds for every element of both lists:
+{:/}
+
+一个谓词对两个附加在一起的列表的每个元素都成立，当且仅当这个谓词对两个列表的每个元素都成立：
 \begin{code}
 All-++-⇔ : ∀ {A : Set} {P : A → Set} (xs ys : List A) →
   All P (xs ++ ys) ⇔ (All P xs × All P ys)
@@ -1182,73 +1485,147 @@ All-++-⇔ xs ys =
   from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩ =  Px ∷ from xs ys ⟨ Pxs , Pys ⟩
 \end{code}
 
+{::comment}
 #### Exercise `Any-++-⇔` (recommended)
+{:/}
 
+#### 练习 `Any-++-⇔` （推荐）
+
+{::comment}
 Prove a result similar to `All-++-⇔`, but with `Any` in place of `All`, and a suitable
 replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 `_∈_` and `_++_`.
+{:/}
+使用 `Any` 代替 `All` 与一个合适的 `_×_` 的替代，证明一个类似于 `All-++-⇔` 的结果。
+作为结论，展示关联 `_∈_` 和 `_++_` 的一个等价关系。
 
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 #### Exercise `All-++-≃` (stretch)
+{:/}
 
+#### 练习 `All-++-≃` （延伸）
+
+{::comment}
 Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
+{:/}
 
+证明 `All-++-⇔` 的等价关系可以被扩展至一个同构关系。
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
 
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
+
+{::comment}
 #### Exercise `¬Any≃All¬` (stretch)
+{:/}
 
+#### 练习 `¬Any≃All¬` （拓展）
+
+{::comment}
 First generalise composition to arbitrary levels, using
 [universe polymorphism][plfa.Equality#unipoly]:
+{:/}
+
+首先我们将函数组合使用[全体多态][plfa.Equality#unipoly]推广到任意等级：
 \begin{code}
 _∘′_ : ∀ {ℓ₁ ℓ₂ ℓ₃ : Level} {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃}
   → (B → C) → (A → B) → A → C
 (g ∘′ f) x  =  g (f x)
 \end{code}
 
+{::comment}
 Show that `Any` and `All` satisfy a version of De Morgan's Law:
+{:/}
+
+证明 `Any` 和 `All` 满足某个形式的德摩根定律：
 \begin{code}
 postulate
   ¬Any≃All¬ : ∀ {A : Set} (P : A → Set) (xs : List A)
     → (¬_ ∘′ Any P) xs ≃ All (¬_ ∘′ P) xs
 \end{code}
 
+{::comment}
 Do we also have the following?
+{:/}
+
+下列命题是否成立？
+
 \begin{code}
 postulate
   ¬All≃Any¬ : ∀ {A : Set} (P : A → Set) (xs : List A)
     → (¬_ ∘′ All P) xs ≃ Any (¬_ ∘′ P) xs
 \end{code}
+{::comment}
 If so, prove; if not, explain why.
+{:/}
+
+如果成立，请证明；如果不成立，请解释原因。
 
 
+{::comment}
 ## Decidability of All
+{:/}
 
+## 所有的可判定性
+
+{::comment}
 If we consider a predicate as a function that yields a boolean,
 it is easy to define an analogue of `All`, which returns true if
 a given predicate returns true for every element of a list:
+{:/}
+
+如果我们将一个谓词看作一个返回布尔值的函数，那么我们可以简单的定义一个类似于 `All`
+的函数，其当给定谓词对于列表每个元素返回真时返回真：
+
 \begin{code}
 all : ∀ {A : Set} → (A → Bool) → List A → Bool
 all p  =  foldr _∧_ true ∘ map p
 \end{code}
+{::comment}
 The function can be written in a particularly compact style by
 using the higher-order functions `map` and `foldr`.
+{:/}
 
+我们可以使用高阶函数 `map` 和 `foldr` 来简洁地写出这个函数。
+
+{::comment}
 As one would hope, if we replace booleans by decidables there is again
 an analogue of `All`.  First, return to the notion of a predicate `P` as
 a function of type `A → Set`, taking a value `x` of type `A` into evidence
 `P x` that a property holds for `x`.  Say that a predicate `P` is _decidable_
 if we have a function that for a given `x` can decide `P x`:
+{:/}
+
+正如所希望的那样，如果我们将布尔值替换成可判定值，这与 `All` 是相似的。首先，回到将 `P`
+当作一个类型为 `A → Set` 的函数的概念，将一个类型为 `A` 的值 `x` 转换成 `P x` 对 `x` 成立
+的证明。我们成 `P` 为**可判定的**（Decidable），如果我们有一个函数，其在给定 `x` 时能够判定 `P x`：
+
 \begin{code}
 Decidable : ∀ {A : Set} → (A → Set) → Set
 Decidable {A} P  =  ∀ (x : A) → Dec (P x)
 \end{code}
+{::comment}
 Then if predicate `P` is decidable, it is also decidable whether every
 element of a list satisfies the predicate:
+{:/}
+
+那么当谓词 `P` 可判定时，我们亦可判定列表中的每一个元素是否满足这个谓词：
 \begin{code}
 All? : ∀ {A : Set} {P : A → Set} → Decidable P → Decidable (All P)
 All? P? []                                 =  yes []
@@ -1257,48 +1634,107 @@ All? P? (x ∷ xs) with P? x   | All? P? xs
 ...                 | no ¬Px | _           =  no λ{ (Px ∷ Pxs) → ¬Px Px   }
 ...                 | _      | no ¬Pxs     =  no λ{ (Px ∷ Pxs) → ¬Pxs Pxs }
 \end{code}
+{::comment}
 If the list is empty, then trivially `P` holds for every element of
 the list.  Otherwise, the structure of the proof is similar to that
 showing that the conjunction of two decidable propositions is itself
 decidable, using `_∷_` rather than `⟨_,_⟩` to combine the evidence for
 the head and tail of the list.
+{:/}
+
+如果列表为空，那么 `P` 显然对列表的每个元素成立。
+否则，证明的结构与两个可判定的命题是可判定的证明相似，不过我们使用 `_∷_` 而不是 `⟨_,_⟩`
+来整合头元素和尾列表的证明。
 
 
+{::comment}
 #### Exercise `any?` (stretch)
+{:/}
 
+#### 练习 `any?` （延伸）
+
+{::comment}
 Just as `All` has analogues `all` and `All?` which determine whether a
 predicate holds for every element of a list, so does `Any` have
 analogues `any` and `Any?` which determine whether a predicate holds
 for some element of a list.  Give their definitions.
+{:/}
 
+正如 `All` 有类似的 `all` 和 `All?` 形式，来判断列表的每个元素是否满足给定的谓词，
+那么 `Any` 也有类似的 `any` 和 `Any?` 形式，来判断列表的一些元素是否满足给定的谓词。
+给出它们的定义。
+
+{::comment}
 \begin{code}
 -- Your code goes here
 \end{code}
+{:/}
+
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
 
+{::comment}
 #### Exercise `All-∀`
+{:/}
 
+#### 练习 `All-∀`
+
+{::comment}
 Show that `All P xs` is isomorphic to `∀ {x} → x ∈ xs → P x`.
+{:/}
 
+证明 `All P xs` 与 `∀ {x} → x ∈ xs → P x` 同构。
+
+{::comment}
 \begin{code}
 -- You code goes here
 \end{code}
+{:/}
+
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
 
+{::comment}
 #### Exercise `Any-∃`
+{:/}
 
+#### 练习 `Any-∃`
+
+{::comment}
 Show that `Any P xs` is isomorphic to `∃[ x ∈ xs ] P x`.
+{:/}
 
+证明 `Any P xs` 与 `∃[ x ∈ xs ] P x` 同构。
+
+{::comment}
 \begin{code}
 -- You code goes here
 \end{code}
+{:/}
+
+\begin{code}
+-- 请将代码写在此处。
+\end{code}
 
 
+{::comment}
 #### Exercise `filter?` (stretch)
+{:/}
 
+#### 练习 `filter?` （延伸）
+
+{::comment}
 Define the following variant of the traditional `filter` function on lists,
 which given a decidable predicate and a list returns all elements of the
 list satisfying the predicate:
+{:/}
+
+定义下面给出的列表 `filter` 函数的变种，给定一个可判定的谓词和一个列表，返回列表中所有满足
+谓词的元素：
 \begin{code}
 postulate
   filter? : ∀ {A : Set} {P : A → Set}
@@ -1306,9 +1742,17 @@ postulate
 \end{code}
 
 
+{::comment}
 ## Standard Library
+{:/}
 
+## 标准库
+
+{::comment}
 Definitions similar to those in this chapter can be found in the standard library:
+{:/}
+
+标准库中可以找到与本章节中相似的定义：
 \begin{code}
 import Data.List using (List; _++_; length; reverse; map; foldr; downFrom)
 import Data.List.All using (All; []; _∷_)
@@ -1321,19 +1765,40 @@ import Algebra.Structures using (IsMonoid)
 import Relation.Unary using (Decidable)
 import Relation.Binary using (Decidable)
 \end{code}
+{::comment}
 The standard library version of `IsMonoid` differs from the
 one given here, in that it is also parameterised on an equivalence relation.
+{:/}
 
+标准库中的 `IsMonoid` 与给出的定义不同，因为它可以针对特定的等价关系参数化。
+
+{::comment}
 Both `Relation.Unary` and `Relation.Binary` define a version of `Decidable`,
 one for unary relations (as used in this chapter where `P` ranges over
 unary predicates) and one for binary relations (as used earlier, where `_≤_`
 ranges over a binary relation).
+{:/}
+
+`Relation.Unary` 和 `Relation.Binary` 都定义了 `Decidable` 的某个版本，一个
+用于单元关系（正如本章中的单元谓词 `P`），一个用于二元关系（正如之前使用的 `_≤_`）。
 
 ## Unicode
 
+{::comment}
 This chapter uses the following unicode:
+{:/}
 
+本章节使用下列 Unicode：
+
+{::comment}
     ∷  U+2237  PROPORTION  (\::)
     ⊗  U+2297  CIRCLED TIMES  (\otimes, \ox)
     ∈  U+2208  ELEMENT OF  (\in)
     ∉  U+2209  NOT AN ELEMENT OF  (\inn, \notin)
+
+{:/}
+
+    ∷  U+2237  比例  (\::)
+    ⊗  U+2297  带圈的乘号  (\otimes, \ox)
+    ∈  U+2208  是……的元素  (\in)
+    ∉  U+2209  不是……的元素  (\inn, \notin)
