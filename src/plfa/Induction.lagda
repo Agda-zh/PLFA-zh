@@ -5,7 +5,7 @@ prev      : /Naturals/
 permalink : /Induction/
 next      : /Relations/
 translators : ["Oling Cat"]
-progress  : 90
+progress  : 100
 ---
 
 \begin{code}
