@@ -297,7 +297,7 @@ isomorphism_.
 {:/}
 
 类型上的积与数的积有相似的性质——它们满足交换律和结合律。
-更确切地说，积在*忽略同构*的情况下是交换和结合的。
+更确切地说，积在*在同构意义下*满足交换律和结合率。
 
 {::comment}
 For commutativity, the `to` function swaps a pair, taking `⟨ x , y ⟩` to
@@ -328,7 +328,7 @@ Being _commutative_ is different from being _commutative up to
 isomorphism_.  Compare the two statements:
 {:/}
 
-满足*交换律*和*忽略同构*下满足*交换律*是不一样的。比较下列两个命题：
+满足*交换律*和*在同构意义下满足交换律*是不一样的。比较下列两个命题：
 
     m * n ≡ n * m
     A × B ≃ B × A
@@ -373,7 +373,7 @@ Being _associative_ is not the same as being _associative
 up to isomorphism_.  Compare the two statements:
 {:/}
 
-满足*结合律*和*忽略同构*下满足*结合律*是不一样的。比较下列两个命题：
+满足*结合律*和*在同构意义下满足结合律*是不一样的。比较下列两个命题：
 
     (m * n) * p ≡ m * (n * p)
     (A × B) × C ≃ A × (B × C)
@@ -489,7 +489,7 @@ function does the inverse.  The evidence of left inverse requires
 matching against a suitable pattern to enable simplification:
 {:/}
 
-对于数来说，1 是乘法的幺元。对应地，单元是积的幺元（*忽略同构*）。对于左幺元来说，
+对于数来说，1 是乘法的幺元。对应地，单元是积的幺元（*在同构意义下*）。对于左幺元来说，
 `to` 函数将 `⟨ tt , x ⟩` 转换成 `x`， `from` 函数则是其反函数。左逆的证明需要
 匹配一个合适的模式来化简：
 
@@ -509,7 +509,7 @@ Having an _identity_ is different from having an identity
 _up to isomorphism_.  Compare the two statements:
 {:/}
 
-*幺元*和*忽略同构*的*幺元*是不一样的。比较下列两个命题：
+*幺元*和*在同构意义下的幺元*是不一样的。比较下列两个命题：
 
     1 * m ≡ m
     ⊤ × A ≃ A
@@ -723,7 +723,7 @@ commutative and associative _up to isomorphism_.
 {:/}
 
 类型上的和与数的和有相似的性质——它们满足交换律和结合律。
-更确切地说，和在*忽略同构*的情况下是交换和结合的。
+更确切地说，和在*在同构意义下*是交换和结合的。
 
 {::comment}
 #### Exercise `⊎-comm` (recommended)
@@ -735,7 +735,7 @@ commutative and associative _up to isomorphism_.
 Show sum is commutative up to isomorphism.
 {:/}
 
-证明和类型在忽略同构下满足交换律。
+证明和类型在同构意义下满足交换律。
 
 {::comment}
 \begin{code}
@@ -757,7 +757,7 @@ Show sum is commutative up to isomorphism.
 Show sum is associative up to isomorphism.
 {:/}
 
-证明和类型在忽略同构下满足结合律。
+证明和类型在同构意义下满足结合律。
 
 {::comment}
 \begin{code}
@@ -883,7 +883,7 @@ For numbers, zero is the identity of addition. Correspondingly, empty
 is the identity of sums _up to isomorphism_.
 {:/}
 
-对于数来说，0 是加法的幺元。对应地，空是和的幺元（*忽略同构*）。
+对于数来说，0 是加法的幺元。对应地，空是和的幺元（*在同构意义下*）。
 
 {::comment}
 #### Exercise `⊥-identityˡ` (recommended)
@@ -895,7 +895,7 @@ is the identity of sums _up to isomorphism_.
 Show empty is the left identity of sums up to isomorphism.
 {:/}
 
-证明空在忽略同构下是和的左幺元。
+证明空在同构意义下是和的左幺元。
 
 {::comment}
 \begin{code}
@@ -917,7 +917,7 @@ Show empty is the left identity of sums up to isomorphism.
 Show empty is the right identity of sums up to isomorphism.
 {:/}
 
-证明空在忽略同构下是和的右幺元。
+证明空在同构意义下是和的右幺元。
 
 {::comment}
 \begin{code}
@@ -1216,7 +1216,7 @@ Products distribute over sum, up to isomorphism.  The code to validate
 this fact is similar in structure to our previous results:
 {:/}
 
-在忽略同构的情况下，积对于和满足分配律。验证这条形式的代码和之前的证明相似：
+在同构意义下，积对于和满足分配律。验证这条形式的代码和之前的证明相似：
 
 \begin{code}
 ×-distrib-⊎ : ∀ {A B C : Set} → (A ⊎ B) × C ≃ (A × C) ⊎ (B × C)

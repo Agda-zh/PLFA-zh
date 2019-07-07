@@ -4,6 +4,8 @@ layout    : page
 prev      : /Connectives/
 permalink : /Negation/
 next      : /Quantifiers/
+translators : ["Oling Cat"]
+progress  : 100
 ---
 
 \begin{code}
@@ -420,7 +422,7 @@ Show that conjunction, disjunction, and negation are related by a
 version of De Morgan's Law.
 {:/}
 
-请证明合取、析取和否定可通过以下版本的德·摩根定律关联在一起。
+请证明合取、析取和否定可通过以下版本的德摩根定律（De Morgan's Law）关联在一起。
 
     ¬ (A ⊎ B) ≃ (¬ A) × (¬ B)
 
@@ -476,7 +478,7 @@ whatever."
 Casilda 被告知她还是个婴儿时，就被许配给了巴塔维亚国王的继承人。
 但由于一场动乱，没人知道她被许配给了两位继承人 Marco 和 Giuseppe
 中的哪一位。她惊慌地哀嚎道：「那么你的意思是说我嫁给了两位船夫中的一位，
-但却无法确定是谁？」对此的回答是：「虽然不知到是谁，但这件事却是毫无疑问的。」
+但却无法确定是谁？」对此的回答是：「虽然不知道是谁，但这件事却是毫无疑问的。」
 
 {::comment}
 Logic comes in many varieties, and one distinction is between
@@ -513,13 +515,13 @@ a formula is provable in classical logic if and only if its
 translation is provable in intuitionistic logic.
 {:/}
 
-直觉主义者也拒绝排中律，该定律断言，对于所有的 `A`，`A ⊎ ¬ A` 必定成立，
-因为该定律没有给出 `A` 和 `¬ A` 中的哪一个成立。海廷形式化了希尔伯特经典逻辑的
-一个变种，他抓住了直觉主义中可证明性的概念。具体来说，排中律在希尔伯特逻辑
-中是可证明的，但在海廷逻辑中却不可证明。进一步来说，如果排中律作为一条公理
-添加到海廷逻辑中，那么它会等价于希尔伯特逻辑。柯尔莫哥洛夫证明了两种逻辑紧密相关：
-他给出了双重否定翻译，即一个式子在经典逻辑中可证，当且仅当它的双重否定式在
-直觉逻辑中可证。
+直觉主义者也拒绝排中律（Law of the Excluded Middle），该定律断言，对于所有的
+`A`，`A ⊎ ¬ A` 必定成立，因为该定律没有给出 `A` 和 `¬ A` 中的哪一个成立。
+海廷形式化了希尔伯特经典逻辑的一个变种，他抓住了直觉主义中可证明性的概念。
+具体来说，排中律在希尔伯特逻辑中是可证明的，但在海廷逻辑中却不可证明。
+进一步来说，如果排中律作为一条公理添加到海廷逻辑中，那么它会等价于希尔伯特逻辑。
+柯尔莫哥洛夫证明了两种逻辑紧密相关：他给出了双重否定翻译，即一个式子在经典逻辑中
+可证，当且仅当它的双重否定式在直觉逻辑中可证。
 
 {::comment}
 Propositions as Types was first formulated for intuitionistic logic.
@@ -538,8 +540,8 @@ a disjoint sum.
 _Communications of the ACM_, December 2015.)
 {:/}
 
-（以上内容部分来源于 "Propositions as Types", Philip Wadler,
-_Communications of the ACM_，2015 年 12月。）
+（以上内容部分取自 "Propositions as Types", Philip Wadler,
+_Communications of the ACM_，2015 年 12 月。）
 
 {::comment}
 ## Excluded middle is irrefutable
@@ -589,11 +591,9 @@ we can get a value of the empty type is by applying `k` itself, so let's
 expand the hole accordingly:
 {:/}
 
-Given evidence `k` that `¬ (A ⊎ ¬ A)`, that is, a function that given a
-value of type `A ⊎ ¬ A` returns a value of the empty type, we must fill
-in `?` with a term that returns a value of the empty type.  The only way
-we can get a value of the empty type is by applying `k` itself, so let's
-expand the hole accordingly:
+给定 `¬ (A ⊎ ¬ A)` 的证据 `k`，即一个函数，它接受一个类型为 `A ⊎ ¬ A` 的值，
+返回一个空类型的值，我们必须在 `?` 处填上一个返回空类型的项。得到空类型值
+的唯一方式就是应用 `k` 本身，于是我们据此展开此洞：
 
     em-irrefutable k = k ?
 
@@ -602,8 +602,8 @@ We need to fill the new hole with a value of type `A ⊎ ¬ A`. We don't have
 a value of type `A` to hand, so let's pick the second disjunct:
 {:/}
 
-We need to fill the new hole with a value of type `A ⊎ ¬ A`. We don't have
-a value of type `A` to hand, so let's pick the second disjunct:
+我们需要用类型为 `A ⊎ ¬ A` 的值填上这个新的洞。由于目前我们并没有类型为 `A` 的值，
+因此先处理第二个析取：
 
     em-irrefutable k = k (inj₂ λ{ x → ? })
 
@@ -616,12 +616,9 @@ value of the empty type is by applying `k` itself, so let's expand the
 hole accordingly:
 {:/}
 
-The second disjunct accepts evidence of `¬ A`, that is, a function
-that given a value of type `A` returns a value of the empty type.  We
-bind `x` to the value of type `A`, and now we need to fill in the hole
-with a value of the empty type.  Once again, the only way we can get a
-value of the empty type is by applying `k` itself, so let's expand the
-hole accordingly:
+第二个析取接受 `¬ A` 的证据，即一个函数，它接受类型为 `A` 的值，返回空类型的值。
+我们将 `x` 绑定到类型为 `A` 的值，现在我们需要在洞中填入空类型的值。同样，
+得到空类型的值的唯一方法就是将 `k` 应用到其自身，于是我们展开此洞：
 
     em-irrefutable k = k (inj₂ λ{ x → k ? })
 
@@ -630,8 +627,7 @@ This time we do have a value of type `A` to hand, namely `x`, so we can
 pick the first disjunct:
 {:/}
 
-This time we do have a value of type `A` to hand, namely `x`, so we can
-pick the first disjunct:
+这次我们就有一个类型为 `A` 的值了，其名为 `x`，于是我们可以处理第一个析取：
 
     em-irrefutable k = k (inj₂ λ{ x → k (inj₁ x) })
 
@@ -639,7 +635,7 @@ pick the first disjunct:
 There are no holes left! This completes the proof.
 {:/}
 
-There are no holes left! This completes the proof.
+现在没有洞了！这样就完成了证明。
 
 {::comment}
 The following story illustrates the behaviour of the term we have created.
@@ -647,9 +643,8 @@ The following story illustrates the behaviour of the term we have created.
 about a king, a wizard, and the Philosopher's stone.)
 {:/}
 
-The following story illustrates the behaviour of the term we have created.
-(With apologies to Peter Selinger, who tells a similar story
-about a king, a wizard, and the Philosopher's stone.)
+下面的故事说明了我们创建的项的行为。
+（向 Peter Selinger 道歉，他讲的是个关于国王，巫师和贤者之石的类似的故事。）
 
 {::comment}
 Once upon a time, the devil approached a man and made an offer:
@@ -658,18 +653,16 @@ you any wish if you pay me one billion dollars.
 Of course, I get to choose whether I offer (a) or (b)."
 {:/}
 
-Once upon a time, the devil approached a man and made an offer:
-"Either (a) I will give you one billion dollars, or (b) I will grant
-you any wish if you pay me one billion dollars.
-Of course, I get to choose whether I offer (a) or (b)."
+曾经有一个恶魔向一个男人提议：“要么 (a) 我给你 10 亿美元，要么 (b) 如果你付给我
+10 亿美元，我可以实现你的任何一个愿望。当然，得是我决定提供 (a) 还是 (b)。”
 
 {::comment}
 The man was wary.  Did he need to sign over his soul?
 No, said the devil, all the man need do is accept the offer.
 {:/}
 
-The man was wary.  Did he need to sign over his soul?
-No, said the devil, all the man need do is accept the offer.
+男人很谨慎。他需要付出他的灵魂吗？
+恶魔说不用，他只要接受这个提议就行。
 
 {::comment}
 The man pondered.  If he was offered (b) it was unlikely that he would
@@ -677,9 +670,8 @@ ever be able to buy the wish, but what was the harm in having the
 opportunity available?
 {:/}
 
-The man pondered.  If he was offered (b) it was unlikely that he would
-ever be able to buy the wish, but what was the harm in having the
-opportunity available?
+于是男人思索着，如果恶魔向他提供 (b)，那么他不太可能付得起这个愿望。
+不过倘若真是如此的话，能有什么坏处吗？
 
 {::comment}
 "I accept," said the man at last.  "Do I get (a) or (b)?"
@@ -687,9 +679,9 @@ opportunity available?
 The devil paused.  "I choose (b)."
 {:/}
 
-"I accept," said the man at last.  "Do I get (a) or (b)?"
+“我接受”，男人回答道，“我能得到 (a) 还是 (b)？”
 
-The devil paused.  "I choose (b)."
+恶魔顿了顿。“我提供 (b)。”
 
 {::comment}
 The man was disappointed but not surprised.  That was that, he thought.
@@ -700,20 +692,17 @@ this must be what the devil had in mind.
 Eventually he had his billion dollars, and the devil appeared again.
 {:/}
 
-The man was disappointed but not surprised.  That was that, he thought.
-But the offer gnawed at him.  Imagine what he could do with his wish!
-Many years passed, and the man began to accumulate money.  To get the
-money he sometimes did bad things, and dimly he realised that
-this must be what the devil had in mind.
-Eventually he had his billion dollars, and the devil appeared again.
+男人很失望，但并不惊讶。“果然是这样”，他想。
+但是这个提议折磨着他。想想他都能用这个愿望做些什么！
+多年以后，男人开始积累钱财。为了得到这笔钱，他有时会做坏事，
+而且他隐约意识到这一定是魔鬼所想到的。最后他攒够了 10 亿美元，恶魔再次出现了。
 
 {::comment}
 "Here is a billion dollars," said the man, handing over a valise
 containing the money.  "Grant me my wish!"
 {:/}
 
-"Here is a billion dollars," said the man, handing over a valise
-containing the money.  "Grant me my wish!"
+“这是一百美元”，男人说着，交出一个手提箱。“实现我的愿望吧！”
 
 {::comment}
 The devil took possession of the valise.  Then he said, "Oh, did I say
@@ -721,25 +710,23 @@ The devil took possession of the valise.  Then he said, "Oh, did I say
 give you one billion dollars."
 {:/}
 
-The devil took possession of the valise.  Then he said, "Oh, did I say
-(b) before?  I'm so sorry.  I meant (a).  It is my great pleasure to
-give you one billion dollars."
+恶魔占有了手提箱。然后他说道，“哦？我之前说的是 (b) 吗？抱歉，我说的是 (a)。
+很高兴能给你 10 亿美元。”
 
 {::comment}
 And the devil handed back to the man the same valise that the man had
 just handed to him.
 {:/}
 
-And the devil handed back to the man the same valise that the man had
-just handed to him.
+于是恶魔将那个手提箱又还给了他。
 
 {::comment}
 (Parts of the above are adopted from "Call-by-Value is Dual to Call-by-Name",
 Philip Wadler, _International Conference on Functional Programming_, 2003.)
 {:/}
 
-(Parts of the above are adopted from "Call-by-Value is Dual to Call-by-Name",
-Philip Wadler, _International Conference on Functional Programming_, 2003.)
+（以上内容部分取自 "Call-by-Value is Dual to Call-by-Name",
+Philip Wadler, _International Conference on Functional Programming_, 2003 年。）
 
 
 {::comment}
@@ -758,19 +745,19 @@ Consider the following principles:
   * De Morgan: `¬ (¬ A × ¬ B) → A ⊎ B`, for all `A` and `B`.
 {:/}
 
-Consider the following principles:
+考虑以下定律：
 
-  * Excluded Middle: `A ⊎ ¬ A`, for all `A`
-  * Double Negation Elimination: `¬ ¬ A → A`, for all `A`
-  * Peirce's Law: `((A → B) → A) → A`, for all `A` and `B`.
-  * Implication as disjunction: `(A → B) → ¬ A ⊎ B`, for all `A` and `B`.
-  * De Morgan: `¬ (¬ A × ¬ B) → A ⊎ B`, for all `A` and `B`.
+  * 排中律：对于所有 `A`，`A ⊎ ¬ A`。
+  * 双重否定消去：对于所有的 `A`，`¬ ¬ A → A`。
+  * 皮尔士定律：对于所有的 `A` 和 `B`，`((A → B) → A) → A`。
+  * 蕴含表示为析取：对于所有的 `A` 和 `B`，`(A → B) → ¬ A ⊎ B`。
+  * 德摩根定律：对于所有的 `A` 和 `B`，`¬ (¬ A × ¬ B) → A ⊎ B`。
 
 {::comment}
 Show that each of these implies all the others.
 {:/}
 
-Show that each of these implies all the others.
+请证明其中任意一条定律都蕴涵其它所有定律。
 
 {::comment}
 \begin{code}
@@ -779,7 +766,7 @@ Show that each of these implies all the others.
 {:/}
 
 \begin{code}
--- Your code goes here
+-- 请将代码写在此处
 \end{code}
 
 
@@ -787,13 +774,13 @@ Show that each of these implies all the others.
 #### Exercise `Stable` (stretch)
 {:/}
 
-#### Exercise `Stable` (stretch)
+#### 联系 `Stable`（延伸）
 
 {::comment}
 Say that a formula is _stable_ if double negation elimination holds for it:
 {:/}
 
-Say that a formula is _stable_ if double negation elimination holds for it:
+若双重否定消去对某个式子成立，我们就说它是**稳定（stable）**的：
 
 \begin{code}
 Stable : Set → Set
@@ -805,25 +792,29 @@ Show that any negated formula is stable, and that the conjunction
 of two stable formulas is stable.
 {:/}
 
+请证明任何否定式都是稳定的，并且两个稳定式的合取也是稳定的。
 
-Show that any negated formula is stable, and that the conjunction
-of two stable formulas is stable.
-
+{::comment}
 \begin{code}
 -- Your code goes here
+\end{code}
+{:/}
+
+\begin{code}
+-- 请将代码写在此处
 \end{code}
 
 {::comment}
 ## Standard Prelude
 {:/}
 
-## Standard Prelude
+## 标准前导库
 
 {::comment}
 Definitions similar to those in this chapter can be found in the standard library:
 {:/}
 
-Definitions similar to those in this chapter can be found in the standard library:
+本章中的类似定义可在标准库中找到：
 
 \begin{code}
 import Relation.Nullary using (¬_)
@@ -836,7 +827,7 @@ import Relation.Nullary.Negation using (contraposition)
 This chapter uses the following unicode:
 {:/}
 
-This chapter uses the following unicode:
+本章使用了以下 Unicode：
 
 {::comment}
     ¬  U+00AC  NOT SIGN (\neg)
@@ -844,5 +835,5 @@ This chapter uses the following unicode:
 {:/}
 
 
-    ¬  U+00AC  NOT SIGN (\neg)
-    ≢  U+2262  NOT IDENTICAL TO (\==n)
+    ¬  U+00AC  否定符号 (\neg)
+    ≢  U+2262  不等价于 (\==n)
