@@ -183,7 +183,7 @@ There are only three interesting cases to consider:
 
 The variable case is thrown out because a closed term has no free
 variables and because a variable is not a value.  The cases for
-application, zero, successor, and fixpoint are thrown out because they
+application, case expression, and fixpoint are thrown out because they
 are not values.
 
 Conversely, if a term is canonical then it is a value
@@ -368,7 +368,7 @@ three key steps.
 The first step is to show that types are preserved by _renaming_.
 
 _Renaming_:
-Let `Γ` and `Δ` be two context such that every variable that
+Let `Γ` and `Δ` be two contexts such that every variable that
 appears in `Γ` also appears with the same type in `Δ`.  Then
 if any term is typeable under `Γ`, it has the same type under `Δ`.
 
@@ -476,9 +476,9 @@ With the extension lemma under our belts, it is straightforward to
 prove renaming preserves types:
 \begin{code}
 rename : ∀ {Γ Δ}
-        → (∀ {x A} → Γ ∋ x ⦂ A → Δ ∋ x ⦂ A)
-          ----------------------------------
-        → (∀ {M A} → Γ ⊢ M ⦂ A → Δ ⊢ M ⦂ A)
+  → (∀ {x A} → Γ ∋ x ⦂ A → Δ ∋ x ⦂ A)
+    ----------------------------------
+  → (∀ {M A} → Γ ⊢ M ⦂ A → Δ ⊢ M ⦂ A)
 rename ρ (⊢` ∋w)           =  ⊢` (ρ ∋w)
 rename ρ (⊢ƛ ⊢N)           =  ⊢ƛ (rename (ext ρ) ⊢N)
 rename ρ (⊢L · ⊢M)         =  (rename ρ ⊢L) · (rename ρ ⊢M)
@@ -498,7 +498,7 @@ the variable appears in `Δ`.
 
 * If the term is a lambda abstraction, use the previous lemma to
 extend the map `ρ` suitably and use induction to rename the body of the
-abstraction
+abstraction.
 
 * If the term is an application, use induction to rename both the
 function and the argument.
@@ -1200,7 +1200,7 @@ _ = refl
 Again, the derivation in the previous chapter was derived by
 editing the above.
 
-Similarly, can evaluate the corresponding term for Church numerals:
+Similarly, we can evaluate the corresponding term for Church numerals:
 \begin{code}
 _ : eval (gas 100) ⊢2+2ᶜ ≡
   steps

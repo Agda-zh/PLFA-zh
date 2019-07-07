@@ -1148,7 +1148,7 @@ postulate
 
 {::comment}
 Typically when we use a fold the operator is associative and the
-value is a left and right identity for the value, meaning that the
+value is a left and right identity for the operator, meaning that the
 operator and the value form a _monoid_.
 {:/}
 
