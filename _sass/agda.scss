@@ -1,12 +1,20 @@
 // Define variables for code formatting
 @font-face {
+    font-family: 'Fira Code';
+    src: url('fonts/FiraCode-Regular.woff2') format('woff2'),
+        url('fonts/FiraCode-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Dejavu Sans Mono';
     src: url('fonts/DejavuSansMono.woff2') format('woff2'),
          url('fonts/DejavuSansMono.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
+
 @font-face {
     font-family: 'FreeMono';
     src: url('fonts/FreeMono.woff') format('woff');
@@ -16,7 +24,18 @@
 }
 
 @mixin code-font {
-    font-family: 'Dejavu Sans Mono', 'Source Code Pro', 'Bitstream Vera Sans Mono', 'FreeMono', 'Courier New', 'Monaco', 'Menlo', monospace, serif;
+    font-family:
+    'Fira Code Retina',
+    'Fira Code',
+    'Dejavu Sans Mono',
+    'Source Code Pro',
+    'Bitstream Vera Sans Mono',
+    'FreeMono',
+    'Courier New',
+    'Monaco',
+    'Menlo',
+    monospace,
+    serif;
     font-size: .85em;
 }
 @mixin code-container {

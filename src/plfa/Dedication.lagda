@@ -1,5 +1,5 @@
 ---
-title     : "Dedication"
+title     : "Dedication: 题献"
 layout    : page
 permalink : /Dedication/
 next      : /Preface/
