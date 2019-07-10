@@ -702,7 +702,7 @@ Eventually he had his billion dollars, and the devil appeared again.
 containing the money.  "Grant me my wish!"
 {:/}
 
-“这是一百美元”，男人说着，交出一个手提箱。“实现我的愿望吧！”
+“这是 10 亿美元”，男人说着，交出一个手提箱。“实现我的愿望吧！”
 
 {::comment}
 The devil took possession of the valise.  Then he said, "Oh, did I say
@@ -710,7 +710,7 @@ The devil took possession of the valise.  Then he said, "Oh, did I say
 give you one billion dollars."
 {:/}
 
-恶魔占有了手提箱。然后他说道，“哦？我之前说的是 (b) 吗？抱歉，我说的是 (a)。
+恶魔接过了手提箱。然后他说道，“哦？我之前说的是 (b) 吗？抱歉，我说的是 (a)。
 很高兴能给你 10 亿美元。”
 
 {::comment}
