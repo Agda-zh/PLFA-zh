@@ -123,7 +123,7 @@ evidence of a proposition are indistinguishable.
 函数是依赖函数的一种特殊形式，其值域不取决于定义域中的变量。当一个函数被视为
 蕴含的证明时，它的参数和结果都是证明，而当一个依赖函数被视为全称量词的证明时，
 它的参数被视为数据类型中的一个元素，而结果是一个依赖于参数的命题的证明。因为在
-Agda 中，一个数据类型中的一个值一个命题的证明是无法区别的，这样的区别很大程度上
+Agda 中，一个数据类型中的一个值和一个命题的证明是无法区别的，这样的区别很大程度上
 取决于如何来诠释。
 
 {::comment}
@@ -153,7 +153,7 @@ dependent product is ambiguous.
 Show that universals distribute over conjunction:
 {:/}
 
-证明全程量词对于合取满足分配律：
+证明全称量词对于合取满足分配律：
 
 \begin{code}
 postulate
@@ -177,7 +177,7 @@ Chapter [Connectives][plfa.Connectives].
 Show that a disjunction of universals implies a universal of disjunctions:
 {:/}
 
-证明全称量词的析取蕴含了析取的全称量词：
+证明全称命题的析取蕴含了析取的全称命题：
 
 \begin{code}
 postulate
@@ -188,7 +188,7 @@ postulate
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
 
-反命题成立么？如果成立，给出证明。如果不成立，解释为什么。
+逆命题成立么？如果成立，给出证明。如果不成立，解释为什么。
 
 
 {::comment}
@@ -419,7 +419,7 @@ the evidence for `∃[ x ] B x`.
 Indeed, the converse also holds, and the two together form an isomorphism:
 {:/}
 
-的确，反命题也成立，两者合起来构成一个同构：
+的确，逆命题也成立，两者合起来构成一个同构：
 
 \begin{code}
 ∀∃-currying : ∀ {A : Set} {B : A → Set} {C : Set}
@@ -469,7 +469,7 @@ postulate
 Show that an existential of conjunctions implies a conjunction of existentials:
 {:/}
 
-证明存在量词的合取蕴含了合取的存在量词：
+证明合取的存在命题蕴含了存在命题的合取：
 
 \begin{code}
 postulate
@@ -480,7 +480,7 @@ postulate
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
 
-反命题成立么？如果成立，给出证明。如果不成立，解释为什么。
+逆命题成立么？如果成立，给出证明。如果不成立，解释为什么。
 
 {::comment}
 #### Exercise `∃-⊎`
@@ -623,13 +623,13 @@ substituting for `n`.
 This completes the proof in the forward direction.
 {:/}
 
-这样，我们就完成了向前方向的证明。
+这样，我们就完成了正方向的证明。
 
 {::comment}
 Here is the proof in the reverse direction:
 {:/}
 
-接下来是向后方向的证明：
+接下来是反方向的证明：
 
 \begin{code}
 ∃-even : ∀ {n : ℕ} → ∃[ m ] (    m * 2 ≡ n) → even n
@@ -732,7 +732,7 @@ Show that `y ≤ z` holds if and only if there exists a `x` such that
 ## Existentials, Universals, and Negation
 {:/}
 
-## 存在量化、全程量化和否定
+## 存在量化、全称量化和否定
 
 {::comment}
 Negation of an existential is isomorphic to the universal
@@ -742,7 +742,7 @@ result is analogous to the one which tells us that negation
 of a disjunction is isomorphic to a conjunction of negations:
 {:/}
 
-存在量化的否定与否定的全程量化是同构的。考虑到存在量化是析构的推广，全程量化是合构的推广，
+存在量化的否定与否定的全称量化是同构的。考虑到存在量化是析构的推广，全称量化是合构的推广，
 这样的结果与析构的否定与否定的合构是同构的结果相似。
 
 \begin{code}
@@ -798,7 +798,7 @@ requires extensionality.
 Show that existential of a negation implies negation of a universal:
 {:/}
 
-证明否定的存在量化蕴含了全程量化的否定：
+证明否定的存在量化蕴含了全称量化的否定：
 
 \begin{code}
 postulate
@@ -811,7 +811,7 @@ postulate
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
 
-反命题成立吗？如果成立，给出证明；如果不成立，给出反例。
+逆命题成立么？如果成立，给出证明。如果不成立，解释为什么。
 
 {::comment}
 #### Exercise `Bin-isomorphism` (stretch) {#Bin-isomorphism}
