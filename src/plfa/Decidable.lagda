@@ -234,7 +234,7 @@ by `refl`, while if `b` is false then `T b` in uninhabited.
 {:/}
 
 如果 `b` 为真，那么 `T b` 由 `tt` 证明，`b ≡ true` 由 `refl` 证明。
-当 `b` 为家，那么 `T b` 无法证明。
+当 `b` 为假，那么 `T b` 无法证明。
 
 {::comment}
 In the reverse direction, there is no need for a case analysis on the boolean `b`:
