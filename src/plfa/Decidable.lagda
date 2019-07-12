@@ -778,7 +778,7 @@ first or the second can match.  However, regardless of which matches
 the answer is the same.
 {:/}
 
-在 Emacs 中，第三个等式的左手边显示为灰色，表示这些等式出现的顺序决定了是第二条还是第三条
+在 Emacs 中，第二个等式的左手边显示为灰色，表示这些等式出现的顺序决定了是第一条还是第二条
 会被匹配到。然而，不管是哪一条被匹配到，结果都是一样的。
 
 {::comment}
@@ -815,7 +815,7 @@ on which matches; if both disjuncts hold we pick the first,
 but it would be equally valid to pick the second.
 {:/}
 
-同样地，在 Emacs 中，第三条等式在左手边以灰色显示，说明等式的顺序决定了第二条还是第三条会被匹配。
+同样地，在 Emacs 中，第二条等式在左手边以灰色显示，说明等式的顺序决定了第一条还是第二条会被匹配。
 这一次，我们给出的结果会因为是第二条还是第三条而不一样。如果两个命题都成立，我们选择第一个来构造析取，
 但选择第二个也是同样正确的。
 
