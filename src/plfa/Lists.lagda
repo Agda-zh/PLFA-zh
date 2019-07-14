@@ -112,6 +112,7 @@ data List′ : Set → Set where
   []′  : ∀ {A : Set} → List′ A
   _∷′_ : ∀ {A : Set} → A → List′ A → List′ A
 ```
+
 {::comment}
 Each constructor takes the parameter as an implicit argument.
 Thus, our example list could also be written:
@@ -123,6 +124,7 @@ Thus, our example list could also be written:
 _ : List ℕ
 _ = _∷_ {ℕ} 0 (_∷_ {ℕ} 1 (_∷_ {ℕ} 2 ([] {ℕ})))
 ```
+
 {::comment}
 where here we have provided the implicit parameters explicitly.
 {:/}
@@ -166,6 +168,7 @@ pattern [_,_,_,_] w x y z = w ∷ x ∷ y ∷ z ∷ []
 pattern [_,_,_,_,_] v w x y z = v ∷ w ∷ x ∷ y ∷ z ∷ []
 pattern [_,_,_,_,_,_] u v w x y z = u ∷ v ∷ w ∷ x ∷ y ∷ z ∷ []
 ```
+
 {::comment}
 This is our first use of pattern declarations.  For instance,
 the third line tells us that `[ x , y , z ]` is equivalent to
@@ -197,6 +200,7 @@ _++_ : ∀ {A : Set} → List A → List A → List A
 []       ++ ys  =  ys
 (x ∷ xs) ++ ys  =  x ∷ (xs ++ ys)
 ```
+
 {::comment}
 The type `A` is an implicit argument to append, making it a
 _polymorphic_ function (one that can be used at many types).  The
@@ -232,6 +236,7 @@ _ =
     0 ∷ 1 ∷ 2 ∷ 3 ∷ 4 ∷ []
   ∎
 ```
+
 {::comment}
 Appending two lists requires time linear in the
 number of elements in the first list.
@@ -276,6 +281,7 @@ about numbers.  Here is the proof that append is associative:
     x ∷ xs ++ (ys ++ zs)
   ∎
 ```
+
 {::comment}
 The proof is by induction on the first argument. The base case instantiates
 to `[]`, and follows by straightforward computation.
@@ -330,6 +336,7 @@ That it is a left identity is immediate from the definition:
     xs
   ∎
 ```
+
 {::comment}
 That it is a right identity follows by simple induction:
 {:/}
@@ -352,6 +359,7 @@ That it is a right identity follows by simple induction:
     x ∷ xs
   ∎
 ```
+
 {::comment}
 As we will see later,
 these three properties establish that `_++_` and `[]` form
@@ -377,6 +385,7 @@ length : ∀ {A : Set} → List A → ℕ
 length []        =  zero
 length (x ∷ xs)  =  suc (length xs)
 ```
+
 {::comment}
 Again, it takes an implicit parameter `A`.
 The length of the empty list is zero.
@@ -407,6 +416,7 @@ _ =
     suc (suc (suc zero))
   ∎
 ```
+
 {::comment}
 Computing the length of a list requires time
 linear in the number of elements in the list.
@@ -458,6 +468,7 @@ length-++ (x ∷ xs) ys =
     length (x ∷ xs) + length ys
   ∎
 ```
+
 {::comment}
 The proof is by induction on the first argument. The base case
 instantiates to `[]`, and follows by straightforward computation.  As
@@ -491,6 +502,7 @@ reverse : ∀ {A : Set} → List A → List A
 reverse []        =  []
 reverse (x ∷ xs)  =  reverse xs ++ [ x ]
 ```
+
 {::comment}
 The reverse of the empty list is the empty list.
 The reverse of a non-empty list
@@ -537,6 +549,7 @@ _ =
     [ 2 , 1 , 0 ]
   ∎
 ```
+
 {::comment}
 Reversing a list in this way takes time _quadratic_ in the length of
 the list. This is because reverse ends up appending lists of lengths
@@ -609,6 +622,7 @@ shunt : ∀ {A : Set} → List A → List A → List A
 shunt []       ys  =  ys
 shunt (x ∷ xs) ys  =  shunt xs (x ∷ ys)
 ```
+
 {::comment}
 The definition is by recursion on the first argument. The second argument
 actually becomes _larger_, but this is not a problem because the argument
@@ -649,6 +663,7 @@ shunt-reverse (x ∷ xs) ys =
     reverse (x ∷ xs) ++ ys
   ∎
 ```
+
 {::comment}
 The proof is by induction on the first argument.
 The base case instantiates to `[]`, and follows by straightforward computation.
@@ -754,6 +769,7 @@ map : ∀ {A B : Set} → (A → B) → List A → List B
 map f []        =  []
 map f (x ∷ xs)  =  f x ∷ map f xs
 ```
+
 {::comment}
 Map of the empty list is the empty list.
 Map of a non-empty list yields a list
@@ -787,6 +803,7 @@ _ =
     1 ∷ 2 ∷ 3 ∷ []
   ∎
 ```
+
 {::comment}
 Map requires time linear in the length of the list.
 {:/}
@@ -844,6 +861,7 @@ postulate
   map-compose : ∀ {A B C : Set} {f : A → B} {g : B → C}
     → map (g ∘ f) ≡ map g ∘ map f
 ```
+
 {::comment}
 The last step of the proof requires extensionality.
 {:/}
@@ -884,6 +902,7 @@ data Tree (A B : Set) : Set where
   leaf : A → Tree A B
   node : Tree A B → B → Tree A B → Tree A B
 ```
+
 {::comment}
 Define a suitable map operator over trees:
 {:/}
@@ -915,6 +934,7 @@ foldr : ∀ {A B : Set} → (A → B → B) → B → List A → B
 foldr _⊗_ e []        =  e
 foldr _⊗_ e (x ∷ xs)  =  x ⊗ foldr _⊗_ e xs
 ```
+
 {::comment}
 Fold of the empty list is the given value.
 Fold of a non-empty list uses the operator to combine
@@ -946,6 +966,7 @@ _ =
     1 + (2 + (3 + (4 + 0)))
   ∎
 ```
+
 {::comment}
 Fold requires time linear in the length of the list.
 {:/}
@@ -1046,6 +1067,7 @@ postulate
   map-is-foldr : ∀ {A B : Set} {f : A → B} →
     map f ≡ foldr (λ x xs → f x ∷ xs) []
 ```
+
 {::comment}
 This requires extensionality.
 {:/}
@@ -1117,6 +1139,7 @@ downFrom : ℕ → List ℕ
 downFrom zero     =  []
 downFrom (suc n)  =  n ∷ downFrom n
 ```
+
 {::comment}
 For example:
 {:/}
@@ -1126,6 +1149,7 @@ For example:
 _ : downFrom 3 ≡ [ 2 , 1 , 0 ]
 _ = refl
 ```
+
 {::comment}
 Prove that the sum of the numbers `(n - 1) + ⋯ + 0` is
 equal to `n * (n ∸ 1) / 2`:
@@ -1329,6 +1353,7 @@ data All {A : Set} (P : A → Set) : List A → Set where
   []  : All P []
   _∷_ : ∀ {x : A} {xs : List A} → P x → All P xs → All P (x ∷ xs)
 ```
+
 {::comment}
 The type has two constructors, reusing the names of the same constructors for lists.
 The first asserts that `P` holds for every element of the empty list.
@@ -1357,6 +1382,7 @@ suc n`:
 _ : All (_≤ 2) [ 0 , 1 , 2 ]
 _ = z≤n ∷ s≤s z≤n ∷ s≤s (s≤s z≤n) ∷ []
 ```
+
 {::comment}
 Here `_∷_` and `[]` are the constructors of `All P` rather than of `List A`.
 The three items are proofs of `0 ≤ 2`, `1 ≤ 2`, and `2 ≤ 2`, respectively.
@@ -1394,6 +1420,7 @@ data Any {A : Set} (P : A → Set) : List A → Set where
   here  : ∀ {x : A} {xs : List A} → P x → Any P (x ∷ xs)
   there : ∀ {x : A} {xs : List A} → Any P xs → Any P (x ∷ xs)
 ```
+
 {::comment}
 The first constructor provides evidence that the head of the list
 satisfies `P`, while the second provides evidence that some element of
@@ -1412,6 +1439,7 @@ x ∈ xs = Any (x ≡_) xs
 _∉_ : ∀ {A : Set} (x : A) (xs : List A) → Set
 x ∉ xs = ¬ (x ∈ xs)
 ```
+
 {::comment}
 For example, zero is an element of the list `[ 0 , 1 , 0 , 2 ]`.  Indeed, we can demonstrate
 this fact in two different ways, corresponding to the two different
@@ -1428,6 +1456,7 @@ _ = here refl
 _ : 0 ∈ [ 0 , 1 , 0 , 2 ]
 _ = there (there (here refl))
 ```
+
 {::comment}
 Further, we can demonstrate that three is not in the list, because
 any possible proof that it is in the list leads to contradiction:
@@ -1442,6 +1471,7 @@ not-in (there (there (here ())))
 not-in (there (there (there (here ()))))
 not-in (there (there (there (there ()))))
 ```
+
 {::comment}
 The five occurrences of `()` attest to the fact that there is no
 possible evidence for `3 ≡ 0`, `3 ≡ 1`, `3 ≡ 0`, `3 ≡ 2`, and
@@ -1571,6 +1601,7 @@ postulate
   ¬All≃Any¬ : ∀ {A : Set} (P : A → Set) (xs : List A)
     → (¬_ ∘′ All P) xs ≃ Any (¬_ ∘′ P) xs
 ```
+
 {::comment}
 If so, prove; if not, explain why.
 {:/}
@@ -1597,6 +1628,7 @@ a given predicate returns true for every element of a list:
 all : ∀ {A : Set} → (A → Bool) → List A → Bool
 all p  =  foldr _∧_ true ∘ map p
 ```
+
 {::comment}
 The function can be written in a particularly compact style by
 using the higher-order functions `map` and `foldr`.
@@ -1620,6 +1652,7 @@ if we have a function that for a given `x` can decide `P x`:
 Decidable : ∀ {A : Set} → (A → Set) → Set
 Decidable {A} P  =  ∀ (x : A) → Dec (P x)
 ```
+
 {::comment}
 Then if predicate `P` is decidable, it is also decidable whether every
 element of a list satisfies the predicate:
@@ -1634,6 +1667,7 @@ All? P? (x ∷ xs) with P? x   | All? P? xs
 ...                 | no ¬Px | _           =  no λ{ (Px ∷ Pxs) → ¬Px Px   }
 ...                 | _      | no ¬Pxs     =  no λ{ (Px ∷ Pxs) → ¬Pxs Pxs }
 ```
+
 {::comment}
 If the list is empty, then trivially `P` holds for every element of
 the list.  Otherwise, the structure of the proof is similar to that
@@ -1765,6 +1799,7 @@ import Algebra.Structures using (IsMonoid)
 import Relation.Unary using (Decidable)
 import Relation.Binary using (Decidable)
 ```
+
 {::comment}
 The standard library version of `IsMonoid` differs from the
 one given here, in that it is also parameterised on an equivalence relation.

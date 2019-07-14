@@ -82,6 +82,7 @@ data _×_ (A B : Set) : Set where
       -----
     → A × B
 ```
+
 {::comment}
 Evidence that `A × B` holds is of the form `⟨ M , N ⟩`, where `M`
 provides evidence that `A` holds and `N` provides evidence that `B`
@@ -133,6 +134,7 @@ record _×′_ (A B : Set) : Set where
     proj₂′ : B
 open _×′_
 ```
+
 {::comment}
 Here record construction
 {:/}
@@ -211,6 +213,7 @@ constructor is the identity over products:
 η-× : ∀ {A B : Set} (w : A × B) → ⟨ proj₁ w , proj₂ w ⟩ ≡ w
 η-× ⟨ x , y ⟩ = refl
 ```
+
 {::comment}
 The pattern matching on the left-hand side is essential, since
 replacing `w` by `⟨ x , y ⟩` allows both sides of the
@@ -229,6 +232,7 @@ tightly than anything save disjunction:
 ```
 infixr 2 _×_
 ```
+
 {::comment}
 Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
 {:/}
@@ -263,6 +267,7 @@ data Tri : Set where
   bb : Tri
   cc : Tri
 ```
+
 {::comment}
 Then the type `Bool × Tri` has six members:
 {:/}
@@ -432,6 +437,7 @@ data ⊤ : Set where
     --
     ⊤
 ```
+
 {::comment}
 Evidence that `⊤` holds is of the form `tt`.
 {:/}
@@ -459,6 +465,7 @@ value of type `⊤` must be equal to `tt`:
 η-⊤ : ∀ (w : ⊤) → tt ≡ w
 η-⊤ tt = refl
 ```
+
 {::comment}
 The pattern matching on the left-hand side is essential.  Replacing
 `w` by `tt` allows both sides of the propositional equality to
@@ -544,6 +551,7 @@ Right identity follows from commutativity of product and left identity:
     A
   ≃-∎
 ```
+
 {::comment}
 Here we have used a chain of isomorphisms, analogous to that used for
 equality.
@@ -579,6 +587,7 @@ data _⊎_ (A B : Set) : Set where
       -----
     → A ⊎ B
 ```
+
 {::comment}
 Evidence that `A ⊎ B` holds is either of the form `inj₁ M`, where `M`
 provides evidence that `A` holds, or `inj₂ N`, where `N` provides
@@ -605,6 +614,7 @@ case-⊎ : ∀ {A B C : Set}
 case-⊎ f g (inj₁ x) = f x
 case-⊎ f g (inj₂ y) = g y
 ```
+
 {::comment}
 Pattern matching against `inj₁` and `inj₂` is typical of how we exploit
 evidence that a disjunction holds.
@@ -639,6 +649,7 @@ Applying the destructor to each of the constructors is the identity:
 η-⊎ (inj₁ x) = refl
 η-⊎ (inj₂ y) = refl
 ```
+
 {::comment}
 More generally, we can also throw in an arbitrary function from a disjunction:
 {:/}
@@ -651,6 +662,7 @@ uniq-⊎ : ∀ {A B C : Set} (h : A ⊎ B → C) (w : A ⊎ B) →
 uniq-⊎ h (inj₁ x) = refl
 uniq-⊎ h (inj₂ y) = refl
 ```
+
 {::comment}
 The pattern matching on the left-hand side is essential.  Replacing
 `w` by `inj₁ x` allows both sides of the propositional equality to
@@ -670,6 +682,7 @@ than any other declared operator:
 ```
 infix 1 _⊎_
 ```
+
 {::comment}
 Thus, `A × C ⊎ B × C` parses as `(A × C) ⊎ (B × C)`.
 {:/}
@@ -821,6 +834,7 @@ Sheba".  We formalise it as follows:
   → A
 ⊥-elim ()
 ```
+
 {::comment}
 This is our first use of the _absurd pattern_ `()`.
 Here since `⊥` is a type with no members, we indicate that it is
@@ -851,6 +865,7 @@ is equal to any arbitrary function from `⊥`:
 uniq-⊥ : ∀ {C : Set} (h : ⊥ → C) (w : ⊥) → ⊥-elim w ≡ h w
 uniq-⊥ h ()
 ```
+
 {::comment}
 Using the absurd pattern asserts there are no possible values for `w`,
 so the equation holds trivially.
@@ -871,6 +886,7 @@ enumerates all possible arguments of type `⊥`:
 ⊥-count : ⊥ → ℕ
 ⊥-count ()
 ```
+
 {::comment}
 Here again the absurd pattern `()` indicates that no value can match
 type `⊥`.
@@ -980,6 +996,7 @@ then we may conclude that `B` holds:
   → B
 →-elim L M = L M
 ```
+
 {::comment}
 In medieval times, this rule was known by the name _modus ponens_.
 It corresponds to function application.
@@ -1259,6 +1276,7 @@ Sums do not distribute over products up to isomorphism, but it is an embedding:
                  }
     }
 ```
+
 {::comment}
 Note that there is a choice in how we write the `from` function.
 As given, it takes `⟨ inj₂ z , inj₂ z′ ⟩` to `inj₂ z`, but it is
@@ -1308,6 +1326,7 @@ Show that the following property holds:
 postulate
   ⊎-weak-× : ∀ {A B C : Set} → (A ⊎ B) × C → A ⊎ (B × C)
 ```
+
 {::comment}
 This is called a _weak distributive law_. Give the corresponding
 distributive law, and explain how it relates to the weak version.
@@ -1343,6 +1362,7 @@ Show that a disjunct of conjuncts implies a conjunct of disjuncts:
 postulate
   ⊎×-implies-×⊎ : ∀ {A B C D : Set} → (A × B) ⊎ (C × D) → (A ⊎ C) × (B ⊎ D)
 ```
+
 {::comment}
 Does the converse hold? If so, prove; if not, give a counterexample.
 {:/}
@@ -1378,6 +1398,7 @@ import Data.Sum using (_⊎_; inj₁; inj₂) renaming ([_,_] to case-⊎)
 import Data.Empty using (⊥; ⊥-elim)
 import Function.Equivalence using (_⇔_)
 ```
+
 {::comment}
 The standard library constructs pairs with `_,_` whereas we use `⟨_,_⟩`.
 The former makes it convenient to build triples or larger tuples from pairs,

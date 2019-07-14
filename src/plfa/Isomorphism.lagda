@@ -816,6 +816,7 @@ parameterised with regard to an arbitrary notion of equivalence.
 
 
 ## Unicode
+
 {::comment}
 This chapter uses the following unicode:
 

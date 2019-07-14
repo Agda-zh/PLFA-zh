@@ -11,6 +11,7 @@ progress  : 100
 ```
 module plfa.Relations where
 ```
+
 {::comment}
 After having defined operations such as addition and multiplication,
 the next step is to define relations, such as _less than or equal_.
@@ -347,6 +348,7 @@ inv-z≤n z≤n = refl
 {:/}
 
 ## 序关系的性质
+
 {::comment}
 Relations pop up all the time, and mathematicians have agreed
 on names for some of the most common properties.
@@ -647,6 +649,7 @@ second inequality holds by `s≤s n≤m`, and so we are given `suc m ≤ suc n`
 and `suc n ≤ suc m` and must show `suc m ≡ suc n`.  The inductive
 hypothesis `≤-antisym m≤n n≤m` establishes that `m ≡ n`, and our goal
 follows by congruence.
+
 {::comment}
 
 在归纳步骤中，第一个不等式因为 `s≤s m≤n` 而成立，第二个等式因为 `s≤s n≤m` 而成立。因此我们已知

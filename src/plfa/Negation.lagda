@@ -362,6 +362,7 @@ is irreflexive, that is, `n < n` holds for no `n`.
 
 利用否定证明 [strict inequality][plfa.Relations#strict-inequality]
 不满足自反性，即 `n < n` 对于任何 `n` 都不成立。
+
 {::comment}
 
 ```

@@ -79,6 +79,7 @@ data _≤_ : ℕ → ℕ → Set where
       -------------
     → suc m ≤ suc n
 ```
+
 {::comment}
 For example, we can provide evidence that `2 ≤ 4`,
 and show there is no possible evidence that `4 ≤ 2`:
@@ -93,6 +94,7 @@ and show there is no possible evidence that `4 ≤ 2`:
 ¬4≤2 : ¬ (4 ≤ 2)
 ¬4≤2 (s≤s (s≤s ()))
 ```
+
 {::comment}
 The occurrence of `()` attests to the fact that there is
 no possible evidence for `2 ≤ 0`, which `z≤n` cannot match
@@ -115,6 +117,7 @@ data Bool : Set where
   true  : Bool
   false : Bool
 ```
+
 {::comment}
 Given booleans, we can define a function of two numbers that
 _computes_ to `true` if the comparison holds and to `false` otherwise:
@@ -131,6 +134,7 @@ zero ≤ᵇ n       =  true
 suc m ≤ᵇ zero   =  false
 suc m ≤ᵇ suc n  =  m ≤ᵇ n
 ```
+
 {::comment}
 The first and last clauses of this definition resemble the two
 constructors of the corresponding inductive datatype, while the
@@ -169,6 +173,7 @@ _ =
     false
   ∎
 ```
+
 {::comment}
 In the first case, it takes two steps to reduce the first argument to zero,
 and one more step to compute true, corresponding to the two uses of `s≤s`
@@ -203,6 +208,7 @@ T : Bool → Set
 T true   =  ⊤
 T false  =  ⊥
 ```
+
 {::comment}
 Recall that `⊤` is the unit type which contains the single element `tt`,
 and the `⊥` is the empty type which contains no values.  (Also note that
@@ -228,6 +234,7 @@ T→≡ : ∀ (b : Bool) → T b → b ≡ true
 T→≡ true tt   =  refl
 T→≡ false ()
 ```
+
 {::comment}
 If `b` is true then `T b` is inhabited by `tt` and `b ≡ true` is inhabited
 by `refl`, while if `b` is false then `T b` in uninhabited.
@@ -246,6 +253,7 @@ In the reverse direction, there is no need for a case analysis on the boolean `b
 ≡→T : ∀ {b : Bool} → b ≡ true → T b
 ≡→T refl  =  tt
 ```
+
 {::comment}
 If `b ≡ true` is inhabited by `refl` we know that `b` is `true` and
 hence `T b` is inhabited by `tt`.
@@ -272,6 +280,7 @@ of `_≤ᵇ_`:
 ≤ᵇ→≤ (suc m) zero    ()
 ≤ᵇ→≤ (suc m) (suc n) t   =  s≤s (≤ᵇ→≤ m n t)
 ```
+
 {::comment}
 In the first clause, we immediately have that `zero ≤ᵇ n` is
 true, so `T (m ≤ᵇ n)` is evidenced by `tt`, and correspondingly `m ≤ n` is
@@ -304,6 +313,7 @@ that `m ≤ n`:
 ≤→≤ᵇ z≤n        =  tt
 ≤→≤ᵇ (s≤s m≤n)  =  ≤→≤ᵇ m≤n
 ```
+
 {::comment}
 If the evidence is `z≤n` then we immediately have that `zero ≤ᵇ n` is
 true, so `T (m ≤ᵇ n)` is evidenced by `tt`. If the evidence is `s≤s`
@@ -365,6 +375,7 @@ data Dec (A : Set) : Set where
   yes :   A → Dec A
   no  : ¬ A → Dec A
 ```
+
 {::comment}
 Like booleans, the type has two constructors.  A value of type `Dec A`
 is either of the form `yes x`, where `x` provides evidence that `A` holds,
@@ -397,6 +408,7 @@ an inequality does not hold:
 ¬s≤s : ∀ {m n : ℕ} → ¬ (m ≤ n) → ¬ (suc m ≤ suc n)
 ¬s≤s ¬m≤n (s≤s m≤n) = ¬m≤n m≤n
 ```
+
 {::comment}
 The first of these asserts that `¬ (suc m ≤ zero)`, and follows by
 absurdity, since any evidence of inequality has the form `zero ≤ n`
@@ -427,6 +439,7 @@ suc m ≤? suc n with m ≤? n
 ...               | yes m≤n  =  yes (s≤s m≤n)
 ...               | no ¬m≤n  =  no (¬s≤s ¬m≤n)
 ```
+
 {::comment}
 As with `_≤ᵇ_`, the definition has three clauses.  In the first
 clause, it is immediate that `zero ≤ n` holds, and it is evidenced by
@@ -474,6 +487,7 @@ _ = refl
 _ : 4 ≤? 2 ≡ no (¬s≤s (¬s≤s ¬s≤z))
 _ = refl
 ```
+
 {::comment}
 You can check that Agda will indeed compute these values.  Typing
 `C-c C-n` and providing `2 ≤? 4` or `4 ≤? 2` as the requested expression
@@ -569,6 +583,7 @@ m ≤?′ n with m ≤ᵇ n | ≤ᵇ→≤ m n | ≤→≤ᵇ {m} {n}
 ...        | true   | p        | _            = yes (p tt)
 ...        | false  | _        | ¬p           = no ¬p
 ```
+
 {::comment}
 If `m ≤ᵇ n` is true then `≤ᵇ→≤` yields a proof that `m ≤ n` holds,
 while if it is false then `≤→≤ᵇ` takes a proof that `m ≤ n` holds into a contradiction.
@@ -630,6 +645,7 @@ Erasure takes a decidable value to a boolean:
 ⌊ yes x ⌋  =  true
 ⌊ no ¬x ⌋  =  false
 ```
+
 {::comment}
 Using erasure, we can easily derive `_≤ᵇ_` from `_≤?_`:
 {:/}
@@ -657,6 +673,7 @@ fromWitness : ∀ {A : Set} {D : Dec A} → A → T ⌊ D ⌋
 fromWitness {A} {yes x} _  =  tt
 fromWitness {A} {no ¬x} x  =  ¬x x
 ```
+
 {::comment}
 Using these, we can easily derive that `T (m ≤ᵇ′ n)` is inhabited
 exactly when `m ≤ n` is inhabited:
@@ -708,6 +725,7 @@ true  ∧ true  = true
 false ∧ _     = false
 _     ∧ false = false
 ```
+
 {::comment}
 In Emacs, the left-hand side of the third equation displays in grey,
 indicating that the order of the equations determines which of the
@@ -733,6 +751,7 @@ yes x ×-dec yes y = yes ⟨ x , y ⟩
 no ¬x ×-dec _     = no λ{ ⟨ x , y ⟩ → ¬x x }
 _     ×-dec no ¬y = no λ{ ⟨ x , y ⟩ → ¬y y }
 ```
+
 {::comment}
 The conjunction of two propositions holds if they both hold,
 and its negation holds if the negation of either holds.
@@ -771,6 +790,7 @@ true  ∨ _      = true
 _     ∨ true   = true
 false ∨ false  = false
 ```
+
 {::comment}
 In Emacs, the left-hand side of the second equation displays in grey,
 indicating that the order of the equations determines which of the
@@ -796,6 +816,7 @@ yes x ⊎-dec _     = yes (inj₁ x)
 _     ⊎-dec yes y = yes (inj₂ y)
 no ¬x ⊎-dec no ¬y = no λ{ (inj₁ x) → ¬x x ; (inj₂ y) → ¬y y }
 ```
+
 {::comment}
 The disjunction of two propositions holds if either holds,
 and its negation holds if the negation of both hold.
@@ -831,6 +852,7 @@ not : Bool → Bool
 not true  = false
 not false = true
 ```
+
 {::comment}
 Correspondingly, given a decidable proposition, we
 can decide its negation:
@@ -843,6 +865,7 @@ can decide its negation:
 ¬? (yes x)  =  no (¬¬-intro x)
 ¬? (no ¬x)  =  yes ¬x
 ```
+
 {::comment}
 We simply swap yes and no.  In the first equation,
 the right-hand side asserts that the negation of `¬ A` holds,
@@ -866,6 +889,7 @@ _     ⊃ true   =  true
 false ⊃ _      =  true
 true  ⊃ false  =  false
 ```
+
 {::comment}
 One boolean implies another if
 whenever the first is true then the second is true.
@@ -896,6 +920,7 @@ _     →-dec yes y  =  yes (λ _ → y)
 no ¬x →-dec _      =  yes (λ x → ⊥-elim (¬x x))
 yes x →-dec no ¬y  =  no (λ f → ¬y (f x))
 ```
+
 {::comment}
 The implication holds if either the second holds or
 the negation of the first holds, and its negation

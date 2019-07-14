@@ -102,6 +102,7 @@ is a term of type `A` then we may conclude that `B M` holds:
   → B M
 ∀-elim L M = L M
 ```
+
 {::comment}
 As with `→-elim`, the rule corresponds to function application.
 {:/}
@@ -160,6 +161,7 @@ postulate
   ∀-distrib-× : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x × C x) ≃ (∀ (x : A) → B x) × (∀ (x : A) → C x)
 ```
+
 {::comment}
 Compare this with the result (`→-distrib-×`) in
 Chapter [Connectives][plfa.Connectives].
@@ -184,6 +186,7 @@ postulate
   ⊎∀-implies-∀⊎ : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x)  →  ∀ (x : A) → B x ⊎ C x
 ```
+
 {::comment}
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
@@ -209,6 +212,7 @@ data Tri : Set where
   bb : Tri
   cc : Tri
 ```
+
 {::comment}
 Let `B` be a type indexed by `Tri`, that is `B : Tri → Set`.
 Show that `∀ (x : Tri) → B x` is isomorphic to `B aa × B bb × B cc`.
@@ -250,6 +254,7 @@ inductive type:
 data Σ (A : Set) (B : A → Set) : Set where
   ⟨_,_⟩ : (x : A) → B x → Σ A B
 ```
+
 {::comment}
 We define a convenient syntax for existentials as follows:
 {:/}
@@ -261,6 +266,7 @@ We define a convenient syntax for existentials as follows:
 infix 2 Σ-syntax
 syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
 ```
+
 {::comment}
 This is our first use of a syntax declaration, which specifies that
 the term on the left may be written with the syntax on the right.
@@ -376,6 +382,7 @@ notation for the case where the domain of the bound variable is left implicit:
 ∃-syntax = ∃
 syntax ∃-syntax (λ x → B) = ∃[ x ] B
 ```
+
 {::comment}
 The special syntax is available only when the identifier `∃-syntax` is imported.
 We will tend to use this syntax, since it is shorter and more familiar.
@@ -401,6 +408,7 @@ may conclude that `C` holds:
   → C
 ∃-elim f ⟨ x , y ⟩ = f x y
 ```
+
 {::comment}
 In other words, if we know for every `x` of type `A` that `B x`
 implies `C`, and we know for some `x` of type `A` that `B x` holds,
@@ -432,6 +440,7 @@ Indeed, the converse also holds, and the two together form an isomorphism:
     ; to∘from =  λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
     }
 ```
+
 {::comment}
 The result can be viewed as a generalisation of currying.  Indeed, the code to
 establish the isomorphism is identical to what we wrote when discussing
@@ -476,6 +485,7 @@ postulate
   ∃×-implies-×∃ : ∀ {A : Set} {B C : A → Set} →
     ∃[ x ] (B x × C x) → (∃[ x ] B x) × (∃[ x ] C x)
 ```
+
 {::comment}
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
@@ -581,6 +591,7 @@ even-∃ (even-suc o) with odd-∃ o
 odd-∃  (odd-suc e)  with even-∃ e
 ...                    | ⟨ m , refl ⟩  =  ⟨ m , refl ⟩
 ```
+
 {::comment}
 We define two mutually recursive functions. Given
 evidence that `n` is even or odd, we return a
@@ -756,6 +767,7 @@ of a disjunction is isomorphic to a conjunction of negations:
     ; to∘from =  λ{ ∀¬xy → refl }
     }
 ```
+
 {::comment}
 In the `to` direction, we are given a value `¬∃xy` of type
 `¬ ∃[ x ] B x`, and need to show that given a value
@@ -807,6 +819,7 @@ postulate
       --------------
     → ¬ (∀ x → B x)
 ```
+
 {::comment}
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
@@ -838,6 +851,7 @@ data Bin : Set where
   x0_ : Bin → Bin
   x1_ : Bin → Bin
 ```
+
 {::comment}
 And ask you to define the following functions and predicates:
 {:/}
