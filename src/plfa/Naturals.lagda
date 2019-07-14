@@ -8,9 +8,9 @@ translators : ["Rongxiao Fu"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Naturals where
-\end{code}
+```
 
 {::comment}
 The night sky holds more stars than I can count, though fewer than five
@@ -79,11 +79,11 @@ And here is the definition in Agda:
 
 以及用 Agda 写出的自然数定义：
 
-\begin{code}
+```
 data ℕ : Set where
   zero : ℕ
   suc  : ℕ → ℕ
-\end{code}
+```
 
 {::comment}
 Here `ℕ` is the name of the *datatype* we are defining,
@@ -147,14 +147,14 @@ Write out `7` in longhand.
 写出 `7` 的完整定义。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Unpacking the inference rules
@@ -469,9 +469,9 @@ _pragma_, which is enclosed between `{-#` and `#-}`.
 Including the line
 {:/}
 
-\begin{code}
+```
 {-# BUILTIN NATURAL ℕ #-}
-\end{code}
+```
 
 {::comment}
 tells Agda that `ℕ` corresponds to the natural numbers, and hence one
@@ -518,11 +518,11 @@ about it from the Agda standard library:
 我们很快就能够写一些包含自然数的等式了。在此之前，我们需要从 Agda 标
 准库中导入相等性的定义和用于等式推理的记号：
 
-\begin{code}
+```
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _∎)
-\end{code}
+```
 
 {::comment}
 The first line brings the standard library module that defines
@@ -601,11 +601,11 @@ Here is the definition of addition in Agda:
 
 这是用 Agda 编写的加法的定义：
 
-\begin{code}
+```
 _+_ : ℕ → ℕ → ℕ
 zero + n = n
 suc m + n = suc (m + n)
-\end{code}
+```
 
 {::comment}
 Let's unpack this definition.  Addition is an infix operator.  It is
@@ -688,7 +688,7 @@ For example, let's add two and three:
 例如，我们来计算二加三：
 
 {::comment}
-\begin{code}
+```
 _ : 2 + 3 ≡ 5
 _ =
   begin
@@ -702,10 +702,10 @@ _ =
   ≡⟨⟩
     5
   ∎
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 _ : 2 + 3 ≡ 5
 _ =
   begin
@@ -721,7 +721,7 @@ _ =
   ≡⟨⟩    -- 简写为
     5
   ∎
-\end{code}
+```
 
 {::comment}
 We can write the same derivation more compactly by only
@@ -772,10 +772,10 @@ with the following:
 
 其实，上面的两种证明都比实际所需的要长，下面的证明就足以让 Agda 满意了。
 
-\begin{code}
+```
 _ : 2 + 3 ≡ 5
 _ = refl
-\end{code}
+```
 
 {::comment}
 Agda knows how to compute the value of `2 + 3`, and so can immediately
@@ -837,14 +837,14 @@ Compute `3 + 4`, writing out your reasoning as a chain of equations.
 计算 `3 + 4`，将你的推导过程写成等式链。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Multiplication
@@ -859,11 +859,11 @@ as repeated addition:
 
 一旦我们定义了加法，我们就可以将乘法定义为重复的加法。
 
-\begin{code}
+```
 _*_ : ℕ → ℕ → ℕ
 zero    * n  =  zero
 (suc m) * n  =  n + (m * n)
-\end{code}
+```
 
 {::comment}
 Computing `m * n` returns the sum of `m` copies of `n`.
@@ -914,7 +914,7 @@ For example, let's multiply two and three:
 
 例如，我们来计算二乘三：
 
-\begin{code}
+```
 _ =
   begin
     2 * 3
@@ -927,7 +927,7 @@ _ =
   ≡⟨⟩    -- 化简
     6
   ∎
-\end{code}
+```
 
 {::comment}
 The first line matches the inductive case by taking `m = 1` and `n = 3`,
@@ -955,14 +955,14 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations.
 计算 `3 * 4`，将你的推导过程写成等式链。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Exercise `_^_` (recommended)
@@ -986,14 +986,14 @@ Check that `3 ^ 4` is `81`.
 检查 `3 ^ 4` 是否等于 `81`。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Monus
@@ -1018,12 +1018,12 @@ matching against both arguments:
 
 饱和减法是我们第一次在定义中对两个参数都使用模式匹配：
 
-\begin{code}
+```
 _∸_ : ℕ → ℕ → ℕ
 m     ∸ zero   =  m
 zero  ∸ suc n  =  zero
 suc m ∸ suc n  =  m ∸ n
-\end{code}
+```
 
 {::comment}
 We can do a simple analysis to show that all the cases are covered.
@@ -1059,7 +1059,7 @@ For example, let's subtract two from three:
 
 例如，我们来计算三减二：
 
-\begin{code}
+```
 _ =
   begin
      3 ∸ 2
@@ -1070,7 +1070,7 @@ _ =
   ≡⟨⟩
      1
   ∎
-\end{code}
+```
 
 {::comment}
 We did not use the second equation at all, but it will be required
@@ -1079,7 +1079,7 @@ if we try to subtract a larger number from a smaller one:
 
 我们没有使用第二个等式，但是如果被减数比减数小，我们还是会需要它。
 
-\begin{code}
+```
 _ =
   begin
      2 ∸ 3
@@ -1090,7 +1090,7 @@ _ =
   ≡⟨⟩
      0
   ∎
-\end{code}
+```
 
 {::comment}
 Exercise `∸-examples` (recommended)
@@ -1105,14 +1105,14 @@ Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equati
 计算 `5 ∸ 3` 和 `3 ∸ 5`，将你的推导过程写成等式链。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Precedence
@@ -1143,10 +1143,10 @@ needs to be declared:
 
 在 Agda 中中缀运算符的优先级和结合性需要被声明：
 
-\begin{code}
+```
 infixl 6  _+_  _∸_
 infixl 7  _*_
-\end{code}
+```
 
 {::comment}
 This states operators `_+_` and `_∸_` have precedence level 6,
@@ -1688,11 +1688,11 @@ More pragmas
 Including the lines
 {:/}
 
-\begin{code}
+```
 {-# BUILTIN NATPLUS _+_ #-}
 {-# BUILTIN NATTIMES _*_ #-}
 {-# BUILTIN NATMINUS _∸_ #-}
-\end{code}
+```
 
 {::comment}
 tells Agda that these three operators correspond to the usual ones,
@@ -1728,12 +1728,12 @@ rather than a unary system.  We represent a number as a bitstring:
 
 使用二进制系统能提供比一进制系统更高效的自然数表示。我们可以用一个比特串来表示一个数：
 
-\begin{code}
+```
 data Bin : Set where
   nil : Bin
   x0_ : Bin → Bin
   x1_ : Bin → Bin
-\end{code}
+```
 
 {::comment}
 For instance, the bitstring
@@ -1805,14 +1805,14 @@ Confirm that these both give the correct answer for zero through four.
 确定这两个函数都能对零到四给出正确结果。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Standard library
@@ -1830,9 +1830,9 @@ library module `Data.Nat`:
 在每一章的结尾，我们将展示如何在标准库中找到相关的定义。
 自然数，它们的构造器，以及用于自然数的基本运算符，都在标准库模块 `Data.Nat` 中定义：
 
-\begin{code}
+```
 -- import Data.Nat using (ℕ; zero; suc; _+_; _*_; _^_; _∸_)
-\end{code}
+```
 
 {::comment}
 Normally, we will show an import as running code, so Agda will

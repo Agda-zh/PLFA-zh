@@ -8,9 +8,9 @@ translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Relations where
-\end{code}
+```
 {::comment}
 After having defined operations such as addition and multiplication,
 the next step is to define relations, such as _less than or equal_.
@@ -25,12 +25,12 @@ the next step is to define relations, such as _less than or equal_.
 
 ## 导入
 
-\begin{code}
+```
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong)
 open import Data.Nat using (ℕ; zero; suc; _+_)
 open import Data.Nat.Properties using (+-comm)
-\end{code}
+```
 
 
 {::comment}
@@ -74,7 +74,7 @@ And here is the definition in Agda:
 
 以及其 Agda 定义：
 
-\begin{code}
+```
 data _≤_ : ℕ → ℕ → Set where
 
   z≤n : ∀ {n : ℕ}
@@ -85,7 +85,7 @@ data _≤_ : ℕ → ℕ → Set where
     → m ≤ n
       -------------
     → suc m ≤ suc n
-\end{code}
+```
 
 {::comment}
 Here `z≤n` and `s≤s` (with no spaces) are constructor names, while
@@ -154,10 +154,10 @@ And here is the corresponding Agda proof:
 
 下面是对应的 Agda 证明：
 
-\begin{code}
+```
 _ : 2 ≤ 4
 _ = s≤s (s≤s z≤n)
-\end{code}
+```
 
 {::comment}
 ## Implicit arguments
@@ -203,10 +203,10 @@ explicit:
 如果有希望的话，我们也可以在大括号里显式声明隐式参数。例如，下面是 `2 ≤ 4` 的 Agda
 证明，包括了显式声明了的隐式参数：
 
-\begin{code}
+```
 _ : 2 ≤ 4
 _ = s≤s {1} {3} (s≤s {0} {2} (z≤n {2}))
-\end{code}
+```
 
 {::comment}
 One may also identify implicit arguments by name:
@@ -214,10 +214,10 @@ One may also identify implicit arguments by name:
 
 也可以额外加上参数的名字：
 
-\begin{code}
+```
 _ : 2 ≤ 4
 _ = s≤s {m = 1} {n = 3} (s≤s {m = 0} {n = 2} (z≤n {n = 2}))
-\end{code}
+```
 
 {::comment}
 In the latter format, you may only supply some implicit arguments:
@@ -225,10 +225,10 @@ In the latter format, you may only supply some implicit arguments:
 
 在后者的形式中，也可以只声明一部分隐式参数：
 
-\begin{code}
+```
 _ : 2 ≤ 4
 _ = s≤s {n = 3} (s≤s {n = 2} z≤n)
-\end{code}
+```
 
 {::comment}
 It is not permitted to swap implicit arguments, even when named.
@@ -249,9 +249,9 @@ We declare the precedence for comparison as follows:
 
 我们如下定义比较的优先级：
 
-\begin{code}
+```
 infix 4 _≤_
-\end{code}
+```
 
 {::comment}
 We set the precedence of `_≤_` at level 4, so it binds less tightly
@@ -310,13 +310,13 @@ and `n`.  This lets us invert our previous rule.
 只有一种方式能够证明对于任意 `m` 和 `n` 有 `suc m ≤ suc n`。
 这让我们能够反演（invert）之前的规则。
 
-\begin{code}
+```
 inv-s≤s : ∀ {m n : ℕ}
   → suc m ≤ suc n
     -------------
   → m ≤ n
 inv-s≤s (s≤s m≤n) = m≤n
-\end{code}
+```
 
 {::comment}
 Not every rule is invertible; indeed, the rule for `z≤n` has
@@ -334,13 +334,13 @@ only one way a number can be less than or equal to zero.
 
 反演的另一个例子是证明只存在一种情况使得一个数字能够小于或等于零。
 
-\begin{code}
+```
 inv-z≤n : ∀ {m : ℕ}
   → m ≤ zero
     --------
   → m ≡ zero
 inv-z≤n z≤n = refl
-\end{code}
+```
 
 {::comment}
 ## Properties of ordering relations
@@ -425,14 +425,14 @@ Give an example of a preorder that is not a partial order.
 给出一个不是偏序的预序的例子。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Give an example of a partial order that is not a total order.
@@ -441,14 +441,14 @@ Give an example of a partial order that is not a total order.
 给出一个不是全序的偏序的例子。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -467,13 +467,13 @@ as that will make it easier to invoke reflexivity:
 我们第一个来证明的性质是自反性：对于任意自然数 `n`，关系 `n ≤ n` 成立。我们使用标准库
 的惯例来隐式申明参数，在使用自反性的证明时这样可以更加方便。
 
-\begin{code}
+```
 ≤-refl : ∀ {n : ℕ}
     -----
   → n ≤ n
 ≤-refl {zero} = z≤n
 ≤-refl {suc n} = s≤s ≤-refl
-\end{code}
+```
 
 {::comment}
 The proof is a straightforward induction on the implicit argument `n`.
@@ -510,7 +510,7 @@ hold, then `m ≤ p` holds.  Again, `m`, `n`, and `p` are implicit:
 我们第二个证明的性质是传递性：对于任意自然数 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ p`
 成立，那么 `m ≤ p` 成立。同样，`m`、`n` 和 `p` 是隐式参数：
 
-\begin{code}
+```
 ≤-trans : ∀ {m n p : ℕ}
   → m ≤ n
   → n ≤ p
@@ -518,7 +518,7 @@ hold, then `m ≤ p` holds.  Again, `m`, `n`, and `p` are implicit:
   → m ≤ p
 ≤-trans z≤n       _          =  z≤n
 ≤-trans (s≤s m≤n) (s≤s n≤p)  =  s≤s (≤-trans m≤n n≤p)
-\end{code}
+```
 
 {::comment}
 Here the proof is by induction on the _evidence_ that `m ≤ n`.  In the
@@ -561,7 +561,7 @@ Alternatively, we could make the implicit parameters explicit:
 
 我们也可以将隐式参数显式地声明。
 
-\begin{code}
+```
 ≤-trans′ : ∀ (m n p : ℕ)
   → m ≤ n
   → n ≤ p
@@ -569,7 +569,7 @@ Alternatively, we could make the implicit parameters explicit:
   → m ≤ p
 ≤-trans′ zero    _       _       z≤n       _          =  z≤n
 ≤-trans′ (suc m) (suc n) (suc p) (s≤s m≤n) (s≤s n≤p)  =  s≤s (≤-trans′ m n p m≤n n≤p)
-\end{code}
+```
 
 {::comment}
 One might argue that this is clearer or one might argue that the extra
@@ -614,7 +614,7 @@ m` hold, then `m ≡ n` holds:
 我们证明的第三个性质是反对称性：对于所有的自然数 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ m`
 同时成立，那么 `m ≡ n` 成立：
 
-\begin{code}
+```
 ≤-antisym : ∀ {m n : ℕ}
   → m ≤ n
   → n ≤ m
@@ -622,7 +622,7 @@ m` hold, then `m ≡ n` holds:
   → m ≡ n
 ≤-antisym z≤n       z≤n        =  refl
 ≤-antisym (s≤s m≤n) (s≤s n≤m)  =  cong suc (≤-antisym m≤n n≤m)
-\end{code}
+```
 
 {::comment}
 Again, the proof is by induction over the evidence that `m ≤ n`
@@ -668,14 +668,14 @@ argument is `s≤s`.  Why is it ok to omit them?
 上面的证明中省略了一个参数是 `z≤n`，另一个参数是 `s≤s` 的情况。为什么可以省略这种情况？
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -699,7 +699,7 @@ We specify what it means for inequality to be total:
 
 我们首先来说明怎么样不等式才是完全的：
 
-\begin{code}
+```
 data Total (m n : ℕ) : Set where
 
   forward :
@@ -711,7 +711,7 @@ data Total (m n : ℕ) : Set where
       n ≤ m
       ---------
     → Total m n
-\end{code}
+```
 
 {::comment}
 Evidence that `Total m n` holds is either of the form
@@ -739,7 +739,7 @@ indexed datatype:
 
 这是我们第一次使用带*参数*的数据类型，这里 `m` 和 `n` 是参数。这等同于下面的索引数据类型：
 
-\begin{code}
+```
 data Total′ : ℕ → ℕ → Set where
 
   forward′ : ∀ {m n : ℕ}
@@ -751,7 +751,7 @@ data Total′ : ℕ → ℕ → Set where
     → n ≤ m
       ----------
     → Total′ m n
-\end{code}
+```
 
 {::comment}
 Each parameter of the type translates as an implicit parameter of each
@@ -774,14 +774,14 @@ With that preliminary out of the way, we specify and prove totality:
 
 在上述准备工作完成后，我们定义并证明完全性。
 
-\begin{code}
+```
 ≤-total : ∀ (m n : ℕ) → Total m n
 ≤-total zero    n                         =  forward z≤n
 ≤-total (suc m) zero                      =  flipped z≤n
 ≤-total (suc m) (suc n) with ≤-total m n
 ...                        | forward m≤n  =  forward (s≤s m≤n)
 ...                        | flipped n≤m  =  flipped (s≤s n≤m)
-\end{code}
+```
 
 {::comment}
 In this case the proof is by induction over both the first
@@ -843,7 +843,7 @@ example, the definition above is equivalent to the following:
 
 使用 `with` 语句等同于定义一个辅助函数。比如说，上面的定义和下面的等价：
 
-\begin{code}
+```
 ≤-total′ : ∀ (m n : ℕ) → Total m n
 ≤-total′ zero    n        =  forward z≤n
 ≤-total′ (suc m) zero     =  flipped z≤n
@@ -852,7 +852,7 @@ example, the definition above is equivalent to the following:
   helper : Total m n → Total (suc m) (suc n)
   helper (forward m≤n)  =  forward (s≤s m≤n)
   helper (flipped n≤m)  =  flipped (s≤s n≤m)
-\end{code}
+```
 
 {::comment}
 This is also our first use of a `where` clause in Agda.  The keyword `where` is
@@ -876,14 +876,14 @@ variant that returns the flipped case:
 如果两个参数相同，那么两个情况同时成立，我们可以返回任一证明。上面的代码中我们返回 forward 条件，
 但是我们也可以返回 flipped 条件，如下：
 
-\begin{code}
+```
 ≤-total″ : ∀ (m n : ℕ) → Total m n
 ≤-total″ m       zero                      =  flipped z≤n
 ≤-total″ zero    (suc n)                   =  forward z≤n
 ≤-total″ (suc m) (suc n) with ≤-total″ m n
 ...                        | forward m≤n   =  forward (s≤s m≤n)
 ...                        | flipped n≤m   =  flipped (s≤s n≤m)
-\end{code}
+```
 
 {::comment}
 It differs from the original code in that it pattern
@@ -919,14 +919,14 @@ addition is monotonic on the right:
 这个证明可以用我们学会的方法，很直接的来完成。我们最好把它分成三个部分，首先我们证明加法对于
 小于等于在右手边是单调的：
 
-\begin{code}
+```
 +-monoʳ-≤ : ∀ (n p q : ℕ)
   → p ≤ q
     -------------
   → n + p ≤ n + q
 +-monoʳ-≤ zero    p q p≤q  =  p≤q
 +-monoʳ-≤ (suc n) p q p≤q  =  s≤s (+-monoʳ-≤ n p q p≤q)
-\end{code}
+```
 
 {::comment}
 The proof is by induction on the first argument.
@@ -958,13 +958,13 @@ result and the commutativity of addition:
 
 接下来，我们证明加法对于小于等于在左手边是单调的。我们可以用之前的结论和加法的交换律来证明：
 
-\begin{code}
+```
 +-monoˡ-≤ : ∀ (m n p : ℕ)
   → m ≤ n
     -------------
   → m + p ≤ n + p
 +-monoˡ-≤ m n p m≤n  rewrite +-comm m p | +-comm n p  = +-monoʳ-≤ p m n m≤n
-\end{code}
+```
 
 {::comment}
 Rewriting by `+-comm m p` and `+-comm n p` converts `m + p ≤ n + p` into
@@ -980,14 +980,14 @@ Third, we combine the two previous results:
 
 最后，我们把前两步的结论结合起来：
 
-\begin{code}
+```
 +-mono-≤ : ∀ (m n p q : ℕ)
   → m ≤ n
   → p ≤ q
     -------------
   → m + p ≤ n + q
 +-mono-≤ m n p q m≤n p≤q  =  ≤-trans (+-monoˡ-≤ m n p m≤n) (+-monoʳ-≤ n p q p≤q)
-\end{code}
+```
 
 {::comment}
 Invoking `+-monoˡ-≤ m n p m≤n` proves `m + p ≤ n + p` and invoking
@@ -1012,14 +1012,14 @@ Show that multiplication is monotonic with regard to inequality.
 证明乘法对于小于等于是单调的。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1034,7 +1034,7 @@ We can define strict inequality similarly to inequality:
 
 我们可以用类似于定义不等关系的方法来定义严格不等关系。
 
-\begin{code}
+```
 infix 4 _<_
 
 data _<_ : ℕ → ℕ → Set where
@@ -1047,7 +1047,7 @@ data _<_ : ℕ → ℕ → Set where
     → m < n
       -------------
     → suc m < suc n
-\end{code}
+```
 
 {::comment}
 The key difference is that zero is less than the successor of an
@@ -1106,14 +1106,14 @@ Show that strict inequality is transitive.
 证明严格不等是传递的。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1148,14 +1148,14 @@ similar to that used for totality.
 （我们会在介绍[逻辑非][plfa.Negation]以后证明三者是互斥的）
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1172,14 +1172,14 @@ As with inequality, some additional definitions may be required.
 证明加法对于严格不等关系是单调的。正如不等关系中那样，你可以需要额外的定义。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1195,14 +1195,14 @@ Show that `suc m ≤ n` implies `m < n`, and conversely.
 证明 `suc m ≤ n` 蕴含了 `m < n`，及其逆命题。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1221,14 +1221,14 @@ the fact that inequality is transitive.
 以及不等关系的传递性。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1246,7 +1246,7 @@ _unary relations_, sometimes called _predicates_:
 作为一个额外的例子，我们来定义奇数和偶数。不等关系和严格不等关系是**二元关系**，而奇偶性
 是**一元关系**，有时也被叫做**谓词（Predicate）**：
 
-\begin{code}
+```
 data even : ℕ → Set
 data odd  : ℕ → Set
 
@@ -1267,7 +1267,7 @@ data odd where
     → even n
       -----------
     → odd (suc n)
-\end{code}
+```
 
 {::comment}
 A number is even if it is zero or the successor of an odd number,
@@ -1327,7 +1327,7 @@ We show that the sum of two even numbers is even:
 
 我们证明两个偶数之和是偶数：
 
-\begin{code}
+```
 e+e≡e : ∀ {m n : ℕ}
   → even m
   → even n
@@ -1344,7 +1344,7 @@ e+e≡e zero     en  =  en
 e+e≡e (suc om) en  =  suc (o+e≡o om en)
 
 o+e≡o (suc em) en  =  suc (e+e≡e em en)
-\end{code}
+```
 
 {::comment}
 Corresponding to the mutually recursive types, we use two mutually recursive
@@ -1403,14 +1403,14 @@ Show that the sum of two odd numbers is even.
 证明两个奇数之和为偶数。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1501,14 +1501,14 @@ properties of `One`.)
 （提示：对于每一条习题，先从 `One` 的性质开始）
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1523,11 +1523,11 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 标准库中有类似于本章介绍的定义：
 
-\begin{code}
+```
 import Data.Nat using (_≤_; z≤n; s≤s)
 import Data.Nat.Properties using (≤-refl; ≤-trans; ≤-antisym; ≤-total;
                                   +-monoʳ-≤; +-monoˡ-≤; +-mono-≤)
-\end{code}
+```
 
 {::comment}
 In the standard library, `≤-total` is formalised in terms of

@@ -8,9 +8,9 @@ translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Isomorphism where
-\end{code}
+```
 
 {::comment}
 This section introduces isomorphism as a way of asserting that two
@@ -32,13 +32,13 @@ distributivity.
 
 ## 导入
 
-\begin{code}
+```
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong; cong-app)
 open Eq.≡-Reasoning
 open import Data.Nat using (ℕ; zero; suc; _+_)
 open import Data.Nat.Properties using (+-comm)
-\end{code}
+```
 
 
 {::comment}
@@ -129,10 +129,10 @@ In what follows, we will make use of function composition:
 
 接下来，我们将使用函数组合：
 
-\begin{code}
+```
 _∘_ : ∀ {A B C : Set} → (B → C) → (A → B) → (A → C)
 (g ∘ f) x  = g (f x)
-\end{code}
+```
 
 {::comment}
 Thus, `g ∘ f` is the function that first applies `f` and
@@ -143,10 +143,10 @@ expressions, is as follows:
 `g ∘ f` 是一个函数，先使用函数 `f`，再使用函数 `g`。
 一个等价的定义，使用 lambda 表达式，如下：
 
-\begin{code}
+```
 _∘′_ : ∀ {A B C : Set} → (B → C) → (A → B) → (A → C)
 g ∘′ f  =  λ x → g (f x)
-\end{code}
+```
 
 
 {::comment}
@@ -172,13 +172,13 @@ Agda does not presume extensionality, but we can postulate that it holds:
 
 Agda 并不预设外延性，但我们可以假设其成立：
 
-\begin{code}
+```
 postulate
   extensionality : ∀ {A B : Set} {f g : A → B}
     → (∀ (x : A) → f x ≡ g x)
       -----------------------
     → f ≡ g
-\end{code}
+```
 
 {::comment}
 Postulating extensionality does not lead to difficulties, as it is
@@ -197,11 +197,11 @@ and one where it is defined the other way around.
 举个例子，我们考虑两个库都定义了加法，一个按照我们在 [Naturals][plfa.Naturals]
 章节中那样定义，另一个如下，反过来定义：
 
-\begin{code}
+```
 _+′_ : ℕ → ℕ → ℕ
 m +′ zero  = m
 m +′ suc n = suc (m +′ n)
-\end{code}
+```
 
 {::comment}
 Applying commutativity, it is easy to show that both operators always
@@ -211,14 +211,14 @@ return the same result given the same arguments:
 通过使用交换律，我们可以简单地证明两个运算符在给定相同参数的情况下，
 会返回相同的值：
 
-\begin{code}
+```
 same-app : ∀ (m n : ℕ) → m +′ n ≡ m + n
 same-app m n rewrite +-comm m n = helper m n
   where
   helper : ∀ (m n : ℕ) → m +′ n ≡ n + m
   helper m zero    = refl
   helper m (suc n) = cong suc (helper m n)
-\end{code}
+```
 
 {::comment}
 However, it might be convenient to assert that the two operators are
@@ -228,10 +228,10 @@ extensionality:
 
 然而，有时断言两个运算符是无法区分的会更加方便。我们可以使用两次外延性：
 
-\begin{code}
+```
 same : _+′_ ≡ _+_
 same = extensionality (λ m → extensionality (λ n → same-app m n))
-\end{code}
+```
 
 {::comment}
 We occasionally need to postulate extensionality in what follows.
@@ -254,7 +254,7 @@ Here is a formal definition of isomorphism:
 如果两个集合有一一对应的关系，那么它们是同构的。
 下面是同构的正式定义：
 
-\begin{code}
+```
 infix 0 _≃_
 record _≃_ (A B : Set) : Set where
   field
@@ -263,7 +263,7 @@ record _≃_ (A B : Set) : Set where
     from∘to : ∀ (x : A) → from (to x) ≡ x
     to∘from : ∀ (y : B) → to (from y) ≡ y
 open _≃_
-\end{code}
+```
 
 {::comment}
 Let's unpack the definition. An isomorphism between sets `A` and `B` consists
@@ -298,7 +298,7 @@ to a corresponding inductive data declaration:
 
 这是我们第一次使用记录（Record）。记录声明等同于下面的归纳数据声明：
 
-\begin{code}
+```
 data _≃′_ (A B : Set): Set where
   mk-≃′ : ∀ (to : A → B) →
           ∀ (from : B → A) →
@@ -317,7 +317,7 @@ from∘to′ (mk-≃′ f g g∘f f∘g) = g∘f
 
 to∘from′ : ∀ {A B : Set} → (A≃B : A ≃′ B) → (∀ (y : B) → to′ A≃B (from′ A≃B y) ≡ y)
 to∘from′ (mk-≃′ f g g∘f f∘g) = f∘g
-\end{code}
+```
 
 {::comment}
 We construct values of the record type with the syntax
@@ -363,7 +363,7 @@ and `from` to be the identity function:
 同构是一个等价关系。这意味着它自反、对称、传递。要证明同构是自反的，我们用恒等函数
 作为 `to` 和 `from`：
 
-\begin{code}
+```
 ≃-refl : ∀ {A : Set}
     -----
   → A ≃ A
@@ -374,7 +374,7 @@ and `from` to be the identity function:
     ; from∘to = λ{x → refl}
     ; to∘from = λ{y → refl}
     }
-\end{code}
+```
 
 {::comment}
 In the above, `to` and `from` are both bound to identity functions,
@@ -395,7 +395,7 @@ and `from`, and `from∘to` and `to∘from`:
 
 要证明同构是对称的，我们把 `to` 和 `from`、`from∘to` 和 `to∘from` 互换：
 
-\begin{code}
+```
 ≃-sym : ∀ {A B : Set}
   → A ≃ B
     -----
@@ -407,7 +407,7 @@ and `from`, and `from∘to` and `to∘from`:
     ; from∘to = to∘from A≃B
     ; to∘from = from∘to A≃B
     }
-\end{code}
+```
 
 {::comment}
 To show isomorphism is transitive, we compose the `to` and `from`
@@ -416,7 +416,7 @@ functions, and use equational reasoning to combine the inverses:
 
 要证明同构是传递的，我们将 `to` 和 `from` 函数进行组合，并使用相等性论证来结合左逆和右逆：
 
-\begin{code}
+```
 ≃-trans : ∀ {A B C : Set}
   → A ≃ B
   → B ≃ C
@@ -447,7 +447,7 @@ functions, and use equational reasoning to combine the inverses:
           y
         ∎}
      }
-\end{code}
+```
 
 
 {::comment}
@@ -466,7 +466,7 @@ trivial isomorphisms arise far less often than trivial equalities:
 我们可以直接的构造一种同构的相等性论证方法。我们对之前的相等性论证定义进行修改。
 我们省略 `_≡⟨⟩_` 的定义，因为简单的同构比简单的相等性出现的少很多：
 
-\begin{code}
+```
 module ≃-Reasoning where
 
   infix  1 ≃-begin_
@@ -492,7 +492,7 @@ module ≃-Reasoning where
   A ≃-∎ = ≃-refl
 
 open ≃-Reasoning
-\end{code}
+```
 
 
 {::comment}
@@ -518,7 +518,7 @@ Here is the formal definition of embedding:
 
 嵌入的正式定义如下：
 
-\begin{code}
+```
 infix 0 _≲_
 record _≲_ (A B : Set) : Set where
   field
@@ -526,7 +526,7 @@ record _≲_ (A B : Set) : Set where
     from    : B → A
     from∘to : ∀ (x : A) → from (to x) ≡ x
 open _≲_
-\end{code}
+```
 
 {::comment}
 It is the same as an isomorphism, save that it lacks the `to∘from` field.
@@ -544,7 +544,7 @@ are cut down versions of the similar proofs for isomorphism:
 
 嵌入是自反和传递的，但不是对称的。证明与同构类似，不过去除了不需要的部分：
 
-\begin{code}
+```
 ≲-refl : ∀ {A : Set} → A ≲ A
 ≲-refl =
   record
@@ -567,7 +567,7 @@ are cut down versions of the similar proofs for isomorphism:
           x
         ∎}
      }
-\end{code}
+```
 
 {::comment}
 It is also easy to see that if two types embed in each other, and the
@@ -578,7 +578,7 @@ weak form of anti-symmetry:
 显而易见的是，如果两个类型相互嵌入，且其嵌入函数相互对应，那么它们是同构的。
 这个一种反对称性的弱化形式：
 
-\begin{code}
+```
 ≲-antisym : ∀ {A B : Set}
   → (A≲B : A ≲ B)
   → (B≲A : B ≲ A)
@@ -602,7 +602,7 @@ weak form of anti-symmetry:
           y
         ∎}
     }
-\end{code}
+```
 
 {::comment}
 The first three components are copied from the embedding, while the
@@ -628,7 +628,7 @@ analogous to that used for isomorphism:
 
 和同构类似，我们亦支持嵌入的相等性论证：
 
-\begin{code}
+```
 module ≲-Reasoning where
 
   infix  1 ≲-begin_
@@ -654,7 +654,7 @@ module ≲-Reasoning where
   A ≲-∎ = ≲-refl
 
 open ≲-Reasoning
-\end{code}
+```
 
 {::comment}
 #### Exercise `≃-implies-≲`
@@ -668,23 +668,23 @@ Show that every isomorphism implies an embedding.
 
 证明每个同构蕴含了一个嵌入。
 
-\begin{code}
+```
 postulate
   ≃-implies-≲ : ∀ {A B : Set}
     → A ≃ B
       -----
     → A ≲ B
-\end{code}
+```
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `_⇔_` {#iff}
@@ -698,12 +698,12 @@ Define equivalence of propositions (also known as "if and only if") as follows:
 
 按下列形式定义命题的等价性（又名“当且仅当“）：
 
-\begin{code}
+```
 record _⇔_ (A B : Set) : Set where
   field
     to   : A → B
     from : B → A
-\end{code}
+```
 
 {::comment}
 Show that equivalence is reflexive, symmetric, and transitive.
@@ -712,14 +712,14 @@ Show that equivalence is reflexive, symmetric, and transitive.
 证明等价性是自反、对称和传递的。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `Bin-embedding` (stretch) {#Bin-embedding}
@@ -738,12 +738,12 @@ define a datatype of bitstrings representing natural numbers:
 [Bin-laws][plfa.Induction#Bin-laws] 中，
 我们定义了一个数据类型来表示二进制比特串来表示自然数：
 
-\begin{code}
+```
 data Bin : Set where
   nil : Bin
   x0_ : Bin → Bin
   x1_ : Bin → Bin
-\end{code}
+```
 
 {::comment}
 And ask you to define the following functions
@@ -769,14 +769,14 @@ Using the above, establish that there is an embedding of `ℕ` into `Bin`.
 使用上述条件，证明存在一个从 `ℕ` 到 `Bin` 的嵌入。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Why do `to` and `from` not form an isomorphism?
@@ -797,11 +797,11 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 标准库中可以找到与本章节中相似的定义：
 
-\begin{code}
+```
 import Function using (_∘_)
 import Function.Inverse using (_↔_)
 import Function.LeftInverse using (_↞_)
-\end{code}
+```
 
 {::comment}
 The standard library `_↔_` and `_↞_` correspond to our `_≃_` and

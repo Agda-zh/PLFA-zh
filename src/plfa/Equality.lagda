@@ -8,9 +8,9 @@ translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Equality where
-\end{code}
+```
 
 {::comment}
 Much of our reasoning has involved equality.  Given two terms `M`
@@ -52,10 +52,10 @@ We declare equality as follows:
 
 我们如下定义相等性：
 
-\begin{code}
+```
 data _≡_ {A : Set} (x : A) : A → Set where
   refl : x ≡ x
-\end{code}
+```
 
 {::comment}
 In other words, for any type `A` and for any `x` of type `A`, the
@@ -83,9 +83,9 @@ We declare the precedence of equality as follows:
 
 我们如下定义相等性的优先级：
 
-\begin{code}
+```
 infix 4 _≡_
-\end{code}
+```
 
 {::comment}
 We set the precedence of `_≡_` at level 4, the same as `_≤_`,
@@ -113,13 +113,13 @@ constructor `refl`.  It is straightforward to show symmetry:
 一个等价关系是自反、对称和传递的。其中自反性可以通过构造器 `refl` 直接从相等性的定义中得来。
 我们可以直接地证明其对称性：
 
-\begin{code}
+```
 sym : ∀ {A : Set} {x y : A}
   → x ≡ y
     -----
   → y ≡ x
 sym refl = refl
-\end{code}
+```
 
 {::comment}
 How does this proof work? The argument to `sym` has type `x ≡ y`, but
@@ -218,14 +218,14 @@ Transitivity is equally straightforward:
 
 传递性亦是很直接：
 
-\begin{code}
+```
 trans : ∀ {A : Set} {x y z : A}
   → x ≡ y
   → y ≡ z
     -----
   → x ≡ z
 trans refl refl  =  refl
-\end{code}
+```
 
 {::comment}
 Again, a useful exercise is to carry out an interactive development,
@@ -250,13 +250,13 @@ they remain so after the same function is applied to both:
 相等性满足 *合同性*（Congurence）。如果两个项相等，那么对它们使用相同的函数，
 其结果仍然相等：
 
-\begin{code}
+```
 cong : ∀ {A B : Set} (f : A → B) {x y : A}
   → x ≡ y
     ---------
   → f x ≡ f y
 cong f refl  =  refl
-\end{code}
+```
 
 {::comment}
 Congruence of functions with two arguments is similar:
@@ -264,14 +264,14 @@ Congruence of functions with two arguments is similar:
 
 两个参数的函数也满足合同性：
 
-\begin{code}
+```
 cong₂ : ∀ {A B C : Set} (f : A → B → C) {u x : A} {v y : B}
   → u ≡ x
   → v ≡ y
     -------------
   → f u v ≡ f x y
 cong₂ f refl refl  =  refl
-\end{code}
+```
 
 {::comment}
 Equality is also a congruence in the function position of an application.
@@ -281,13 +281,13 @@ yields equal terms:
 
 在函数上的等价性也满足合同性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
 
-\begin{code}
+```
 cong-app : ∀ {A B : Set} {f g : A → B}
   → f ≡ g
     ---------------------
   → ∀ (x : A) → f x ≡ g x
 cong-app refl x = refl
-\end{code}
+```
 
 {::comment}
 Equality also satisfies *substitution*.
@@ -297,13 +297,13 @@ If two values are equal and a predicate holds of the first then it also holds of
 相等性也满足*替换性*（Substitution）。
 如果两个值相等，其中一个满足某谓词，那么另一个也满足此谓词。
 
-\begin{code}
+```
 subst : ∀ {A : Set} {x y : A} (P : A → Set)
   → x ≡ y
     ---------
   → P x → P y
 subst P refl px = px
-\end{code}
+```
 
 
 {::comment}
@@ -322,7 +322,7 @@ library:
 我们在此演示如何使用等式串来论证，正如本书中使用证明形式。我们讲声明放在一个叫做
 `≡-Reasoning` 的模块里，与 Agda 标准库中的格式相对应。
 
-\begin{code}
+```
 module ≡-Reasoning {A : Set} where
 
   infix  1 begin_
@@ -354,7 +354,7 @@ module ≡-Reasoning {A : Set} where
   x ∎  =  refl
 
 open ≡-Reasoning
-\end{code}
+```
 
 {::comment}
 This is our first use of a nested module. It consists of the keyword
@@ -379,7 +379,7 @@ as a chain of equations:
 
 举个例子，我们来看看如何用等式串证明传递性：
 
-\begin{code}
+```
 trans′ : ∀ {A : Set} {x y z : A}
   → x ≡ y
   → y ≡ z
@@ -393,7 +393,7 @@ trans′ {A} {x} {y} {z} x≡y y≡z =
   ≡⟨ y≡z ⟩
     z
   ∎
-\end{code}
+```
 
 {::comment}
 According to the fixity declarations, the body parses as follows:
@@ -459,7 +459,7 @@ it would cause a conflict:
 我们重新证明加法的交换律来作为等式串的第二个例子。我们首先重复自然数和加法的定义。
 我们不能导入它们（正如本章节开头中所解释的那样），因为那样会产生一个冲突：
 
-\begin{code}
+```
 data ℕ : Set where
   zero : ℕ
   suc  : ℕ → ℕ
@@ -467,7 +467,7 @@ data ℕ : Set where
 _+_ : ℕ → ℕ → ℕ
 zero    + n  =  n
 (suc m) + n  =  suc (m + n)
-\end{code}
+```
 
 {::comment}
 To save space we postulate (rather than prove in full) two lemmas:
@@ -475,11 +475,11 @@ To save space we postulate (rather than prove in full) two lemmas:
 
 为了节约空间，我们假设两条引理（而不是证明它们）：
 
-\begin{code}
+```
 postulate
   +-identity : ∀ (m : ℕ) → m + zero ≡ m
   +-suc : ∀ (m n : ℕ) → m + suc n ≡ suc (m + n)
-\end{code}
+```
 
 {::comment}
 This is our first use of a _postulate_.  A postulate specifies a
@@ -499,7 +499,7 @@ We then repeat the proof of commutativity:
 
 我们接下来重复交换律的证明：
 
-\begin{code}
+```
 +-comm : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm m zero =
   begin
@@ -519,7 +519,7 @@ We then repeat the proof of commutativity:
   ≡⟨⟩
     suc n + m
   ∎
-\end{code}
+```
 
 {::comment}
 The reasoning here is similar to that in the
@@ -584,14 +584,14 @@ regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mon
 和 `+-mono-≤`。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -607,7 +607,7 @@ We repeat the earlier definition:
 
 考虑一个自然数的性质，比如说一个数是偶数。我们重复之前给出的定义：
 
-\begin{code}
+```
 data even : ℕ → Set
 data odd  : ℕ → Set
 
@@ -625,7 +625,7 @@ data odd where
     → even n
       -----------
     → odd (suc n)
-\end{code}
+```
 
 {::comment}
 In the previous section, we proved addition is commutative.  Given
@@ -646,9 +646,9 @@ corresponds to equality:
 Agda 对这种论证有特殊记法的支持——我们之前提到过的 `rewrite` 记法。来启用这种记法，
 我们只用编译程序指令来告诉 Agda 什么类型对应相等性：
 
-\begin{code}
+```
 {-# BUILTIN EQUALITY _≡_ #-}
-\end{code}
+```
 
 {::comment}
 We can then prove the desired property as follows:
@@ -656,13 +656,13 @@ We can then prove the desired property as follows:
 
 我们然后就可以如下证明求证的性质：
 
-\begin{code}
+```
 even-comm : ∀ (m n : ℕ)
   → even (m + n)
     ------------
   → even (n + m)
 even-comm m n ev  rewrite +-comm n m  =  ev
-\end{code}
+```
 
 {::comment}
 Here `ev` ranges over evidence that `even (m + n)` holds, and we show
@@ -751,11 +751,11 @@ than chains of equalities:
 
 我们可以多次使用重写，以竖线隔开。举个例子，这里是加法交换律的第二个证明，使用重写而不是等式串：
 
-\begin{code}
+```
 +-comm′ : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm′ zero    n  rewrite +-identity n             =  refl
 +-comm′ (suc m) n  rewrite +-suc n m | +-comm′ m n  =  refl
-\end{code}
+```
 
 {::comment}
 This is far more compact.  Among other things, whereas the previous
@@ -785,14 +785,14 @@ abstraction:
 
 `rewrite` 记法实际上是 `with` 抽象的一种应用：
 
-\begin{code}
+```
 even-comm′ : ∀ (m n : ℕ)
   → even (m + n)
     ------------
   → even (n + m)
 even-comm′ m n ev with   m + n  | +-comm m n
 ...                  | .(n + m) | refl       = ev
-\end{code}
+```
 
 {::comment}
 In general, one can follow `with` by any number of expressions,
@@ -827,13 +827,13 @@ function defined earlier:
 
 在这种情况中，我们也可以使用之前定义的替换函数来避免使用重写：
 
-\begin{code}
+```
 even-comm″ : ∀ (m n : ℕ)
   → even (m + n)
     ------------
   → even (n + m)
 even-comm″ m n  =  subst even (+-comm m n)
-\end{code}
+```
 
 {::comment}
 Nonetheless, rewrite is a vital part of the Agda toolkit.  We will use
@@ -885,10 +885,10 @@ for every predicate `P` over type `A` we have that `P x` implies `P y`:
 令 `x` 和 `y` 为类型 `A` 的对象。我们定义 `x ≐ y` 成立，当每个对于类型 `A` 成立的谓词 `P`，
 我们有 `P x` 蕴含了 `P y`：
 
-\begin{code}
+```
 _≐_ : ∀ {A : Set} (x y : A) → Set₁
 _≐_ {A} x y = ∀ (P : A → Set) → P x → P y
-\end{code}
+```
 
 {::comment}
 We cannot write the left-hand side of the equation as `x ≐ y`,
@@ -922,7 +922,7 @@ and the second by a variant of function composition:
 
 莱布尼兹相等性是自反和传递的。自反性由恒等函数的变种得来，传递性由函数组合的变种得来：
 
-\begin{code}
+```
 refl-≐ : ∀ {A : Set} {x : A}
   → x ≐ x
 refl-≐ P Px  =  Px
@@ -933,7 +933,7 @@ trans-≐ : ∀ {A : Set} {x y z : A}
     -----
   → x ≐ z
 trans-≐ x≐y y≐z P Px  =  y≐z P (x≐y P Px)
-\end{code}
+```
 
 {::comment}
 Symmetry is less obvious.  We have to show that if `P x` implies `P y`
@@ -944,7 +944,7 @@ as well:
 对称性就没有那么显然了。我们需要证明如果对于所有谓词 `P`，`P x` 蕴含 `P y`，
 那么反方向的蕴含也成立。
 
-\begin{code}
+```
 sym-≐ : ∀ {A : Set} {x y : A}
   → x ≐ y
     -----
@@ -957,7 +957,7 @@ sym-≐ {A} {x} {y} x≐y P  =  Qy
     Qx = refl-≐ P
     Qy : Q y
     Qy = x≐y Q Qx
-\end{code}
+```
 
 {::comment}
 Given `x ≐ y`, a specific `P`, we have to construct a proof that `P y`
@@ -984,13 +984,13 @@ of `P x` is also a proof of `P y`:
 如果我们已知 `x ≡ y`，我们需要对于任意的 `P`，将 `P x` 的证明转换为 `P y` 的证明。
 我们很容易就可以做到这一点，因为 `x` 与 `y` 相等意味着任何 `P x` 的证明即是 `P y` 的证明。
 
-\begin{code}
+```
 ≡-implies-≐ : ∀ {A : Set} {x y : A}
   → x ≡ y
     -----
   → x ≐ y
 ≡-implies-≐ x≡y P  =  subst P x≡y
-\end{code}
+```
 
 {::comment}
 This direction follows from substitution, which we showed earlier.
@@ -1006,7 +1006,7 @@ to a proof of `P y` we need to show `x ≡ y`:
 在反方向上，我们已知对于任何 `P`，我们可以将 `P x` 的证明转换成 `P y` 的证明，
 我们需要证明 `x ≡ y`：
 
-\begin{code}
+```
 ≐-implies-≡ : ∀ {A : Set} {x y : A}
   → x ≐ y
     -----
@@ -1019,7 +1019,7 @@ to a proof of `P y` we need to show `x ≡ y`:
     Qx = refl
     Qy : Q y
     Qy = x≐y Q Qx
-\end{code}
+```
 
 {::comment}
 The proof is similar to that for symmetry of Leibniz equality. We take
@@ -1076,9 +1076,9 @@ first import the following:
 答案是*全体多态*（Universe Polymorphism），一个定义可以根据任何等级 `ℓ` 来做出。
 为了使用等级，我们首先导入下列内容：
 
-\begin{code}
+```
 open import Level using (Level; _⊔_) renaming (zero to lzero; suc to lsuc)
-\end{code}
+```
 
 {::comment}
 We rename constructors `zero` and `suc` to `lzero` and `lsuc` to avoid confusion
@@ -1126,10 +1126,10 @@ Here is the definition of equality, generalised to an arbitrary level:
 
 下面是相等性的定义，推广到任意等级：
 
-\begin{code}
+```
 data _≡′_ {ℓ : Level} {A : Set ℓ} (x : A) : A → Set ℓ where
   refl′ : x ≡′ x
-\end{code}
+```
 
 {::comment}
 Similarly, here is the generalised definition of symmetry:
@@ -1137,13 +1137,13 @@ Similarly, here is the generalised definition of symmetry:
 
 相似的，下面是对称性的推广定义：
 
-\begin{code}
+```
 sym′ : ∀ {ℓ : Level} {A : Set ℓ} {x y : A}
   → x ≡′ y
     ------
   → y ≡′ x
 sym′ refl′ = refl′
-\end{code}
+```
 
 {::comment}
 For simplicity, we avoid universe polymorphism in the definitions given in
@@ -1160,10 +1160,10 @@ Here is the generalised definition of Leibniz equality:
 
 下面是莱布尼兹相等性的推广定义：
 
-\begin{code}
+```
 _≐′_ : ∀ {ℓ : Level} {A : Set ℓ} (x y : A) → Set (lsuc ℓ)
 _≐′_ {ℓ} {A} x y = ∀ (P : A → Set ℓ) → P x → P y
-\end{code}
+```
 
 {::comment}
 Before the signature used `Set₁` as the type of a term that includes
@@ -1196,11 +1196,11 @@ standard library:
 
 标准库中可以找到与本章节中相似的定义：
 
-\begin{code}
+```
 -- import Relation.Binary.PropositionalEquality as Eq
 -- open Eq using (_≡_; refl; trans; sym; cong; cong-app; subst)
 -- open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _≡⟨_⟩_; _∎)
-\end{code}
+```
 
 {::comment}
 Here the imports are shown as comments rather than code to avoid

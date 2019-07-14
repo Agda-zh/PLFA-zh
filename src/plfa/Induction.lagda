@@ -8,9 +8,9 @@ translators : ["Oling Cat"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Induction where
-\end{code}
+```
 
 {::comment}
 > Induction makes you feel guilty for getting something out of nothing
@@ -48,12 +48,12 @@ and some operations upon them.  We also import a couple of new operations,
 我们需要上一章中的相等性，加上自然数及其运算。我们还导入了一些新的运算：
 `cong`、`sym` 和 `_≡⟨_⟩_`，之后会解释它们：
 
-\begin{code}
+```
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong; sym)
 open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _≡⟨_⟩_; _∎)
 open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_)
-\end{code}
+```
 
 
 {::comment}
@@ -148,14 +148,14 @@ and are associative, commutative, and distribute over one another.
 请给出另一对运算符，它们拥有一个幺元，满足结合律、交换律，且其中一个对另一个满足分配率。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 Give an example of an operator that has an identity and is
@@ -193,7 +193,7 @@ variables:
 
 我们可以为这三个变量选取特定的数值来测试此命题：
 
-\begin{code}
+```
 _ : (3 + 4) + 5 ≡ 3 + (4 + 5)
 _ =
   begin
@@ -207,7 +207,7 @@ _ =
   ≡⟨⟩
     3 + (4 + 5)
   ∎
-\end{code}
+```
 
 {::comment}
 Here we have displayed the computation as a chain of equations,
@@ -453,7 +453,7 @@ Here is the proposition's statement and proof:
 
 以下为此性质的陈述和证明：
 
-\begin{code}
+```
 +-assoc : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
 +-assoc zero n p =
   begin
@@ -475,7 +475,7 @@ Here is the proposition's statement and proof:
   ≡⟨⟩
     suc m + (n + p)
   ∎
-\end{code}
+```
 
 {::comment}
 We have named the proof `+-assoc`.  In Agda, identifiers can consist of
@@ -620,7 +620,7 @@ recursion is one of the most appealing aspects of Agda.
 下面是归纳如何对应于递归的具体例子，它是在结合律的证明中，将 `m` 实例化为 `2`
 时出现的计算。
 
-\begin{code}
+```
 +-assoc-2 : ∀ (n p : ℕ) → (2 + n) + p ≡ 2 + (n + p)
 +-assoc-2 n p =
   begin
@@ -658,7 +658,7 @@ recursion is one of the most appealing aspects of Agda.
       ≡⟨⟩
         0 + (n + p)
       ∎
-\end{code}
+```
 
 
 {::comment}
@@ -755,7 +755,7 @@ Here is the lemma's statement and proof:
 
 以下是此引理的证明：
 
-\begin{code}
+```
 +-identityʳ : ∀ (m : ℕ) → m + zero ≡ m
 +-identityʳ zero =
   begin
@@ -771,7 +771,7 @@ Here is the lemma's statement and proof:
   ≡⟨ cong suc (+-identityʳ m) ⟩
     suc m
   ∎
-\end{code}
+```
 
 {::comment}
 The signature states that we are defining the identifier `+-identityʳ` which
@@ -881,7 +881,7 @@ Here is the lemma's statement and proof:
 
 下面是该引理的陈述和证明：
 
-\begin{code}
+```
 +-suc : ∀ (m n : ℕ) → m + suc n ≡ suc (m + n)
 +-suc zero n =
   begin
@@ -901,7 +901,7 @@ Here is the lemma's statement and proof:
   ≡⟨⟩
     suc (suc m + n)
   ∎
-\end{code}
+```
 
 {::comment}
 The signature states that we are defining the identifier `+-suc` which provides
@@ -994,7 +994,7 @@ Finally, here is our proposition's statement and proof:
 
 最后，以下是我们的命题的陈述和证明：
 
-\begin{code}
+```
 +-comm : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm m zero =
   begin
@@ -1014,7 +1014,7 @@ Finally, here is our proposition's statement and proof:
   ≡⟨⟩
     suc n + m
   ∎
-\end{code}
+```
 
 {::comment}
 The first line states that we are defining the identifier
@@ -1124,7 +1124,7 @@ Here is an example:
 
 我们可以随意应用结合律来重排括号。例如：
 
-\begin{code}
+```
 +-rearrange : ∀ (m n p q : ℕ) → (m + n) + (p + q) ≡ m + (n + p) + q
 +-rearrange m n p q =
   begin
@@ -1136,7 +1136,7 @@ Here is an example:
   ≡⟨ sym (+-assoc m (n + p) q) ⟩
     (m + (n + p)) + q
   ∎
-\end{code}
+```
 
 {::comment}
 No induction is required, we simply apply associativity twice.
@@ -1331,14 +1331,14 @@ first four days using a finite story of creation, as
 请参考[前文][plfa.Naturals#finite-creation]写出前四天已知的加法结合律的创世故事。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 ## Associativity with rewrite
@@ -1355,11 +1355,11 @@ equations:
 证明可不止一种方法。下面是第二种在 Agda 中证明加法结合律的方法，使用 `rewrite`（改写）
 而非等式链：
 
-\begin{code}
+```
 +-assoc′ : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
 +-assoc′ zero    n p                          =  refl
 +-assoc′ (suc m) n p  rewrite +-assoc′ m n p  =  refl
-\end{code}
+```
 
 {::comment}
 For the base case, we must show:
@@ -1424,7 +1424,7 @@ chains of equations:
 
 下面是加法交换律的第二个证明，使用 `rewrite` 而非等式链：
 
-\begin{code}
+```
 +-identity′ : ∀ (n : ℕ) → n + zero ≡ n
 +-identity′ zero = refl
 +-identity′ (suc n) rewrite +-identity′ n = refl
@@ -1436,7 +1436,7 @@ chains of equations:
 +-comm′ : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm′ m zero rewrite +-identity′ m = refl
 +-comm′ m (suc n) rewrite +-suc′ m n | +-comm′ m n = refl
-\end{code}
+```
 
 {::comment}
 In the final line, rewriting with two equations is
@@ -1629,14 +1629,14 @@ is associative and commutative.
 
 成立。无需归纳证明，只需应用前面满足结合律和交换律的结果即可。
 
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `*-distrib-+` (recommended) {#times-distrib-plus}
@@ -1659,14 +1659,14 @@ for all naturals `m`, `n`, and `p`.
 成立。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `*-assoc` (recommended) {#times-assoc}
@@ -1689,14 +1689,14 @@ for all naturals `m`, `n`, and `p`.
 成立。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `*-comm` {#times-comm}
@@ -1720,14 +1720,14 @@ you will need to formulate and prove suitable lemmas.
 成立。和加法交换律一样，你需要陈述并证明配套的引理。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1751,14 +1751,14 @@ for all naturals `n`. Did your proof require induction?
 成立。你的证明需要归纳法吗？
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1782,14 +1782,14 @@ for all naturals `m`, `n`, and `p`.
 成立。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1828,12 +1828,12 @@ defines a datatype of bitstrings representing natural numbers
 
 回想练习 [Bin][plfa.Naturals#Bin] 中定义了一种比特串数据类型来表示自然数
 
-\begin{code}
+```
 data Bin : Set where
   nil : Bin
   x0_ : Bin → Bin
   x1_ : Bin → Bin
-\end{code}
+```
 
 {::comment}
 and asks you to define functions
@@ -1863,14 +1863,14 @@ For each law: if it holds, prove; if not, give a counterexample.
 对于每一条定律：若它成立，请证明；若不成立，请给出一个反例。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1885,9 +1885,9 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 本章中类似的定义可在标准库中找到：
 
-\begin{code}
+```
 import Data.Nat.Properties using (+-assoc; +-identityʳ; +-suc; +-comm)
-\end{code}
+```
 
 {::comment}
 ## Unicode

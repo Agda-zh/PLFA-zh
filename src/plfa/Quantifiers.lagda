@@ -8,9 +8,9 @@ translators: ["Fangyi Zhou"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Quantifiers where
-\end{code}
+```
 
 {::comment}
 This chapter introduces universal and existential quantification.
@@ -24,7 +24,7 @@ This chapter introduces universal and existential quantification.
 
 ## 导入
 
-\begin{code}
+```
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
@@ -32,7 +32,7 @@ open import Relation.Nullary using (¬_)
 open import Data.Product using (_×_; proj₁) renaming (_,_ to ⟨_,_⟩)
 open import Data.Sum using (_⊎_)
 open import plfa.Isomorphism using (_≃_; extensionality)
-\end{code}
+```
 
 
 {::comment}
@@ -94,14 +94,14 @@ is a term of type `A` then we may conclude that `B M` holds:
 
 再换句话说，如果我们知道 `∀ (x : A) → B x` 成立，又知道 `M` 是一个类型为 `A` 的项，
 那么我们可以推导出 `B M` 成立：
-\begin{code}
+```
 ∀-elim : ∀ {A : Set} {B : A → Set}
   → (L : ∀ (x : A) → B x)
   → (M : A)
     -----------------
   → B M
 ∀-elim L M = L M
-\end{code}
+```
 {::comment}
 As with `→-elim`, the rule corresponds to function application.
 {:/}
@@ -155,11 +155,11 @@ Show that universals distribute over conjunction:
 
 证明全称量词对于合取满足分配律：
 
-\begin{code}
+```
 postulate
   ∀-distrib-× : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x × C x) ≃ (∀ (x : A) → B x) × (∀ (x : A) → C x)
-\end{code}
+```
 {::comment}
 Compare this with the result (`→-distrib-×`) in
 Chapter [Connectives][plfa.Connectives].
@@ -179,11 +179,11 @@ Show that a disjunction of universals implies a universal of disjunctions:
 
 证明全称命题的析取蕴含了析取的全称命题：
 
-\begin{code}
+```
 postulate
   ⊎∀-implies-∀⊎ : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x)  →  ∀ (x : A) → B x ⊎ C x
-\end{code}
+```
 {::comment}
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
@@ -203,12 +203,12 @@ Consider the following type.
 
 参考下面的类型：
 
-\begin{code}
+```
 data Tri : Set where
   aa : Tri
   bb : Tri
   cc : Tri
-\end{code}
+```
 {::comment}
 Let `B` be a type indexed by `Tri`, that is `B : Tri → Set`.
 Show that `∀ (x : Tri) → B x` is isomorphic to `B aa × B bb × B cc`.
@@ -246,21 +246,21 @@ inductive type:
 
 我们定义一个合适的归纳数据类型来形式化存在量化：
 
-\begin{code}
+```
 data Σ (A : Set) (B : A → Set) : Set where
   ⟨_,_⟩ : (x : A) → B x → Σ A B
-\end{code}
+```
 {::comment}
 We define a convenient syntax for existentials as follows:
 {:/}
 
 我们为存在量词定义一个方便的语法：
 
-\begin{code}
+```
 Σ-syntax = Σ
 infix 2 Σ-syntax
 syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
-\end{code}
+```
 {::comment}
 This is our first use of a syntax declaration, which specifies that
 the term on the left may be written with the syntax on the right.
@@ -287,12 +287,12 @@ Equivalently, we could also declare existentials as a record type:
 
 我们也可以用记录类型来等价地定义存在量化。
 
-\begin{code}
+```
 record Σ′ (A : Set) (B : A → Set) : Set where
   field
     proj₁′ : A
     proj₂′ : B proj₁′
-\end{code}
+```
 
 {::comment}
 Here record construction
@@ -369,13 +369,13 @@ notation for the case where the domain of the bound variable is left implicit:
 存在量词的普通记法是 `∃` （与全程量词的 `∀` 记法相类似）。我们使用 Agda 标准库中的惯例，
 使用一种隐式申明约束变量定义域的记法。
 
-\begin{code}
+```
 ∃ : ∀ {A : Set} (B : A → Set) → Set
 ∃ {A} B = Σ A B
 
 ∃-syntax = ∃
 syntax ∃-syntax (λ x → B) = ∃[ x ] B
-\end{code}
+```
 {::comment}
 The special syntax is available only when the identifier `∃-syntax` is imported.
 We will tend to use this syntax, since it is shorter and more familiar.
@@ -393,14 +393,14 @@ may conclude that `C` holds:
 给定 `∀ x → B x → C` 成立的证明，其中 `C` 不包括自由变量 `x`，给定 `∃[ x ] B x` 成立的
 证明，我们可以推导出 `C` 成立。
 
-\begin{code}
+```
 ∃-elim : ∀ {A : Set} {B : A → Set} {C : Set}
   → (∀ x → B x → C)
   → ∃[ x ] B x
     ---------------
   → C
 ∃-elim f ⟨ x , y ⟩ = f x y
-\end{code}
+```
 {::comment}
 In other words, if we know for every `x` of type `A` that `B x`
 implies `C`, and we know for some `x` of type `A` that `B x` holds,
@@ -421,7 +421,7 @@ Indeed, the converse also holds, and the two together form an isomorphism:
 
 的确，逆命题也成立，两者合起来构成一个同构：
 
-\begin{code}
+```
 ∀∃-currying : ∀ {A : Set} {B : A → Set} {C : Set}
   → (∀ x → B x → C) ≃ (∃[ x ] B x → C)
 ∀∃-currying =
@@ -431,7 +431,7 @@ Indeed, the converse also holds, and the two together form an isomorphism:
     ; from∘to =  λ{ f → refl }
     ; to∘from =  λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
     }
-\end{code}
+```
 {::comment}
 The result can be viewed as a generalisation of currying.  Indeed, the code to
 establish the isomorphism is identical to what we wrote when discussing
@@ -453,11 +453,11 @@ Show that existentials distribute over disjunction:
 
 证明存在量词对于析取满足分配律：
 
-\begin{code}
+```
 postulate
   ∃-distrib-⊎ : ∀ {A : Set} {B C : A → Set} →
     ∃[ x ] (B x ⊎ C x) ≃ (∃[ x ] B x) ⊎ (∃[ x ] C x)
-\end{code}
+```
 
 {::comment}
 #### Exercise `∃×-implies-×∃`
@@ -471,11 +471,11 @@ Show that an existential of conjunctions implies a conjunction of existentials:
 
 证明合取的存在命题蕴含了存在命题的合取：
 
-\begin{code}
+```
 postulate
   ∃×-implies-×∃ : ∀ {A : Set} {B C : A → Set} →
     ∃[ x ] (B x × C x) → (∃[ x ] B x) × (∃[ x ] C x)
-\end{code}
+```
 {::comment}
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
@@ -509,7 +509,7 @@ Chapter [Relations][plfa.Relations]:
 
 回忆我们在 [Relations][plfa.Relations] 章节中定义的 `even` 和 `odd`：
 
-\begin{code}
+```
 data even : ℕ → Set
 data odd  : ℕ → Set
 
@@ -527,7 +527,7 @@ data odd where
     → even n
       -----------
     → odd (suc n)
-\end{code}
+```
 
 {::comment}
 A number is even if it is zero or the successor of an odd number, and
@@ -570,7 +570,7 @@ Here is the proof in the forward direction:
 
 这是向前方向的证明：
 
-\begin{code}
+```
 even-∃ : ∀ {n : ℕ} → even n → ∃[ m ] (    m * 2 ≡ n)
 odd-∃  : ∀ {n : ℕ} →  odd n → ∃[ m ] (1 + m * 2 ≡ n)
 
@@ -580,7 +580,7 @@ even-∃ (even-suc o) with odd-∃ o
 
 odd-∃  (odd-suc e)  with even-∃ e
 ...                    | ⟨ m , refl ⟩  =  ⟨ m , refl ⟩
-\end{code}
+```
 {::comment}
 We define two mutually recursive functions. Given
 evidence that `n` is even or odd, we return a
@@ -631,7 +631,7 @@ Here is the proof in the reverse direction:
 
 接下来是反方向的证明：
 
-\begin{code}
+```
 ∃-even : ∀ {n : ℕ} → ∃[ m ] (    m * 2 ≡ n) → even n
 ∃-odd  : ∀ {n : ℕ} → ∃[ m ] (1 + m * 2 ≡ n) →  odd n
 
@@ -639,7 +639,7 @@ Here is the proof in the reverse direction:
 ∃-even ⟨ suc m , refl ⟩  =  even-suc (∃-odd ⟨ m , refl ⟩)
 
 ∃-odd  ⟨     m , refl ⟩  =  odd-suc (∃-even ⟨ m , refl ⟩)
-\end{code}
+```
 
 {::comment}
 Given a number that is twice some other number we must show it is
@@ -696,14 +696,14 @@ restated in this way.
 用这种方法来重写 `∃-even` 和 `∃-odd`。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `∃-+-≤`
@@ -719,14 +719,14 @@ Show that `y ≤ z` holds if and only if there exists a `x` such that
 证明 `y ≤ z` 当且仅当存在一个 `x` 使得 `x + y ≡ z` 成立时成立。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 ## Existentials, Universals, and Negation
@@ -745,7 +745,7 @@ of a disjunction is isomorphic to a conjunction of negations:
 存在量化的否定与否定的全称量化是同构的。考虑到存在量化是析构的推广，全称量化是合构的推广，
 这样的结果与析构的否定与否定的合构是同构的结果相似。
 
-\begin{code}
+```
 ¬∃≃∀¬ : ∀ {A : Set} {B : A → Set}
   → (¬ ∃[ x ] B x) ≃ ∀ x → ¬ B x
 ¬∃≃∀¬ =
@@ -755,7 +755,7 @@ of a disjunction is isomorphic to a conjunction of negations:
     ; from∘to =  λ{ ¬∃xy → extensionality λ{ ⟨ x , y ⟩ → refl } }
     ; to∘from =  λ{ ∀¬xy → refl }
     }
-\end{code}
+```
 {::comment}
 In the `to` direction, we are given a value `¬∃xy` of type
 `¬ ∃[ x ] B x`, and need to show that given a value
@@ -800,13 +800,13 @@ Show that existential of a negation implies negation of a universal:
 
 证明否定的存在量化蕴含了全称量化的否定：
 
-\begin{code}
+```
 postulate
   ∃¬-implies-¬∀ : ∀ {A : Set} {B : A → Set}
     → ∃[ x ] (¬ B x)
       --------------
     → ¬ (∀ x → B x)
-\end{code}
+```
 {::comment}
 Does the converse hold? If so, prove; if not, explain why.
 {:/}
@@ -832,12 +832,12 @@ define a datatype of bitstrings representing natural numbers:
 [Bin-predicates][plfa.Relations#Bin-predicates] 中，
 我们定义了比特串的数据类型来表示自然数：
 
-\begin{code}
+```
 data Bin : Set where
   nil : Bin
   x0_ : Bin → Bin
   x1_ : Bin → Bin
-\end{code}
+```
 {::comment}
 And ask you to define the following functions and predicates:
 {:/}
@@ -871,14 +871,14 @@ Using the above, establish that there is an isomorphism between `ℕ` and
 使用上述，证明 `ℕ` 与 `∃[ x ](Can x)` 之间存在同构。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 ## Standard library
@@ -892,9 +892,9 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 标准库中可以找到与本章节中相似的定义：
 
-\begin{code}
+```
 import Data.Product using (Σ; _,_; ∃; Σ-syntax; ∃-syntax)
-\end{code}
+```
 
 
 ## Unicode

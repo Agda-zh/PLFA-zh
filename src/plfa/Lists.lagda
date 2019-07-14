@@ -8,9 +8,9 @@ translators: ["Fangyi Zhou"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Lists where
-\end{code}
+```
 
 {::comment}
 This chapter discusses the list data type.  It gives further examples
@@ -27,7 +27,7 @@ examples of polymorphic types and higher-order functions.
 
 ## 导入
 
-\begin{code}
+```
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; sym; trans; cong)
 open Eq.≡-Reasoning
@@ -40,7 +40,7 @@ open import Data.Product using (_×_; ∃; ∃-syntax) renaming (_,_ to ⟨_,_�
 open import Function using (_∘_)
 open import Level using (Level)
 open import plfa.Isomorphism using (_≃_; _⇔_)
-\end{code}
+```
 
 
 {::comment}
@@ -54,13 +54,13 @@ Lists are defined in Agda as follows:
 {:/}
 
 Agda 中的列表如下定义：
-\begin{code}
+```
 data List (A : Set) : Set where
   []  : List A
   _∷_ : A → List A → List A
 
 infixr 5 _∷_
-\end{code}
+```
 
 {::comment}
 Let's unpack this definition. If `A` is a set, then `List A` is a set.
@@ -82,10 +82,10 @@ For example,
 
 例如：
 
-\begin{code}
+```
 _ : List ℕ
 _ = 0 ∷ 1 ∷ 2 ∷ []
-\end{code}
+```
 
 {::comment}
 denotes the list of the first three natural numbers.  Since `_∷_`
@@ -107,11 +107,11 @@ indexed types. The definition above is equivalent to the following:
 
 正如我们所见，参数化的类型可以被转换成索引类型。上面的定义与下列等价：
 
-\begin{code}
+```
 data List′ : Set → Set where
   []′  : ∀ {A : Set} → List′ A
   _∷′_ : ∀ {A : Set} → A → List′ A → List′ A
-\end{code}
+```
 {::comment}
 Each constructor takes the parameter as an implicit argument.
 Thus, our example list could also be written:
@@ -119,10 +119,10 @@ Thus, our example list could also be written:
 
 每个构造器将参数作为隐式参数。因此我们列表的例子也可以写作：
 
-\begin{code}
+```
 _ : List ℕ
 _ = _∷_ {ℕ} 0 (_∷_ {ℕ} 1 (_∷_ {ℕ} 2 ([] {ℕ})))
-\end{code}
+```
 {::comment}
 where here we have provided the implicit parameters explicitly.
 {:/}
@@ -158,14 +158,14 @@ We can write lists more conveniently by introducing the following definitions:
 
 我们可以用下面的定义，更简便地表示列表：
 
-\begin{code}
+```
 pattern [_] z = z ∷ []
 pattern [_,_] y z = y ∷ z ∷ []
 pattern [_,_,_] x y z = x ∷ y ∷ z ∷ []
 pattern [_,_,_,_] w x y z = w ∷ x ∷ y ∷ z ∷ []
 pattern [_,_,_,_,_] v w x y z = v ∷ w ∷ x ∷ y ∷ z ∷ []
 pattern [_,_,_,_,_,_] u v w x y z = u ∷ v ∷ w ∷ x ∷ y ∷ z ∷ []
-\end{code}
+```
 {::comment}
 This is our first use of pattern declarations.  For instance,
 the third line tells us that `[ x , y , z ]` is equivalent to
@@ -190,13 +190,13 @@ _append_:
 
 我们对于列表的第一个函数写作 `_++_`，读作*附加*（Append）：
 
-\begin{code}
+```
 infixr 5 _++_
 
 _++_ : ∀ {A : Set} → List A → List A → List A
 []       ++ ys  =  ys
 (x ∷ xs) ++ ys  =  x ∷ (xs ++ ys)
-\end{code}
+```
 {::comment}
 The type `A` is an implicit argument to append, making it a
 _polymorphic_ function (one that can be used at many types).  The
@@ -217,7 +217,7 @@ of appending two lists:
 
 我们举个例子，来展示将两个列表附加的计算过程：
 
-\begin{code}
+```
 _ : [ 0 , 1 , 2 ] ++ [ 3 , 4 ] ≡ [ 0 , 1 , 2 , 3 , 4 ]
 _ =
   begin
@@ -231,7 +231,7 @@ _ =
   ≡⟨⟩
     0 ∷ 1 ∷ 2 ∷ 3 ∷ 4 ∷ []
   ∎
-\end{code}
+```
 {::comment}
 Appending two lists requires time linear in the
 number of elements in the first list.
@@ -252,7 +252,7 @@ about numbers.  Here is the proof that append is associative:
 {:/}
 
 我们可以与用论证数几乎相同的方法来论证列表。下面是附加满足结合律的证明：
-\begin{code}
+```
 ++-assoc : ∀ {A : Set} (xs ys zs : List A)
   → (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
 ++-assoc [] ys zs =
@@ -275,7 +275,7 @@ about numbers.  Here is the proof that append is associative:
   ≡⟨⟩
     x ∷ xs ++ (ys ++ zs)
   ∎
-\end{code}
+```
 {::comment}
 The proof is by induction on the first argument. The base case instantiates
 to `[]`, and follows by straightforward computation.
@@ -321,7 +321,7 @@ That it is a left identity is immediate from the definition:
 我们也可以简单地证明 `[]` 是 `_++_` 的左幺元和右幺元。
 左幺元的证明从定义中即可得：
 
-\begin{code}
+```
 ++-identityˡ : ∀ {A : Set} (xs : List A) → [] ++ xs ≡ xs
 ++-identityˡ xs =
   begin
@@ -329,13 +329,13 @@ That it is a left identity is immediate from the definition:
   ≡⟨⟩
     xs
   ∎
-\end{code}
+```
 {::comment}
 That it is a right identity follows by simple induction:
 {:/}
 
 右幺元的证明可由简单的归纳得到：
-\begin{code}
+```
 ++-identityʳ : ∀ {A : Set} (xs : List A) → xs ++ [] ≡ xs
 ++-identityʳ [] =
   begin
@@ -351,7 +351,7 @@ That it is a right identity follows by simple induction:
   ≡⟨ cong (x ∷_) (++-identityʳ xs) ⟩
     x ∷ xs
   ∎
-\end{code}
+```
 {::comment}
 As we will see later,
 these three properties establish that `_++_` and `[]` form
@@ -372,11 +372,11 @@ Our next function finds the length of a list:
 
 在下一个函数里，我们来寻找列表的长度：
 
-\begin{code}
+```
 length : ∀ {A : Set} → List A → ℕ
 length []        =  zero
 length (x ∷ xs)  =  suc (length xs)
-\end{code}
+```
 {::comment}
 Again, it takes an implicit parameter `A`.
 The length of the empty list is zero.
@@ -392,7 +392,7 @@ Here is an example showing how to compute the length of a list:
 {:/}
 
 我们用下面的例子来展示如何计算列表的长度：
-\begin{code}
+```
 _ : length [ 0 , 1 , 2 ] ≡ 3
 _ =
   begin
@@ -406,7 +406,7 @@ _ =
   ≡⟨⟩
     suc (suc (suc zero))
   ∎
-\end{code}
+```
 {::comment}
 Computing the length of a list requires time
 linear in the number of elements in the list.
@@ -436,7 +436,7 @@ sum of the lengths of the lists:
 
 两个附加在一起的列表的长度是两列表长度之和：
 
-\begin{code}
+```
 length-++ : ∀ {A : Set} (xs ys : List A)
   → length (xs ++ ys) ≡ length xs + length ys
 length-++ {A} [] ys =
@@ -457,7 +457,7 @@ length-++ (x ∷ xs) ys =
   ≡⟨⟩
     length (x ∷ xs) + length ys
   ∎
-\end{code}
+```
 {::comment}
 The proof is by induction on the first argument. The base case
 instantiates to `[]`, and follows by straightforward computation.  As
@@ -486,11 +486,11 @@ Using append, it is easy to formulate a function to reverse a list:
 {:/}
 
 我们可以使用附加，来简单地构造一个函数来反转一个列表：
-\begin{code}
+```
 reverse : ∀ {A : Set} → List A → List A
 reverse []        =  []
 reverse (x ∷ xs)  =  reverse xs ++ [ x ]
-\end{code}
+```
 {::comment}
 The reverse of the empty list is the empty list.
 The reverse of a non-empty list
@@ -506,7 +506,7 @@ Here is an example showing how to reverse a list:
 {:/}
 
 下面的例子展示了如何反转一个列表。
-\begin{code}
+```
 _ : reverse [ 0 , 1 , 2 ] ≡ [ 2 , 1 , 0 ]
 _ =
   begin
@@ -536,7 +536,7 @@ _ =
   ≡⟨⟩
     [ 2 , 1 , 0 ]
   ∎
-\end{code}
+```
 {::comment}
 Reversing a list in this way takes time _quadratic_ in the length of
 the list. This is because reverse ends up appending lists of lengths
@@ -562,11 +562,11 @@ reverse of the second appended to the reverse of the first:
 {:/}
 
 证明一个列表附加到另外一个列表的反转即是反转后的第二个列表附加至反转后的第一个列表：
-\begin{code}
+```
 postulate
   reverse-++-commute : ∀ {A : Set} {xs ys : List A}
     → reverse (xs ++ ys) ≡ reverse ys ++ reverse xs
-\end{code}
+```
 
 {::comment}
 #### Exercise `reverse-involutive` (recommended)
@@ -582,11 +582,11 @@ as the identity function.  Show that reverse is an involution:
 当一个函数应用两次后与恒等函数作用相同，那么这个函数是一个**对合**（Involution）。
 证明反转是一个对合：
 
-\begin{code}
+```
 postulate
   reverse-involutive : ∀ {A : Set} {xs : List A}
     → reverse (reverse xs) ≡ xs
-\end{code}
+```
 
 
 {::comment}
@@ -604,11 +604,11 @@ The idea is that we generalise reverse to take an additional argument:
 上面的定义虽然论证起来方便，但是它比期望中的实现更低效，因为它的运行时间是关于列表长度的二次函数。
 我们可以将反转进行推广，使用一个额外的参数：
 
-\begin{code}
+```
 shunt : ∀ {A : Set} → List A → List A → List A
 shunt []       ys  =  ys
 shunt (x ∷ xs) ys  =  shunt xs (x ∷ ys)
-\end{code}
+```
 {::comment}
 The definition is by recursion on the first argument. The second argument
 actually becomes _larger_, but this is not a problem because the argument
@@ -623,7 +623,7 @@ Shunt is related to reverse as follows:
 {:/}
 
 转移（Shunt）与反转的关系如下：
-\begin{code}
+```
 shunt-reverse : ∀ {A : Set} (xs ys : List A)
   → shunt xs ys ≡ reverse xs ++ ys
 shunt-reverse [] ys =
@@ -648,7 +648,7 @@ shunt-reverse (x ∷ xs) ys =
   ≡⟨⟩
     reverse (x ∷ xs) ++ ys
   ∎
-\end{code}
+```
 {::comment}
 The proof is by induction on the first argument.
 The base case instantiates to `[]`, and follows by straightforward computation.
@@ -678,10 +678,10 @@ give a more efficient definition of reverse:
 
 在定义了推广的转移之后，我们可以将其特化，作为一个更高效的反转的定义：
 
-\begin{code}
+```
 reverse′ : ∀ {A : Set} → List A → List A
 reverse′ xs = shunt xs []
-\end{code}
+```
 
 {::comment}
 Given our previous lemma, it is straightforward to show
@@ -690,7 +690,7 @@ the two definitions equivalent:
 
 因为我们之前证明的引理，我们可以直接地证明两个定义是等价的：
 
-\begin{code}
+```
 reverses : ∀ {A : Set} (xs : List A)
   → reverse′ xs ≡ reverse xs
 reverses xs =
@@ -703,7 +703,7 @@ reverses xs =
   ≡⟨ ++-identityʳ (reverse xs) ⟩
     reverse xs
   ∎
-\end{code}
+```
 
 {::comment}
 Here is an example showing fast reverse of the list `[ 0 , 1 , 2 ]`:
@@ -711,7 +711,7 @@ Here is an example showing fast reverse of the list `[ 0 , 1 , 2 ]`:
 
 下面的例子展示了如何快速反转列表 `[ 0 , 1 , 2 ]`：
 
-\begin{code}
+```
 _ : reverse′ [ 0 , 1 , 2 ] ≡ [ 2 , 1 , 0 ]
 _ =
   begin
@@ -727,7 +727,7 @@ _ =
   ≡⟨⟩
     2 ∷ 1 ∷ 0 ∷ []
   ∎
-\end{code}
+```
 
 {::comment}
 Now the time to reverse a list is linear in the length of the list.
@@ -749,11 +749,11 @@ argument or returns a function as a result:
 
 映射将一个函数应用于列表中的所有元素，生成一个对应的列表。
 映射是一个**高阶函数**（Higher-Order Function）的例子，它取一个函数作为参数，返回一个函数作为结果：
-\begin{code}
+```
 map : ∀ {A B : Set} → (A → B) → List A → List B
 map f []        =  []
 map f (x ∷ xs)  =  f x ∷ map f xs
-\end{code}
+```
 {::comment}
 Map of the empty list is the empty list.
 Map of a non-empty list yields a list
@@ -770,7 +770,7 @@ Here is an example showing how to use map to increment every element of a list:
 {:/}
 
 下面的例子展示了如何使用映射来增加列表中的每一个元素：
-\begin{code}
+```
 _ : map suc [ 0 , 1 , 2 ] ≡ [ 1 , 2 , 3 ]
 _ =
   begin
@@ -786,7 +786,7 @@ _ =
   ≡⟨⟩
     1 ∷ 2 ∷ 3 ∷ []
   ∎
-\end{code}
+```
 {::comment}
 Map requires time linear in the length of the list.
 {:/}
@@ -800,7 +800,7 @@ point applying the resulting function:
 {:/}
 
 我们常常可以利用柯里化，将映射作用于一个函数，获得另一个函数，然后在之后的时候应用获得的函数：
-\begin{code}
+```
 sucs : List ℕ → List ℕ
 sucs = map suc
 
@@ -813,7 +813,7 @@ _ =
   ≡⟨⟩
     [ 1 , 2 , 3 ]
   ∎
-\end{code}
+```
 
 {::comment}
 Any type that is parameterised on another type, such as lists, has a
@@ -839,11 +839,11 @@ Prove that the map of a composition is equal to the composition of two maps:
 {:/}
 
 证明函数组合的映射是两个映射的组合：
-\begin{code}
+```
 postulate
   map-compose : ∀ {A B C : Set} {f : A → B} {g : B → C}
     → map (g ∘ f) ≡ map g ∘ map f
-\end{code}
+```
 {::comment}
 The last step of the proof requires extensionality.
 {:/}
@@ -861,11 +861,11 @@ Prove the following relationship between map and append:
 {:/}
 
 证明下列关于映射与附加的关系：
-\begin{code}
+```
 postulate
   map-++-commute : ∀ {A B : Set} {f : A → B} {xs ys : List A}
    →  map f (xs ++ ys) ≡ map f xs ++ map f ys
-\end{code}
+```
 
 {::comment}
 #### Exercise `map-Tree`
@@ -879,21 +879,21 @@ nodes of type `B`:
 {:/}
 
 定义一个树数据类型，其叶节点类型为 `A`，内部节点类型为 `B`：
-\begin{code}
+```
 data Tree (A B : Set) : Set where
   leaf : A → Tree A B
   node : Tree A B → B → Tree A B → Tree A B
-\end{code}
+```
 {::comment}
 Define a suitable map operator over trees:
 {:/}
 
 定义一个对于树的映射运算符：
-\begin{code}
+```
 postulate
   map-Tree : ∀ {A B C D : Set}
     → (A → C) → (B → D) → Tree A B → Tree C D
-\end{code}
+```
 
 
 {::comment}
@@ -910,11 +910,11 @@ for the empty list:
 
 折叠取一个运算符和一个值，并使用运算符将列表中的元素合并至一个值，如果给定的列表为空，
 则使用给定的值：
-\begin{code}
+```
 foldr : ∀ {A B : Set} → (A → B → B) → B → List A → B
 foldr _⊗_ e []        =  e
 foldr _⊗_ e (x ∷ xs)  =  x ⊗ foldr _⊗_ e xs
-\end{code}
+```
 {::comment}
 Fold of the empty list is the given value.
 Fold of a non-empty list uses the operator to combine
@@ -929,7 +929,7 @@ Here is an example showing how to use fold to find the sum of a list:
 {:/}
 
 下面的例子展示了如何使用折叠来对一个列表求和：
-\begin{code}
+```
 _ : foldr _+_ 0 [ 1 , 2 , 3 , 4 ] ≡ 10
 _ =
   begin
@@ -945,7 +945,7 @@ _ =
   ≡⟨⟩
     1 + (2 + (3 + (4 + 0)))
   ∎
-\end{code}
+```
 {::comment}
 Fold requires time linear in the length of the list.
 {:/}
@@ -960,7 +960,7 @@ and at a later point applying the resulting function:
 
 我们常常可以利用柯里化，将折叠作用于一个运算符和一个值，获得另一个函数，
 然后在之后的时候应用获得的函数：
-\begin{code}
+```
 sum : List ℕ → ℕ
 sum = foldr _+_ 0
 
@@ -973,7 +973,7 @@ _ =
   ≡⟨⟩
     10
   ∎
-\end{code}
+```
 
 {::comment}
 Just as the list type has two constructors, `[]` and `_∷_`,
@@ -1003,14 +1003,14 @@ For example:
     product [ 1 , 2 , 3 , 4 ] ≡ 24
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `foldr-++` (recommended)
@@ -1023,11 +1023,11 @@ Show that fold and append are related as follows:
 {:/}
 
 证明折叠和附加有如下的关系：
-\begin{code}
+```
 postulate
   foldr-++ : ∀ {A B : Set} (_⊗_ : A → B → B) (e : B) (xs ys : List A) →
     foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ (foldr _⊗_ e ys) xs
-\end{code}
+```
 
 
 {::comment}
@@ -1041,11 +1041,11 @@ Show that map can be defined using fold:
 {:/}
 
 证明映射可以用折叠定义：
-\begin{code}
+```
 postulate
   map-is-foldr : ∀ {A B : Set} {f : A → B} →
     map f ≡ foldr (λ x xs → f x ∷ xs) []
-\end{code}
+```
 {::comment}
 This requires extensionality.
 {:/}
@@ -1063,21 +1063,21 @@ Define a suitable fold function for the type of trees given earlier:
 {:/}
 
 为之前给出的树数据类型定义一个折叠函数：
-\begin{code}
+```
 postulate
   fold-Tree : ∀ {A B C : Set}
     → (A → C) → (C → B → C → C) → Tree A B → C
-\end{code}
+```
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `map-is-fold-Tree`
@@ -1092,14 +1092,14 @@ Demonstrate an analogue of `map-is-foldr` for the type of trees.
 对于树数据类型，证明与 `map-is-foldr` 相似的性质。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `sum-downFrom` (stretch)
@@ -1112,20 +1112,20 @@ Define a function that counts down as follows:
 {:/}
 
 定义一个向下数数的函数：
-\begin{code}
+```
 downFrom : ℕ → List ℕ
 downFrom zero     =  []
 downFrom (suc n)  =  n ∷ downFrom n
-\end{code}
+```
 {::comment}
 For example:
 {:/}
 
 例如：
-\begin{code}
+```
 _ : downFrom 3 ≡ [ 2 , 1 , 0 ]
 _ = refl
-\end{code}
+```
 {::comment}
 Prove that the sum of the numbers `(n - 1) + ⋯ + 0` is
 equal to `n * (n ∸ 1) / 2`:
@@ -1133,11 +1133,11 @@ equal to `n * (n ∸ 1) / 2`:
 
 证明数列之和 `(n - 1) + ⋯ + 0` 等于 `n * (n ∸ 1) / 2`：
 
-\begin{code}
+```
 postulate
   sum-downFrom : ∀ (n : ℕ)
     → sum (downFrom n) * 2 ≡ n * (n ∸ 1)
-\end{code}
+```
 
 
 {::comment}
@@ -1160,7 +1160,7 @@ We can define a monoid as a suitable record type:
 {:/}
 
 我们可以用一个合适的记录类型来定义幺半群：
-\begin{code}
+```
 record IsMonoid {A : Set} (_⊗_ : A → A → A) (e : A) : Set where
   field
     assoc : ∀ (x y z : A) → (x ⊗ y) ⊗ z ≡ x ⊗ (y ⊗ z)
@@ -1168,7 +1168,7 @@ record IsMonoid {A : Set} (_⊗_ : A → A → A) (e : A) : Set where
     identityʳ : ∀ (x : A) → x ⊗ e ≡ x
 
 open IsMonoid
-\end{code}
+```
 
 {::comment}
 As examples, sum and zero, multiplication and one, and append and the empty
@@ -1176,7 +1176,7 @@ list, are all examples of monoids:
 {:/}
 
 举例来说，加法和零，乘法和一，附加和空列表，都是幺半群：
-\begin{code}
+```
 +-monoid : IsMonoid _+_ 0
 +-monoid =
   record
@@ -1200,7 +1200,7 @@ list, are all examples of monoids:
     ; identityˡ = ++-identityˡ
     ; identityʳ = ++-identityʳ
     }
-\end{code}
+```
 
 {::comment}
 If `_⊗_` and `e` form a monoid, then we can re-express fold on the
@@ -1209,7 +1209,7 @@ same operator and an arbitrary value:
 
 
 如果 `_⊗_` 和 `e` 构成一个幺半群，那么我们可以用相同的运算符和一个任意的值来表示折叠：
-\begin{code}
+```
 foldr-monoid : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) → IsMonoid _⊗_ e →
   ∀ (xs : List A) (y : A) → foldr _⊗_ y xs ≡ foldr _⊗_ e xs ⊗ y
 foldr-monoid _⊗_ e ⊗-monoid [] y =
@@ -1234,14 +1234,14 @@ foldr-monoid _⊗_ e ⊗-monoid (x ∷ xs) y =
   ≡⟨⟩
     foldr _⊗_ e (x ∷ xs) ⊗ y
   ∎
-\end{code}
+```
 
 {::comment}
 As a consequence, using a previous exercise, we have the following:
 {:/}
 
 使用之前练习中的一个结论，我们可以得到如下：
-\begin{code}
+```
 foldr-monoid-++ : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) → IsMonoid _⊗_ e →
   ∀ (xs ys : List A) → foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ e xs ⊗ foldr _⊗_ e ys
 foldr-monoid-++ _⊗_ e monoid-⊗ xs ys =
@@ -1252,7 +1252,7 @@ foldr-monoid-++ _⊗_ e monoid-⊗ xs ys =
   ≡⟨ foldr-monoid _⊗_ e monoid-⊗ xs (foldr _⊗_ e ys) ⟩
     foldr _⊗_ e xs ⊗ foldr _⊗_ e ys
   ∎
-\end{code}
+```
 
 {::comment}
 #### Exercise `foldl`
@@ -1271,14 +1271,14 @@ operations associate to the left rather than the right.  For example:
     foldl _⊗_ e [ x , y , z ]  =  ((e ⊗ x) ⊗ y) ⊗ z
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1296,14 +1296,14 @@ Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 永远是相同的。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1324,11 +1324,11 @@ Predicate `All P` holds if predicate `P` is satisfied by every element of a list
 {:/}
 
 谓词 `All P` 当列表里的所有元素满足 `P` 时成立：
-\begin{code}
+```
 data All {A : Set} (P : A → Set) : List A → Set where
   []  : All P []
   _∷_ : ∀ {x : A} {xs : List A} → P x → All P xs → All P (x ∷ xs)
-\end{code}
+```
 {::comment}
 The type has two constructors, reusing the names of the same constructors for lists.
 The first asserts that `P` holds for every element of the empty list.
@@ -1353,10 +1353,10 @@ suc n`, for any `m` and `n`:
 回忆 `z≤n` 证明了对于任意 `n`， `zero ≤ n` 成立；
 对于任意 `m` 和 `n`，如果 `m≤n` 证明了 `m ≤ n`，那么 `s≤s m≤n` 证明了 `suc m ≤
 suc n`:
-\begin{code}
+```
 _ : All (_≤ 2) [ 0 , 1 , 2 ]
 _ = z≤n ∷ s≤s z≤n ∷ s≤s (s≤s z≤n) ∷ []
-\end{code}
+```
 {::comment}
 Here `_∷_` and `[]` are the constructors of `All P` rather than of `List A`.
 The three items are proofs of `0 ≤ 2`, `1 ≤ 2`, and `2 ≤ 2`, respectively.
@@ -1389,11 +1389,11 @@ Predicate `Any P` holds if predicate `P` is satisfied by some element of a list:
 {:/}
 
 谓词 `Any P` 当列表里的一些元素满足 `P` 时成立：
-\begin{code}
+```
 data Any {A : Set} (P : A → Set) : List A → Set where
   here  : ∀ {x : A} {xs : List A} → P x → Any P (x ∷ xs)
   there : ∀ {x : A} {xs : List A} → Any P xs → Any P (x ∷ xs)
-\end{code}
+```
 {::comment}
 The first constructor provides evidence that the head of the list
 satisfies `P`, while the second provides evidence that some element of
@@ -1403,7 +1403,7 @@ membership as follows:
 
 第一个构造器证明了列表的头元素满足 `P`，第二个构造器证明的列表的尾列表中的一些元素满足 `P`。
 举例来说，我们可以如下定义列表的成员关系：
-\begin{code}
+```
 infix 4 _∈_ _∉_
 
 _∈_ : ∀ {A : Set} (x : A) (xs : List A) → Set
@@ -1411,7 +1411,7 @@ x ∈ xs = Any (x ≡_) xs
 
 _∉_ : ∀ {A : Set} (x : A) (xs : List A) → Set
 x ∉ xs = ¬ (x ∈ xs)
-\end{code}
+```
 {::comment}
 For example, zero is an element of the list `[ 0 , 1 , 0 , 2 ]`.  Indeed, we can demonstrate
 this fact in two different ways, corresponding to the two different
@@ -1421,27 +1421,27 @@ occurrences of zero in the list, as the first element and as the third element:
 比如说，零是列表 `[ 0 , 1 , 0 , 2 ]` 中的一个元素。
 我们可以用两种方法来展示这个事实，对应零在列表中出现了两次：第一个元素和第三个元素：
 
-\begin{code}
+```
 _ : 0 ∈ [ 0 , 1 , 0 , 2 ]
 _ = here refl
 
 _ : 0 ∈ [ 0 , 1 , 0 , 2 ]
 _ = there (there (here refl))
-\end{code}
+```
 {::comment}
 Further, we can demonstrate that three is not in the list, because
 any possible proof that it is in the list leads to contradiction:
 {:/}
 
 除此之外，我们可以展示三不在列表之中，因为任何它在列表中的证明会推导出矛盾：
-\begin{code}
+```
 not-in : 3 ∉ [ 0 , 1 , 0 , 2 ]
 not-in (here ())
 not-in (there (here ()))
 not-in (there (there (here ())))
 not-in (there (there (there (here ()))))
 not-in (there (there (there (there ()))))
-\end{code}
+```
 {::comment}
 The five occurrences of `()` attest to the fact that there is no
 possible evidence for `3 ≡ 0`, `3 ≡ 1`, `3 ≡ 0`, `3 ≡ 2`, and
@@ -1463,7 +1463,7 @@ only if it holds for every element of both lists:
 {:/}
 
 一个谓词对两个附加在一起的列表的每个元素都成立，当且仅当这个谓词对两个列表的每个元素都成立：
-\begin{code}
+```
 All-++-⇔ : ∀ {A : Set} {P : A → Set} (xs ys : List A) →
   All P (xs ++ ys) ⇔ (All P xs × All P ys)
 All-++-⇔ xs ys =
@@ -1483,7 +1483,7 @@ All-++-⇔ xs ys =
     All P xs × All P ys → All P (xs ++ ys)
   from [] ys ⟨ [] , Pys ⟩ = Pys
   from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩ =  Px ∷ from xs ys ⟨ Pxs , Pys ⟩
-\end{code}
+```
 
 {::comment}
 #### Exercise `Any-++-⇔` (recommended)
@@ -1500,14 +1500,14 @@ replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 作为结论，展示关联 `_∈_` 和 `_++_` 的一个等价关系。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `All-++-≃` (stretch)
@@ -1522,14 +1522,14 @@ Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
 证明 `All-++-⇔` 的等价关系可以被扩展至一个同构关系。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `¬Any≃All¬` (stretch)
@@ -1543,22 +1543,22 @@ First generalise composition to arbitrary levels, using
 {:/}
 
 首先我们将函数组合使用[全体多态][plfa.Equality#unipoly]推广到任意等级：
-\begin{code}
+```
 _∘′_ : ∀ {ℓ₁ ℓ₂ ℓ₃ : Level} {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃}
   → (B → C) → (A → B) → A → C
 (g ∘′ f) x  =  g (f x)
-\end{code}
+```
 
 {::comment}
 Show that `Any` and `All` satisfy a version of De Morgan's Law:
 {:/}
 
 证明 `Any` 和 `All` 满足某个形式的德摩根定律：
-\begin{code}
+```
 postulate
   ¬Any≃All¬ : ∀ {A : Set} (P : A → Set) (xs : List A)
     → (¬_ ∘′ Any P) xs ≃ All (¬_ ∘′ P) xs
-\end{code}
+```
 
 {::comment}
 Do we also have the following?
@@ -1566,11 +1566,11 @@ Do we also have the following?
 
 下列命题是否成立？
 
-\begin{code}
+```
 postulate
   ¬All≃Any¬ : ∀ {A : Set} (P : A → Set) (xs : List A)
     → (¬_ ∘′ All P) xs ≃ Any (¬_ ∘′ P) xs
-\end{code}
+```
 {::comment}
 If so, prove; if not, explain why.
 {:/}
@@ -1593,10 +1593,10 @@ a given predicate returns true for every element of a list:
 如果我们将一个谓词看作一个返回布尔值的函数，那么我们可以简单的定义一个类似于 `All`
 的函数，其当给定谓词对于列表每个元素返回真时返回真：
 
-\begin{code}
+```
 all : ∀ {A : Set} → (A → Bool) → List A → Bool
 all p  =  foldr _∧_ true ∘ map p
-\end{code}
+```
 {::comment}
 The function can be written in a particularly compact style by
 using the higher-order functions `map` and `foldr`.
@@ -1616,24 +1616,24 @@ if we have a function that for a given `x` can decide `P x`:
 当作一个类型为 `A → Set` 的函数的概念，将一个类型为 `A` 的值 `x` 转换成 `P x` 对 `x` 成立
 的证明。我们成 `P` 为**可判定的**（Decidable），如果我们有一个函数，其在给定 `x` 时能够判定 `P x`：
 
-\begin{code}
+```
 Decidable : ∀ {A : Set} → (A → Set) → Set
 Decidable {A} P  =  ∀ (x : A) → Dec (P x)
-\end{code}
+```
 {::comment}
 Then if predicate `P` is decidable, it is also decidable whether every
 element of a list satisfies the predicate:
 {:/}
 
 那么当谓词 `P` 可判定时，我们亦可判定列表中的每一个元素是否满足这个谓词：
-\begin{code}
+```
 All? : ∀ {A : Set} {P : A → Set} → Decidable P → Decidable (All P)
 All? P? []                                 =  yes []
 All? P? (x ∷ xs) with P? x   | All? P? xs
 ...                 | yes Px | yes Pxs     =  yes (Px ∷ Pxs)
 ...                 | no ¬Px | _           =  no λ{ (Px ∷ Pxs) → ¬Px Px   }
 ...                 | _      | no ¬Pxs     =  no λ{ (Px ∷ Pxs) → ¬Pxs Pxs }
-\end{code}
+```
 {::comment}
 If the list is empty, then trivially `P` holds for every element of
 the list.  Otherwise, the structure of the proof is similar to that
@@ -1665,14 +1665,14 @@ for some element of a list.  Give their definitions.
 给出它们的定义。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1688,14 +1688,14 @@ Show that `All P xs` is isomorphic to `∀ {x} → x ∈ xs → P x`.
 证明 `All P xs` 与 `∀ {x} → x ∈ xs → P x` 同构。
 
 {::comment}
-\begin{code}
+```
 -- You code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1711,14 +1711,14 @@ Show that `Any P xs` is isomorphic to `∃[ x ∈ xs ] P x`.
 证明 `Any P xs` 与 `∃[ x ∈ xs ] P x` 同构。
 
 {::comment}
-\begin{code}
+```
 -- You code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -1735,11 +1735,11 @@ list satisfying the predicate:
 
 定义下面给出的列表 `filter` 函数的变种，给定一个可判定的谓词和一个列表，返回列表中所有满足
 谓词的元素：
-\begin{code}
+```
 postulate
   filter? : ∀ {A : Set} {P : A → Set}
     → (P? : Decidable P) → List A → ∃[ ys ]( All P ys )
-\end{code}
+```
 
 
 {::comment}
@@ -1753,7 +1753,7 @@ Definitions similar to those in this chapter can be found in the standard librar
 {:/}
 
 标准库中可以找到与本章节中相似的定义：
-\begin{code}
+```
 import Data.List using (List; _++_; length; reverse; map; foldr; downFrom)
 import Data.List.All using (All; []; _∷_)
 import Data.List.Any using (Any; here; there)
@@ -1764,7 +1764,7 @@ import Data.List.Properties
 import Algebra.Structures using (IsMonoid)
 import Relation.Unary using (Decidable)
 import Relation.Binary using (Decidable)
-\end{code}
+```
 {::comment}
 The standard library version of `IsMonoid` differs from the
 one given here, in that it is also parameterised on an equivalence relation.

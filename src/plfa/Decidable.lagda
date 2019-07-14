@@ -8,9 +8,9 @@ translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Decidable where
-\end{code}
+```
 
 {::comment}
 We have a choice as to how to represent relations:
@@ -33,7 +33,7 @@ of a new notion of _decidable_.
 
 ## 导入
 
-\begin{code}
+```
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open Eq.≡-Reasoning
@@ -47,7 +47,7 @@ open import Data.Unit using (⊤; tt)
 open import Data.Empty using (⊥; ⊥-elim)
 open import plfa.Relations using (_<_; z<s; s<s)
 open import plfa.Isomorphism using (_⇔_)
-\end{code}
+```
 
 {::comment}
 ## Evidence vs Computation
@@ -65,7 +65,7 @@ is less than or equal to another:
 回忆我们在 [Relations][plfa.Relations] 章节中将比较定义为一个归纳数据类型，
 其提供了一个数小于或等于另外一个数的证明：
 
-\begin{code}
+```
 infix 4 _≤_
 
 data _≤_ : ℕ → ℕ → Set where
@@ -78,7 +78,7 @@ data _≤_ : ℕ → ℕ → Set where
     → m ≤ n
       -------------
     → suc m ≤ suc n
-\end{code}
+```
 {::comment}
 For example, we can provide evidence that `2 ≤ 4`,
 and show there is no possible evidence that `4 ≤ 2`:
@@ -86,13 +86,13 @@ and show there is no possible evidence that `4 ≤ 2`:
 
 举例来说，我们提供 `2 ≤ 4` 成立的证明，也可以证明没有 `4 ≤ 2` 成立的证明。
 
-\begin{code}
+```
 2≤4 : 2 ≤ 4
 2≤4 = s≤s (s≤s z≤n)
 
 ¬4≤2 : ¬ (4 ≤ 2)
 ¬4≤2 (s≤s (s≤s ()))
-\end{code}
+```
 {::comment}
 The occurrence of `()` attests to the fact that there is
 no possible evidence for `2 ≤ 0`, which `z≤n` cannot match
@@ -110,11 +110,11 @@ type of booleans:
 
 作为替代的定义，我们可以定义一个大家可能比较熟悉的布尔类型：
 
-\begin{code}
+```
 data Bool : Set where
   true  : Bool
   false : Bool
-\end{code}
+```
 {::comment}
 Given booleans, we can define a function of two numbers that
 _computes_ to `true` if the comparison holds and to `false` otherwise:
@@ -123,14 +123,14 @@ _computes_ to `true` if the comparison holds and to `false` otherwise:
 给定了布尔类型，我们可以定义一个两个数的函数在比较关系成立时来*计算*出 `true`，
 否则计算出 `false`：
 
-\begin{code}
+```
 infix 4 _≤ᵇ_
 
 _≤ᵇ_ : ℕ → ℕ → Bool
 zero ≤ᵇ n       =  true
 suc m ≤ᵇ zero   =  false
 suc m ≤ᵇ suc n  =  m ≤ᵇ n
-\end{code}
+```
 {::comment}
 The first and last clauses of this definition resemble the two
 constructors of the corresponding inductive datatype, while the
@@ -144,7 +144,7 @@ and we can compute that `4 ≤ᵇ 2` does not hold:
 `suc m ≤ zero` 的证明，我们使用中间一条定义来表示。
 举个例子，我们可以计算 `2 ≤ᵇ 4` 成立，也可以计算 `4 ≤ᵇ 2` 不成立：
 
-\begin{code}
+```
 _ : (2 ≤ᵇ 4) ≡ true
 _ =
   begin
@@ -168,7 +168,7 @@ _ =
   ≡⟨⟩
     false
   ∎
-\end{code}
+```
 {::comment}
 In the first case, it takes two steps to reduce the first argument to zero,
 and one more step to compute true, corresponding to the two uses of `s≤s`
@@ -198,11 +198,11 @@ computation world to the evidence world:
 我们希望能够证明这两种方法是有联系的，而我们的确可以。
 首先，我们定义一个函数来把计算世界映射到证明世界：
 
-\begin{code}
+```
 T : Bool → Set
 T true   =  ⊤
 T false  =  ⊥
-\end{code}
+```
 {::comment}
 Recall that `⊤` is the unit type which contains the single element `tt`,
 and the `⊥` is the empty type which contains no values.  (Also note that
@@ -223,11 +223,11 @@ In the forward direction, we need to do a case analysis on the boolean `b`:
 
 换句话说，`T b` 当且仅当 `b ≡ true` 成立时成立。在向前的方向，我们需要针对 `b` 进行情况分析：
 
-\begin{code}
+```
 T→≡ : ∀ (b : Bool) → T b → b ≡ true
 T→≡ true tt   =  refl
 T→≡ false ()
-\end{code}
+```
 {::comment}
 If `b` is true then `T b` is inhabited by `tt` and `b ≡ true` is inhabited
 by `refl`, while if `b` is false then `T b` in uninhabited.
@@ -242,10 +242,10 @@ In the reverse direction, there is no need for a case analysis on the boolean `b
 
 在向后的方向，不需要针对布尔值 `b` 的情况分析：
 
-\begin{code}
+```
 ≡→T : ∀ {b : Bool} → b ≡ true → T b
 ≡→T refl  =  tt
-\end{code}
+```
 {::comment}
 If `b ≡ true` is inhabited by `refl` we know that `b` is `true` and
 hence `T b` is inhabited by `tt`.
@@ -266,12 +266,12 @@ of `_≤ᵇ_`:
 
 在向前的方向，我们考虑 `_≤ᵇ_` 定义中的三条语句：
 
-\begin{code}
+```
 ≤ᵇ→≤ : ∀ (m n : ℕ) → T (m ≤ᵇ n) → m ≤ n
 ≤ᵇ→≤ zero    n       tt  =  z≤n
 ≤ᵇ→≤ (suc m) zero    ()
 ≤ᵇ→≤ (suc m) (suc n) t   =  s≤s (≤ᵇ→≤ m n t)
-\end{code}
+```
 {::comment}
 In the first clause, we immediately have that `zero ≤ᵇ n` is
 true, so `T (m ≤ᵇ n)` is evidenced by `tt`, and correspondingly `m ≤ n` is
@@ -299,11 +299,11 @@ that `m ≤ n`:
 
 在向后的方向，我们考虑 `m ≤ n` 成立证明的可能形式：
 
-\begin{code}
+```
 ≤→≤ᵇ : ∀ {m n : ℕ} → m ≤ n → T (m ≤ᵇ n)
 ≤→≤ᵇ z≤n        =  tt
 ≤→≤ᵇ (s≤s m≤n)  =  ≤→≤ᵇ m≤n
-\end{code}
+```
 {::comment}
 If the evidence is `z≤n` then we immediately have that `zero ≤ᵇ n` is
 true, so `T (m ≤ᵇ n)` is evidenced by `tt`. If the evidence is `s≤s`
@@ -360,11 +360,11 @@ both approaches.  It is called `Dec A`, where `Dec` is short for _decidable_:
 为什么这个关系成立，但是我们需要自行完成这样的证明。但是我们可以简单地来定义一个类型来取二者之精华。
 我们把它叫做：`Dec A`，其中 `Dec` 是*可判定的*（Decidable）的意思。
 
-\begin{code}
+```
 data Dec (A : Set) : Set where
   yes :   A → Dec A
   no  : ¬ A → Dec A
-\end{code}
+```
 {::comment}
 Like booleans, the type has two constructors.  A value of type `Dec A`
 is either of the form `yes x`, where `x` provides evidence that `A` holds,
@@ -390,13 +390,13 @@ an inequality does not hold:
 
 首先，我们使用两个有用的函数，用于构造不等式不成立的证明：
 
-\begin{code}
+```
 ¬s≤z : ∀ {m : ℕ} → ¬ (suc m ≤ zero)
 ¬s≤z ()
 
 ¬s≤s : ∀ {m n : ℕ} → ¬ (m ≤ n) → ¬ (suc m ≤ suc n)
 ¬s≤s ¬m≤n (s≤s m≤n) = ¬m≤n m≤n
-\end{code}
+```
 {::comment}
 The first of these asserts that `¬ (suc m ≤ zero)`, and follows by
 absurdity, since any evidence of inequality has the form `zero ≤ n`
@@ -419,14 +419,14 @@ Using these, it is straightforward to decide an inequality:
 
 使用这些，我们可以直接的判定不等关系：
 
-\begin{code}
+```
 _≤?_ : ∀ (m n : ℕ) → Dec (m ≤ n)
 zero  ≤? n                   =  yes z≤n
 suc m ≤? zero                =  no ¬s≤z
 suc m ≤? suc n with m ≤? n
 ...               | yes m≤n  =  yes (s≤s m≤n)
 ...               | no ¬m≤n  =  no (¬s≤s ¬m≤n)
-\end{code}
+```
 {::comment}
 As with `_≤ᵇ_`, the definition has three clauses.  In the first
 clause, it is immediate that `zero ≤ n` holds, and it is evidenced by
@@ -467,13 +467,13 @@ think up on our own:
 
 我们可以使用我们新的函数来*计算*出我们之前需要自己想出来的*证明*。
 
-\begin{code}
+```
 _ : 2 ≤? 4 ≡ yes (s≤s (s≤s z≤n))
 _ = refl
 
 _ : 4 ≤? 2 ≡ no (¬s≤s (¬s≤s ¬s≤z))
 _ = refl
-\end{code}
+```
 {::comment}
 You can check that Agda will indeed compute these values.  Typing
 `C-c C-n` and providing `2 ≤? 4` or `4 ≤? 2` as the requested expression
@@ -505,20 +505,20 @@ Analogous to the function above, define a function to decide strict inequality:
 
 与上面的函数相似，定义一个判定严格不等性的函数：
 
-\begin{code}
+```
 postulate
   _<?_ : ∀ (m n : ℕ) → Dec (m < n)
-\end{code}
+```
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `_≡ℕ?_`
@@ -532,20 +532,20 @@ Define a function to decide whether two naturals are equal:
 
 定义一个函数来判定两个自然数是否相等。
 
-\begin{code}
+```
 postulate
   _≡ℕ?_ : ∀ (m n : ℕ) → Dec (m ≡ n)
-\end{code}
+```
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 {::comment}
@@ -563,12 +563,12 @@ decidability.  Indeed, we can do so as follows:
 好奇的读者可能会思考能不能重用 `m ≤ᵇ n` 的定义，加上它与 `m ≤ n` 等价的证明，
 来证明可判定性。的确，我们是可以做到的：
 
-\begin{code}
+```
 _≤?′_ : ∀ (m n : ℕ) → Dec (m ≤ n)
 m ≤?′ n with m ≤ᵇ n | ≤ᵇ→≤ m n | ≤→≤ᵇ {m} {n}
 ...        | true   | p        | _            = yes (p tt)
 ...        | false  | _        | ¬p           = no ¬p
-\end{code}
+```
 {::comment}
 If `m ≤ᵇ n` is true then `≤ᵇ→≤` yields a proof that `m ≤ n` holds,
 while if it is false then `≤→≤ᵇ` takes a proof that `m ≤ n` holds into a contradiction.
@@ -625,21 +625,21 @@ Erasure takes a decidable value to a boolean:
 
 擦除（Erasure）将一个可判定的值转换为一个布尔值：
 
-\begin{code}
+```
 ⌊_⌋ : ∀ {A : Set} → Dec A → Bool
 ⌊ yes x ⌋  =  true
 ⌊ no ¬x ⌋  =  false
-\end{code}
+```
 {::comment}
 Using erasure, we can easily derive `_≤ᵇ_` from `_≤?_`:
 {:/}
 
 使用擦除，我们可以简单地从 `_≤?_` 中派生出 `_≤ᵇ_`：
 
-\begin{code}
+```
 _≤ᵇ′_ : ℕ → ℕ → Bool
 m ≤ᵇ′ n  =  ⌊ m ≤? n ⌋
-\end{code}
+```
 
 {::comment}
 Further, if `D` is a value of type `Dec A`, then `T ⌊ D ⌋` is
@@ -648,7 +648,7 @@ inhabited exactly when `A` is inhabited:
 
 更进一步来说，如果 `D` 是一个类型为 `Dec A` 的值，那么 `T ⌊ D ⌋`
 当且仅当 `A` 成立时成立：
-\begin{code}
+```
 toWitness : ∀ {A : Set} {D : Dec A} → T ⌊ D ⌋ → A
 toWitness {A} {yes x} tt  =  x
 toWitness {A} {no ¬x} ()
@@ -656,7 +656,7 @@ toWitness {A} {no ¬x} ()
 fromWitness : ∀ {A : Set} {D : Dec A} → A → T ⌊ D ⌋
 fromWitness {A} {yes x} _  =  tt
 fromWitness {A} {no ¬x} x  =  ¬x x
-\end{code}
+```
 {::comment}
 Using these, we can easily derive that `T (m ≤ᵇ′ n)` is inhabited
 exactly when `m ≤ n` is inhabited:
@@ -664,13 +664,13 @@ exactly when `m ≤ n` is inhabited:
 
 使用这些，我们可以简单地派生出 `T (m ≤ᵇ′ n)` 当且仅当 `m ≤ n` 成立时成立。
 
-\begin{code}
+```
 ≤ᵇ′→≤ : ∀ {m n : ℕ} → T (m ≤ᵇ′ n) → m ≤ n
 ≤ᵇ′→≤  =  toWitness
 
 ≤→≤ᵇ′ : ∀ {m n : ℕ} → m ≤ n → T (m ≤ᵇ′ n)
 ≤→≤ᵇ′  =  fromWitness
-\end{code}
+```
 
 {::comment}
 In summary, it is usually best to eschew booleans and rely on decidables.
@@ -700,14 +700,14 @@ and false if either is false:
 
 两个布尔值的合取当两者都为真时为真，当任一为假时为假：
 
-\begin{code}
+```
 infixr 6 _∧_
 
 _∧_ : Bool → Bool → Bool
 true  ∧ true  = true
 false ∧ _     = false
 _     ∧ false = false
-\end{code}
+```
 {::comment}
 In Emacs, the left-hand side of the third equation displays in grey,
 indicating that the order of the equations determines which of the
@@ -725,14 +725,14 @@ decide their conjunction:
 
 相应地，给定两个可判定的命题，我们可以判定它们的合取：
 
-\begin{code}
+```
 infixr 6 _×-dec_
 
 _×-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A × B)
 yes x ×-dec yes y = yes ⟨ x , y ⟩
 no ¬x ×-dec _     = no λ{ ⟨ x , y ⟩ → ¬x x }
 _     ×-dec no ¬y = no λ{ ⟨ x , y ⟩ → ¬y y }
-\end{code}
+```
 {::comment}
 The conjunction of two propositions holds if they both hold,
 and its negation holds if the negation of either holds.
@@ -763,14 +763,14 @@ and false if both are false:
 
 两个布尔值的析取当任意为真时为真，当两者为假时为假：
 
-\begin{code}
+```
 infixr 5 _∨_
 
 _∨_ : Bool → Bool → Bool
 true  ∨ _      = true
 _     ∨ true   = true
 false ∨ false  = false
-\end{code}
+```
 {::comment}
 In Emacs, the left-hand side of the second equation displays in grey,
 indicating that the order of the equations determines which of the
@@ -788,14 +788,14 @@ decide their disjunction:
 
 相应地，给定两个可判定的命题，我们可以判定它们的析取：
 
-\begin{code}
+```
 infixr 5 _⊎-dec_
 
 _⊎-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⊎ B)
 yes x ⊎-dec _     = yes (inj₁ x)
 _     ⊎-dec yes y = yes (inj₂ y)
 no ¬x ⊎-dec no ¬y = no λ{ (inj₁ x) → ¬x x ; (inj₂ y) → ¬y y }
-\end{code}
+```
 {::comment}
 The disjunction of two propositions holds if either holds,
 and its negation holds if the negation of both hold.
@@ -826,11 +826,11 @@ and vice versa:
 
 一个布尔值的否定当值为真时为假，反之亦然：
 
-\begin{code}
+```
 not : Bool → Bool
 not true  = false
 not false = true
-\end{code}
+```
 {::comment}
 Correspondingly, given a decidable proposition, we
 can decide its negation:
@@ -838,11 +838,11 @@ can decide its negation:
 
 相应地，给定一个可判定的命题，我们可以判定它的否定：
 
-\begin{code}
+```
 ¬? : ∀ {A : Set} → Dec A → Dec (¬ A)
 ¬? (yes x)  =  no (¬¬-intro x)
 ¬? (no ¬x)  =  yes ¬x
-\end{code}
+```
 {::comment}
 We simply swap yes and no.  In the first equation,
 the right-hand side asserts that the negation of `¬ A` holds,
@@ -860,12 +860,12 @@ corresponding to implication:
 
 还有一个与蕴含相对应，但是稍微不那么知名的运算符：
 
-\begin{code}
+```
 _⊃_ : Bool → Bool → Bool
 _     ⊃ true   =  true
 false ⊃ _      =  true
 true  ⊃ false  =  false
-\end{code}
+```
 {::comment}
 One boolean implies another if
 whenever the first is true then the second is true.
@@ -890,12 +890,12 @@ we can decide if the first implies the second:
 
 相应地，给定两个可判定的命题，我们可以判定它们的析取：
 
-\begin{code}
+```
 _→-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A → B)
 _     →-dec yes y  =  yes (λ _ → y)
 no ¬x →-dec _      =  yes (λ x → ⊥-elim (¬x x))
 yes x →-dec no ¬y  =  no (λ f → ¬y (f x))
-\end{code}
+```
 {::comment}
 The implication holds if either the second holds or
 the negation of the first holds, and its negation
@@ -940,12 +940,12 @@ Show that erasure relates corresponding boolean and decidable operations:
 
 证明擦除将对应的布尔值和可判定的值的操作联系了起来：
 
-\begin{code}
+```
 postulate
   ∧-× : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∧ ⌊ y ⌋ ≡ ⌊ x ×-dec y ⌋
   ∨-⊎ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∨ ⌊ y ⌋ ≡ ⌊ x ⊎-dec y ⌋
   not-¬ : ∀ {A : Set} (x : Dec A) → not ⌊ x ⌋ ≡ ⌊ ¬? x ⌋
-\end{code}
+```
 
 {::comment}
 #### Exercise `iff-erasure` (recommended)
@@ -962,22 +962,22 @@ operation on booleans and decidables, and also show the corresponding erasure:
 给出与 [Isomorphism][plfa.Isomorphism#iff] 章节中 `_↔_` 相对应的布尔值与可判定的值的操作，
 并证明其对应的擦除：
 
-\begin{code}
+```
 postulate
   _iff_ : Bool → Bool → Bool
   _⇔-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⇔ B)
   iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋
-\end{code}
+```
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 ## Standard Library
@@ -985,7 +985,7 @@ postulate
 
 ## 标准库
 
-\begin{code}
+```
 import Data.Bool.Base using (Bool; true; false; T; _∧_; _∨_; not)
 import Data.Nat using (_≤?_)
 import Relation.Nullary using (Dec; yes; no)
@@ -994,7 +994,7 @@ import Relation.Nullary.Negation using (¬?)
 import Relation.Nullary.Product using (_×-dec_)
 import Relation.Nullary.Sum using (_⊎-dec_)
 import Relation.Binary using (Decidable)
-\end{code}
+```
 
 
 ## Unicode

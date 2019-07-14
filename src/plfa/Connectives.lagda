@@ -8,9 +8,9 @@ translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Connectives where
-\end{code}
+```
 
 <!-- The ⊥ ⊎ A ≅ A exercise requires a (inj₁ ()) pattern,
      which the reader will not have seen. Restore this
@@ -47,7 +47,7 @@ principle known as _Propositions as Types_:
 
 ## 导入
 
-\begin{code}
+```
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open Eq.≡-Reasoning
@@ -55,7 +55,7 @@ open import Data.Nat using (ℕ)
 open import Function using (_∘_)
 open import plfa.Isomorphism using (_≃_; _≲_; extensionality)
 open plfa.Isomorphism.≃-Reasoning
-\end{code}
+```
 
 
 {::comment}
@@ -73,7 +73,7 @@ declaring a suitable inductive type:
 给定两个命题 `A` 和 `B`，其合取 `A × B` 成立当 `A` 成立和 `B` 成立。
 我们将这样的概念形式化，使用如下的归纳类型：
 
-\begin{code}
+```
 data _×_ (A B : Set) : Set where
 
   ⟨_,_⟩ :
@@ -81,7 +81,7 @@ data _×_ (A B : Set) : Set where
     → B
       -----
     → A × B
-\end{code}
+```
 {::comment}
 Evidence that `A × B` holds is of the form `⟨ M , N ⟩`, where `M`
 provides evidence that `A` holds and `N` provides evidence that `B`
@@ -98,7 +98,7 @@ Given evidence that `A × B` holds, we can conclude that either
 
 给定 `A × B` 成立的证明，我们可以得出 `A` 成立或者 `B` 成立。
 
-\begin{code}
+```
 proj₁ : ∀ {A B : Set}
   → A × B
     -----
@@ -110,7 +110,7 @@ proj₂ : ∀ {A B : Set}
     -----
   → B
 proj₂ ⟨ x , y ⟩ = y
-\end{code}
+```
 
 {::comment}
 If `L` provides evidence that `A × B` holds, then `proj₁ L` provides evidence
@@ -126,13 +126,13 @@ Equivalently, we could also declare conjunction as a record type:
 
 等价地，我们亦可以将合取定义为一个记录类型：
 
-\begin{code}
+```
 record _×′_ (A B : Set) : Set where
   field
     proj₁′ : A
     proj₂′ : B
 open _×′_
-\end{code}
+```
 {::comment}
 Here record construction
 {:/}
@@ -207,10 +207,10 @@ constructor is the identity over products:
 
 在这样的情况下，先使用析构器，再使用构造器将结果重组，得到还是原来的积。
 
-\begin{code}
+```
 η-× : ∀ {A B : Set} (w : A × B) → ⟨ proj₁ w , proj₂ w ⟩ ≡ w
 η-× ⟨ x , y ⟩ = refl
-\end{code}
+```
 {::comment}
 The pattern matching on the left-hand side is essential, since
 replacing `w` by `⟨ x , y ⟩` allows both sides of the
@@ -226,9 +226,9 @@ tightly than anything save disjunction:
 
 我们设置合取的优先级，使它与除了析取之外结合的都不紧密：
 
-\begin{code}
+```
 infixr 2 _×_
-\end{code}
+```
 {::comment}
 Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
 {:/}
@@ -253,7 +253,7 @@ a type `Tri` with three members:
 那么类型 `A × B` 有 `m * n` 个不同的成员。这也是它被称为积的原因之一。
 例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型：
 
-\begin{code}
+```
 data Bool : Set where
   true  : Bool
   false : Bool
@@ -262,7 +262,7 @@ data Tri : Set where
   aa : Tri
   bb : Tri
   cc : Tri
-\end{code}
+```
 {::comment}
 Then the type `Bool × Tri` has six members:
 {:/}
@@ -279,7 +279,7 @@ possible arguments of type `Bool × Tri`:
 
 下面的函数枚举了所有类型为 `Bool × Tri` 的参数：
 
-\begin{code}
+```
 ×-count : Bool × Tri → ℕ
 ×-count ⟨ true  , aa ⟩  =  1
 ×-count ⟨ true  , bb ⟩  =  2
@@ -287,7 +287,7 @@ possible arguments of type `Bool × Tri`:
 ×-count ⟨ false , aa ⟩  =  4
 ×-count ⟨ false , bb ⟩  =  5
 ×-count ⟨ false , cc ⟩  =  6
-\end{code}
+```
 
 {::comment}
 Product on types also shares a property with product on numbers in
@@ -312,7 +312,7 @@ and similarly for `to∘from`:
 在 `from∘to` 和 `to∘from` 中正确地实例化要匹配的模式是很重要的。
 使用 `λ w → refl` 作为 `from∘to` 的定义是不可行的，`to∘from` 同理。
 
-\begin{code}
+```
 ×-comm : ∀ {A B : Set} → A × B ≃ B × A
 ×-comm =
   record
@@ -321,7 +321,7 @@ and similarly for `to∘from`:
     ; from∘to  =  λ{ ⟨ x , y ⟩ → refl }
     ; to∘from  =  λ{ ⟨ y , x ⟩ → refl }
     }
-\end{code}
+```
 
 {::comment}
 Being _commutative_ is different from being _commutative up to
@@ -357,7 +357,7 @@ matching against a suitable pattern to enable simplification:
 对于结合律来说，`to` 函数将两个有序对进行重组：将 `⟨ ⟨ x , y ⟩ , z ⟩` 转换为 `⟨ x , ⟨ y , z ⟩ ⟩`，
 `from` 函数则为其逆。同样，左逆和右逆的证明需要在一个合适的模式来匹配，从而可以直接化简：
 
-\begin{code}
+```
 ×-assoc : ∀ {A B C : Set} → (A × B) × C ≃ A × (B × C)
 ×-assoc =
   record
@@ -366,7 +366,7 @@ matching against a suitable pattern to enable simplification:
     ; from∘to = λ{ ⟨ ⟨ x , y ⟩ , z ⟩ → refl }
     ; to∘from = λ{ ⟨ x , ⟨ y , z ⟩ ⟩ → refl }
     }
-\end{code}
+```
 
 {::comment}
 Being _associative_ is not the same as being _associative
@@ -403,14 +403,14 @@ is isomorphic to `(A → B) × (B → A)`.
 证明[之前][plfa.Isomorphism#iff]定义的 `A ⇔ B` 与 `(A → B) × (B → A)` 同构。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 ## Truth is unit
@@ -425,13 +425,13 @@ declaring a suitable inductive type:
 
 恒真 `⊤` 恒成立。我们将这个概念用合适的归纳类型来形式化：
 
-\begin{code}
+```
 data ⊤ : Set where
 
   tt :
     --
     ⊤
-\end{code}
+```
 {::comment}
 Evidence that `⊤` holds is of the form `tt`.
 {:/}
@@ -455,10 +455,10 @@ value of type `⊤` must be equal to `tt`:
 
 `η-×` 的 零元形式是 `η-⊤`，其断言了任何 `⊤` 类型的值一定等于 `tt`：
 
-\begin{code}
+```
 η-⊤ : ∀ (w : ⊤) → tt ≡ w
 η-⊤ tt = refl
-\end{code}
+```
 {::comment}
 The pattern matching on the left-hand side is essential.  Replacing
 `w` by `tt` allows both sides of the propositional equality to
@@ -476,10 +476,10 @@ function enumerates all possible arguments of type `⊤`:
 例如，下面的函数枚举了所有 `⊤` 类型的参数：
 
 {:/}
-\begin{code}
+```
 ⊤-count : ⊤ → ℕ
 ⊤-count tt = 1
-\end{code}
+```
 
 {::comment}
 For numbers, one is the identity of multiplication. Correspondingly,
@@ -493,7 +493,7 @@ matching against a suitable pattern to enable simplification:
 `to` 函数将 `⟨ tt , x ⟩` 转换成 `x`， `from` 函数则是其反函数。左逆的证明需要
 匹配一个合适的模式来化简：
 
-\begin{code}
+```
 ⊤-identityˡ : ∀ {A : Set} → ⊤ × A ≃ A
 ⊤-identityˡ =
   record
@@ -502,7 +502,7 @@ matching against a suitable pattern to enable simplification:
     ; from∘to = λ{ ⟨ tt , x ⟩ → refl }
     ; to∘from = λ{ x → refl }
     }
-\end{code}
+```
 
 {::comment}
 Having an _identity_ is different from having an identity
@@ -533,7 +533,7 @@ Right identity follows from commutativity of product and left identity:
 
 右幺元可以由积的交换律得来：
 
-\begin{code}
+```
 ⊤-identityʳ : ∀ {A : Set} → (A × ⊤) ≃ A
 ⊤-identityʳ {A} =
   ≃-begin
@@ -543,7 +543,7 @@ Right identity follows from commutativity of product and left identity:
   ≃⟨ ⊤-identityˡ ⟩
     A
   ≃-∎
-\end{code}
+```
 {::comment}
 Here we have used a chain of isomorphisms, analogous to that used for
 equality.
@@ -566,7 +566,7 @@ declaring a suitable inductive type:
 给定两个命题 `A` 和 `B`，析取 `A ⊎ B` 在 `A` 成立或者 `B` 成立时成立。
 我们将这个概念用合适的归纳类型来形式化：
 
-\begin{code}
+```
 data _⊎_ (A B : Set) : Set where
 
   inj₁ :
@@ -578,7 +578,7 @@ data _⊎_ (A B : Set) : Set where
       B
       -----
     → A ⊎ B
-\end{code}
+```
 {::comment}
 Evidence that `A ⊎ B` holds is either of the form `inj₁ M`, where `M`
 provides evidence that `A` holds, or `inj₂ N`, where `N` provides
@@ -595,7 +595,7 @@ evidence that `A ⊎ B` holds we can conclude that `C` holds:
 
 给定 `A → C` 和 `B → C` 成立的证明，那么给定一个 `A ⊎ B` 的证明，我们可以得出 `C` 成立：
 
-\begin{code}
+```
 case-⊎ : ∀ {A B C : Set}
   → (A → C)
   → (B → C)
@@ -604,7 +604,7 @@ case-⊎ : ∀ {A B C : Set}
   → C
 case-⊎ f g (inj₁ x) = f x
 case-⊎ f g (inj₂ y) = g y
-\end{code}
+```
 {::comment}
 Pattern matching against `inj₁` and `inj₂` is typical of how we exploit
 evidence that a disjunction holds.
@@ -634,23 +634,23 @@ Applying the destructor to each of the constructors is the identity:
 
 对每个构造器使用析构器得到的是原来的值：
 
-\begin{code}
+```
 η-⊎ : ∀ {A B : Set} (w : A ⊎ B) → case-⊎ inj₁ inj₂ w ≡ w
 η-⊎ (inj₁ x) = refl
 η-⊎ (inj₂ y) = refl
-\end{code}
+```
 {::comment}
 More generally, we can also throw in an arbitrary function from a disjunction:
 {:/}
 
 更普遍地来说，我们亦可对于析取使用一个任意的函数：
 
-\begin{code}
+```
 uniq-⊎ : ∀ {A B C : Set} (h : A ⊎ B → C) (w : A ⊎ B) →
   case-⊎ (h ∘ inj₁) (h ∘ inj₂) w ≡ h w
 uniq-⊎ h (inj₁ x) = refl
 uniq-⊎ h (inj₂ y) = refl
-\end{code}
+```
 {::comment}
 The pattern matching on the left-hand side is essential.  Replacing
 `w` by `inj₁ x` allows both sides of the propositional equality to
@@ -667,9 +667,9 @@ than any other declared operator:
 
 我们设置析取的优先级，使它与任何已经定义的运算符都结合的不紧密：
 
-\begin{code}
+```
 infix 1 _⊎_
-\end{code}
+```
 {::comment}
 Thus, `A × C ⊎ B × C` parses as `(A × C) ⊎ (B × C)`.
 {:/}
@@ -708,14 +708,14 @@ possible arguments of type `Bool ⊎ Tri`:
 
 下面的函数枚举了所有类型为 `Bool ⊎ Tri` 的参数：
 
-\begin{code}
+```
 ⊎-count : Bool ⊎ Tri → ℕ
 ⊎-count (inj₁ true)   =  1
 ⊎-count (inj₁ false)  =  2
 ⊎-count (inj₂ aa)     =  3
 ⊎-count (inj₂ bb)     =  4
 ⊎-count (inj₂ cc)     =  5
-\end{code}
+```
 
 {::comment}
 Sum on types also shares a property with sum on numbers in that it is
@@ -738,14 +738,14 @@ Show sum is commutative up to isomorphism.
 证明和类型在同构意义下满足交换律。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `⊎-assoc`
@@ -760,14 +760,14 @@ Show sum is associative up to isomorphism.
 证明和类型在同构意义下满足结合律。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 ## False is empty
@@ -788,10 +788,10 @@ data ⊥ : Set where
   -- no clauses!
 {:/}
 
-\begin{code}
+```
 data ⊥ : Set where
   -- 没有语句！
-\end{code}
+```
 
 {::comment}
 There is no possible evidence that `⊥` holds.
@@ -814,13 +814,13 @@ Sheba".  We formalise it as follows:
 这是逻辑学的基本原理，又由中世纪的拉丁文词组 _ex falso_ 为名。小孩子也由诸如
 “如果猪有翅膀，那我就是示巴女王”的词组中知晓。我们如下将它形式化：
 
-\begin{code}
+```
 ⊥-elim : ∀ {A : Set}
   → ⊥
     --
   → A
 ⊥-elim ()
-\end{code}
+```
 {::comment}
 This is our first use of the _absurd pattern_ `()`.
 Here since `⊥` is a type with no members, we indicate that it is
@@ -847,10 +847,10 @@ is equal to any arbitrary function from `⊥`:
 
 `uniq-⊎` 的零元形式是 `uniq-⊥`，其断言了 `⊥-elim` 和任何取 `⊥` 的函数是等价的。
 
-\begin{code}
+```
 uniq-⊥ : ∀ {C : Set} (h : ⊥ → C) (w : ⊥) → ⊥-elim w ≡ h w
 uniq-⊥ h ()
-\end{code}
+```
 {::comment}
 Using the absurd pattern asserts there are no possible values for `w`,
 so the equation holds trivially.
@@ -867,10 +867,10 @@ enumerates all possible arguments of type `⊥`:
 例如，下面的函数枚举了所有 `⊥` 类型的参数：
 
 {:/}
-\begin{code}
+```
 ⊥-count : ⊥ → ℕ
 ⊥-count ()
-\end{code}
+```
 {::comment}
 Here again the absurd pattern `()` indicates that no value can match
 type `⊥`.
@@ -898,14 +898,14 @@ Show empty is the left identity of sums up to isomorphism.
 证明空在同构意义下是和的左幺元。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 #### Exercise `⊥-identityʳ`
@@ -920,14 +920,14 @@ Show empty is the right identity of sums up to isomorphism.
 证明空在同构意义下是和的右幺元。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 ## Implication is function {#implication}
@@ -972,14 +972,14 @@ then we may conclude that `B` holds:
 
 换句话说，如果知道 `A → B` 和 `A` 同时成立，那么我们可以推出 `B` 成立：
 
-\begin{code}
+```
 →-elim : ∀ {A B : Set}
   → (A → B)
   → A
     -------
   → B
 →-elim L M = L M
-\end{code}
+```
 {::comment}
 In medieval times, this rule was known by the name _modus ponens_.
 It corresponds to function application.
@@ -1002,10 +1002,10 @@ Elimination followed by introduction is the identity:
 
 引入后接着消去，得到的还是原来的值：
 
-\begin{code}
+```
 η-→ : ∀ {A B : Set} (f : A → B) → (λ (x : A) → f x) ≡ f
 η-→ f = refl
-\end{code}
+```
 
 {::comment}
 Implication binds less tightly than any other operator. Thus, `A ⊎ B →
@@ -1043,7 +1043,7 @@ arguments of the type `Bool → Tri`:
 
 下面的函数枚举了所有类型为 `Bool → Tri` 的参数：
 
-\begin{code}
+```
 →-count : (Bool → Tri) → ℕ
 →-count f with f true | f false
 ...          | aa     | aa      =   1
@@ -1055,7 +1055,7 @@ arguments of the type `Bool → Tri`:
 ...          | cc     | aa      =   7
 ...          | cc     | bb      =   8
 ...          | cc     | cc      =   9
-\end{code}
+```
 
 {::comment}
 Exponential on types also share a property with exponential on
@@ -1091,7 +1091,7 @@ The proof of the right inverse requires extensionality:
 两个类型可以被看作给定 `A` 成立的证据和 `B` 成立的证据，返回 `C` 成立的证据。
 这个同构有时也被称作*柯里化*（Currying）。右逆的证明需要外延性：
 
-\begin{code}
+```
 currying : ∀ {A B C : Set} → (A → B → C) ≃ (A × B → C)
 currying =
   record
@@ -1100,7 +1100,7 @@ currying =
     ; from∘to =  λ{ f → refl }
     ; to∘from =  λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
     }
-\end{code}
+```
 
 {::comment}
 Currying tells us that instead of a function that takes a pair of arguments,
@@ -1156,7 +1156,7 @@ is the same as the assertion that if `A` holds then `C` holds and if
 命题如果 `A` 成立或者 `B` 成立，那么 `C` 成立，和命题如果 `A` 成立，那么 `C` 成立以及
 如果 `B` 成立，那么 `C` 成立，是一样的。左逆的证明需要外延性：
 
-\begin{code}
+```
 →-distrib-⊎ : ∀ {A B C : Set} → (A ⊎ B → C) ≃ ((A → C) × (B → C))
 →-distrib-⊎ =
   record
@@ -1165,7 +1165,7 @@ is the same as the assertion that if `A` holds then `C` holds and if
     ; from∘to = λ{ f → extensionality λ{ (inj₁ x) → refl ; (inj₂ y) → refl } }
     ; to∘from = λ{ ⟨ g , h ⟩ → refl }
     }
-\end{code}
+```
 
 {::comment}
 Corresponding to the law
@@ -1193,7 +1193,7 @@ and the rule `η-×` for products:
 命题如果 `A` 成立，那么 `B` 成立和 `C` 成立，和命题如果 `A` 成立，那么 `B` 成立以及
 如果 `A` 成立，那么 `C` 成立，是一样的。左逆的证明需要外延性和积的 `η-×` 规则：
 
-\begin{code}
+```
 →-distrib-× : ∀ {A B C : Set} → (A → B × C) ≃ (A → B) × (A → C)
 →-distrib-× =
   record
@@ -1202,7 +1202,7 @@ and the rule `η-×` for products:
     ; from∘to = λ{ f → extensionality λ{ x → η-× (f x) } }
     ; to∘from = λ{ ⟨ g , h ⟩ → refl }
     }
-\end{code}
+```
 
 
 {::comment}
@@ -1218,7 +1218,7 @@ this fact is similar in structure to our previous results:
 
 在同构意义下，积对于和满足分配律。验证这条形式的代码和之前的证明相似：
 
-\begin{code}
+```
 ×-distrib-⊎ : ∀ {A B C : Set} → (A ⊎ B) × C ≃ (A × C) ⊎ (B × C)
 ×-distrib-⊎ =
   record
@@ -1235,7 +1235,7 @@ this fact is similar in structure to our previous results:
                  ; (inj₂ ⟨ y , z ⟩) → refl
                  }
     }
-\end{code}
+```
 
 {::comment}
 Sums do not distribute over products up to isomorphism, but it is an embedding:
@@ -1243,7 +1243,7 @@ Sums do not distribute over products up to isomorphism, but it is an embedding:
 
 和对于积不满足分配律，但满足嵌入：
 
-\begin{code}
+```
 ⊎-distrib-× : ∀ {A B C : Set} → (A × B) ⊎ C ≲ (A ⊎ C) × (B ⊎ C)
 ⊎-distrib-× =
   record
@@ -1258,7 +1258,7 @@ Sums do not distribute over products up to isomorphism, but it is an embedding:
                  ; (inj₂ z)         → refl
                  }
     }
-\end{code}
+```
 {::comment}
 Note that there is a choice in how we write the `from` function.
 As given, it takes `⟨ inj₂ z , inj₂ z′ ⟩` to `inj₂ z`, but it is
@@ -1304,10 +1304,10 @@ Show that the following property holds:
 
 证明如下性质成立：
 
-\begin{code}
+```
 postulate
   ⊎-weak-× : ∀ {A B C : Set} → (A ⊎ B) × C → A ⊎ (B × C)
-\end{code}
+```
 {::comment}
 This is called a _weak distributive law_. Give the corresponding
 distributive law, and explain how it relates to the weak version.
@@ -1316,14 +1316,14 @@ distributive law, and explain how it relates to the weak version.
 这被称为*弱分配律*。给出相对应的分配律，并解释分配律与弱分配律的关系。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 
 
@@ -1339,10 +1339,10 @@ Show that a disjunct of conjuncts implies a conjunct of disjuncts:
 
 证明合取的析取蕴含了析取的合取：
 
-\begin{code}
+```
 postulate
   ⊎×-implies-×⊎ : ∀ {A B C D : Set} → (A × B) ⊎ (C × D) → (A ⊎ C) × (B ⊎ D)
-\end{code}
+```
 {::comment}
 Does the converse hold? If so, prove; if not, give a counterexample.
 {:/}
@@ -1350,14 +1350,14 @@ Does the converse hold? If so, prove; if not, give a counterexample.
 反命题成立吗？如果成立，给出证明；如果不成立，给出反例。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处。
-\end{code}
+```
 
 {::comment}
 ## Standard library
@@ -1371,13 +1371,13 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 标准库中可以找到与本章节中相似的定义：
 
-\begin{code}
+```
 import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
 import Data.Unit using (⊤; tt)
 import Data.Sum using (_⊎_; inj₁; inj₂) renaming ([_,_] to case-⊎)
 import Data.Empty using (⊥; ⊥-elim)
 import Function.Equivalence using (_⇔_)
-\end{code}
+```
 {::comment}
 The standard library constructs pairs with `_,_` whereas we use `⟨_,_⟩`.
 The former makes it convenient to build triples or larger tuples from pairs,

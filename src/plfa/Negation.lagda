@@ -8,9 +8,9 @@ translators : ["Oling Cat"]
 progress  : 100
 ---
 
-\begin{code}
+```
 module plfa.Negation where
-\end{code}
+```
 
 {::comment}
 This chapter introduces negation, and discusses intuitionistic
@@ -21,14 +21,14 @@ and classical logic.
 
 ## Imports
 
-\begin{code}
+```
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.Product using (_×_)
 open import plfa.Isomorphism using (_≃_; extensionality)
-\end{code}
+```
 
 
 {::comment}
@@ -46,10 +46,10 @@ as implication of false:
 给定命题 `A`，当 `A` 不成立时，它的否定形式 `¬ A` 成立。
 我们将否定阐述为「蕴含假」来形式化此概念。
 
-\begin{code}
+```
 ¬_ : Set → Set
 ¬ A = A → ⊥
-\end{code}
+```
 
 {::comment}
 This is a form of _proof by contradiction_: if assuming `A` leads
@@ -84,14 +84,14 @@ In other words, if both `¬ A` and `A` hold, then we have a contradiction:
 给定 `¬ A` 和 `A` 均成立的证据，我们可以得出 `⊥` 成立。换言之，若 `¬ A` 和 `A` 均成立，
 那么我们就得到了矛盾：
 
-\begin{code}
+```
 ¬-elim : ∀ {A : Set}
   → ¬ A
   → A
     ---
   → ⊥
 ¬-elim ¬x x = ¬x x
-\end{code}
+```
 
 {::comment}
 Here we write `¬x` for evidence of `¬ A` and `x` for evidence of `A`.  This
@@ -109,9 +109,9 @@ than disjunction and conjunction, but less tightly than anything else:
 
 我们将否定的优先级设定为高于析取和合取，但低于其它运算：
 
-\begin{code}
+```
 infix 3 ¬_
-\end{code}
+```
 
 {::comment}
 Thus, `¬ A × ¬ B` parses as `(¬ A) × (¬ B)` and `¬ m ≡ n` as `¬ (m ≡ n)`.
@@ -128,13 +128,13 @@ we have only half of this equivalence, namely that `A` implies `¬ ¬ A`:
 在**经典逻辑**中，`A` 等价于 `¬ ¬ A`。而如前文所述，Agda 中使用了**直觉逻辑**，
 因此我们只有该等价关系的一半，即 `A` 蕴含 `¬ ¬ A`：
 
-\begin{code}
+```
 ¬¬-intro : ∀ {A : Set}
   → A
     -----
   → ¬ ¬ A
 ¬¬-intro x  =  λ{¬x → ¬x x}
-\end{code}
+```
 
 {::comment}
 Let `x` be evidence of `A`. We show that assuming
@@ -154,13 +154,13 @@ An equivalent way to write the above is as follows:
 
 以上描述的等价写法如下：
 
-\begin{code}
+```
 ¬¬-intro′ : ∀ {A : Set}
   → A
     -----
   → ¬ ¬ A
 ¬¬-intro′ x ¬x = ¬x x
-\end{code}
+```
 
 {::comment}
 Here we have simply converted the argument of the lambda term
@@ -178,13 +178,13 @@ We cannot show that `¬ ¬ A` implies `A`, but we can show that
 
 我们无法证明 `¬ ¬ A` 蕴含 `A`，但可以证明 `¬ ¬ ¬ A` 蕴含 `¬ A`：
 
-\begin{code}
+```
 ¬¬¬-elim : ∀ {A : Set}
   → ¬ ¬ ¬ A
     -------
   → ¬ A
 ¬¬¬-elim ¬¬¬x  =  λ x → ¬¬¬x (¬¬-intro x)
-\end{code}
+```
 
 {::comment}
 Let `¬¬¬x` be evidence of `¬ ¬ ¬ A`. We will show that assuming
@@ -208,13 +208,13 @@ stating that if `A` implies `B`, then `¬ B` implies `¬ A`:
 另一个逻辑规则是**换质换位律（contraposition）**，它陈述了若 `A` 蕴含 `B`，
 则 `¬ B` 蕴含 `¬ A`：
 
-\begin{code}
+```
 contraposition : ∀ {A B : Set}
   → (A → B)
     -----------
   → (¬ B → ¬ A)
 contraposition f ¬y x = ¬y (f x)
-\end{code}
+```
 
 {::comment}
 Let `f` be evidence of `A → B` and let `¬y` be evidence of `¬ B`.  We
@@ -235,10 +235,10 @@ Using negation, it is straightforward to define inequality:
 
 利用否定可直接定义不等性：
 
-\begin{code}
+```
 _≢_ : ∀ {A : Set} → A → A → Set
 x ≢ y  =  ¬ (x ≡ y)
-\end{code}
+```
 
 {::comment}
 It is trivial to show distinct numbers are not equal:
@@ -246,10 +246,10 @@ It is trivial to show distinct numbers are not equal:
 
 要证明不同的数不相等很简单：
 
-\begin{code}
+```
 _ : 1 ≢ 2
 _ = λ()
-\end{code}
+```
 
 {::comment}
 This is our first use of an absurd pattern in a lambda expression.
@@ -265,10 +265,10 @@ Peano's postulate that zero is not the successor of any number:
 会化简为不同的正规形式，因此 Agda 判定没有正据可证明 `1 ≡ 2`。
 第二个例子是，很容易验证皮亚诺公理中「零不是任何数的后继数」的假设：
 
-\begin{code}
+```
 peano : ∀ {m : ℕ} → zero ≢ suc m
 peano = λ()
-\end{code}
+```
 
 {::comment}
 The evidence is essentially the same, as the absurd pattern matches
@@ -297,13 +297,13 @@ this proof two different ways:
 
 确实，只有一个 `⊥ → ⊥` 的证明。我们可以用两种方式写出此证明：
 
-\begin{code}
+```
 id : ⊥ → ⊥
 id x = x
 
 id′ : ⊥ → ⊥
 id′ ()
-\end{code}
+```
 
 {::comment}
 But, using extensionality, we can prove these equal:
@@ -311,10 +311,10 @@ But, using extensionality, we can prove these equal:
 
 不过使用外延性，我们可以证明二者相等：
 
-\begin{code}
+```
 id≡id′ : id ≡ id′
 id≡id′ = extensionality (λ())
-\end{code}
+```
 
 {::comment}
 By extensionality, `id ≡ id′` holds if for every
@@ -331,10 +331,10 @@ Indeed, we can show any two proofs of a negation are equal:
 
 实际上，我们可以证明任意两个否定的证明都是相等的：
 
-\begin{code}
+```
 assimilation : ∀ {A : Set} (¬x ¬x′ : ¬ A) → ¬x ≡ ¬x′
 assimilation ¬x ¬x′ = extensionality (λ x → ⊥-elim (¬x x))
-\end{code}
+```
 
 {::comment}
 Evidence for `¬ A` implies that any evidence of `A`
@@ -364,15 +364,15 @@ is irreflexive, that is, `n < n` holds for no `n`.
 不满足自反性，即 `n < n` 对于任何 `n` 都不成立。
 {::comment}
 
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处
-\end{code}
+```
 
 {::comment}
 #### Exercise `trichotomy`
@@ -402,14 +402,14 @@ but that when one holds the negation of the other two must also hold.
 其它二者的否定也必定成立。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处
-\end{code}
+```
 
 {::comment}
 #### Exercise `⊎-dual-×` (recommended)
@@ -433,14 +433,14 @@ This result is an easy consequence of something we've proved previously.
 此结果是我们之前证明的定理的简单推论。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处
-\end{code}
+```
 
 {::comment}
 Do we also have the following?
@@ -555,10 +555,10 @@ The law of the excluded middle can be formulated as follows:
 
 排中律可形式化如下：
 
-\begin{code}
+```
 postulate
   em : ∀ {A : Set} → A ⊎ ¬ A
-\end{code}
+```
 
 {::comment}
 As we noted, the law of the excluded middle does not hold in
@@ -570,10 +570,10 @@ its negation is never provable):
 如之前所言，排中律在直觉逻辑中并不成立。然而，我们可以证明它是
 **不可辩驳（irrefutable）**的，即其否定的否定是可证明的（因而其否定式不可证明）：
 
-\begin{code}
+```
 em-irrefutable : ∀ {A : Set} → ¬ ¬ (A ⊎ ¬ A)
 em-irrefutable = λ k → k (inj₂ (λ x → k (inj₁ x)))
-\end{code}
+```
 
 {::comment}
 The best way to explain this code is to develop it interactively:
@@ -760,14 +760,14 @@ Show that each of these implies all the others.
 请证明其中任意一条定律都蕴涵其它所有定律。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处
-\end{code}
+```
 
 
 {::comment}
@@ -782,10 +782,10 @@ Say that a formula is _stable_ if double negation elimination holds for it:
 
 若双重否定消去对某个式子成立，我们就说它是**稳定（stable）**的：
 
-\begin{code}
+```
 Stable : Set → Set
 Stable A = ¬ ¬ A → A
-\end{code}
+```
 
 {::comment}
 Show that any negated formula is stable, and that the conjunction
@@ -795,14 +795,14 @@ of two stable formulas is stable.
 请证明任何否定式都是稳定的，并且两个稳定式的合取也是稳定的。
 
 {::comment}
-\begin{code}
+```
 -- Your code goes here
-\end{code}
+```
 {:/}
 
-\begin{code}
+```
 -- 请将代码写在此处
-\end{code}
+```
 
 {::comment}
 ## Standard Prelude
@@ -816,10 +816,10 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 本章中的类似定义可在标准库中找到：
 
-\begin{code}
+```
 import Relation.Nullary using (¬_)
 import Relation.Nullary.Negation using (contraposition)
-\end{code}
+```
 
 ## Unicode
 
