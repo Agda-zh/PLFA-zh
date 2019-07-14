@@ -947,8 +947,6 @@ postulate
   not-¬ : ∀ {A : Set} (x : Dec A) → not ⌊ x ⌋ ≡ ⌊ ¬? x ⌋
 \end{code}
 
-（译注：此处第二个变量按照其类型应该是 `∨-⊎` ，似乎是作者的笔误）
-
 {::comment}
 #### Exercise `iff-erasure` (recommended)
 {:/}
