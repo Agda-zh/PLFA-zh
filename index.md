@@ -15,6 +15,7 @@ This is a Chinese translation of "Programming Language Foundations in Agda" by P
 发起讨论或直接发起 PR。项目源码可访问 [Github][Github-zh] 获取。
 
 以下为原书主页内容：
+
 ---
 
 <!---
@@ -36,7 +37,7 @@ Pull requests are encouraged.
 本书的源码托管在 [GitHub]。欢迎拉取请求。
 
 <!---
-Front matter
+## Front matter
 
   - [Dedication]({{ site.baseurl }}/Dedication/)
   - [Preface]({{ site.baseurl }}/Preface/)
@@ -51,18 +52,18 @@ Front matter
   - [前言]({{ site.baseurl }}/Preface/) <span class = "progress" >{{ Preface.progress | ceil }}</span>
 
 <!---
-Part 1: Logical Foundations
+## Part 1: Logical Foundations
 
-  - [Naturals](/Naturals/): Natural numbers
-  - [Induction](/Induction/): Proof by induction
-  - [Relations](/Relations/): Inductive definition of relations
-  - [Equality](/Equality/): Equality and equational reasoning
-  - [Isomorphism](/Isomorphism/): Isomorphism and embedding
-  - [Connectives](/Connectives/): Conjunction, disjunction, and implication
-  - [Negation](/Negation/): Negation, with intuitionistic and classical logic
-  - [Quantifiers](/Quantifiers/): Universals and existentials
-  - [Decidable](/Decidable/): Booleans and decision procedures
-  - [Lists](/Lists/): Lists and higher-order functions
+  - [Naturals]({{ site.baseurl }}/Naturals/): Natural numbers
+  - [Induction]({{ site.baseurl }}/Induction/): Proof by induction
+  - [Relations]({{ site.baseurl }}/Relations/): Inductive definition of relations
+  - [Equality]({{ site.baseurl }}/Equality/): Equality and equational reasoning
+  - [Isomorphism]({{ site.baseurl }}/Isomorphism/): Isomorphism and embedding
+  - [Connectives]({{ site.baseurl }}/Connectives/): Conjunction, disjunction, and implication
+  - [Negation]({{ site.baseurl }}/Negation/): Negation, with intuitionistic and classical logic
+  - [Quantifiers]({{ site.baseurl }}/Quantifiers/): Universals and existentials
+  - [Decidable]({{ site.baseurl }}/Decidable/): Booleans and decision procedures
+  - [Lists]({{ site.baseurl }}/Lists/): Lists and higher-order functions
 --->
 
 {%- assign Naturals = site.pages | where:"permalink", "/Naturals/"  | first -%}
@@ -90,13 +91,13 @@ Part 1: Logical Foundations
   - [Lists]({{ site.baseurl }}/Lists/): 列表与高阶函数 <span class = "progress" >{{ Lists.progress | ceil }}</span>
 
 <!---
-Part 2: Programming Language Foundations
+## Part 2: Programming Language Foundations
 
   - [Lambda]({{ site.baseurl }}/Lambda/): Introduction to Lambda Calculus
   - [Properties]({{ site.baseurl }}/Properties/): Progress and Preservation
   - [DeBruijn]({{ site.baseurl }}/DeBruijn/): Inherently typed de Bruijn representation
   - [More]({{ site.baseurl }}/More/): Additional constructs of simply-typed lambda calculus
-  - [Bisimulation]({{ site.baseurl }}/Bisimulation/) : Relating reductions systems
+  - [Bisimulation]({{ site.baseurl }}/Bisimulation/): Relating reductions systems
   - [Inference]({{ site.baseurl }}/Inference/): Bidirectional type inference
   - [Untyped]({{ site.baseurl }}/Untyped/): Untyped lambda calculus with full normalisation
 --->
@@ -120,7 +121,7 @@ Part 2: Programming Language Foundations
   - [Untyped]({{ site.baseurl }}/Untyped/): 无类型 λ-演算及其完整范式 <span class = "progress" >{{ Untyped.progress | ceil }}</span>
 
 <!---
-Backmatter
+## Backmatter
 
   - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/)
   - [Fonts]({{ site.baseurl }}/Fonts/): Test page for fonts
@@ -138,19 +139,23 @@ Backmatter
   - [Statistics]({{ site.baseurl }}/Statistics/): 每章行数统计 <span class = "progress" >{{ Statistics.progress | ceil }}</span>
 
 <!---
-Related
+## Related
+
+  - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/)
+  - [Fonts]({{ site.baseurl }}/Fonts/): Test page for fonts
+  - [Statistics]({{ site.baseurl }}/Statistics/): Line counts for each chapter
 --->
 
 ## 相关资源
 
   - Courses taught from the textbook:
     * Philip Wadler, University of Edinburgh,
-      [2018](/TSPL/)
+      [2018]({{ site.baseurl }}/TSPL/2018/)
     * David Darais, University of Vermont,
       [2018](http://david.darais.com/courses/fa2018-cs295A/)
     * John Leo, Google Seattle, 2018--2019
     * Philip Wadler, Pontifícia Universidade Católica do Rio de Janeiro (PUC-Rio),
-      [2019](/PUC/)
+      [2019]({{ site.baseurl }}/PUC/2019/)
   - A paper describing the book appeared in [SBMF][sbmf]
 
 [wen]: https://github.com/wenkokke
