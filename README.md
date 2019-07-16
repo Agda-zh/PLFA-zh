@@ -125,7 +125,6 @@ The Makefile offers more than just these options:
 
     make                      (see make test)
     make build                (builds lagda->markdown and the website)
-    make build-offline        (builds lagda->markdown and the website offline)
     make build-incremental    (builds lagda->markdown and the website incrementally)
     make test                 (checks all links are valid)
     make test-offline         (checks all links are valid offline)
@@ -140,14 +139,13 @@ Makefile 提供了更多可选的命令：
 
     make                      （见 make test）
     make build                （将 lagda 构建至 markdown 并构建网站）
-    make build-offline        （将 lagda 构建至 markdown 并离线构建网站）
     make build-incremental    （将 lagda 构建至 markdown 并增量式构建网站）
     make test                 （检查所有链接的有效性）
     make test-offline         （离线检查所有链接的有效性）
     make serve                （启动服务）
     make server-start         （以分离模式启动服务）
     make server-stop          （使用 pkill 停止服务）
-    make clean                （移除所有~非必要的~生成的文件）
+    make clean                （移除所有~不必要的~生成的文件）
     make clobber              （移除所有生成的文件）
 
 <!---

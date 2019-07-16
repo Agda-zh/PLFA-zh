@@ -567,9 +567,9 @@ replaces the formal parameter by the actual parameter.
 
 If a term is a value, then no reduction applies; conversely,
 if a reduction applies to a term then it is not a value.
-We will show in the next chapter that for well-typed terms
-this exhausts the possibilities: for every well-typed term
-either a reduction applies or it is a value.
+We will show in the next chapter that 
+this exhausts the possibilities: every well-typed term
+either reduces or is a value.
 
 For numbers, zero does not reduce and successor reduces the subterm.
 A case expression reduces its argument to a number, and then chooses
@@ -626,12 +626,19 @@ data _—→_ : Term → Term → Set where
 
 The reduction rules are carefully designed to ensure that subterms
 of a term are reduced to values before the whole term is reduced.
-This is referred to as _call by value_ reduction.
+This is referred to as _call-by-value_ reduction.
 
 Further, we have arranged that subterms are reduced in a
 left-to-right order.  This means that reduction is _deterministic_:
 for any term, there is at most one other term to which it reduces.
 Put another way, our reduction relation `—→` is in fact a function.
+
+This style of explaining the meaning of terms is called
+a _small-step operational semantics_.  If `M —→ N`, we say that
+term `M` _reduces_ to term `N`, or equivalently,
+term `M` _steps_ to term `N`.  Each compatibility rule has
+another reduction rule in its premise; so a step always consists
+of a beta rule, possibly adjusted by zero or more compatibility rules.
 
 
 #### Quiz
@@ -1057,7 +1064,7 @@ The constructors `Z` and `S` correspond roughly to the constructors
 `here` and `there` for the element-of relation `_∈_` on lists.
 Constructor `S` takes an additional parameter, which ensures that
 when we look up a variable that it is not _shadowed_ by another
-variable with the same name earlier in the list.
+variable with the same name to its left in the list.
 
 ### Typing judgment
 
