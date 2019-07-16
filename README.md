@@ -6,9 +6,8 @@ translators : ["Rongxiao Fu"]
 ---
 
 [![Build Status](https://travis-ci.org/Agda-zh/PLFA-zh.svg?branch=dev)](https://travis-ci.org/Agda-zh/PLFA-zh)
-[![Agda](https://img.shields.io/badge/agda-2.5.4.2-blue.svg)](https://github.com/agda/agda/releases/tag/v2.5.4.2)
-[![agda-stdlib](https://img.shields.io/badge/agda--stdlib-0.17-blue.svg)](https://github.com/agda/agda-stdlib/releases/tag/v0.17)
-[![agda2html](https://img.shields.io/badge/agda2html-0.2.4.0-blue.svg)](https://github.com/wenkokke/agda2html/releases/tag/v0.2.4.0)
+[![Agda](https://img.shields.io/badge/agda-2.6.0.1-blue.svg)](https://github.com/agda/agda/releases/tag/v2.6.0.1)
+[![agda-stdlib](https://img.shields.io/badge/agda--stdlib-1.1-blue.svg)](https://github.com/agda/agda-stdlib/releases/tag/v1.1)
 
 《编程语言基础：Agda 描述》的使用方法和《Programming Language Foundations in Agda》一致。
 
@@ -25,14 +24,15 @@ Getting Started with PLFA
 <!---
 There are several tools you need to work with PLFA:
 
-  - [Agda](https://agda.readthedocs.io/en/v2.5.4.2/getting-started/installation.html)
-  - [Agda standard library](https://github.com/agda/agda-stdlib/tree/5819a4dd9c965296224944f05b1481805649bdc2)
+  - [Agda](https://agda.readthedocs.io/en/v2.6.0.1/getting-started/installation.html)
+  - [Agda standard library](https://github.com/agda/agda-stdlib/releases/tag/v1.1)
 --->
+
 
 为使用 PLFA，你需要以下工具：
 
-  - [Agda](https://agda-zh.rtfd.io/zh_CN/latest/getting-started/installation.html)
-  - [Agda 标准库](https://github.com/agda/agda-stdlib/tree/5819a4dd9c965296224944f05b1481805649bdc2)
+  - [Agda](https://agda-zh.rtfd.io/zh_CN/v2.6.0.1/getting-started/installation.html)
+  - [Agda 标准库](https://github.com/agda/agda-stdlib/releases/tag/v1.1)
 
 <!---
 For most of the tools, you can simply follow their respective build instructions.
@@ -60,10 +60,10 @@ or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archi
 
 <!---
 Finally, we need to let Agda know where to find the standard library.
-For this, you can follow the instructions [here](https://agda.readthedocs.io/en/v2.5.4.2/tools/package-system.html#example-using-the-standard-library).
+For this, you can follow the instructions [here](https://agda.readthedocs.io/en/v2.6.0.1/tools/package-system.html#example-using-the-standard-library).
 --->
 
-最后，我们需要让 Agda 知道标准库位于何处。[此处](https://agda-zh.rtfd.io/zh_CN/latest/tools/package-system.html#example-using-the-standard-library)的说明可供参考。
+最后，我们需要让 Agda 知道标准库位于何处。[此处](https://agda-zh.rtfd.io/zh_CN/v2.6.0.1/tools/package-system.html#example-using-the-standard-library)的说明可供参考。
 
 <!---
 It is possible to set up PLFA as an Agda library as well.
@@ -86,7 +86,6 @@ To build and host a local copy of the book, there are several tools you need *in
 
 要在本地构建并部署本书，**在前文所列工具的基础之上**，你还需要：
 
-  - [agda2html](https://github.com/wenkokke/agda2html)
   - [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
   - [Bundler](https://bundler.io/#getting-started)
 
@@ -98,20 +97,10 @@ Most recent versions of Ruby should work.
 大部分工具的安装遵循其对应的网页提供的说明即可。Ruby 的较新版本应该都可以使用。
 
 <!---
-We advise installing agda2html using [Stack](https://docs.haskellstack.org/en/stable/README/):
+You install the Ruby dependencies---[Jekyll](https://jekyllrb.com/), [html-proofer](https://github.com/gjtorikian/html-proofer), *etc.*---using Bundler:
 --->
 
-我们建议使用 [Stack](https://docs.haskellstack.org/en/stable/README/) 安装 agda2html：
-
-    git clone https://github.com/wenkokke/agda2html.git
-    cd agda2html
-    stack install
-
-<!---
-Finally, you must install the Ruby dependencies---[Jekyll](https://jekyllrb.com/), [html-proofer](https://github.com/gjtorikian/html-proofer), *etc.*---using Bundler:
---->
-
-最后，你需要用 Bundler 安装 Ruby 依赖：[Jekyll](https://jekyllrb.com/)、 [html-proofer](https://github.com/gjtorikian/html-proofer) 等。
+你需要用 Bundler 安装 Ruby 依赖：[Jekyll](https://jekyllrb.com/)、 [html-proofer](https://github.com/gjtorikian/html-proofer) 等。
 
     bundle install
 
@@ -203,24 +192,6 @@ You can fix this error by installing a GNU compatible version of sed, e.g. using
 ```
 brew install gnu-sed --with-default-names
 ```
-
-<!---
-Updating `agda2html`
---->
-
-## 更新 `agda2html`
-
-<!---
-Sometimes we have to update agda2html.
-To update your local copy, run the following commands from your clone of the
-agda2html repository, or simply follow the installation instructions again:
---->
-
-有时我们需要更新 agda2html。要更新你的本地副本，可以在你克隆的 agda2html 仓库中运行如下命令。
-更简单的方法是按照前文所述的方法重新安装 agda2html。
-
-    git pull
-    stack install
 
 <!---
 Unicode characters
