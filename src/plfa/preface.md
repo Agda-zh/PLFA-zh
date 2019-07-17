@@ -138,7 +138,7 @@ related ground, but focusses more on programming with dependent
 types than on the theory of programming languages.
 {:/}
 
-然而，此前还没有 Agda 描述的编程语言理论教材。虽然 Stump 的
+然而，此前还没有用 Agda 语言描述的编程语言理论教材。虽然 Stump 的
 [Verified Functional Programming in Agda][stump] 涵盖了相关的范围，
 但比起编程语言理论，却更多关注于依赖类型编程。
 
