@@ -9,7 +9,7 @@ translators : ["Rongxiao Fu"]
 [![Agda](https://img.shields.io/badge/agda-2.6.0.1-blue.svg)](https://github.com/agda/agda/releases/tag/v2.6.0.1)
 [![agda-stdlib](https://img.shields.io/badge/agda--stdlib-1.1-blue.svg)](https://github.com/agda/agda-stdlib/releases/tag/v1.1)
 
-《编程语言基础：Agda 描述》的使用方法和《Programming Language Foundations in Agda》一致。
+《编程语言基础：Agda 语言描述》的使用方法和《Programming Language Foundations in Agda》一致。
 
 **本书可访问 [PLFA-zh](https://agda-zh.github.io/PLFA-zh/) 在线阅读。**
 
