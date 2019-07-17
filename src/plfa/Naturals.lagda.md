@@ -906,7 +906,7 @@ Again, the definition is well-founded in that multiplication of
 larger numbers is defined in terms of multiplication of smaller numbers.
 {:/}
 
-这个定义也是良基的，因为较大的数相乘是用较小的数相乘定义的
+这个定义也是良基的，因为较大的数相乘是用较小的数相乘定义的。
 
 {::comment}
 For example, let's multiply two and three:
