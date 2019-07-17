@@ -13,7 +13,7 @@ translators : ["Rongxiao Fu"]
 
 **本书可访问 [PLFA-zh](https://agda-zh.github.io/PLFA-zh/) 在线阅读。**
 
-**要参与翻译请先阅读[翻译规范](https://github.com/Agda-zh/PLFA-zh/issues/1)**
+**要参与翻译，请先阅读[翻译规范](https://github.com/Agda-zh/PLFA-zh/issues/1)**
 
 <!---
 Getting Started with PLFA
