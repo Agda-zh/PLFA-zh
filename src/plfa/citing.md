@@ -34,7 +34,7 @@ permalink      : /Citing/
 
 中文版：
 
-	@Book{plfa2019,
+	@Book{plfazh2019,
 	  author     = {Philip Wadler and Wen Kokke},
 	  title      = {编程语言基础：{A}gda 语言描述},
 	  translator = {周方易 and 欧林猫 and 傅荣枭},
