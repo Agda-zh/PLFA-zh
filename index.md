@@ -164,6 +164,6 @@ Pull requests are encouraged.
 [Github-zh]: https://github.com/Agda-zh/PLFA-zh
 [sbmf]: https://homepages.inf.ed.ac.uk/wadler/topics/agda.html#sbmf
 [PLFA]: https://plfa.github.io/
-[PLFA-zh]: https://plfa-zh.github.io/
+[PLFA-zh]: https://agda-zh.github.io/PLFA-zh/
 [Issue]: https://github.com/Agda-zh/plfa-zh/issues
 [TransSpec]: https://github.com/Agda-zh/PLFA-zh/issues/1

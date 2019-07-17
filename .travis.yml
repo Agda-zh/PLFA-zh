@@ -23,6 +23,10 @@ addons:
       - libgmp-dev
       - libicu-dev
 
+# Ensure we run BASH and not SH
+env:
+  - SH=bash
+
 before_install:
 # Download and unpack the stack executable
 - mkdir -p ~/.local/bin
@@ -36,15 +40,20 @@ script:
 - acknowledgements --version
 - make test-offline # disable to only build cache
 
-before_deploy: |
-  if ! [[ $BEFORE_DEPLOY_RUN ]]; then
-    export BEFORE_DEPLOY_RUN=1 &&
-    acknowledgements -i _config.yml >> _config.yml &&
-    make clean &&
-    rm -rf hs/ extra/ depr/ papers/ slides/ .bundle/ vendor/ *.agdai *.agda-lib *.lagda.md Guardfile Gemfile Gemfile.lock Makefile highlight.sh .gitignore .travis.yml;
-  else
-    sed -i 's/^baseurl\:\s*".*"$/baseurl: ""/g ; s/^url\:\s*".*"$/url: "https:\/\/plfa-zh.github.io"/g' _config.yml;
-  fi
+before_deploy:
+- acknowledgements -i _config.yml >> _config.yml
+- make clean
+- rm -rf hs/ extra/ depr/ papers/ slides/ .bundle/ vendor/ *.agdai *.agda-lib *.lagda.md Guardfile Gemfile Gemfile.lock Makefile highlight.sh .gitignore .travis.yml
+
+# before_deploy: |
+#   if ! [[ $BEFORE_DEPLOY_RUN ]]; then
+#     export BEFORE_DEPLOY_RUN=1 &&
+#     acknowledgements -i _config.yml >> _config.yml &&
+#     make clean &&
+#     rm -rf hs/ extra/ depr/ papers/ slides/ .bundle/ vendor/ *.agdai *.agda-lib *.lagda.md Guardfile Gemfile Gemfile.lock Makefile highlight.sh .gitignore .travis.yml;
+#   else
+#     sed -i 's/^baseurl\:\s*".*"$/baseurl: ""/g ; s/^url\:\s*".*"$/url: "https:\/\/plfa-zh.github.io"/g' _config.yml;
+#   fi
 
 branches:
   only:
@@ -61,11 +70,12 @@ deploy:
     edge: true
     on:
       branch: dev
-  - provider: pages
-    skip-cleanup: true
-    github-token: $GITHUB_TOKEN
-    repo: plfa-zh/plfa-zh.github.io
-    target-branch: master
-    edge: true
-    on:
-      branch: dev
+
+  # - provider: pages
+  #   skip-cleanup: true
+  #   github-token: $GITHUB_TOKEN
+  #   repo: plfa-zh/plfa-zh.github.io
+  #   target-branch: master
+  #   edge: true
+  #   on:
+  #     branch: dev

@@ -11,7 +11,7 @@ translators : ["Rongxiao Fu"]
 
 《编程语言基础：Agda 描述》的使用方法和《Programming Language Foundations in Agda》一致。
 
-**本书可访问 [PLFA-zh](https://plfa-zh.github.io/) 在线阅读。**
+**本书可访问 [PLFA-zh](https://agda-zh.github.io/PLFA-zh/) 在线阅读。**
 
 **要参与翻译请先阅读[翻译规范](https://github.com/Agda-zh/PLFA-zh/issues/1)**
 
