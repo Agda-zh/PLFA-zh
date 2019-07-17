@@ -263,7 +263,7 @@ definition as "Brexit means Brexit"?
 等一下！第二行用自然数定义了自然数，这怎么能被允许呢？这个定义难道
 不会像「脱欧即是脱欧」一样无用吗？
 
-【译注：「脱欧即使脱欧」是英国首相特蕾莎·梅提出的一句口号。】
+【译注：「脱欧即是脱欧」是英国首相特蕾莎·梅提出的一句口号。】
 
 {::comment}
 In fact, it is possible to assign our definition a meaning without
