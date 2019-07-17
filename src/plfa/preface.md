@@ -32,7 +32,7 @@ themselves programmes.
 {:/}
 
 与此相应，本书的名字也有两种含义。它可以看做「编程语言的基础」，也可以看做
-「编程的语言基础」。我们在 Agda 证明助理中编写的规范（Specification）
+「编程的语言基础」。我们用 Agda 证明助理编写的规范（Specification）
 同时描述了编程语言以及该语言编写的程序自身。
 
 {::comment}
@@ -46,11 +46,14 @@ development more concrete and accessible to students, and give them
 rapid feedback to find and correct misapprehensions.
 {:/}
 
-本书面向本科最后一年学有余力的学生，或者一年级的研究生或博士生。
+本书面向本科最后一年的学生、一年级的研究生或博士生。
 本书以简单类型 λ-演算（Simply-Typed Lambda Calculus，简称 STLC）作为核心示例，
-旨在教授编程语言的操作语义基础。全书以 Agda 文学脚本的形式写成。
+旨在教授编程语言的操作语义基础。全书以 Agda 文学脚本（Literal Script）的形式写成。
 使用证明助理可以让开发过程变得更加具体而清晰易懂，还可以给予学生即时反馈，
 帮助学生发现理解有误的地方并及时纠正。
+
+【译注：文学编程（Literal Programming）用带有代码的自然语言文章来进行编程，
+此概念由高德纳（Donald Knuth）提出，详情可参考[维基百科][literateprogramming]。】
 
 {::comment}
 The book is broken into two parts. The first part, Logical
@@ -66,7 +69,7 @@ operational semantics.
 ## Personal remarks
 {:/}
 
-## 个人言论
+## 个人评论
 
 {::comment}
 Since 2013, I have taught a course on Types and Semantics for
@@ -106,7 +109,7 @@ hidden.
 然而有了五年的教学经验后，我得出了 Coq 并不是最好的授课载体的结论。
 对于学习编程语言理论的基础而言，我们花费了太多课程去专门学习证明推导的策略（Tactic）。
 每个概念都需要学习两遍：例如，在学过一遍积数据类型（Product Data Type）之后，
-我们还要再学一遍与之对应的连词（Conjunction）的引入（Introduction）和消除（Elimination）策略。
+我们还要再学一遍与之对应的合取（Conjunction）的引入（Introduction）和消除（Elimination）策略。
 Coq 用来生成归纳假设（Induction Hypothesis）的规则有时看起来很玄学。而 `notation`
 构造则允许直观但灵活多变的语法，同一个概念总是有两个名字有时会令人迷惑，
 例如，`subst N x M` 和 `N [x := M]`。策略的名字时短时长；标准库中的命名约定则非常不一致。
@@ -126,7 +129,7 @@ foundation of proof is on proud display.
 {:/}
 
 我发现自己热衷于用 Agda 重构此课程。在 Agda 中，我们不再需要学习策略了：
-这里只有依赖类型编程，简单纯粹。我们总是通过构造子来引入，通过模式匹配来消除。
+这里只有依赖类型编程，简单纯粹。我们总是通过构造器来引入，通过模式匹配来消除。
 归纳不再是谜之独立的概念，它与我们熟悉的递归概念直接对应。混缀语法十分灵活，
 但每个概念只需要一个名字，例如代换就是 `_[_:=_]`。标准库虽不完美，但它的一致性却很合理。
 **命题即类型**作为证明的基础则被骄傲地展示了出来。
@@ -170,7 +173,10 @@ Most of the text was written during a sabbatical in the first half of 2018.
 
 这里的大部分内容都是在 2018 年上半年的休假期间写的。
 
+{::comment}
 — Philip Wadler, Rio de Janeiro, January–June 2018
+{:/}
+—— Philip Wadler，里约热内卢，2018 年 1 月 - 6 月
 
 [tapl]: https://www.cis.upenn.edu/~bcpierce/tapl/
 [sf]: https://softwarefoundations.cis.upenn.edu/
@@ -179,6 +185,7 @@ Most of the text was written during a sabbatical in the first half of 2018.
 [stump]: https://www.morganclaypoolpublishers.com/catalog_Orig/product_info.php?cPath=24&products_id=908
 [wen]: https://github.com/wenkokke
 [phil]: https://homepages.inf.ed.ac.uk/wadler/
+[literateprogramming]: https://zh.wikipedia.org/wiki/%E6%96%87%E5%AD%A6%E7%BC%96%E7%A8%8B
 
 {::comment}
 ## A word on the exercises
@@ -191,14 +198,14 @@ Exercises labelled "(recommended)" are the ones students are
 required to do in the class taught at Edinburgh from this textbook.
 {:/}
 
-标有（推荐）的习题是爱丁堡大学使用本教材的课程中学生需要做的。
+标有「（推荐）」的习题是爱丁堡大学使用本教材的课程中学生需要做的。
 
 {::comment}
 Exercises labelled "(stretch)" are there to provide an extra challenge.
 Few students do all of these, but most attempt at least a few.
 {:/}
 
-标有（延伸）的习题提供了额外的挑战。很少有学生全部做完，但大部分练习至少应该尝试一下。
+标有「（延伸）」的习题提供了额外的挑战。很少有学生全部做完，但大部分学生至少尝试了一些。
 
 {::comment}
 Exercises without a label are included for those who want extra practice.
