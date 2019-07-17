@@ -1402,7 +1402,7 @@ infinite set of instances.
 
 上述的创世故事是用分层的方式讲述的。首先，我们创造了自然数的无限集合。
 然后，我们构造加法的实例时把自然数集视为现成的，所以即使在第一天我
-们也有一个实例的无限集合。
+们也有一个无限的实例集合。
 
 {::comment}
 Instead, we could choose to create both the naturals and the instances
@@ -1411,7 +1411,7 @@ a finite set of instances:
 {:/}
 
 然而，我们也可以选择同时构造自然数集和加法的实例。这样在任何一天都只会有
-一个实例的有限集合。
+一个有限的实例集合。
 
 {::comment}
     -- In the beginning, we know nothing.
