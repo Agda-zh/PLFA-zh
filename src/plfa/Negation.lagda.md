@@ -56,7 +56,7 @@ This is a form of _proof by contradiction_: if assuming `A` leads
 to the conclusion `⊥` (a contradiction), then we must have `¬ A`.
 {:/}
 
-这是一种**反证法（proof by contradiction）**的形式：若从 `A` 可得出结论 `⊥`（即矛盾），
+这是一种**反证法（Proof by Contradiction）**的形式：若从 `A` 可得出结论 `⊥`（即矛盾），
 则 `¬ A` 必定成立。
 
 {::comment}
@@ -100,7 +100,7 @@ means that `¬x` must be a function of type `A → ⊥`, and hence the applicati
 {:/}
 
 在这里，我们将 `¬ A` 的证据写作 `¬x`，将 `A` 的证据写作 `x`。这表示 `¬x` 必须是类型为 `A → ⊥`
-的函数，因此应用 `¬x x` 的类型必为 `⊥`。注意此规则只是 `→-elim` 的一个特例。
+的函数，因此应用 `¬x x` 得到的类型必为 `⊥`。注意此规则只是 `→-elim` 的一个特例。
 
 {::comment}
 We set the precedence of negation so that it binds more tightly
@@ -168,7 +168,7 @@ to an additional argument of the function.  We will usually
 use this latter style, as it is more compact.
 {:/}
 
-在这里我们简单地将 λ-项的参数转换成了该函数的附加参数。
+在这里我们简单地将 λ-项的参数转换成了该函数的额外参数。
 我们通常会使用后面这种形式，因为它更加紧凑。
 
 {::comment}
@@ -205,7 +205,7 @@ Another law of logic is _contraposition_,
 stating that if `A` implies `B`, then `¬ B` implies `¬ A`:
 {:/}
 
-另一个逻辑规则是**换质换位律（contraposition）**，它陈述了若 `A` 蕴含 `B`，
+另一个逻辑定律是**换质换位律（Contraposition）**，它陈述了若 `A` 蕴含 `B`，
 则 `¬ B` 蕴含 `¬ A`：
 
 ```
@@ -227,13 +227,14 @@ conclude `⊥`, evidenced by `¬y (f x)`.  Hence, we have shown `¬ A`.
 令 `f` 为 `A → B` 的证据，`¬y` 为 `¬ B` 的证据。我们要证明，若假定 `A`
 成立就会导出矛盾，因此 `¬ A` 必定成立。令 `x` 为 `A` 的证据。根据 `f x`，
 我们可从 `A → B` 和 `A` 我们可得出结论 `B`。而根据 `¬y (f x)`，可从
-B` 和 `¬ B` 得出结论 `⊥`。这样，我们就证明了 `¬ A`。
+`B` 和 `¬ B` 得出结论 `⊥`。这样，我们就证明了 `¬ A`。
 
 {::comment}
 Using negation, it is straightforward to define inequality:
 {:/}
 
 利用否定可直接定义不等性：
+
 
 ```
 _≢_ : ∀ {A : Set} → A → A → Set
@@ -260,7 +261,7 @@ As a second example, it is also easy to validate
 Peano's postulate that zero is not the successor of any number:
 {:/}
 
-这是我们第一次在 λ-表达式中使用谬模式（absurd pattern）。类型 `M ≡ N`
+这是我们第一次在 λ-表达式中使用谬模式（Absurd Pattern）。类型 `M ≡ N`
 只有在 `M` 和 `N` 可被化简为相同的项时才能居留。由于 `1` 和 `2`
 会化简为不同的正规形式，因此 Agda 判定没有正据可证明 `1 ≡ 2`。
 第二个例子是，很容易验证皮亚诺公理中「零不是任何数的后继数」的假设：
@@ -275,7 +276,7 @@ The evidence is essentially the same, as the absurd pattern matches
 all possible evidence of type `zero ≡ suc m`.
 {:/}
 
-它们证据本质上相同，因为谬模式会匹配所有类型为 `zero ≡ suc m` 的可能的证据。
+它们的证明基本上相同，因为谬模式会匹配所有类型为 `zero ≡ suc m` 的可能的证据。
 
 {::comment}
 Given the correspondence of implication to exponentiation and
@@ -344,7 +345,7 @@ such `x` immediately leads to a contradiction,
 again causing the equality to hold trivially.
 {:/}
 
-`¬ A` 的证据蕴含任何 `A` 的证据都可直接得出矛盾。但由于外延性全称量化了使
+`¬ A` 的证据表示任何 `A` 的证据都可直接得出矛盾。但由于外延性全称量化了使
 `A` 成立的 `x`，因此任何这样的 `x` 都会直接导出矛盾，同样其相等性平凡成立。
 
 
@@ -360,8 +361,8 @@ Using negation, show that
 is irreflexive, that is, `n < n` holds for no `n`.
 {:/}
 
-利用否定证明 [strict inequality][plfa.Relations#strict-inequality]
-不满足自反性，即 `n < n` 对于任何 `n` 都不成立。
+利用否定证明[严格不等性][plfa.Relations#strict-inequality]满足非自反性，
+即 `n < n` 对于任何 `n` 都不成立。
 
 {::comment}
 
@@ -387,7 +388,7 @@ Show that strict inequality satisfies
 that is, for any naturals `m` and `n` exactly one of the following holds:
 {:/}
 
-请证明严格不相等满足 [trichotomy][plfa.Relations#trichotomy]（三分性），
+请证明严格不等性满足[三分律][plfa.Relations#trichotomy]，
 即对于任何自然数 `m` 和 `n`，以下三条刚好只有一条成立：
 
 * `m < n`
@@ -475,7 +476,7 @@ say which?"  To which the response is "Without any doubt of any kind
 whatever."
 {:/}
 
-在 Gilbert 和 Sullivan 的电影《船夫（The Gondoliers）》中，
+在 Gilbert 和 Sullivan 的电影《船夫》（_The Gondoliers_）中，
 Casilda 被告知她还是个婴儿时，就被许配给了巴塔维亚国王的继承人。
 但由于一场动乱，没人知道她被许配给了两位继承人 Marco 和 Giuseppe
 中的哪一位。她惊慌地哀嚎道：「那么你的意思是说我嫁给了两位船夫中的一位，
@@ -516,12 +517,12 @@ a formula is provable in classical logic if and only if its
 translation is provable in intuitionistic logic.
 {:/}
 
-直觉主义者也拒绝排中律（Law of the Excluded Middle），该定律断言，对于所有的
-`A`，`A ⊎ ¬ A` 必定成立，因为该定律没有给出 `A` 和 `¬ A` 中的哪一个成立。
-海廷形式化了希尔伯特经典逻辑的一个变种，他抓住了直觉主义中可证明性的概念。
+直觉主义者也拒绝排中律（Law of the Excluded Middle）————该定律断言，对于所有的
+`A`，`A ⊎ ¬ A` 必定成立————因为该定律没有给出 `A` 和 `¬ A` 中的哪一个成立。
+海廷（Heyting）形式化了希尔伯特（Hilbert）经典逻辑的一个变种，抓住了直觉主义中可证明性的概念。
 具体来说，排中律在希尔伯特逻辑中是可证明的，但在海廷逻辑中却不可证明。
 进一步来说，如果排中律作为一条公理添加到海廷逻辑中，那么它会等价于希尔伯特逻辑。
-柯尔莫哥洛夫证明了两种逻辑紧密相关：他给出了双重否定翻译，即一个式子在经典逻辑中
+柯尔莫哥洛夫（Kolmogorov）证明了两种逻辑紧密相关：他给出了双重否定翻译，即一个式子在经典逻辑中
 可证，当且仅当它的双重否定式在直觉逻辑中可证。
 
 {::comment}
@@ -534,7 +535,7 @@ a disjoint sum.
 
 「命题即类型」最初是为直觉逻辑而制定的。这是一种完美的契合，因为在直觉主义的
 解释中，式子 `A ⊎ B` 刚好可以在给出 `A` 或 `B` 之一的证明时得证，因此对应于析取
-的类型是一个不交和（disjoint sum）。
+的类型是一个不交和（Disjoint Sum）。
 
 {::comment}
 (Parts of the above are adopted from "Propositions as Types", Philip Wadler,
@@ -569,7 +570,7 @@ its negation is never provable):
 {:/}
 
 如之前所言，排中律在直觉逻辑中并不成立。然而，我们可以证明它是
-**不可辩驳（irrefutable）**的，即其否定的否定是可证明的（因而其否定式不可证明）：
+**不可辩驳（Irrefutable）**的，即其否定的否定是可证明的（因而其否定式不可证明）：
 
 ```
 em-irrefutable : ∀ {A : Set} → ¬ ¬ (A ⊎ ¬ A)
@@ -654,8 +655,8 @@ you any wish if you pay me one billion dollars.
 Of course, I get to choose whether I offer (a) or (b)."
 {:/}
 
-曾经有一个恶魔向一个男人提议：“要么 (a) 我给你 10 亿美元，要么 (b) 如果你付给我
-10 亿美元，我可以实现你的任何一个愿望。当然，得是我决定提供 (a) 还是 (b)。”
+曾经有一个恶魔向一个男人提议：「要么 (a) 我给你 10 亿美元，要么 (b) 如果你付给我
+10 亿美元，我可以实现你的任何一个愿望。当然，得是我决定提供 (a) 还是 (b)。」
 
 {::comment}
 The man was wary.  Did he need to sign over his soul?
@@ -680,9 +681,9 @@ opportunity available?
 The devil paused.  "I choose (b)."
 {:/}
 
-“我接受”，男人回答道，“我能得到 (a) 还是 (b)？”
+「我接受」，男人回答道，「我能得到 (a) 还是 (b)？」
 
-恶魔顿了顿。“我提供 (b)。”
+恶魔顿了顿。「我提供 (b)。」
 
 {::comment}
 The man was disappointed but not surprised.  That was that, he thought.
@@ -693,7 +694,7 @@ this must be what the devil had in mind.
 Eventually he had his billion dollars, and the devil appeared again.
 {:/}
 
-男人很失望，但并不惊讶。“果然是这样”，他想。
+男人很失望，但并不惊讶。「果然是这样」，他想。
 但是这个提议折磨着他。想想他都能用这个愿望做些什么！
 多年以后，男人开始积累钱财。为了得到这笔钱，他有时会做坏事，
 而且他隐约意识到这一定是魔鬼所想到的。最后他攒够了 10 亿美元，恶魔再次出现了。
@@ -703,7 +704,7 @@ Eventually he had his billion dollars, and the devil appeared again.
 containing the money.  "Grant me my wish!"
 {:/}
 
-“这是 10 亿美元”，男人说着，交出一个手提箱。“实现我的愿望吧！”
+「这是 10 亿美元」，男人说着，交出一个手提箱。「实现我的愿望吧！」
 
 {::comment}
 The devil took possession of the valise.  Then he said, "Oh, did I say
@@ -711,8 +712,8 @@ The devil took possession of the valise.  Then he said, "Oh, did I say
 give you one billion dollars."
 {:/}
 
-恶魔接过了手提箱。然后他说道，“哦？我之前说的是 (b) 吗？抱歉，我说的是 (a)。
-很高兴能给你 10 亿美元。”
+恶魔接过了手提箱。然后他说道，「哦？我之前说的是 (b) 吗？抱歉，我说的是 (a)。
+很高兴能给你 10 亿美元。」
 
 {::comment}
 And the devil handed back to the man the same valise that the man had
@@ -758,7 +759,7 @@ Consider the following principles:
 Show that each of these implies all the others.
 {:/}
 
-请证明其中任意一条定律都蕴涵其它所有定律。
+请证明其中任意一条定律都蕴含其它所有定律。
 
 {::comment}
 ```
@@ -781,7 +782,7 @@ Show that each of these implies all the others.
 Say that a formula is _stable_ if double negation elimination holds for it:
 {:/}
 
-若双重否定消去对某个式子成立，我们就说它是**稳定（stable）**的：
+若双重否定消去对某个式子成立，我们就说它是**稳定（Stable）**的：
 
 ```
 Stable : Set → Set
@@ -809,7 +810,7 @@ of two stable formulas is stable.
 ## Standard Prelude
 {:/}
 
-## 标准前导库
+## 标准库
 
 {::comment}
 Definitions similar to those in this chapter can be found in the standard library:
