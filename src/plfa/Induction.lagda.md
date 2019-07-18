@@ -20,7 +20,7 @@ module plfa.Induction where
 
 > 归纳会让你对无中生有感到内疚
 > ... 但它却是文明中最伟大的思想之一。
-> -- Herbert Wilf
+> ———— Herbert Wilf
 
 {::comment}
 Now that we've defined the naturals and operations upon them, our next
@@ -30,7 +30,7 @@ _induction_.
 {:/}
 
 现在我们定义了自然数及其运算，下一步是学习如何证明它们满足的性质。
-如其名称所示，**归纳数据类型（inductive datatype）**是通过**归纳（induction）**
+如其名称所示，**归纳数据类型（Inductive Datatype）**是通过**归纳（Induction）**
 来证明的。
 
 {::comment}
@@ -46,7 +46,7 @@ and some operations upon them.  We also import a couple of new operations,
 {:/}
 
 我们需要上一章中的相等性，加上自然数及其运算。我们还导入了一些新的运算：
-`cong`、`sym` 和 `_≡⟨_⟩_`，之后会解释它们：
+`cong`、`sym` 和 `_≡⟨_⟩_`，我们会在之后解释它们：
 
 ```
 import Relation.Binary.PropositionalEquality as Eq
@@ -95,12 +95,12 @@ on names for some of the most common properties.
 * **结合律（Associativity）**。若括号的位置无关紧要，则称运算符 `+` 满足结合律，
   即对于所有的 `m`、`n` 和 `p`，有 `(m + n) + p ≡ m + (n + p)`。
 
-* **交换律（Commutativity）**。若参数的位置无关紧要，则称运算符 `+` 满足交换律，
+* **交换律（Commutativity）**。若参数的顺序无关紧要，则称运算符 `+` 满足交换律，
   即对于所有的 `m` 和 `n`，有 `m + n ≡ n + m`。
 
-* **分配率（Distributivity）**。对于所有的 `m`、`n` 和 `p`，若
-  `(m + n) * p ≡ (m * p) + (n * p)`，则运算符 `*` 对运算符 `+` 满足左分配率；
-  对于所有的 `m`、`n` 和 `p`，若 `m * (p + q) ≡ (m * p) + (m * q)`，则满足右分配率。
+* **分配律（Distributivity）**。对于所有的 `m`、`n` 和 `p`，若
+  `(m + n) * p ≡ (m * p) + (n * p)`，则运算符 `*` 对运算符 `+` 满足左分配律；
+  对于所有的 `m`、`n` 和 `p`，若 `m * (p + q) ≡ (m * p) + (m * q)`，则满足右分配律。
 
 {::comment}
 Addition has identity `0` and multiplication has identity `1`;
@@ -108,8 +108,8 @@ addition and multiplication are both associative and commutative;
 and multiplication distributes over addition.
 {:/}
 
-加法的幺元为 `0`，乘法的幺元为 `1`，加法和乘法都满足结合律和交换律，
-乘法对加法满足分配率。
+加法的幺元为 `0`，乘法的幺元为 `1`。加法和乘法都满足结合律和交换律，
+乘法对加法满足分配律。
 
 If you ever bump into an operator at a party, you now know how
 to make small talk, by asking whether it has a unit and is
@@ -118,7 +118,8 @@ might ask them if one distributes over the other.
 
 如果你在一个舞会上碰见了一位操作员，那么你可以跟他闲聊，问问他是否有单位元，
 能不能结合或者交换。如果你碰见了两位操作员，那么可以问他们某一位是否在另一位上面分布。
-（作者的双关冷笑话，运算符（Operator）也有操作员的意思= =||）
+
+【译注：作者的双关冷笑话，运算符（Operator）也有操作员的意思。】
 
 {::comment}
 Less frivolously, if you ever bump into an operator while reading a
@@ -130,22 +131,22 @@ that a newly introduced operator is associative but not commutative.
 {:/}
 
 正经来说，如果你在阅读技术论文时遇到了一个运算符，那么你可以考察它是否拥有一个幺元，
-是否满足结合律或分配率，或者是否对另一个运算符满足分配率，这能为你提供一种视角。
-细心的作者通常会指出它们是否满足这些性质，比如说指明一个新引入的运算符满足结合率
-但不满足交换率。
+是否满足结合律或分配律，或者是否对另一个运算符满足分配律，这能为你提供一种视角。
+细心的作者通常会指出它们是否满足这些性质，比如说指明一个新引入的运算符满足结合律
+但不满足交换律。
 
 {::comment}
 #### Exercise `operators` {#operators}
 {:/}
 
-#### 练习：`operators` {#operators}
+#### 练习 `operators` {#operators}
 
 {::comment}
 Give another example of a pair of operators that have an identity
 and are associative, commutative, and distribute over one another.
 {:/}
 
-请给出另一对运算符，它们拥有一个幺元，满足结合律、交换律，且其中一个对另一个满足分配率。
+请给出另一对运算符，它们拥有一个幺元，满足结合律、交换律，且其中一个对另一个满足分配律。
 
 {::comment}
 ```
@@ -188,7 +189,7 @@ location of the parentheses does not matter:
 Here `m`, `n`, and `p` are variables that range over all natural numbers.
 {:/}
 
-这里的 `m`、`n` 和 `p` 都是取值范围是全体自然数的变量。
+这里的 `m`、`n` 和 `p` 变量的取值范围都是全体自然数。
 
 {::comment}
 We can test the proposition by choosing specific numbers for the three
@@ -409,8 +410,8 @@ on some given day.  In particular, the property `P n` first appears on
 day _n+1_.
 {:/}
 
-此过程可以继续下去。在第 **n** 天会有 **n** 个不同的性质成立。
-每个自然数的性质都会在某一天出现。具体来说，性质 `P n` 会在第 **n+1** 天
+此过程可以继续下去。在第 *n* 天会有 *n* 个不同的性质成立。
+每个自然数的性质都会在某一天出现。具体来说，性质 `P n` 会在第 *n+1* 天
 首次出现。
 
 
@@ -536,7 +537,7 @@ be shown, and reading down from the top and up from the bottom takes us to
 {:/}
 
 此式平凡成立。阅读此证明中起始步骤中的等式链，其最初和最末的式子分别匹配待证等式的两边，
-从上到下或从下到上读都会让我们在中间遇到 `n + p` 。此步骤除了化简外不需要任何依据。
+从上到下或从下到上读都会让我们在中间遇到 `n + p` 。此步骤除了化简外不需要其他额外的解释。
 
 {::comment}
 For the inductive case, we must show:
@@ -720,7 +721,7 @@ Another important property of addition is that it is _commutative_, that is,
 that the order of the operands does not matter:
 {:/}
 
-加法的另一个重要性质是**交换律（Commutativity）**，即运算数的顺序无关紧要：
+加法的另一个重要性质是满足**交换律（Commutativity）**，即运算数的顺序无关紧要：
 
     m + n ≡ n + m
 
@@ -1187,7 +1188,7 @@ returns `x + y`.  Thus, applying the congruence `cong (m +_)` takes
 the above equation into:
 {:/}
 
-第三，Agda 支持 Richard Bird 引入的**片段（section）**记法。我们将应用到
+第三，Agda 支持 Richard Bird 引入的**片段（Section）**记法。我们将应用到
 `y` 并返回 `x + y` 的函数写作 `(x +_)`。因此，应用合同性 `cong (m +_)`
 会将上面的等式转换成：
 
@@ -1311,7 +1312,7 @@ The process continues.  On the _m_'th day we will know all the
 judgments where the first number is less than _m_.
 {:/}
 
-此过程可以继续下去。在第 **m** 天我们会知道所有第一个数小于 **m** 的判断。
+此过程可以继续下去。在第 *m* 天我们会知道所有第一个数小于 *m* 的判断。
 
 {::comment}
 There is also a completely finite approach to generating the same equations,
@@ -1457,7 +1458,7 @@ right.
 ## Building proofs interactively
 {:/}
 
-## 交互式地构造证明
+## 交互式构造证明
 
 {::comment}
 It is instructive to see how to build the alternative proof of
@@ -1581,7 +1582,7 @@ hypothesis, so let's edit the text accordingly:
 {:/}
 
 同样，它会给出化简后的目标和可用的变量。在此步骤中，我们需要根据归纳假设进行改写，
-于是我来编辑这些文本：
+于是我们来编辑这些文本：
 
     +-assoc′ : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
     +-assoc′ zero n p = refl
@@ -1915,7 +1916,7 @@ This chapter uses the following unicode:
 {:/}
 
     ∀  U+2200  对于所有 (\forall, \all)
-    ʳ  U+02B3  小写字母 r 的变体 (\^r)
+    ʳ  U+02B3  描述符小写字母 r (\^r)
     ′  U+2032  撇号 (\')
     ″  U+2033  双撇号 (\')
     ‴  U+2034  三撇号 (\')
