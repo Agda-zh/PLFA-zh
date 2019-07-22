@@ -1,5 +1,5 @@
 ---
-title     : "Connectives: 合取、析取与蕴含"
+title     : "Connectives: 合取、析取与蕴涵"
 layout    : page
 prev      : /Isomorphism/
 permalink : /Connectives/
@@ -39,7 +39,7 @@ principle known as _Propositions as Types_:
   * *析取*（Disjunction）即是*和*（Sum）
   * *真*（True）即是*单元类型*（Unit Type）
   * *假*（False）即是*空类型*（Empty Type）
-  * *蕴含*（Implication）即是*函数空间*（Function Space）
+  * *蕴涵*（Implication）即是*函数空间*（Function Space）
 
 {::comment}
 ## Imports
@@ -949,7 +949,7 @@ Show empty is the right identity of sums up to isomorphism.
 ## Implication is function {#implication}
 {:/}
 
-## 蕴含即是函数 {#implication}
+## 蕴涵即是函数 {#implication}
 
 {::comment}
 Given two propositions `A` and `B`, the implication `A → B` holds if
@@ -957,8 +957,8 @@ whenever `A` holds then `B` must also hold.  We formalise implication using
 the function type, which has appeared throughout this book.
 {:/}
 
-给定两个命题 `A` 和 `B`，其蕴含 `A → B` 在任何 `A` 成立的时候，`B` 也成立时成立。
-我们用函数类型来形式化蕴含，如本书中通篇出现的那样。
+给定两个命题 `A` 和 `B`，其蕴涵 `A → B` 在任何 `A` 成立的时候，`B` 也成立时成立。
+我们用函数类型来形式化蕴涵，如本书中通篇出现的那样。
 
 
 {::comment}
@@ -1029,7 +1029,7 @@ Implication binds less tightly than any other operator. Thus, `A ⊎ B →
 B ⊎ A` parses as `(A ⊎ B) → (B ⊎ A)`.
 {:/}
 
-蕴含比其他的运算符结合得都不紧密。因此 `A ⊎ B → B ⊎ A` 被解析为 `(A ⊎ B) → (B ⊎ A)`。
+蕴涵比其他的运算符结合得都不紧密。因此 `A ⊎ B → B ⊎ A` 被解析为 `(A ⊎ B) → (B ⊎ A)`。
 
 {::comment}
 Given two types `A` and `B`, we refer to `A → B` as the _function_
@@ -1294,7 +1294,7 @@ In the usual approach to logic, both of the distribution laws
 are given as equivalences, where each side implies the other:
 {:/}
 
-在一般的逻辑学方法中，两条分配律都以等价的形式给出，每一边都蕴含了另一边：
+在一般的逻辑学方法中，两条分配律都以等价的形式给出，每一边都蕴涵了另一边：
 
     A × (B ⊎ C) ⇔ (A × B) ⊎ (A × C)
     A ⊎ (B × C) ⇔ (A ⊎ B) × (A ⊎ C)
@@ -1306,7 +1306,7 @@ second only corresponds to an embedding, revealing a sense in which
 one of these laws is "more true" than the other.
 {:/}
 
-但当我们考虑提供上述蕴含证明的函数时，第一条对应同构而第二条只能对应嵌入，
+但当我们考虑提供上述蕴涵证明的函数时，第一条对应同构而第二条只能对应嵌入，
 揭示了有些定理比另一个更加的”正确“。
 
 
@@ -1356,7 +1356,7 @@ distributive law, and explain how it relates to the weak version.
 Show that a disjunct of conjuncts implies a conjunct of disjuncts:
 {:/}
 
-证明合取的析取蕴含了析取的合取：
+证明合取的析取蕴涵了析取的合取：
 
 ```
 postulate

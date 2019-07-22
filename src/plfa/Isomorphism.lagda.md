@@ -666,7 +666,7 @@ open ≲-Reasoning
 Show that every isomorphism implies an embedding.
 {:/}
 
-证明每个同构蕴含了一个嵌入。
+证明每个同构蕴涵了一个嵌入。
 
 ```
 postulate

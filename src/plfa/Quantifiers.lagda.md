@@ -122,7 +122,7 @@ evidence of a proposition are indistinguishable.
 {:/}
 
 函数是依赖函数的一种特殊形式，其值域不取决于定义域中的变量。当一个函数被视为
-蕴含的证明时，它的参数和结果都是证明，而当一个依赖函数被视为全称量词的证明时，
+蕴涵的证明时，它的参数和结果都是证明，而当一个依赖函数被视为全称量词的证明时，
 它的参数被视为数据类型中的一个元素，而结果是一个依赖于参数的命题的证明。因为在
 Agda 中，一个数据类型中的一个值和一个命题的证明是无法区别的，这样的区别很大程度上
 取决于如何来诠释。
@@ -179,7 +179,7 @@ Chapter [Connectives][plfa.Connectives].
 Show that a disjunction of universals implies a universal of disjunctions:
 {:/}
 
-证明全称命题的析取蕴含了析取的全称命题：
+证明全称命题的析取蕴涵了析取的全称命题：
 
 ```
 postulate
@@ -418,7 +418,7 @@ instantiate that proof that `∀ x → B x → C` to any value `x` of type
 the evidence for `∃[ x ] B x`.
 {:/}
 
-换句话说，如果我们知道对于任何 `A` 类型的 `x`，`B x` 蕴含了 `C`，还知道对于某个类型
+换句话说，如果我们知道对于任何 `A` 类型的 `x`，`B x` 蕴涵了 `C`，还知道对于某个类型
 `A` 的 `x`，`B x` 成立，那么我们可以推导出 `C` 成立。这是因为我们可以先将 `∀ x → B x → C`
 的证明对于 `A` 类型的 `x` 和 `B x` 类型的 `y` 实例化，而这样的值恰好可以由 `∃[ x ] B x`
 的证明来提供。
@@ -448,7 +448,7 @@ establish the isomorphism is identical to what we wrote when discussing
 {:/}
 
 这可以被看做是将柯里化推广的结果。的确，建立这两者同构的证明与之前我们讨论
-[蕴含][plfa.Connectives#implication]时给出的证明是一样的。
+[蕴涵][plfa.Connectives#implication]时给出的证明是一样的。
 
 {::comment}
 #### Exercise `∃-distrib-⊎` (recommended)
@@ -478,7 +478,7 @@ postulate
 Show that an existential of conjunctions implies a conjunction of existentials:
 {:/}
 
-证明合取的存在命题蕴含了存在命题的合取：
+证明合取的存在命题蕴涵了存在命题的合取：
 
 ```
 postulate
@@ -810,7 +810,7 @@ requires extensionality.
 Show that existential of a negation implies negation of a universal:
 {:/}
 
-证明否定的存在量化蕴含了全称量化的否定：
+证明否定的存在量化蕴涵了全称量化的否定：
 
 ```
 postulate

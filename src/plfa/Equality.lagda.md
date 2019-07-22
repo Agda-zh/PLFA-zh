@@ -817,7 +817,7 @@ reversing the order of the clauses will cause Agda to report an error.
 我们经常将表达式和模式如上对齐。这个第一列表明了 `m + n` 和 `n + m` 是相同的，第二列使用相应等式来证明的前述的断言。
 注意在这里使用的*点模式*（Dot Pattern），`.(n + m)`。点模式由一个点和一个表达式组成，
 在其他信息迫使这个值和点模式中的值相等时使用。在这里，`m + n` 和 `n + m` 由后续的
-`+-comm m n` 与 `refl` 的匹配来识别。我们可能会认为第一种情况是多余的，因为第二种情况中才蕴含了需要的信息。
+`+-comm m n` 与 `refl` 的匹配来识别。我们可能会认为第一种情况是多余的，因为第二种情况中才蕴涵了需要的信息。
 但实际上 Agda 在这件事上很挑剔——省略第一条或者更换顺序会让 Agda 报告一个错误。（试一试你就知道！）
 
 {::comment}
@@ -883,7 +883,7 @@ for every predicate `P` over type `A` we have that `P x` implies `P y`:
 {:/}
 
 令 `x` 和 `y` 为类型 `A` 的对象。我们定义 `x ≐ y` 成立，当每个对于类型 `A` 成立的谓词 `P`，
-我们有 `P x` 蕴含了 `P y`：
+我们有 `P x` 蕴涵了 `P y`：
 
 ```
 _≐_ : ∀ {A : Set} (x y : A) → Set₁
@@ -941,8 +941,8 @@ for all predicates `P`, then the implication holds the other way round
 as well:
 {:/}
 
-对称性就没有那么显然了。我们需要证明如果对于所有谓词 `P`，`P x` 蕴含 `P y`，
-那么反方向的蕴含也成立。
+对称性就没有那么显然了。我们需要证明如果对于所有谓词 `P`，`P x` 蕴涵 `P y`，
+那么反方向的蕴涵也成立。
 
 ```
 sym-≐ : ∀ {A : Set} {x y : A}
@@ -967,10 +967,10 @@ is trivial by reflexivity, and hence `Q y` follows from `x ≐ y`.  But
 `Q y` is exactly a proof of what we require, that `P y` implies `P x`.
 {:/}
 
-给定 `x ≐ y` 和一个特定的 `P`，我们需要构造一个 `P y` 蕴含 `P x` 的证明。
-我们首先用一个谓词 `Q` 将相等性实例化，使得 `Q z` 在 `P z` 蕴含 `P x` 时成立。
+给定 `x ≐ y` 和一个特定的 `P`，我们需要构造一个 `P y` 蕴涵 `P x` 的证明。
+我们首先用一个谓词 `Q` 将相等性实例化，使得 `Q z` 在 `P z` 蕴涵 `P x` 时成立。
 `Q x` 这个性质是显然的，由自反性可以得出，由此通过 `x ≐ y` 就能推出 `Q y` 成立。而 `Q y`
-正是我们需要的证明，即 `P y` 蕴含 `P x`。
+正是我们需要的证明，即 `P y` 蕴涵 `P x`。
 
 {::comment}
 We now show that Martin Löf equality implies
@@ -980,7 +980,7 @@ which is easy since equality of `x` and `y` implies that any proof
 of `P x` is also a proof of `P y`:
 {:/}
 
-我们现在来证明 Martin Löf 相等性蕴含了莱布尼兹相等性，以及其逆命题。在正方向上，
+我们现在来证明 Martin Löf 相等性蕴涵了莱布尼兹相等性，以及其逆命题。在正方向上，
 如果我们已知 `x ≡ y`，我们需要对于任意的 `P`，将 `P x` 的证明转换为 `P y` 的证明。
 我们很容易就可以做到这一点，因为 `x` 与 `y` 相等意味着任何 `P x` 的证明即是 `P y` 的证明。
 

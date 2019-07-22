@@ -44,7 +44,7 @@ as implication of false:
 {:/}
 
 给定命题 `A`，当 `A` 不成立时，它的否定形式 `¬ A` 成立。
-我们将否定阐述为「蕴含假」来形式化此概念。
+我们将否定阐述为「蕴涵假」来形式化此概念。
 
 ```
 ¬_ : Set → Set
@@ -126,7 +126,7 @@ we have only half of this equivalence, namely that `A` implies `¬ ¬ A`:
 {:/}
 
 在**经典逻辑**中，`A` 等价于 `¬ ¬ A`。而如前文所述，Agda 中使用了**直觉逻辑**，
-因此我们只有该等价关系的一半，即 `A` 蕴含 `¬ ¬ A`：
+因此我们只有该等价关系的一半，即 `A` 蕴涵 `¬ ¬ A`：
 
 ```
 ¬¬-intro : ∀ {A : Set}
@@ -176,7 +176,7 @@ We cannot show that `¬ ¬ A` implies `A`, but we can show that
 `¬ ¬ ¬ A` implies `¬ A`:
 {:/}
 
-我们无法证明 `¬ ¬ A` 蕴含 `A`，但可以证明 `¬ ¬ ¬ A` 蕴含 `¬ A`：
+我们无法证明 `¬ ¬ A` 蕴涵 `A`，但可以证明 `¬ ¬ ¬ A` 蕴涵 `¬ A`：
 
 ```
 ¬¬¬-elim : ∀ {A : Set}
@@ -205,8 +205,8 @@ Another law of logic is _contraposition_,
 stating that if `A` implies `B`, then `¬ B` implies `¬ A`:
 {:/}
 
-另一个逻辑定律是**换质换位律（Contraposition）**，它陈述了若 `A` 蕴含 `B`，
-则 `¬ B` 蕴含 `¬ A`：
+另一个逻辑规则是**换质换位律（contraposition）**，它陈述了若 `A` 蕴涵 `B`，
+则 `¬ B` 蕴涵 `¬ A`：
 
 ```
 contraposition : ∀ {A B : Set}
@@ -285,7 +285,7 @@ raising to the zero power.  This indeed corresponds to what
 we know for arithmetic, where
 {:/}
 
-鉴于蕴含和幂运算之间的对应关系，以及没有成员的类型为假，
+鉴于蕴涵和幂运算之间的对应关系，以及没有成员的类型为假，
 我们可以将否定看作零的幂。它确实对应于我们所知的算术运算，即
 
     0 ^ n  ≡  1,  if n ≡ 0
@@ -345,7 +345,7 @@ such `x` immediately leads to a contradiction,
 again causing the equality to hold trivially.
 {:/}
 
-`¬ A` 的证据表示任何 `A` 的证据都可直接得出矛盾。但由于外延性全称量化了使
+`¬ A` 的证据蕴涵任何 `A` 的证据都可直接得出矛盾。但由于外延性全称量化了使
 `A` 成立的 `x`，因此任何这样的 `x` 都会直接导出矛盾，同样其相等性平凡成立。
 
 
@@ -752,7 +752,7 @@ Consider the following principles:
   * 排中律：对于所有 `A`，`A ⊎ ¬ A`。
   * 双重否定消去：对于所有的 `A`，`¬ ¬ A → A`。
   * 皮尔士定律：对于所有的 `A` 和 `B`，`((A → B) → A) → A`。
-  * 蕴含表示为析取：对于所有的 `A` 和 `B`，`(A → B) → ¬ A ⊎ B`。
+  * 蕴涵表示为析取：对于所有的 `A` 和 `B`，`(A → B) → ¬ A ⊎ B`。
   * 德摩根定律：对于所有的 `A` 和 `B`，`¬ (¬ A × ¬ B) → A ⊎ B`。
 
 {::comment}
