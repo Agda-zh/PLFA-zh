@@ -30,7 +30,7 @@ _induction_.
 {:/}
 
 现在我们定义了自然数及其运算，下一步是学习如何证明它们满足的性质。
-如其名称所示，**归纳数据类型（Inductive Datatype）**是通过**归纳（Induction）**
+顾名思义，**归纳数据类型（Inductive Datatype）**是通过**归纳（Induction）**
 来证明的。
 
 {::comment}
@@ -46,7 +46,7 @@ and some operations upon them.  We also import a couple of new operations,
 {:/}
 
 我们需要上一章中的相等性，加上自然数及其运算。我们还导入了一些新的运算：
-`cong`、`sym` 和 `_≡⟨_⟩_`，我们会在之后解释它们：
+`cong`、`sym` 和 `_≡⟨_⟩_`，之后会解释它们：
 
 ```
 import Relation.Binary.PropositionalEquality as Eq
@@ -189,7 +189,7 @@ location of the parentheses does not matter:
 Here `m`, `n`, and `p` are variables that range over all natural numbers.
 {:/}
 
-这里的 `m`、`n` 和 `p` 变量的取值范围都是全体自然数。
+这里的变量 `m`、`n` 和 `p` 的取值范围都是全体自然数。
 
 {::comment}
 We can test the proposition by choosing specific numbers for the three
@@ -1916,7 +1916,7 @@ This chapter uses the following unicode:
 {:/}
 
     ∀  U+2200  对于所有 (\forall, \all)
-    ʳ  U+02B3  描述符小写字母 r (\^r)
+    ʳ  U+02B3  修饰符小写字母 r (\^r)
     ′  U+2032  撇号 (\')
     ″  U+2033  双撇号 (\')
     ‴  U+2034  三撇号 (\')
