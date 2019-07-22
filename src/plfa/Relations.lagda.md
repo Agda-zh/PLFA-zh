@@ -1092,7 +1092,7 @@ properties of strict inequality, such as transitivity, by
 exploiting the corresponding properties of inequality.
 {:/}
 
-我们可以直接地来证明 `suc m ≤ n` 蕴含了 `m < n`，及其逆命题。
+我们可以直接地来证明 `suc m ≤ n` 蕴涵了 `m < n`，及其逆命题。
 因此我们亦可从不等关系的性质中，使用此性质来证明严格不等关系的性质。
 
 
@@ -1195,7 +1195,7 @@ As with inequality, some additional definitions may be required.
 Show that `suc m ≤ n` implies `m < n`, and conversely.
 {:/}
 
-证明 `suc m ≤ n` 蕴含了 `m < n`，及其逆命题。
+证明 `suc m ≤ n` 蕴涵了 `m < n`，及其逆命题。
 
 {::comment}
 ```
