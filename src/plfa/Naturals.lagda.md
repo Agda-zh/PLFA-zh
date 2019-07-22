@@ -272,7 +272,7 @@ while only working with _finite_ sets and never referring to the
 _infinite_ set of natural numbers.
 {:/}
 
-实际上，无需利用循环性，我们的自然数定义也是可以被赋予意义的。
+实际上，不必通过自我指涉，我们的自然数定义也是可以被赋予意义的。
 为此，我们甚至只需要处理**有限**的集合，而不必涉及**无限**的自然数集。
 
 {::comment}
