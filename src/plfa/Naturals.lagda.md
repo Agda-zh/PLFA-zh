@@ -92,7 +92,7 @@ and `zero` and `suc` (short for *successor*) are the
 {:/}
 
 这里 `ℕ` 是我们所定义的**数据类型（Datatype）**的名字，而 `zero`（零）和 `suc`
-（**Successor**，即**后继数**的简写）是该数据类型的**构造器（Constructor）**。
+（**后继**，即**Successor**的简写）是该数据类型的**构造器（Constructor）**。
 
 {::comment}
 Both definitions above tell us the same two things:
@@ -114,7 +114,7 @@ Further, these two rules give the *only* ways of creating natural numbers.
 Hence, the possible natural numbers are:
 {:/}
 
-此外，这两条规则给出了产生自然数的**唯一**一种方法。因此，可能的自然数包括：
+此外，这两条规则给出了产生自然数的**唯一**方法。因此，可能的自然数包括：
 
     zero
     suc zero
@@ -218,8 +218,8 @@ They tell us that `zero` is a natural number and that `suc` takes a natural
 number as argument and returns a natural number.
 {:/}
 
-这两行给出的是指定了构造器 `zero` 和 `suc` 的类型的**签名（Signature)**，
-告诉我们 `zero` 是一个自然数，`suc` 则取一个自然数作为参数并返回另一个自然数。
+这两行给出了构造器 `zero` 和 `suc` 的类型**签名（Signature）**。
+它们告诉我们 `zero` 是一个自然数，`suc` 则取一个自然数作为参数并返回另一个自然数。
 
 {::comment}
 You may have noticed that `ℕ` and `→` don't appear on your keyboard.
@@ -230,8 +230,8 @@ _type_ refers to typing with fingers as opposed to data types!
 {:/}
 
 读者可能已经注意到了 `ℕ` 和 `→` 在键盘上没有对应的按键。它们是
-**统一码（Unicode）**中的符号。在每一章的结尾都会有本章节引入的 Unicode 符号的列表，
-以及在 Emacs 编辑器中输入它们的方法。
+**Unicode（统一码）**中的符号。在每一章的结尾都会有本章节引入的 Unicode
+符号的列表， 以及在 Emacs 编辑器中输入它们的方法。
 
 {::comment}
 The story of creation
@@ -243,7 +243,7 @@ The story of creation
 Let's look again at the rules that define the natural numbers:
 {:/}
 
-让我们再来看一遍定义了自然数的规则：
+让我们再来看一遍定义自然数的规则：
 
 {::comment}
 _Base case_: `zero` is a natural number.
@@ -261,7 +261,9 @@ definition as "Brexit means Brexit"?
 {:/}
 
 等一下！第二行用自然数定义了自然数，这怎么能被允许呢？这个定义难道
-不会像“三角形就是三角形”一样无用吗？
+不会像「脱欧即是脱欧」一样无用吗？
+
+【译注：「脱欧即是脱欧」是英国首相特蕾莎·梅提出的一句口号。】
 
 {::comment}
 In fact, it is possible to assign our definition a meaning without
@@ -270,7 +272,7 @@ while only working with _finite_ sets and never referring to the
 _infinite_ set of natural numbers.
 {:/}
 
-实际上，无需利用循环性，我们的自然数定义也是可以被赋予意义的。
+实际上，不必通过自我指涉，我们的自然数定义也是可以被赋予意义的。
 为此，我们甚至只需要处理**有限**的集合，而不必涉及**无限**的自然数集。
 
 {::comment}
@@ -338,9 +340,9 @@ tells us that since `zero` and `suc zero` are both natural numbers, then
 the first of these, but the second is new:
 {:/}
 
-我们再次重复这个过程。现在归纳步骤告诉我们因为 `zero` 和 `suc zero` 都是自然
-数，所以 `suc zero` 和 `suc (suc zero)` 也是自然数。我们已经知道前者是自然数了，
-但 `suc (suc zero)` 是新加入的。
+我们再次重复这个过程。现在归纳步骤告诉我们，因为 `zero` 和 `suc zero` 都是自然
+数，所以 `suc zero` 和 `suc (suc zero)` 也是自然数。我们已经知道 `suc zero` 是自然数了，
+但后者 `suc (suc zero)` 是新加入的。
 
 {::comment}
     -- On the third day, there are three natural numbers.
@@ -411,7 +413,7 @@ a base case is useless, as in the phrase "Brexit means Brexit".
 就引入了一个自然数。定义了后继数的规则之所以被称作**归纳步骤**，则是因为它在
 我们已知自然数的基础上引入了更多自然数。其中，起始步骤的重要性不可小觑。如果
 我们只有归纳规则，我们将在第一天没有任何自然数，第二天，第三天，无论多久也依旧没有。
-一个缺失了起始步骤的归纳定义是无用的，就像“三角形就是三角形”一样。
+一个缺失了起始步骤的归纳定义是无用的，就像「脱欧即是脱欧」一样。
 
 {::comment}
 Philosophy and history
@@ -429,7 +431,7 @@ numbers, which we may take as a foundation for their formal
 description.
 {:/}
 
-哲学家可能会观察到，我们对“第一天”、“第二天”等说法的使用暗含了对自然数的理解。
+哲学家可能会观察到，我们对「第一天」、「第二天」等说法的使用暗含了对自然数的理解。
 在这个层面，我们的自然数定义也许一定程度上可以被视作循环的，但我们不必为此烦恼。
 每个人对自然数都有良好的非形式化的理解，而我们可以将这作为自然数的形式化描述的基础。
 
@@ -443,9 +445,9 @@ principia, nova methodo exposita_" (The principles of arithmetic
 presented by a new method), published the following year.
 {:/}
 
-尽管自然数从人类开始计数起就被认知，但是其归纳定义却是相对较近的事情。这可以追溯到理查德·戴德金
+尽管自然数从人类开始计数起就被认知，但是其归纳定义却是相对较近的事情。这可以追溯到理查德·戴德金（Richard Dedekind）
 于 1888 年发表的论文 "*Was sind und was sollen die Zahlen?*"（《数是什么，应该是什么？》），
-以及朱塞佩·皮亚诺于次年发表的著作 "*Arithmetices principia, nova methodo exposita*"
+以及朱塞佩·皮亚诺（Giuseppe Peano）于次年发表的著作 "*Arithmetices principia, nova methodo exposita*"
 （《算术原理：用一种新方法呈现》）。
 
 {::comment}
@@ -516,7 +518,7 @@ about it from the Agda standard library:
 {:/}
 
 我们很快就能够写一些包含自然数的等式了。在此之前，我们需要从 Agda 标
-准库中导入相等性的定义和用于等式推理的记号：
+准库中导入相等性的定义和用于等式推理的记法：
 
 ```
 import Relation.Binary.PropositionalEquality as Eq
@@ -539,14 +541,14 @@ but will see how they are defined in
 Chapter [Equality][plfa.Equality].
 {:/}
 
-第一行代码将标准库中定义了相等性的模块导入当前作用域（Scope）并将其命名
+第一行代码将标准库中定义了相等性的模块导入当前作用域（Scope），并将其命名
 为 `Eq`。第二行打开了这个模块，也就是将所有在 `using` 从句中指定的名称
 添加到当前作用域。在这里被添加的名称有相等性运算符 `_≡_` 和两个项相等的
 证据 `refl`。第三行选取了一个提供用于等价关系推理的运算符的模块，并将
 在 `using` 从句中指定的名称添加到当前作用域。在这里被添加的名称有 `begin_`，
 `_≡⟨⟩_`，以及 `_∎`。我们会在下文中看到这些运算符的使用方法。我们目前把这些
-名称都当作现成的工具来使用，不深究其细节，但我们会在 [相等性][plfa.Equality]
-一章学习它们的具体定义。
+名称都当作现成的工具来使用，不深究其细节，但我们会在[相等性][plfa.Equality]章节
+学习它们的具体定义。
 
 {::comment}
 Agda uses underbars to indicate where terms appear in infix or mixfix
@@ -564,7 +566,7 @@ Parentheses and semicolons are among the few characters that cannot
 appear in names, so we do not need extra spaces in the `using` list.
 {:/}
 
-括号和分号属于少有的几个不能在名称中出现的的字符，所以我们在 `using`
+括号和分号是少有的几个不能在名称中出现的的字符，所以我们在 `using`
 列表中不需要额外的空白（以消除歧义）。
 
 {::comment}
@@ -759,9 +761,9 @@ equations.  The chain starts with `begin` and finishes with `∎`
 consists of a series of terms separated by `≡⟨⟩`.
 {:/}
 
-这里的类型是 `2 + 3 ≡ 5`，而项，也就是这里写成表格形式的等式链，提供了作为类型
+这里的类型是 `2 + 3 ≡ 5`，而这里写成表格形式的等式链的项，提供了类型中表示
 的等式成立的**证据（Evidence）**。这个等式链由 `begin` 开始，以 `∎` 结束（`∎` 可
-读作 "qed"/“证毕” 或 "tombstone"/“墓碑符号”，后者来自于其外观），并由一系列被 `≡⟨⟩` 分隔的项组成。
+读作 「qed」/「证毕」 或 「tombstone」/「墓碑符号」，后者来自于其外观），并由一系列由 `≡⟨⟩` 分隔的项组成。
 
 {::comment}
 In fact, both proofs are longer than need be, and Agda is satisfied
@@ -795,7 +797,7 @@ the equations in an order that makes sense to the reader.
 
 在等式链中，Agda 只检查是否每个项都可以化简到相同的值。如果我们打乱等式顺序，
 省略或者加入一些额外的步骤，证明仍然会被接受。我们需要自己确保等式是按
-一定顺序书写的，以便读者理解。
+一种方便读者理解的顺序来书写。
 
 {::comment}
 Here `2 + 3 ≡ 5` is a type, and the chains of equations (and also
@@ -904,7 +906,7 @@ Again, the definition is well-founded in that multiplication of
 larger numbers is defined in terms of multiplication of smaller numbers.
 {:/}
 
-这个定义也是良基的，因为较大的数相乘是用较小的数相乘定义的
+这个定义也是良基的，因为较大的数相乘是用较小的数相乘定义的。
 
 {::comment}
 For example, let's multiply two and three:
@@ -1223,10 +1225,12 @@ appears in the _Begriffschrift_ of Gottlob Frege, published in 1879.
 柯里化是以哈斯凯尔·柯里（Haskell Curry）的名字命名的，编程语言 Haskell 也是。
 柯里的工作可以追溯到 19 世纪 30 年代。当我第一次了解到柯里化时，有人
 告诉我柯里化的命名是个归因错误，因为在 20 年代同样的想法就已经被 Moses Schönfinkel 提出了。
-我也听说过这样一个笑话：（柯里化）本来该命名成 Schönfinkel 化的，但是咖喱
-更好吃（curry 也可指调味料咖喱）。直到之后我才了解到，这个对于归因错误的解释
+我也听说过这样一个笑话：「（柯里化）本来该命名成 Schönfinkel 化的，但是咖喱
+更好吃。」直到之后我才了解到，这个对于归因错误的解释
 本身也是个归因错误。柯里化的概念早在戈特洛布·弗雷格（Gottlob Frege）所著的
 发表于 1879 年的 **"Begriffsschrift"（《概念文字》）**中就出现了。
+
+【译注：curry 也可指调味料咖喱。】
 
 {::comment}
 The story of creation, revisited
@@ -1398,7 +1402,7 @@ infinite set of instances.
 
 上述的创世故事是用分层的方式讲述的。首先，我们创造了自然数的无限集合。
 然后，我们构造加法的实例时把自然数集视为现成的，所以即使在第一天我
-们也有一个实例的无限集合。
+们也有一个无限的实例集合。
 
 {::comment}
 Instead, we could choose to create both the naturals and the instances
@@ -1407,7 +1411,7 @@ a finite set of instances:
 {:/}
 
 然而，我们也可以选择同时构造自然数集和加法的实例。这样在任何一天都只会有
-一个实例的有限集合。
+一个有限的实例集合。
 
 {::comment}
     -- In the beginning, we know nothing.
@@ -1572,7 +1576,8 @@ Typing `m` will cause a split on that variable, resulting
 in an update to the code:
 {:/}
 
-即“用于分项的模式变量（留空以对结果分项）：”。
+即「用于分项的模式变量（留空以对结果分项）：」。
+
 键入 `m` 会触发对名为 `m` 的变量的分项操作（即自动模式匹配），产生如下的代码更新：
 
     _+_ : ℕ → ℕ → ℕ
@@ -1781,7 +1786,7 @@ Confirm that this gives the correct answer for the bitstrings
 encoding zero through four.
 {:/}
 
-实现这个函数并确定对于编码了零到四的比特串它都能给出正确结果。
+实现这个函数，并验证它对于表示零到四的比特串都能给出正确结果。
 
 {::comment}
 Using the above, define a pair of functions to convert
@@ -1800,7 +1805,7 @@ Confirm that these both give the correct answer for zero through four.
 {:/}
 
 对于前者，用没有前导零的比特串来表示正数，并用 `x0 nil` 表示零。
-确定这两个函数都能对零到四给出正确结果。
+验证这两个函数都能对零到四给出正确结果。
 
 {::comment}
 ```
