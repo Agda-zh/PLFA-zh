@@ -218,7 +218,7 @@ They tell us that `zero` is a natural number and that `suc` takes a natural
 number as argument and returns a natural number.
 {:/}
 
-这两行给出了构造器 `zero` 和 `suc` 的类型的**签名（Signature）**。
+这两行给出了构造器 `zero` 和 `suc` 的类型**签名（Signature）**。
 它们告诉我们 `zero` 是一个自然数，`suc` 则取一个自然数作为参数并返回另一个自然数。
 
 {::comment}
@@ -341,7 +341,7 @@ the first of these, but the second is new:
 {:/}
 
 我们再次重复这个过程。现在归纳步骤告诉我们，因为 `zero` 和 `suc zero` 都是自然
-数，所以 `suc zero` 和 `suc (suc zero)` 也是自然数。我们已经知道前者 `suc zero` 是自然数了，
+数，所以 `suc zero` 和 `suc (suc zero)` 也是自然数。我们已经知道 `suc zero` 是自然数了，
 但后者 `suc (suc zero)` 是新加入的。
 
 {::comment}
@@ -763,7 +763,7 @@ consists of a series of terms separated by `≡⟨⟩`.
 
 这里的类型是 `2 + 3 ≡ 5`，而这里写成表格形式的等式链的项，提供了类型中表示
 的等式成立的**证据（Evidence）**。这个等式链由 `begin` 开始，以 `∎` 结束（`∎` 可
-读作 「qed」/「证毕」 或 「tombstone」/「墓碑符号」，后者来自于其外观），并由一系列被 `≡⟨⟩` 分隔的项组成。
+读作 「qed」/「证毕」 或 「tombstone」/「墓碑符号」，后者来自于其外观），并由一系列由 `≡⟨⟩` 分隔的项组成。
 
 {::comment}
 In fact, both proofs are longer than need be, and Agda is satisfied
