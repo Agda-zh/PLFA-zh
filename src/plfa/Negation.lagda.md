@@ -759,7 +759,7 @@ Consider the following principles:
 Show that each of these implies all the others.
 {:/}
 
-请证明其中任意一条定律都蕴含其它所有定律。
+请证明其中任意一条定律都蕴涵其它所有定律。
 
 {::comment}
 ```
