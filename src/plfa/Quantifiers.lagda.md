@@ -703,7 +703,7 @@ by `2 * m` and `2 * m + 1`?  Rewrite the proofs of `∃-even` and `∃-odd` when
 restated in this way.
 {:/}
 
-如果我们用 `m * 2` 代替 `2 * m`，`1 + m * 2` 代替 `2 * m + 1`，上述证明会变得复杂多少呢？
+如果我们用 `2 * m` 代替 `m * 2`，`2 * m + 1` 代替 `1 + m * 2`，上述证明会变得复杂多少呢？
 用这种方法来重写 `∃-even` 和 `∃-odd`。
 
 {::comment}

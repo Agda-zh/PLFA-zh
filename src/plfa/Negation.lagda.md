@@ -263,7 +263,7 @@ Peano's postulate that zero is not the successor of any number:
 
 这是我们第一次在 λ-表达式中使用谬模式（Absurd Pattern）。类型 `M ≡ N`
 只有在 `M` 和 `N` 可被化简为相同的项时才能居留。由于 `1` 和 `2`
-会化简为不同的正规形式，因此 Agda 判定没有正据可证明 `1 ≡ 2`。
+会化简为不同的正规形式，因此 Agda 判定没有证据可证明 `1 ≡ 2`。
 第二个例子是，很容易验证皮亚诺公理中「零不是任何数的后继数」的假设：
 
 ```
