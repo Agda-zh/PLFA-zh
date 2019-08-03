@@ -22,8 +22,8 @@ but later discover that these are best avoided in favour
 of a new notion of _decidable_.
 {:/}
 
-我们有两种不同的方式来表示关系：一是表示为，由关系成立的*证明*（Evidence）所构成的数据类型，
-二是表示为一个*计算*（Compute）关系是否成立的函数。在本章中，我们将探讨这两个方式之间的关系。
+我们有两种不同的方式来表示关系：一是表示为由关系成立的*证明*（Evidence）所构成的数据类型；
+二是表示为一个*计算*（Compute）关系是否成立的函数。在本章中，我们将探讨这两种方式之间的关系。
 我们首先研究大家熟悉的*布尔值*（Boolean）记法，但是之后我们会发现，相较布尔值记法，
 使用一种新的*可判定性*（Decidable）记法将会是更好的选择。
 
