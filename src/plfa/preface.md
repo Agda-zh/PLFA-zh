@@ -18,10 +18,10 @@ corresponding type.  Further still, simplification of proofs
 corresponds to evaluation of programs.
 {:/}
 
-逻辑与计算之间最深刻的联系是一种双关。「命题即类型」的学说断言，
-形式化的结构可以按两种方式看待：可以看做逻辑中的命题，也可以看做计算中的类型。
-此外，相关的结构可以看做命题的证明或者其相应类型的程序。更进一步来说，
-证明的化简与程序的求值对应。
+逻辑与计算之间最深刻的联系是一种双关。「命题即类型（Propositions as Types）」
+的学说断言，形式化的结构可以按两种方式看待：可以看做逻辑中的命题，
+也可以看做计算中的类型。此外，相关的结构可以看做命题的证明或者其相应类型的程序。
+更进一步来说，证明的化简与程序的求值对应。
 
 {::comment}
 Accordingly, the title of this book also has two readings.  It may be
@@ -31,8 +31,8 @@ the proof assistant Agda both describe programming languages and are
 themselves programmes.
 {:/}
 
-与此相应，本书的名字也有两种含义。它可以看做「编程语言的基础」，也可以看做
-「编程的语言基础」。我们用 Agda 证明助理编写的规范（Specification）
+与此相应，本书的名字也有两种含义。它可以看做「**编程语言**的基础」，也可以看做
+「编程的**语言基础**」。我们用 Agda 证明助理编写的规范（Specification）
 同时描述了编程语言以及该语言编写的程序自身。
 
 {::comment}
@@ -85,7 +85,7 @@ proof assistant aids learning, as summarised in his ICFP Keynote,
 
 从 2013 年开始，我在爱丁堡大学为四年制本科生和研究生教授编程语言的类型和语义的课程。
 该课程的早期版本基于 Benjamin Pierce 的著作 [TAPL][tapl]。我的版本则基于
-Pierce 的后续教材 [Software Foundations][sf]（中文版[《软件基础》][sf-zh]），此书为
+Pierce 的后续教材[《软件基础》][sf-zh]（英文版 [Software Foundations][sf]），此书为
 Pierce 与他人合著，基于 Coq 编写。正如 Pierce 在 ICFP 的主题演讲
 [Lambda, The Ultimate TA][ta] 中所言，我也相信基于证明助理的课程会对学习有所帮助。
 
@@ -106,8 +106,8 @@ conventions in the standard library can be wildly inconsistent.
 hidden.
 {:/}
 
-然而有了五年的教学经验后，我得出了 Coq 并不是最好的授课载体的结论。
-对于学习编程语言理论的基础而言，我们花费了太多课程去专门学习证明推导的策略（Tactic）。
+然而有了五年的教学经验后，我发现 Coq 并不是最好的授课载体。
+对于学习编程语言理论基础而言，我们花费了太多课程去专门学习证明推导的策略（Tactic）。
 每个概念都需要学习两遍：例如，在学过一遍积数据类型（Product Data Type）之后，
 我们还要再学一遍与之对应的合取（Conjunction）的引入（Introduction）和消除（Elimination）策略。
 Coq 用来生成归纳假设（Induction Hypothesis）的规则有时看起来很玄学。而 `notation`
@@ -141,7 +141,7 @@ related ground, but focusses more on programming with dependent
 types than on the theory of programming languages.
 {:/}
 
-然而，此前还没有用 Agda 语言描述的编程语言理论教材。虽然 Stump 的
+不过，此前还没有用 Agda 语言描述的编程语言理论教材。虽然 Stump 的
 [Verified Functional Programming in Agda][stump] 涵盖了相关的范围，
 但比起编程语言理论，却更多关注于依赖类型编程。
 
@@ -155,8 +155,8 @@ book, and I soon found that this was a book I could not not write.
 {:/}
 
 本书最初的目标只是简单地改编**《软件基础》**，保持同样的内容，而只是将代码从
-Coq 翻译成 Agda。但五年的课堂经验让我很快就明白了，自己有一些关于如何展示这些材料的想法。
-有人说除非你**不得不**写书，否则绝对不要写书。而我很快就发现这是一本我不得不写的书。
+Coq 翻译成 Agda。但五年的课堂经验很快让我明白，自己有一些关于如何展示这些材料的想法。
+有人说除非你**不得不**写书，否则绝对不要写书。而我很快发现这就是一本我不得不写的书。
 
 {::comment}
 I am fortunate that my student, [Wen Kokke][wen], was keen to help.
@@ -165,7 +165,7 @@ is easy to use and produces pages that are a pleasure to view.
 {:/}
 
 我很幸运地得到了我的学生 [Wen Kokke][wen] 的热情帮助。她引导着我站在 Agda
-新手的视角写书，还提供了一些十分易用的工具来产生清晰易读的的页面。
+新手的视角写书，还提供了一些十分易用的工具来生成清晰易读的的页面。
 
 {::comment}
 Most of the text was written during a sabbatical in the first half of 2018.
@@ -198,14 +198,14 @@ Exercises labelled "(recommended)" are the ones students are
 required to do in the class taught at Edinburgh from this textbook.
 {:/}
 
-标有「（推荐）」的习题是爱丁堡大学使用本教材的课程中学生需要做的。
+标有**推荐**的习题是爱丁堡大学使用本教材的课程中学生需要做的。
 
 {::comment}
 Exercises labelled "(stretch)" are there to provide an extra challenge.
 Few students do all of these, but most attempt at least a few.
 {:/}
 
-标有「（延伸）」的习题提供了额外的挑战。很少有学生全部做完，但大部分学生至少尝试了一些。
+标有**延伸**的习题提供了额外的挑战。很少有学生能全部做完，但大部分练习至少应该尝试一下。
 
 {::comment}
 Exercises without a label are included for those who want extra practice.

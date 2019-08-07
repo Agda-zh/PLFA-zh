@@ -19,8 +19,8 @@ module plfa.Induction where
 {:/}
 
 > 归纳会让你对无中生有感到内疚
-> ... 但它却是文明中最伟大的思想之一。
-> ———— Herbert Wilf
+> ……但它却是文明中最伟大的思想之一。
+> —— Herbert Wilf
 
 {::comment}
 Now that we've defined the naturals and operations upon them, our next
