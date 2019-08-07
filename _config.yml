@@ -44,6 +44,8 @@ google_analytics: "UA-125055580-1"
 repository: Agda-zh/PLFA-zh
 branch: dev
 
+port: 4000
+host: 0.0.0.0
 baseurl: "/PLFA-zh"
 url: "https://agda-zh.github.io"
 markdown: kramdown

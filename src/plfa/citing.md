@@ -19,7 +19,7 @@ permalink      : /Citing/
 > 编程语言基础：Agda 语言描述[M].
 > 周方易, 欧林猫, 傅荣枭 译.
 > 2019.
-> 可访问 https://agda-zh.github.io/PLFA-zh/ 阅读.
+> 本书可访问 https://agda-zh.github.io/PLFA-zh/ 在线阅读.
 
 ### Bibtex
 
