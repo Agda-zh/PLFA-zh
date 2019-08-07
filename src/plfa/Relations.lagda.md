@@ -277,11 +277,11 @@ either `(1 ≤ 2) ≤ 3` or `1 ≤ (2 ≤ 3)`.
 Given two numbers, it is straightforward to compute whether or not the
 first is less than or equal to the second.  We don't give the code for
 doing so here, but will return to this point in
-Chapter [Decidable][plfa.Decidable].
+Chapter [Decidable]({{ site.baseurl }}/Decidable/).
 {:/}
 
 给定两个数，我们可以很直接地决定第一个数是不是小于等于第二个数。我们在此处不给出说明的代码，
-但我们会在 [Decidable][plfa.Decidable] 章节重新讨论这个问题。
+但我们会在 [Decidable]({{ site.baseurl }}/Decidable/) 章节重新讨论这个问题。
 
 
 {::comment}
@@ -318,6 +318,17 @@ inv-s≤s : ∀ {m n : ℕ}
   → m ≤ n
 inv-s≤s (s≤s m≤n) = m≤n
 ```
+
+{::comment}
+Here `m≤n` (with no spaces) is a variable name while
+`m ≤ n` (with spaces) is a type, and the latter
+is the type of the former.  It is a common convention
+in Agda to choose derive a variable name by removing
+spaces from its type.
+{:/}
+
+这里的 `m≤n`（不带空格）是一个变量名，而 `m ≤ n`（带空格）是一个类型，
+且后者是前者的类型。在 Agda 中，将类型中的空格去掉来作为变量名是一种常见的约定。
 
 {::comment}
 Not every rule is invertible; indeed, the rule for `z≤n` has
@@ -728,11 +739,11 @@ evidence of `m ≤ n` and `n ≤ m` respectively.
 {::comment}
 (For those familiar with logic, the above definition
 could also be written as a disjunction. Disjunctions will
-be introduced in Chapter [Connectives][plfa.Connectives].)
+be introduced in Chapter [Connectives]({{ site.baseurl }}/Connectives/).)
 {:/}
 
 （如果你对于逻辑学有所了解，上面的定义可以由析取（Disjunction）表示。
-我们会在 [Connectives][plfa.Connectives] 章节介绍析取。）
+我们会在 [Connectives]({{ site.baseurl }}/Connectives/) 章节介绍析取。）
 
 {::comment}
 This is our first use of a datatype with _parameters_,
@@ -1079,11 +1090,11 @@ It is also monotonic with regards to addition and multiplication.
 Most of the above are considered in exercises below.  Irreflexivity
 requires negation, as does the fact that the three cases in
 trichotomy are mutually exclusive, so those points are deferred to
-Chapter [Negation][plfa.Negation].
+Chapter [Negation]({{ site.baseurl }}/Negation/).
 {:/}
 
 我们把一部分上述性质作为习题。非自反性需要逻辑非，三分律需要证明三者是互斥的，因此这两个性质
-暂不做为习题。我们会在 [Negation][plfa.Negation] 章节来重新讨论。
+暂不做为习题。我们会在 [Negation]({{ site.baseurl }}/Negation/) 章节来重新讨论。
 
 {::comment}
 It is straightforward to show that `suc m ≤ n` implies `m < n`,
@@ -1144,11 +1155,11 @@ Define `m > n` to be the same as `n < m`.
 You will need a suitable data declaration,
 similar to that used for totality.
 (We will show that the three cases are exclusive after we introduce
-[negation][plfa.Negation].)
+[negation]({{ site.baseurl }}/Negation/).)
 {:/}
 
 定义 `m > n` 为 `n < m`。你需要一个合适的数据类型声明，如同我们在证明完全性中使用的那样。
-（我们会在介绍[逻辑非][plfa.Negation]以后证明三者是互斥的）
+（我们会在介绍完[否定]({{ site.baseurl }}/Negation/)之后证明三者是互斥的。）
 
 {::comment}
 ```
@@ -1424,7 +1435,7 @@ Show that the sum of two odd numbers is even.
 
 {::comment}
 Recall that
-Exercise [Bin][plfa.Naturals#Bin]
+Exercise [Bin]({{ site.baseurl }}/Naturals/#Bin)
 defines a datatype `Bin` of bitstrings representing natural numbers.
 Representations are not unique due to leading zeros.
 Hence, eleven may be represented by both of the following:
@@ -1535,7 +1546,7 @@ import Data.Nat.Properties using (≤-refl; ≤-trans; ≤-antisym; ≤-total;
 {::comment}
 In the standard library, `≤-total` is formalised in terms of
 disjunction (which we define in
-Chapter [Connectives][plfa.Connectives]),
+Chapter [Connectives]({{ site.baseurl }}/Connectives/)),
 and `+-monoʳ-≤`, `+-monoˡ-≤`, `+-mono-≤` are proved differently than here,
 and more arguments are implicit.
 {:/}

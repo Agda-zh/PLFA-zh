@@ -31,10 +31,10 @@ informal. We show how to formalise the first four constructs and leave
 the rest as an exercise for the reader.
 
 Our informal descriptions will be in the style of
-Chapter [Lambda][plfa.Lambda],
+Chapter [Lambda]({{ site.baseurl }}/Lambda/),
 using named variables and a separate type relation,
 while our formalisation will be in the style of
-Chapter [DeBruijn][plfa.DeBruijn],
+Chapter [DeBruijn]({{ site.baseurl }}/DeBruijn/),
 using de Bruijn indices and inherently typed terms.
 
 By now, explaining with symbols should be more concise, more precise,
@@ -45,7 +45,7 @@ correctness of translations will be the subject of the next chapter.
 
 ## Primitive numbers
 
-We define a `Num` type equivalent to the built-in natural number type
+We define a `Nat` type equivalent to the built-in natural number type
 with multiplication as a primitive operation on numbers:
 
 ### Syntax
@@ -223,7 +223,7 @@ and reduction rules:
 
     L, M, N ::= ...                     Terms
       `⟨ M , N ⟩                          pair
-      case× L [⟨ x , y ⟩=> M ]            case
+      case× L [⟨ x , y ⟩⇒ M ]             case
 
     V, W ::=                            Values
       `⟨ V , W ⟩                          pair
@@ -242,7 +242,7 @@ and reduction rules:
     case× L [⟨ x , y ⟩⇒ N ] —→ case× L′ [⟨ x , y ⟩⇒ N ]
 
     --------------------------------------------------------- β-case×
-    case× `⟨ V , W ⟩ [⟨ x , y ⟩⇒  N —→ N [ x := V ][ y := W ]
+    case× `⟨ V , W ⟩ [⟨ x , y ⟩⇒ N ] —→ N [ x := V ][ y := W ]
 
 ### Example
 
@@ -487,7 +487,7 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
     L, M, N ::= ...                     Terms
       `[]                                 nil
       M `∷ N                              cons
-      caseL L [nil=> M | x ∷ y ⇒ N ]      case
+      caseL L [nil⇒ M | x ∷ y ⇒ N ]      case
 
     V, W ::= ...                        Values
       `[]                                 nil
@@ -507,7 +507,7 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
     Γ ⊢ M ⦂ B
     Γ , x ⦂ A , xs ⦂ `List A ⊢ N ⦂ B
     -------------------------------------- caseL or List-E
-    Γ ⊢ caseL L [[]=> M | x ∷ xs ⇒ N ] ⦂ B
+    Γ ⊢ caseL L [[]⇒ M | x ∷ xs ⇒ N ] ⦂ B
 
 ### Reduction
 
@@ -1225,7 +1225,7 @@ postulate
 ```
 Note the arguments need to be swapped and `W` needs to have
 its context adjusted via renaming in order for the right-hand
-side to be well-typed.
+side to be well typed.
 
 
 ## Unicode

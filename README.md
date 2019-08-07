@@ -36,14 +36,17 @@ There are several tools you need to work with PLFA:
 
 <!---
 For most of the tools, you can simply follow their respective build instructions.
-We list the versions of our dependencies on the badges above.
+We list the versions of our dependencies on the badges above.  We have
+tested with the versions listed; either earlier or later versions may
+cause problems.
 --->
 
 大部分工具的安装方式遵循其对应网页提供的说明即可。
-本页顶部的徽章列出了 PLFA 使用的依赖版本。
+本页顶部的徽章列出了 PLFA 使用的依赖版本。我们已经用上面列出的版本测试过了，
+其它更旧或更新的版本可能会出问题。
 
 <!---
-You can get the latest version of Programming Language Foundations in Agda from Github,
+You can get the appropriate version of Programming Language Foundations in Agda from Github,
 either by cloning the repository,
 or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archive/dev.zip):
 --->
@@ -60,136 +63,25 @@ or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archi
 
 <!---
 Finally, we need to let Agda know where to find the standard library.
-For this, you can follow the instructions [here](https://agda.readthedocs.io/en/v2.6.0.1/tools/package-system.html#example-using-the-standard-library).
---->
+For this, you can follow the instructions
+[here](https://agda.readthedocs.io/en/v2.6.0.1/tools/package-system.html#example-using-the-standard-library).
+-->
 
-最后，我们需要让 Agda 知道标准库位于何处。[此处](https://agda-zh.rtfd.io/zh_CN/v2.6.0.1/tools/package-system.html#example-using-the-standard-library)的说明可供参考。
+最后，我们需要让 Agda 知道标准库位于何处。
+[此处](https://agda-zh.rtfd.io/zh_CN/v2.6.0.1/tools/package-system.html#example-using-the-standard-library)的说明可供参考。
 
-<!---
-It is possible to set up PLFA as an Agda library as well.
-If you are trying to complete the exercises found in the `tspl` folder, or otherwise want to import modules from the book, you need to do this.
-To do so, add the path to `plfa.agda-lib` to `~/.agda/libraries` and add `plfa` to `~/.agda/defaults`, both on lines of their own.
---->
+<!--
+It is possible to set up PLFA as an Agda library as well.  If you want
+to complete the exercises found in the `courses` folder, or to import
+modules from the book, you need to do this.  To do so, add the path to
+`plfa.agda-lib` to `~/.agda/libraries` and add `plfa` to
+`~/.agda/defaults`, both on lines of their own.
+-->
 
-如果你想完成位于 `tspl` 目录内的习题，或者想导入书中的模块，PLFA 也可以被设置为一个 Agda 库。
-完成此设置需要将 `plfa.agda-lib` 所处的路径作为单独的一行添加到 `~/.agda/libraries`，并将 `plfa` 作为单独的一行添加到 `~/.agda/defaults`。
-
-<!---
-Building the book
---->
-
-# 构建本书
-
-<!---
-To build and host a local copy of the book, there are several tools you need *in addition to those listed above*:
---->
-
-要在本地构建并部署本书，**在前文所列工具的基础之上**，你还需要：
-
-  - [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
-  - [Bundler](https://bundler.io/#getting-started)
-
-<!---
-For most of the tools, you can simply follow their respective build instructions.
-Most recent versions of Ruby should work.
---->
-
-大部分工具的安装遵循其对应的网页提供的说明即可。Ruby 的较新版本应该都可以使用。
-
-<!---
-You install the Ruby dependencies---[Jekyll](https://jekyllrb.com/), [html-proofer](https://github.com/gjtorikian/html-proofer), *etc.*---using Bundler:
---->
-
-你需要用 Bundler 安装 Ruby 依赖：[Jekyll](https://jekyllrb.com/)、 [html-proofer](https://github.com/gjtorikian/html-proofer) 等。
-
-    bundle install
-
-<!---
-Once you have installed these tools, you can build the book from source:
---->
-
-安装完所有的工具后，我们就可以从源码构建本书了：
-
-    make build
-
-<!---
-You can host your copy of the book locally by running:
---->
-
-运行如下命令可以在本地部署本书：
-
-    make serve
-
-<!---
-The Makefile offers more than just these options:
-
-    make                      (see make test)
-    make build                (builds lagda->markdown and the website)
-    make build-incremental    (builds lagda->markdown and the website incrementally)
-    make test                 (checks all links are valid)
-    make test-offline         (checks all links are valid offline)
-    make serve                (starts the server)
-    make server-start         (starts the server in detached mode)
-    make server-stop          (stops the server, uses pkill)
-    make clean                (removes all ~unnecessary~ generated files)
-    make clobber              (removes all generated files)
---->
-
-Makefile 提供了更多可选的命令：
-
-    make                      （见 make test）
-    make build                （将 lagda 构建至 markdown 并构建网站）
-    make build-incremental    （将 lagda 构建至 markdown 并增量式构建网站）
-    make test                 （检查所有链接的有效性）
-    make test-offline         （离线检查所有链接的有效性）
-    make serve                （启动服务）
-    make server-start         （以分离模式启动服务）
-    make server-stop          （使用 pkill 停止服务）
-    make clean                （移除所有~不必要的~生成的文件）
-    make clobber              （移除所有生成的文件）
-
-<!---
-If you simply wish to have a local copy of the book, e.g. for offline reading,
-but don't care about editing and rebuilding the book, you can grab a copy of the
-[master branch](https://github.com/plfa/plfa.github.io/archive/master.zip),
-which is automatically built using Travis. You will still need Ruby and Bundler
-to host the book (see above). To host the book this way, download a copy of the
-[master branch](https://github.com/plfa/plfa.github.io/archive/master.zip),
-unzip, and from within the directory run
---->
-
-如果你只想获取本书的副本以供离线阅读，而并不关心如何编辑并构建本书，
-那么你可以下载由 Travis 自动构建的 master 分支（[原书](https://github.com/plfa/plfa.github.io/archive/master.zip) / [中文版](https://github.com/Agda-zh/PLFA-zh/archive/master.zip)）。若要在本地部署本书，你需要 Ruby 和 Bundler（见上文）。请下载 master 分支的压缩包，并在解压后的目录中运行：
-
-    bundle install
-    bundle exec jekyll serve
-
-<!---
-GNU sed and macOS
---->
-
-## GNU sed 和 macOS
-
-<!---
-The version of sed that ships with macOS is not fully compatible with the GNU sed.
-Therefore, you may get errors such as:
---->
-
-macOS 预装的 sed 版本和 GNU sed 并不完全兼容。因此，你可能会遇到类似这样的错误：
-
-```
-sed: 1: "out/plfa/Bisimulation.md": invalid command code o
-```
-
-<!---
-You can fix this error by installing a GNU compatible version of sed, e.g. using [Homebrew](https://brew.sh/):
---->
-
-你可以通过安装 GNU 兼容版 sed 来修复此错误，如执行以下 [Homebrew](https://brew.sh/) 命令：
-
-```
-brew install gnu-sed --with-default-names
-```
+如果你想完成 `courses` 目录中的习题，或者想导入书中的模块，
+那么需要将 PLFA 设置为 Agda 库。完成此设置需要将 `plfa.agda-lib`
+所在的路径作为单独的一行添加到 `~/.agda/libraries`，并将 `plfa`
+作为单独的一行添加到 `~/.agda/defaults`。
 
 <!---
 Unicode characters
@@ -307,8 +199,94 @@ configuration file at `~/.emacs`, if you have the mentioned fonts available:
 ```
 
 <!---
-Markdown
+Building the book
 --->
+
+# 构建本书
+
+<!---
+To build and host a local copy of the book, there are several tools you need *in addition to those listed above*:
+--->
+
+要在本地构建并部署本书，**在前文所列工具的基础之上**，你还需要：
+
+  - [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
+  - [Bundler](https://bundler.io/#getting-started)
+
+<!---
+For most of the tools, you can simply follow their respective build instructions.
+Most recent versions of Ruby should work.
+--->
+
+大部分工具的安装遵循其对应的网页提供的说明即可。Ruby 的较新版本应该都可以使用。
+
+<!---
+You install the Ruby dependencies---[Jekyll](https://jekyllrb.com/), [html-proofer](https://github.com/gjtorikian/html-proofer), *etc.*---using Bundler:
+--->
+
+你需要用 Bundler 安装 Ruby 依赖：[Jekyll](https://jekyllrb.com/)、 [html-proofer](https://github.com/gjtorikian/html-proofer) 等。
+
+    bundle install
+
+<!---
+Once you have installed all of the dependencies, you can build a copy of the book by running:
+--->
+
+安装完所有的工具后，我们就可以从源码构建本书了：
+
+    make build
+
+<!---
+You can host your copy of the book locally by running:
+--->
+
+运行如下命令可以在本地部署本书：
+
+    make serve
+
+<!---
+The Makefile offers more than just these options:
+
+    make                      (see make test)
+    make build                (builds lagda->markdown and the website)
+    make build-incremental    (builds lagda->markdown and the website incrementally)
+    make test                 (checks all links are valid)
+    make test-offline         (checks all links are valid offline)
+    make serve                (starts the server)
+    make server-start         (starts the server in detached mode)
+    make server-stop          (stops the server, uses pkill)
+    make clean                (removes all ~unnecessary~ generated files)
+    make clobber              (removes all generated files)
+--->
+
+Makefile 提供了更多可选的命令：
+
+    make                      （见 make test）
+    make build                （将 lagda 构建至 markdown 并构建网站）
+    make build-incremental    （将 lagda 构建至 markdown 并增量式构建网站）
+    make test                 （检查所有链接的有效性）
+    make test-offline         （离线检查所有链接的有效性）
+    make serve                （启动服务）
+    make server-start         （以分离模式启动服务）
+    make server-stop          （使用 pkill 停止服务）
+    make clean                （移除所有~不必要的~生成的文件）
+    make clobber              （移除所有生成的文件）
+
+<!---
+If you simply wish to have a local copy of the book, e.g. for offline reading,
+but don't care about editing and rebuilding the book, you can grab a copy of the
+[master branch](https://github.com/plfa/plfa.github.io/archive/master.zip),
+which is automatically built using Travis. You will still need Ruby and Bundler
+to host the book (see above). To host the book this way, download a copy of the
+[master branch](https://github.com/plfa/plfa.github.io/archive/master.zip),
+unzip, and from within the directory run
+--->
+
+如果你只想获取本书的副本以供离线阅读，而并不关心如何编辑并构建本书，
+那么你可以下载由 Travis 自动构建的 master 分支（[原书](https://github.com/plfa/plfa.github.io/archive/master.zip) / [中文版](https://github.com/Agda-zh/PLFA-zh/archive/master.zip)）。若要在本地部署本书，你需要 Ruby 和 Bundler（见上文）。请下载 master 分支的压缩包，并在解压后的目录中运行：
+
+    bundle install
+    bundle exec jekyll serve
 
 ## Markdown
 

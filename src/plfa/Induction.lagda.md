@@ -466,7 +466,7 @@ Here is the proposition's statement and proof:
   ≡⟨⟩
     n + p
   ≡⟨⟩
-   zero + (n + p)
+    zero + (n + p)
   ∎
 +-assoc (suc m) n p =
   begin
@@ -604,7 +604,7 @@ then `cong f e` is evidence that `f x ≡ f y`, for any function `f`.
 {::comment}
 Here the inductive hypothesis is not assumed, but instead proved by a
 recursive invocation of the function we are defining, `+-assoc m n p`.
-As with addition, this is well-founded because associativity of
+As with addition, this is well founded because associativity of
 larger numbers is proved in terms of associativity of smaller numbers.
 In this case, `assoc (suc m) n p` is proved using `assoc m n p`.
 The correspondence between proof by induction and definition by
@@ -675,12 +675,12 @@ recursion is one of the most appealing aspects of Agda.
 {::comment}
 The symbol `∀` appears in the statement of associativity to indicate that
 it holds for all numbers `m`, `n`, and `p`.  We refer to `∀` as the _universal
-quantifier_, and it is discussed further in Chapter [Quantifiers][plfa.Quantifiers].
+quantifier_, and it is discussed further in Chapter [Quantifiers]({{ site.baseurl }}/Quantifiers/).
 {:/}
 
 在结合律的陈述中出现的符号 `∀` 表示它对于所有的 `m`、`n` 和 `p` 都成立。
 我们将 `∀` 称为**全称量词**（Universal Quantifier），我们会在
-[Quantifiers][plfa.Quantifiers] 章节中进一步讨论。
+[Quantifiers]({{ site.baseurl }}/Quantifiers/) 章节中进一步讨论。
 
 {::comment}
 Evidence for a universal quantifier is a function.  The notations
@@ -1322,18 +1322,19 @@ which is left as an exercise for the reader.
 还有一种完全有限的方法来生成同样的等式，它的证明留作读者的练习。
 
 {::comment}
-#### Exercise `finite-+-assoc` (stretch) {#finite-plus-assoc}
+#### Exercise `finite-|-assoc` (stretch) {#finite-plus-assoc}
 {:/}
 
-#### 练习 `finite-+-assoc`（延伸） {#finite-plus-assoc}
+#### 练习 `finite-|-assoc`（延伸） {#finite-plus-assoc}
 
 {::comment}
 Write out what is known about associativity of addition on each of the
 first four days using a finite story of creation, as
-[earlier][plfa.Naturals#finite-creation].
+[earlier]({{ site.baseurl }}/Naturals/#finite-creation).
 {:/}
 
-请参考[前文][plfa.Naturals#finite-creation]写出前四天已知的加法结合律的创世故事。
+请参考[前文]({{ site.baseurl }}/Naturals/#finite-creation)
+写出前四天已知的加法结合律的创世故事。
 
 {::comment}
 ```
@@ -1767,10 +1768,10 @@ for all naturals `n`. Did your proof require induction?
 
 
 {::comment}
-#### Exercise `∸-+-assoc` {#monus-plus-assoc}
+#### Exercise `∸-|-assoc` {#monus-plus-assoc}
 {:/}
 
-#### 练习 `∸-+-assoc` {#monus-plus-assoc}
+#### 练习 `∸-|-assoc` {#monus-plus-assoc}
 
 {::comment}
 Show that monus associates with addition, that is,
@@ -1827,7 +1828,7 @@ for all `m`, `n`, and `p`.
 
 {::comment}
 Recall that
-Exercise [Bin][plfa.Naturals#Bin]
+Exercise [Bin]({{ site.baseurl }}/Naturals/#Bin)
 defines a datatype of bitstrings representing natural numbers
 {:/}
 

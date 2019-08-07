@@ -2,6 +2,10 @@
 
 AGDA_STDLIB_SED=".agda-stdlib.sed"
 
+function sedi {
+    sed --version >/dev/null 2>&1 && sed -i "$@" || sed -i "" "$@"
+}
+
 SRC="$1"
 shift
 
@@ -20,7 +24,7 @@ function html_path {
 
     # Extract the module name from the Agda file
     # NOTE: this fails if there is more than a single space after 'module'
-    MOD_NAME=`grep -oP -m 1 "(?<=^module )(\\S+)(?=\\s+(\\S+\\s+)*where)" "$SRC"`
+    MOD_NAME=`grep -o -m 1 "module\\s*\\(\\S\\S*\\)\\s.*where$" "$SRC" | cut -d ' ' -f 2`
 
     # Extract the extension from the Agda file
     SRC_EXT="$(basename $SRC)"
@@ -45,14 +49,22 @@ if [[ ! -f "$HTML" ]]; then
 fi
 
 # Add source file to the Jekyll metadata
-sed -i "1 s|---|---\nsrc: $SRC|" "$HTML"
+#sedi "1 s|---|---\nsrc: $SRC|" "$HTML"
+ed "$HTML" <<EOF >/dev/null 2>&1
+2i
+src       : "$SRC"
+.
+w
+q
+EOF
 
 # Add raw tags around Agda code blocks
-sed -i "s|<pre class=\"Agda\">|{% raw %}<pre class=\"Agda\">|" "$HTML"
-sed -i "s|</pre>|</pre>{% endraw %}|" "$HTML"
+sedi "s|<pre class=\"Agda\">|{% raw %}<pre class=\"Agda\">|" "$HTML"
+sedi "s|</pre>|</pre>{% endraw %}|" "$HTML"
 
 # Fix links to the Agda standard library
 STDLIB_AGDALIB=`grep -m 1 "standard-library" $HOME/.agda/libraries`
+STDLIB_AGDALIB="${STDLIB_AGDALIB/#\~/$HOME}" # see https://stackoverflow.com/q/3963716/312692
 STDLIB_AGDALIB="$(eval "echo -e \"$STDLIB_AGDALIB\"")"
 
 STDLIB_INCLUDE=`grep -m 1 "include:" "$STDLIB_AGDALIB"`
@@ -69,33 +81,31 @@ fi
 
 # Create a sed script which matches and replaces all Agda standard library links
 if [ ! -f "$AGDA_STDLIB_SED" ]; then
-    echo "s|\\(Agda\\.[A-Za-z\\.]*\\)|$AGDA_STDLIB_URL\\1|;" > "$AGDA_STDLIB_SED"
+    echo "s|\\(Agda\\.[A-Za-z\\.]+\\)|$AGDA_STDLIB_URL\\1|;" > "$AGDA_STDLIB_SED"
     find "$STDLIB_PATH" -name "*.agda" -print0 | while read -d $'\0' AGDA_MODULE_PATH; do
         AGDA_MODULE=$(eval "echo \"$AGDA_MODULE_PATH\" | sed -e \"s|$STDLIB_PATH/||g; s|/|\\\.|g; s|\.agda|\\\.html|g\"")
         echo "s|$AGDA_MODULE|$AGDA_STDLIB_URL$AGDA_MODULE|g;" >> "$AGDA_STDLIB_SED"
     done
 fi
 
-sed -i -f "$AGDA_STDLIB_SED" "$HTML"
+sedi -f "$AGDA_STDLIB_SED" "$HTML"
 
 # Create a sed script which matches and repairs all local links
 for INCLUDE_PATH in "$@"; do
     if [[ "$INCLUDE_PATH" = --include-path=* ]]; then
         INCLUDE_PATH="${INCLUDE_PATH:15}"
         INCLUDE_PATH="${INCLUDE_PATH%/}"
-        INCLUDE_PATH="${INCLUDE_PATH#./}"
         LOCAL_LINKS_SED=`echo ".links-${INCLUDE_PATH}.sed" | sed -e "s|/|-|g;"`
 
         if [ ! -f "$LOCAL_LINKS_SED" ]; then
             find "$INCLUDE_PATH" -name "*.lagda.md" -print0 | while read -d $'\0' AGDA_MODULE_SRC; do
-                AGDA_MODULE_SRC="${AGDA_MODULE_SRC#./}"
                 AGDA_MODULE_OUT="$(out_path "$AGDA_MODULE_SRC")"
                 AGDA_MODULE_HTML="$(basename "$(html_path "$AGDA_MODULE_SRC" "$HTML_DIR")" .md).html"
                 echo "s|$AGDA_MODULE_HTML|{% endraw %}{{ site.baseurl }}{% link $AGDA_MODULE_OUT %}{% raw %}|;" >> "$LOCAL_LINKS_SED"
             done
         fi
 
-        sed -i -f "$LOCAL_LINKS_SED" "$HTML"
+        sedi -f "$LOCAL_LINKS_SED" "$HTML"
     fi
 done
 

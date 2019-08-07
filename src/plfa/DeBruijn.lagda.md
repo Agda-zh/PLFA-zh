@@ -41,7 +41,7 @@ open import Relation.Nullary using (¬_)
 
 There is a close correspondence between the structure of a
 term and the structure of the derivation showing that it is
-well-typed.  For example, here is the term for the Church
+well typed.  For example, here is the term for the Church
 numeral two:
 
     twoᶜ : Term
@@ -56,10 +56,10 @@ And here is its corresponding type derivation:
       ∋z = Z
 
 (These are both taken from Chapter
-[Lambda][plfa.Lambda]
+[Lambda]({{ site.baseurl }}/Lambda/)
 and you can see the corresponding derivation tree written out
 in full
-[here][plfa.Lambda#derivation].)
+[here]({{ site.baseurl }}/Lambda/#derivation).)
 The two definitions are in close correspondence, where:
 
   * `` `_ `` corresponds to `` ⊢` ``
@@ -112,7 +112,7 @@ typed terms, which in context `Γ` have type `A`.
 While these two choices fit well, they are independent.  One
 can use de Bruijn indices in raw terms, or (with more
 difficulty) have inherently typed terms with names.  In
-Chapter [Untyped][plfa.Untyped],
+Chapter [Untyped]({{ site.baseurl }}/Untyped/),
 we will introduce terms with de Bruijn indices that
 are inherently scoped but not typed.
 
@@ -255,7 +255,7 @@ _ : Context
 _ = ∅ , `ℕ ⇒ `ℕ , `ℕ
 ```
 is a context with two variables in scope, where the outer
-bound one has type `` `ℕ → `ℕ ``, and the inner bound one has
+bound one has type `` `ℕ ⇒ `ℕ ``, and the inner bound one has
 type `` `ℕ ``.
 
 ### Variables and the lookup judgment
@@ -320,17 +320,17 @@ with all terms and variable names dropped:
 ```
 data _⊢_ : Context → Type → Set where
 
-  `_ : ∀ {Γ} {A}
+  `_ : ∀ {Γ A}
     → Γ ∋ A
       ------
     → Γ ⊢ A
 
-  ƛ_  :  ∀ {Γ} {A B}
+  ƛ_  : ∀ {Γ A B}
     → Γ , A ⊢ B
       ----------
     → Γ ⊢ A ⇒ B
 
-  _·_ : ∀ {Γ} {A B}
+  _·_ : ∀ {Γ A B}
     → Γ ⊢ A ⇒ B
     → Γ ⊢ A
       ----------
@@ -359,7 +359,7 @@ data _⊢_ : Context → Type → Set where
 ```
 The definition exploits the close correspondence between the
 structure of terms and the structure of a derivation showing
-that it is well-typed: now we use the derivation _as_ the
+that it is well typed: now we use the derivation _as_ the
 term.
 
 For example, consider the following old-style typing
@@ -408,7 +408,7 @@ lookup ∅       _        =  ⊥-elim impossible
 We intend to apply the function only when the natural is
 shorter than the length of the context, which we indicate by
 postulating an `impossible` term, just as we did
-[here][plfa.Lambda#impossible].
+[here]({{ site.baseurl }}/Lambda/#impossible).
 
 Given the above, we can convert a natural to a corresponding
 de Bruijn index, looking up its type in the context:
@@ -437,9 +437,9 @@ _ = ƛ ƛ (# 1 · (# 1 · # 0))
 ### Test examples
 
 We repeat the test examples from
-Chapter [Lambda][plfa.Lambda].
+Chapter [Lambda]({{ site.baseurl }}/Lambda/).
 You can find them
-[here][plfa.Lambda#derivation]
+[here]({{ site.baseurl }}/Lambda/#derivation)
 for comparison.
 
 First, computing two plus two on naturals:
@@ -557,11 +557,11 @@ and extending the map whenever the construct introduces a
 bound variable.
 
 Whereas before renaming was a result that carried evidence
-that a term is well-typed in one context to evidence that it
-is well-typed in another context, now it actually transforms
+that a term is well typed in one context to evidence that it
+is well typed in another context, now it actually transforms
 the term, suitably altering the bound variables. Typechecking
 the code in Agda ensures that it is only passed and returns
-terms that are well-typed by the rules of simply-typed lambda
+terms that are well typed by the rules of simply-typed lambda
 calculus.
 
 Here is an example of renaming a term with one free
@@ -772,7 +772,7 @@ data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 
 Here `zero` requires an implicit parameter to aid inference,
 much in the same way that `[]` did in
-[Lists][plfa.Lists].
+[Lists]({{ site.baseurl }}/Lists/).
 
 
 ## Reduction
@@ -834,7 +834,7 @@ definition that reduction preserves types.  There is no
 separate Preservation theorem to prove.  The Agda type-checker
 validates that each term preserves types.  In the case of `β`
 rules, preservation depends on the fact that substitution
-preserves types, which we previously is built-in to our
+preserves types, which is built-in to our
 definition of substitution.
 
 
@@ -978,7 +978,7 @@ values.
 
 ## Progress
 
-As before, every term that is well-typed and closed is either
+As before, every term that is well typed and closed is either
 a value or takes a reduction step.  The formulation of progress
 is just as before, but annotated with types:
 ```

@@ -160,11 +160,11 @@ Extensionality asserts that the only way to distinguish functions is
 by applying them; if two functions applied to the same argument always
 yield the same result, then they are the same function.  It is the
 converse of `cong-app`, as introduced
-[earlier][plfa.Equality#cong].
+[earlier]({{ site.baseurl }}/Equality/#cong).
 {:/}
 
 外延性断言了区分函数的唯一方法是应用它们。如果两个函数作用在相同的参数上永远返回相同的结果，
-那么两个函数相同。这是 `cong-app` 的逆命题，在[之前][plfa.Equality#cong]有所介绍。
+那么两个函数相同。这是 `cong-app` 的逆命题，在[之前]({{ site.baseurl }}/Equality/#cong)有所介绍。
 
 {::comment}
 Agda does not presume extensionality, but we can postulate that it holds:
@@ -190,7 +190,7 @@ known to be consistent with the theory that underlies Agda.
 {::comment}
 As an example, consider that we need results from two libraries,
 one where addition is defined, as in
-Chapter [Naturals][plfa.Naturals],
+Chapter [Naturals]({{ site.baseurl }}/Naturals/),
 and one where it is defined the other way around.
 {:/}
 
@@ -238,6 +238,19 @@ We occasionally need to postulate extensionality in what follows.
 {:/}
 
 我们偶尔需要在之后的情况中假设外延性。
+
+More generally, we may wish to postulate extensionality for
+dependent functions.
+```
+postulate
+  ∀-extensionality : ∀ {A : Set} {B : A → Set} {f g : ∀(x : A) → B x}
+    → (∀ (x : A) → f x ≡ g x)
+      -----------------------
+    → f ≡ g
+```
+Here the type of `f` and `g` has changed from `A → B` to
+`∀ (x : A) → B x`, generalising ordinary functions to
+dependent functions.
 
 
 {::comment}
@@ -729,8 +742,8 @@ Show that equivalence is reflexive, symmetric, and transitive.
 
 {::comment}
 Recall that Exercises
-[Bin][plfa.Naturals#Bin] and
-[Bin-laws][plfa.Induction#Bin-laws]
+[Bin]({{ site.baseurl }}/Naturals/#Bin) and
+[Bin-laws]({{ site.baseurl }}/Induction/#Bin-laws)
 define a datatype of bitstrings representing natural numbers:
 {:/}
 

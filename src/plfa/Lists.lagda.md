@@ -296,11 +296,11 @@ invocation of the proof, in this case `++-assoc xs ys zs`.
 与往常一样，归纳假设由递归使用证明函数来表明，此处为 `++-assoc xs ys zs`。
 
 {::comment}
-Recall that Agda supports [sections][plfa.Induction#sections].
+Recall that Agda supports [sections]({{ site.baseurl }}/Induction/#sections).
 Applying `cong (x ∷_)` promotes the inductive hypothesis:
 {:/}
 
-回忆到 Agda 支持[片段][plfa.Induction#sections]。使用 `cong (x ∷_)`
+回忆到 Agda 支持[片段]({{ site.baseurl }}/Induction/#sections)。使用 `cong (x ∷_)`
 可以将归纳假设：
 
     (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
@@ -1593,10 +1593,10 @@ Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
 
 {::comment}
 First generalise composition to arbitrary levels, using
-[universe polymorphism][plfa.Equality#unipoly]:
+[universe polymorphism]({{ site.baseurl }}/Equality/#unipoly):
 {:/}
 
-首先我们将函数组合使用[全体多态][plfa.Equality#unipoly]推广到任意等级：
+首先我们将函数组合使用[全体多态]({{ site.baseurl }}/Equality/#unipoly)推广到任意等级：
 ```
 _∘′_ : ∀ {ℓ₁ ℓ₂ ℓ₃ : Level} {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃}
   → (B → C) → (A → B) → A → C

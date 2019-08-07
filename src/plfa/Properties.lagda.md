@@ -127,8 +127,8 @@ which are the same function with the arguments swapped.
 
 ## Canonical Forms
 
-Well-typed values must take one of a small number of _canonical forms_.
-We provide an analogue of the `Value` relation that relates values
+Well-typed values must take one of a small number of _canonical forms_,
+which provide an analogue of the `Value` relation that relates values
 to their types.  A lambda expression must have a function type,
 and a zero or successor expression must be a natural.
 Further, the body of a function must be well typed in a context
@@ -603,9 +603,8 @@ subst : ∀ {Γ x N V A B}
   → Γ , x ⦂ A ⊢ N ⦂ B
     --------------------
   → Γ ⊢ N [ x := V ] ⦂ B
-
 subst {x = y} ⊢V (⊢` {x = x} Z) with x ≟ y
-... | yes refl        =  weaken ⊢V
+... | yes _           =  weaken ⊢V
 ... | no  x≢y         =  ⊥-elim (x≢y refl)
 subst {x = y} ⊢V (⊢` {x = x} (S x≢y ∋x)) with x ≟ y
 ... | yes refl        =  ⊥-elim (x≢y refl)
@@ -656,8 +655,8 @@ Now that naming is resolved, let's unpack the first three cases:
 
   + The lookup judgment is evidenced by rule `Z`:
 
-        -----------------
-        Γ , x ⦂ A ⊢ x ⦂ A
+        ----------------
+        Γ , x ⦂ A ∋ x ⦂ A
 
     In this case, `x` and `y` are necessarily identical, as are `A`
     and `B`.  Nonetheless, we must evaluate `x ≟ y` in order to allow

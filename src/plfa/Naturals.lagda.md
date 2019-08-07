@@ -538,7 +538,7 @@ all the names specified in the `using` clause into the current scope.
 In this case, the names added are `begin_`, `_≡⟨⟩_`, and `_∎`.  We
 will see how these are used below.  We take these as givens for now,
 but will see how they are defined in
-Chapter [Equality][plfa.Equality].
+Chapter [Equality]({{ site.baseurl }}/Equality/).
 {:/}
 
 第一行代码将标准库中定义了相等性的模块导入当前作用域（Scope），并将其命名
@@ -547,8 +547,8 @@ Chapter [Equality][plfa.Equality].
 证据 `refl`。第三行选取了一个提供用于等价关系推理的运算符的模块，并将
 在 `using` 从句中指定的名称添加到当前作用域。在这里被添加的名称有 `begin_`，
 `_≡⟨⟩_`，以及 `_∎`。我们会在下文中看到这些运算符的使用方法。我们目前把这些
-名称都当作现成的工具来使用，不深究其细节，但我们会在[相等性][plfa.Equality]章节
-学习它们的具体定义。
+名称都当作现成的工具来使用，不深究其细节，但我们会在
+[相等性]({{ site.baseurl }}/Equality/)章节学习它们的具体定义。
 
 {::comment}
 Agda uses underbars to indicate where terms appear in infix or mixfix
@@ -902,7 +902,7 @@ identity for multiplication, so `1 * n ≡ n`.
 一是乘法的幺元，也就是 `1 * n ≡ n`，我们就得到了第二个等式。
 
 {::comment}
-Again, the definition is well-founded in that multiplication of
+Again, the definition is well founded in that multiplication of
 larger numbers is defined in terms of multiplication of smaller numbers.
 {:/}
 
@@ -1046,7 +1046,7 @@ We can do a simple analysis to show that all the cases are covered.
       - 如果它是 `suc m`，应用第三个等式。
 
 {::comment}
-Again, the recursive definition is well-founded because
+Again, the recursive definition is well founded because
 monus on bigger numbers is defined in terms of monus on
 smaller numbers.
 {:/}

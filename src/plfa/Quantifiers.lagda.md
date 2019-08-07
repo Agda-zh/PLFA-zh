@@ -164,10 +164,11 @@ postulate
 
 {::comment}
 Compare this with the result (`→-distrib-×`) in
-Chapter [Connectives][plfa.Connectives].
+Chapter [Connectives]({{ site.baseurl }}/Connectives/).
 {:/
 
-将这个结果与 [Connectives][plfa.Connectives] 章节中的 (`→-distrib-×`) 结果对比。
+将这个结果与 [Connectives]({{ site.baseurl }}/Connectives/)
+章节中的 (`→-distrib-×`) 结果对比。
 
 {::comment}
 #### Exercise `⊎∀-implies-∀⊎`
@@ -444,11 +445,11 @@ Indeed, the converse also holds, and the two together form an isomorphism:
 {::comment}
 The result can be viewed as a generalisation of currying.  Indeed, the code to
 establish the isomorphism is identical to what we wrote when discussing
-[implication][plfa.Connectives#implication].
+[implication]({{ site.baseurl }}/Connectives/#implication).
 {:/}
 
 这可以被看做是将柯里化推广的结果。的确，建立这两者同构的证明与之前我们讨论
-[蕴涵][plfa.Connectives#implication]时给出的证明是一样的。
+[蕴涵]({{ site.baseurl }}/Connectives/#implication)时给出的证明是一样的。
 
 {::comment}
 #### Exercise `∃-distrib-⊎` (recommended)
@@ -514,10 +515,11 @@ Show that `∃[ x ] B x` is isomorphic to `B aa ⊎ B bb ⊎ B cc`.
 
 {::comment}
 Recall the definitions of `even` and `odd` from
-Chapter [Relations][plfa.Relations]:
+Chapter [Relations]({{ site.baseurl }}/Relations/):
 {:/}
 
-回忆我们在 [Relations][plfa.Relations] 章节中定义的 `even` 和 `odd`：
+回忆我们在 [Relations]({{ site.baseurl }}/Relations/)
+章节中定义的 `even` 和 `odd`：
 
 ```
 data even : ℕ → Set
@@ -717,10 +719,10 @@ restated in this way.
 ```
 
 {::comment}
-#### Exercise `∃-+-≤`
+#### Exercise `∃-|-≤`
 {:/}
 
-#### 练习 `∃-+-≤`
+#### 练习 `∃-|-≤`
 
 {::comment}
 Show that `y ≤ z` holds if and only if there exists a `x` such that
@@ -834,9 +836,9 @@ Does the converse hold? If so, prove; if not, explain why.
 
 {::comment}
 Recall that Exercises
-[Bin][plfa.Naturals#Bin],
-[Bin-laws][plfa.Induction#Bin-laws], and
-[Bin-predicates][plfa.Relations#Bin-predicates]
+[Bin]({{ site.baseurl }}/Naturals/#Bin),
+[Bin-laws]({{ site.baseurl }}/Induction/#Bin-laws), and
+[Bin-predicates]({{ site.baseurl }}/Relations/#Bin-predicates)
 define a datatype of bitstrings representing natural numbers:
 {:/}
 

@@ -357,19 +357,17 @@ again causing the equality to hold trivially.
 
 {::comment}
 Using negation, show that
-[strict inequality][plfa.Relations#strict-inequality]
+[strict inequality]({{ site.baseurl }}/Relations/#strict-inequality)
 is irreflexive, that is, `n < n` holds for no `n`.
 {:/}
 
-利用否定证明[严格不等性][plfa.Relations#strict-inequality]满足非自反性，
+利用否定证明[严格不等性]({{ site.baseurl }}/Relations/#strict-inequality)满足非自反性，
 即 `n < n` 对于任何 `n` 都不成立。
 
 {::comment}
-
 ```
 -- Your code goes here
 ```
-
 {:/}
 
 ```
@@ -384,11 +382,11 @@ is irreflexive, that is, `n < n` holds for no `n`.
 
 {::comment}
 Show that strict inequality satisfies
-[trichotomy][plfa.Relations#trichotomy],
+[trichotomy]({{ site.baseurl }}/Relations/#trichotomy),
 that is, for any naturals `m` and `n` exactly one of the following holds:
 {:/}
 
-请证明严格不等性满足[三分律][plfa.Relations#trichotomy]，
+请证明严格不等性满足[三分律]({{ site.baseurl }}/Relations/#trichotomy)，
 即对于任何自然数 `m` 和 `n`，以下三条刚好只有一条成立：
 
 * `m < n`

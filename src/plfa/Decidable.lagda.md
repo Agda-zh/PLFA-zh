@@ -56,14 +56,14 @@ open import plfa.Isomorphism using (_⇔_)
 ## 证据 vs 计算
 
 {::comment}
-Recall that Chapter [Relations][plfa.Relations]
+Recall that Chapter [Relations]({{ site.baseurl }}/Relations/)
 defined comparison as an inductive datatype,
 which provides _evidence_ that one number
 is less than or equal to another:
 {:/}
 
-回忆我们在 [Relations][plfa.Relations] 章节中将比较定义为一个归纳数据类型，
-其提供了一个数小于或等于另外一个数的证明：
+回忆我们在 [Relations]({{ site.baseurl }}/Relations/)
+章节中将比较定义为一个归纳数据类型，其提供了一个数小于或等于另外一个数的证明：
 
 ```
 infix 4 _≤_
@@ -980,7 +980,7 @@ postulate
 
 {::comment}
 Give analogues of the `_⇔_` operation from
-Chapter [Isomorphism][plfa.Isomorphism#iff],
+Chapter [Isomorphism]({{ site.baseurl }}/Isomorphism/#iff),
 operation on booleans and decidables, and also show the corresponding erasure:
 {:/}
 

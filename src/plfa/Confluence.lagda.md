@@ -1,7 +1,7 @@
 ---
 title     : "Confluence of the untyped lambda calculus"
 layout    : page
-prev      : /LambdaReduction/
+prev      : /Untyped/
 permalink : /Confluence/
 next      : /CallByName/
 ---
@@ -61,13 +61,11 @@ confluence for parallel reduction.
 ## Imports
 
 ```
-open import plfa.Substitution
-   using (subst-commute; rename-subst-commute; Rename; Subst)
-open import plfa.LambdaReduction
-    using (_—→_; β; ξ₁; ξ₂; ζ; _—↠_; _—→⟨_⟩_; _[];
-           abs-cong; appL-cong; appR-cong; —↠-trans)
+open import plfa.Substitution using (Rename; Subst)
 open import plfa.Untyped
-    using (_⊢_; _∋_; `_; _,_; ★; ƛ_; _·_; _[_];
+    using (_—→_; β; ξ₁; ξ₂; ζ; _—↠_; _—→⟨_⟩_; _∎;
+           abs-cong; appL-cong; appR-cong; —↠-trans;
+           _⊢_; _∋_; `_; #_; _,_; ★; ƛ_; _·_; _[_];
            rename; ext; exts; Z; S_; subst; subst-zero)
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
@@ -142,6 +140,18 @@ data _⇛*_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
     → L ⇛* N
 ```
 
+
+#### Exercise `par-diamond-eg`
+
+Revisit the counter example to the diamond property for reduction by
+showing that the diamond property holds for parallel reduction in that
+case.
+
+```
+-- Your code goes here
+```
+
+
 ## Equivalence between parallel reduction and reduction
 
 Here we prove that for any `M` and `N`, `M ⇛* N` if and only if `M —↠ N`.
@@ -169,7 +179,7 @@ betas-pars : ∀{Γ A} {M N : Γ ⊢ A}
            → M —↠ N
              ------
            → M ⇛* N
-betas-pars {Γ} {A} {M₁} {.M₁} (M₁ []) = M₁ ∎
+betas-pars {Γ} {A} {M₁} {.M₁} (M₁ ∎) = M₁ ∎
 betas-pars {Γ} {A} {.L} {N} (L —→⟨ b ⟩ bs) =
    L ⇛⟨ beta-par b ⟩ betas-pars bs
 ```
@@ -184,7 +194,7 @@ par-betas : ∀{Γ A}{M N : Γ ⊢ A}
          → M ⇛ N
            ------
          → M —↠ N
-par-betas {Γ} {A} {.(` _)} (pvar{x = x}) = (` x) []
+par-betas {Γ} {A} {.(` _)} (pvar{x = x}) = (` x) ∎
 par-betas {Γ} {★} {ƛ N} (pabs p) = abs-cong (par-betas p)
 par-betas {Γ} {★} {L · M} (papp p₁ p₂) =
    —↠-trans (appL-cong{M = M} (par-betas p₁)) (appR-cong (par-betas p₂))
@@ -195,7 +205,7 @@ par-betas {Γ} {★} {(ƛ N) · M} (pbeta{N′ = N′}{M′ = M′} p₁ p₂) =
       a = appL-cong{M = M} (abs-cong ih₁) in
   let b : (ƛ N′) · M —↠ (ƛ N′) · M′
       b = appR-cong{L = ƛ N′} ih₂ in
-  let c = (ƛ N′) · M′ —→⟨ β ⟩ N′ [ M′ ] [] in
+  let c = (ƛ N′) · M′ —→⟨ β ⟩ N′ [ M′ ] ∎ in
   —↠-trans (—↠-trans a b) c
 ```
 
@@ -227,7 +237,7 @@ pars-betas : ∀{Γ A} {M N : Γ ⊢ A}
            → M ⇛* N
              ------
            → M —↠ N
-pars-betas (M₁ ∎) = M₁ []
+pars-betas (M₁ ∎) = M₁ ∎
 pars-betas (L ⇛⟨ p ⟩ ps) = —↠-trans (par-betas p) (pars-betas ps)
 ```
 
@@ -251,7 +261,19 @@ par-subst {Γ}{Δ} σ σ′ = ∀{A}{x : Γ ∋ A} → σ x ⇛ σ′ x
 
 Because substitution depends on the extension function `exts`, which
 in turn relies on `rename`, we start with a version of the
-substitution lemma specialized to renamings.
+substitution lemma, called `par-rename`, that is specialized to
+renamings.  The proof of `par-rename` relies on the fact that renaming
+and substitution commute with one another, which is a lemma that we
+import from Chapter [Substitution]({{ site.baseurl }}/Substitution/)
+and restate here.
+
+```
+rename-subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{ρ : Rename Γ Δ }
+    → (rename (ext ρ) N) [ rename ρ M ] ≡ rename ρ (N [ M ])
+rename-subst-commute {N = N} = plfa.Substitution.rename-subst-commute {N = N}
+```
+
+Now for the `par-rename` lemma.
 
 ```
 par-rename : ∀{Γ Δ A} {ρ : Rename Γ Δ} {M M′ : Γ ⊢ A}
@@ -264,6 +286,7 @@ par-rename (papp p₁ p₂) = papp (par-rename p₁) (par-rename p₂)
 par-rename {Γ}{Δ}{A}{ρ} (pbeta{Γ}{N}{N′}{M}{M′} p₁ p₂)
      with pbeta (par-rename{ρ = ext ρ} p₁) (par-rename{ρ = ρ} p₂)
 ... | G rewrite rename-subst-commute{Γ}{Δ}{N′}{M′}{ρ} = G
+
 ```
 
 The proof is by induction on `M ⇛ M′`. The first four cases
@@ -277,13 +300,12 @@ are straightforward so we just consider the last one for `pbeta`.
   `(ƛ rename (ext ρ) N) · (rename ρ M) ⇛ (rename (ext ρ) N) [ rename ρ M ]`.
   However, to conclude we instead need parallel reduction to
   `rename ρ (N [ M ])`. But thankfully, renaming and substitution
-  commute with one another, that is,
-
-        (rename (ext ρ) N) [ rename ρ M ] ≡ rename ρ (N [ M ])
+  commute with one another.
 
 
-With this lemma in hand, it is straightforward to show that extending
-substitutions preserves the pointwise parallel reduction relation.
+With the `par-rename` lemma in hand, it is straightforward to show
+that extending substitutions preserves the pointwise parallel
+reduction relation.
 
 ```
 par-subst-exts : ∀{Γ Δ} {σ τ : Subst Γ Δ}
@@ -293,8 +315,19 @@ par-subst-exts s {x = Z} = pvar
 par-subst-exts s {x = S x} = par-rename s
 ```
 
-We are ready to prove the main lemma regarding substitution and
-parallel reduction.
+The next lemma that we need to prove that substitution respects
+parallel reduction is the following one, which states that
+simultaneoous substitution commutes with single substitution. We import this
+lemma from Chapter [Substitution]({{ site.baseurl }}/Substitution/)
+and restate it below.
+
+```
+subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{σ : Subst Γ Δ }
+    → subst (exts σ) N [ subst σ M ] ≡ subst σ (N [ M ])
+subst-commute {N = N} = plfa.Substitution.subst-commute {N = N}
+```
+
+We are ready to prove that substitution respects parallel reduction.
 
 ```
 subst-par : ∀{Γ Δ A} {σ τ : Subst Γ Δ} {M M′ : Γ ⊢ A}
@@ -420,10 +453,10 @@ The proof is by induction on both premises.
 * Suppose `x ⇛ x` and `x ⇛ x`.
   We choose `L = x` and immediately have `x ⇛ x` and `x ⇛ x`.
 
-* Suppose `ƛ N ⇛ ƛ N′` and `ƛ N ⇛ ƛ N′′`.
+* Suppose `ƛ N ⇛ ƛ N₁` and `ƛ N ⇛ ƛ N₂`.
   By the induction hypothesis, there exists `L′` such that
-  `N′ ⇛ L′` and `N′′ ⇛ L′`. We choose `L = ƛ L′` and
-  by `pabs` conclude that `ƛ N′ ⇛ ƛ L′` and `ƛ N′′ ⇛ ƛ L′.
+  `N₁ ⇛ L′` and `N₂ ⇛ L′`. We choose `L = ƛ L′` and
+  by `pabs` conclude that `ƛ N₁ ⇛ ƛ L′` and `ƛ N₂ ⇛ ƛ L′.
 
 * Suppose that `L · M ⇛ L₁ · M₁` and `L · M ⇛ L₂ · M₂`.
   By the induction hypothesis we have
@@ -455,15 +488,37 @@ The proof is by induction on both premises.
   and `(ƛ N₂) · M₂ ⇛ N₃ [ M₃ ]`
   by rule `pbeta`
 
+#### Exercise
+
+Draw pictures that represent the proofs of each of the six cases in
+the above proof of `par-diamond`. The pictures should consist of nodes
+and directed edges, where each node is labeled with a term and each
+edge represents parallel reduction.
+
 
 ## Proof of confluence for parallel reduction
 
 As promised at the beginning, the proof that parallel reduction is
 confluent is easy now that we know it satisfies the diamond property.
 We just need to prove the strip lemma, which states that
-if `M ⇒ N` and `M ⇒* N′`, then
-`N ⇒* L` and `N′ ⇒ L` for some `L`.
-The proof is a straightforward induction on `M ⇒* N′`,
+if `M ⇛ N` and `M ⇛* N′`, then
+`N ⇛* L` and `N′ ⇛ L` for some `L`.
+The following diagram illustrates the strip lemma
+
+        M
+       / \
+      1   *
+     /     \
+    N       N′
+     \     /
+      *   1
+       \ /
+        L
+
+where downward lines are instances of `⇛` or `⇛*`, depending on how
+they are marked.
+
+The proof of the strip lemma is a straightforward induction on `M ⇛* N′`,
 using the diamond property in the induction step.
 
 ```
