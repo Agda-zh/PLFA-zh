@@ -10,7 +10,7 @@ This is a Chinese translation of "Programming Language Foundations in Agda" by P
 
 **本书在线版可访问 [PLFA-zh] 阅读。**
 
-目前翻译刚刚开始，欢迎各位参与到[翻译规范][TransSpec]的拟定中。
+目前第一部分已翻译完毕，欢迎各位参与翻译和审校。详情请参考[翻译规范][TransSpec]。
 由于译者水平有限，错漏之处在所难免，欢迎读者提出修改建议。如有问题可在 [Issue]
 发起讨论或直接发起 PR。项目源码可访问 [Github][Github-zh] 获取。
 
@@ -48,8 +48,8 @@ Pull requests are encouraged.
 
 ## 前言
 
-  - [题献]({{ site.baseurl }}/Dedication/) <span class = "progress" >{{ Dedication.progress | ceil }}</span>
-  - [前言]({{ site.baseurl }}/Preface/) <span class = "progress" >{{ Preface.progress | ceil }}</span>
+  - [题献]({{ site.baseurl }}/Dedication/) <span class="progress" >{{ Dedication.progress | ceil }}</span>
+  - [前言]({{ site.baseurl }}/Preface/) <span class="progress" >{{ Preface.progress | ceil }}</span>
 
 <!---
 ## Part 1: Logical Foundations
@@ -79,16 +79,16 @@ Pull requests are encouraged.
 
 ## 第一分册：逻辑基础
 
-  - [Naturals]({{ site.baseurl }}/Naturals/): 自然数 <span class = "progress" >{{ Naturals.progress | ceil }}</span>
-  - [Induction]({{ site.baseurl }}/Induction/): 归纳证明 <span class = "progress" >{{ Induction.progress | ceil }}</span>
-  - [Relations]({{ site.baseurl }}/Relations/): 关系的归纳定义 <span class = "progress" >{{ Relations.progress | ceil }}</span>
-  - [Equality]({{ site.baseurl }}/Equality/): 相等性与等式推理 <span class = "progress" >{{ Equality.progress | ceil }}</span>
-  - [Isomorphism]({{ site.baseurl }}/Isomorphism/): 同构与嵌入 <span class = "progress" >{{ Isomorphism.progress | ceil }}</span>
-  - [Connectives]({{ site.baseurl }}/Connectives/): 合取、析取与蕴涵 <span class = "progress" >{{ Connectives.progress | ceil }}</span>
-  - [Negation]({{ site.baseurl }}/Negation/): 直觉逻辑与命题逻辑中的否定 <span class = "progress" >{{ Negation.progress | ceil }}</span>
-  - [Quantifiers]({{ site.baseurl }}/Quantifiers/): 全称量词与存在量词 <span class = "progress" >{{ Quantifiers.progress | ceil }}</span>
-  - [Decidable]({{ site.baseurl }}/Decidable/): 布尔值与判定过程 <span class = "progress" >{{ Decidable.progress | ceil }}</span>
-  - [Lists]({{ site.baseurl }}/Lists/): 列表与高阶函数 <span class = "progress" >{{ Lists.progress | ceil }}</span>
+  - [Naturals]({{ site.baseurl }}/Naturals/): 自然数 <span class="progress" >{{ Naturals.progress | ceil }}</span>
+  - [Induction]({{ site.baseurl }}/Induction/): 归纳证明 <span class="progress" >{{ Induction.progress | ceil }}</span>
+  - [Relations]({{ site.baseurl }}/Relations/): 关系的归纳定义 <span class="progress" >{{ Relations.progress | ceil }}</span>
+  - [Equality]({{ site.baseurl }}/Equality/): 相等性与等式推理 <span class="progress" >{{ Equality.progress | ceil }}</span>
+  - [Isomorphism]({{ site.baseurl }}/Isomorphism/): 同构与嵌入 <span class="progress" >{{ Isomorphism.progress | ceil }}</span>
+  - [Connectives]({{ site.baseurl }}/Connectives/): 合取、析取与蕴涵 <span class="progress" >{{ Connectives.progress | ceil }}</span>
+  - [Negation]({{ site.baseurl }}/Negation/): 直觉逻辑与命题逻辑中的否定 <span class="progress" >{{ Negation.progress | ceil }}</span>
+  - [Quantifiers]({{ site.baseurl }}/Quantifiers/): 全称量词与存在量词 <span class="progress" >{{ Quantifiers.progress | ceil }}</span>
+  - [Decidable]({{ site.baseurl }}/Decidable/): 布尔值与判定过程 <span class="progress" >{{ Decidable.progress | ceil }}</span>
+  - [Lists]({{ site.baseurl }}/Lists/): 列表与高阶函数 <span class="progress" >{{ Lists.progress | ceil }}</span>
 
 <!---
 ## Part 2: Programming Language Foundations
@@ -112,13 +112,13 @@ Pull requests are encouraged.
 
 ## 第二分册：编程语言基础
 
-  - [Lambda]({{ site.baseurl }}/Lambda/): λ-演算简介 <span class = "progress" >{{ Lambda.progress | ceil }}</span>
-  - [Properties]({{ site.baseurl }}/Properties/): 可进性与保型性 <span class = "progress" >{{ Properties.progress | ceil }}</span>
-  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): 固有类型的 de Bruijn 表示 <span class = "progress" >{{ DeBruijn.progress | ceil }}</span>
-  - [More]({{ site.baseurl }}/More/): 简单类型 λ-演算的附加构造 <span class = "progress" >{{ More.progress | ceil }}</span>
-  - [Bisimulation]({{ site.baseurl }}/Bisimulation/) : 关系归约系统 <span class = "progress" >{{ Bisimulation.progress | ceil }}</span>
-  - [Inference]({{ site.baseurl }}/Inference/): 双向类型推断 <span class = "progress" >{{ Inference.progress | ceil }}</span>
-  - [Untyped]({{ site.baseurl }}/Untyped/): 无类型 λ-演算及其完整范式 <span class = "progress" >{{ Untyped.progress | ceil }}</span>
+  - [Lambda]({{ site.baseurl }}/Lambda/): λ-演算简介 <span class="progress" >{{ Lambda.progress | ceil }}</span>
+  - [Properties]({{ site.baseurl }}/Properties/): 可进性与保型性 <span class="progress" >{{ Properties.progress | ceil }}</span>
+  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): 固有类型的 de Bruijn 表示 <span class="progress" >{{ DeBruijn.progress | ceil }}</span>
+  - [More]({{ site.baseurl }}/More/): 简单类型 λ-演算的附加构造 <span class="progress" >{{ More.progress | ceil }}</span>
+  - [Bisimulation]({{ site.baseurl }}/Bisimulation/) : 关系归约系统 <span class="progress" >{{ Bisimulation.progress | ceil }}</span>
+  - [Inference]({{ site.baseurl }}/Inference/): 双向类型推断 <span class="progress" >{{ Inference.progress | ceil }}</span>
+  - [Untyped]({{ site.baseurl }}/Untyped/): 无类型 λ-演算及其完整范式 <span class="progress" >{{ Untyped.progress | ceil }}</span>
 
 <!---
 ## Backmatter
@@ -134,9 +134,9 @@ Pull requests are encouraged.
 
 ## 后记
 
-  - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/): 鸣谢 <span class = "progress" >{{ Acknowledgements.progress | ceil }}</span>
-  - [Fonts]({{ site.baseurl }}/Fonts/): 字体测试页 <span class = "progress" >{{ Fonts.progress | ceil }}</span>
-  - [Statistics]({{ site.baseurl }}/Statistics/): 每章行数统计 <span class = "progress" >{{ Statistics.progress | ceil }}</span>
+  - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/): 鸣谢 <span class="progress" >{{ Acknowledgements.progress | ceil }}</span>
+  - [Fonts]({{ site.baseurl }}/Fonts/): 字体测试页 <span class="progress" >{{ Fonts.progress | ceil }}</span>
+  - [Statistics]({{ site.baseurl }}/Statistics/): 每章行数统计 <span class="progress" >{{ Statistics.progress | ceil }}</span>
 
 <!---
 ## Related
