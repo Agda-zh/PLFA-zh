@@ -165,7 +165,7 @@ is easy to use and produces pages that are a pleasure to view.
 {:/}
 
 我很幸运地得到了我的学生 [Wen Kokke][wen] 的热情帮助。她引导着我站在 Agda
-新手的视角写书，还提供了一些十分易用的工具来生成清晰易读的的页面。
+新手的视角写书，还提供了一些十分易用的工具来生成清晰易读的页面。
 
 {::comment}
 Most of the text was written during a sabbatical in the first half of 2018.
@@ -205,7 +205,7 @@ Exercises labelled "(stretch)" are there to provide an extra challenge.
 Few students do all of these, but most attempt at least a few.
 {:/}
 
-标有**延伸**的习题提供了额外的挑战。很少有学生能全部做完，但大部分练习至少应该尝试一下。
+标有**延伸**的习题提供了额外的挑战。很少有学生能全部做完，但至少应该尝试一下。
 
 {::comment}
 Exercises without a label are included for those who want extra practice.
