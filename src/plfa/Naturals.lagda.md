@@ -18,8 +18,8 @@ thousand are visible to the naked eye.  The observable universe
 contains about seventy sextillion stars.
 {:/}
 
-夜空中的星星不计其数，但其中只有不到五千颗是肉眼可见的。
-可观测宇宙则包含了大约 7*10^22 颗恒星。
+夜空中的星星不计其数，但只有不到五千颗是肉眼可见的。
+可观测宇宙中则包含大约 7*10^22 颗恒星。
 
 {::comment}
 But the number of stars is finite, while natural numbers are infinite.
@@ -27,8 +27,8 @@ Count all the stars, and you will still have as many natural numbers
 left over as you started with.
 {:/}
 
-星星的数量虽多却是有限的，而自然数的数量是无限的。就算用自然数把所有的星星都数尽了，
-剩余的自然数也和刚开始时一样多。
+星星虽多，但却是有限的，而自然数是无限的。就算用自然数把所有的星星都数尽了，
+剩下的自然数也和开始的一样多。
 
 {::comment}
 The naturals are an inductive datatype
@@ -40,7 +40,7 @@ The naturals are an inductive datatype
 Everyone is familiar with the natural numbers
 {:/}
 
-大家都熟悉自然数，比如：
+大家都熟悉自然数，例如：
 
     0
     1
@@ -54,7 +54,7 @@ and so on. We write `ℕ` for the *type* of natural numbers, and say that
 writing `0 : ℕ`, `1 : ℕ`, `2 : ℕ`, `3 : ℕ`, and so on.
 {:/}
 
-等等。我们将自然数的**类型（Type）**记为 `ℕ` ，并称 `0`，`1`，`2`，`3` 等数字
+等等。我们将自然数的**类型（Type）**记作 `ℕ` ，并称 `0`、`1`、`2`、`3` 等数
 是类型 `ℕ` 的**值（Value）**，表示为 `0 : ℕ`，`1 : ℕ`，`2 : ℕ`，`3 : ℕ` 等等。
 
 {::comment}
@@ -63,8 +63,8 @@ its definition in just a few lines.  Here is the definition
 as a pair of inference rules:
 {:/}
 
-自然数集是无限的，然而其定义只需寥寥几行即可写出。下面是用一对
-推导规则（Inference Rules）表示的自然数定义。
+自然数集是无限的，然而其定义只需寥寥几行即可写出。下面是用两条
+**推导规则（Inference Rules）**定义的自然数：
 
     --------
     zero : ℕ
@@ -77,7 +77,7 @@ as a pair of inference rules:
 And here is the definition in Agda:
 {:/}
 
-以及用 Agda 写出的自然数定义：
+以及用 Agda 定义的自然数：
 
 ```
 data ℕ : Set where
@@ -91,14 +91,14 @@ and `zero` and `suc` (short for *successor*) are the
 *constructors* of the datatype.
 {:/}
 
-这里 `ℕ` 是我们所定义的**数据类型（Datatype）**的名字，而 `zero`（零）和 `suc`
-（**后继**，即**Successor**的简写）是该数据类型的**构造器（Constructor）**。
+其中 `ℕ` 是我们定义的**数据类型（Datatype）**的名字，而 `zero`（零）和 `suc`
+（**后继**，即 **Successor** 的简写）是该数据类型的**构造器（Constructor）**。
 
 {::comment}
 Both definitions above tell us the same two things:
 {:/}
 
-以上的定义都告诉了我们相同的两件事情：
+这两种定义说的是同一件事：
 
 {::comment}
 _Base case_: `zero` is a natural number.
@@ -114,7 +114,7 @@ Further, these two rules give the *only* ways of creating natural numbers.
 Hence, the possible natural numbers are:
 {:/}
 
-此外，这两条规则给出了产生自然数的**唯一**方法。因此，可能的自然数包括：
+此外，这两条规则给出了产生自然数**唯一**的方法。因此，可能的自然数包括：
 
     zero
     suc zero
@@ -132,7 +132,7 @@ successor of two; and so on.
 
 我们将 `zero` 简写为 `0`；将 `suc zero`，零的后继数，
 也就是排在零之后的自然数，简写为 `1`；将 `suc (suc zero)`，也就是 `suc 1`，
-即一的后继数，简写为 `2`；将二的后继数简写为 `3`；以此类推。
+即一的后继数，简写为 `2`；将二的后继数简写为 `3`；依次类推。
 
 {::comment}
 Exercise `seven`
@@ -144,7 +144,7 @@ Exercise `seven`
 Write out `7` in longhand.
 {:/}
 
-写出 `7` 的完整定义。
+请写出 `7` 的完整定义。
 
 {::comment}
 ```
@@ -173,10 +173,10 @@ is a natural, and the conclusion asserts that `suc m`
 is a also a natural.
 {:/}
 
-让我们来分析一下刚才的两条推导规则。每条推导规则包含写在一条水平直线上的
-零条或多条**判断（Judgment）**，称之为**假设（Hypothesis）**；以及写在直
-线下的一条判断，称之为**结论（Conclusion）**。第一条规则是起始步骤：它没
-有任何假设，而结论断言 `zero` 是一个自然数。第二条规则是归纳步骤：它有
+我们来分析一下刚才的两条推导规则。每条推导规则包含写在一条水平直线上的
+零条或多条**判断（Judgment）**，称之为**假设（Hypothesis）**；以及写在
+直线下的一条判断，称之为**结论（Conclusion）**。第一条规则是起始步骤：它没
+有任何假设，其结论断言 `zero` 是一个自然数。第二条规则是归纳步骤：它有
 一条假设，即 `m` 是自然数，而结论断言 `suc m` 也是一个自然数。
 
 {::comment}
@@ -191,8 +191,8 @@ inductive definition, that is, that we are defining a new datatype
 with constructors.  The phrase
 {:/}
 
-现在我们来分析刚才的 Agda 定义。关键字 `data` 告诉我们这是一个归纳定义，
-也就是我们正在用构造器定义一个新的数据类型。
+现在分析一下 Agda 的定义。关键字 `data` 表示这是一个归纳定义，
+也就是用构造器定义一个新的数据类型。
 
     ℕ : Set
 
@@ -205,9 +205,9 @@ separate line, which is indented to indicate that it belongs to the
 corresponding `data` declaration.  The lines
 {:/}
 
-这告诉我们 `ℕ` 是新的数据类型的名字，并且它是一个 `Set`，也就是在 Agda 中对类型的称呼。
-关键字 `where` 用于分离数据类型的声明和其构造器的声明。
-每个构造器在单独的一行里声明，通过缩进来表示它属于对应的 `data` 声明。
+表示 `ℕ` 是新的数据类型的名字，它是一个 `Set`，也就是在 Agda 中对类型的称呼。
+关键字 `where` 用于分隔数据类型的声明和构造器的声明。
+每个构造器的声明独占一行，用缩进来指明它所属的 `data` 声明。
 
     zero : ℕ
     suc  : ℕ → ℕ
@@ -219,7 +219,7 @@ number as argument and returns a natural number.
 {:/}
 
 这两行给出了构造器 `zero` 和 `suc` 的类型**签名（Signature）**。
-它们告诉我们 `zero` 是一个自然数，`suc` 则取一个自然数作为参数并返回另一个自然数。
+它们表示 `zero` 是一个自然数，`suc` 则取一个自然数作为参数，返回另一个自然数。
 
 {::comment}
 You may have noticed that `ℕ` and `→` don't appear on your keyboard.
@@ -229,9 +229,9 @@ instructions on how to type them in the Emacs text editor.  Here
 _type_ refers to typing with fingers as opposed to data types!
 {:/}
 
-读者可能已经注意到了 `ℕ` 和 `→` 在键盘上没有对应的按键。它们是
-**Unicode（统一码）**中的符号。在每一章的结尾都会有本章节引入的 Unicode
-符号的列表， 以及在 Emacs 编辑器中输入它们的方法。
+读者可能注意到 `ℕ` 和 `→` 在键盘上没有对应的按键。它们是
+**Unicode（统一码）**中的符号。每一章的结尾都会有本章节引入的 Unicode
+符号列表，以及在 Emacs 编辑器中输入它们的方法。
 
 {::comment}
 The story of creation
@@ -243,7 +243,7 @@ The story of creation
 Let's look again at the rules that define the natural numbers:
 {:/}
 
-让我们再来看一遍定义自然数的规则：
+我们再看一下自然数的定义规则：
 
 {::comment}
 _Base case_: `zero` is a natural number.
@@ -260,7 +260,7 @@ numbers. How can that possibly be allowed?  Isn't this as useless a
 definition as "Brexit means Brexit"?
 {:/}
 
-等一下！第二行用自然数定义了自然数，这怎么能被允许呢？这个定义难道
+等等！第二行用自然数定义了自然数，这怎么能行？这个定义难道
 不会像「脱欧即是脱欧」一样无用吗？
 
 【译注：「脱欧即是脱欧」是英国首相特蕾莎·梅提出的一句口号。】
@@ -273,14 +273,14 @@ _infinite_ set of natural numbers.
 {:/}
 
 实际上，不必通过自我指涉，我们的自然数定义也是可以被赋予意义的。
-为此，我们甚至只需要处理**有限**的集合，而不必涉及**无限**的自然数集。
+我们甚至只需要处理**有限**的集合，而不必涉及**无限**的自然数集。
 
 {::comment}
 We will think of it as a creation story.  To start with, we know about
 no natural numbers at all:
 {:/}
 
-我们可以将这个过程比作是一个创世故事。在最开始，我们对自然数一无所知：
+我们可以将这个过程比作一个创世故事。起初，我们对自然数一无所知：
 
 {::comment}
     -- In the beginning, there are no natural numbers.
@@ -297,9 +297,9 @@ natural number (today).  We didn't know about any natural numbers
 before today, so the inductive case doesn't apply:
 {:/}
 
-现在，对我们已知的所有自然数应用之前的规则。起始步骤告诉我们 `zero` 是
-一个自然数，所以我们将其加入已知自然数的集合。归纳步骤告诉我们如果（在
-昨天）`m` 是一个自然数，那么（在今天）`suc m` 就也是一个自然数。我们在
+现在，我们对所有已知的自然数应用之前的规则。起始步骤告诉我们 `zero` 是
+一个自然数，所以我们将它加入已知自然数的集合中。归纳步骤告诉我们如果
+「昨天的」`m` 是一个自然数，那么「今天的」`suc m` 也是一个自然数。我们在
 今天之前并不知道任何自然数，所以归纳步骤在此处不适用。
 
 {::comment}
@@ -318,8 +318,8 @@ that. But now the inductive case tells us that since `zero` was a natural
 number yesterday, then `suc zero` is a natural number today:
 {:/}
 
-然后我们重复这个过程。在今天我们知道来自前一天的所有自然数，以及任何
-通过规则添加的数。起始步骤依然告诉我们 `zero` 是一个自然数，当然，我们
+然后我们重复这个过程。今天我们知道昨天及以前的所有自然数，以及任何
+通过规则添加的数。起始步骤依然告诉我们 `zero` 是一个自然数，我们
 已经知道这件事了。而如今归纳步骤告诉我们，由于 `zero` 在昨天是自然数，
 `suc zero` 在今天也成为了自然数：
 
@@ -341,8 +341,8 @@ the first of these, but the second is new:
 {:/}
 
 我们再次重复这个过程。现在归纳步骤告诉我们，因为 `zero` 和 `suc zero` 都是自然
-数，所以 `suc zero` 和 `suc (suc zero)` 也是自然数。我们已经知道 `suc zero` 是自然数了，
-但后者 `suc (suc zero)` 是新加入的。
+数，所以 `suc zero` 和 `suc (suc zero)` 也是自然数。我们已经知道 `suc zero`
+是自然数了，而后者 `suc (suc zero)` 是新加入的。
 
 {::comment}
     -- On the third day, there are three natural numbers.
@@ -395,8 +395,8 @@ build up a potentially infinite set by applying rules that convert one
 finite set into another finite set.
 {:/}
 
-像这样的过程被称作是**归纳的（Inductive）**。我们从一无所有开始，通过应用将一个有限
-集合转换到另一个有限集合的规则，逐步生成潜在无限的集合。
+像这样的过程被称作是**归纳的（Inductive）**。我们从一无所有开始，通过应用将
+一个有限集合转换到另一个有限集合的规则，逐步生成潜在无限的集合。
 
 {::comment}
 The rule defining zero is called a _base case_, because it introduces
@@ -409,11 +409,11 @@ second day, and on the third, and so on.  An inductive definition lacking
 a base case is useless, as in the phrase "Brexit means Brexit".
 {:/}
 
-定义了零的规则之所以被称作**起始步骤**，是因为它甚至在我们还不知道其它自然数时
+定义了零的规则之所以被称作**起始步骤**，是因为它在我们还不知道其它自然数时
 就引入了一个自然数。定义了后继数的规则之所以被称作**归纳步骤**，则是因为它在
-我们已知自然数的基础上引入了更多自然数。其中，起始步骤的重要性不可小觑。如果
-我们只有归纳规则，我们将在第一天没有任何自然数，第二天，第三天，无论多久也依旧没有。
-一个缺失了起始步骤的归纳定义是无用的，就像「脱欧即是脱欧」一样。
+已知自然数的基础上引入了更多自然数。其中，起始步骤的重要性不可小觑。如果
+只有归纳步骤，那么第一天就没有任何自然数。第二天，第三天，无论多久也依旧没有。
+一个没有起始步骤的归纳定义是无用的，就像「脱欧即是脱欧」一样。
 
 {::comment}
 Philosophy and history
@@ -431,9 +431,9 @@ numbers, which we may take as a foundation for their formal
 description.
 {:/}
 
-哲学家可能会观察到，我们对「第一天」、「第二天」等说法的使用暗含了对自然数的理解。
-在这个层面，我们的自然数定义也许一定程度上可以被视作循环的，但我们不必为此烦恼。
-每个人对自然数都有良好的非形式化的理解，而我们可以将这作为自然数的形式化描述的基础。
+哲学家发现，我们对「第一天」「第二天」等说法的使用暗含了对自然数的理解。
+在这个层面上，我们对自然数的定义也许某种程度上可以说是循环的，但我们不必为此烦恼。
+每个人对自然数都有良好的非形式化的理解，而我们可以将它作为形式化描述自然数的基础。
 
 {::comment}
 While the natural numbers have been understood for as long as people
@@ -445,10 +445,11 @@ principia, nova methodo exposita_" (The principles of arithmetic
 presented by a new method), published the following year.
 {:/}
 
-尽管自然数从人类开始计数起就被认知，但是其归纳定义却是相对较近的事情。这可以追溯到理查德·戴德金（Richard Dedekind）
-于 1888 年发表的论文 "*Was sind und was sollen die Zahlen?*"（《数是什么，应该是什么？》），
-以及朱塞佩·皮亚诺（Giuseppe Peano）于次年发表的著作 "*Arithmetices principia, nova methodo exposita*"
-（《算术原理：用一种新方法呈现》）。
+尽管从人类开始计数起，自然数就被人所认知，然而其归纳定义却是近代的事情。
+这可以追溯到理查德·戴德金（Richard Dedekind）于 1888 年发表的论文
+*Was sind und was sollen die Zahlen?*"（《数是什么，应该是什么？》），
+以及朱塞佩·皮亚诺（Giuseppe Peano）于次年发表的著作
+"*Arithmetices principia, nova methodo exposita*"（《算术原理：用一种新方法呈现》）。
 
 {::comment}
 A pragma
@@ -463,9 +464,9 @@ code, with the exception of one special kind of comment, called a
 _pragma_, which is enclosed between `{-#` and `#-}`.
 {:/}
 
-在 Agda 中，任何跟在 `--` 之后或者被 `{-` 和 `-}` 包裹的文字都被视作一
-条**注释（Comment）**。一般的注释对代码没有任何作用，但有一种特殊的注释却是例外。
-这种注释被称作**编译指令（Pragma）**，被 `{-#` 和 `#-}` 包裹。
+在 Agda 中，任何跟在 `--` 之后或者由 `{-` 和 `-}` 包裹的文字都会被视为
+**注释（Comment）**。一般的注释对代码没有任何作用，但有一种例外，
+这种注释被称作**编译指令（Pragma）**，由 `{-#` 和 `#-}` 包裹。
 
 {::comment}
 Including the line
@@ -486,7 +487,7 @@ one with a single argument of the same type given in the pragma
 {:/}
 
 这一行告诉 Agda 数据类型 `ℕ` 对应了自然数，然后编写者就可以将 `zero` 简写
-为 `0`，将 `suc zero` 简写为 `1`，将 `suc (suc zero)` 简写为 `2`，以此类推。
+为 `0`，将 `suc zero` 简写为 `1`，将 `suc (suc zero)` 简写为 `2` 了，依次类推。
 只有在给出的数据类型有且只有两个构造器，其中一个没有参数（对应零），另一个
 仅取一个和被定义的数据类型一样的参数（对应后继数）的时候，这条声明
 才是合乎规定的。
@@ -500,7 +501,7 @@ representing it as an arbitrary-precision integer in Haskell only
 requires space proportional to the logarithm of _n_.
 {:/}
 
-在启用上述简写的同时，这条编译指令也会使用 Haskell 的任意精度整数类型
+在启用上述简写的同时，这条编译指令也会用 Haskell 的任意精度整数类型
 来提供更高效的自然数内部表示。用 `zero` 和 `suc` 表示自然数 *n* 要占用正比
 于 *n* 的空间，而将其表示为 Haskell 中的任意精度整数只会占用正比于 *n* 的对数的空间。
 
@@ -517,8 +518,8 @@ the definition of equality and notations for reasoning
 about it from the Agda standard library:
 {:/}
 
-我们很快就能够写一些包含自然数的等式了。在此之前，我们需要从 Agda 标
-准库中导入相等性的定义和用于等式推理的记法：
+我们很快就能写一些包含自然数的等式了。在此之前，我们需要从 Agda 标准库
+中导入**相等性（Equality）**的定义和用于等式推理的记法：
 
 ```
 import Relation.Binary.PropositionalEquality as Eq
@@ -541,14 +542,14 @@ but will see how they are defined in
 Chapter [Equality]({{ site.baseurl }}/Equality/).
 {:/}
 
-第一行代码将标准库中定义了相等性的模块导入当前作用域（Scope），并将其命名
-为 `Eq`。第二行打开了这个模块，也就是将所有在 `using` 从句中指定的名称
-添加到当前作用域。在这里被添加的名称有相等性运算符 `_≡_` 和两个项相等的
-证据 `refl`。第三行选取了一个提供用于等价关系推理的运算符的模块，并将
-在 `using` 从句中指定的名称添加到当前作用域。在这里被添加的名称有 `begin_`，
-`_≡⟨⟩_`，以及 `_∎`。我们会在下文中看到这些运算符的使用方法。我们目前把这些
-名称都当作现成的工具来使用，不深究其细节，但我们会在
-[相等性]({{ site.baseurl }}/Equality/)章节学习它们的具体定义。
+第一行代码将标准库中定义了相等性的模块导入到当前**作用域（Scope）**中，
+并将其命名为 `Eq`。第二行打开了这个模块，也就是将所有在 `using`
+从句中指定的名称添加到当前作用域中。此处添加的名称有相等性运算符 `_≡_`
+和两个项相等的证据 `refl`。第三行选取的模块提供了用于等价关系推理的运算符，并将
+`using` 从句中指定的名称添加到当前作用域。此处添加的名称有 `begin_`、
+`_≡⟨⟩_` 和 `_∎`。我们后面会看到这些运算符的使用方法。现在暂且把它们当作现成的
+工具来使用，不深究其细节。但我们会在[相等性]({{ site.baseurl }}/Equality/)一章中
+学习它们的具体定义。
 
 {::comment}
 Agda uses underbars to indicate where terms appear in infix or mixfix
@@ -557,8 +558,8 @@ between two terms), while `begin_` is prefix (it is written before a
 term), and `_∎` is postfix (it is written after a term).
 {:/}
 
-Agda 用下划线来标注在中缀或混缀（Mixfix）运算符中项出现的位置。因此，
-`_≡_` 和 `_≡⟨⟩_` 是中缀的（运算符写在两个项之间），而 `begin_` 是前缀的
+Agda 用下划线来标注**项（Term）**在中缀或混缀（Mixfix）运算符中项出现的位置。
+因此，`_≡_` 和 `_≡⟨⟩_` 是中缀的（运算符写在两个项之间），而 `begin_` 是前缀的
 （运算符写在项之前），`_∎` 则是后缀的（运算符写在项之后）。
 
 {::comment}
@@ -566,14 +567,14 @@ Parentheses and semicolons are among the few characters that cannot
 appear in names, so we do not need extra spaces in the `using` list.
 {:/}
 
-括号和分号是少有的几个不能在名称中出现的的字符，所以我们在 `using`
-列表中不需要额外的空白（以消除歧义）。
+括号和分号是少有的几个不能在名称中出现的的字符，于是我们在 `using`
+列表中不需要额外的空格来消除歧义。
 
 {::comment}
 Operations on naturals are recursive functions {#plus}
 {:/}
 
-## 对自然数的操作是递归函数 {#plus}
+## 自然数的运算是递归函数 {#plus}
 
 {::comment}
 Now that we have the natural numbers, what can we do with them?
@@ -582,7 +583,7 @@ addition and multiplication?
 {:/}
 
 既然我们有了自然数，那么可以用它们做什么呢？比如，我们能定义
-加法和乘法之类的算术操作吗？
+加法和乘法之类的算术运算吗？
 
 {::comment}
 As a child I spent much time memorising tables of addition and
@@ -593,15 +594,15 @@ instances of addition and multiplication can be specified in
 just a couple of lines.
 {:/}
 
-我儿时曾花费了大量的时间来记忆加法和乘法表。最开始，运算规则看起来很
+我儿时曾花费了大量的时间来记忆加法表和乘法表。最开始，运算规则看起来很
 复杂，我也经常犯错。在发现**递归（Recursion）**时，我如同醍醐灌顶。
-通过这个简单的技巧，有无数种可能的加法和乘法运算，只用几行即可概括。
+有了这种简单的技巧，无数的加法和乘法运算只用几行就能概括。
 
 {::comment}
 Here is the definition of addition in Agda:
 {:/}
 
-这是用 Agda 编写的加法的定义：
+这是用 Agda 编写的加法定义：
 
 ```
 _+_ : ℕ → ℕ → ℕ
@@ -618,9 +619,9 @@ and returns a natural.  Infix notation is just a shorthand for application;
 the terms `m + n` and `_+_ m n` are equivalent.
 {:/}
 
-我们来分析一下这个定义。加法是一个中缀运算符，被命名为 `_+_`，其中参数的
-位置在书写时被下划线占据。第一行是指定了运算符类型的签名。`ℕ → ℕ → ℕ` 这个
-类型说明加法接受两个自然数作为参数，并返回一个自然数。中缀记法只是函数应用的简写，
+我们来分析一下它的定义。加法是一种中缀运算符，其名为 `_+_`，其中参数的
+位置用下划线表示。第一行指定了运算符的类型签名。类型 `ℕ → ℕ → ℕ` 表示
+加法接受两个自然数作为参数，并返回一个自然数。中缀记法只是函数应用的简写，
 `m + n` 和 `_+_ m n` 这两个项是等价的。
 
 {::comment}
@@ -633,10 +634,10 @@ We say we use _pattern matching_ when constructors appear on the
 left-hand side of an equation.
 {:/}
 
-这个定义包含一个起始步骤和一个归纳步骤，与自然数的定义相对应。起始步骤说明了
-用零加一个数返回那个数，即 `zero + n` 得 `n`。归纳步骤说明了用一个数的后继数
-加上另一个数返回两数之和的后继数，即 `(suc m) + n` 得 `suc (m + n)`。在加法
-定义中，构造器出现在了等式左手侧，我们将这称为**模式匹配（Pattern Matching）**。
+它的定义包含一个起始步骤和一个归纳步骤，与自然数的定义对应。起始步骤说明
+零加上一个数仍返回这个数，即 `zero + n` 等于 `n`。归纳步骤说明一个数的后继数
+加上另一个数返回两数之和的后继数，即 `(suc m) + n` 等于 `suc (m + n)`。在加法的
+定义中，构造器出现在了等式左边，我们称之为**模式匹配（Pattern Matching）**。
 
 {::comment}
 If we write `zero` as `0` and `suc m` as `1 + m`, the definition turns
@@ -656,7 +657,7 @@ associativity is written
 {:/}
 
 因为零是加法的幺元，所以第一个等式成立。又因为加法满足结合律，所以
-第二个等式也成立。加法结合律的一般形式如下，说明运算结果和括号的位置无关。
+第二个等式也成立。加法结合律的一般形式如下，说明运算结果与括号位置无关。
 
      (m + n) + p  ≡  m + (n + p)
 
@@ -668,8 +669,7 @@ write `≡` for assertions that two already defined things are the same.
 {:/}
 
 将上面第三个等式中的 `m` 换成 `1`，`n` 换成 `m`，`p` 换成 `n`，我们就
-得到了第二个等式。我们用等号 `=` 表示定义，而在断言两个已定义的事物等同时，
-我们将等于写作 `≡`。
+得到了第二个等式。我们用等号 `=` 表示定义，用 `≡` 断言两个已定义的事物相等。
 
 {::comment}
 The definition is _recursive_, in that the last line defines addition
@@ -680,7 +680,7 @@ numbers.  Such a definition is called _well founded_.
 {:/}
 
 加法的定义是**递归（Recursive）**的，因为在最后一行我们用加法定义了加法。
-类似于自然数的归纳定义的情况，这个表面上的循环性并不会造成问题，因为较大
+与自然数的归纳定义类似，这种表面上的循环性并不会造成问题，因为较大
 的数相加是用较小的数相加定义的。这样的定义被称作是**良基的（Well founded）**。
 
 {::comment}
@@ -712,7 +712,7 @@ We can write the same derivation more compactly by only
 expanding shorthand as needed:
 {:/}
 
-我们可以只展开需要用到的简写来把同样的推导过程写得更紧凑。
+我们可以按需展开简写，把同样的推导过程写得更加紧凑。
 
 ```
 _ : 2 + 3 ≡ 5
@@ -736,9 +736,8 @@ the second line matches the inductive case by taking `m = 0` and `n = 3`,
 and the third line matches the base case by taking `n = 3`.
 {:/}
 
-第一行通过取 `m = 1` 和 `n = 3` 匹配了归纳步骤，第二行也通过
-取 `m = 0` 和 `n = 3` 匹配了归纳步骤，
-最后第三行通过取 `n = 3` 匹配了起始步骤。
+第一行取 `m = 1` 和 `n = 3` 匹配了归纳步骤，第二行取
+`m = 0` 和 `n = 3` 匹配了归纳步骤，第三行取 `n = 3` 匹配了起始步骤。
 
 {::comment}
 Both derivations consist of a signature (written with a colon, `:`),
@@ -748,9 +747,9 @@ dummy name can be reused, and is convenient for examples.  Names other
 than `_` must be used only once in a module.
 {:/}
 
-以上两个推导过程都由一个类型签名（含冒号 `:` 的一行）和一个提供对应类型
-的项的绑定（Binding）（含等号 `=` 的一行及之后的部分）组成。在编写代码时
-我们用了虚拟名称 `_`。虚拟名称可以被重复使用，在举例时非常方便。除了 `_` 之外
+以上两个推导过程都由一个类型签名（包含冒号 `:` 的一行）和一个提供对应类型
+的项的绑定（Binding）（包含等号 `=` 的一行及之后的部分）组成。在编写代码时
+我们用了虚设名称 `_`。虚设名称可以被重复使用，在举例时非常方便。除了 `_` 之外
 的名称在一个模块里只能被定义一次。
 
 {::comment}
@@ -761,16 +760,17 @@ equations.  The chain starts with `begin` and finishes with `∎`
 consists of a series of terms separated by `≡⟨⟩`.
 {:/}
 
-这里的类型是 `2 + 3 ≡ 5`，而这里写成表格形式的等式链的项，提供了类型中表示
-的等式成立的**证据（Evidence）**。这个等式链由 `begin` 开始，以 `∎` 结束（`∎` 可
-读作 「qed」/「证毕」 或 「tombstone」/「墓碑符号」，后者来自于其外观），并由一系列由 `≡⟨⟩` 分隔的项组成。
+这里的类型是 `2 + 3 ≡ 5`，而该等式写成列表形式的等式链的项，提供了类型中表示
+等式成立的**证据（Evidence）**。该等式链由 `begin` 开始，以 `∎` 结束（`∎`
+可读作「qed（证毕）」或「tombstone（墓碑符号）」，后者来自于其外观），
+并由一系列 `≡⟨⟩` 分隔的项组成。
 
 {::comment}
 In fact, both proofs are longer than need be, and Agda is satisfied
 with the following:
 {:/}
 
-其实，上面的两种证明都比实际所需的要长，下面的证明就足以让 Agda 满意了。
+其实，以上两种证明都比实际所需的要长，下面的证明就足以让 Agda 满意了。
 
 ```
 _ : 2 + 3 ≡ 5
@@ -785,8 +785,8 @@ itself is written `refl`.
 {:/}
 
 Agda 知道如何计算 `2 + 3` 的值，也可以立刻确定这个值和 `5` 是一样的。如果一个
-二元关系（Binary Relation）中每个值都和自己相关，我们称这个二元关系是**自反的（Reflexive）**。
-在 Agda 中，一个值等于其自身的证据写作 `refl`。
+二元关系（Binary Relation）中每个值都和自己相关，我们称这个二元关系满足
+**自反性（Reflexive）**。在 Agda 中，一个值等于其自身的证据写作 `refl`。
 
 {::comment}
 In the chains of equations, all Agda checks is that each term
@@ -795,9 +795,9 @@ add extraneous lines it will still be accepted.  It's up to us to write
 the equations in an order that makes sense to the reader.
 {:/}
 
-在等式链中，Agda 只检查是否每个项都可以化简到相同的值。如果我们打乱等式顺序，
-省略或者加入一些额外的步骤，证明仍然会被接受。我们需要自己确保等式是按
-一种方便读者理解的顺序来书写。
+在等式链中，Agda 只检查每个项是否都能化简为相同的值。如果我们打乱等式顺序，
+省略或者加入一些额外的步骤，证明仍然会被接受。我们需要自己保证等式的书写顺序
+是便于理解的。
 
 {::comment}
 Here `2 + 3 ≡ 5` is a type, and the chains of equations (and also
@@ -810,8 +810,8 @@ be a running theme throughout this book.
 
 在这里，`2 + 3 ≡ 5` 是一个类型，等式链（以及 `refl`）都是这个类型的项。
 换言之，我们也可以把每个项都看作断言 `2 + 3 ≡ 5` 的**证据**。这种解释的
-对偶性————类型作为命题，而项作为证据————是我们在 Agda 中形式化各种概念
-的核心，也是本书贯穿始终的主题。
+对偶性——类型即命题，项即证据——是我们在 Agda 中形式化各种概念的核心，
+也是贯穿本书的主题。
 
 {::comment}
 Note that when we use the word _evidence_ it is nothing equivocal.  It
@@ -820,8 +820,8 @@ whether the witness is trustworthy.  Rather, it is ironclad.  The
 other word for evidence, which we will use interchangeably, is _proof_.
 {:/}
 
-需要注意的是，当我们使用**证据**这个词时，不容一点含糊。这里的证据
-确凿不移，不像法庭上的证词一样必须被反复权衡以决定证人是否可信。
+注意，当我们使用**证据**这个词时不容一点含糊。这里的证据确凿不移，
+不像法庭上的证词一样必须被反复权衡以决定证人是否可信。
 我们也会使用**证明**一词表达相同的意思，在本书中这两个词可以互换使用。
 
 {::comment}
@@ -937,10 +937,9 @@ Here we have omitted the signature declaring `_ : 2 * 3 ≡ 6`, since
 it can easily be inferred from the corresponding term.
 {:/}
 
-第一行通过取 `m = 1` 和 `n = 3` 匹配了归纳步骤，第二行也通过
-取 `m = 0` 和 `n = 3` 匹配了归纳步骤，最后第三行通过取 `n = 3` 匹配
-了起始步骤。在这里我们省略了声明 `_ : 2 * 3 ≡ 6` 的签名，因为它很容易
-从对应的项推导出来。
+第一行取 `m = 1` 和 `n = 3` 匹配了归纳步骤，第二行取 `m = 0` 和 `n = 3`
+匹配了归纳步骤，最后第三行取 `n = 3` 匹配了起始步骤。在这里我们省略了
+`_ : 2 * 3 ≡ 6` 的签名，因为它很容易从对应的项推导出来。
 
 {::comment}
 Exercise `*-example`
@@ -974,7 +973,7 @@ Exercise `_^_` (recommended)
 Define exponentiation, which is given by the following equations:
 {:/}
 
-根据如下等式写出乘方的定义。
+根据以下等式写出乘方的定义。
 
     m ^ 0        =  1
     m ^ (1 + n)  =  m * (m ^ n)
@@ -1016,7 +1015,7 @@ Monus is our first use of a definition that uses pattern
 matching against both arguments:
 {:/}
 
-饱和减法是我们第一次在定义中对两个参数都使用模式匹配：
+饱和减法是我们首次在定义中对两个参数都使用模式匹配：
 
 ```
 _∸_ : ℕ → ℕ → ℕ
@@ -1029,7 +1028,7 @@ suc m ∸ suc n  =  m ∸ n
 We can do a simple analysis to show that all the cases are covered.
 {:/}
 
-我们可以做一个简单的分析来说明所有的情况都被考虑了。
+我们可以通过简单的分析来说明所有的情况都被考虑了。
 
 {::comment}
    Consider the second argument.
@@ -1051,7 +1050,7 @@ monus on bigger numbers is defined in terms of monus on
 smaller numbers.
 {:/}
 
-这个定义也是良基的，因为较大的数的饱和减法是用较小的数的饱和减法定义的。
+此也是良基的，因为较大的数的饱和减法是用较小的数的饱和减法定义的。
 
 {::comment}
 For example, let's subtract two from three:
@@ -1077,7 +1076,7 @@ We did not use the second equation at all, but it will be required
 if we try to subtract a larger number from a smaller one:
 {:/}
 
-我们没有使用第二个等式，但是如果被减数比减数小，我们还是会需要它。
+我们没有使用第二个等式，但是如果被减数比减数小，我们还是会用到它。
 
 ```
 _ =
@@ -1131,17 +1130,17 @@ so write `m + n + p` to mean `(m + n) + p`.
 {:/}
 
 我们经常使用**优先级（Precedence）**来避免书写大量的括号。
-函数应用比其它任何运算符都**绑定得更紧密**（或**有更高的优先级**），所以我们
-可以写 `suc m + n` 来表示 `(suc m) + n`。另一个例子是，我们说乘法比
-加法绑定得更紧密，所以可以写 `n + m * n` 来表示 `n + (m * n)`。我们有
-时候也说加法是**左结合的**，所以可以写 `m + n + p` 来表示 `(m + n) + p`。
+函数应用比其它任何运算符都**结合得更紧密**（即**有更高的优先级**），所以我们
+可以用 `suc m + n` 来表示 `(suc m) + n`。另一个例子是，我们说乘法比
+加法结合得更紧密，所以可以用 `n + m * n` 来表示 `n + (m * n)`。我们有
+时候也说加法是**左结合的**，所以可以用 `m + n + p` 来表示 `(m + n) + p`。
 
 {::comment}
 In Agda the precedence and associativity of infix operators
 needs to be declared:
 {:/}
 
-在 Agda 中中缀运算符的优先级和结合性需要被声明：
+在 Agda 中，中缀运算符的优先级和结合性需要被声明：
 
 ```
 infixl 6  _+_  _∸_
@@ -1159,8 +1158,8 @@ indicate that an operator associates to the right, or just `infix` to
 indicate that parentheses are always required to disambiguate.
 {:/}
 
-这声明了运算符 `_+_` 和 `_∸_` 的优先级为 6，运算符 `_*_` 的优先级
-为 7。因为加法和饱和减法的优先级更低，所以它们绑定得不如乘法紧密。
+它声明了运算符 `_+_` 和 `_∸_` 的优先级为 6，运算符 `_*_` 的优先级
+为 7。因为加法和饱和减法的优先级更低，所以它们结合得不如乘法紧密。
 `infixl` 意味着三个运算符都是左结合的。编写者也可以用 `infixr` 来表示
 某个运算符是右结合的，或者用 `infix` 来表示总是需要括号来消除歧义。
 
@@ -1176,8 +1175,8 @@ of a function of the first argument that returns a function of the
 second argument.  This trick goes by the name _currying_.
 {:/}
 
-我们在之前曾将取两个参数的函数表示成取第一个参数并返回取第二个
-参数的函数的函数。这种技巧被称作**柯里化（Currying）**。
+我们曾将接受两个参数的函数表示成「接受第一个参数，返回接受第二个
+参数的函数」的函数。这种技巧叫做**柯里化（Currying）**。
 
 {::comment}
 Agda, like other functional languages such as Haskell and ML,
@@ -1185,8 +1184,8 @@ is designed to make currying easy to use.  Function
 arrows associate to the right and application associates to the left
 {:/}
 
-类似于别的函数式语言，如 Haskell 和 ML，Agda 在设计时就考虑了让柯里化
-更易用。函数箭头是右结合的，而函数应用是左结合的。
+与 Haskell 和 ML 等函数式语言类似，Agda 在设计时就考虑了让柯里化更加易用。
+函数箭头是右结合的，而函数应用是左结合的。
 
 比如
 
@@ -1198,18 +1197,18 @@ and
 `_+_ 2 3` stands for `(_+_ 2) 3`.
 {:/}
 
-`ℕ → ℕ → ℕ` 代表了 `ℕ → (ℕ → ℕ)`
+`ℕ → ℕ → ℕ` 表示 `ℕ → (ℕ → ℕ)`
 
-以及
+而
 
-`_+_ 2 3` 代表了 `(_+_ 2) 3`。
+`_+_ 2 3` 表示 `(_+_ 2) 3`。
 
 {::comment}
 The term `_+_ 2` by itself stands for the function that adds two to
 its argument, hence applying it to three yields five.
 {:/}
 
-`_+_ 2` 这个项本身代表了一个将参数加二的函数，所以将其应用到三得到了五。
+`_+_ 2` 这个项表示一个「将参数加二」的函数，因此将它应用到三就得到了五。
 
 {::comment}
 Currying is named for Haskell Curry, after whom the programming
@@ -1223,14 +1222,12 @@ appears in the _Begriffschrift_ of Gottlob Frege, published in 1879.
 {:/}
 
 柯里化是以哈斯凯尔·柯里（Haskell Curry）的名字命名的，编程语言 Haskell 也是。
-柯里的工作可以追溯到 19 世纪 30 年代。当我第一次了解到柯里化时，有人
-告诉我柯里化的命名是个归因错误，因为在 20 年代同样的想法就已经被 Moses Schönfinkel 提出了。
-我也听说过这样一个笑话：「（柯里化）本来该命名成 Schönfinkel 化的，但是咖喱
-更好吃。」直到之后我才了解到，这个对于归因错误的解释
-本身也是个归因错误。柯里化的概念早在戈特洛布·弗雷格（Gottlob Frege）所著的
-发表于 1879 年的 **"Begriffsschrift"（《概念文字》）**中就出现了。
-
-【译注：curry 也可指调味料咖喱。】
+柯里的工作可以追溯到 19 世纪 30 年代。当我第一次了解到柯里化时，
+有人告诉我柯里化的命名是个归因错误，因为在 20 年代同样的想法就已经被
+Moses Schönfinkel 提出了。我也听说过这样一个笑话：「（柯里化）本来该命名成
+Schönfinkel 化的，但是咖喱（Curry）更好吃」。直到之后我才了解到，
+这个归因错误的解释本身也是个归因错误。柯里化的概念早在戈特洛布·弗雷格
+（Gottlob Frege）发表于 1879 年的 **"Begriffsschrift"（《概念文字》）**中就出现了。
 
 {::comment}
 The story of creation, revisited
@@ -1244,7 +1241,7 @@ naturals, so does our recursive definition define addition in terms
 of addition.
 {:/}
 
-就像我们的归纳定义中用自然数定义了自然数一样，我们的递归定义也用加法定义了加法。
+和归纳定义中用自然数定义了自然数一样，递归定义也用加法定义了加法。
 
 {::comment}
 Again, it is possible to assign our definition a meaning without
@@ -1253,7 +1250,7 @@ definition to equivalent inference rules for judgments about equality:
 {:/}
 
 同理，无需利用循环性，我们的加法定义也是可以被赋予意义的。
-为了办到这一点，我们将加法的定义规约到等价的用于判断相等性的推导规则。
+为此，我们需要将加法的定义规约到用于判断相等性的等价的推导规则上来。
 
     n : ℕ
     --------------
@@ -1272,7 +1269,7 @@ case. It asserts that if adding `m` and `n` gives `p`, then adding `suc m` and
 `n` gives `suc p`.
 {:/}
 
-这里我们假设我们已经定义了指定判断 `n : ℕ` 的意义的自然数的无限集合。
+假设我们已经定义了自然数的无限集合，指定了判断 `n : ℕ` 的意义。
 第一条推导规则是起始步骤。它断言如果 `n` 是一个自然数，那么零加上它得 `n`。
 第二条推导规则是归纳步骤。它断言如果 `m` 加上 `n` 得 `p`，那么 `suc m` 加
 上 `n` 得 `suc p`。
@@ -1282,7 +1279,7 @@ Again we resort to a creation story, where this time we are
 concerned with judgments about addition:
 {:/}
 
-我们又一次借助于创世故事来理解，只是这次我们关注的是关于加法的判断。
+我们同样借创世故事来帮助理解，不过这次关注的是关于加法的判断。
 
 {::comment}
     -- In the beginning, we know nothing about addition.
@@ -1299,11 +1296,11 @@ so we add all those equations.  The inductive case tells us that if
 so that rule doesn't give us any new equations:
 {:/}
 
-现在，对我们已知的所有判断应用之前的规则。起始步骤告诉我们对于
-每个自然数 `n` 都有 `zero + n = n`，所以我们添加所有的这类等式。
-归纳步骤告诉我们如果（在昨天）有 `m + n = p`，那么（在今天）
-有 `suc m + n = suc p`。我们在今天之前不知道任何关于加法的等式，
-所以这条规则不会给我们任何新的等式。
+现在对所有已知的判断应用之前的规则。起始步骤告诉我们，对于
+每个自然数 `n` 都有 `zero + n = n`，因此我们添加所有的这类等式。
+归纳步骤告诉我们，如果（昨天）有 `m + n = p`，那么（今天）
+就有 `suc m + n = suc p`。在今天之前，我们不知道任何关于加法的等式，
+因此这条规则不会给我们任何新的等式。
 
 {::comment}
     -- On the first day, we know about addition of 0.
@@ -1320,9 +1317,8 @@ The base case tells us nothing new, but now the inductive case adds
 more equations:
 {:/}
 
-然后我们重复这个过程。在今天我们知道来自前一天的所有等式，以及任何通过
-规则添加的等式。起始步骤没有告诉我们任何新东西，但是归纳步骤添加了更多的
-等式。
+然后我们重复这个过程。今天我们知道来自昨天的所有等式，以及任何通过
+规则添加的等式。起始步骤没有告诉我们任何新东西，但是归纳步骤添加了更多的等式。
 
 {::comment}
     -- On the second day, we know about addition of 0 and 1.
@@ -1377,7 +1373,7 @@ The process continues.  On the _m_'th day we will know all the
 equations where the first number is less than _m_.
 {:/}
 
-这个过程可以继续下去。在第 *m* 天我们将知道所有被加数小于 *m* 的等式。
+此过程可以继续下去。在第 *m* 天我们将知道所有被加数小于 *m* 的等式。
 
 {::comment}
 As we can see, the reasoning that justifies inductive and recursive
@@ -1385,7 +1381,7 @@ definitions is quite similar.  They might be considered two sides of
 the same coin.
 {:/}
 
-正如我们所见，解释了归纳和递归定义的正确性的推导是很相似的。它们就像一枚硬币的两面。
+如上所示，归纳定义和递归定义的的推导过程十分相似。它们就像一枚硬币的两面。
 
 {::comment}
 ## The story of creation, finitely {#finite-creation}
@@ -1400,7 +1396,7 @@ creating instances of addition, so even on day one we have an
 infinite set of instances.
 {:/}
 
-上述的创世故事是用分层的方式讲述的。首先，我们创造了自然数的无限集合。
+前面的创世故事是用分层的方式讲述的。首先，我们创造了自然数的无限集合。
 然后，我们构造加法的实例时把自然数集视为现成的，所以即使在第一天我
 们也有一个无限的实例集合。
 
@@ -1502,13 +1498,13 @@ equations relating the data.
 
 在第 _n_ 天会有 _n_ 个不同的自然数和 _n × (n-1) / 2_ 个加法等式。
 数字 _n_ 和所有和小于 _n_ 的加法等式在第 _n+1_ 天首次出现。这提供了
-一个对数据和关联数据的等式的无限集合的有限主义视角。
+一种无限的数据集合及与之相关的等式的有限主义视角。
 
 {::comment}
 Writing definitions interactively
 {:/}
 
-## 交互式定义书写
+## 交互式地编写定义
 
 {::comment}
 Agda is designed to be used with the Emacs text editor, and the two
@@ -1516,7 +1512,7 @@ in combination provide features that help to create definitions
 and proofs interactively.
 {:/}
 
-Agda 被设计为使用 Emacs 作为文本编辑器，而这两者一起提供了很多能帮助
+Agda 被设计为使用 Emacs 作为文本编辑器，二者一同提供了很多能帮助
 用户交互式地创建定义和证明的功能。
 
 {::comment}
@@ -1535,7 +1531,7 @@ the control key while hitting the `c` key followed by the `l` key)
 the question mark will be replaced:
 {:/}
 
-问号意味着你希望 Agda 帮助你填入这部分代码。如果按组合键 `C-c C-l`
+问号表示你希望 Agda 帮助你填入这部分代码。如果按下组合键 `C-c C-l`
 （按住 Control 键的同时先按 `c` 键再按 `l` 键），这个问号会被替换：
 
     _+_ : ℕ → ℕ → ℕ
@@ -1548,7 +1544,7 @@ Emacs will also create a window displaying the text
 {:/}
 
 这对花括号被称作一个**洞（Hole）**，0 是这个洞的编号。洞将会被高亮显示为
-绿色（或蓝色）。Emacs 会同时创建一个窗口显示如下文字：
+绿色（或蓝色）。同时，Emacs 会创建一个窗口显示如下文字：
 
     ?0 : ℕ
 
@@ -1566,19 +1562,19 @@ Move the cursor into the hole and type `C-c C-c`.   You will be given
 the prompt:
 {:/}
 
-我们希望在第一个参数递归来定义加法。
+我们希望在第一个参数上递归来定义加法。
 将光标移至 0 号洞并按 `C-c C-c`，你将看见如下提示：
 
     pattern variables to case (empty for split on result):
+
+即「用于分项的模式变量（留空以对结果分项）：」。
 
 {::comment}
 Typing `m` will cause a split on that variable, resulting
 in an update to the code:
 {:/}
 
-即「用于分项的模式变量（留空以对结果分项）：」。
-
-键入 `m` 会触发对名为 `m` 的变量的分项操作（即自动模式匹配），产生如下的代码更新：
+键入 `m` 会对名为 `m` 的变量分项（即自动模式匹配），并将代码更新为：
 
     _+_ : ℕ → ℕ → ℕ
     zero + n = { }0
@@ -1599,7 +1595,7 @@ Going into hole 0 and type `C-c C-,` will display information on the
 required type of the hole, and what free variables are available:
 {:/}
 
-移动至 0 号洞并按 `C-c C-,` 将会显示当前洞所需类型的具体信息，以及
+移动至 0 号洞，按下 `C-c C-,` 会显示当前洞所需类型的具体信息，以及
 可用的自由变量：
 
     Goal: ℕ
@@ -1611,7 +1607,8 @@ This strongly suggests filling the hole with `n`.  After the hole is
 filled, you can type `C-c C-space`, which will remove the hole:
 {:/}
 
-这些信息强烈地提示了可以用 `n` 填入该洞。填入内容后，你可以按 `C-c C-空格` 来移除这个洞。
+这些信息强烈建议了用 `n` 填入该洞。填入内容后，你可以按下 `C-c C-空格`
+来移除这个洞。
 
     _+_ : ℕ → ℕ → ℕ
     zero + n = n
@@ -1622,8 +1619,8 @@ Again, going into hole 1 and type `C-c C-,` will display information on the
 required type of the hole, and what free variables are available:
 {:/}
 
-同理，移动到 1 号洞并按 `C-c C-,` 将会显示当前洞所需类型的具体信息，以及
-可用的自由变量：
+同理，移动到 1 号洞并按下 `C-c C-,` 会显示当前洞所需类型的具体信息，
+以及可用的自由变量：
 
     Goal: ℕ
     ————————————————————————————————————————————————————————————
@@ -1636,16 +1633,18 @@ Going into the hole and type `C-c C-r` will fill it in with a constructor
 if there is a choice.  In this case, it displays the following:
 {:/}
 
-移动到一个洞并按 `C-c C-r` 会将一个构造器填入这个洞（如果有唯一的选择的话），
-或者告诉你有哪些可用的构造器以供选择。在我们目前的情况下，编辑器将显示如下内容：
+移动到一个洞并按下 `C-c C-r` 会将一个构造器填入这个洞（如果有唯一的选择的话），
+或者告诉你有哪些可用的构造器以供选择。在当前情况下，编辑器会显示如下内容：
 
     Don't know which constructor to introduce of zero or suc
+
+即“不知道在 `zero` 和 `suc` 中该引入哪一个构造器”。
 
 {::comment}
 Filling the hole with `suc ?` and typing `C-c C-space` results in the following:
 {:/}
 
-即“不知道在 `zero` 和 `suc` 中该引入哪一个构造器”。我们将 `suc ?` 填入并按 `C-c C-空格` 产生如下的代码更新：
+我们将 `suc ?` 填入并按下 `C-c C-空格`，它会将代码更新为：
 
     _+_ : ℕ → ℕ → ℕ
     zero + n = n
@@ -1655,7 +1654,7 @@ Filling the hole with `suc ?` and typing `C-c C-space` results in the following:
 Going into the new hole and typing `C-c C-,` gives similar information to before:
 {:/}
 
-移动到新的洞并按 `C-c C-,` 给出了和之前类似的信息：
+移动到新的洞并按下 `C-c C-,` 给出了和之前类似的信息：
 
     Goal: ℕ
     ————————————————————————————————————————————————————————————
@@ -1678,8 +1677,9 @@ simple, but the same techniques can help with more complex programs.  Even for
 a program this simple, using `C-c C-c` to split cases can be helpful.
 {:/}
 
-在如此简单的程序如此大量地使用交互操作可能帮助不大，但是同样的技巧能够帮助你构建更复杂的程序。
-甚至对于加法定义这么简单的程序，使用 `C-c C-c` 来分项仍然是有用的。
+在如此简单的程序上频繁使用交互操作可能帮助不大，
+但是同样的技巧能够帮助你构建更复杂的程序。甚至对于加法定义这么简单的程序，使用
+`C-c C-c` 来分项仍然是有用的。
 
 {::comment}
 More pragmas
@@ -1711,8 +1711,8 @@ Haskell requires time proportional to the sum of the logarithms of
 _m_ and _n_.
 {:/}
 
-以上几行告诉 Agda 这几个运算符和数学中常规的运算符相对应，
-并令其在计算时使用对应的处理任意精度整数类型的 Haskell 运算符。
+以上几行告诉 Agda 这几个运算符和数学中常用的运算符相对应，
+以便让它在计算时使用相应的，可处理任意精度整数类型的 Haskell 运算符。
 计算 `m` 加 `n` 时，用 `zero` 和 `suc` 表示的自然数需要正比于 `m` 的时间，
 而用 Haskell 整数表示的情况下只需要正比于 `m` 和 `n` 中较大者的对数的时间。
 类似地，计算 `m` 乘 `n` 时，用 `zero` 和 `suc` 表示的自然数需要正比于 `m` 乘 `n` 的
@@ -1742,7 +1742,7 @@ data Bin : Set where
 For instance, the bitstring
 {:/}
 
-比如，如下的比特串
+例如，以下比特串
 
     1011
 
@@ -1850,15 +1850,15 @@ twice. For this reason, we will usually avoid pragmas in future chapters.
 Information on pragmas can be found in the Agda documentation.
 {:/}
 
-正常情况下，我们会以可运行代码的形式展示一个导入语句，
-这样如果我们尝试导入一个不可用的定义 Agda 就会报错。
-但是这一次，我们只在注释里展示了这个导入语句。这一章和标准库
+正常情况下，我们会以运行代码的形式展示一个导入语句，
+这样如果我们尝试导入一个不可用的定义，Agda 就会报错。
+不过现在，我们只在注释里展示了这个导入语句。这一章和标准库
 都调用了 `NATURAL` 编译指令。我们是在 `ℕ` 上使用，而标准库是在
 等价的类型 `Data.Nat.ℕ` 上使用。这样的编译指令只能被调用一次，因为
-重复调用会导致类似于 `2` 到底是类型 `ℕ` 的值还是类型 `Data.Nat.ℕ` 的
+重复调用会导致 `2` 到底是类型 `ℕ` 的值还是类型 `Data.Nat.ℕ` 的
 值这样的困惑。重复调用其它的编译指令也会导致同样的问题。基于这个原因，
-我们在后续章节中通常会避免使用编译指令。更多关于编译指令的信息可以
-在 Agda 文档中找到。
+我们在后续章节中通常会避免使用编译指令。更多关于编译指令的信息可在
+Agda 文档中找到。
 
 {::comment}
 Unicode
@@ -1883,7 +1883,7 @@ This chapter uses the following unicode:
     ℕ  U+2115  双线体大写 N (\bN)
     →  U+2192  右箭头 (\to, \r, \->)
     ∸  U+2238  点减 (\.-)
-    ≡  U+2261  等同于 (\==)
+    ≡  U+2261  等价于 (\==)
     ⟨  U+27E8  数学左尖括号 (\<)
     ⟩  U+27E9  数学右尖括号 (\>)
     ∎  U+220E  证毕 (\qed)
@@ -1894,7 +1894,7 @@ code point (`U+2115`), the name of the character (`DOUBLE-STRUCK CAPITAL N`),
 and the sequence to type into Emacs to generate the character (`\bN`).
 {:/}
 
-以上的每一行由 Unicode 符号（如 `ℕ`），对应的 Unicode 码点（如 `U+2115`），
+以上的每一行均包含 Unicode 符号（如 `ℕ`），对应的 Unicode 码点（如 `U+2115`），
 符号的名称（如 `双线体大写 N`），以及用于在 Emacs 中键入该符号的按键序列（如 `\bN`）。
 
 {::comment}
@@ -1905,10 +1905,9 @@ where you navigated to the last time, and starts with the same
 character next time.  The command `\l` works similarly for left arrows.
 {:/}
 
-通过 `\r` 命令可以访问多种右箭头符号。在输入 `\r` 后，使用者可以
-按左、右、上、下键来查看/选择可用的箭头符号。这个命令会记住你上一次选择的位置，
-并在下一次使用时从该字符开始。
-用于输入左箭头的 `\l` 命令的工作方式与此类似。
+通过 `\r` 命令可以查看多种右箭头符号。在输入 `\r` 后，你可以
+按左、右、上、下键来查看或选择可用的箭头符号。这个命令会记住你上一次选择的位置，
+并在下一次使用时从该字符开始。用于输入左箭头的 `\l` 命令的用法与此类似。
 
 {::comment}
 In place of left, right, up, and down keys, one may also use control characters:
@@ -1919,7 +1918,7 @@ In place of left, right, up, and down keys, one may also use control characters:
     C-n  down (to the next line)
 {:/}
 
-作为在输入箭头的命令中左、右、上、下键的替代，如下的控制字符也是可用的：
+除了在输入箭头的命令中使用左、右、上、下键以外，以下按键也可以起到相同的作用：
 
     C-b  左（后退一个字符）
     C-f  右（前进一个字符）
@@ -1931,4 +1930,4 @@ We write `C-b` to stand for control-b, and similarly.  One can also navigate
 left and right by typing the digits that appear in the displayed list.
 {:/}
 
-`C-b` 表示按 Control + b，其余同理。使用者也可以直接输入显示的列表中的数字编号来选择。
+`C-b` 表示按 Control + b，其余同理。你也可以直接输入显示的列表中的数字编号来选择。
