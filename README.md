@@ -130,7 +130,7 @@ Command to give when in a hole:
 
     C-c C-c x    在变量 x 上分项（自动模式匹配）
     C-c C-空格   填洞
-    C-c C-r      用构造器精化
+    C-c C-r      用构造子精化
     C-c C-a      自动填洞
     C-c C-,      目标类型和上下文
     C-c C-.      目标类型，上下文，以及推断的类型

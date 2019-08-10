@@ -144,7 +144,7 @@ For example, we can compute that `2 ≤ᵇ 4` holds,
 and we can compute that `4 ≤ᵇ 2` does not hold:
 {:/}
 
-定义中的第一条与最后一条与归纳数据类型中的两个构造器相对应。因为对于任意的 `m`，不可能出现
+定义中的第一条与最后一条与归纳数据类型中的两个构造子相对应。因为对于任意的 `m`，不可能出现
 `suc m ≤ zero` 的证明，我们使用中间一条定义来表示。
 举个例子，我们可以计算 `2 ≤ᵇ 4` 成立，也可以计算 `4 ≤ᵇ 2` 不成立：
 
@@ -383,7 +383,7 @@ or of the form `no ¬x`, where `¬x` provides evidence that `A` cannot hold
 (that is, `¬x` is a function which given evidence of `A` yields a contradiction).
 {:/}
 
-如果布尔值，这个类型有两个构造器。一个 `Dec A` 类型的值要么是以 `yes x` 的形式，其中 `x` 提供 `A`
+如果布尔值，这个类型有两个构造子。一个 `Dec A` 类型的值要么是以 `yes x` 的形式，其中 `x` 提供 `A`
 成立的证明，或者是以 `no ¬x` 的形式，其中 `x` 提供了 `A` 无法成立的证明。（也就是说，`¬x` 是一个给定
 `A` 成立的证据，返回矛盾的函数）
 

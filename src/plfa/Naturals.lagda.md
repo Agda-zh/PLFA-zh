@@ -92,7 +92,7 @@ and `zero` and `suc` (short for *successor*) are the
 {:/}
 
 其中 `ℕ` 是我们定义的**数据类型（Datatype）**的名字，而 `zero`（零）和 `suc`
-（**后继**，即 **Successor** 的简写）是该数据类型的**构造器（Constructor）**。
+（**后继**，即 **Successor** 的简写）是该数据类型的**构造子（Constructor）**。
 
 {::comment}
 Both definitions above tell us the same two things:
@@ -192,7 +192,7 @@ with constructors.  The phrase
 {:/}
 
 现在分析一下 Agda 的定义。关键字 `data` 表示这是一个归纳定义，
-也就是用构造器定义一个新的数据类型。
+也就是用构造子定义一个新的数据类型。
 
     ℕ : Set
 
@@ -206,8 +206,8 @@ corresponding `data` declaration.  The lines
 {:/}
 
 表示 `ℕ` 是新的数据类型的名字，它是一个 `Set`，也就是在 Agda 中对类型的称呼。
-关键字 `where` 用于分隔数据类型的声明和构造器的声明。
-每个构造器的声明独占一行，用缩进来指明它所属的 `data` 声明。
+关键字 `where` 用于分隔数据类型的声明和构造子的声明。
+每个构造子的声明独占一行，用缩进来指明它所属的 `data` 声明。
 
     zero : ℕ
     suc  : ℕ → ℕ
@@ -218,7 +218,7 @@ They tell us that `zero` is a natural number and that `suc` takes a natural
 number as argument and returns a natural number.
 {:/}
 
-这两行给出了构造器 `zero` 和 `suc` 的类型**签名（Signature）**。
+这两行给出了构造子 `zero` 和 `suc` 的类型**签名（Signature）**。
 它们表示 `zero` 是一个自然数，`suc` 则取一个自然数作为参数，返回另一个自然数。
 
 {::comment}
@@ -488,7 +488,7 @@ one with a single argument of the same type given in the pragma
 
 这一行告诉 Agda 数据类型 `ℕ` 对应了自然数，然后编写者就可以将 `zero` 简写
 为 `0`，将 `suc zero` 简写为 `1`，将 `suc (suc zero)` 简写为 `2` 了，依次类推。
-只有在给出的数据类型有且只有两个构造器，其中一个没有参数（对应零），另一个
+只有在给出的数据类型有且只有两个构造子，其中一个没有参数（对应零），另一个
 仅取一个和被定义的数据类型一样的参数（对应后继数）的时候，这条声明
 才是合乎规定的。
 
@@ -637,7 +637,7 @@ left-hand side of an equation.
 它的定义包含一个起始步骤和一个归纳步骤，与自然数的定义对应。起始步骤说明
 零加上一个数仍返回这个数，即 `zero + n` 等于 `n`。归纳步骤说明一个数的后继数
 加上另一个数返回两数之和的后继数，即 `(suc m) + n` 等于 `suc (m + n)`。在加法的
-定义中，构造器出现在了等式左边，我们称之为**模式匹配（Pattern Matching）**。
+定义中，构造子出现在了等式左边，我们称之为**模式匹配（Pattern Matching）**。
 
 {::comment}
 If we write `zero` as `0` and `suc m` as `1 + m`, the definition turns
@@ -1633,12 +1633,12 @@ Going into the hole and type `C-c C-r` will fill it in with a constructor
 if there is a choice.  In this case, it displays the following:
 {:/}
 
-移动到一个洞并按下 `C-c C-r` 会将一个构造器填入这个洞（如果有唯一的选择的话），
-或者告诉你有哪些可用的构造器以供选择。在当前情况下，编辑器会显示如下内容：
+移动到一个洞并按下 `C-c C-r` 会将一个构造子填入这个洞（如果有唯一的选择的话），
+或者告诉你有哪些可用的构造子以供选择。在当前情况下，编辑器会显示如下内容：
 
     Don't know which constructor to introduce of zero or suc
 
-即“不知道在 `zero` 和 `suc` 中该引入哪一个构造器”。
+即“不知道在 `zero` 和 `suc` 中该引入哪一个构造子”。
 
 {::comment}
 Filling the hole with `suc ?` and typing `C-c C-space` results in the following:
@@ -1831,7 +1831,7 @@ library module `Data.Nat`:
 {:/}
 
 在每一章的结尾，我们将展示如何在标准库中找到相关的定义。
-自然数，它们的构造器，以及用于自然数的基本运算符，都在标准库模块 `Data.Nat` 中定义：
+自然数，它们的构造子，以及用于自然数的基本运算符，都在标准库模块 `Data.Nat` 中定义：
 
 ```
 -- import Data.Nat using (ℕ; zero; suc; _+_; _*_; _^_; _∸_)

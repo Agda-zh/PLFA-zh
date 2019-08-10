@@ -350,7 +350,7 @@ which corresponds to using the constructor of the corresponding
 inductive type
 {:/}
 
-这与使用相应的归纳类型的构造器对应：
+这与使用相应的归纳类型的构造子对应：
 
     mk-≃′ f g g∘f f∘g
 

@@ -168,7 +168,7 @@ We may also refer to `proj₁` and `proj₂` as destructors, since they
 play a similar role.
 {:/}
 
-当 `⟨_,_⟩` 在等式右手边的项中出现的时候，我们将其称作*构造器*（Constructor），
+当 `⟨_,_⟩` 在等式右手边的项中出现的时候，我们将其称作*构造子*（Constructor），
 当它出现在等式左边时，我们将其称作*析构器*（Destructor）。我们亦可将 `proj₁` 和 `proj₂`
 称作析构器，因为它们起到相似的效果。
 
@@ -207,7 +207,7 @@ In this case, applying each destructor and reassembling the results with the
 constructor is the identity over products:
 {:/}
 
-在这样的情况下，先使用析构器，再使用构造器将结果重组，得到还是原来的积。
+在这样的情况下，先使用析构器，再使用构造子将结果重组，得到还是原来的积。
 
 ```
 η-× : ∀ {A B : Set} (w : A × B) → ⟨ proj₁ w , proj₂ w ⟩ ≡ w
@@ -633,7 +633,7 @@ the former are sometimes given the names `⊎-I₁` and `⊎-I₂` and the
 latter the name `⊎-E`.
 {:/}
 
-当 `inj₁` 和 `inj₂` 在等式右手边出现的时候，我们将其称作*构造器*，
+当 `inj₁` 和 `inj₂` 在等式右手边出现的时候，我们将其称作*构造子*，
 当它出现在等式左边时，我们将其称作*析构器*。我们亦可将 `case-⊎`
 称作析构器，因为它们起到相似的效果。其他术语将 `inj₁` 和 `inj₂` 称为*引入*析取，
 将 `case-⊎` 称为*消去*析取。前者亦被称为 `⊎-I₁` 和 `⊎-I₂`，后者 `⊎-E`。
@@ -642,7 +642,7 @@ latter the name `⊎-E`.
 Applying the destructor to each of the constructors is the identity:
 {:/}
 
-对每个构造器使用析构器得到的是原来的值：
+对每个构造子使用析构器得到的是原来的值：
 
 ```
 η-⊎ : ∀ {A B : Set} (w : A ⊎ B) → case-⊎ inj₁ inj₂ w ≡ w

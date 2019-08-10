@@ -69,7 +69,7 @@ can be a parameter because it doesn't vary, while the second must be
 an index, so it can be required to be equal to the first.
 {:/}
 
-用其他的话来说，对于任意类型 `A` 和任意 `A` 类型的 `x`，构造器 `refl` 提供了
+用其他的话来说，对于任意类型 `A` 和任意 `A` 类型的 `x`，构造子 `refl` 提供了
 `x ≡ x` 的证明。所以，每个值等同于它本身，我们并没有其他办法来证明值的相等性。
 这个定义里有不对称的地方，`_≡_` 的第一个参数（Argument）由 `x : A` 给出，
 而第二个参数（Argument）则是由 `A → Set` 的索引给出。
@@ -110,7 +110,7 @@ Reflexivity is built-in to the definition of equality, via the
 constructor `refl`.  It is straightforward to show symmetry:
 {:/}
 
-一个等价关系是自反、对称和传递的。其中自反性可以通过构造器 `refl` 直接从相等性的定义中得来。
+一个等价关系是自反、对称和传递的。其中自反性可以通过构造子 `refl` 直接从相等性的定义中得来。
 我们可以直接地证明其对称性：
 
 ```
@@ -165,8 +165,8 @@ all possible constructors, with one equation for each. There is only
 one possible constructor:
 {:/}
 
-在这个洞里，我们使用 `C-c C-c e`，Agda 会将 `e` 逐一展开为其所有可能的构造器。
-此处只有一个构造器：
+在这个洞里，我们使用 `C-c C-c e`，Agda 会将 `e` 逐一展开为其所有可能的构造子。
+此处只有一个构造子：
 
     sym : ∀ {A : Set} {x y : A}
       → x ≡ y
@@ -198,7 +198,7 @@ instantiate the hole with the one constructor that yields a value of
 the expected type:
 {:/}
 
-最后，我们回到洞里，使用 `C-c C-r`，Agda 将会把洞变成一个可以满足给定类型的构造器实例。
+最后，我们回到洞里，使用 `C-c C-r`，Agda 将会把洞变成一个可以满足给定类型的构造子实例。
 
     sym : ∀ {A : Set} {x y : A}
       → x ≡ y
@@ -1085,13 +1085,13 @@ We rename constructors `zero` and `suc` to `lzero` and `lsuc` to avoid confusion
 between levels and naturals.
 {:/}
 
-我们将构造器 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和等级之间的混淆。
+我们将构造子 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和等级之间的混淆。
 
 {::comment}
 Levels are isomorphic to natural numbers, and have similar constructors:
 {:/}
 
-等级与自然数是同构的，有相似的构造器：
+等级与自然数是同构的，有相似的构造子：
 
     lzero : Level
     lsuc  : Level → Level
