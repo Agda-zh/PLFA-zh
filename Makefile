@@ -187,3 +187,7 @@ travis-uninstall-agda-stdlib:
 travis-reinstall-agda-stdlib: travis-uninstall-agda-stdlib travis-install-agda-stdlib
 
 .phony: travis-install-agda-stdlib travis-uninstall-agda-stdlib travis-reinstall-agda-stdlib
+
+preview: build-incremental serve
+
+.phony: preview

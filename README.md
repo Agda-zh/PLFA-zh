@@ -31,7 +31,7 @@ There are several tools you need to work with PLFA:
 
 为使用 PLFA，你需要以下工具：
 
-  - [Agda](https://agda-zh.rtfd.io/zh_CN/v2.6.0.1/getting-started/installation.html)
+  - [Agda](https://agda-zh.rtfd.io/zh_CN/latest/getting-started/installation.html)
   - [Agda 标准库](https://github.com/agda/agda-stdlib/releases/tag/v1.1)
 
 <!---
@@ -42,6 +42,7 @@ cause problems.
 --->
 
 大部分工具的安装方式遵循其对应网页提供的说明即可。
+**[这里](https://ice1000.org/2018/06/13/AgdaEnvConfig/)有篇安装配置的教程可供参考。**
 本页顶部的徽章列出了 PLFA 使用的依赖版本。我们已经用上面列出的版本测试过了，
 其它更旧或更新的版本可能会出问题。
 
@@ -68,7 +69,7 @@ For this, you can follow the instructions
 -->
 
 最后，我们需要让 Agda 知道标准库位于何处。
-[此处](https://agda-zh.rtfd.io/zh_CN/v2.6.0.1/tools/package-system.html#example-using-the-standard-library)的说明可供参考。
+[此处](https://agda-zh.rtfd.io/zh_CN/latest/tools/package-system.html#example-using-the-standard-library)的说明可供参考。
 
 <!--
 It is possible to set up PLFA as an Agda library as well.  If you want
