@@ -165,7 +165,7 @@ all possible constructors, with one equation for each. There is only
 one possible constructor:
 {:/}
 
-在这个洞里，我们使用 `C-c C-c e`，Agda 会将 `e` 逐一展开为其所有可能的构造子。
+在这个洞里，我们使用 `C-c C-c e`，Agda 会将 `e` 逐一展开为所有可能的构造子。
 此处只有一个构造子：
 
     sym : ∀ {A : Set} {x y : A}

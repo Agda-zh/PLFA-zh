@@ -132,7 +132,7 @@ successor of two; and so on.
 
 我们将 `zero` 简写为 `0`；将 `suc zero`，零的后继数，
 也就是排在零之后的自然数，简写为 `1`；将 `suc (suc zero)`，也就是 `suc 1`，
-即一的后继数，简写为 `2`；将二的后继数简写为 `3`；依次类推。
+即一的后继数，简写为 `2`；将二的后继数简写为 `3`；以此类推。
 
 {::comment}
 Exercise `seven`
@@ -318,7 +318,7 @@ that. But now the inductive case tells us that since `zero` was a natural
 number yesterday, then `suc zero` is a natural number today:
 {:/}
 
-然后我们重复这个过程。今天我们知道昨天及以前的所有自然数，以及任何
+然后我们重复这个过程。今天我们知道昨天的所有自然数，以及任何
 通过规则添加的数。起始步骤依然告诉我们 `zero` 是一个自然数，我们
 已经知道这件事了。而如今归纳步骤告诉我们，由于 `zero` 在昨天是自然数，
 `suc zero` 在今天也成为了自然数：
@@ -487,7 +487,7 @@ one with a single argument of the same type given in the pragma
 {:/}
 
 这一行告诉 Agda 数据类型 `ℕ` 对应了自然数，然后编写者就可以将 `zero` 简写
-为 `0`，将 `suc zero` 简写为 `1`，将 `suc (suc zero)` 简写为 `2` 了，依次类推。
+为 `0`，将 `suc zero` 简写为 `1`，将 `suc (suc zero)` 简写为 `2` 了，以此类推。
 只有在给出的数据类型有且只有两个构造子，其中一个没有参数（对应零），另一个
 仅取一个和被定义的数据类型一样的参数（对应后继数）的时候，这条声明
 才是合乎规定的。
@@ -558,7 +558,7 @@ between two terms), while `begin_` is prefix (it is written before a
 term), and `_∎` is postfix (it is written after a term).
 {:/}
 
-Agda 用下划线来标注**项（Term）**在中缀或混缀（Mixfix）运算符中项出现的位置。
+Agda 用下划线来标注**项（Term）**在中缀（Infix）或混缀（Mixfix）运算符中项出现的位置。
 因此，`_≡_` 和 `_≡⟨⟩_` 是中缀的（运算符写在两个项之间），而 `begin_` 是前缀的
 （运算符写在项之前），`_∎` 则是后缀的（运算符写在项之后）。
 
@@ -786,7 +786,7 @@ itself is written `refl`.
 
 Agda 知道如何计算 `2 + 3` 的值，也可以立刻确定这个值和 `5` 是一样的。如果一个
 二元关系（Binary Relation）中每个值都和自己相关，我们称这个二元关系满足
-**自反性（Reflexive）**。在 Agda 中，一个值等于其自身的证据写作 `refl`。
+**自反性（Reflexivity）**。在 Agda 中，一个值等于其自身的证据写作 `refl`。
 
 {::comment}
 In the chains of equations, all Agda checks is that each term

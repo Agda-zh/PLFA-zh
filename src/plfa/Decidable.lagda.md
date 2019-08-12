@@ -383,7 +383,7 @@ or of the form `no ¬x`, where `¬x` provides evidence that `A` cannot hold
 (that is, `¬x` is a function which given evidence of `A` yields a contradiction).
 {:/}
 
-如果布尔值，这个类型有两个构造子。一个 `Dec A` 类型的值要么是以 `yes x` 的形式，其中 `x` 提供 `A`
+正如布尔值，这个类型有两个构造子。一个 `Dec A` 类型的值要么是以 `yes x` 的形式，其中 `x` 提供 `A`
 成立的证明，或者是以 `no ¬x` 的形式，其中 `x` 提供了 `A` 无法成立的证明。（也就是说，`¬x` 是一个给定
 `A` 成立的证据，返回矛盾的函数）
 
