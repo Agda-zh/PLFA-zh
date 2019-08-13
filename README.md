@@ -111,8 +111,8 @@ Using `agda-mode`
     C-c C-l      load buffer
 --->
 
-    ?            坑
-    {!...!}      有内容的坑
+    ?            洞
+    {!...!}      有内容的洞
     C-c C-l      加载缓冲区
 
 <!---
@@ -129,9 +129,9 @@ Command to give when in a hole:
 在洞上可用的命令：
 
     C-c C-c x    在变量 x 上分项（自动模式匹配）
-    C-c C-空格   填坑
-    C-c C-r      用构造器精化
-    C-c C-a      自动填坑
+    C-c C-空格   填洞
+    C-c C-r      用构造子精化
+    C-c C-a      自动填洞
     C-c C-,      目标类型和上下文
     C-c C-.      目标类型，上下文，以及推断的类型
 

@@ -118,7 +118,7 @@ Each constructor takes the parameter as an implicit argument.
 Thus, our example list could also be written:
 {:/}
 
-每个构造器将参数作为隐式参数。因此我们列表的例子也可以写作：
+每个构造子将参数作为隐式参数。因此我们列表的例子也可以写作：
 
 ```
 _ : List ℕ
@@ -145,7 +145,7 @@ list, and the constructors `[]` and `_∷_` correspond to nil and
 cons respectively, allowing a more efficient representation of lists.
 {:/}
 
-告诉 Agda，`List` 类型对应了 Haskell 的列表类型，构造器 `[]` 和 `_∷_`
+告诉 Agda，`List` 类型对应了 Haskell 的列表类型，构造子 `[]` 和 `_∷_`
 分别代表了 nil 和 cons，这可以让列表的表示更加的有效率。
 
 {::comment}
@@ -1014,8 +1014,8 @@ In general, a data type with _n_ constructors will have
 a corresponding fold function that takes _n_ arguments.
 {:/}
 
-正如列表由两个构造器 `[]` 和 `_∷_`，折叠函数取两个参数 `e` 和 `_⊗_`
-（除去列表参数）。推广来说，一个有 _n_ 个构造器的数据类型，会有对应的
+正如列表由两个构造子 `[]` 和 `_∷_`，折叠函数取两个参数 `e` 和 `_⊗_`
+（除去列表参数）。推广来说，一个有 _n_ 个构造子的数据类型，会有对应的
 取 _n_ 个参数的折叠函数。
 
 {::comment}
@@ -1382,9 +1382,9 @@ Agda uses types to disambiguate whether the constructor is building
 a list or evidence that `All P` holds.
 {:/}
 
-这个类型有两个构造器，使用了与列表构造器相同的名称。第一个断言了 `P` 对于空列表的任何元素成立。
+这个类型有两个构造子，使用了与列表构造子相同的名称。第一个断言了 `P` 对于空列表的任何元素成立。
 第二个断言了如果 `P` 对于列表的头元素和尾列表的所有元素成立，那么 `P` 对于这个列表的任何元素成立。
-Agda 使用类型来区分构造器是用于构造一个列表，还是构造 `All P` 成立的证明。
+Agda 使用类型来区分构造子是用于构造一个列表，还是构造 `All P` 成立的证明。
 
 {::comment}
 For example, `All (_≤ 2)` holds of a list where every element is less
@@ -1408,7 +1408,7 @@ Here `_∷_` and `[]` are the constructors of `All P` rather than of `List A`.
 The three items are proofs of `0 ≤ 2`, `1 ≤ 2`, and `2 ≤ 2`, respectively.
 {:/}
 
-这里 `_∷_` 和 `[]` 是 `All P` 的构造器，而不是 `List A` 的。
+这里 `_∷_` 和 `[]` 是 `All P` 的构造子，而不是 `List A` 的。
 这三项分别是 `0 ≤ 2`、 `1 ≤ 2` 和 `2 ≤ 2` 的证明。
 
 {::comment}
@@ -1420,7 +1420,7 @@ scope when the pattern is declared.  That's not the case here, since
 {:/}
 
 （读者可能会思考诸如 `[_,_,_]` 的模式是否可以用于构造 `All` 类型的值，
-像构造 `List` 类型的一样，因为两者使用了相同的构造器。事实上这样做是可以的，只要两个类型
+像构造 `List` 类型的一样，因为两者使用了相同的构造子。事实上这样做是可以的，只要两个类型
 在模式声明时在作用域内。然而现在不是这样的情况，因为 `List` 先于 `[_,_,_]` 定义，而 `All` 在
 之后定义。）
 
@@ -1449,7 +1449,7 @@ the tail of the list satisfies `P`.  For example, we can define list
 membership as follows:
 {:/}
 
-第一个构造器证明了列表的头元素满足 `P`，第二个构造器证明的列表的尾列表中的一些元素满足 `P`。
+第一个构造子证明了列表的头元素满足 `P`，第二个构造子证明的列表的尾列表中的一些元素满足 `P`。
 举例来说，我们可以如下定义列表的成员关系：
 
 ```

@@ -98,7 +98,7 @@ convention to write our Agda code in a form that resembles the
 corresponding inference rules, a trick we will use often from now on.
 {:/}
 
-在这里，`z≤n` 和 `s≤s`（无空格）是构造器的名称，`zero ≤ n`、`m ≤ n` 和
+在这里，`z≤n` 和 `s≤s`（无空格）是构造子的名称，`zero ≤ n`、`m ≤ n` 和
 `suc m ≤ suc n` （带空格）是类型。在这里我们第一次用到了
 **索引数据类型（Indexed datatype）**。我们使用 `m` 和 `n` 这两个自然数来索引
 `m ≤ n` 这个类型。在 Agda 里，由两个及以上短横线开始的行是注释行，
@@ -131,8 +131,8 @@ In fact, they each give us a bit more detail:
 
 实际上，他们分别给我们更多的信息：
 
-* **起始步骤**: 对于所有的自然数 `n`，构造器 `z≤n` 提供了 `zero ≤ n` 成立的证明。
-* **归纳步骤**：对于所有的自然数 `m` 和 `n`，构造器 `s≤s` 将 `m ≤ n` 成立的证明
+* **起始步骤**: 对于所有的自然数 `n`，构造子 `z≤n` 提供了 `zero ≤ n` 成立的证明。
+* **归纳步骤**：对于所有的自然数 `m` 和 `n`，构造子 `s≤s` 将 `m ≤ n` 成立的证明
   转化为 `suc m ≤ suc n` 成立的证明。
 
 {::comment}
@@ -172,7 +172,7 @@ inequality, the two lines defining the constructors use `∀`, very
 similar to our use of `∀` in propositions such as:
 {:/}
 
-这是我们第一次使用隐式参数。定义不等式时，构造器的定义中使用了 `∀`，
+这是我们第一次使用隐式参数。定义不等式时，构造子的定义中使用了 `∀`，
 就像我们在下面的命题中使用 `∀` 一样：
 
     +-comm : ∀ (m n : ℕ) → m + n ≡ n + m
@@ -777,7 +777,7 @@ occasionally aid Agda's termination checker, so we will use them in
 preference to indexed types when possible.
 {:/}
 
-类型里的每个参数都转换成构造器的一个隐式参数。索引数据类型中的索引可以变化，正如在
+类型里的每个参数都转换成构造子的一个隐式参数。索引数据类型中的索引可以变化，正如在
 `zero ≤ n` 和 `suc m ≤ suc n` 中那样，而参数化数据类型不一样，其参数必须保持相同，
 正如在 `Total m n` 中那样。参数化的声明更短，更易于阅读，而且有时可以帮助到 Agda 的
 终结检查器，所以我们尽可能地使用它们，而不是索引数据类型。
@@ -1300,8 +1300,8 @@ which were given earlier).
 {:/}
 
 这是我们第一次定义一个相互递归的数据类型。因为每个标识符必须在使用前声明，所以
-我们首先声明索引数据类型 `even` 和 `odd` （省略 `where` 关键字和其构造器的定义），
-然后声明其构造器（省略其签名 `ℕ → Set`，因为在之前已经给出）。
+我们首先声明索引数据类型 `even` 和 `odd` （省略 `where` 关键字和其构造子的定义），
+然后声明其构造子（省略其签名 `ℕ → Set`，因为在之前已经给出）。
 
 {::comment}
 This is also our first use of _overloaded_ constructors,
@@ -1309,8 +1309,8 @@ that is, using the same name for constructors of different types.
 Here `suc` means one of three constructors:
 {:/}
 
-这也是我们第一次使用 **重载（Overloaded）**的构造器。这意味着不同类型的构造器
-拥有相同的名字。在这里 `suc` 表示下面三种构造器其中之一：
+这也是我们第一次使用 **重载（Overloaded）**的构造子。这意味着不同类型的构造子
+拥有相同的名字。在这里 `suc` 表示下面三种构造子其中之一：
 
     suc : ℕ → ℕ
 
@@ -1332,8 +1332,8 @@ one restrict overloading to related meanings, as we have done here,
 but it is not required.
 {:/}
 
-同理，`zero` 表示两种构造器的一种。因为类型推导的限制，Agda 不允许重载已定义的名字，
-但是允许重载构造器。我们推荐将重载限制在有关联的定义中，如我们所做的这样，但这不是必须的。
+同理，`zero` 表示两种构造子的一种。因为类型推导的限制，Agda 不允许重载已定义的名字，
+但是允许重载构造子。我们推荐将重载限制在有关联的定义中，如我们所做的这样，但这不是必须的。
 
 {::comment}
 We show that the sum of two even numbers is even:
