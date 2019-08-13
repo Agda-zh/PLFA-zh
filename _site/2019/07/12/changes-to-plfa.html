@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Changes to PLFA – Migration to Agda 2.6 | 编程语言基础：Agda 语言描述
+</title><!-- Begin Jekyll SEO tag v2.5.0 -->
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Changes to PLFA – Migration to Agda 2.6" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Today, we made several major changes to the PLFA infrastructure!" />
+<meta property="og:description" content="Today, we made several major changes to the PLFA infrastructure!" />
+<link rel="canonical" href="https://agda-zh.github.io/PLFA-zh/2019/07/12/changes-to-plfa.html" />
+<meta property="og:url" content="https://agda-zh.github.io/PLFA-zh/2019/07/12/changes-to-plfa.html" />
+<meta property="og:site_name" content="编程语言基础：Agda 语言描述" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-07-12T00:00:00+00:00" />
+<script type="application/ld+json">
+{"description":"Today, we made several major changes to the PLFA infrastructure!","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://agda-zh.github.io/PLFA-zh/2019/07/12/changes-to-plfa.html"},"url":"https://agda-zh.github.io/PLFA-zh/2019/07/12/changes-to-plfa.html","headline":"Changes to PLFA – Migration to Agda 2.6","dateModified":"2019-07-12T00:00:00+00:00","datePublished":"2019-07-12T00:00:00+00:00","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/PLFA-zh/assets/main.css"></head>
+<body><header class="site-header" role="banner">
+
+    <div class="wrapper">
+
+        <a class="site-title" href="/PLFA-zh/">编程语言基础：Agda 语言描述
+</a>
+
+        <nav class="site-nav">
+            <span class="menu-icon">
+                <svg viewBox="0 0 18 15" width="18px" height="15px">
+                    <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                    <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                    <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                </svg>
+            </span>
+
+            <div class="trigger">
+                <a class="page-link" href="/PLFA-zh/">主页</a>
+                <a class="page-link" href="/PLFA-zh/Announcements/">公告</a>
+                <a class="page-link" href="/PLFA-zh/GettingStarted/">使用说明</a>
+                <a class="page-link" href="/PLFA-zh/Citing/">引用</a>
+                <a class="page-link" href="https://plfa.github.io/">English</a>
+            </div>
+        </nav>
+
+    </div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Changes to PLFA – Migration to Agda 2.6</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-07-12T00:00:00+00:00" itemprop="datePublished">Jul 12, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Today, we made several major changes to the PLFA infrastructure!</p>
+
+<p>We upgraded to <a href="https://github.com/agda/agda/releases/tag/v2.6.0.1">Agda 2.6.0.1</a> and <a href="https://github.com/agda/agda-stdlib/releases/tag/v1.1">version 1.1 of the standard library</a>. If you want to continue working with the book, you’ll have to update your versions locally. Please follow the instructions in <a href="/PLFA-zh/GettingStarted/">Getting Started</a> to reinstall Agda and the standard library.</p>
+
+<p>We deprecated <a href="https://github.com/wenkokke/agda2html">agda2html</a>. In version 2.6, Agda has added support for the <code class="highlighter-rouge">--html-highlight</code> flag. Using this command, Agda will highlight only the code in a file, and leave the rest untouched:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>agda <span class="nt">--html</span> <span class="nt">--html-highlight</span><span class="o">=</span>code FILE.lagda.md
+</code></pre></div></div>
+<p>Of course, <a href="https://github.com/wenkokke/agda2html">agda2html</a> offered support for more than just inline highlighting of code in Markdown files. We have written a bash script, <a href="https://github.com/plfa/plfa.github.io/blob/dev/highlight.sh"><code class="highlighter-rouge">highlight.sh</code></a>, which supports much of the same functionality. In particular, it uses sed to redirect links to the standard library to <a href="https://agda.github.io/agda-stdlib/README.html">the online version</a>. For the time being, we dropped support for module references, e.g., linking to the chapter on Naturals by writing <code class="highlighter-rouge">[Naturals][plfa.Naturals]</code>, and removed all module references from the text.</p>
+
+<p>Lastly, to use Agda 2.6 with Markdown, we updated all literal Agda files. We replaced LaTeX code fences, i.e., <code class="highlighter-rouge">\begin{code}</code> and <code class="highlighter-rouge">\end{code}</code>, with Markdown backtick fences <code class="highlighter-rouge">```</code>, and changed the file extensions <code class="highlighter-rouge">.lagda</code> to <code class="highlighter-rouge">.lagda.md</code>. As a consequence, when you open up a literate Agda file in Emacs, it will open the file in Markdown mode – if you have it installed – or in fundamental mode. To switch to Agda mode, you will have to invoke <code class="highlighter-rouge">M-x agda2-mode</code>.</p>
+
+  </div><a class="u-url" href="/PLFA-zh/2019/07/12/changes-to-plfa.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/PLFA-zh/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">编程语言基础：Agda 语言描述
+</h2>
+
+    <h3 class="footer-heading">原作者：</h3><div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Philip Wadler</li>
+          <li><a class="u-email" href="mailto:wadler@inf.ed.ac.uk">wadler@inf.ed.ac.uk</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/wadler"><svg class="svg-icon"><use xlink:href="/PLFA-zh/assets/minima-social-icons.svg#github"></use></svg> <span class="username">wadler</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3"></div>
+    </div><div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Wen Kokke</li>
+          <li><a class="u-email" href="mailto:wen.kokke@ed.ac.uk">wen.kokke@ed.ac.uk</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/wenkokke"><svg class="svg-icon"><use xlink:href="/PLFA-zh/assets/minima-social-icons.svg#github"></use></svg> <span class="username">wenkokke</span></a></li><li><a href="https://www.twitter.com/wenkokke"><svg class="svg-icon"><use xlink:href="/PLFA-zh/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">wenkokke</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3"></div>
+    </div><h3 class="footer-heading">本章暂无翻译</h3>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">创作共用-署名 4.0 国际（CC BY 4.0）许可协议</a>授权。<br />
+  </div>
+</footer>
+<!-- Import jQuery -->
+<script type="text/javascript" src="/PLFA-zh/assets/jquery.js"></script>
+
+<!-- Script which draws background for progress tags -->
+<script type="text/javascript">
+$('span.progress').each(function(){
+    const progress = parseInt($(this).text());
+    $(this).css({
+        'border-style': 'solid',
+        'border-radius': '5px',
+        'border-width': 'thin',
+        'border-color': progress === 100 ? 'limegreen' : 'dimgray',
+        'font-size': '70%',
+        'padding': '0% 0.5% 0% 0.5%',
+        'margin': '0em 0em 0em 0.5em',
+        'box-sizing': 'border-box',
+        'vertical-align': '10%'
+    });
+    $(this).text(progress.toString() + " %");
+})
+</script>
+
+<!-- Script which allows for foldable code blocks -->
+<script type="text/javascript">
+
+ // Makes sandwhich menu works
+ $('.menu-icon').click(function(){
+   $('.trigger').toggle();
+ });
+
+ // Script which allows for foldable code blocks
+ $('div.foldable pre').each(function(){
+     var autoHeight = $(this).height();
+     var lineHeight = parseFloat($(this).css('line-height'));
+
+     var plus    = $("<div></div>");
+     var horLine = $("<div></div>");
+     var verLine = $("<div></div>");
+     $(this).prepend(plus);
+     plus.css({
+         'position'         : 'relative',
+         'float'            : 'right',
+         'right'            : '-' + (0.5 * lineHeight - 1.5) + 'px',
+         'width'            : lineHeight,
+         'height'           : lineHeight});
+     verLine.css({
+         'position'         : 'relative',
+         'height'           : lineHeight,
+         'width'            : '3px',
+         'background-color' : '#C1E0FF'});
+     horLine.css({
+         'position'         : 'relative',
+         'top'              : '-' + (0.5 * lineHeight + 1.5) + 'px',
+         'left'             : '-' + (0.5 * lineHeight - 1.5) + 'px',
+         'height'           : '3px',
+         'width'            : lineHeight,
+         'background-color' : '#C1E0FF'});
+     plus.append(verLine);
+     plus.append(horLine);
+
+     $(this).height(2.0 * lineHeight);
+     $(this).css('overflow','hidden');
+
+     $(this).click(function(){
+         if ($(this).height() == autoHeight) {
+             $(this).height(2.0 * lineHeight);
+             plus.show();
+         }
+         else {
+             $(this).height('auto');
+             plus.hide();
+         }
+     });
+ });
+</script>
+
+<!-- Import KaTeX -->
+<script type="text/javascript" src="/PLFA-zh/assets/katex.js"></script>
+
+<!-- Script which renders TeX using KaTeX -->
+<script type="text/javascript">
+ $("script[type='math/tex']").replaceWith(
+     function(){
+         var tex = $(this).text();
+         return "<span class=\"inline-equation\">" +
+                katex.renderToString(tex) +
+                "</span>";
+     });
+ $("script[type='math/tex; mode=display']").replaceWith(
+     function(){
+         var tex = $(this).text().replace(/%.*?(\n|$)/g,"");
+         return "<div class=\"equation\">" +
+                katex.renderToString("\\displaystyle "+tex) +
+                "</div>";
+     });
+</script>
+</body>
+
+</html>
