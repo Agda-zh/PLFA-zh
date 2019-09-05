@@ -271,7 +271,7 @@ either `(1 ≤ 2) ≤ 3` or `1 ≤ (2 ≤ 3)`.
 ## Decidability
 {:/}
 
-## 可决定性
+## 可判定性
 
 {::comment}
 Given two numbers, it is straightforward to compute whether or not the
