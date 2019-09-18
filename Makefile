@@ -49,8 +49,8 @@ ifeq (,$$(findstring courses/,$$(in)))
 else
 # Fix links to the file itself (out/<filename> to out/<filepath>)
 	./highlight.sh $$(subst ./,,$$(in)) --include-path=src/ --include-path=$$(subst ./,,$$(dir $$(in)))
-	ruby scripts/fix-cjk.rb $$(out)
 endif
+	ruby scripts/fix-cjk.rb $$(out)
 endef
 
 $(foreach agda,$(AGDA),$(eval $(call AGDA_template,$(agda))))

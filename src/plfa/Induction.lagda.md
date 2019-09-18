@@ -67,7 +67,7 @@ Operators pop up all the time, and mathematicians have agreed
 on names for some of the most common properties.
 {:/}
 
-运算符总是到处出现，而数学家们已经统一了一些最常见的性质的名称。
+运算符随处可见，而数学家们统一了一些最常见的性质的名称。
 
 {::comment}
 * _Identity_.   Operator `+` has left identity `0` if `0 + n ≡ n`, and
@@ -88,17 +88,17 @@ on names for some of the most common properties.
   `p`, and `q`.
 {:/}
 
-* **幺元（Identity）**。对于所有的 `n`，若 `0 + n ≡ n`，则 `+` 有左幺元 `0`；
+* **幺元（Identity）**：对于所有的 `n`，若 `0 + n ≡ n`，则 `+` 有左幺元 `0`；
   若 `n + 0 ≡ n`，则 `+` 有右幺元 `0`。同时为左幺元和右幺元的值称简称幺元。
   幺元有时也称作**单位元（Unit）**。
 
-* **结合律（Associativity）**。若括号的位置无关紧要，则称运算符 `+` 满足结合律，
+* **结合律（Associativity）**：若括号的位置无关紧要，则称运算符 `+` 满足结合律，
   即对于所有的 `m`、`n` 和 `p`，有 `(m + n) + p ≡ m + (n + p)`。
 
-* **交换律（Commutativity）**。若参数的顺序无关紧要，则称运算符 `+` 满足交换律，
+* **交换律（Commutativity）**：若参数的顺序无关紧要，则称运算符 `+` 满足交换律，
   即对于所有的 `m` 和 `n`，有 `m + n ≡ n + m`。
 
-* **分配律（Distributivity）**。对于所有的 `m`、`n` 和 `p`，若
+* **分配律（Distributivity）**：对于所有的 `m`、`n` 和 `p`，若
   `(m + n) * p ≡ (m * p) + (n * p)`，则运算符 `*` 对运算符 `+` 满足左分配律；
   对于所有的 `m`、`n` 和 `p`，若 `m * (p + q) ≡ (m * p) + (m * q)`，则满足右分配律。
 
@@ -130,7 +130,7 @@ out these properties---or their lack---for instance by pointing out
 that a newly introduced operator is associative but not commutative.
 {:/}
 
-正经来说，如果你在阅读技术论文时遇到了一个运算符，那么你可以考察它是否拥有一个幺元，
+正经来说，如果你在阅读技术论文时遇到了一个运算符，那么你可以考察它是否拥有幺元，
 是否满足结合律或分配律，或者是否对另一个运算符满足分配律，这能为你提供一种视角。
 细心的作者通常会指出它们是否满足这些性质，比如说指明一个新引入的运算符满足结合律
 但不满足交换律。
@@ -165,8 +165,14 @@ associative but is not commutative.
 
 请给出一个运算符的例子，它拥有幺元、满足结合律但不满足交换律。
 
+{::comment}
 ```
 -- Your code goes here
+```
+{:/}
+
+```
+-- 请将代码写在此处。
 ```
 
 
@@ -196,7 +202,7 @@ We can test the proposition by choosing specific numbers for the three
 variables:
 {:/}
 
-我们可以为这三个变量选取特定的数值来测试此命题：
+我们可以为这三个变量选取特定的数值来验证此命题：
 
 ```
 _ : (3 + 4) + 5 ≡ 3 + (4 + 5)
@@ -221,7 +227,7 @@ until one reaches the simplest term (in this case, `12`), and
 then from the bottom up until one reaches the same term.
 {:/}
 
-在这里，我们将计算过程写成了等式链，一行一个式子。这样的等式链通常非常易读，
+在这里，我们将计算过程写成了等式链，每行一个式子。这样的等式链通常非常易读，
 你可以从上到下，直到遇到最简形式（本例中为 `12`），也可以从下到上，直到回到同样的式子。
 
 {::comment}
@@ -234,7 +240,7 @@ sure that associativity holds for _all_ the natural numbers?
 {:/}
 
 该测试揭示了结合律可能没有它初看起来那么显然。为什么 `7 + 5` 与 `3 + 9` 相同？
-我们可能需要收集更多证据，选择其它的数值来测试此命题。但由于自然数是无限的，
+我们可能需要收集更多证据，选择其它的数值来验证此命题。但由于自然数是无限的，
 因此测试永远无法完成。那么我们还有其它可以确保结合律对于**所有**自然数都成立的方法吗？
 
 {::comment}
@@ -242,7 +248,7 @@ The answer is yes! We can prove a property holds for all naturals using
 _proof by induction_.
 {:/}
 
-答案是肯定的！我们可以用**归纳证明（Proof by Induction）**
+当然有！我们可以用**归纳证明（Proof by Induction）**
 来确保某个性质对于所有的自然数都成立。
 
 
@@ -271,8 +277,8 @@ then show that the property must also hold for `suc m`.
 {:/}
 
 归纳证明遵循此定义的结构。要通过归纳证明自然数的某个性质，我们需要两个步骤。
-其一是**起始步骤**，我们需要证明此性质对 `zero` 成立。其二是**归纳步骤**，
-我们假设此性质对一个任意自然数 `m` 成立（我们称之为**归纳假设（Induction
+其一是**起始步骤**，即需要证明此性质对 `zero` 成立。其二是**归纳步骤**，
+即假设此性质对一个任意自然数 `m` 成立（我们称之为**归纳假设（Induction
 Hypothesis）**），然后证明该性质对 `suc m` 必定成立。
 
 {::comment}
@@ -280,7 +286,7 @@ If we write `P m` for a property of `m`, then what we need to
 demonstrate are the following two inference rules:
 {:/}
 
-若我们将 `m` 的某种性质（Property）写作 `P m`，那么我们需要证明的就是以下两个推导规则：
+若将 `m` 的某种性质（Property）写作 `P m`，那么我们需要证明的就是以下两个推导规则：
 
     ------
     P zero
@@ -297,7 +303,7 @@ inductive hypothesis---namely that `P` holds for `m`---then it follows that
 `P` also holds for `suc m`.
 {:/}
 
-我们来分析一下这些规则。第一条规则是起始步骤，它需要我们证明性质 `P` 对 `zero`
+先来分析一下这些规则。第一条规则是起始步骤，它需要我们证明性质 `P` 对 `zero`
 成立。第二条规则是归纳步骤，它需要我们证明若归纳假设「`P` 对 `m` 成立」，
 那么 `P` 也对 `suc m` 成立。
 
@@ -306,8 +312,7 @@ Why does this work?  Again, it can be explained by a creation story.
 To start with, we know no properties:
 {:/}
 
-为什么它能够起作用？同样，它也可以用创世故事来讲解。在最开始，我们对性质一无所知：
-
+为什么可以这样做呢？它也可以用创世故事来讲解。起初，我们对性质一无所知：
 
 {::comment}
     -- In the beginning, no properties are known.
@@ -325,8 +330,8 @@ apply:
 {:/}
 
 现在我们对所有已知的性质应用上述两条规则。起始步骤告诉我们 `P zero` 成立，
-所以我们将它加入已知的性质集合中。归纳步骤告诉我们若（在昨天）`P m` 成立，
-那么（在今天）`P (suc m)` 也成立。我们在今天之前并不知道任何性质，
+所以我们将它加入已知的性质集合中。归纳步骤告诉我们若「昨天的」`P m` 成立，
+那么「今天的」`P (suc m)` 也成立。我们在今天之前并不知道任何性质，
 因此归纳步骤在这里不适用：
 
 {::comment}
@@ -347,7 +352,7 @@ held yesterday, then `P (suc zero)` holds today:
 
 然后我们重复此过程。在接下来的一天我们知道今天之前的所有性质，
 以及任何通过此规则添加的性质。起始步骤告诉我们 `P zero`
-成立，当然我们已经知道这件事了。而如今归纳步骤告诉我们，由于 `P zero`
+成立，我们已经知道这件事了。而如今归纳步骤告诉我们，由于 `P zero`
 在昨天成立，那么 `P (suc zero)` 今天也成立。
 
 {::comment}
@@ -450,7 +455,7 @@ If we can demonstrate both of these, then associativity of addition
 follows by induction.
 {:/}
 
-如果我们可以证明这两条规则，那么加法结合律就可根据归纳法来证明。
+如果我们可以证明这两条规则，那么加法结合律就可以用归纳法来证明。
 
 {::comment}
 Here is the proposition's statement and proof:
@@ -487,7 +492,7 @@ We have named the proof `+-assoc`.  In Agda, identifiers can consist of
 any sequence of characters not including spaces or the characters `@.(){};_`.
 {:/}
 
-我们将此证明命名为 `+-assoc`。在 Agda 中，标识符可以由除空格或 `@.(){};_`
+我们将此证明命名为 `+-assoc`。在 Agda 中，标识符可以由除空格和 `@.(){};_`
 之外的任何字符序列构成。
 
 {::comment}
@@ -537,7 +542,7 @@ be shown, and reading down from the top and up from the bottom takes us to
 {:/}
 
 此式平凡成立。阅读此证明中起始步骤中的等式链，其最初和最末的式子分别匹配待证等式的两边，
-从上到下或从下到上读都会让我们在中间遇到 `n + p` 。此步骤除了化简外不需要其他额外的解释。
+从上到下或从下到上读都会让我们在中间遇到 `n + p` 。此步骤无需多言，化简即可。
 
 {::comment}
 For the inductive case, we must show:
@@ -577,9 +582,9 @@ within angle brackets.  The justification given is:
 {:/}
 
 阅读此证明中归纳步骤的等式链，其最初和最末的式子分别匹配待证等式的两边，
-从上到下或从下到上读都会让我们到达上面化简等式的地方。剩下的等式，
-不止用化简就行，因此我们需要为推理链使用一个附加的运算符 `_≡⟨_⟩_`，
-为等式给出的依据会放在尖括号中。这里给出的依据是：
+从上到下或从下到上读都会让我们到达上面化简等式的地方。剩下的等式单化简还不行，
+我们还需要为推理链使用一个附加的运算符 `_≡⟨_⟩_`，
+并将等式的依据放在尖括号中。这里给出的依据是：
 
     ⟨ cong suc (+-assoc m n p) ⟩
 
@@ -598,8 +603,8 @@ preserved by applying that function.  If `e` is evidence that `x ≡ y`,
 then `cong f e` is evidence that `f x ≡ f y`, for any function `f`.
 {:/}
 
-若某个关系在应用给定函数后仍然保持不变，则称该关系满足**合同性（Congruence）**。
-若 `e` 是 `x ≡ y` 的证据，那么对于任意函数 `f`，`cong f e` 是 `f x ≡ f y` 的证据。
+若某个关系在应用了给定的函数后仍然保持不变，则称该关系满足**合同性（Congruence）**。
+若 `e` 是 `x ≡ y` 的证据，那么对于任意函数 `f`，`cong f e` 就是 `f x ≡ f y` 的证据。
 
 {::comment}
 Here the inductive hypothesis is not assumed, but instead proved by a
@@ -622,8 +627,14 @@ recursion is one of the most appealing aspects of Agda.
 
 ## 归纳即递归
 
+{::comment}
+As a concrete example of how induction corresponds to recursion, here
+is the computation that occurs when instantiating `m` to `2` in the
+proof of associativity.
+{:/}
+
 下面是归纳如何对应于递归的具体例子，它是在结合律的证明中，将 `m` 实例化为 `2`
-时出现的计算。
+时的计算过程。
 
 ```
 +-assoc-2 : ∀ (n p : ℕ) → (2 + n) + p ≡ 2 + (n + p)
@@ -705,8 +716,8 @@ result type may mention (or depend upon) these variables; hence they
 are called _dependent functions_.
 {:/}
 
-是等价的。它们不同于像 `ℕ → ℕ → ℕ` 这样的函数类型，其中的变量
-与每一个实参类型相关联，其结果类型可能会涉及（或依赖于）这些变量，
+是等价的。和 `ℕ → ℕ → ℕ` 这样的函数类型不同，上述函数中的变量
+与每一个实参类型相关联，且其结果类型可能会涉及（或依赖于）这些变量，
 因此它们叫做**依赖函数**（Dependent Function）。
 
 
@@ -783,7 +794,7 @@ The signature states that we are defining the identifier `+-identityʳ` which
 provides evidence for the proposition:
 {:/}
 
-其签名描述了我们定义的标识符 `+-identityʳ` 提供了以下命题的证据：
+其签名说明我们定义的标识符 `+-identityʳ` 提供了以下命题的证据：
 
     ∀ (m : ℕ) → m + zero ≡ m
 
@@ -808,7 +819,7 @@ For the base case, we must show:
 Simplifying with the base case of addition, this is straightforward.
 {:/}
 
-根据加法的起始步骤化简，这很直白。
+根据加法的起始步骤化简，这很显然。
 
 {::comment}
 For the inductive case, we must show:
@@ -913,7 +924,7 @@ The signature states that we are defining the identifier `+-suc` which provides
 evidence for the proposition:
 {:/}
 
-其签名描述了我们定义的标识符 `+-suc` 提供了以下命题的证据：
+其签名说明我们定义的标识符 `+-suc` 提供了以下命题的证据：
 
     ∀ (m n : ℕ) → m + suc n ≡ suc (m + n)
 
@@ -938,7 +949,7 @@ For the base case, we must show:
 Simplifying with the base case of addition, this is straightforward.
 {:/}
 
-根据加法的起始步骤化简，这很直白。
+根据加法的起始步骤化简，这很显然。
 
 {::comment}
 For the inductive case, we must show:
@@ -1026,7 +1037,7 @@ The first line states that we are defining the identifier
 `+-comm` which provides evidence for the proposition:
 {:/}
 
-第一行描述了我们定义的标识符 `+-comm` 提供了以下命题的证据：
+第一行说明我们定义的标识符 `+-comm` 提供了以下命题的证据：
 
     ∀ (m n : ℕ) → m + n ≡ n + m
 
@@ -1111,9 +1122,9 @@ the main proposition first, and the equations required to do so
 will suggest what lemmas to prove.
 {:/}
 
-Agda 要求标识符必须在使用前定义，因此我们必须在主命题之前展示引理，
-如前例所示。在实践中，我们通常会先试着证明主命题，之后所需的等式会表明
-需要证明的引理。
+Agda 要求标识符必须在使用前定义，因此我们必须在主命题之前列出引理，
+如前例所示。在实践中，我们通常会先试着证明主命题，之后所需的等式会说明
+需要证明哪些引理。
 
 
 {::comment}
@@ -1215,7 +1226,7 @@ proof (or, equivalently, the recursive definition) as a creation story.  This
 time we are concerned with judgments asserting associativity:
 {:/}
 
-我们回到结合律的证明上来，把归纳证明（或等价地，递归定义）看做一个创世故事会有助于理解。
+我们回到结合律的证明上来，把归纳证明（或等价的递归定义）看做一个创世故事会有助于理解。
 这次我们专注于判断结合律的断言：
 
 {::comment}
@@ -1470,7 +1481,6 @@ Begin by typing:
 看看如何在 Emacs 中用 Agda 的交互式特性来构造另一种结合律的证明会很有启发性。
 我们从输入以下内容开始：
 
-
     +-assoc′ : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
     +-assoc′ m n p = ?
 
@@ -1511,7 +1521,7 @@ the cursor into the hole and type `C-c C-c`.  You will be given
 the prompt:
 {:/}
 
-我们希望通过对 `m` 进行归纳来证明此命题。将光标移动到洞中并按下
+我们希望对 `m` 进行归纳来证明此命题。将光标移动到洞中并按下
 `C-c C-c`。它会给出提示：
 
     pattern variables to case (empty for split on result):
@@ -1635,6 +1645,7 @@ is associative and commutative.
 
 成立。无需归纳证明，只需应用前面满足结合律和交换律的结果即可。
 
+{::comment}
 ```
 -- Your code goes here
 ```
@@ -1820,7 +1831,7 @@ for all `m`, `n`, and `p`.
 
 对于所有 `m`、`n` 和 `p` 成立。
 
-
+{::comment}
 #### Exercise `Bin-laws` (stretch) {#Bin-laws}
 {:/}
 
@@ -1832,7 +1843,8 @@ Exercise [Bin]({{ site.baseurl }}/Naturals/#Bin)
 defines a datatype of bitstrings representing natural numbers
 {:/}
 
-回想练习 [Bin][plfa.Naturals#Bin] 中定义了一种比特串数据类型来表示自然数
+回想练习 [Bin]({{ site.baseurl }}/Naturals/#Bin)
+中定义的一种表示自然数的比特串数据类型：
 
 ```
 data Bin : Set where
@@ -1845,7 +1857,7 @@ data Bin : Set where
 and asks you to define functions
 {:/}
 
-并要求你定义函数
+以及要求你定义的函数
 
     inc   : Bin → Bin
     to    : ℕ → Bin

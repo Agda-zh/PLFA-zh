@@ -318,10 +318,10 @@ that. But now the inductive case tells us that since `zero` was a natural
 number yesterday, then `suc zero` is a natural number today:
 {:/}
 
-然后我们重复这个过程。今天我们知道昨天的所有自然数，以及任何
+然后我们重复此过程。今天我们知道昨天的所有自然数，以及任何
 通过规则添加的数。起始步骤依然告诉我们 `zero` 是一个自然数，我们
 已经知道这件事了。而如今归纳步骤告诉我们，由于 `zero` 在昨天是自然数，
-`suc zero` 在今天也成为了自然数：
+那么 `suc zero` 在今天也是自然数：
 
 {::comment}
     -- On the second day, there are two natural numbers.
@@ -340,8 +340,8 @@ tells us that since `zero` and `suc zero` are both natural numbers, then
 the first of these, but the second is new:
 {:/}
 
-我们再次重复这个过程。现在归纳步骤告诉我们，因为 `zero` 和 `suc zero` 都是自然
-数，所以 `suc zero` 和 `suc (suc zero)` 也是自然数。我们已经知道 `suc zero`
+我们再次重复此过程。现在归纳步骤告诉我们，由于 `zero` 和 `suc zero` 都是自然
+数，因此 `suc zero` 和 `suc (suc zero)` 也是自然数。我们已经知道 `suc zero`
 是自然数了，而后者 `suc (suc zero)` 是新加入的。
 
 {::comment}
@@ -385,7 +385,7 @@ we define the set of numbers on day _n+1_ in terms of the set of
 numbers on day _n_.
 {:/}
 
-这个过程可以继续下去。在第 *n* 天会有 *n* 个不同的自然数。每个自然数都会在
+此过程可以继续下去。在第 *n* 天会有 *n* 个不同的自然数。每个自然数都会在
 某一天出现。具体来说，自然数 *n* 在第 *n+1* 天首次出现。至此，我们并没有使
 用自然数集来定义其自身，而是根据第 *n* 天的数集定义了第 *n+1* 天的数集。
 
@@ -796,8 +796,8 @@ the equations in an order that makes sense to the reader.
 {:/}
 
 在等式链中，Agda 只检查每个项是否都能化简为相同的值。如果我们打乱等式顺序，
-省略或者加入一些额外的步骤，证明仍然会被接受。我们需要自己保证等式的书写顺序
-是便于理解的。
+省略或者加入一些额外的步骤，证明仍然会被接受。我们需要自己来保证等式的顺序
+便于理解。
 
 {::comment}
 Here `2 + 3 ≡ 5` is a type, and the chains of equations (and also
