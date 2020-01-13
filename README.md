@@ -46,6 +46,7 @@ cause problems.
 本页顶部的徽章列出了 PLFA 使用的依赖版本。我们已经用上面列出的版本测试过了，
 其它更旧或更新的版本可能会出问题。
 
+<!---
 You can get the appropriate version of Programming Language Foundations in Agda from GitHub,
 either by cloning the repository,
 or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archive/dev.zip):
