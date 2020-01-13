@@ -4,6 +4,20 @@ title: Notes
 permalink: /Notes/
 ---
 
+## To Do
+
+Changes I would like to make to the book:
+- Relations, exercise `o+o≡e` --> (recommended)
+- Relations, exercise `≤-iff-<` --> `≤→<`, `<→≤`
+- Relations, exercise `Bin-predicates` --> `Bin-predicate`
+  change canonical form of zero to be empty string, `<>`.
+  Similar change to subsequent exercise.
+
+
+## Downloading older versions
+
+<https://github.com/plfa/plfa.github.io/releases>
+
 ## Google Analytics
 
 <https://analytics.google.com/analytics/web/>
@@ -18,7 +32,6 @@ Git commands to create a branch and pull request
     git checkout <name>         -- make <name> the current branch
     git merge <name>            -- merge branch <name> into current branch 
     git push origin <name>      -- make local branch <name> into remote
-    git rebase <base>           -- merge branch <base> into current branch
 
 On website, use pulldown menu to swith branch and then
 click "new pull request" button.

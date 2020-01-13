@@ -208,7 +208,7 @@ Few students do all of these, but most attempt at least a few.
 标有**延伸**的习题提供了额外的挑战。很少有学生能全部做完，但至少应该尝试一下。
 
 {::comment}
-Exercises without a label are included for those who want extra practice.
+Exercises labelled "(practice)" are included for those who want extra practice.
 {:/}
 
-没有标记的习题供想要更多实践的学生练习。
+标记有**实践**的习题供想要更多实践的学生练习。

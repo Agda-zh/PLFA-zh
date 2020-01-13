@@ -46,8 +46,7 @@ cause problems.
 本页顶部的徽章列出了 PLFA 使用的依赖版本。我们已经用上面列出的版本测试过了，
 其它更旧或更新的版本可能会出问题。
 
-<!---
-You can get the appropriate version of Programming Language Foundations in Agda from Github,
+You can get the appropriate version of Programming Language Foundations in Agda from GitHub,
 either by cloning the repository,
 or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archive/dev.zip):
 --->
@@ -58,7 +57,7 @@ or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archi
 
     git clone https://github.com/plfa/plfa.github.io
 
-中文版：
+    git clone https://github.com/plfa/plfa.github.io
 
     git clone https://github.com/Agda-zh/PLFA-zh
 
@@ -84,6 +83,38 @@ modules from the book, you need to do this.  To do so, add the path to
 所在的路径作为单独的一行添加到 `~/.agda/libraries`，并将 `plfa`
 作为单独的一行添加到 `~/.agda/defaults`。
 
+<!--
+## Auto-loading `agda-mode` in Emacs
+-->
+
+## 在 Emacs 中自动加载 `agda-mode`
+
+<!--
+In order to have `agda-mode` automatically loaded whenever you open a file ending
+with `.agda` or `.lagda.md`, put the following on your Emacs configuration file:
+-->
+
+为了让 `agda-mode` 在你打开 `.agda` 或 `.lagda.md` 文件时自动加载，
+请将以下内容放到你的 Emacs 配置文件中。
+
+``` elisp
+(setq auto-mode-alist
+   (append
+     '(("\\.agda\\'" . agda2-mode)
+       ("\\.lagda.md\\'" . agda2-mode))
+     auto-mode-alist))
+```
+
+<!--
+The configuration file for Emacs is normally located in `~/.emacs` or `~/.emacs.d/init.el`,
+but Aquamacs users might need to move their startup settings to the Preferences.el file in
+`~/Library/Preferences/Aquamacs Emacs/Preferences`.
+-->
+
+Emacs 的配置文件通常位于 `~/.emacs` 或 `~/.emacs.d/init.el`，不过
+Aquamacs 用户需要将启动设置放到位于 `~/Library/Preferences/Aquamacs Emacs/Preferences`
+的 Preferences.el 文件中。
+
 <!---
 Unicode characters
 --->
@@ -93,11 +124,47 @@ Unicode characters
 <!---
 If you're having trouble typing the Unicode characters into Emacs, the end of
 each chapter should provide a list of the unicode characters introduced in that
-chapter. For a full list of supported characters, see
-[agda-input.el](https://github.com/agda/agda/blob/master/src/data/emacs-mode/agda-input.el#L194).
+chapter.
 --->
 
-如果你在 Emacs 中输入 Unicode 字符时遇到困难，每一章的结尾都列出了该章引入的 Unicode 字符。所支持字符的完整列表请参阅 [agda-input.el](https://github.com/agda/agda/blob/master/src/data/emacs-mode/agda-input.el#L194)。
+如果你在 Emacs 中输入 Unicode 字符时遇到困难，每一章的结尾都列出了该章引入的 Unicode 字符。
+
+<!--
+`agda-mode` and emacs have a number of useful commands.
+Two of them are especially useful when you solve exercises.
+-->
+
+`agda-mode` 和 Emacs 有很多有用的命令，其中的两个在你做练习时非常有用。
+
+<!--
+For a full list of supported characters, use `agda-input-show-translations` with:
+-->
+
+要查看所支持字符的完整列表，请使用 `agda-input-show-translations`：
+
+    M-x agda-input-show-translations
+
+<!--
+All the supported characters in `agda-mode` are shown.
+-->
+
+这样会显示出 `agda-mode` 中所有支持的字符。
+
+<!--
+If you want to know how you input a specific Unicode character in agda file,
+move the cursor onto the character and type the following command:
+-->
+
+如果你想知道如何在 agda 文件中输入一个特定的 Unicode 字符，请将光标移至该字符上，
+然后输入以下命令：
+
+    M-x quail-show-key
+
+<!--
+You'll see the key sequence of the character in mini buffer.
+-->
+
+你会在迷你缓冲区中看到输入该字符所需的按键序列。
 
 <!---
 Using `agda-mode`
@@ -147,11 +214,11 @@ for more details.
 If you want to see messages beside rather than below your Agda code,
 you can do the following:
 
-Load your Agda file and do `C-c C-l`;
-type `C-x 1` to get only your Agda file showing;
-type `C-x 3` to split the window horizontally;
-move your cursor to the right-hand half of your frame;
-type `C-x b` and switch to the buffer called "Agda information"
+  - Load your Agda file and do `C-c C-l`;
+  - type `C-x 1` to get only your Agda file showing;
+  - type `C-x 3` to split the window horizontally;
+  - move your cursor to the right-hand half of your frame;
+  - type `C-x b` and switch to the buffer called "Agda information"
 --->
 
 如果你希望在 Agda 代码侧边而非底部查看消息，可以参考如下操作：
@@ -175,29 +242,23 @@ Fonts in Emacs
 
 ## Emacs 中的字体
 
-<!---
-It is recommended that you add the following to the end of your emacs
-configuration file at `~/.emacs`, if you have the mentioned fonts available:
---->
+<!--
+It is recommended that you install the font [mononoki](https://madmalik.github.io/mononoki/), and add the following to the end of your emacs configuration file at `~/.emacs`:
+-->
 
-如果你有以下代码中提及的字体，推荐将这些代码添加到 Emacs 配置文件 `~/.emacs` 的末尾。
+推荐安装 [mononoki](https://madmalik.github.io/mononoki/) 字体，并将以下内容添加到位于
+`~/.emacs` 的 Emacs 配置文件的末尾：
 
 ``` elisp
-;; Setting up Fonts for use with Agda/PLFA
-;;
-;; default to DejaVu Sans Mono,
+;; default to mononoki
 (set-face-attribute 'default nil
-		    :family "DejaVu Sans Mono"
+		    :family "mononoki"
 		    :height 120
 		    :weight 'normal
 		    :width  'normal)
-
-;; fix \:
-(set-fontset-font "fontset-default"
-		  (cons (decode-char 'ucs #x2982)
-			(decode-char 'ucs #x2982))
-		  "STIX")
 ```
+
+另外带有连体符号的 [FiraCode](https://github.com/tonsky/FiraCode) 也是个不错的选择。
 
 <!---
 Building the book

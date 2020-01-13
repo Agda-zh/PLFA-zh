@@ -95,7 +95,7 @@ Pull requests are encouraged.
 
   - [Lambda]({{ site.baseurl }}/Lambda/): Introduction to Lambda Calculus
   - [Properties]({{ site.baseurl }}/Properties/): Progress and Preservation
-  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): Inherently typed de Bruijn representation
+  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): Intrinsically-typed de Bruijn representation
   - [More]({{ site.baseurl }}/More/): Additional constructs of simply-typed lambda calculus
   - [Bisimulation]({{ site.baseurl }}/Bisimulation/): Relating reductions systems
   - [Inference]({{ site.baseurl }}/Inference/): Bidirectional type inference
@@ -150,7 +150,8 @@ Pull requests are encouraged.
 
   - Courses taught from the textbook:
     * Philip Wadler, University of Edinburgh,
-      [2018]({{ site.baseurl }}/TSPL/2018/)
+      [2018]({{ site.baseurl }}/TSPL/2018/),
+	  [2019]({{ site.baseurl }}/TSPL/2019/)
     * David Darais, University of Vermont,
       [2018](http://david.darais.com/courses/fa2018-cs295A/)
     * John Leo, Google Seattle, 2018--2019
@@ -158,13 +159,20 @@ Pull requests are encouraged.
       [2019]({{ site.baseurl }}/PUC/2019/)
     * Prabhakar Ragde, University of Waterloo,
 	  [2019](https://cs.uwaterloo.ca/~plragde/842/)
+    * Jeremy Siek, Indiana University,
+	  [2020](https://jsiek.github.io/B522-PL-Foundations/)
   - A paper describing the book appeared in [SBMF][sbmf].
+  - A notebook version of the textbook
+    is available at [NextJournal][nextjournal].
+    It lets you edit and execute the book via a web interface.
 
 [wen]: https://github.com/wenkokke
 [phil]: https://homepages.inf.ed.ac.uk/wadler/
 [GitHub]: https://github.com/plfa/plfa.github.io/
 [Github-zh]: https://github.com/Agda-zh/PLFA-zh
 [sbmf]: https://homepages.inf.ed.ac.uk/wadler/topics/agda.html#sbmf
+[nextjournal]: https://nextjournal.com/plfa/ToC
+
 [PLFA]: https://plfa.github.io/
 [PLFA-zh]: https://agda-zh.github.io/PLFA-zh/
 [Issue]: https://github.com/Agda-zh/plfa-zh/issues
