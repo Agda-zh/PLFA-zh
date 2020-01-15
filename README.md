@@ -58,7 +58,7 @@ or by downloading [the zip archive](https://github.com/plfa/plfa.github.io/archi
 
     git clone https://github.com/plfa/plfa.github.io
 
-    git clone https://github.com/plfa/plfa.github.io
+中文版：
 
     git clone https://github.com/Agda-zh/PLFA-zh
 
