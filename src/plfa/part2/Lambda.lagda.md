@@ -4,6 +4,8 @@ layout    : page
 prev      : /Lists/
 permalink : /Lambda/
 next      : /Properties/
+translators : ["Fangyi Zhou"]
+progress  : 100
 ---
 
 ```
@@ -985,16 +987,31 @@ substitution.
 ```
 
 
+<!--
 ## Reduction
+-->
 
+## 规约
+
+<!--
 We give the reduction rules for call-by-value lambda calculus.  To
 reduce an application, first we reduce the left-hand side until it
 becomes a value (which must be an abstraction); then we reduce the
 right-hand side until it becomes a value; and finally we substitute
 the argument for the variable in the abstraction.
+-->
 
+我们接下来给出 λ-演算的传值规约规则。
+规约一个应用时，我们首先规约左手边，直到它变成一个值（必须是抽象）；
+接下来我们规约后手边，直到它变成一个值；
+最后我们使用替换，把变量替换成参数。
+
+<!--
 In an informal presentation of the operational semantics,
 the rules for reduction of applications are written as follows:
+-->
+
+在非正式的操作语言表达中，我们可以如下写出应用的规约规则：
 
     L —→ L′
     --------------- ξ-·₁
@@ -1007,36 +1024,71 @@ the rules for reduction of applications are written as follows:
     ----------------------------- β-ƛ
     (ƛ x ⇒ N) · V —→ N [ x := V ]
 
+<!--
 The Agda version of the rules below will be similar, except that universal
 quantifications are made explicit, and so are the predicates that indicate
 which terms are values.
+-->
 
+稍后给出的 Agda 版本的规则与上述相似，但是我们需要将全称量化显式地表示出来，也需要
+使用谓词来表示一个是值的项。
+
+<!--
 The rules break into two sorts. Compatibility rules direct us to
 reduce some part of a term.  We give them names starting with the
 Greek letter `ξ` (_xi_).  Once a term is sufficiently reduced, it will
 consist of a constructor and a deconstructor, in our case `ƛ` and `·`,
 which reduces directly.  We give them names starting with the Greek
 letter `β` (_beta_) and such rules are traditionally called _beta rules_.
+-->
 
+规则可以分为两类。
+兼容性规则让我们规约一个项的一部分。我们用希腊字母 `ξ` （_xi_）开头的规则表示。
+当一个项规约到足够的时候，它将会包括一个构造子和一个析构子，在这里是 `ƛ` 和 `·`，
+我们可以直接规约。这样的规则我们用希腊字母 `β` （_beta_）表示，也被称为 **β-规则**。
+
+<!--
 A bit of terminology: A term that matches the left-hand side of a
 reduction rule is called a _redex_. In the redex `(ƛ x ⇒ N) · V`, we
 may refer to `x` as the _formal parameter_ of the function, and `V`
 as the _actual parameter_ of the function application.  Beta reduction
 replaces the formal parameter by the actual parameter.
+-->
 
+一些额外的术语：可以匹配规约规则左手边的项被称之为**可规约项**（Redex）。
+在可规约项 `(ƛ x ⇒ N) · V` 中，我们把 `x` 叫做函数的**形式参数**（形参，Formal Parameter），
+把 `V` 叫做函数应用的**实际参数**（实参，Actual Parameter）。
+β-规约将形参用实参来替换。
+
+<!--
 If a term is a value, then no reduction applies; conversely,
 if a reduction applies to a term then it is not a value.
 We will show in the next chapter that
 this exhausts the possibilities: every well-typed term
 either reduces or is a value.
+-->
 
+如果一个项已经是一个值，它就没有可以规约的规则；
+反过来说，如果一个项可以被规约，那么它就不是一个值。
+我们在下一章里证明这概括了所有的情况——所以良类型的项要么可以规约要么是一个值。
+
+<!--
 For numbers, zero does not reduce and successor reduces the subterm.
 A case expression reduces its argument to a number, and then chooses
 the zero or successor branch as appropriate.  A fixpoint replaces
 the bound variable by the entire fixpoint term; this is the one
 case where we substitute by a term that is not a value.
+-->
 
+对于数字来说，零不可以规约，后继可以对它的子项进行规约。
+匹配表达式先将它的参数规约至一个数字，然后根据它是零还是后继选择相应的分支。
+不动点会把约束变量替换成整个不动点项——这是我们唯一一处用项、而不是值进行的替换。
+
+<!--
 Here are the rules formalised in Agda:
+-->
+
+我们用下面的形式在 Agda 里形式化这些规则：
 
 ```
 infix 4 _—→_
@@ -1083,26 +1135,52 @@ data _—→_ : Term → Term → Set where
     → μ x ⇒ M —→ M [ x := μ x ⇒ M ]
 ```
 
+<!--
 The reduction rules are carefully designed to ensure that subterms
 of a term are reduced to values before the whole term is reduced.
 This is referred to as _call-by-value_ reduction.
+-->
 
+我们小心地设计这些规约规则，使得一个项的子项在整项被规约之前先被规约。
+这被称为**传值**（Call-by-value）规约。
+
+<!--
 Further, we have arranged that subterms are reduced in a
 left-to-right order.  This means that reduction is _deterministic_:
 for any term, there is at most one other term to which it reduces.
 Put another way, our reduction relation `—→` is in fact a function.
+-->
 
+除此之外，我们规定规约的顺序是从左向右的。
+这意味着规约是**确定的**（Deterministic）：对于任何一个项，最多存在一个可以被规约至的项。
+换句话说，我们的规约关系 `—→` 实际上是一个函数。
+
+<!--
 This style of explaining the meaning of terms is called
 a _small-step operational semantics_.  If `M —→ N`, we say that
 term `M` _reduces_ to term `N`, or equivalently,
 term `M` _steps_ to term `N`.  Each compatibility rule has
 another reduction rule in its premise; so a step always consists
 of a beta rule, possibly adjusted by zero or more compatibility rules.
+-->
+
+这种解释一个项的含义的方法叫做**小步操作语义**（Small-step Operational Semantics）。
+如果 `M —→ N`，我们称之为项 `M` **规约** 至项 `N`，也称之为项 `M` **步进**至（Step to）
+项 `N`。
+每条兼容性规则以另一条规约规则作为前提；因此每一步都会用到一条 β-规则，用零或多条兼容性规则进行调整。
 
 
+<!--
 #### Quiz
+-->
 
+#### 小测验
+
+<!--
 What does the following term step to?
+-->
+
+下面的项步进至哪一项？
 
     (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x")  —→  ???
 
@@ -1110,7 +1188,11 @@ What does the following term step to?
 2.  `` (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") ``
 3.  `` (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") ``
 
+<!--
 What does the following term step to?
+-->
+
+下面的项步进至哪一项？
 
     (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x")  —→  ???
 
@@ -1118,8 +1200,13 @@ What does the following term step to?
 2.  `` (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") ``
 3.  `` (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") · (ƛ "x" ⇒ ` "x") ``
 
+
+<!--
 What does the following term step to?  (Where `twoᶜ` and `sucᶜ` are as
 defined above.)
+-->
+
+下面的项步进至哪一项？（`twoᶜ` 和 `sucᶜ` 如之前的定义）
 
     twoᶜ · sucᶜ · `zero  —→  ???
 
@@ -1127,17 +1214,32 @@ defined above.)
 2.  `` (ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z")) · `zero ``
 3.  `` `zero ``
 
-
+<!--
 ## Reflexive and transitive closure
+-->
 
+## 自反传递闭包
+
+<!--
 A single step is only part of the story. In general, we wish to repeatedly
 step a closed term until it reduces to a value.  We do this by defining
 the reflexive and transitive closure `—↠` of the step relation `—→`.
+-->
 
+步进并不是故事的全部。
+总的来说，对于一个封闭的项，我们想要对它反复地步进，直到规约至一个值。
+这样可以用定义步进关系 `—→` 的自反传递闭包 `—↠` 来完成。
+
+<!--
 We define reflexive and transitive closure as a sequence of zero or
 more steps of the underlying relation, along lines similar to that for
 reasoning about chains of equalities in
 Chapter [Equality](/Equality/):
+-->
+
+我们以一个零或多步的步进关系的序列来定义这样的自反传递闭包，这样的形式与
+[Equality](/Equality/) 章节中的等式链论证形式相似：
+
 ```
 infix  2 _—↠_
 infix  1 begin_
@@ -1161,22 +1263,45 @@ begin_ : ∀ {M N}
   → M —↠ N
 begin M—↠N = M—↠N
 ```
+<!--
 We can read this as follows:
+-->
 
+我们如下理解这个关系：
+
+<!--
 * From term `M`, we can take no steps, giving a step of type `M —↠ M`.
   It is written `M ∎`.
+-->
 
+* 对于项 `M`，我们可以一步也不规约而得到类型为 `M —↠ M` 的步骤，写作 `M ∎`。
+
+<!--
 * From term `L` we can take a single step of type `L —→ M` followed by zero
   or more steps of type `M —↠ N`, giving a step of type `L —↠ N`. It is
   written `L —→⟨ L—→M ⟩ M—↠N`, where `L—→M` and `M—↠N` are steps of the
   appropriate type.
+-->
 
+* 对于项 `L`，我们可以使用 `L —→ M` 类型步进一步，再使用 `M —↠ N` 类型步进零或多步，
+  得到类型为 `L —↠ N` 的步骤，写作 `L —→⟨ L—→M ⟩ M—↠N`。其中，
+  `L—→M` 和 `M—↠N` 是相应类型的步骤。
+
+<!--
 The notation is chosen to allow us to lay out example reductions in an
 appealing way, as we will see in the next section.
+-->
 
+在下一部分我们可以看到，这样的记法可以让我们用清晰的步骤来表示规约的例子。
+
+<!--
 An alternative is to define reflexive and transitive closure directly,
 as the smallest relation that includes `—→` and is also reflexive
 and transitive.  We could do so as follows:
+-->
+
+我们也可以用包括 `—→` 的最小的自反传递关系作为另一种定义：
+
 ```
 data _—↠′_ : Term → Term → Set where
 
@@ -1195,25 +1320,56 @@ data _—↠′_ : Term → Term → Set where
       -------
     → L —↠′ N
 ```
+
+<!--
 The three constructors specify, respectively, that `—↠′` includes `—→`
 and is reflexive and transitive.  A good exercise is to show that
 the two definitions are equivalent (indeed, one embeds in the other).
+-->
 
+这样的三个构造子分别表示了 `—↠′` 包括 `—→`、自反和传递的性质。
+证明两者是等价的是一个很好的练习。（的确，一者嵌入了另一者）
+
+<!--
 #### Exercise `—↠≲—↠′` (practice)
+-->
 
+#### 练习 `—↠≲—↠′` （习题）
+
+<!--
 Show that the first notion of reflexive and transitive closure
 above embeds into the second. Why are they not isomorphic?
+-->
 
+证明自反传递闭包的第一种记法嵌入了第二种记法。
+为什么它们不是同构的？
+
+<!--
 ```
 -- Your code goes here
 ```
+-->
 
+```
+-- 请将代码写在此处。
+```
+
+<!--
 ## Confluence
+-->
 
+## 合流性
+
+<!--
 One important property a reduction relation might satisfy is
 to be _confluent_.  If term `L` reduces to two other terms,
 `M` and `N`, then both of these reduce to a common term `P`.
 It can be illustrated as follows:
+-->
+
+在讨论规约关系时，有一个重要的性质是**合流性**（Confluence）。
+如果项 `L` 规约至两个项 `M` 和项 `N`，那么它们都可以规约至同一个项 `P`。
+我们可以用下面的图来展示这个性质：
 
                L
               / \
@@ -1225,12 +1381,19 @@ It can be illustrated as follows:
               \ /
                P
 
+<!--
 Here `L`, `M`, `N` are universally quantified while `P`
 is existentially quantified.  If each line stands for zero
 or more reduction steps, this is called confluence,
 while if the top two lines stand for a single reduction
 step and the bottom two stand for zero or more reduction
 steps it is called the diamond property. In symbols:
+-->
+
+图中，`L`、`M` 和 `N` 由全称量词涵盖，而 `P` 由存在量词涵盖。
+如果图中的每条线代表了零或多步规约步骤，这样的性质被成为合流性。
+如果上面的两条线代表一步规约步骤，下面的两条线代表零或多步规约步骤，
+这样的性质被成为菱形性质。用符号表示为：
 
 ```
 postulate
@@ -1245,8 +1408,12 @@ postulate
     → ∃[ P ] ((M —↠ P) × (N —↠ P))
 ```
 
+<!--
 The reduction system studied in this chapter is deterministic.
 In symbols:
+-->
+
+在本章中我们讨论的规约系统是确定的。用符号表示为：
 
 ```
 postulate
@@ -1257,15 +1424,28 @@ postulate
     → M ≡ N
 ```
 
+<!--
 It is easy to show that every deterministic relation satisfies
 the diamond and confluence properties. Hence, all the reduction
 systems studied in this text are trivially confluent.
+-->
 
+我们可以简单地证明任何确定的规约关系满足菱形性质，
+任何满足菱形性质的规约关系满足合流性。
+因为，我们研究的规则系统平凡地满足了合流性。
 
+<!--
 ## Examples
+-->
 
+## 例子
+
+<!--
 We start with a simple example. The Church numeral two applied to the
 successor function and zero yields the natural number two:
+-->
+
+我们用一个简单的例子开始。Church 数二应用于后继函数和零可以得到自然数二：
 ```
 _ : twoᶜ · sucᶜ · `zero —↠ `suc `suc `zero
 _ =
@@ -1282,7 +1462,11 @@ _ =
   ∎
 ```
 
+<!--
 Here is a sample reduction demonstrating that two plus two is four:
+-->
+
+下面的例子中我们规约二加二至四：
 ```
 _ : plus · two · two —↠ `suc `suc `suc `suc `zero
 _ =
@@ -1327,7 +1511,11 @@ _ =
   ∎
 ```
 
+<!--
 And here is a similar sample reduction for Church numerals:
+-->
+
+我们用 Church 数规约同样的例子：
 ```
 _ : plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero
 _ =
@@ -1362,32 +1550,73 @@ _ =
   ∎
 ```
 
+<!--
 In the next chapter, we will see how to compute such reduction sequences.
+-->
 
+下一章节中，我们研究如何计算这样的规约序列。
 
+<!--
 #### Exercise `plus-example` (practice)
+-->
 
+#### 练习 `plus-example` （习题）
+
+<!--
 Write out the reduction sequence demonstrating that one plus one is two.
+-->
 
+使用规约序列，证明一加一得二。
+
+<!--
 ```
 -- Your code goes here
 ```
+-->
 
+```
+-- 请将代码写在此处。
+```
 
+<!--
 ## Syntax of types
+-->
 
+## 类型的语法
+
+<!--
 We have just two types:
+-->
 
+我们只有两种类型：
+
+<!--
   * Functions, `A ⇒ B`
   * Naturals, `` `ℕ ``
+-->
 
+  * 函数：`A ⇒ B`
+  * 自然数：`` `ℕ ``
+
+<!--
 As before, to avoid overlap we use variants of the names used by Agda.
+-->
 
+和之前一样，我们需要使用与 Agda 不一样的名称来防止混淆。
+
+<!--
 Here is the syntax of types in BNF:
+-->
+
+下面是类型的 BNF 形式语法：
 
     A, B, C  ::=  A ⇒ B | `ℕ
 
+<!--
 And here it is formalised in Agda:
+-->
+
+下面是用 Agda 的形式化：
 
 ```
 infixr 7 _⇒_
@@ -1397,19 +1626,42 @@ data Type : Set where
   `ℕ : Type
 ```
 
+<!--
 ### Precedence
+-->
 
+### 优先级
+
+<!--
 As in Agda, functions of two or more arguments are represented via
 currying. This is made more convenient by declaring `_⇒_` to
 associate to the right and `_·_` to associate to the left.
 Thus:
+-->
 
+与 Agda 中一致，两个或多个参数的函数以科里化的形式表示。
+以右结合的方式定义 `_⇒_`、左结合的方式定义 `_·_` 更加方面。
+因此：
+
+<!--
 * ``(`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ`` stands for ``((`ℕ ⇒ `ℕ) ⇒ (`ℕ ⇒ `ℕ))``.
 * `plus · two · two` stands for `(plus · two) · two`.
+-->
 
+* ``(`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ`` 表示 ``((`ℕ ⇒ `ℕ) ⇒ (`ℕ ⇒ `ℕ))``。
+* `plus · two · two` 表示 `(plus · two) · two`。
+
+<!--
 ### Quiz
+-->
 
+### 小测验
+
+<!--
 * What is the type of the following term?
+-->
+
+* 下面给出的项的类型是什么？
 
     `` ƛ "s" ⇒ ` "s" · (` "s"  · `zero) ``
 
@@ -1420,9 +1672,17 @@ Thus:
   5. `` `ℕ ⇒ `ℕ ``
   6. `` `ℕ ``
 
+<!--
   Give more than one answer if appropriate.
+-->
 
+  在适当的情况下，可以给出多于一个答案。
+
+<!--
 * What is the type of the following term?
+-->
+
+* 下面给出的项的类型是什么？
 
     `` (ƛ "s" ⇒ ` "s" · (` "s"  · `zero)) · sucᶜ ``
 
@@ -1433,29 +1693,63 @@ Thus:
   5. `` `ℕ ⇒ `ℕ ``
   6. `` `ℕ ``
 
+<!--
   Give more than one answer if appropriate.
+-->
+
+  在适当的情况下，可以给出多于一个答案。
 
 
+<!--
 ## Typing
+-->
 
+## 赋型
+
+<!--
 ### Contexts
+-->
 
+### 上下文
+
+<!--
 While reduction considers only closed terms, typing must
 consider terms with free variables.  To type a term,
 we must first type its subterms, and in particular in the
 body of an abstraction its bound variable may appear free.
+-->
 
+在规约时，我们只讨论封闭的项，但是在赋型时，我们必须考虑带有自由变量的项。
+给一个项赋型时，我们必须先给它的子项赋型。而在给一个抽象的抽象体赋型时，
+抽象的约束变量在抽象体内部是自由的。
+
+<!--
 A _context_ associates variables with types.  We let `Γ` and `Δ` range
 over contexts.  We write `∅` for the empty context, and `Γ , x ⦂ A`
 for the context that extends `Γ` by mapping variable `x` to type `A`.
 For example,
+-->
+
+上下文（Context）将变量和类型联系在一起。
+我们用 `Γ` 和 `Δ` 来表示上下文。
+我们用 `∅` 表示空的上下文，用 `Γ , x ⦂ A` 表示扩充 `Γ` ，将变量 `x` 对应至类型 `A`。
+例如：
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ``
 
+<!--
 is the context that associates variable `` "s" `` with type `` `ℕ ⇒ `ℕ ``,
 and variable `` "z" `` with type `` `ℕ ``.
+-->
 
+这个上下文将变量 `` "s" `` 对应至类型 `` `ℕ ⇒ `ℕ ``，
+将变量 `` "z" `` 对应至类型 `` `ℕ ``。
+
+<!--
 Contexts are formalised as follows:
+-->
+
+上下文如下形式化：
 
 ```
 infixl 5  _,_⦂_
@@ -1466,48 +1760,104 @@ data Context : Set where
 ```
 
 
+<!--
 #### Exercise `Context-≃` (practice)
+-->
 
+#### 练习 `Context-≃` （习题）
+
+<!--
 Show that `Context` is isomorphic to `List (Id × Type)`.
 For instance, the isomorphism relates the context
+-->
+
+证明 `Context` 与 `List (Id × Type)` 同构。
+
+<!--
+For instance, the isomorphism relates the context
+-->
+
+例如，如下的上下文
 
     ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ
 
+<!--
 to the list
+-->
+
+和如下的列表相关。
 
     [ ⟨ "z" , `ℕ ⟩ , ⟨ "s" , `ℕ ⇒ `ℕ ⟩ ]
 
+<!--
 ```
 -- Your code goes here
 ```
+-->
 
+```
+-- 请将代码写在此处。
+```
+
+<!--
 ### Lookup judgment
+-->
 
+### 查询判断
+
+<!--
 We have two forms of _judgment_.  The first is written
+-->
+
+我们使用两种**判断**。第一种写作
 
     Γ ∋ x ⦂ A
 
+<!--
 and indicates in context `Γ` that variable `x` has type `A`.
 It is called _lookup_.
 For example,
+-->
+
+表示在上下文 `Γ` 中变量 `x` 的类型是 `A`。这样的判断叫做**查询**（Lookup）判断。
+例如，
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ∋ "z" ⦂ `ℕ ``
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ∋ "s" ⦂ `ℕ ⇒ `ℕ ``
 
+<!--
 give us the types associated with variables `` "z" `` and `` "s" ``,
 respectively.  The symbol `∋` (pronounced "ni", for "in"
 backwards) is chosen because checking that `Γ ∋ x ⦂ A` is analogous to
 checking whether `x ⦂ A` appears in a list corresponding to `Γ`.
+-->
 
+分别给出了变量 `` "z" `` 和 `` "s" `` 对应的类型。
+我们使用符号 `∋` （读作 "ni"，反写的 "in"），因为 `Γ ∋ x ⦂ A` 与查询
+`x ⦂ A` 是否在与 `Γ` 对应的列表中存在相似。
+
+<!--
 If two variables in a context have the same name, then lookup
 should return the most recently bound variable, which _shadows_
 the other variables.  For example,
+-->
+
+如果上下文中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮盖**（Shadow）
+了另一个变量。例如：
 
 * `` ∅ , "x" ⦂ `ℕ ⇒ `ℕ , "x" ⦂ `ℕ ∋ "x" ⦂ `ℕ ``.
 
+<!--
 Here `` "x" ⦂ `ℕ ⇒ `ℕ `` is shadowed by `` "x" ⦂ `ℕ ``.
+-->
 
+在这里 `` "x" ⦂ `ℕ ⇒ `ℕ `` 被 `` "x" ⦂ `ℕ `` 遮盖了。
+
+<!--
 Lookup is formalised as follows:
+-->
+
+我们如下形式化查询：
 ```
 infix  4  _∋_⦂_
 
@@ -1524,11 +1874,16 @@ data _∋_⦂_ : Context → Id → Type → Set where
     → Γ , y ⦂ B ∋ x ⦂ A
 ```
 
+<!--
 The constructors `Z` and `S` correspond roughly to the constructors
 `here` and `there` for the element-of relation `_∈_` on lists.
 Constructor `S` takes an additional parameter, which ensures that
 when we look up a variable that it is not _shadowed_ by another
 variable with the same name to its left in the list.
+-->
+
+构造子 `Z` 和 `S` 大致与列表包含关系 `_∈_` 的 `here` 和 `there` 构造子对应。
+但是构造子 `S` 多取一个参数，来保证查询时我们不会查询一个被**遮盖**的同名变量。
 
 It can be rather tedious to use the `S` constructor, as you have to provide
 proofs that `x ≢ y` each time. For example:
@@ -1550,15 +1905,29 @@ S′ : ∀ {Γ x y A B}
 S′ {x≢y = x≢y} x = S (toWitnessFalse x≢y) x
 ```
 
+<!--
 ### Typing judgment
+-->
 
+### 赋型判断
+
+<!--
 The second judgment is written
+-->
+
+第二种判断写作
 
     Γ ⊢ M ⦂ A
 
+<!--
 and indicates in context `Γ` that term `M` has type `A`.
 Context `Γ` provides types for all the free variables in `M`.
 For example:
+-->
+
+表示在上下文 `Γ` 中，项 `M` 有类型 `A`。
+上下文 `Γ` 为 `M` 中的所有自由变量提供了类型。
+例如：
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "z" ⦂ `ℕ ``
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "s" ⦂ `ℕ ⇒ `ℕ ``
@@ -1567,7 +1936,11 @@ For example:
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ ⊢ ƛ "z" ⇒ ` "s" · (` "s" · ` "z") ⦂  `ℕ ⇒ `ℕ ``
 * `` ∅ ⊢ ƛ "s" ⇒ ƛ "z" ⇒ ` "s" · (` "s" · ` "z") ⦂  (`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ ``
 
+<!--
 Typing is formalised as follows:
+-->
+
+赋型可以如下形式化：
 ```
 infix  4  _⊢_⦂_
 
@@ -1617,9 +1990,14 @@ data _⊢_⦂_ : Context → Term → Type → Set where
     → Γ ⊢ μ x ⇒ M ⦂ A
 ```
 
+<!--
 Each type rule is named after the constructor for the
 corresponding term.
+-->
 
+赋型规则由对应的项的构造子来命名。
+
+<!--
 Most of the rules have a second name, derived from a convention in
 logic, whereby the rule is named after the type connective that it
 concerns; rules to introduce and to eliminate each connective are
@@ -1633,18 +2011,42 @@ construct a value of the type (abstractions yield functions, successor
 and zero yield naturals), while an elimination rule describes how to
 deconstruct a value of the given type (applications use functions,
 case expressions use naturals).
+-->
 
+大多数规则有第二个名字，从逻辑中的惯例得到。规则的名称也可以用类型的连接符中得到，
+引入和消去连接符分别用 `-I` 和 `-E` 表示。
+我们从上往下阅读时，引入和消去的规则一目了然：前者**引入**了一个带有连接符的式子，
+其出现在结论中，而不是条件中；后者**消去**了带有连接符的式子，其出现在条件中，而不是结论中。
+引入规则表示了如何构造一个给定类型的值（抽象产生函数、零和后继产生自然数），而消去规则
+表示了如何析构一个给定类型的值（应用使用函数，匹配表达式使用自然数）。
+
+<!--
 Note also the three places (in `⊢ƛ`, `⊢case`, and `⊢μ`) where the
 context is extended with `x` and an appropriate type, corresponding to
 the three places where a bound variable is introduced.
+-->
 
+
+另外需要注意的是有三处地方（`⊢ƛ`、`⊢case` 和 `⊢μ`），上下文被 `x` 和相应的类型
+所扩充，对应着三处约束变量的引入。
+
+<!--
 The rules are deterministic, in that at most one rule applies to every term.
+-->
 
+这些规则是确定的，对于每一项至多有一条规则使用。
 
 ### Example type derivations {#derivation}
+-->
 
+### 类型推导的例子 {#derivation}
+
+<!--
 Type derivations correspond to trees. In informal notation, here
 is a type derivation for the Church numeral two,
+-->
+
+类型推导对应着树。在非正式的记法中，下面是 Church 数二的类型推导：
 
                             ∋s                     ∋z
                             ------------------ ⊢`  -------------- ⊢`
@@ -1658,18 +2060,32 @@ is a type derivation for the Church numeral two,
     ------------------------------------------------------------- ⊢ƛ
     Γ ⊢ ƛ "s" ⇒ ƛ "z" ⇒ ` "s" · (` "s" · ` "z") ⦂ (A ⇒ A) ⇒ A ⇒ A
 
+<!--
 where `∋s` and `∋z` abbreviate the two derivations,
+-->
+
+其中 `∋s` 和 `∋z` 是下面两个推导的简写：
 
                  ---------------- Z
     "s" ≢ "z"    Γ₁ ∋ "s" ⦂ A ⇒ A
     ----------------------------- S       ------------- Z
     Γ₂ ∋ "s" ⦂ A ⇒ A                       Γ₂ ∋ "z" ⦂ A
 
+<!--
 and where `Γ₁ = Γ , "s" ⦂ A ⇒ A` and `Γ₂ = Γ , "s" ⦂ A ⇒ A , "z" ⦂ A`.
 The typing derivation is valid for any `Γ` and `A`, for instance,
 we might take `Γ` to be `∅` and `A` to be `` `ℕ ``.
+-->
 
+其中 `Γ₁ = Γ , "s" ⦂ A ⇒ A`、`Γ₂ = Γ , "s" ⦂ A ⇒ A , "z" ⦂ A`。
+给出的推导对于任意的 `Γ` 和 `A` 有效，例如，
+我们可以取 `Γ` 为 `∅` 和 `A` 为 `` `ℕ ``。
+
+<!--
 Here is the above typing derivation formalised in Agda:
+-->
+
+上面的推导可以如下用 Agda 形式化：
 ```
 Ch : Type → Type
 Ch A = (A ⇒ A) ⇒ A ⇒ A
@@ -1681,7 +2097,11 @@ Ch A = (A ⇒ A) ⇒ A ⇒ A
   ∋z = Z
 ```
 
+<!--
 Here are the typings corresponding to computing two plus two:
+-->
+
+下面是针对二加二的赋型：
 ```
 ⊢two : ∀ {Γ} → Γ ⊢ two ⦂ `ℕ
 ⊢two = ⊢suc (⊢suc ⊢zero)
@@ -1699,16 +2119,29 @@ Here are the typings corresponding to computing two plus two:
 ⊢2+2 : ∅ ⊢ plus · two · two ⦂ `ℕ
 ⊢2+2 = ⊢plus · ⊢two · ⊢two
 ```
+
+<!--
 In contrast to our earlier examples, here we have typed `two` and `plus`
 in an arbitrary context rather than the empty context; this makes it easy
 to use them inside other binding contexts as well as at the top level.
 Here the two lookup judgments `∋m` and `∋m′` refer to two different
 bindings of variables named `"m"`.  In contrast, the two judgments `∋n` and
 `∋n′` both refer to the same binding of `"n"` but accessed in different
-contexts, the first where `"n"` is the last binding in the context, and
-the second after `"m"` is bound in the successor branch of the case.
+contexts, the first where "n" is the last binding in the context, and
+the second after "m" is bound in the successor branch of the case.
+-->
 
+与之前的例子不同，我们以任意上下文，而不是空上下文来赋型。
+这让我们能够在其他除了顶层之外的上下文中使用这个推导。
+这里的查询判断 `∋m` 和 `∋m′` 指代两个变量 "m" 的绑定。
+作为对比，查询判断 `∋n` 和 `∋n′` 指代同一个变量 "n" 的绑定，但是查询的上下文不同，
+第一次 "n" 出现在在上下文的最后，第二次在 "m" 之后。
+
+<!--
 And here are typings for the remainder of the Church example:
+-->
+
+对 Church 数赋型的余下推导如下：
 ```
 ⊢plusᶜ : ∀ {Γ A} → Γ  ⊢ plusᶜ ⦂ Ch A ⇒ Ch A ⇒ Ch A
 ⊢plusᶜ = ⊢ƛ (⊢ƛ (⊢ƛ (⊢ƛ (⊢` ∋m · ⊢` ∋s · (⊢` ∋n · ⊢` ∋s · ⊢` ∋z)))))
@@ -1727,54 +2160,106 @@ And here are typings for the remainder of the Church example:
 ⊢2+2ᶜ = ⊢plusᶜ · ⊢twoᶜ · ⊢twoᶜ · ⊢sucᶜ · ⊢zero
 ```
 
+<!--
 ### Interaction with Agda
+-->
 
+### 与 Agda 交互
+
+<!--
 Construction of a type derivation may be done interactively.
 Start with the declaration:
+-->
+
+可以交互式地构造类型推导。
+从声明开始：
 
     ⊢sucᶜ : ∅ ⊢ sucᶜ ⦂ `ℕ ⇒ `ℕ
     ⊢sucᶜ = ?
 
+<!--
 Typing C-c C-l causes Agda to create a hole and tell us its expected type:
+-->
+
+使用 C-c C-l 让 Agda 创建一个洞，并且告诉我们期望的类型：
 
     ⊢sucᶜ = { }0
     ?0 : ∅ ⊢ sucᶜ ⦂ `ℕ ⇒ `ℕ
 
+<!--
 Now we fill in the hole by typing C-c C-r. Agda observes that
 the outermost term in `sucᶜ` is `ƛ`, which is typed using `⊢ƛ`. The
 `⊢ƛ` rule in turn takes one argument, which Agda leaves as a hole:
+-->
+
+现在使用 C-c C-r 来填补这个洞。Agda 注意到 `sucᶜ` 最外层的项是 `ƛ`，应该使用 `⊢ƛ` 来赋型。
+`⊢ƛ` 规则需要一个变量，用一个新的洞表示：
 
     ⊢sucᶜ = ⊢ƛ { }1
     ?1 : ∅ , "n" ⦂ `ℕ ⊢ `suc ` "n" ⦂ `ℕ
 
+<!--
 We can fill in the hole by typing C-c C-r again:
+-->
+
+再次使用 C-c C-r 来填补洞：
 
     ⊢sucᶜ = ⊢ƛ (⊢suc { }2)
     ?2 : ∅ , "n" ⦂ `ℕ ⊢ ` "n" ⦂ `ℕ
 
+<!--
 And again:
+-->
+
+再来一次：
 
     ⊢sucᶜ = ⊢ƛ (⊢suc (⊢` { }3))
     ?3 : ∅ , "n" ⦂ `ℕ ∋ "n" ⦂ `ℕ
 
+<!--
 A further attempt with C-c C-r yields the message:
+-->
+
+再次尝试使用 C-c C-r 得到下面的消息：
 
     Don't know which constructor to introduce of Z or S
 
+<!--
 We can fill in `Z` by hand. If we type C-c C-space, Agda will confirm we are done:
+-->
+
+我们使用填入 `Z`。如果我们使用 C-c C-space，Agda 证实我们完成了：
 
     ⊢sucᶜ = ⊢ƛ (⊢suc (⊢` Z))
 
+<!--
 The entire process can be automated using Agsy, invoked with C-c C-a.
+-->
 
+我们也可以使用 C-c C-a，用 Agsy 来自动完成。
+
+<!--
 Chapter [Inference](/Inference/)
 will show how to use Agda to compute type derivations directly.
+-->
 
+在 [Inference](/Inference/) 章节中，我们会展示如何使用 Agda
+来直接计算出类型推导。
 
+<!--
 ### Lookup is injective
+-->
 
+### 查询是单射
+
+<!--
 The lookup relation `Γ ∋ x ⦂ A` is injective, in that for each `Γ` and `x`
 there is at most one `A` such that the judgment holds:
+-->
+
+查询关系 `Γ ∋ x ⦂ A` 是一个单射。 对于所有的 `Γ` 和 `x`，
+至多有一个 `A` 满足这个判断：
+
 ```
 ∋-injective : ∀ {Γ x A B} → Γ ∋ x ⦂ A → Γ ∋ x ⦂ B → A ≡ B
 ∋-injective Z        Z          =  refl
@@ -1783,25 +2268,46 @@ there is at most one `A` such that the judgment holds:
 ∋-injective (S _ ∋x) (S _ ∋x′)  =  ∋-injective ∋x ∋x′
 ```
 
+<!--
 The typing relation `Γ ⊢ M ⦂ A` is not injective. For example, in any `Γ`
 the term `` ƛ "x" ⇒ ` "x" `` has type `A ⇒ A` for any type `A`.
+-->
 
+赋型关系 `Γ ⊢ M ⦂ A` 不是一个单射。例如，在任何 `Γ` 中
+项 `` ƛ "x" ⇒ ` "x" `` 有类型 `A ⇒ A`，`A` 为任何类型。
+
+<!--
 ### Non-examples
+-->
 
+### 非例子
+
+<!--
 We can also show that terms are _not_ typeable.  For example, here is
 a formal proof that it is not possible to type the term
 `` `zero · `suc `zero ``.  It cannot be typed, because doing so
 requires that the first term in the application is both a natural and
 a function:
+-->
+
+我们也可以证明一些项**不是**可赋型的。例如，我们接下来证明项
+`` `zero · `suc `zero `` 是不可赋型的。
+原因在于我们需要使得 `` `zero`` 既是一个函数又是一个自然数。
 
 ```
 nope₁ : ∀ {A} → ¬ (∅ ⊢ `zero · `suc `zero ⦂ A)
 nope₁ (() · _)
 ```
 
+<!--
 As a second example, here is a formal proof that it is not possible to
 type `` ƛ "x" ⇒ ` "x" · ` "x" ``. It cannot be typed, because
 doing so requires types `A` and `B` such that `A ⇒ B ≡ A`:
+-->
+
+第二个例子，我们证明项
+`` ƛ "x" ⇒ ` "x" · ` "x" `` 是不可赋型的。
+原因在于我们需要满足 `A ⇒ B ≡ A` 的两个类型 `A` 和 `B`：
 
 ```
 nope₂ : ∀ {A} → ¬ (∅ ⊢ ƛ "x" ⇒ ` "x" · ` "x" ⦂ A)
@@ -1811,46 +2317,87 @@ nope₂ (⊢ƛ (⊢` ∋x · ⊢` ∋x′))  =  contradiction (∋-injective ∋
   contradiction ()
 ```
 
-
+<!--
 #### Quiz
+-->
 
+#### 小测验
+
+<!--
 For each of the following, give a type `A` for which it is derivable,
 or explain why there is no such `A`.
+-->
+
+对于下面的每一条，如果可以推导，给出类型 `A`，否则说明为什么这样的 `A` 不存在。
 
 1. `` ∅ , "y" ⦂ `ℕ ⇒ `ℕ , "x" ⦂ `ℕ ⊢ ` "y" · ` "x" ⦂ A ``
 2. `` ∅ , "y" ⦂ `ℕ ⇒ `ℕ , "x" ⦂ `ℕ ⊢ ` "x" · ` "y" ⦂ A ``
 3. `` ∅ , "y" ⦂ `ℕ ⇒ `ℕ ⊢ ƛ "x" ⇒ ` "y" · ` "x" ⦂ A ``
 
+<!--
 For each of the following, give types `A`, `B`, and `C` for which it is derivable,
 or explain why there are no such types.
+-->
+
+对于下面的每一条，如果可以推导，给出类型 `A`、`B` 和 `C`，否则说明为什么这样的类型 不存在。
 
 1. `` ∅ , "x" ⦂ A ⊢ ` "x" · ` "x" ⦂ B ``
 2. `` ∅ , "x" ⦂ A , "y" ⦂ B ⊢ ƛ "z" ⇒ ` "x" · (` "y" · ` "z") ⦂ C ``
 
 
+<!--
 #### Exercise `⊢mul` (recommended)
+-->
 
+#### 练习 `⊢mul` （推荐）
+
+<!--
 Using the term `mul` you defined earlier, write out the derivation
 showing that it is well typed.
+-->
 
+使用你之前写出的项 `mul`，给出其良类型的推导。
+
+<!--
 ```
 -- Your code goes here
 ```
+-->
+
+```
+-- 请将代码写在此处。
+```
 
 
+<!--
 #### Exercise `⊢mulᶜ` (practice)
+-->
+#### 练习 `⊢mulᶜ` （习题）
 
+<!--
 Using the term `mulᶜ` you defined earlier, write out the derivation
 showing that it is well typed.
+-->
 
+使用你之前写出的项 `mulᶜ`，给出其良类型的推导。
+
+<!--
 ```
 -- Your code goes here
 ```
+-->
 
+```
+-- 请将代码写在此处。
+```
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章中使用了以下 Unicode：
 
     ⇒  U+21D2  RIGHTWARDS DOUBLE ARROW (\=>)
     ƛ  U+019B  LATIN SMALL LETTER LAMBDA WITH STROKE (\Gl-)
@@ -1869,5 +2416,10 @@ This chapter uses the following unicode:
     😇  U+1F607  SMILING FACE WITH HALO
     😈  U+1F608  SMILING FACE WITH HORNS
 
+<!--
 We compose reduction `—→` from an em dash `—` and an arrow `→`.
 Similarly for reflexive and transitive closure `—↠`.
+-->
+
+我们用短划 `—` 和箭头 `→` 来构造规约 `—→`。
+自反传递闭包 `—↠` 也类似。
