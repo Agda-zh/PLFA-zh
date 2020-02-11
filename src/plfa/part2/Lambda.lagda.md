@@ -29,7 +29,7 @@ recursive function definitions.
 
 **λ-演算**，最早由逻辑学家 Alonzo Church 发表，是一种只含有三种构造的演算——
 变量（Variable）、抽象（Abstraction）与应用（Application）。
-**λ-演算**含括了**函数抽象**（Functional Abstract）的核心概念。这样的概念
+**λ-演算**刻画了**函数抽象**（Functional Abstract）的核心概念。这样的概念
 以函数、过程和方法的形式，在基本上每一个编程语言中都有体现。
 简单类型的 λ-演算 （Simply-Typed Lambda Calculus，简写为 STLC）是 λ-演算的一种变体，
 由 Church 在 1940 年发表。
@@ -47,8 +47,8 @@ progress and preservation.  Following chapters will look at a number
 of variants of lambda calculus.
 -->
 
-在这个章节中，我们将形式化简单类型的 λ-演算，给出它的语法、小步语义和类型规则。
-在下一个章节 [Properties](/Properties/) 中，我们将
+在本章中，我们将形式化简单类型的 λ-演算，给出它的语法、小步语义和类型规则。
+在下一章 [Properties](/Properties/) 中，我们将
 证明它的主要性质，包括可进性与保型性。
 后续的章节将研究 λ-演算的不同变体。
 
@@ -63,11 +63,11 @@ partly because names are easier than indices to read,
 and partly because the development is more traditional.
 -->
 
-请注意，我们在这里使用的方法**不是**形式化的推荐方法。使用 de Bruijn 因子和
+请注意，我们在这里使用的方法**不是**将它形式化的推荐方法。使用 de Bruijn 索引和
 固有类型的项（我们会在 [DeBruijn](/DeBruijn/) 章节中进一步研究），
 可以让我们的形式化更简洁。
-尽管如此，我们首先使用带名字的变量和外在类型的项来表示 λ-演算。
-这样一方面是因为这样表述的项更易于阅读，另一方面是因为这样的表述更加传统。
+不过，我们先从使用带名字的变量和外在类型的项来表示 λ-演算开始。
+一方面是因为这样表述的项更易于阅读，另一方面是因为这样的表述更加传统。
 
 <!--
 The development in this chapter was inspired by the corresponding
@@ -82,11 +82,11 @@ particular, we will be able to show (twice!) that two plus two is
 four.
 -->
 
-这一章节由《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language
-Foundations_）的对应的 _Stlc_ 章节所启发。
-我们的不同之处在于使用显式的方法来表示上下文（由表示符和类型的有序对组成的列表），
-而不是偏映射（从表示符到类型的偏函数）。
-这样的做法与后续的 de Bruijn 因子表示方法能更好的对应。
+这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language
+Foundations_）中对应的 _Stlc_ 的内容。
+我们的不同之处在于使用显式的方法来表示上下文（由标识符和类型的序对组成的列表），
+而不是偏映射（从标识符到类型的偏函数）。
+这样的做法与后续的 de Bruijn 索引表示方法能更好的对应。
 我们使用自然数作为基础类型，而不是布尔值，这样我们可以表示更复杂的例子。
 特别的是，我们将可以证明（两次！）二加二得四。
 
@@ -175,7 +175,7 @@ correspond to introduction rules and deconstructors to eliminators.
 Here is the syntax of terms in Backus-Naur Form (BNF):
 -->
 
-下面是以 Backus-Naur 形式（BNF）给出的语法：
+下面是以 Backus-Naur 范式（BNF）给出的语法：
 
     L, M, N  ::=
       ` x  |  ƛ x ⇒ N  |  L · M  |
@@ -186,7 +186,7 @@ Here is the syntax of terms in Backus-Naur Form (BNF):
 And here it is formalised in Agda:
 -->
 
-而下面是用 Agda 的形式化：
+而下面是用 Agda 形式化后的代码：
 
 ```
 Id : Set
@@ -214,7 +214,7 @@ then successor, and tightest of all is the constructor for variables.
 Case expressions are self-bracketing.
 -->
 
-我们用字符串来表示表示符。
+我们用字符串来表示标识符。
 我们使用的优先级使得 λ-抽象和不动点结合的最不紧密，其次是应用，再是后继，
 结合得最紧密的是变量的构造子。
 匹配表达式自带了括号。
@@ -261,7 +261,7 @@ FIXME: shadow 应该翻译成什么？
 `_+_` 相似。
 在这里，变量「m」被约束了两次，一个在 λ-抽象中，另一次在匹配表达式的后继分支中。
 第一次使用的「m」指代前者，第二次使用的指代后者。
-任何在后继分支中的「m」必须指代后者，因此我们称之为后者**遮盖**（Shadow）了前者。
+任何在后继分支中的「m」必须指代后者，因此我们称之为后者**屏蔽**（Shadow）了前者。
 后面我们会证实二加二得四，也就是说下面的项
 
     plus · two · two
@@ -270,7 +270,7 @@ FIXME: shadow 应该翻译成什么？
 reduces to `` `suc `suc `suc `suc `zero ``.
 -->
 
-规约至 `` `suc `suc `suc `suc `zero ``。
+会规约为 `` `suc `suc `suc `suc `zero ``。
 
 <!--
 As a second example, we use higher-order functions to represent
@@ -283,10 +283,10 @@ and a term that computes two plus two:
 -->
 
 第二个例子里，我们使用高阶函数来表示自然数。
-具体来说，数字 _n_ 是有一个取两个参数的函数来表示，这个函数将第一个参数
+具体来说，数字 _n_ 由一个接受两个参数的函数来表示，这个函数将第一个参数
 应用于第二个参数上 _n_ 次。
 这样的表示方法叫做自然数的 **Church 表示法**。
-下面是一个项的例子：Church 表示法的数字二、一个将两个用 Church 表示法的表示数字相加的函数、
+下面是一个项的例子：Church 表示法的数字二、一个将两个用 Church 表示法表示的数字相加的函数、
 一个计算后继的函数和一个计算二加二的项：
 ```
 twoᶜ : Term
@@ -313,12 +313,12 @@ Again, later we will confirm that two plus two is four,
 in other words that the term
 -->
 
-Church 法表示的二取两个参数 `s` 和 `z`，将 `s` 运用于 `z` 两次。
+Church 法表示的二取两个参数 `s` 和 `z`，将 `s` 应用于 `z` 两次。
 加法取两个数 `m` 和 `n`，函数 `s` 和参数 `z`，使用 `m` 将 `s` 应用于
 使用 `n` 应用于 `s` 和 `z` 的结果。因此 `s` 对于 `z` 被应用了 `m` 加 `n` 次。
 为了方便起见，我们定义一个计算后继的函数。
-将一个 Church 数转化为对应的自然数的，我们使用其应用于 `sucᶜ` 函数和自然数零。
-同样，我们后续会证实二加二得四，也就是说，下面的项
+为了将一个 Church 数转化为对应的自然数，我们将它应用到 `sucᶜ` 函数和自然数零上。
+同样，我们之后会证明二加二得四，也就是说，下面的项
 
     plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero
 
@@ -326,7 +326,7 @@ Church 法表示的二取两个参数 `s` 和 `z`，将 `s` 运用于 `z` 两次
 reduces to `` `suc `suc `suc `suc `zero ``.
 -->
 
-规约至 `` `suc `suc `suc `suc `zero ``。
+会规约为 `` `suc `suc `suc `suc `zero ``。
 
 
 <!--
@@ -368,7 +368,7 @@ definition may use `plusᶜ` as defined earlier (or may not
 
 写出一个项来定义两个用 Church 法表示的自然数的乘法。
 你可以使用之前定义的 `plusᶜ`。
-（你也可以不使用，使用或不使用都有好的表示方法）
+（当然也可以不用，用或不使都有很好的表示方法）
 
 <!--
 ```
@@ -420,7 +420,7 @@ C-c C-n to normalise the term
 -->
 
 我们希望只在两个参数不相等的时候应用这个函数；
-我们假设一个空类型 `⊥` 的项 `impossible`，用来表示第二种情况不会发生。
+我们引入一个空类型 `⊥` 的项 `impossible` 作为公设，用来表示第二种情况不会发生。
 如果我们使用 C-c C-n 来范式化这个项
 
     ƛ′ two ⇒ two
@@ -429,6 +429,7 @@ C-c C-n to normalise the term
 Agda will return an answer warning us that the impossible has occurred:
 -->
 
+Agda 会警告我们出现了不可能的情况。
     ⊥-elim (plfa.part2.Lambda.impossible (`` `suc (`suc `zero)) (`suc (`suc `zero)) ``)
 
 <!--
@@ -438,7 +439,7 @@ evidence of _any_ proposition whatsoever, regardless of its truth.
 -->
 
 假设一件不可能的事情是一个有用的方法，但是我们必须加以注意。因为这样的假设能让我们
-不管真假构造出**任何的**命题。
+构造出**任何**命题，不论真假。
 
 <!--
 The definition of `plus` can now be written as follows:
@@ -469,7 +470,7 @@ FIXME: 形式化？正式？
 ### Formal vs informal
 -->
 
-### 正式与非正式
+### 形式化与非正式
 
 <!--
 In informal presentation of formal semantics, one uses choice of
@@ -477,7 +478,7 @@ variable name to disambiguate and writes `x` rather than `` ` x ``
 for a term that is a variable. Agda requires we distinguish.
 -->
 
-在形式化语义的非正式表达中，我们使用变量名来消除歧义，用 `x` 而不是 `` ` x ``
+在形式化语义的非正式表述中，我们使用变量名来消除歧义，用 `x` 而不是 `` ` x ``
 来表示一个变量项。Agda 要求我们对两者进行区分。
 
 <!--
@@ -493,7 +494,7 @@ meta-language, Agda.
 
 相似地来说，非正式的表达在**对象语言**（Object Language，我们正在描述的语言）
 和**元语言**（Meta-Language，我们用来描述对象语言的语言）
-中使用相同的记法来表示函数类型、λ-抽象和函数应用，相信读者可以通关上下文区分两种语言。
+中使用相同的记法来表示函数类型、λ-抽象和函数应用，相信读者可以通过上下文区分两种语言。
 而 Agda 并不能做到这样，因此我们在目标语言中使用 `ƛ x ⇒ N` 和 `L · M` ，
 与我们使用的元语言 Agda 中的 `λ x → N` 和 `L M` 相对。
 
@@ -501,7 +502,7 @@ meta-language, Agda.
 ### Bound and free variables
 -->
 
-### 约束和自由变量
+### 约束变量与自由变量
 
 <!--
 In an abstraction `ƛ x ⇒ N` we call `x` the _bound_ variable
@@ -510,8 +511,8 @@ of lambda calculus is that consistent renaming of bound variables
 leaves the meaning of a term unchanged.  Thus the five terms
 -->
 
-在抽象 `ƛ x ⇒ N` 中，我们把 `x` 叫做**约束**变量，`N` 叫做抽象**体**。
-λ-演算一个重要的特性是将约束变量连贯一致的重命名不改变一个项的意义。
+在抽象 `ƛ x ⇒ N` 中，我们把 `x` 叫做**约束变量**，`N` 叫做**抽象体**。
+λ-演算一个重要的特性是将相同的约束变量同时重命名不会改变一个项的意义。
 因此下面的五个项
 
 * `` ƛ "s" ⇒ ƛ "z" ⇒ ` "s" · (` "s" · ` "z") ``
@@ -526,8 +527,8 @@ by Haskell Curry, who used the Greek letter `α` (_alpha_) to label such rules,
 this equivalence relation is called _alpha renaming_.
 -->
 
-可以认为是完全相等的。使用 Haskell Curry 引入的惯例，这样的规则
-用希腊字母 `α` （_alpha_） 来表示，因此这样的相等关系也叫做 **α-重命名**。
+都可以认为是等价的。使用 Haskell Curry 引入的约定，这样的规则
+用希腊字母 `α` （_alpha_） 来表示，因此这样的等价关系也叫做 **α-重命名**。
 
 <!--
 As we descend from a term into its subterms, variables
@@ -563,8 +564,8 @@ _open_.  Of the three terms above, the first is closed and the other
 two are open.  We will focus on reduction of closed terms.
 -->
 
-我们将没有自由变量的项叫做**封闭的**（Closed）项，否则它是一个**开放的**（Open）项。
-上面的三个项中，第一个是封闭的，剩下两个是开放的。我们在讨论规约时，会注重封闭的项。
+我们将没有自由变量的项叫做**闭项**，否则它是一个**开项**。
+上面的三个项中，第一个是闭项，剩下两个是开项。我们在讨论规约时，会注重闭项。
 
 <!--
 Different occurrences of a variable may be bound and free.
@@ -592,7 +593,7 @@ avoid confusions that may arise if bound and free variables have the
 same names.
 -->
 
-在此之中 `y` 是约束变量，`x` 是自由变量。**Barendregt 惯例**，一个常见的惯例，使用 α-重命名
+在此之中 `y` 是约束变量，`x` 是自由变量。**Barendregt 约定**，一个常见的约定，使用 α-重命名
 来保证约束变量与自由变量完全不同。这样可以避免因为约束变量和自由变量名称相同而造成的混乱。
 
 <!--
