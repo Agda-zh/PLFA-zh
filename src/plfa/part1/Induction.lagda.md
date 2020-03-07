@@ -147,6 +147,7 @@ and are associative, commutative, and distribute over one another.
 {:/}
 
 请给出另一对运算符，它们拥有一个幺元，满足结合律、交换律，且其中一个对另一个满足分配律。
+（你不必证明这些性质）
 
 {::comment}
 ```
@@ -164,6 +165,7 @@ associative but is not commutative.
 {:/}
 
 请给出一个运算符的例子，它拥有幺元、满足结合律但不满足交换律。
+（你不必证明这些性质）
 
 {::comment}
 ```
@@ -1238,8 +1240,8 @@ time we are concerned with judgments asserting associativity:
 {::comment}
 Now, we apply the rules to all the judgments we know about.  The base
 case tells us that `(zero + n) + p ≡ zero + (n + p)` for every natural
-`n` and `p`.  The inductive case tells us that if `(m + n) + p ≡ m +
-(n + p)` (on the day before today) then
+`n` and `p`.  The inductive case tells us that if
+`(m + n) + p ≡ m + (n + p)` (on the day before today) then
 `(suc m + n) + p ≡ suc m + (n + p)` (today).
 We didn't know any judgments about associativity before today, so that
 rule doesn't give us any new judgments:
@@ -1821,9 +1823,9 @@ Show the following three laws
 
 证明下列三条定律
 
-    m ^ (n + p) ≡ (m ^ n) * (m ^ p)
-    (m * n) ^ p ≡ (m ^ p) * (n ^ p)
-    m ^ (n * p) ≡ (m ^ n) ^ p
+     m ^ (n + p) ≡ (m ^ n) * (m ^ p)  (^-distribˡ-+-*)
+     (m * n) ^ p ≡ (m ^ p) * (n ^ p)  (^-distribʳ-*)
+     (m ^ n) ^ p ≡ m ^ (n * p)        (^-*-assoc)
 
 {::comment}
 for all `m`, `n`, and `p`.

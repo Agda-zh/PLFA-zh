@@ -1505,10 +1505,13 @@ and back is the identity:
 
 {::comment}
 (Hint: For each of these, you may first need to prove related
+properties of `One`. Also, you may need to prove that `1` is
+less or equal to the result of `from b`.)
 properties of `One`.)
 {:/}
 
-（提示：对于每一条习题，先从 `One` 的性质开始）
+（提示：对于每一条习题，先从 `One` 的性质开始。此外，你或许还需要证明
+`1` 小于或等于 `from b` 的结果。）
 
 {::comment}
 ```

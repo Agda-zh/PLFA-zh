@@ -226,10 +226,13 @@ data Tri : Set where
 {::comment}
 Let `B` be a type indexed by `Tri`, that is `B : Tri → Set`.
 Show that `∀ (x : Tri) → B x` is isomorphic to `B aa × B bb × B cc`.
+Hint: you will need to postulate a version of extensionality that
+works for dependent functions.
 {:/}
 
 令 `B` 作为由 `Tri` 索引的一个类型，也就是说 `B : Tri → Set`。
 证明 `∀ (x : Tri) → B x` 和 `B aa × B bb × B cc` 是同构的。
+提示：你需要引入一个可应用于依赖函数的外延性公设。
 
 
 {::comment}
@@ -881,6 +884,19 @@ Using the above, establish that there is an isomorphism between `ℕ` and
 `∃[ b ](Can b)`.
 
 使用上述，证明 `ℕ` 与 `∃[ b ](Can b)` 之间存在同构。
+
+我们建议证明以下引理，它描述了对于给定的二进制数 `b`，`One b` 只有一个证明，
+`Can b`，也是如此。
+
+    ≡One : ∀{b : Bin} (o o' : One b) → o ≡ o'
+
+    ≡Can : ∀{b : Bin} (cb : Can b) (cb' : Can b) → cb ≡ cb'
+
+Many of the alternatives for proving `to∘from` turn out to be tricky.
+However, the proof can be straightforward if you use the following lemma,
+which is a corollary of `≡Can`.
+
+    proj₁≡→Can≡ : {cb cb′ : ∃[ b ](Can b)} → proj₁ cb ≡ proj₁ cb′ → cb ≡ cb′
 
 {::comment}
 ```

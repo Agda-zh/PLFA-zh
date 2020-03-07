@@ -742,8 +742,8 @@ Now that naming is resolved, let's unpack the first three cases:
 
         ∅ ⊢ V ⦂ B
         Γ , x ⦂ A , y ⦂ B ⊢ N ⦂ C
-        ------------------------------------
-        Γ , x ⦂ A , y ⦂ B ⊢ N [ y := V ] ⦂ C
+        ----------------------------
+        Γ , x ⦂ A ⊢ N [ y := V ] ⦂ C
 
     The typing rule for abstractions then yields the required conclusion.
 
@@ -807,7 +807,7 @@ preserve ((⊢ƛ ⊢N) · ⊢V)          (β-ƛ VV)         =  subst ⊢V ⊢N
 preserve ⊢zero                   ()
 preserve (⊢suc ⊢M)               (ξ-suc M—→M′)    =  ⊢suc (preserve ⊢M M—→M′)
 preserve (⊢case ⊢L ⊢M ⊢N)        (ξ-case L—→L′)   =  ⊢case (preserve ⊢L L—→L′) ⊢M ⊢N
-preserve (⊢case ⊢zero ⊢M ⊢N)     β-zero           =  ⊢M
+preserve (⊢case ⊢zero ⊢M ⊢N)     (β-zero)         =  ⊢M
 preserve (⊢case (⊢suc ⊢V) ⊢M ⊢N) (β-suc VV)       =  subst ⊢V ⊢N
 preserve (⊢μ ⊢M)                 (β-μ)            =  subst (⊢μ ⊢M) ⊢M
 ```
@@ -841,8 +841,8 @@ Let's unpack the cases for two of the reduction rules:
 * Rule `β-ƛ`.  We have
 
       Value V
-      ----------------------------
-      (ƛ x ⇒ N) · V ⊢ N [ x := V ]
+      -----------------------------
+      (ƛ x ⇒ N) · V —→ N [ x := V ]
 
   where the left-hand side is typed by
 
@@ -967,7 +967,7 @@ remaining.  There are two possibilities:
 
   + Term `L` is a value, so we are done. We return the
     trivial reduction sequence `L —↠ L`, evidence that `L` is
-    well-typed, and the evidence that `L` is a value.
+    well typed, and the evidence that `L` is a value.
 
   + Term `L` steps to another term `M`.  Preservation provides
     evidence that `M` is also well typed, and we recursively invoke
@@ -1006,7 +1006,7 @@ _ : eval (gas 3) ⊢sucμ ≡
 _ = refl
 ```
 
-Similarly, we can use Agda to compute the reductions sequences given
+Similarly, we can use Agda to compute the reduction sequences given
 in the previous chapter.  We start with the Church numeral two
 applied to successor and zero.  Supplying 100 steps of gas is more than enough:
 ```

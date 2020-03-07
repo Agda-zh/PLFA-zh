@@ -479,18 +479,16 @@ Including the line
 {::comment}
 tells Agda that `ℕ` corresponds to the natural numbers, and hence one
 is permitted to type `0` as shorthand for `zero`, `1` as shorthand for
-`suc zero`, `2` as shorthand for `suc (suc zero)`, and so on.  The
-declaration is not permitted unless the type given has exactly two
-constructors, one with no arguments (corresponding to zero) and
-one with a single argument of the same type given in the pragma
-(corresponding to successor).
+`suc zero`, `2` as shorthand for `suc (suc zero)`, and so on. The pragma
+must be given a previously declared type (in this case `ℕ`) with
+precisely two constructors, one with no arguments (in this case `zero`),
+and one with a single argument of the given type (in this case `suc`).
 {:/}
 
 这一行告诉 Agda 数据类型 `ℕ` 对应了自然数，然后编写者就可以将 `zero` 简写
 为 `0`，将 `suc zero` 简写为 `1`，将 `suc (suc zero)` 简写为 `2` 了，以此类推。
-只有在给出的数据类型有且只有两个构造子，其中一个没有参数（对应零），另一个
-仅取一个和被定义的数据类型一样的参数（对应后继数）的时候，这条声明
-才是合乎规定的。
+必须要向编译指令给出之前声明的类型（本例中为 `ℕ`），该类型有且只有两个构造子，
+其中一个没有参数（本例中为 `zero`），另一个只接受一个所给定类型的参数（本例中为 `suc`）。
 
 {::comment}
 As well as enabling the above shorthand, the pragma also enables a
@@ -831,10 +829,10 @@ other word for evidence, which we will use interchangeably, is _proof_.
 #### 练习 `+-example`（实践） {#plus-example}
 
 {::comment}
-Compute `3 + 4`, writing out your reasoning as a chain of equations.
+Compute `3 + 4`, writing out your reasoning as a chain of equations, using the equations for `+`.
 {:/}
 
-计算 `3 + 4`，将你的推导过程写成等式链。
+计算 `3 + 4`，将你的推导过程写成等式链，为 `+` 使用等式。
 
 {::comment}
 ```
@@ -948,10 +946,12 @@ it can easily be inferred from the corresponding term.
 #### 练习 `*-example`（实践） {#times-example}
 
 {::comment}
-Compute `3 * 4`, writing out your reasoning as a chain of equations.
+Compute `3 * 4`, writing out your reasoning as a chain of equations, using the equations for `*`.
+(You do not need to step through the evaluation of `+`.)
 {:/}
 
-计算 `3 * 4`，将你的推导过程写成等式链。
+计算 `3 * 4`，将你的推导过程写成等式链，为 `*` 使用等式。
+（不必写出 `+` 求值的每一步。）
 
 {::comment}
 ```
@@ -1092,10 +1092,10 @@ _ =
 ```
 
 {::comment}
-Exercise `∸-examples` (recommended)
+#### Exercise `∸-example₁` and `∸-example₂` (recommended) {#monus-examples}
 {:/}
 
-练习 `∸-examples`（推荐） {#monus-examples}
+练习 `∸-example₁` 和 `∸-example₂`（推荐） {#monus-examples}
 
 {::comment}
 Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equations.
@@ -1218,7 +1218,7 @@ since the same idea was previously proposed by Moses Schönfinkel in
 the 1920's.  I was told a joke: "It should be called schönfinkeling,
 but currying is tastier". Only later did I learn that the explanation
 of the misattribution was itself a misattribution.  The idea actually
-appears in the _Begriffschrift_ of Gottlob Frege, published in 1879.
+appears in the _Begriffsschrift_ of Gottlob Frege, published in 1879.
 {:/}
 
 柯里化是以哈斯凯尔·柯里（Haskell Curry）的名字命名的，编程语言 Haskell 也是。
