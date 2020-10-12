@@ -53,12 +53,16 @@ four.
 ## Imports
 
 ```
-open import Relation.Binary.PropositionalEquality using (_≡_; _≢_; refl)
-open import Data.String using (String; _≟_)
-open import Data.Nat using (ℕ; zero; suc)
+open import Data.Bool using (T; not)
 open import Data.Empty using (⊥; ⊥-elim)
-open import Relation.Nullary using (Dec; yes; no; ¬_)
 open import Data.List using (List; _∷_; [])
+open import Data.Nat using (ℕ; zero; suc)
+open import Data.Product using (∃-syntax; _×_)
+open import Data.String using (String; _≟_)
+open import Relation.Nullary using (Dec; yes; no; ¬_)
+open import Relation.Nullary.Decidable using (⌊_⌋; False; toWitnessFalse)
+open import Relation.Nullary.Negation using (¬?)
+open import Relation.Binary.PropositionalEquality using (_≡_; _≢_; refl)
 ```
 
 ## Syntax of terms
@@ -582,7 +586,7 @@ replaces the formal parameter by the actual parameter.
 
 If a term is a value, then no reduction applies; conversely,
 if a reduction applies to a term then it is not a value.
-We will show in the next chapter that 
+We will show in the next chapter that
 this exhausts the possibilities: every well-typed term
 either reduces or is a value.
 
@@ -788,28 +792,33 @@ while if the top two lines stand for a single reduction
 step and the bottom two stand for zero or more reduction
 steps it is called the diamond property. In symbols:
 
-    confluence : ∀ {L M N} → ∃[ P ]
-      ( ((L —↠ M) × (L —↠ N))
-        --------------------
-      → ((M —↠ P) × (N —↠ P)) )
+```
+postulate
+  confluence : ∀ {L M N}
+    → ((L —↠ M) × (L —↠ N))
+      --------------------
+    → ∃[ P ] ((M —↠ P) × (N —↠ P))
 
-    diamond : ∀ {L M N} → ∃[ P ]
-      ( ((L —→ M) × (L —→ N))
-        --------------------
-      → ((M —↠ P) × (N —↠ P)) )
+  diamond : ∀ {L M N}
+    → ((L —→ M) × (L —→ N))
+      --------------------
+    → ∃[ P ] ((M —↠ P) × (N —↠ P))
+```
 
 The reduction system studied in this chapter is deterministic.
 In symbols:
 
-    deterministic : ∀ {L M N}
-      → L —→ M
-      → L —→ N
-        ------
-      → M ≡ N
+```
+postulate
+  deterministic : ∀ {L M N}
+    → L —→ M
+    → L —→ N
+      ------
+    → M ≡ N
+```
 
 It is easy to show that every deterministic relation satisfies
-the diamond property, and that every relation that satisfies
-the diamond property is confluent.  Hence, all the reduction
+the diamond and confluence properties. Hence, all the reduction
 systems studied in this text are trivially confluent.
 
 
@@ -1081,6 +1090,26 @@ Constructor `S` takes an additional parameter, which ensures that
 when we look up a variable that it is not _shadowed_ by another
 variable with the same name to its left in the list.
 
+It can be rather tedious to use the `S` constructor, as you have to provide
+proofs that `x ≢ y` each time. For example:
+
+```
+_ : ∅ , "x" ⦂ `ℕ ⇒ `ℕ , "y" ⦂ `ℕ , "z" ⦂ `ℕ ∋ "x" ⦂ `ℕ ⇒ `ℕ
+_ = S (λ()) (S (λ()) Z)
+```
+
+Instead, we'll use a "smart constructor", which uses [proof by reflection]({{ site.baseurl }}/Decidable/#proof-by-reflection) to check the inequality while type checking:
+
+```
+S′ : ∀ {Γ x y A B}
+   → {x≢y : False (x ≟ y)}
+   → Γ ∋ x ⦂ A
+     ------------------
+   → Γ , y ⦂ B ∋ x ⦂ A
+
+S′ {x≢y = x≢y} x = S (toWitnessFalse x≢y) x
+```
+
 ### Typing judgment
 
 The second judgment is written
@@ -1104,13 +1133,13 @@ infix  4  _⊢_⦂_
 
 data _⊢_⦂_ : Context → Term → Type → Set where
 
-  -- Axiom 
+  -- Axiom
   ⊢` : ∀ {Γ x A}
     → Γ ∋ x ⦂ A
       -----------
     → Γ ⊢ ` x ⦂ A
 
-  -- ⇒-I 
+  -- ⇒-I
   ⊢ƛ : ∀ {Γ x N A B}
     → Γ , x ⦂ A ⊢ N ⦂ B
       -------------------
@@ -1208,7 +1237,7 @@ Ch A = (A ⇒ A) ⇒ A ⇒ A
 ⊢twoᶜ : ∀ {Γ A} → Γ ⊢ twoᶜ ⦂ Ch A
 ⊢twoᶜ = ⊢ƛ (⊢ƛ (⊢` ∋s · (⊢` ∋s · ⊢` ∋z)))
   where
-  ∋s = S (λ()) Z
+  ∋s = S′ Z
   ∋z = Z
 ```
 
@@ -1221,11 +1250,11 @@ Here are the typings corresponding to computing two plus two:
 ⊢plus = ⊢μ (⊢ƛ (⊢ƛ (⊢case (⊢` ∋m) (⊢` ∋n)
          (⊢suc (⊢` ∋+ · ⊢` ∋m′ · ⊢` ∋n′)))))
   where
-  ∋+  = (S (λ()) (S (λ()) (S (λ()) Z)))
-  ∋m  = (S (λ()) Z)
+  ∋+  = S′ (S′ (S′ Z))
+  ∋m  = S′ Z
   ∋n  = Z
   ∋m′ = Z
-  ∋n′ = (S (λ()) Z)
+  ∋n′ = S′ Z
 
 ⊢2+2 : ∅ ⊢ plus · two · two ⦂ `ℕ
 ⊢2+2 = ⊢plus · ⊢two · ⊢two
@@ -1236,17 +1265,17 @@ to use them inside other binding contexts as well as at the top level.
 Here the two lookup judgments `∋m` and `∋m′` refer to two different
 bindings of variables named `"m"`.  In contrast, the two judgments `∋n` and
 `∋n′` both refer to the same binding of `"n"` but accessed in different
-contexts, the first where "n" is the last binding in the context, and
-the second after "m" is bound in the successor branch of the case.
+contexts, the first where `"n"` is the last binding in the context, and
+the second after `"m"` is bound in the successor branch of the case.
 
 And here are typings for the remainder of the Church example:
 ```
 ⊢plusᶜ : ∀ {Γ A} → Γ  ⊢ plusᶜ ⦂ Ch A ⇒ Ch A ⇒ Ch A
 ⊢plusᶜ = ⊢ƛ (⊢ƛ (⊢ƛ (⊢ƛ (⊢` ∋m · ⊢` ∋s · (⊢` ∋n · ⊢` ∋s · ⊢` ∋z)))))
   where
-  ∋m = S (λ()) (S (λ()) (S (λ()) Z))
-  ∋n = S (λ()) (S (λ()) Z)
-  ∋s = S (λ()) Z
+  ∋m = S′ (S′ (S′ Z))
+  ∋n = S′ (S′ Z)
+  ∋s = S′ Z
   ∋z = Z
 
 ⊢sucᶜ : ∀ {Γ} → Γ ⊢ sucᶜ ⦂ `ℕ ⇒ `ℕ

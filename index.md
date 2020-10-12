@@ -1,7 +1,7 @@
 ---
 title          : 目录
 layout         : page
-translators    : ["Rongxiao Fu"]
+translators    : ["Rongxiao Fu", "Oling Cat"]
 ---
 
 [本书][PLFA-zh]是 Philip Wadler 和 Wen Kokke 所著的《Programming Language Foundations in Agda》的中文翻译。英文原书请见 [PLFA]。
@@ -14,7 +14,7 @@ This is a Chinese translation of "Programming Language Foundations in Agda" by P
 由于译者水平有限，错漏之处在所难免，欢迎读者提出修改建议。如有问题可在 [Issue]
 发起讨论或直接发起 PR。项目源码可访问 [Github][Github-zh] 获取。
 
-以下为原书主页内容：
+**以下为原书主页内容：**
 
 ---
 
@@ -100,6 +100,8 @@ Pull requests are encouraged.
   - [Bisimulation]({{ site.baseurl }}/Bisimulation/): Relating reductions systems
   - [Inference]({{ site.baseurl }}/Inference/): Bidirectional type inference
   - [Untyped]({{ site.baseurl }}/Untyped/): Untyped lambda calculus with full normalisation
+  - [Confluence]({{ site.baseurl }}/Confluence/): Confluence of untyped lambda calculus
+  - [BigStep]({{ site.baseurl }}/BigStep/): Big-step semantics of untyped lambda calculus
 --->
 
 {%- assign Lambda = site.pages | where:"permalink", "/Lambda/"  | first -%}
@@ -109,6 +111,8 @@ Pull requests are encouraged.
 {%- assign Bisimulation = site.pages | where:"permalink", "/Bisimulation/"  | first -%}
 {%- assign Inference = site.pages | where:"permalink", "/Inference/"  | first -%}
 {%- assign Untyped = site.pages | where:"permalink", "/Untyped/"  | first -%}
+{%- assign Confluence = site.pages | where:"permalink", "/Confluence/"  | first -%}
+{%- assign BigStep = site.pages | where:"permalink", "/BigStep/"  | first -%}
 
 ## 第二分册：编程语言基础
 
@@ -119,68 +123,107 @@ Pull requests are encouraged.
   - [Bisimulation]({{ site.baseurl }}/Bisimulation/) : 关系归约系统 <span class="progress" >{{ Bisimulation.progress | ceil }}</span>
   - [Inference]({{ site.baseurl }}/Inference/): 双向类型推断 <span class="progress" >{{ Inference.progress | ceil }}</span>
   - [Untyped]({{ site.baseurl }}/Untyped/): 无类型 λ-演算及其完整范式 <span class="progress" >{{ Untyped.progress | ceil }}</span>
+  - [Confluence]({{ site.baseurl }}/Confluence/): 无类型 λ-演算的汇合性 <span class="progress" >{{ Confluence.progress | ceil }}</span>
+  - [BigStep]({{ site.baseurl }}/BigStep/): 无类型 λ-演算的大步语义 <span class="progress" >{{ BigStep.progress | ceil }}</span>
+
+<!--
+## Part 3: Denotational Semantics
+
+  - [Denotational]({{ site.baseurl }}/Denotational/): Denotational semantics of untyped lambda calculus
+  - [Compositional]({{ site.baseurl }}/Compositional/): The denotational semantics is compositional
+  - [Soundness]({{ site.baseurl }}/Soundness/): Soundness of reduction with respect to denotational semantics
+  - [Adequacy]({{ site.baseurl }}/Adequacy/): Adequacy of denotational semantics with respect to operational semantics
+  - [ContextualEquivalence]({{ site.baseurl }}/ContextualEquivalence/): Denotational equality implies contextual equivalence
+-->
+
+## 第三分册：指称语义
+
+{%- assign Denotational = site.pages | where:"permalink", "/Denotational/"  | first -%}
+{%- assign Compositional = site.pages | where:"permalink", "/Compositional/"  | first -%}
+{%- assign Soundness = site.pages | where:"permalink", "/Soundness/"  | first -%}
+{%- assign Adequacy = site.pages | where:"permalink", "/Adequacy/"  | first -%}
+{%- assign ContextualEquivalence = site.pages | where:"permalink", "/ContextualEquivalence/"  | first -%}
+
+  - [Denotational]({{ site.baseurl }}/Denotational/): 无类型 λ-演算的指称语义 <span class="progress" >{{ Denotational.progress | ceil }}</span>
+  - [Compositional]({{ site.baseurl }}/Compositional/): 指称语义具有复合性 <span class="progress" >{{ Compositional.progress | ceil }}</span>
+  - [Soundness]({{ site.baseurl }}/Soundness/): 从指称语义看归约的可靠性 <span class="progress" >{{ Soundness.progress | ceil }}</span>
+  - [Adequacy]({{ site.baseurl }}/Adequacy/): 从操作语义看指称语义的充分性 <span class="progress" >{{ Adequacy.progress | ceil }}</span>
+  - [ContextualEquivalence]({{ site.baseurl }}/ContextualEquivalence/): 指称相等蕴含上下文等价 <span class="progress" >{{ ContextualEquivalence.progress | ceil }}</span>
+
+<!--
+## Appendix
+
+  - [Substitution]({{ site.baseurl }}/Substitution/): Substitution in untyped lambda calculus
+-->
+
+## 附录
+
+  - [Substitution]({{ site.baseurl }}/Substitution/): 无类型 λ-演算中的代换 <span class="progress" >{{ Substitution.progress | ceil }}</span>
 
 <!---
 ## Backmatter
 
   - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/)
   - [Fonts]({{ site.baseurl }}/Fonts/): Test page for fonts
-  - [Statistics]({{ site.baseurl }}/Statistics/): Line counts for each chapter
 --->
 
 {%- assign Acknowledgements = site.pages | where:"permalink", "/Acknowledgements/"  | first -%}
 {%- assign Fonts = site.pages | where:"permalink", "/Fonts/"  | first -%}
-{%- assign Statistics = site.pages | where:"permalink", "/Statistics/"  | first -%}
 
 ## 后记
 
   - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/): 鸣谢 <span class="progress" >{{ Acknowledgements.progress | ceil }}</span>
   - [Fonts]({{ site.baseurl }}/Fonts/): 字体测试页 <span class="progress" >{{ Fonts.progress | ceil }}</span>
-  - [Statistics]({{ site.baseurl }}/Statistics/): 每章行数统计 <span class="progress" >{{ Statistics.progress | ceil }}</span>
-
-<!---
-## Related
-
-  - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/)
-  - [Fonts]({{ site.baseurl }}/Fonts/): Test page for fonts
-  - [Statistics]({{ site.baseurl }}/Statistics/): Line counts for each chapter
---->
 
 ## 相关资源
 
-  - PLFA 邮件列表：
-    * [plfa-interest@inf.ed.ac.uk](http://lists.inf.ed.ac.uk/mailman/listinfo/plfa-interest): <br />
-      A mailing list for users of the book. <br />
-      This is the place to ask and answer questions, or comment on the content of the book.
-    * [plfa-dev@inf.ed.ac.uk](http://lists.inf.ed.ac.uk/mailman/listinfo/plfa-dev): <br />
-      A mailing list for contributors. <br />
-      This is the place to discuss changes and new additions to the book in excruciating detail.
-  - 用本书教学的课程：
-    * Philip Wadler, University of Edinburgh,
-      [2018]({{ site.baseurl }}/TSPL/2018/),
-	  [2019]({{ site.baseurl }}/TSPL/2019/)
-    * David Darais, University of Vermont,
-      [2018][UVM-CS-295A-2018]
-    * John Leo, Google Seattle, 2018--2019
-    * Philip Wadler, Pontifícia Universidade Católica do Rio de Janeiro (PUC-Rio),
-      [2019]({{ site.baseurl }}/PUC/2019/)
-    * Prabhakar Ragde, University of Waterloo,
-	  [2019][UW-CS-842-2019]
-    * Adrian King,
-      San Francisco Types, Theorems, and Programming Languages Meetup
-      [2019--2020][SFPL-Meetup-2020]
-    * Jeremy Siek, Indiana University,
-	  [2020][IU-B522-2020]
-  - A paper describing the book appeared in [SBMF][SMBF].
-  - [NextJournal][NextJournal] has built a notebook version of PLFA, which lets you edit and execute the book via a web interface.
+### 邮件列表
 
+  * [plfa-interest@inf.ed.ac.uk](http://lists.inf.ed.ac.uk/mailman/listinfo/plfa-interest): <br />
+    A mailing list for users of the book. <br />
+    This is the place to ask and answer questions, or comment on the content of the book.
+  * [plfa-dev@inf.ed.ac.uk](http://lists.inf.ed.ac.uk/mailman/listinfo/plfa-dev): <br />
+    A mailing list for contributors. <br />
+    This is the place to discuss changes and new additions to the book in excruciating detail.
+
+### 使用本书教学的课程
+
+#### 2020
+  * [William Cook, University of Texas][UT-2020]
+  * [Jeremy Siek, Indiana University][IU-2020]
+
+#### 2019
+  * [Dan Ghica, University of Birmingham][BHAM-2019]
+  * [Adrian King, San Francisco Types, Theorems, and Programming Languages Meetup][SFPL-Meetup-2020]
+  * [Prabhakar Ragde, University of Waterloo][UW-2019]
+  * [Philip Wadler, University of Edinburgh][TSPL-2019]
+  * [Philip Wadler, Pontifícia Universidade Católica do Rio de Janeiro][PUC-2019]
+
+#### 2018
+  * [Philip Wadler, University of Edinburgh][TSPL-2018]
+  * [David Darais, University of Vermont][UVM-2018]
+  * John Leo, Google Seattle
+
+<!--
+Please tell us of others!
+-->
+
+请告诉我们其他的资源！
+
+[TSPL-2018]: https://plfa.github.io/19.08/TSPL/2018/
+[PUC-2019]: https://plfa.github.io/20.07/PUC/2019/
+[TSPL-2019]: https://plfa.github.io/20.07/TSPL/2019/
 [GitHub]: https://github.com/plfa/plfa.github.io/
-[SMBF]: https://homepages.inf.ed.ac.uk/wadler/topics/agda.html#sbmf
-[NextJournal]: https://nextjournal.com/plfa/ToC
-[UVM-CS-295A-2018]: https://web.archive.org/web/20190324115921/http://david.darais.com/courses/fa2018-cs295A/
-[IU-B522-2020]: https://jsiek.github.io/B522-PL-Foundations/
+[UVM-2018]: https://web.archive.org/web/20190324115921/http://david.darais.com/courses/fa2018-cs295A/
+[IU-2020]: https://jsiek.github.io/B522-PL-Foundations/
 [SFPL-Meetup-2020]: http://meet.meetup.com/wf/click?upn=ZDzXt-2B-2BZmzYir6Bq5X7vEQ2iNYdgjN9-2FU9nWKp99AU8rZjrncUsSYODqOGn6kV-2BqW71oirCo-2Bk8O1q2FtDFhYZR-2B737CPhNWBjt58LuSRC-2BWTj61VZCHquysW8z7dVtQWxB5Sorl3chjZLDptP70L7aBZL14FTERnKJcRQdrMtc-3D_IqHN4t3hH47BvE1Cz0BakIxV4odHudhr6IVs-2Fzslmv-2FBuORsh-2FwQmOxMBdyMHsSBndQDQmt47hobqsLp-2Bm04Y9LwgV66MGyucsd0I9EgDEUB-2FjzdtSgRv-2Fxng8Pgsa3AZIEYILOhLpQ5ige5VFYTEHVN1pEqnujCHovmTxJkqAK9H-2BIL15-2FPxx97RfHcz7M30YNyqp6TOYfgTxyUHc6lufYKFA75Y7MV6MeDJMxw9-2FYUxR6CEjdoagQBmaGkBVzN
-[UW-CS-842-2019]: https://cs.uwaterloo.ca/~plragde/842/
+[UW-2019]: https://cs.uwaterloo.ca/~plragde/842/
+[UT-2020]: https://www.cs.utexas.edu/~wcook/Courses/386L/Sp2020-GradPL.pdf
+[BHAM-2019]: https://www.cs.bham.ac.uk/internal/modules/2019/06-26943/
+[EUSA-2020]: https://www.eusa.ed.ac.uk/representation/campaigns/teachingawards2020/
+[SBMF]: https://homepages.inf.ed.ac.uk/wadler/topics/agda.html#sbmf
+[SCP]: https://homepages.inf.ed.ac.uk/wadler/topics/agda.html#scf
+[NextJournal]: https://nextjournal.com/plfa/ToC
 
 [PLFA]: https://plfa.github.io/
 [PLFA-zh]: https://agda-zh.github.io/PLFA-zh/

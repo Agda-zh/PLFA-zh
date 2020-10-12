@@ -1762,7 +1762,7 @@ Hence, eleven is also represented by `001011`, encoded as:
 由于前导零的存在，表示并不是唯一的。因此，十一同样可以
 表示成 `001011`，编码为：
 
-    ⟨⟩ O I O I I
+    ⟨⟩ O O I O I I
 
 {::comment}
 Define a function
@@ -1847,7 +1847,8 @@ Such a pragma can only be invoked once, as invoking it twice would
 raise confusion as to whether `2` is a value of type `ℕ` or type
 `Data.Nat.ℕ`.  Similar confusions arise if other pragmas are invoked
 twice. For this reason, we will usually avoid pragmas in future chapters.
-Information on pragmas can be found in the Agda documentation.
+Information on pragmas can be found in the (Agda documentation)[https://agda.readthedocs.io/en/v2.6.1/language/pragmas.html].
+
 {:/}
 
 正常情况下，我们会以运行代码的形式展示一个导入语句，
@@ -1858,7 +1859,7 @@ Information on pragmas can be found in the Agda documentation.
 重复调用会导致 `2` 到底是类型 `ℕ` 的值还是类型 `Data.Nat.ℕ` 的
 值这样的困惑。重复调用其它的编译指令也会导致同样的问题。基于这个原因，
 我们在后续章节中通常会避免使用编译指令。更多关于编译指令的信息可在
-Agda 文档中找到。
+(Agda 文档)[https://agda-zh.readthedocs.io/zh_CN/latest/language/pragmas.html]中找到。
 
 {::comment}
 Unicode
@@ -1960,8 +1961,8 @@ move the cursor onto the character and use `quail-show-key` with:
 
 {::comment}
 You'll see a key sequence of the character in mini buffer.
-If you run `M-x qualy-show-key` on say `∸`, you will see `\.-` for the character.
+If you run `M-x quail-show-key` on say `∸`, you will see `\.-` for the character.
 {:/}
 
 你会在迷你缓冲区中看到输入该字符所需的按键序列。
-例如，如果你在 `∸` 上执行 `M-x qualy-show-key`，就会看到该字符的按键序列为 `\.-`。
+例如，如果你在 `∸` 上执行 `M-x quail-show-key`，就会看到该字符的按键序列为 `\.-`。

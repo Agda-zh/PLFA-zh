@@ -24,5 +24,6 @@ Gemfile.lock
 ## Emacs files
 auto/
 
-## Temp files
+## Misc build files
 out/
+.versions/

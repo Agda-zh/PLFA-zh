@@ -52,11 +52,11 @@ as implication of false:
 ```
 
 {::comment}
-This is a form of _proof by contradiction_: if assuming `A` leads
-to the conclusion `⊥` (a contradiction), then we must have `¬ A`.
+This is a form of _reductio ad absurdum_: if assuming `A` leads
+to the conclusion `⊥` (an absurdity), then we must have `¬ A`.
 {:/}
 
-这是一种**反证法（Proof by Contradiction）**的形式：若从 `A` 可得出结论 `⊥`（即矛盾），
+这是**归谬法（Reductio ad Absurdum）**的一种形式：若从 `A` 可得出结论 `⊥`（即喵呜），
 则 `¬ A` 必定成立。
 
 {::comment}

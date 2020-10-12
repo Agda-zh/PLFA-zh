@@ -467,7 +467,7 @@ _ =
   ∎
 ```
 After just two steps the top-level term is an abstraction,
-and `ζ` rules drive the rest of the normalisation. 
+and `ζ` rules drive the rest of the normalisation.
 
 
 ## Progress
@@ -547,8 +547,10 @@ As previously, progress immediately yields an evaluator.
 
 Gas is specified by a natural number:
 ```
-data Gas : Set where
-  gas : ℕ → Gas
+record Gas : Set where
+  constructor gas
+  field
+    amount : ℕ
 ```
 When our evaluator returns a term `N`, it will either give evidence that
 `N` is normal or indicate that it ran out of gas:
@@ -675,7 +677,7 @@ the predecessor of the current argument) and one corresponding to the
 zero branch of the case.  (The cases could be in either order.
 We put the successor case first to ease comparison with Church numerals.)
 
-Here is the representation of naturals encoded with de Bruijn indexes:
+Here is the Scott representation of naturals encoded with de Bruijn indexes:
 ```
 `zero : ∀ {Γ} → (Γ ⊢ ★)
 `zero = ƛ ƛ (# 0)
@@ -690,6 +692,20 @@ Here we have been careful to retain the exact form of our previous
 definitions.  The successor branch expects an additional variable to
 be in scope (as indicated by its type), so it is converted to an
 ordinary term using lambda abstraction.
+
+Applying successor to the zero indeed reduces to the Scott numeral
+for one.
+
+```
+_ : eval (gas 100) (`suc_ {∅} `zero) ≡
+    steps
+        ((ƛ (ƛ (ƛ # 1 · # 2))) · (ƛ (ƛ # 0))
+    —→⟨ β ⟩
+         ƛ (ƛ # 1 · (ƛ (ƛ # 0)))
+    ∎)
+    (done (ƛ (ƛ (′ (` (S Z)) · (ƛ (ƛ (′ (` Z))))))))
+_ = refl
+```
 
 We can also define fixpoint.  Using named terms, we define:
 
@@ -728,6 +744,7 @@ plus = μ ƛ ƛ (case (# 1) (# 0) (`suc (# 3 · # 0 · # 1)))
 Because `` `suc `` is now a defined term rather than primitive,
 it is no longer the case that `plus · two · two` reduces to `four`,
 but they do both reduce to the same normal term.
+
 
 #### Exercise `plus-eval` (practice)
 

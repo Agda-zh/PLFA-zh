@@ -212,3 +212,9 @@ Exercises labelled "(practice)" are included for those who want extra practice.
 {:/}
 
 标记有**实践**的习题供想要更多实践的学生练习。
+
+{::comment}
+You may need to import library functions required for the solution.
+{:/}
+
+你在解题时或许需要导入库函数。

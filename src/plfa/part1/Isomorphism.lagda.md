@@ -305,11 +305,11 @@ The declaration `open _≃_` makes available the names `to`, `from`,
 在当前作用域内可用，否则我们需要使用类似 `_≃_.to` 的写法。
 
 {::comment}
-The above is our first use of records. A record declaration is equivalent
-to a corresponding inductive data declaration:
+The above is our first use of records. A record declaration behaves similar to a single-constructor data declaration (there are minor differences, which we discuss in [Connectives]({{ site.baseurl }}/Connectives/)):
 {:/}
 
-这是我们第一次使用记录（Record）。记录声明等同于下面的归纳数据声明：
+这是我们第一次使用**记录（Record）**。记录声明的行为类似于一个单构造子的数据声明
+（二者稍微有些不同，我们会在 [Connectives]({{ site.baseurl }}/Connectives/) 一章中讨论）：
 
 ```
 data _≃′_ (A B : Set): Set where

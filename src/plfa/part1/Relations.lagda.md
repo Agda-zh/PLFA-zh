@@ -30,7 +30,7 @@ the next step is to define relations, such as _less than or equal_.
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong)
 open import Data.Nat using (ℕ; zero; suc; _+_)
-open import Data.Nat.Properties using (+-comm)
+open import Data.Nat.Properties using (+-comm; +-identityʳ)
 ```
 
 
@@ -221,10 +221,10 @@ _ = s≤s {m = 1} {n = 3} (s≤s {m = 0} {n = 2} (z≤n {n = 2}))
 ```
 
 {::comment}
-In the latter format, you may only supply some implicit arguments:
+In the latter format, you can choose to only supply some implicit arguments:
 {:/}
 
-在后者的形式中，也可以只声明一部分隐式参数：
+在后者的形式中，也可以选择只声明一部分隐式参数：
 
 ```
 _ : 2 ≤ 4
@@ -236,6 +236,31 @@ It is not permitted to swap implicit arguments, even when named.
 {:/}
 
 但是不可以改变隐式参数的顺序，即便加上了名字。
+
+{::comment}
+We can ask Agda to use the same inference to try and infer an _explicit_ term,
+by writing `_`. For instance, we can define a variant of the proposition
+`+-identityʳ` with implicit arguments:
+{:/}
+
+我们可以写出 `_` 来让 Agda 用相同的推导方式试着推导一个**显式**的项。
+例如，我们可以为命题 `+-identityʳ` 定义一个带有隐式参数的变体：
+
+```
++-identityʳ′ : ∀ {m : ℕ} → m + zero ≡ m
++-identityʳ′ = +-identityʳ _
+```
+
+{::comment}
+We use `_` to ask Agda to infer the value of the _explicit_ argument from
+context. There is only one value which gives us the correct proof, `m`, so Agda
+happily fills it in.
+If Agda fails to infer the value, it reports an error.
+{:/}
+
+我们用 `_` 来让 Agda 从上下文中推导**显式参数**的值。只有 `m`
+这一个值能够给出正确的证明，因此 Agda 愉快地填入了它。
+如果 Agda 推导值失败，那么它会报一个错误。
 
 
 {::comment}
@@ -534,8 +559,8 @@ hold, then `m ≤ p` holds.  Again, `m`, `n`, and `p` are implicit:
 
 {::comment}
 Here the proof is by induction on the _evidence_ that `m ≤ n`.  In the
-base case, the first inequality holds by `z≤n` and must show `zero ≤
-p`, which follows immediately by `z≤n`.  In this case, the fact that
+base case, the first inequality holds by `z≤n` and must show `zero ≤ p`,
+which follows immediately by `z≤n`.  In this case, the fact that
 `n ≤ p` is irrelevant, and we write `_` as the pattern to indicate
 that the corresponding evidence is unused.
 {:/}
@@ -1273,7 +1298,7 @@ data even where
 
 data odd where
 
-  suc   : ∀ {n : ℕ}
+  suc  : ∀ {n : ℕ}
     → even n
       -----------
     → odd (suc n)
@@ -1505,13 +1530,12 @@ and back is the identity:
 
 {::comment}
 (Hint: For each of these, you may first need to prove related
-properties of `One`. Also, you may need to prove that `1` is
-less or equal to the result of `from b`.)
-properties of `One`.)
+properties of `One`. Also, you may need to prove that
+if `One b` then `1` is less or equal to the result of `from b`.)
 {:/}
 
-（提示：对于每一条习题，先从 `One` 的性质开始。此外，你或许还需要证明
-`1` 小于或等于 `from b` 的结果。）
+（提示：对于每一条习题，先从 `One` 的性质开始。此外，你或许还需要证明若
+`One b` 成立，则 `1` 小于或等于 `from b` 的结果。）
 
 {::comment}
 ```

@@ -67,11 +67,11 @@ open plfa.part1.Isomorphism.≃-Reasoning
 {::comment}
 Given two propositions `A` and `B`, the conjunction `A × B` holds
 if both `A` holds and `B` holds.  We formalise this idea by
-declaring a suitable inductive type:
+declaring a suitable record type:
 {:/}
 
 给定两个命题 `A` 和 `B`，其合取 `A × B` 成立当 `A` 成立和 `B` 成立。
-我们将这样的概念形式化，使用如下的归纳类型：
+我们将这样的概念形式化，使用如下的记录类型：
 
 ```
 data _×_ (A B : Set) : Set where
@@ -121,46 +121,6 @@ that `A` holds, and `proj₂ L` provides evidence that `B` holds.
 如果 `L` 是 `A × B` 成立的证据, 那么 `proj₁ L` 是 `A` 成立的证据，
 `proj₂ L` 是 `B` 成立的证据。
 
-{::comment}
-Equivalently, we could also declare conjunction as a record type:
-{:/}
-
-等价地，我们亦可以将合取定义为一个记录类型：
-
-```
-record _×′_ (A B : Set) : Set where
-  field
-    proj₁′ : A
-    proj₂′ : B
-open _×′_
-```
-
-{::comment}
-Here record construction
-{:/}
-
-在这里，记录的构造
-
-    record
-      { proj₁′ = M
-      ; proj₂′ = N
-      }
-
-{::comment}
-corresponds to the term
-{:/}
-
-对应
-
-    ⟨ M , N ⟩
-
-{::comment}
-where `M` is a term of type `A` and `N` is a term of type `B`.
-{:/}
-
-其中 `M` 是 `A` 类型的项，`N` 是 `B` 类型的项。
-
-{::comment}
 When `⟨_,_⟩` appears in a term on the right-hand side of an equation
 we refer to it as a _constructor_, and when it appears in a pattern on
 the left-hand side of an equation we refer to it as a _destructor_.
@@ -184,7 +144,7 @@ formula for the connective, which appears in a hypothesis but not in
 the conclusion. An introduction rule describes under what conditions
 we say the connective holds---how to _define_ the connective. An
 elimination rule describes what we may conclude when the connective
-holds---how to _use_ the connective.
+holds---how to _use_ the connective.[^from-wadler-2015]
 {:/}
 
 其他的术语将 `⟨_,_⟩` 称作*引入*（Introduce）合取，将 `proj₁` 和 `proj₂` 称作*消去*（Eliminate）合取。
@@ -192,15 +152,8 @@ holds---how to _use_ the connective.
 正如其名字所说的那样：第一条*引入*一个运算符，所以运算符出现在结论中，而不是假设中；
 第二条*消去*一个带有运算符的式子，而运算符出现在假设中，而不是结论中。引入规则描述了
 运算符在什么情况下成立——即怎么样*定义*一个运算符。消去规则描述了运算符成立时，可以得出
-什么样的结论——即怎么样*使用*一个运算符。
+什么样的结论——即怎么样*使用*一个运算符。[^from-wadler-2015]
 
-{::comment}
-(The paragraph above was adopted from "Propositions as Types", Philip Wadler,
-_Communications of the ACM_, December 2015.)
-{:/}
-
-（上面一段内容由此处改编得来：*Propositions as Types*，作者：Philip Wadler，
-发表于 《ACM 通讯》，2015 年 9 月）
 
 {::comment}
 In this case, applying each destructor and reassembling the results with the
@@ -238,6 +191,37 @@ Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
 {:/}
 
 因此，`m ≤ n × n ≤ p` 解析为 `(m ≤ n) × (n ≤ p)`。
+
+Alternatively, we can declare conjunction as a record type:
+
+```
+record _×′_ (A B : Set) : Set where
+  constructor ⟨_,_⟩′
+  field
+    proj₁′ : A
+    proj₂′ : B
+open _×′_
+```
+
+The record construction `record { proj₁′ = M ; proj₂′ = N }` corresponds to the
+term `⟨ M , N ⟩` where `M` is a term of type `A` and `N` is a term of type `B`.
+The constructor declaration allows us to write `⟨ M , N ⟩′` in place of the
+record construction.
+
+The data type `_x_` and the record type `_×′_` behave similarly. One
+difference is that for data types we have to prove η-equality, but for record
+types, η-equality holds *by definition*. While proving `η-×′`, we do not have to
+pattern match on `w` to know that η-equality holds:
+
+```
+η-×′ : ∀ {A B : Set} (w : A ×′ B) → ⟨ proj₁′ w , proj₂′ w ⟩′ ≡ w
+η-×′ w = refl
+```
+
+It can be very convenient to have η-equality *definitionally*, and so the
+standard library defines `_×_` as a record type. We use the definition from the
+standard library in later chapters.
+
 
 {::comment}
 Given two types `A` and `B`, we refer to `A × B` as the
@@ -425,10 +409,10 @@ is isomorphic to `(A → B) × (B → A)`.
 
 {::comment}
 Truth `⊤` always holds. We formalise this idea by
-declaring a suitable inductive type:
+declaring a suitable record type:
 {:/}
 
-恒真 `⊤` 恒成立。我们将这个概念用合适的归纳类型来形式化：
+恒真 `⊤` 恒成立。我们将这个概念用合适的记录类型来形式化：
 
 ```
 data ⊤ : Set where
@@ -467,12 +451,35 @@ value of type `⊤` must be equal to `tt`:
 ```
 
 {::comment}
-The pattern matching on the left-hand side is essential.  Replacing
+The pattern matching on the left-hand side is essential. Replacing
 `w` by `tt` allows both sides of the propositional equality to
 simplify to the same term.
 {:/}
 
 左手边的模式匹配是必要的。将 `w` 替换为 `tt` 让等式两边可以化简为相同的值。
+
+Alternatively, we can declare truth as an empty record:
+```
+record ⊤′ : Set where
+  constructor tt′
+```
+The record construction `record {}` corresponds to the term `tt`. The
+constructor declaration allows us to write `tt′`.
+
+As with the product, the data type `⊤` and the record type `⊤′` behave
+similarly, but η-equality holds *by definition* for the record type. While
+proving `η-⊤′`, we do not have to pattern match on `w`---Agda *knows* it is
+equal to `tt′`:
+```
+η-⊤′ : ∀ (w : ⊤′) → tt′ ≡ w
+η-⊤′ w = refl
+```
+Agda knows that *any* value of type `⊤′` must be `tt′`, so any time we need a
+value of type `⊤′`, we can tell Agda to figure it out:
+```
+truth′ : ⊤′
+truth′ = _
+```
 
 {::comment}
 We refer to `⊤` as the _unit_ type. And, indeed,
@@ -1441,3 +1448,11 @@ This chapter uses the following unicode:
     ₁  U+2081  下标 1 (\_1)
     ₂  U+2082  下标 2 (\_2)
     ⇔  U+21D4  左右双箭头 (\<=>)
+
+
+{::comment}
+[^from-wadler-2015]: This paragraph was adopted from "Propositions as Types", Philip Wadler, _Communications of the ACM_, December 2015.
+{:/}
+
+[^from-wadler-2015]: 此段内容由 Propositions as Types（命题即类型）改编而来，
+作者：Philip Wadler，发表于 《ACM 通讯》，2015 年 9 月

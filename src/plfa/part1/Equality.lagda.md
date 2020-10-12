@@ -1188,12 +1188,12 @@ _∘_ : ∀ {ℓ₁ ℓ₂ ℓ₃ : Level} {A : Set ℓ₁} {B : Set ℓ₂} {C 
 ```
 
 {::comment}
-Further information on levels can be found in the [Agda Wiki][wiki].
+Further information on levels can be found in the [Agda docs][docs].
 {:/}
 
-更多的关于等级的信息可以从[Agda 维基（英文）][wiki]中查询。
+更多关于层级的信息可以从[Agda 文档][wiki]中查询。
 
-[wiki]: http://wiki.portal.chalmers.se/agda/pmwiki.php?n=ReferenceManual.UniversePolymorphism
+[docs]: https://agda.readthedocs.io/en/v2.6.1/language/universe-levels.html
 
 
 {::comment}
@@ -1203,16 +1203,21 @@ Further information on levels can be found in the [Agda Wiki][wiki].
 ## 标准库
 
 {::comment}
-Definitions similar to those in this chapter can be found in the
-standard library:
+Definitions similar to those in this chapter can be found in the standard
+library. The Agda standard library defines `_≡⟨_⟩_` as `step-≡`, [which reverses
+the order of the arguments][step-≡]. The standard library also defines a syntax
+macro, which is automatically imported whenever you import `step-≡`, which
+recovers the original argument order:
 {:/}
 
-标准库中可以找到与本章节中相似的定义：
+标准库中可以找到与本章节中相似的定义。Agda 标准库将 `_≡⟨_⟩_` 定义为 `step-≡`，
+[它反转了参数的顺序][step-≡]。标准库还定义了一个语法宏，它可以在你导入 `step-≡`
+时被自动导入，它能够恢复原始的参数顺序：
 
 ```
 -- import Relation.Binary.PropositionalEquality as Eq
 -- open Eq using (_≡_; refl; trans; sym; cong; cong-app; subst)
--- open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _≡⟨_⟩_; _∎)
+-- open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; step-≡; _∎)
 ```
 
 {::comment}
@@ -1222,6 +1227,7 @@ collisions, as mentioned in the introduction.
 
 这里的导入以注释的形式给出，以防止冲突，如引言中解释的那样。
 
+[step-≡]: https://github.com/agda/agda-stdlib/blob/master/CHANGELOG/v1.3.md#changes-to-how-equational-reasoning-is-implemented
 
 ## Unicode
 
@@ -1246,7 +1252,7 @@ This chapter uses the following unicode:
     ⟨  U+27E8  数学左尖括号 (\<)
     ⟩  U+27E9  数学右尖括号 (\>)
     ∎  U+220E  证毕 (\qed)
-    ≐  U+2250  接近于极限 (\.=)
+    ≐  U+2250  趋近于极限 (\.=)
     ℓ  U+2113  手写小写 L (\ell)
     ⊔  U+2294  正方形向上开口 (\lub)
     ₀  U+2080  下标 0 (\_0)

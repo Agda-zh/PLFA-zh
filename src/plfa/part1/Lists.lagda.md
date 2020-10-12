@@ -1951,8 +1951,8 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 ```
 import Data.List using (List; _++_; length; reverse; map; foldr; downFrom)
-import Data.List.All using (All; []; _∷_)
-import Data.List.Any using (Any; here; there)
+import Data.List.Relation.Unary.All using (All; []; _∷_)
+import Data.List.Relation.Unary.Any using (Any; here; there)
 import Data.List.Membership.Propositional using (_∈_)
 import Data.List.Properties
   using (reverse-++-commute; map-compose; map-++-commute; foldr-++)

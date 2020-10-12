@@ -74,8 +74,8 @@ other term will itself be closed and well typed.  Repeat.  We will
 either loop forever, in which case evaluation does not terminate, or
 we will eventually reach a value, which is guaranteed to be closed and
 of the same type as the original term.  We will turn this recipe into
-Agda code that can compute for us the reduction sequence of `plus ·
-two · two`, and its Church numeral variant.
+Agda code that can compute for us the reduction sequence of `plus · two · two`,
+and its Church numeral variant.
 
 (The development in this chapter was inspired by the corresponding
 development in _Software Foundations_, Volume _Programming Language
@@ -382,7 +382,7 @@ which is well typed in the empty context is also well typed in an arbitrary
 context.  The _drop_ lemma asserts that a term which is well typed in a context
 where the same variable appears twice remains well typed if we drop the shadowed
 occurrence. The _swap_ lemma asserts that a term which is well typed in a
-context remains well typed if we swap two variables. 
+context remains well typed if we swap two variables.
 
 (Renaming is similar to the _context invariance_ lemma in _Software
 Foundations_, but it does not require the definition of
@@ -775,6 +775,14 @@ Where the construct introduces a bound variable we need to compare it
 with the substituted variable, applying the drop lemma if they are
 equal and the swap lemma if they are distinct.
 
+For Agda it makes a difference whether we write `x ≟ y` or
+`y ≟ x`. In an interactive proof, Agda will show which residual `with`
+clauses in the definition of `_[_:=_]` need to be simplified, and the
+`with` clauses in `subst` need to match these exactly. The guideline is
+that Agda knows nothing about symmetry or commutativity, which require
+invoking appropriate lemmas, so it is important to think about order of
+arguments and to be consistent.
+
 #### Exercise `subst′` (stretch)
 
 Rewrite `subst` to work with the modified definition `_[_:=_]′`
@@ -910,8 +918,10 @@ per unit of gas.
 By analogy, we will use the name _gas_ for the parameter which puts a
 bound on the number of reduction steps.  `Gas` is specified by a natural number:
 ```
-data Gas : Set where
-  gas : ℕ → Gas
+record Gas : Set where
+  constructor gas
+  field
+    amount : ℕ
 ```
 When our evaluator returns a term `N`, it will either give evidence that
 `N` is a value or indicate that it ran out of gas:
@@ -947,11 +957,11 @@ eval : ∀ {L A}
   → ∅ ⊢ L ⦂ A
     ---------
   → Steps L
-eval {L} (gas zero)    ⊢L                             =  steps (L ∎) out-of-gas
+eval {L} (gas zero)    ⊢L                                =  steps (L ∎) out-of-gas
 eval {L} (gas (suc m)) ⊢L with progress ⊢L
-... | done VL                                         =  steps (L ∎) (done VL)
-... | step L—→M with eval (gas m) (preserve ⊢L L—→M)
-...    | steps M—↠N fin                               =  steps (L —→⟨ L—→M ⟩ M—↠N) fin
+... | done VL                                            =  steps (L ∎) (done VL)
+... | step {M} L—→M with eval (gas m) (preserve ⊢L L—→M)
+...    | steps M—↠N fin                                  =  steps (L —→⟨ L—→M ⟩ M—↠N) fin
 ```
 Let `L` be the name of the term we are reducing, and `⊢L` be the
 evidence that `L` is well typed.  We consider the amount of gas
@@ -1374,9 +1384,9 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 When we introduced reduction, we claimed it was deterministic.
 For completeness, we present a formal proof here.
 
-A case term takes four arguments (three subterms and a bound
-variable), and our proof will need a variant
-of congruence to deal with functions of four arguments.  It
+Our proof will need a variant
+of congruence to deal with functions of four arguments
+(to deal with `case_[zero⇒_|suc_⇒_]`).  It
 is exactly analogous to `cong` and `cong₂` as defined previously:
 ```
 cong₄ : ∀ {A B C D E : Set} (f : A → B → C → D → E)
