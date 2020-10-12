@@ -23,7 +23,7 @@ permalink      : /Citing/
 > 2020.
 > 本书可访问 https://agda-zh.github.io/PLFA-zh/ 在线阅读.
 
-### Bibtex
+### BibTeX
 
 英文版：
 
@@ -65,7 +65,7 @@ permalink      : /Citing/
 > 2019.
 > 本书可访问 https://agda-zh.github.io/PLFA-zh/ 在线阅读.
 
-### Bibtex
+### BibTeX
 
 英文版：
 

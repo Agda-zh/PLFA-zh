@@ -160,21 +160,12 @@ To load and type-check the file, use [`C-c C-l`][agda-docs-emacs-notation].
 要加载文件并对其执行类型检查，请使用 [`C-c C-l`][agda-docs-emacs-notation]。
 
 <!--
-Agda is edited “interactively, which means that one can type check code which is not yet complete: if a question mark (?) is used as a placeholder for an expression, and the buffer is then checked, Agda will replace the question mark with a “hole” which can be filled in later. One can also do various other things in the context of a hole: listing the context, inferring the type of an expression, and even evaluating an open term which mentions variables bound in the surrounding context.”
+Agda is edited interactively, using [“holes”][agda-docs-holes], which are bits of the program that are not yet filled in. If you use a question mark as an expression, and load the buffer using `C-c C-l`, Agda replaces the question mark with a hole. There are several things you can to while the cursor is in a hole:
 -->
 
-Agda 的编辑是「交互式的，也就是说你可以对尚未完成的代码执行类型检查：如果用问号（?）
-作为表达式的占位符，那么缓冲区就会被检查，Agda 会将问号替换为一个『洞』，它可以稍后再填充。
-你也可以在洞的上下文中做很多其它的事情：列出上下文、推导表达式的类型，
-甚至对引用了在周围上下文中绑定的开项（open term）进行求值。」
-
-<!--
-Agda is edited interactively, using “holes”, which are bits of the program that are not yet filled in. If you use a question mark as an expression, and load the buffer using `C-c C-l`, Agda replaces the question mark with a hole. There are several things you can to while the cursor is in a hole:
--->
-
-Agda 的编辑是通过使用「洞」来交互的，它表示程序中尚未填充的片段。如果用问号作为表达式，
-并用 `C-c C-l` 加载缓冲区，Agda 会将问号替换为一个「洞」。当光标在洞中时，你可以
-做以下这些事情：
+Agda 的编辑是通过使用「[洞][agda-docs-holes]」来交互的，它表示程序中尚未填充的片段。
+如果用问号作为表达式，并用 `C-c C-l` 加载缓冲区，Agda 会将问号替换为一个「洞」。
+当光标在洞中时，你可以做以下这些事情：
 
 <!--
     C-c C-c x    split on variable x
@@ -387,6 +378,10 @@ cd fix-whitespace/
 stack install --stack-yaml stack-8.8.3.yaml
 ```
 
+<!--
+If you want Stack to use your system installation of GHC, you can pass the `--system-ghc` flag and select the appropriate `stack-*.yaml` file, like when installing [Agda](#installing-agda-using-stack).
+-->
+
 如果你想让 Stack 使用你系统中安装的 GHC，那么可以传入 `--system-ghc` 参数并选择对应的
 `stack-*.yaml` 文件，就像在安装 [Agda](#installing-agda-using-stack) 时那样。
 
@@ -548,7 +543,6 @@ EPUB 文件会输出到 `out/epub/plfa.epub`。
 [trans-spec]: https://github.com/Agda-zh/PLFA-zh/issues/1
 
 [agda-zh]: https://agda-zh.rtfd.io/zh_CN/latest/getting-started/installation.html
-
 [FiraCode]: https://github.com/tonsky/FiraCode
 
 [epub]: https://plfa.github.io/out/epub/plfa.epub
@@ -562,6 +556,7 @@ EPUB 文件会输出到 `out/epub/plfa.epub`。
 
 [agda]: https://github.com/agda/agda/releases/tag/v2.6.1
 [agda-version]: https://img.shields.io/badge/agda-v2.6.1-blue.svg
+[agda-docs-holes]: https://agda.readthedocs.io/en/v2.5.4/getting-started/quick-guide.html
 [agda-docs-emacs-mode]: https://agda.readthedocs.io/en/v2.6.1/tools/emacs-mode.html
 [agda-docs-emacs-notation]: https://agda.readthedocs.io/en/v2.6.1/tools/emacs-mode.html#notation-for-key-combinations
 [agda-docs-package-system]: https://agda.readthedocs.io/en/v2.6.1/tools/package-system.html#example-using-the-standard-library

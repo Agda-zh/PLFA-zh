@@ -41,15 +41,17 @@ Pull requests are encouraged.
 
   - [Dedication]({{ site.baseurl }}/Dedication/)
   - [Preface]({{ site.baseurl }}/Preface/)
+  - [Getting Started]({{ site.baseurl }}/GettingStarted/)
 --->
 
 {%- assign Dedication = site.pages | where:"permalink", "/Dedication/"  | first -%}
 {%- assign Preface = site.pages | where:"permalink", "/Preface/"  | first -%}
+{%- assign GettingStarted = site.pages | where:"permalink", "/GettingStarted/"  | first -%}
 
 ## 前言
-
   - [题献]({{ site.baseurl }}/Dedication/) <span class="progress" >{{ Dedication.progress | ceil }}</span>
   - [前言]({{ site.baseurl }}/Preface/) <span class="progress" >{{ Preface.progress | ceil }}</span>
+  - [使用说明]({{ site.baseurl }}/GettingStarted/) <span class="progress" >{{ GettingStarted.progress | ceil }}</span>
 
 <!---
 ## Part 1: Logical Foundations
@@ -158,6 +160,8 @@ Pull requests are encouraged.
 
 ## 附录
 
+{%- assign Substitution = site.pages | where:"permalink", "/Substitution/"  | first -%}
+
   - [Substitution]({{ site.baseurl }}/Substitution/): 无类型 λ-演算中的代换 <span class="progress" >{{ Substitution.progress | ceil }}</span>
 
 <!---
@@ -175,6 +179,12 @@ Pull requests are encouraged.
   - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/): 鸣谢 <span class="progress" >{{ Acknowledgements.progress | ceil }}</span>
   - [Fonts]({{ site.baseurl }}/Fonts/): 字体测试页 <span class="progress" >{{ Fonts.progress | ceil }}</span>
 
+<!--
+## Related
+
+### Mailing lists
+-->
+
 ## 相关资源
 
 ### 邮件列表
@@ -191,6 +201,7 @@ Pull requests are encouraged.
 #### 2020
   * [William Cook, University of Texas][UT-2020]
   * [Jeremy Siek, Indiana University][IU-2020]
+  * [John Maraist, University of Wisconsin-La Crosse][UWL-2020]
 
 #### 2019
   * [Dan Ghica, University of Birmingham][BHAM-2019]
@@ -224,6 +235,7 @@ Please tell us of others!
 [SBMF]: https://homepages.inf.ed.ac.uk/wadler/topics/agda.html#sbmf
 [SCP]: https://homepages.inf.ed.ac.uk/wadler/topics/agda.html#scf
 [NextJournal]: https://nextjournal.com/plfa/ToC
+[UWL-2020]: https://github.com/jphmrst/PLC/tree/fall2020
 
 [PLFA]: https://plfa.github.io/
 [PLFA-zh]: https://agda-zh.github.io/PLFA-zh/

@@ -329,7 +329,7 @@ We write
 
     Γ ⊢ A
 
-for terms which in context `Γ` has type `A`.
+for terms which in context `Γ` have type `A`.
 The judgement is formalised by a datatype indexed
 by a context and a type.
 It looks exactly like the old typing judgment, but
@@ -574,7 +574,7 @@ bound variable.
 Whereas before renaming was a result that carried evidence
 that a term is well typed in one context to evidence that it
 is well typed in another context, now it actually transforms
-the term, suitably altering the bound variables. Typechecking
+the term, suitably altering the bound variables. Type checking
 the code in Agda ensures that it is only passed and returns
 terms that are well typed by the rules of simply-typed lambda
 calculus.
@@ -692,10 +692,10 @@ variables it is easy to define the special case of
 substitution for one free variable:
 ```
 _[_] : ∀ {Γ A B}
-        → Γ , B ⊢ A
-        → Γ ⊢ B
-          ---------
-        → Γ ⊢ A
+  → Γ , B ⊢ A
+  → Γ ⊢ B
+    ---------
+  → Γ ⊢ A
 _[_] {Γ} {A} {B} N M =  subst {Γ , B} {Γ} σ {A} N
   where
   σ : ∀ {A} → Γ , B ∋ A → Γ ⊢ A
@@ -736,8 +736,8 @@ variable to avoid capture:
   `` ƛ "z" ⇒ ` "z" · (` "x" · `zero) ``
 
 Say the bound `"x"` has type `` `ℕ ⇒ `ℕ ``, the substituted
-`"y"` has type `` `ℕ ``, and the free `"x"` also has type ``
-`ℕ ⇒ `ℕ ``.  Here is the example formalised:
+`"y"` has type `` `ℕ ``, and the free `"x"` also has type `` `ℕ ⇒ `ℕ ``.
+Here is the example formalised:
 ```
 M₅ : ∅ , `ℕ ⇒ `ℕ , `ℕ ⊢ (`ℕ ⇒ `ℕ) ⇒ `ℕ
 M₅ = ƛ # 0 · # 1
@@ -756,7 +756,7 @@ The logician Haskell Curry observed that getting the
 definition of substitution right can be a tricky business.  It
 can be even trickier when using de Bruijn indices, which can
 often be hard to decipher.  Under the current approach, any
-definition of substitution must, of necessity, preserves
+definition of substitution must, of necessity, preserve
 types.  While this makes the definition more involved, it
 means that once it is done the hardest work is out of the way.
 And combining definition with proof makes it harder for errors
@@ -1066,9 +1066,9 @@ Given a term `L` of type `A`, the evaluator will, for some `N`, return
 a reduction sequence from `L` to `N` and an indication of whether
 reduction finished:
 ```
-data Steps : ∀ {A} → ∅ ⊢ A → Set where
+data Steps {A} : ∅ ⊢ A → Set where
 
-  steps : ∀ {A} {L N : ∅ ⊢ A}
+  steps : {L N : ∅ ⊢ A}
     → L —↠ N
     → Finished N
       ----------

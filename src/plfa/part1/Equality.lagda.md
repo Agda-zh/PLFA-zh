@@ -1191,7 +1191,7 @@ _∘_ : ∀ {ℓ₁ ℓ₂ ℓ₃ : Level} {A : Set ℓ₁} {B : Set ℓ₂} {C 
 Further information on levels can be found in the [Agda docs][docs].
 {:/}
 
-更多关于层级的信息可以从[Agda 文档][wiki]中查询。
+更多关于层级的信息可以从[Agda 文档][docs]中查询。
 
 [docs]: https://agda.readthedocs.io/en/v2.6.1/language/universe-levels.html
 

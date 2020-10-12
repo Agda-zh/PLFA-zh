@@ -121,6 +121,7 @@ that `A` holds, and `proj₂ L` provides evidence that `B` holds.
 如果 `L` 是 `A × B` 成立的证据, 那么 `proj₁ L` 是 `A` 成立的证据，
 `proj₂ L` 是 `B` 成立的证据。
 
+{::comment}
 When `⟨_,_⟩` appears in a term on the right-hand side of an equation
 we refer to it as a _constructor_, and when it appears in a pattern on
 the left-hand side of an equation we refer to it as a _destructor_.
@@ -153,7 +154,6 @@ holds---how to _use_ the connective.[^from-wadler-2015]
 第二条*消去*一个带有运算符的式子，而运算符出现在假设中，而不是结论中。引入规则描述了
 运算符在什么情况下成立——即怎么样*定义*一个运算符。消去规则描述了运算符成立时，可以得出
 什么样的结论——即怎么样*使用*一个运算符。[^from-wadler-2015]
-
 
 {::comment}
 In this case, applying each destructor and reassembling the results with the
@@ -221,7 +221,6 @@ pattern match on `w` to know that η-equality holds:
 It can be very convenient to have η-equality *definitionally*, and so the
 standard library defines `_×_` as a record type. We use the definition from the
 standard library in later chapters.
-
 
 {::comment}
 Given two types `A` and `B`, we refer to `A × B` as the
@@ -485,6 +484,7 @@ truth′ = _
 We refer to `⊤` as the _unit_ type. And, indeed,
 type `⊤` has exactly one member, `tt`.  For example, the following
 function enumerates all possible arguments of type `⊤`:
+{:/}
 
 我们将 `⊤` 称为*单元*类型（Unit Type）。实际上，`⊤` 类型只有一个成员 `tt`。
 例如，下面的函数枚举了所有 `⊤` 类型的参数：
@@ -1448,7 +1448,6 @@ This chapter uses the following unicode:
     ₁  U+2081  下标 1 (\_1)
     ₂  U+2082  下标 2 (\_2)
     ⇔  U+21D4  左右双箭头 (\<=>)
-
 
 {::comment}
 [^from-wadler-2015]: This paragraph was adopted from "Propositions as Types", Philip Wadler, _Communications of the ACM_, December 2015.

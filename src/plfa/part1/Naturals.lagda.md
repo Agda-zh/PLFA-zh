@@ -1848,7 +1848,6 @@ raise confusion as to whether `2` is a value of type `ℕ` or type
 `Data.Nat.ℕ`.  Similar confusions arise if other pragmas are invoked
 twice. For this reason, we will usually avoid pragmas in future chapters.
 Information on pragmas can be found in the (Agda documentation)[https://agda.readthedocs.io/en/v2.6.1/language/pragmas.html].
-
 {:/}
 
 正常情况下，我们会以运行代码的形式展示一个导入语句，

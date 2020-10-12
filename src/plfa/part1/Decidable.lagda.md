@@ -953,7 +953,9 @@ on which matches; but either is equally valid.
 同样地，在 Emacs 中，第二条等式在左手边以灰色显示，说明等式的顺序决定了第一条还是第二条会被匹配。
 这一次，我们给出的结果会因为是哪一条被匹配而不一样，但两者都是同样正确的。
 
+{::comment}
 #### Exercise `erasure` (practice)
+{:/}
 
 #### 练习 `erasure`（实践）
 
