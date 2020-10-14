@@ -44,14 +44,10 @@ Pull requests are encouraged.
   - [Getting Started]({{ site.baseurl }}/GettingStarted/)
 --->
 
-{%- assign Dedication = site.pages | where:"permalink", "/Dedication/"  | first -%}
-{%- assign Preface = site.pages | where:"permalink", "/Preface/"  | first -%}
-{%- assign GettingStarted = site.pages | where:"permalink", "/GettingStarted/"  | first -%}
-
 ## 前言
-  - [题献]({{ site.baseurl }}/Dedication/) <span class="progress" >{{ Dedication.progress | ceil }}</span>
-  - [前言]({{ site.baseurl }}/Preface/) <span class="progress" >{{ Preface.progress | ceil }}</span>
-  - [使用说明]({{ site.baseurl }}/GettingStarted/) <span class="progress" >{{ GettingStarted.progress | ceil }}</span>
+  - [题献]({{ site.baseurl }}/Dedication/)
+  - [前言]({{ site.baseurl }}/Preface/)
+  - [使用说明]({{ site.baseurl }}/GettingStarted/)
 
 <!---
 ## Part 1: Logical Foundations
@@ -68,29 +64,18 @@ Pull requests are encouraged.
   - [Lists]({{ site.baseurl }}/Lists/): Lists and higher-order functions
 --->
 
-{%- assign Naturals = site.pages | where:"permalink", "/Naturals/"  | first -%}
-{%- assign Induction = site.pages | where:"permalink", "/Induction/"  | first -%}
-{%- assign Relations = site.pages | where:"permalink", "/Relations/"  | first -%}
-{%- assign Equality = site.pages | where:"permalink", "/Equality/"  | first -%}
-{%- assign Isomorphism = site.pages | where:"permalink", "/Isomorphism/"  | first -%}
-{%- assign Connectives = site.pages | where:"permalink", "/Connectives/"  | first -%}
-{%- assign Negation = site.pages | where:"permalink", "/Negation/"  | first -%}
-{%- assign Quantifiers = site.pages | where:"permalink", "/Quantifiers/"  | first -%}
-{%- assign Decidable = site.pages | where:"permalink", "/Decidable/"  | first -%}
-{%- assign Lists = site.pages | where:"permalink", "/Lists/"  | first -%}
-
 ## 第一分册：逻辑基础
 
-  - [Naturals]({{ site.baseurl }}/Naturals/): 自然数 <span class="progress" >{{ Naturals.progress | ceil }}</span>
-  - [Induction]({{ site.baseurl }}/Induction/): 归纳证明 <span class="progress" >{{ Induction.progress | ceil }}</span>
-  - [Relations]({{ site.baseurl }}/Relations/): 关系的归纳定义 <span class="progress" >{{ Relations.progress | ceil }}</span>
-  - [Equality]({{ site.baseurl }}/Equality/): 相等性与等式推理 <span class="progress" >{{ Equality.progress | ceil }}</span>
-  - [Isomorphism]({{ site.baseurl }}/Isomorphism/): 同构与嵌入 <span class="progress" >{{ Isomorphism.progress | ceil }}</span>
-  - [Connectives]({{ site.baseurl }}/Connectives/): 合取、析取与蕴涵 <span class="progress" >{{ Connectives.progress | ceil }}</span>
-  - [Negation]({{ site.baseurl }}/Negation/): 直觉逻辑与命题逻辑中的否定 <span class="progress" >{{ Negation.progress | ceil }}</span>
-  - [Quantifiers]({{ site.baseurl }}/Quantifiers/): 全称量词与存在量词 <span class="progress" >{{ Quantifiers.progress | ceil }}</span>
-  - [Decidable]({{ site.baseurl }}/Decidable/): 布尔值与判定过程 <span class="progress" >{{ Decidable.progress | ceil }}</span>
-  - [Lists]({{ site.baseurl }}/Lists/): 列表与高阶函数 <span class="progress" >{{ Lists.progress | ceil }}</span>
+  - [Naturals]({{ site.baseurl }}/Naturals/): 自然数
+  - [Induction]({{ site.baseurl }}/Induction/): 归纳证明
+  - [Relations]({{ site.baseurl }}/Relations/): 关系的归纳定义
+  - [Equality]({{ site.baseurl }}/Equality/): 相等性与等式推理
+  - [Isomorphism]({{ site.baseurl }}/Isomorphism/): 同构与嵌入
+  - [Connectives]({{ site.baseurl }}/Connectives/): 合取、析取与蕴涵
+  - [Negation]({{ site.baseurl }}/Negation/): 直觉逻辑与命题逻辑中的否定
+  - [Quantifiers]({{ site.baseurl }}/Quantifiers/): 全称量词与存在量词
+  - [Decidable]({{ site.baseurl }}/Decidable/): 布尔值与判定过程
+  - [Lists]({{ site.baseurl }}/Lists/): 列表与高阶函数
 
 <!---
 ## Part 2: Programming Language Foundations
@@ -106,27 +91,17 @@ Pull requests are encouraged.
   - [BigStep]({{ site.baseurl }}/BigStep/): Big-step semantics of untyped lambda calculus
 --->
 
-{%- assign Lambda = site.pages | where:"permalink", "/Lambda/"  | first -%}
-{%- assign Properties = site.pages | where:"permalink", "/Properties/"  | first -%}
-{%- assign DeBruijn = site.pages | where:"permalink", "/DeBruijn/"  | first -%}
-{%- assign More = site.pages | where:"permalink", "/More/"  | first -%}
-{%- assign Bisimulation = site.pages | where:"permalink", "/Bisimulation/"  | first -%}
-{%- assign Inference = site.pages | where:"permalink", "/Inference/"  | first -%}
-{%- assign Untyped = site.pages | where:"permalink", "/Untyped/"  | first -%}
-{%- assign Confluence = site.pages | where:"permalink", "/Confluence/"  | first -%}
-{%- assign BigStep = site.pages | where:"permalink", "/BigStep/"  | first -%}
-
 ## 第二分册：编程语言基础
 
-  - [Lambda]({{ site.baseurl }}/Lambda/): λ-演算简介 <span class="progress" >{{ Lambda.progress | ceil }}</span>
-  - [Properties]({{ site.baseurl }}/Properties/): 可进性与保型性 <span class="progress" >{{ Properties.progress | ceil }}</span>
-  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): 固有类型的 de Bruijn 表示 <span class="progress" >{{ DeBruijn.progress | ceil }}</span>
-  - [More]({{ site.baseurl }}/More/): 简单类型 λ-演算的附加构造 <span class="progress" >{{ More.progress | ceil }}</span>
-  - [Bisimulation]({{ site.baseurl }}/Bisimulation/) : 关系归约系统 <span class="progress" >{{ Bisimulation.progress | ceil }}</span>
-  - [Inference]({{ site.baseurl }}/Inference/): 双向类型推断 <span class="progress" >{{ Inference.progress | ceil }}</span>
-  - [Untyped]({{ site.baseurl }}/Untyped/): 无类型 λ-演算及其完整范式 <span class="progress" >{{ Untyped.progress | ceil }}</span>
-  - [Confluence]({{ site.baseurl }}/Confluence/): 无类型 λ-演算的汇合性 <span class="progress" >{{ Confluence.progress | ceil }}</span>
-  - [BigStep]({{ site.baseurl }}/BigStep/): 无类型 λ-演算的大步语义 <span class="progress" >{{ BigStep.progress | ceil }}</span>
+  - [Lambda]({{ site.baseurl }}/Lambda/): λ-演算简介
+  - [Properties]({{ site.baseurl }}/Properties/): 可进性与保型性
+  - [DeBruijn]({{ site.baseurl }}/DeBruijn/): 固有类型的 de Bruijn 表示
+  - [More]({{ site.baseurl }}/More/): 简单类型 λ-演算的附加构造
+  - [Bisimulation]({{ site.baseurl }}/Bisimulation/) : 关系归约系统
+  - [Inference]({{ site.baseurl }}/Inference/): 双向类型推断
+  - [Untyped]({{ site.baseurl }}/Untyped/): 无类型 λ-演算及其完整范式
+  - [Confluence]({{ site.baseurl }}/Confluence/): 无类型 λ-演算的汇合性
+  - [BigStep]({{ site.baseurl }}/BigStep/): 无类型 λ-演算的大步语义
 
 <!--
 ## Part 3: Denotational Semantics
@@ -140,17 +115,11 @@ Pull requests are encouraged.
 
 ## 第三分册：指称语义
 
-{%- assign Denotational = site.pages | where:"permalink", "/Denotational/"  | first -%}
-{%- assign Compositional = site.pages | where:"permalink", "/Compositional/"  | first -%}
-{%- assign Soundness = site.pages | where:"permalink", "/Soundness/"  | first -%}
-{%- assign Adequacy = site.pages | where:"permalink", "/Adequacy/"  | first -%}
-{%- assign ContextualEquivalence = site.pages | where:"permalink", "/ContextualEquivalence/"  | first -%}
-
-  - [Denotational]({{ site.baseurl }}/Denotational/): 无类型 λ-演算的指称语义 <span class="progress" >{{ Denotational.progress | ceil }}</span>
-  - [Compositional]({{ site.baseurl }}/Compositional/): 指称语义具有复合性 <span class="progress" >{{ Compositional.progress | ceil }}</span>
-  - [Soundness]({{ site.baseurl }}/Soundness/): 从指称语义看归约的可靠性 <span class="progress" >{{ Soundness.progress | ceil }}</span>
-  - [Adequacy]({{ site.baseurl }}/Adequacy/): 从操作语义看指称语义的充分性 <span class="progress" >{{ Adequacy.progress | ceil }}</span>
-  - [ContextualEquivalence]({{ site.baseurl }}/ContextualEquivalence/): 指称相等蕴含上下文等价 <span class="progress" >{{ ContextualEquivalence.progress | ceil }}</span>
+  - [Denotational]({{ site.baseurl }}/Denotational/): 无类型 λ-演算的指称语义
+  - [Compositional]({{ site.baseurl }}/Compositional/): 指称语义具有复合性
+  - [Soundness]({{ site.baseurl }}/Soundness/): 从指称语义看归约的可靠性
+  - [Adequacy]({{ site.baseurl }}/Adequacy/): 从操作语义看指称语义的充分性
+  - [ContextualEquivalence]({{ site.baseurl }}/ContextualEquivalence/): 指称相等蕴含上下文等价
 
 <!--
 ## Appendix
@@ -160,9 +129,7 @@ Pull requests are encouraged.
 
 ## 附录
 
-{%- assign Substitution = site.pages | where:"permalink", "/Substitution/"  | first -%}
-
-  - [Substitution]({{ site.baseurl }}/Substitution/): 无类型 λ-演算中的代换 <span class="progress" >{{ Substitution.progress | ceil }}</span>
+  - [Substitution]({{ site.baseurl }}/Substitution/): 无类型 λ-演算中的代换
 
 <!---
 ## Backmatter
@@ -171,13 +138,10 @@ Pull requests are encouraged.
   - [Fonts]({{ site.baseurl }}/Fonts/): Test page for fonts
 --->
 
-{%- assign Acknowledgements = site.pages | where:"permalink", "/Acknowledgements/"  | first -%}
-{%- assign Fonts = site.pages | where:"permalink", "/Fonts/"  | first -%}
-
 ## 后记
 
-  - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/): 鸣谢 <span class="progress" >{{ Acknowledgements.progress | ceil }}</span>
-  - [Fonts]({{ site.baseurl }}/Fonts/): 字体测试页 <span class="progress" >{{ Fonts.progress | ceil }}</span>
+  - [Acknowledgements]({{ site.baseurl }}/Acknowledgements/): 鸣谢
+  - [Fonts]({{ site.baseurl }}/Fonts/): 字体测试页
 
 <!--
 ## Related
@@ -195,6 +159,10 @@ Pull requests are encouraged.
   * [plfa-dev@inf.ed.ac.uk](http://lists.inf.ed.ac.uk/mailman/listinfo/plfa-dev): <br />
     A mailing list for contributors. <br />
     This is the place to discuss changes and new additions to the book in excruciating detail.
+
+<!--
+### Courses taught from the textbook
+-->
 
 ### 使用本书教学的课程
 
