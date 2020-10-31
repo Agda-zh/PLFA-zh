@@ -984,7 +984,7 @@ Chapter [Isomorphism]({{ site.baseurl }}/Isomorphism/#iff),
 operation on booleans and decidables, and also show the corresponding erasure:
 {:/}
 
-给出与 [Isomorphism][plfa.Isomorphism#iff] 章节中 `_↔_` 相对应的布尔值与可判定的值的操作，
+给出与[同构与嵌入]({{ site.baseurl }}/Isomorphism/#iff)章节中 `_↔_` 相对应的布尔值与可判定的值的操作，
 并证明其对应的擦除：
 
 ```
@@ -1008,7 +1008,7 @@ postulate
 ## Proof by reflection {#proof-by-reflection}
 {:/}
 
-## 反射证明 {#proof-by-reflection}
+## 互映证明 {#proof-by-reflection}
 
 {::comment}
 Let's revisit our definition of monus from
@@ -1019,9 +1019,9 @@ could have defined a *guarded* version of minus, a function which subtracts `n`
 from `m` only if `n ≤ m`:
 {:/}
 
-让我们重新审视章节 [Naturals]({{ site.baseurl }}/Naturals/) 中 monus 的定义。
+让我们回顾一下章节[自然数]({{ site.baseurl }}/Naturals/)中 `monus` 的定义。
 如果从一个较小的数中减去一个较大的数，结果为零。毕竟我们总是要得到一个结果。
-我们可以用其他方式定义吗？可以定义一版带有守卫的减法──只有 `n ≤ m` 时才能从 `m` 中减去 `n` ：
+我们可以用其他方式定义吗？可以定义一版带有*守卫（guarded）*的减法──只有当 `n ≤ m` 时才能从 `m` 中减去 `n` ：
 
 ```
 minus : (m n : ℕ) (n≤m : n ≤ m) → ℕ
@@ -1034,7 +1034,7 @@ Unfortunately, it is painful to use, since we have to explicitly provide
 the proof that `n ≤ m`:
 {:/}
 
-不幸的是，这种定义难以使用，因为我们必须显示地为`n ≤ m`提供证明：
+然而这种定义难以使用，因为我们必须显式地为`n ≤ m`提供证明：
 
 ```
 _ : minus 5 3 (s≤s (s≤s (s≤s z≤n))) ≡ 2
@@ -1048,8 +1048,8 @@ know the two numbers *statically*. In that case, we can use a technique called
 equality `n ≤? m` while type checking, and make sure that `n ≤ m`!
 {:/}
 
-这个问题没有通用的解决方案，但是在上述的情景下，我们恰好静态地知道这两个数字。这种情况下，我们可以使用一种被称为 *反射证明* 的技术。
-实质上，在类型检查的时候我们可以让 Agda 运行可判定的等式 `n ≤ m` 并且保证 `n ≤ m`！
+这个问题没有通用的解决方案，但是在上述的情景下，我们恰好*静态地*知道这两个数字。这种情况下，我们可以使用一种被称为*互映证明（proof by reflection）*的技术。
+实质上，在类型检查的时候我们可以让 Agda 运行可判定的等式 `n ≤? m` 并且保证 `n ≤ m`！
 
 {::comment}
 We do this by using a feature of implicits. Agda will fill in an implicit of a
@@ -1058,8 +1058,8 @@ fill in an implicit of an *empty* record type, since there aren't any fields
 after all. This is why `⊤` is defined as an empty record.
 {:/}
 
-我们使用隐式的一个特性来实现这个功能。如果 Agda 可以填充一个记录类型的所有字段，那么 Agda 就可以填充此记录类型的隐式。
-由于空记录类型没有任何字段，Agda总是会设法填充空记录类型的隐式。这就是`⊤`类型被定义成空记录的原因。
+我们使用「隐式参数」的一个特性来实现这个功能。如果 Agda 可以填充一个记录类型的所有字段，那么 Agda 就可以填充此记录类型的隐式参数。
+由于空记录类型没有任何字段，Agda 总是会设法填充空记录类型的隐式参数。这就是`⊤`类型被定义成空记录的原因。
 
 {::comment}
 The trick is to have an implicit argument of the type `T ⌊ n ≤? m ⌋`. Let's go
@@ -1073,8 +1073,8 @@ guard.
 
 这里的技巧是设置一个类型为 `T ⌊ n ≤? m ⌋` 的隐式参数。让我们一步一步阐述这句话的含义。
 首先，我们运行判定过程 `n ≤? m`。它向我们提供了 `n ≤ m` 是否成立的证据。我们擦除证据得到布尔值。
-最后，我们应用 `T`。回想一下，`T` 将布尔值映射到证明的世界：`true` 变成了单位类型 `⊤`，
-`false` 变成了空类型 `⊥` 。在操作上，这个类型的一个隐式参数起到了守卫的作用。
+最后，我们应用 `T`。回想一下，`T` 将布尔值映射到证据的世界：`true` 变成了单位类型 `⊤`，
+`false` 变成了空类型 `⊥` 。在操作上，这个类型的隐式参数起到了守卫的作用。
 
 {::comment}
 - If `n ≤ m` holds, the type of the implicit value reduces to `⊤`. Agda then
@@ -1083,8 +1083,8 @@ guard.
   it will throw an error. For instance, if we call `3 - 5` we get `_n≤m_254 : ⊥`.
 {:/}
 
-- 如果 `n ≤ m` 成立，隐式参数的类型规约为 `⊤`。 然后Agda会开心地提供隐式参数。
-- 否则，类型规约为 `⊥` ，这个类型 Agda 无法提供，因此会报错。例如，如果我们调用 `3 - 5` 会得到 `_n≤m_254 : ⊥`。
+- 如果 `n ≤ m` 成立，隐式参数的类型规约为 `⊤`。 然后 Agda 会欣然地提供隐式参数。
+- 否则，类型规约为 `⊥` ，Agda 无法为此类型提供对应的值，因此会报错。例如，如果我们调用 `3 - 5` 会得到 `_n≤m_254 : ⊥`。
 
 {::comment}
 We obtain the witness for `n ≤ m` using `toWitness`, which we defined earlier:
@@ -1113,7 +1113,7 @@ It turns out that this idiom is very common. The standard library defines a
 synonym for `T ⌊ ? ⌋` called `True`:
 {:/}
 
-事实证明，这种惯用语法非常普遍。标准库为 `T ⌊ ? ⌋` 定义了叫做 `True` 的代名词：
+事实上，这种惯用语法非常普遍。标准库为 `T ⌊ ? ⌋` 定义了叫做 `True` 的同义词：
 
 ```
 True : ∀ {Q} → Dec Q → Set
@@ -1130,7 +1130,7 @@ True Q = T ⌊ Q ⌋
 Give analogues of `True`, `toWitness`, and `fromWitness` which work with *negated* properties. Call these `False`, `toWitnessFalse`, and `fromWitnessFalse`.
 {:/}
 
-给出 `True`，`toWitness`，和 `fromWitness` 的相反定义。分别称为 `False`，`toWitnessFalse`，以及 `fromWitnessFalse`。
+给出 `True`，`toWitness` 和 `fromWitness` 的相反定义。分别称为 `False`，`toWitnessFalse` 和 `fromWitnessFalse`。
 
 {::comment}
 ## Standard Library
