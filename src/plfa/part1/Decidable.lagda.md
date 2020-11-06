@@ -4,7 +4,7 @@ layout    : page
 prev      : /Quantifiers/
 permalink : /Decidable/
 next      : /Lists/
-translators : ["Fangyi Zhou"]
+translators : ["Fangyi Zhou", "Oshmkufa2010"]
 progress  : 100
 ---
 
