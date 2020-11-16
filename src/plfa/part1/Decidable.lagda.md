@@ -1034,7 +1034,7 @@ Unfortunately, it is painful to use, since we have to explicitly provide
 the proof that `n ≤ m`:
 {:/}
 
-然而这种定义难以使用，因为我们必须显式地为`n ≤ m`提供证明：
+然而这种定义难以使用，因为我们必须显式地为 `n ≤ m` 提供证明：
 
 ```
 _ : minus 5 3 (s≤s (s≤s (s≤s z≤n))) ≡ 2
@@ -1059,7 +1059,7 @@ after all. This is why `⊤` is defined as an empty record.
 {:/}
 
 我们使用「隐式参数」的一个特性来实现这个功能。如果 Agda 可以填充一个记录类型的所有字段，那么 Agda 就可以填充此记录类型的隐式参数。
-由于空记录类型没有任何字段，Agda 总是会设法填充空记录类型的隐式参数。这就是`⊤`类型被定义成空记录的原因。
+由于空记录类型没有任何字段，Agda 总是会设法填充空记录类型的隐式参数。这就是 `⊤` 类型被定义成空记录的原因。
 
 {::comment}
 The trick is to have an implicit argument of the type `T ⌊ n ≤? m ⌋`. Let's go
@@ -1124,7 +1124,6 @@ True Q = T ⌊ Q ⌋
 {:/}
 
 #### 练习 `False`
-
 
 {::comment}
 Give analogues of `True`, `toWitness`, and `fromWitness` which work with *negated* properties. Call these `False`, `toWitnessFalse`, and `fromWitnessFalse`.
