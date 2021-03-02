@@ -315,6 +315,7 @@ Chapter [Decidable]({{ site.baseurl }}/Decidable/).
 
 ## 反演
 
+{::comment}
 In our definitions, we go from smaller things to larger things.
 For instance, from `m ≤ n` we can conclude `suc m ≤ suc n`,
 where `suc m` is bigger than `m` (that is, the former contains
@@ -589,7 +590,7 @@ case cannot arise, and does not require (or permit) it to be listed.
 {:/}
 
 `≤-trans (s≤s m≤n) z≤n` 不可能发生，因为第一个不等式告诉我们中间的数是一个 `suc n`，
-而第二个不等式告诉我们中间的书是 `zero`。Agda 可以推断这样的情况不可能发现，所以我们不需要
+而第二个不等式告诉我们中间的数是 `zero`。Agda 可以推断这样的情况不可能发现，所以我们不需要
 （也不可以）列出这种情况。
 
 {::comment}
