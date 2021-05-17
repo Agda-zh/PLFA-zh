@@ -1804,7 +1804,7 @@ represents a positive natural, and represent zero by `⟨⟩ O`.
 Confirm that these both give the correct answer for zero through four.
 {:/}
 
-对于前者，用没有前导零的比特串来表示正数，并用 `x0 nil` 表示零。
+对于前者，用没有前导零的比特串来表示正数，并用 `⟨⟩ O` 表示零。
 验证这两个函数都能对零到四给出正确结果。
 
 {::comment}
