@@ -108,19 +108,21 @@ Stack 是管理不同版本的 Haskell 编译器和包的管理程序。
 -->
 
 - **UNIX 和 macOS** 平台：如果你的包管理程序有 Stack
-    的包，这是大概是最简单的方法。 比如说 macOS 的 Homebrew 或者 Debian 的 APT
-    提供了「haskell-stack」包。
-    不然，你可以按照 [Stack 网站上][haskell-stack] 的指示进行安装。
-    在一般情况下，Stack 将二进制文件安装至 `HOME/.local/bin`。
-    请务必保证这个目录在你的 PATH 之内，你可以将下面的内容加入你的 shell
-    配置中，例如 `HOME/.bash_profile` 中：
-    ```bash
-    export PATH="${HOME}/.local/bin:${PATH}"
-    ```
-    最后，请保证你有最新版的 Stack，运行：
-    ```bash
-    stack upgrade
-    ```
+  的包，这是大概是最简单的方法。 比如说 macOS 的 Homebrew 或者 Debian 的 APT
+  提供了「haskell-stack」包。
+  不然，你可以按照 [Stack 网站上][haskell-stack] 的指示进行安装。
+  在一般情况下，Stack 将二进制文件安装至 `HOME/.local/bin`。
+  请务必保证这个目录在你的 PATH 之内，你可以将下面的内容加入你的 shell
+  配置中，例如 `HOME/.bash_profile` 中：
+
+  ```bash
+  export PATH="${HOME}/.local/bin:${PATH}"
+  ```
+
+  最后，请保证你有最新版的 Stack，运行：
+  ```bash
+  stack upgrade
+  ```
 - **Windows** 平台：[Stack 网站上][haskell-stack]提供 Windows 安装包。
 
 <!--
@@ -669,7 +671,6 @@ If you're having trouble typing the Unicode characters into Emacs, the end of ea
 如果你在 Emacs 中输入 Unicode 时遇到了问题，可以在每章的最后找到当前章节中用到的
 Unicode 字符。
 
-<<<<<<< HEAD
 <!--
 Emacs with `agda-mode` offers a number of useful commands, and two of them are especially useful when it comes to working with Unicode characters. For a full list of supported characters, use `agda-input-show-translations` with:
 -->
