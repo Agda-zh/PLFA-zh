@@ -44,7 +44,7 @@ However, if you wish to interact with the code or complete the exercises, you ne
 
   - [Stack](#install-the-haskell-tool-stack)
   - [Git](#install-git)
-  - [Agda](#installing-agda-using-stack)
+  - [Agda](#install-agda-using-stack)
   - [Agda 标准库](#install-plfa-and-the-agda-standard-library)
   - [PLFA](#install-plfa-and-the-agda-standard-library)
 
@@ -138,10 +138,10 @@ If you do not already have Git installed, see [the Git downloads page][git].
 如果你没有已经安装 Git，请参阅 [Git 下载页面][git]。
 
 <!--
-### Installing Agda using Stack
+### Install Agda using Stack
 -->
 
-### 用 Stack 安装 Agda {name=installing-agda-using-stack}
+### 用 Stack 安装 Agda {name=install-agda-using-stack}
 
 
 <!--
@@ -851,7 +851,7 @@ If you want Stack to use your system installation of GHC, you can pass the `--sy
 -->
 
 如果你想让 Stack 使用你系统中安装的 GHC，那么可以传入 `--system-ghc` 参数并选择对应的
-`stack-*.yaml` 文件，就像在安装 [Agda](#installing-agda-using-stack) 时那样。
+`stack-*.yaml` 文件，就像在安装 [Agda](#install-agda-using-stack) 时那样。
 
 <!-- Links -->
 [epub-zh]: https://agda-zh.github.io/PLFA-zh/out/epub/plfa.epub
