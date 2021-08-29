@@ -7,7 +7,7 @@ translators : [Oling Cat]
 progress  : 100
 ---
 
-{::comment}
+<!--
 <p style="text-align:center;">
   <span style="font-size:1.5em">de Philip, para Wanda</span>
 </p>
@@ -23,7 +23,7 @@ progress  : 100
 <p style="text-align:center;">
   <span style="font-size:1em">...</span>
 </p>
-{:/}
+-->
 
 <center>
 <h2>致 Wanda</h2>
