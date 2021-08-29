@@ -302,11 +302,11 @@ either `(1 ≤ 2) ≤ 3` or `1 ≤ (2 ≤ 3)`.
 Given two numbers, it is straightforward to compute whether or not the
 first is less than or equal to the second.  We don't give the code for
 doing so here, but will return to this point in
-Chapter [Decidable]({{ site.baseurl }}/Decidable/).
+Chapter [Decidable](/Decidable/).
 {:/}
 
 给定两个数，我们可以很直接地决定第一个数是不是小于等于第二个数。我们在此处不给出说明的代码，
-但我们会在 [Decidable]({{ site.baseurl }}/Decidable/) 章节重新讨论这个问题。
+但我们会在 [Decidable](/Decidable/) 章节重新讨论这个问题。
 
 
 {::comment}
@@ -451,10 +451,10 @@ partial order but not a total order.
 上述性质，比如说指出新定义的关系是一个偏序而不是全序。
 
 {::comment}
-#### Exercise `orderings` (practice) {#orderings}
+#### Exercise `orderings` (practice) {name=orderings}
 {:/}
 
-#### 练习 `orderings`（实践） {#orderings}
+#### 练习 `orderings`（实践） {name=orderings}
 
 {::comment}
 Give an example of a preorder that is not a partial order.
@@ -645,8 +645,8 @@ using holes and the `C-c C-c`, `C-c C-,`, and `C-c C-r` commands.
 
 {::comment}
 The third property to prove about comparison is that it is
-antisymmetric: for all naturals `m` and `n`, if both `m ≤ n` and `n ≤
-m` hold, then `m ≡ n` holds:
+antisymmetric: for all naturals `m` and `n`, if both `m ≤ n` and
+`n ≤ m` hold, then `m ≡ n` holds:
 {:/}
 
 我们证明的第三个性质是反对称性：对于所有的自然数 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ m`
@@ -693,10 +693,10 @@ follows by congruence.
 
 
 {::comment}
-#### Exercise `≤-antisym-cases` (practice) {#leq-antisym-cases}
+#### Exercise `≤-antisym-cases` (practice) {name=leq-antisym-cases}
 {:/}
 
-#### 练习 `≤-antisym-cases`（实践） {#leq-antisym-cases}
+#### 练习 `≤-antisym-cases`（实践） {name=leq-antisym-cases}
 
 {::comment}
 The above proof omits cases where one argument is `z≤n` and one
@@ -763,11 +763,11 @@ evidence of `m ≤ n` and `n ≤ m` respectively.
 {::comment}
 (For those familiar with logic, the above definition
 could also be written as a disjunction. Disjunctions will
-be introduced in Chapter [Connectives]({{ site.baseurl }}/Connectives/).)
+be introduced in Chapter [Connectives](/Connectives/).)
 {:/}
 
 （如果你对于逻辑学有所了解，上面的定义可以由析取（Disjunction）表示。
-我们会在 [Connectives]({{ site.baseurl }}/Connectives/) 章节介绍析取。）
+我们会在 [Connectives](/Connectives/) 章节介绍析取。）
 
 {::comment}
 This is our first use of a datatype with _parameters_,
@@ -1061,10 +1061,10 @@ Show that multiplication is monotonic with regard to inequality.
 
 
 {::comment}
-## Strict inequality {#strict-inequality}
+## Strict inequality {name=strict-inequality}
 {:/}
 
-## 严格不等关系 {#strict-inequality}
+## 严格不等关系 {name=strict-inequality}
 
 {::comment}
 We can define strict inequality similarly to inequality:
@@ -1114,11 +1114,11 @@ It is also monotonic with regards to addition and multiplication.
 Most of the above are considered in exercises below.  Irreflexivity
 requires negation, as does the fact that the three cases in
 trichotomy are mutually exclusive, so those points are deferred to
-Chapter [Negation]({{ site.baseurl }}/Negation/).
+Chapter [Negation](/Negation/).
 {:/}
 
 我们把一部分上述性质作为习题。非自反性需要逻辑非，三分律需要证明三者是互斥的，因此这两个性质
-暂不做为习题。我们会在 [Negation]({{ site.baseurl }}/Negation/) 章节来重新讨论。
+暂不做为习题。我们会在 [Negation](/Negation/) 章节来重新讨论。
 
 {::comment}
 It is straightforward to show that `suc m ≤ n` implies `m < n`,
@@ -1132,10 +1132,10 @@ exploiting the corresponding properties of inequality.
 
 
 {::comment}
-#### Exercise `<-trans` (recommended) {#less-trans}
+#### Exercise `<-trans` (recommended) {name=less-trans}
 {:/}
 
-#### 练习 `<-trans` （推荐） {#less-trans}
+#### 练习 `<-trans` （推荐） {name=less-trans}
 
 {::comment}
 Show that strict inequality is transitive.
@@ -1153,12 +1153,11 @@ Show that strict inequality is transitive.
 -- 请将代码写在此处。
 ```
 
-
 {::comment}
-#### Exercise `trichotomy` (practice) {#trichotomy}
+#### Exercise `trichotomy` (practice) {name=trichotomy}
 {:/}
 
-#### 练习 `trichotomy`（实践） {#trichotomy}
+#### 练习 `trichotomy`（实践） {name=trichotomy}
 
 {::comment}
 Show that strict inequality satisfies a weak version of trichotomy, in
@@ -1179,11 +1178,11 @@ Define `m > n` to be the same as `n < m`.
 You will need a suitable data declaration,
 similar to that used for totality.
 (We will show that the three cases are exclusive after we introduce
-[negation]({{ site.baseurl }}/Negation/).)
+[negation](/Negation/).)
 {:/}
 
 定义 `m > n` 为 `n < m`。你需要一个合适的数据类型声明，如同我们在证明完全性中使用的那样。
-（我们会在介绍完[否定]({{ site.baseurl }}/Negation/)之后证明三者是互斥的。）
+（我们会在介绍完[否定](/Negation/)之后证明三者是互斥的。）
 
 {::comment}
 ```
@@ -1196,10 +1195,10 @@ similar to that used for totality.
 ```
 
 {::comment}
-#### Exercise `+-mono-<` (practice) {#plus-mono-less}
+#### Exercise `+-mono-<` (practice) {name=plus-mono-less}
 {:/}
 
-#### 练习 `+-mono-<`（实践） {#plus-mono-less}
+#### 练习 `+-mono-<`（实践） {name=plus-mono-less}
 
 {::comment}
 Show that addition is monotonic with respect to strict inequality.
@@ -1220,10 +1219,10 @@ As with inequality, some additional definitions may be required.
 
 
 {::comment}
-#### Exercise `≤-iff-<` (recommended) {#leq-iff-less}
+#### Exercise `≤-iff-<` (recommended) {name=leq-iff-less}
 {:/}
 
-#### 练习 `≤-iff-<` (推荐) {#leq-iff-less}
+#### 练习 `≤-iff-<` (推荐) {name=leq-iff-less}
 
 {::comment}
 Show that `suc m ≤ n` implies `m < n`, and conversely.
@@ -1242,10 +1241,10 @@ Show that `suc m ≤ n` implies `m < n`, and conversely.
 ```
 
 {::comment}
-#### Exercise `<-trans-revisited` (practice) {#less-trans-revisited}
+#### Exercise `<-trans-revisited` (practice) {name=less-trans-revisited}
 {:/}
 
-#### 练习 `<-trans-revisited`（实践） {#less-trans-revisited}
+#### 练习 `<-trans-revisited`（实践） {name=less-trans-revisited}
 
 {::comment}
 Give an alternative proof that strict inequality is transitive,
@@ -1427,10 +1426,10 @@ successor of the sum of two even numbers, which is even.
 
 
 {::comment}
-#### Exercise `o+o≡e` (stretch) {#odd-plus-odd}
+#### Exercise `o+o≡e` (stretch) {name=odd-plus-odd}
 {:/}
 
-#### 练习 `o+o≡e` (延伸) {#odd-plus-odd}
+#### 练习 `o+o≡e` (延伸) {name=odd-plus-odd}
 
 {::comment}
 Show that the sum of two odd numbers is even.
@@ -1450,20 +1449,20 @@ Show that the sum of two odd numbers is even.
 
 
 {::comment}
-#### Exercise `Bin-predicates` (stretch) {#Bin-predicates}
+#### Exercise `Bin-predicates` (stretch) {name=Bin-predicates}
 {:/}
 
-#### 练习 `Bin-predicates` (延伸) {#Bin-predicates}
+#### 练习 `Bin-predicates` (延伸) {name=Bin-predicates}
 
 {::comment}
 Recall that
-Exercise [Bin]({{ site.baseurl }}/Naturals/#Bin)
+Exercise [Bin](/Naturals/#Bin)
 defines a datatype `Bin` of bitstrings representing natural numbers.
 Representations are not unique due to leading zeros.
 Hence, eleven may be represented by both of the following:
 {:/}
 
-回忆我们在练习 [Bin][plfa.Naturals#Bin] 中定义了一个数据类型 `Bin` 来用二进制字符串表示自然数。
+回忆我们在练习 [Bin](/Naturals/#Bin) 中定义了一个数据类型 `Bin` 来用二进制字符串表示自然数。
 这个表达方法不是唯一的，因为我们在开头加任意个 0。因此，11 可以由以下方法表示：
 
     ⟨⟩ I O I I
@@ -1570,12 +1569,12 @@ import Data.Nat.Properties using (≤-refl; ≤-trans; ≤-antisym; ≤-total;
 {::comment}
 In the standard library, `≤-total` is formalised in terms of
 disjunction (which we define in
-Chapter [Connectives]({{ site.baseurl }}/Connectives/)),
+Chapter [Connectives](/Connectives/)),
 and `+-monoʳ-≤`, `+-monoˡ-≤`, `+-mono-≤` are proved differently than here,
 and more arguments are implicit.
 {:/}
 
-在标准库中，`≤-total` 是使用析取定义的（我们将在 [Connectives][plfa.Connectives] 章节定义）。
+在标准库中，`≤-total` 是使用析取定义的（我们将在 [Connectives](/Connectives/) 章节定义）。
 `+-monoʳ-≤`、`+-monoˡ-≤` 和 `+-mono-≤` 的证明方法和本书不同。
 更多的参数是隐式申明的。
 

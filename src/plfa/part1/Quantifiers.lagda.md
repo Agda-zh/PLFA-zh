@@ -174,10 +174,10 @@ postulate
 
 {::comment}
 Compare this with the result (`→-distrib-×`) in
-Chapter [Connectives]({{ site.baseurl }}/Connectives/).
-{:/
+Chapter [Connectives](/Connectives/).
+{:/}
 
-将这个结果与 [Connectives]({{ site.baseurl }}/Connectives/)
+将这个结果与 [Connectives](/Connectives/)
 章节中的 (`→-distrib-×`) 结果对比。
 
 {::comment}
@@ -457,11 +457,11 @@ Indeed, the converse also holds, and the two together form an isomorphism:
 {::comment}
 The result can be viewed as a generalisation of currying.  Indeed, the code to
 establish the isomorphism is identical to what we wrote when discussing
-[implication]({{ site.baseurl }}/Connectives/#implication).
+[implication](/Connectives/#implication).
 {:/}
 
 这可以被看做是将柯里化推广的结果。的确，建立这两者同构的证明与之前我们讨论
-[蕴涵]({{ site.baseurl }}/Connectives/#implication)时给出的证明是一样的。
+[蕴涵](/Connectives/#implication)时给出的证明是一样的。
 
 {::comment}
 #### Exercise `∃-distrib-⊎` (recommended)
@@ -527,10 +527,10 @@ Show that `∃[ x ] B x` is isomorphic to `B aa ⊎ B bb ⊎ B cc`.
 
 {::comment}
 Recall the definitions of `even` and `odd` from
-Chapter [Relations]({{ site.baseurl }}/Relations/):
+Chapter [Relations](/Relations/):
 {:/}
 
-回忆我们在 [Relations]({{ site.baseurl }}/Relations/)
+回忆我们在 [Relations](/Relations/)
 章节中定义的 `even` 和 `odd`：
 
 ```
@@ -731,10 +731,10 @@ restated in this way.
 ```
 
 {::comment}
-#### Exercise `∃-+-≤` (practice)
+#### Exercise `∃-|-≤` (practice)
 {:/}
 
-#### 练习 `∃-+-≤`（实践）
+#### 练习 `∃-|-≤`（实践）
 
 {::comment}
 Show that `y ≤ z` holds if and only if there exists a `x` such that
@@ -841,16 +841,16 @@ Does the converse hold? If so, prove; if not, explain why.
 逆命题成立吗？如果成立，给出证明。如果不成立，解释为什么。
 
 {::comment}
-#### Exercise `Bin-isomorphism` (stretch) {#Bin-isomorphism}
+#### Exercise `Bin-isomorphism` (stretch) {name=Bin-isomorphism}
 {:/}
 
-#### 练习 `Bin-isomorphism` （延伸） {#Bin-isomorphism}
+#### 练习 `Bin-isomorphism` （延伸） {name=Bin-isomorphism}
 
 {::comment}
 Recall that Exercises
-[Bin]({{ site.baseurl }}/Naturals/#Bin),
-[Bin-laws]({{ site.baseurl }}/Induction/#Bin-laws), and
-[Bin-predicates]({{ site.baseurl }}/Relations/#Bin-predicates)
+[Bin](/Naturals/#Bin),
+[Bin-laws](/Induction/#Bin-laws), and
+[Bin-predicates](/Relations/#Bin-predicates)
 define a datatype `Bin` of bitstrings representing natural numbers,
 and asks you to define the following functions and predicates:
 {:/}

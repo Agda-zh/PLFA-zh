@@ -301,11 +301,11 @@ invocation of the proof, in this case `++-assoc xs ys zs`.
 与往常一样，归纳假设由递归使用证明函数来表明，此处为 `++-assoc xs ys zs`。
 
 {::comment}
-Recall that Agda supports [sections]({{ site.baseurl }}/Induction/#sections).
+Recall that Agda supports [sections](/Induction/#sections).
 Applying `cong (x ∷_)` promotes the inductive hypothesis:
 {:/}
 
-回忆到 Agda 支持[片段]({{ site.baseurl }}/Induction/#sections)。使用 `cong (x ∷_)`
+回忆到 Agda 支持[片段](/Induction/#sections)。使用 `cong (x ∷_)`
 可以将归纳假设：
 
     (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
@@ -750,10 +750,10 @@ Now the time to reverse a list is linear in the length of the list.
 现在反转一个列表需要的时间与列表的长度线性相关。
 
 {::comment}
-## Map {#Map}
+## Map {name=Map}
 {:/}
 
-## 映射 {#Map}
+## 映射 {name=Map}
 
 {::comment}
 Map applies a function to every element of a list to generate a corresponding list.
@@ -921,10 +921,10 @@ Define a suitable map operator over trees:
 ```
 
 {::comment}
-## Fold {#Fold}
+## Fold {name=Fold}
 {:/}
 
-## 折叠 {#Fold}
+## 折叠 {name=Fold}
 
 {::comment}
 Fold takes an operator and a value, and uses the operator to combine
@@ -1408,10 +1408,10 @@ Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 
 
 {::comment}
-## All {#All}
+## All {name=All}
 {:/}
 
-## 所有 {#All}
+## 所有 {name=All}
 
 {::comment}
 We can also define predicates over lists. Two of the most important
@@ -1661,11 +1661,11 @@ Show that `Any` and `All` satisfy a version of De Morgan's Law:
 {::comment}
 (Can you see why it is important that here `_∘_` is generalised
 to arbitrary levels, as described in the section on
-[universe polymorphism]({{ site.baseurl }}/Equality/#unipoly)?)
+[universe polymorphism](/Equality/#unipoly)?)
 {:/}
 
 （你能明白为什么这里的 `_∘_` 被泛化到任意层级很重要吗？
-如[全体多态]({{ site.baseurl }}/Equality/#unipoly)一节所述。）
+如[全体多态](/Equality/#unipoly)一节所述。）
 
 {::comment}
 Do we also have the following?

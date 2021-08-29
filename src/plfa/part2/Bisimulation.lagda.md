@@ -119,14 +119,14 @@ above is a simulation from source to target.  We leave
 establishing it in the reverse direction as an exercise.
 Another exercise is to show the alternative formulations
 of products in
-Chapter [More]({{ site.baseurl }}/More/)
+Chapter [More](/More/)
 are in bisimulation.
 
 
 ## Imports
 
 We import our source language from
-Chapter [More]({{ site.baseurl }}/More/):
+Chapter [More](/More/):
 ```
 open import plfa.part2.More
 ```
@@ -164,8 +164,8 @@ data _~_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
       ----------------------
     → `let M N ~ (ƛ N†) · M†
 ```
-The language in Chapter [More]({{ site.baseurl }}/More/) has more constructs, which we could easily add.
-However, leaving the simulation small let's us focus on the essence.
+The language in Chapter [More](/More/) has more constructs, which we could easily add.
+However, leaving the simulation small lets us focus on the essence.
 It's a handy technical trick that we can have a large source language,
 but only bother to include in the simulation the terms of interest.
 
@@ -173,6 +173,11 @@ but only bother to include in the simulation the terms of interest.
 
 Formalise the translation from source to target given in the introduction.
 Show that `M † ≡ N` implies `M ~ N`, and conversely.
+
+**Hint:** For simplicity, we focus on only a few constructs of the language,
+so `_†` should be defined only on relevant terms. One way to do this is
+to use a decidable predicate to pick out terms in the domain of `_†`, using
+[proof by reflection](/Decidable/#proof-by-reflection).
 
 ```
 -- Your code goes here
@@ -468,7 +473,7 @@ a bisimulation.
 #### Exercise `products` (practice)
 
 Show that the two formulations of products in
-Chapter [More]({{ site.baseurl }}/More/)
+Chapter [More](/More/)
 are in bisimulation.  The only constructs you need to include are
 variables, and those connected to functions and products.
 In this case, the simulation is _not_ lock-step.

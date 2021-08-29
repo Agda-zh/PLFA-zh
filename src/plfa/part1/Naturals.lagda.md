@@ -1,7 +1,7 @@
 ---
 title     : "Naturals：自然数"
 layout    : page
-prev      : /Preface/
+prev      : /GettingStarted/
 permalink : /Naturals/
 next      : /Induction/
 translators : ["Rongxiao Fu"]
@@ -135,10 +135,10 @@ successor of two; and so on.
 即一的后继数，简写为 `2`；将二的后继数简写为 `3`；以此类推。
 
 {::comment}
-#### Exercise `seven` (practice) {#seven}
+#### Exercise `seven` (practice) {name=seven}
 {:/}
 
-#### 练习 `seven`（实践） {#seven}
+#### 练习 `seven`（实践） {name=seven}
 
 {::comment}
 Write out `7` in longhand.
@@ -537,7 +537,7 @@ all the names specified in the `using` clause into the current scope.
 In this case, the names added are `begin_`, `_≡⟨⟩_`, and `_∎`.  We
 will see how these are used below.  We take these as givens for now,
 but will see how they are defined in
-Chapter [Equality]({{ site.baseurl }}/Equality/).
+Chapter [Equality](/Equality/).
 {:/}
 
 第一行代码将标准库中定义了相等性的模块导入到当前**作用域（Scope）**中，
@@ -546,10 +546,9 @@ Chapter [Equality]({{ site.baseurl }}/Equality/).
 和两个项相等的证据 `refl`。第三行选取的模块提供了用于等价关系推理的运算符，并将
 `using` 从句中指定的名称添加到当前作用域。此处添加的名称有 `begin_`、
 `_≡⟨⟩_` 和 `_∎`。我们后面会看到这些运算符的使用方法。现在暂且把它们当作现成的
-工具来使用，不深究其细节。但我们会在[相等性]({{ site.baseurl }}/Equality/)一章中
+工具来使用，不深究其细节。但我们会在[相等性](/Equality/)一章中
 学习它们的具体定义。
 
-{::comment}
 Agda uses underbars to indicate where terms appear in infix or mixfix
 operators. Thus, `_≡_` and `_≡⟨⟩_` are infix (each operator is written
 between two terms), while `begin_` is prefix (it is written before a
@@ -569,10 +568,10 @@ appear in names, so we do not need extra spaces in the `using` list.
 列表中不需要额外的空格来消除歧义。
 
 {::comment}
-Operations on naturals are recursive functions {#plus}
+## Operations on naturals are recursive functions {name=plus}
 {:/}
 
-## 自然数的运算是递归函数 {#plus}
+## 自然数的运算是递归函数 {name=plus}
 
 {::comment}
 Now that we have the natural numbers, what can we do with them?
@@ -823,10 +822,10 @@ other word for evidence, which we will use interchangeably, is _proof_.
 我们也会使用**证明**一词表达相同的意思，在本书中这两个词可以互换使用。
 
 {::comment}
-#### Exercise `+-example` (practice) {#plus-example}
+#### Exercise `+-example` (practice) {name=plus-example}
 {:/}
 
-#### 练习 `+-example`（实践） {#plus-example}
+#### 练习 `+-example`（实践） {name=plus-example}
 
 {::comment}
 Compute `3 + 4`, writing out your reasoning as a chain of equations, using the equations for `+`.
@@ -940,10 +939,10 @@ it can easily be inferred from the corresponding term.
 `_ : 2 * 3 ≡ 6` 的签名，因为它很容易从对应的项推导出来。
 
 {::comment}
-#### Exercise `*-example` (practice) {#times-example}
+#### Exercise `*-example` (practice) {name=times-example}
 {:/}
 
-#### 练习 `*-example`（实践） {#times-example}
+#### 练习 `*-example`（实践） {name=times-example}
 
 {::comment}
 Compute `3 * 4`, writing out your reasoning as a chain of equations, using the equations for `*`.
@@ -964,10 +963,10 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations, using the e
 ```
 
 {::comment}
-Exercise `_^_` (recommended)
+#### Exercise `_^_` (recommended) {name=power}
 {:/}
 
-#### 练习 `_^_`（推荐） {#power}
+#### 练习 `_^_`（推荐） {name=power}
 
 {::comment}
 Define exponentiation, which is given by the following equations:
@@ -1092,10 +1091,10 @@ _ =
 ```
 
 {::comment}
-#### Exercise `∸-example₁` and `∸-example₂` (recommended) {#monus-examples}
+#### Exercise `∸-example₁` and `∸-example₂` (recommended) {name=monus-examples}
 {:/}
 
-练习 `∸-example₁` 和 `∸-example₂`（推荐） {#monus-examples}
+练习 `∸-example₁` 和 `∸-example₂`（推荐） {name=monus-examples}
 
 {::comment}
 Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equations.
@@ -1384,10 +1383,10 @@ the same coin.
 如上所示，归纳定义和递归定义的的推导过程十分相似。它们就像一枚硬币的两面。
 
 {::comment}
-## The story of creation, finitely {#finite-creation}
+## The story of creation, finitely {name=finite-creation}
 {:/}
 
-## 有限的创世故事 {#finite-creation}
+## 有限的创世故事 {name=finite-creation}
 
 {::comment}
 The above story was told in a stratified way.  First, we create
@@ -1527,12 +1526,14 @@ Begin by typing:
 {::comment}
 The question mark indicates that you would like Agda to help with
 filling in that part of the code. If you type `C-c C-l` (pressing
-the control key while hitting the `c` key followed by the `l` key)
-the question mark will be replaced:
+the control key while hitting the `c` key followed by the `l` key),
+which stands for **l**oad, the question mark will be
+replaced:
 {:/}
 
 问号表示你希望 Agda 帮助你填入这部分代码。如果按下组合键 `C-c C-l`
-（按住 Control 键的同时先按 `c` 键再按 `l` 键），这个问号会被替换：
+（按住 Control 键的同时先按 `c` 键再按 `l` 键，`l` 键代表载入
+**l**oad），这个问号会被替换：
 
     _+_ : ℕ → ℕ → ℕ
     m + n = { }0
@@ -1550,20 +1551,21 @@ Emacs will also create a window displaying the text
 
 {::comment}
 to indicate that hole 0 is to be filled in with a term of type `ℕ`.
-Typing `C-c C-f` will move you into the next hole.
+Typing `C-c C-f` (for **f**orward) will move you into the next hole.
 {:/}
 
-这表示 0 号洞需要填入一个类型为 `ℕ` 的项。按组合键 `C-c C-f` 会移动
-到下一个洞。
+这表示 0 号洞需要填入一个类型为 `ℕ` 的项。按组合键 `C-c C-f` （`f` 键代表向前
+**f**orward）会移动到下一个洞。
 
 {::comment}
 We wish to define addition by recursion on the first argument.
-Move the cursor into the hole and type `C-c C-c`.   You will be given
-the prompt:
+Move the cursor into the hole and type `C-c C-c` (for **c**ase).
+You will be given the prompt:
 {:/}
 
 我们希望在第一个参数上递归来定义加法。
-将光标移至 0 号洞并按 `C-c C-c`，你将看见如下提示：
+将光标移至 0 号洞并按 `C-c C-c`（`c` 键代表分情况讨论
+**c**ase），你将看见如下提示：
 
     pattern variables to case (empty for split on result):
 
@@ -1628,12 +1630,12 @@ required type of the hole, and what free variables are available:
     m : ℕ
 
 {::comment}
-Going into the hole and type `C-c C-r` will fill it in with a constructor
-(if there is a unique choice) or tell you what constructors you might use,
-if there is a choice.  In this case, it displays the following:
+Going into the hole and type `C-c C-r` (for **r**efine) will fill it in
+with a constructor (if there is a unique choice) or tell you what constructors
+you might use, if there is a choice.  In this case, it displays the following:
 {:/}
 
-移动到一个洞并按下 `C-c C-r` 会将一个构造子填入这个洞（如果有唯一的选择的话），
+移动到一个洞并按下 `C-c C-r` （`r` 键表示细分 **r**efine）会将一个构造子填入这个洞（如果有唯一的选择的话），
 或者告诉你有哪些可用的构造子以供选择。在当前情况下，编辑器会显示如下内容：
 
     Don't know which constructor to introduce of zero or suc
@@ -1719,10 +1721,10 @@ _m_ and _n_.
 时间，而用 Haskell 整数表示的情况下只需要正比于 `m` 和 `n` 的对数之和的时间。
 
 {::comment}
-Exercise `Bin` (stretch)
+#### Exercise `Bin` (stretch) {name=Bin}
 {:/}
 
-#### 练习 `Bin`（拓展） {#Bin}
+#### 练习 `Bin`（拓展） {name=Bin}
 
 {::comment}
 A more efficient representation of natural numbers uses a binary

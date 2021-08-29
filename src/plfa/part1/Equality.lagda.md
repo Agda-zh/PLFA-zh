@@ -235,12 +235,11 @@ instantiated.
 
 同样，交互式地证明这个特性是一个很好的练习，尤其是观察 Agda 的已知内容根据参数的实例而变化的过程。
 
-
 {::comment}
-## Congruence and substitution {#cong}
+## Congruence and substitution {name=cong}
 {:/}
 
-## 合同性和替换性 {#cong}
+## 合同性和替换性 {name=cong}
 
 {::comment}
 Equality satisfies _congruence_.  If two terms are equal,
@@ -442,6 +441,14 @@ alone would do.
 `∎` 的小窍门意味着等式串化简成为的一系列 `trans` 会以 `trans e refl` 结尾，尽管只需要 `e`
 就足够了，这里的 `e` 是等式的证明。
 
+#### Exercise `trans` and `≡-Reasoning` (practice)
+
+Sadly, we cannot use the definition of trans' using ≡-Reasoning as the definition
+for trans. Can you see why? (Hint: look at the definition of `_≡⟨_⟩_`)
+
+```
+-- Your code goes here
+```
 
 {::comment}
 ## Chains of equations, another example
@@ -572,7 +579,7 @@ an order that will make sense to the reader.
 
 {::comment}
 The proof of monotonicity from
-Chapter [Relations]({{ site.baseurl }}/Relations/)
+Chapter [Relations](/Relations/)
 can be written in a more readable form by using an analogue of our
 notation for `≡-Reasoning`.  Define `≤-Reasoning` analogously, and use
 it to write out an alternative proof that addition is monotonic with
@@ -850,22 +857,22 @@ it sparingly, but it is occasionally essential.
 ## 莱布尼兹（Leibniz）相等性
 
 {::comment}
-The form of asserting equality that we have used is due to Martin
-Löf, and was published in 1975.  An older form is due to Leibniz, and
+The form of asserting equality that we have used is due to Martin-Löf,
+and was published in 1975.  An older form is due to Leibniz, and
 was published in 1686.  Leibniz asserted the _identity of
 indiscernibles_: two objects are equal if and only if they satisfy the
 same properties. This principle sometimes goes by the name Leibniz'
 Law, and is closely related to Spock's Law, "A difference that makes
 no difference is no difference".  Here we define Leibniz equality,
 and show that two terms satisfy Leibniz equality if and only if they
-satisfy Martin Löf equality.
+satisfy Martin-Löf equality.
 {:/}
 
-我们使用的相等性断言的形式源于 Martin Löf，于 1975 年发表。一个更早的形式源于莱布尼兹，
+我们使用的相等性断言的形式源于 Martin-Löf，于 1975 年发表。一个更早的形式源于莱布尼兹，
 于 1686 年发表。莱布尼兹断言的相等性表示*不可分辨的实体*（Identity of Indiscernibles）：
 两个对象相等当且仅当它们满足完全相同的性质。这条原理有时被称作莱布尼兹定律（Leibniz' Law），
 与史波克定律紧密相关：“一个不造成区别的区别不是区别”。我们在这里定义莱布尼兹相等性，
-并证明两个项满足莱布尼兹相等性当且仅当其满足 Martin Löf 相等性。
+并证明两个项满足莱布尼兹相等性当且仅当其满足 Martin-Löf 相等性。
 
 {::comment}
 Leibniz equality is usually formalised to state that `x ≐ y` holds if
@@ -973,14 +980,14 @@ is trivial by reflexivity, and hence `Q y` follows from `x ≐ y`.  But
 正是我们需要的证明，即 `P y` 蕴涵 `P x`。
 
 {::comment}
-We now show that Martin Löf equality implies
+We now show that Martin-Löf equality implies
 Leibniz equality, and vice versa.  In the forward direction, if we know
 `x ≡ y` we need for any `P` to take evidence of `P x` to evidence of `P y`,
 which is easy since equality of `x` and `y` implies that any proof
 of `P x` is also a proof of `P y`:
 {:/}
 
-我们现在来证明 Martin Löf 相等性蕴涵了莱布尼兹相等性，以及其逆命题。在正方向上，
+我们现在来证明 Martin-Löf 相等性蕴涵了莱布尼兹相等性，以及其逆命题。在正方向上，
 如果我们已知 `x ≡ y`，我们需要对于任意的 `P`，将 `P x` 的证明转换为 `P y` 的证明。
 我们很容易就可以做到这一点，因为 `x` 与 `y` 相等意味着任何 `P x` 的证明即是 `P y` 的证明。
 
@@ -1024,7 +1031,7 @@ to a proof of `P y` we need to show `x ≡ y`:
 {::comment}
 The proof is similar to that for symmetry of Leibniz equality. We take
 `Q` to be the predicate that holds of `z` if `x ≡ z`. Then `Q x` is
-trivial by reflexivity of Martin Löf equality, and hence `Q y`
+trivial by reflexivity of Martin-Löf equality, and hence `Q y`
 follows from `x ≐ y`.  But `Q y` is exactly a proof of what we
 require, that `x ≡ y`.
 {:/}
@@ -1048,10 +1055,10 @@ Isomorphic to Martin-Löf Identity, Parametrically*
 
 
 {::comment}
-## Universe polymorphism {#unipoly}
+## Universe polymorphism {name=unipoly}
 {:/}
 
-## 全体多态 {#unipoly}
+## 全体多态 {name=unipoly}
 
 {::comment}
 As we have seen, not every type belongs to `Set`, but instead every

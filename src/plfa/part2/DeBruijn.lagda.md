@@ -46,8 +46,9 @@ James Chapman, James McKinna, and many others.
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open import Data.Empty using (⊥; ⊥-elim)
-open import Data.Nat using (ℕ; zero; suc)
+open import Data.Nat using (ℕ; zero; suc; _<_; _≤?_; z≤n; s≤s)
 open import Relation.Nullary using (¬_)
+open import Relation.Nullary.Decidable using (True; toWitness)
 ```
 
 ## Introduction
@@ -69,10 +70,10 @@ And here is its corresponding type derivation:
       ∋z = Z
 
 (These are both taken from Chapter
-[Lambda]({{ site.baseurl }}/Lambda/)
+[Lambda](/Lambda/)
 and you can see the corresponding derivation tree written out
 in full
-[here]({{ site.baseurl }}/Lambda/#derivation).)
+[here](/Lambda/#derivation).)
 The two definitions are in close correspondence, where:
 
   * `` `_ `` corresponds to `` ⊢` ``
@@ -125,7 +126,7 @@ which in context `Γ` have type `A`.
 While these two choices fit well, they are independent.  One
 can use de Bruijn indices in raw terms, or
 have intrinsically-typed terms with names.  In
-Chapter [Untyped]({{ site.baseurl }}/Untyped/),
+Chapter [Untyped](/Untyped/),
 we will introduce terms with de Bruijn indices that
 are intrinsically scoped but not typed.
 
@@ -412,35 +413,49 @@ The final term represents the Church numeral two.
 
 ### Abbreviating de Bruijn indices
 
+We define a helper function that computes the length of a context,
+which will be useful in making sure an index is within context bounds:
+```
+length : Context → ℕ
+length ∅        =  zero
+length (Γ , _)  =  suc (length Γ)
+```
+
 We can use a natural number to select a type from a context:
 ```
-lookup : Context → ℕ → Type
-lookup (Γ , A) zero     =  A
-lookup (Γ , _) (suc n)  =  lookup Γ n
-lookup ∅       _        =  ⊥-elim impossible
-  where postulate impossible : ⊥
+lookup : {Γ : Context} → {n : ℕ} → (p : n < length Γ) → Type
+lookup {(_ , A)} {zero}    (s≤s z≤n)  =  A
+lookup {(Γ , _)} {(suc n)} (s≤s p)    =  lookup p
 ```
-We intend to apply the function only when the natural is
-shorter than the length of the context, which we indicate by
-postulating an `impossible` term, just as we did
-[here]({{ site.baseurl }}/Lambda/#primed).
+
+We intend to apply the function only when the natural is shorter than
+the length of the context, which is witnessed by `p`.
 
 Given the above, we can convert a natural to a corresponding
 de Bruijn index, looking up its type in the context:
 ```
-count : ∀ {Γ} → (n : ℕ) → Γ ∋ lookup Γ n
-count {Γ , _} zero     =  Z
-count {Γ , _} (suc n)  =  S (count n)
-count {∅}     _        =  ⊥-elim impossible
-  where postulate impossible : ⊥
+count : ∀ {Γ} → {n : ℕ} → (p : n < length Γ) → Γ ∋ lookup p
+count {_ , _} {zero}    (s≤s z≤n)  =  Z
+count {Γ , _} {(suc n)} (s≤s p)    =  S (count p)
 ```
-This requires the same trick as before.
 
 We can then introduce a convenient abbreviation for variables:
 ```
-#_ : ∀ {Γ} → (n : ℕ) → Γ ⊢ lookup Γ n
-# n  =  ` count n
+#_ : ∀ {Γ}
+  → (n : ℕ)
+  → {n∈Γ : True (suc n ≤? length Γ)}
+    --------------------------------
+  → Γ ⊢ lookup (toWitness n∈Γ)
+#_ n {n∈Γ}  =  ` count (toWitness n∈Γ)
 ```
+Function `#_` takes an implicit argument `n∈Γ` that provides evidence for `n` to
+be within the context's bounds. Recall that
+[`True`](/Decidable/#proof-by-reflection),
+[`_≤?_`](/Decidable/#the-best-of-both-worlds) and
+[`toWitness`](/Decidable/#decidables-from-booleans-and-booleans-from-decidables)
+are defined in Chapter [Decidable](/Decidable/). The type of `n∈Γ` guards
+against invoking `#_` on an `n` that is out of context bounds. Finally, in the
+return type `n∈Γ` is converted to a witness that `n` is within the bounds.
 
 With this abbreviation, we can rewrite the Church numeral two more compactly:
 ```
@@ -449,13 +464,9 @@ _ = ƛ ƛ (# 1 · (# 1 · # 0))
 ```
 
 
-### Test examples {#examples}
-
-We repeat the test examples from
-Chapter [Lambda]({{ site.baseurl }}/Lambda/).
-You can find them
-[here]({{ site.baseurl }}/Lambda/#derivation)
-for comparison.
+### Test examples
+We repeat the test examples from Chapter [Lambda](/Lambda/). You can find them
+[here](/Lambda/#derivation) for comparison.
 
 First, computing two plus two on naturals:
 ```
@@ -787,7 +798,7 @@ data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 
 Here `zero` requires an implicit parameter to aid inference,
 much in the same way that `[]` did in
-[Lists]({{ site.baseurl }}/Lists/).
+[Lists](/Lists/).
 
 
 ## Reduction
@@ -863,13 +874,13 @@ infix  1 begin_
 infixr 2 _—→⟨_⟩_
 infix  3 _∎
 
-data _—↠_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
+data _—↠_ {Γ A} : (Γ ⊢ A) → (Γ ⊢ A) → Set where
 
-  _∎ : ∀ {Γ A} (M : Γ ⊢ A)
+  _∎ : (M : Γ ⊢ A)
       ------
     → M —↠ M
 
-  _—→⟨_⟩_ : ∀ {Γ A} (L : Γ ⊢ A) {M N : Γ ⊢ A}
+  _—→⟨_⟩_ : (L : Γ ⊢ A) {M N : Γ ⊢ A}
     → L —→ M
     → M —↠ N
       ------
@@ -1359,11 +1370,11 @@ number of lines of code is as follows:
 
     Lambda                      216
     Properties                  235
-    DeBruijn                    275
+    DeBruijn                    276
 
 The relation between the two approaches approximates the
 golden ratio: extrinsically-typed terms
-require about 1.6 times as much code as intrinsicaly-typed.
+require about 1.6 times as much code as intrinsically-typed.
 
 ## Unicode
 

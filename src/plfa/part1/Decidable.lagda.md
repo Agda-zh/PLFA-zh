@@ -56,13 +56,13 @@ open import plfa.part1.Isomorphism using (_⇔_)
 ## 证据 vs 计算
 
 {::comment}
-Recall that Chapter [Relations]({{ site.baseurl }}/Relations/)
+Recall that Chapter [Relations](/Relations/)
 defined comparison as an inductive datatype,
 which provides _evidence_ that one number
 is less than or equal to another:
 {:/}
 
-回忆我们在 [Relations]({{ site.baseurl }}/Relations/)
+回忆我们在 [Relations](/Relations/)
 章节中将比较定义为一个归纳数据类型，其提供了一个数小于或等于另外一个数的证明：
 
 ```
@@ -980,7 +980,7 @@ postulate
 
 {::comment}
 Give analogues of the `_⇔_` operation from
-Chapter [Isomorphism]({{ site.baseurl }}/Isomorphism/#iff),
+Chapter [Isomorphism](/Isomorphism/#iff),
 operation on booleans and decidables, and also show the corresponding erasure:
 {:/}
 
@@ -1005,14 +1005,14 @@ postulate
 ```
 
 {::comment}
-## Proof by reflection {#proof-by-reflection}
+## Proof by reflection {name=proof-by-reflection}
 {:/}
 
-## 互映证明 {#proof-by-reflection}
+## 互映证明 {name=proof-by-reflection}
 
 {::comment}
 Let's revisit our definition of monus from
-Chapter [Naturals]({{ site.baseurl }}/Naturals/).
+Chapter [Naturals](/Naturals/).
 If we subtract a larger number from a smaller number, we take the result to be
 zero. We had to do something, after all. What could we have done differently? We
 could have defined a *guarded* version of minus, a function which subtracts `n`
@@ -1156,13 +1156,13 @@ import Relation.Binary using (Decidable)
     ∨  U+2228  LOGICAL OR (\or, \vee)
     ⊃  U+2283  SUPERSET OF (\sup)
     ᵇ  U+1D47  MODIFIER LETTER SMALL B  (\^b)
-    ⌊  U+230A  LEFT FLOOR (\cll)
-    ⌋  U+230B  RIGHT FLOOR (\clr)
+    ⌊  U+230A  LEFT FLOOR (\clL)
+    ⌋  U+230B  RIGHT FLOOR (\clR)
 {:/}
 
     ∧  U+2227  逻辑和 (\and, \wedge)
     ∨  U+2228  逻辑或 (\or, \vee)
     ⊃  U+2283  超集 (\sup)
     ᵇ  U+1D47  修饰符小写 B  (\^b)
-    ⌊  U+230A  左向下取整 (\cll)
-    ⌋  U+230B  右向下取整 (\clr)
+    ⌊  U+230A  左向下取整 (\clL)
+    ⌋  U+230B  右向下取整 (\clR)

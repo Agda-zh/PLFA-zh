@@ -150,21 +150,20 @@ g ∘′ f  =  λ x → g (f x)
 
 
 {::comment}
-## Extensionality {#extensionality}
+## Extensionality {name=extensionality}
 {:/}
 
-## 外延性（Extensionality） {#extensionality}
+## 外延性（Extensionality） {name=extensionality}
 
 {::comment}
 Extensionality asserts that the only way to distinguish functions is
 by applying them; if two functions applied to the same argument always
 yield the same result, then they are the same function.  It is the
 converse of `cong-app`, as introduced
-[earlier]({{ site.baseurl }}/Equality/#cong).
-{:/}
+[earlier](/Equality/#cong).
 
 外延性断言了区分函数的唯一方法是应用它们。如果两个函数作用在相同的参数上永远返回相同的结果，
-那么两个函数相同。这是 `cong-app` 的逆命题，在[之前]({{ site.baseurl }}/Equality/#cong)有所介绍。
+那么两个函数相同。这是 `cong-app` 的逆命题，在[之前](/Equality/#cong)有所介绍。
 
 {::comment}
 Agda does not presume extensionality, but we can postulate that it holds:
@@ -190,11 +189,11 @@ known to be consistent with the theory that underlies Agda.
 {::comment}
 As an example, consider that we need results from two libraries,
 one where addition is defined, as in
-Chapter [Naturals]({{ site.baseurl }}/Naturals/),
+Chapter [Naturals](/Naturals/),
 and one where it is defined the other way around.
 {:/}
 
-举个例子，我们考虑两个库都定义了加法，一个按照我们在 [Naturals][plfa.Naturals]
+举个例子，我们考虑两个库都定义了加法，一个按照我们在 [Naturals](/Naturals/)
 章节中那样定义，另一个如下，反过来定义：
 
 ```
@@ -305,11 +304,11 @@ The declaration `open _≃_` makes available the names `to`, `from`,
 在当前作用域内可用，否则我们需要使用类似 `_≃_.to` 的写法。
 
 {::comment}
-The above is our first use of records. A record declaration behaves similar to a single-constructor data declaration (there are minor differences, which we discuss in [Connectives]({{ site.baseurl }}/Connectives/)):
+The above is our first use of records. A record declaration behaves similar to a single-constructor data declaration (there are minor differences, which we discuss in [Connectives](/Connectives/)):
 {:/}
 
 这是我们第一次使用**记录（Record）**。记录声明的行为类似于一个单构造子的数据声明
-（二者稍微有些不同，我们会在 [Connectives]({{ site.baseurl }}/Connectives/) 一章中讨论）：
+（二者稍微有些不同，我们会在 [Connectives](/Connectives/) 一章中讨论）：
 
 ```
 data _≃′_ (A B : Set): Set where
@@ -700,10 +699,10 @@ postulate
 ```
 
 {::comment}
-#### Exercise `_⇔_` (practice) {#iff}
+#### Exercise `_⇔_` (practice) {name=iff}
 {:/}
 
-#### 练习 `_⇔_`（实践） {#iff}
+#### 练习 `_⇔_`（实践） {name=iff}
 
 {::comment}
 Define equivalence of propositions (also known as "if and only if") as follows:
@@ -735,21 +734,21 @@ Show that equivalence is reflexive, symmetric, and transitive.
 ```
 
 {::comment}
-#### Exercise `Bin-embedding` (stretch) {#Bin-embedding}
+#### Exercise `Bin-embedding` (stretch) {name=Bin-embedding}
 {:/}
 
-#### 练习 `Bin-embedding` （延伸） {#Bin-embedding}
+#### 练习 `Bin-embedding` （延伸） {name=Bin-embedding}
 
 {::comment}
 Recall that Exercises
-[Bin]({{ site.baseurl }}/Naturals/#Bin) and
-[Bin-laws]({{ site.baseurl }}/Induction/#Bin-laws)
+[Bin](/Naturals/#Bin) and
+[Bin-laws](/Induction/#Bin-laws)
 define a datatype `Bin` of bitstrings representing natural numbers,
 and asks you to define the following functions and predicates:
 {:/}
 
-回忆练习 [Bin]({{ site.baseurl }}/Naturals/#Bin) 和
-[Bin-laws]({{ site.baseurl }}/Induction/#Bin-laws)，
+回忆练习 [Bin](/Naturals/#Bin) 和
+[Bin-laws](/Induction/#Bin-laws)，
 我们定义了比特串数据类型 `Bin` 来表示自然数，并要求你来定义下列函数：
 
 

@@ -136,10 +136,10 @@ that a newly introduced operator is associative but not commutative.
 但不满足交换律。
 
 {::comment}
-#### Exercise `operators` (practice) {#operators}
+#### Exercise `operators` (practice) {name=operators}
 {:/}
 
-#### 练习 `operators`（实践） {#operators}
+#### 练习 `operators`（实践） {name=operators}
 
 {::comment}
 Give another example of a pair of operators that have an identity
@@ -577,7 +577,7 @@ hypothesis:
 Reading the chain of equations in the inductive case of the proof, the
 top and bottom of the chain match the two sides of the equation to be
 shown, and reading down from the top and up from the bottom takes us
-to the simplified equation above. The remaining equation, does not follow
+to the simplified equation above. The remaining equation does not follow
 from simplification alone, so we use an additional operator for chain
 reasoning, `_≡⟨_⟩_`, where a justification for the equation appears
 within angle brackets.  The justification given is:
@@ -688,12 +688,12 @@ proof of associativity.
 {::comment}
 The symbol `∀` appears in the statement of associativity to indicate that
 it holds for all numbers `m`, `n`, and `p`.  We refer to `∀` as the _universal
-quantifier_, and it is discussed further in Chapter [Quantifiers]({{ site.baseurl }}/Quantifiers/).
+quantifier_, and it is discussed further in Chapter [Quantifiers](/Quantifiers/).
 {:/}
 
 在结合律的陈述中出现的符号 `∀` 表示它对于所有的 `m`、`n` 和 `p` 都成立。
 我们将 `∀` 称为**全称量词**（Universal Quantifier），我们会在
-[Quantifiers]({{ site.baseurl }}/Quantifiers/) 章节中进一步讨论。
+[Quantifiers](/Quantifiers/) 章节中进一步讨论。
 
 {::comment}
 Evidence for a universal quantifier is a function.  The notations
@@ -1130,10 +1130,10 @@ Agda 要求标识符必须在使用前定义，因此我们必须在主命题之
 
 
 {::comment}
-## Our first corollary: rearranging {#sections}
+## Our first corollary: rearranging {name=sections}
 {:/}
 
-## 第一个推论：重排定理 {#sections}
+## 第一个推论：重排定理 {name=sections}
 
 {::comment}
 We can apply associativity to rearrange parentheses however we like.
@@ -1335,18 +1335,18 @@ which is left as an exercise for the reader.
 还有一种完全有限的方法来生成同样的等式，它的证明留作读者的练习。
 
 {::comment}
-#### Exercise `finite-+-assoc` (stretch) {#finite-plus-assoc}
+#### Exercise `finite-+-assoc` (stretch) {name=finite-plus-assoc}
 {:/}
 
-#### 练习 `finite-+-assoc`（延伸） {#finite-plus-assoc}
+#### 练习 `finite-+-assoc`（延伸） {name=finite-plus-assoc}
 
 {::comment}
 Write out what is known about associativity of addition on each of the
 first four days using a finite story of creation, as
-[earlier]({{ site.baseurl }}/Naturals/#finite-creation).
+[earlier](/Naturals/#finite-creation).
 {:/}
 
-请参考[前文]({{ site.baseurl }}/Naturals/#finite-creation)
+请参考[前文](/Naturals/#finite-creation)
 写出前四天已知的加法结合律的创世故事。
 
 {::comment}
@@ -1626,10 +1626,10 @@ typing `C-c C-r` will fill it in, completing the proof:
 
 
 {::comment}
-#### Exercise `+-swap` (recommended) {#plus-swap}
+#### Exercise `+-swap` (recommended) {name=plus-swap}
 {:/}
 
-#### 练习：`+-swap`（推荐） {#plus-swap}
+#### 练习：`+-swap`（推荐） {name=plus-swap}
 
 {::comment}
 Show
@@ -1658,10 +1658,10 @@ is associative and commutative.
 ```
 
 {::comment}
-#### Exercise `*-distrib-+` (recommended) {#times-distrib-plus}
+#### Exercise `*-distrib-+` (recommended) {name=times-distrib-plus}
 {:/}
 
-#### 练习 `*-distrib-+`（推荐） {#times-distrib-plus}
+#### 练习 `*-distrib-+`（推荐） {name=times-distrib-plus}
 
 {::comment}
 Show multiplication distributes over addition, that is,
@@ -1688,10 +1688,10 @@ for all naturals `m`, `n`, and `p`.
 ```
 
 {::comment}
-#### Exercise `*-assoc` (recommended) {#times-assoc}
+#### Exercise `*-assoc` (recommended) {name=times-assoc}
 {:/}
 
-#### 练习 `*-assoc`（推荐） {#times-assoc}
+#### 练习 `*-assoc`（推荐） {name=times-assoc}
 
 {::comment}
 Show multiplication is associative, that is,
@@ -1718,10 +1718,10 @@ for all naturals `m`, `n`, and `p`.
 ```
 
 {::comment}
-#### Exercise `*-comm` (practice) {#times-comm}
+#### Exercise `*-comm` (practice) {name=times-comm}
 {:/}
 
-#### 练习 `*-comm`（实践） {#times-comm}
+#### 练习 `*-comm`（实践） {name=times-comm}
 
 {::comment}
 Show multiplication is commutative, that is,
@@ -1750,10 +1750,10 @@ you will need to formulate and prove suitable lemmas.
 
 
 {::comment}
-#### Exercise `0∸n≡0` (practice) {#zero-monus}
+#### Exercise `0∸n≡0` (practice) {name=zero-monus}
 {:/}
 
-#### 练习 `0∸n≡0`（实践） {#zero-monus}
+#### 练习 `0∸n≡0`（实践） {name=zero-monus}
 
 {::comment}
 Show
@@ -1781,10 +1781,10 @@ for all naturals `n`. Did your proof require induction?
 
 
 {::comment}
-#### Exercise `∸-+-assoc` (practice) {#monus-plus-assoc}
+#### Exercise `∸-+-assoc` (practice) {name=monus-plus-assoc}
 {:/}
 
-#### 练习 `∸-+-assoc`（实践） {#monus-plus-assoc}
+#### 练习 `∸-+-assoc`（实践） {name=monus-plus-assoc}
 
 {::comment}
 Show that monus associates with addition, that is,
@@ -1823,7 +1823,7 @@ Show the following three laws
 
 证明下列三条定律
 
-     m ^ (n + p) ≡ (m ^ n) * (m ^ p)  (^-distribˡ-+-*)
+     m ^ (n + p) ≡ (m ^ n) * (m ^ p)  (^-distribˡ-|-*)
      (m * n) ^ p ≡ (m ^ p) * (n ^ p)  (^-distribʳ-*)
      (m ^ n) ^ p ≡ m ^ (n * p)        (^-*-assoc)
 
@@ -1834,14 +1834,14 @@ for all `m`, `n`, and `p`.
 对于所有 `m`、`n` 和 `p` 成立。
 
 {::comment}
-#### Exercise `Bin-laws` (stretch) {#Bin-laws}
+#### Exercise `Bin-laws` (stretch) {name=Bin-laws}
 {:/}
 
-#### 练习 `Bin-laws`（延伸） {#Bin-laws}
+#### 练习 `Bin-laws`（延伸） {name=Bin-laws}
 
 {::comment}
 Recall that
-Exercise [Bin]({{ site.baseurl }}/Naturals/#Bin)
+Exercise [Bin](/Naturals/#Bin)
 defines a datatype `Bin` of bitstrings representing natural numbers,
 and asks you to define functions
 {:/}

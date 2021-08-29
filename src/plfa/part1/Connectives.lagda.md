@@ -93,11 +93,11 @@ holds.
 `N` 是 `B` 成立的证明。
 
 {::comment}
-Given evidence that `A × B` holds, we can conclude that either
-`A` holds or `B` holds:
+Given evidence that `A × B` holds, we can conclude that both
+`A` holds and `B` holds:
 {:/}
 
-给定 `A × B` 成立的证明，我们可以得出 `A` 成立或者 `B` 成立。
+给定 `A × B` 成立的证明，我们可以得出 `A` 成立和 `B` 成立。
 
 ```
 proj₁ : ∀ {A B : Set}
@@ -384,11 +384,11 @@ corresponds to `⟨ 1 , ⟨ true , aa ⟩ ⟩`, which is a member of the latter.
 #### 练习 `⇔≃×` （推荐）
 
 {::comment}
-Show that `A ⇔ B` as defined [earlier]({{ site.baseurl }}/Isomorphism/#iff)
+Show that `A ⇔ B` as defined [earlier](/Isomorphism/#iff)
 is isomorphic to `(A → B) × (B → A)`.
 {:/}
 
-证明[之前]({{ site.baseurl }}/Isomorphism/#iff)定义的 `A ⇔ B` 与 `(A → B) × (B → A)` 同构。
+证明[之前](/Isomorphism/#iff)定义的 `A ⇔ B` 与 `(A → B) × (B → A)` 同构。
 
 {::comment}
 ```
@@ -951,10 +951,10 @@ Show empty is the right identity of sums up to isomorphism.
 ```
 
 {::comment}
-## Implication is function {#implication}
+## Implication is function {name=implication}
 {:/}
 
-## 蕴涵即是函数 {#implication}
+## 蕴涵即是函数 {name=implication}
 
 {::comment}
 Given two propositions `A` and `B`, the implication `A → B` holds if
@@ -1408,9 +1408,9 @@ The standard library constructs pairs with `_,_` whereas we use `⟨_,_⟩`.
 The former makes it convenient to build triples or larger tuples from pairs,
 permitting `a , b , c` to stand for `(a , (b , c))`.  But it conflicts with
 other useful notations, such as `[_,_]` to construct a list of two elements in
-Chapter [Lists]({{ site.baseurl }}/Lists/)
+Chapter [Lists](/Lists/)
 and `Γ , A` to extend environments in
-Chapter [DeBruijn]({{ site.baseurl }}/DeBruijn/).
+Chapter [DeBruijn](/DeBruijn/).
 The standard library `_⇔_` is similar to ours, but the one in the
 standard library is less convenient, since it is parameterised with
 respect to an arbitrary notion of equivalence.
