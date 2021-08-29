@@ -161,6 +161,7 @@ by applying them; if two functions applied to the same argument always
 yield the same result, then they are the same function.  It is the
 converse of `cong-app`, as introduced
 [earlier](/Equality/#cong).
+-->
 
 外延性断言了区分函数的唯一方法是应用它们。如果两个函数作用在相同的参数上永远返回相同的结果，
 那么两个函数相同。这是 `cong-app` 的逆命题，在[之前](/Equality/#cong)有所介绍。

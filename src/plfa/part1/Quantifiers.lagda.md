@@ -884,8 +884,15 @@ And to establish the following properties:
 <!--
 Using the above, establish that there is an isomorphism between `ℕ` and
 `∃[ b ] Can b`.
+-->
 
 使用上述，证明 `ℕ` 与 `∃[ b ](Can b)` 之间存在同构。
+
+<!--
+We recommend proving the following lemmas which show that, for a given
+binary number `b`, there is only one proof of `One b` and similarly
+for `Can b`.
+-->
 
 我们建议证明以下引理，它描述了对于给定的二进制数 `b`，`One b` 只有一个证明，
 `Can b`，也是如此。

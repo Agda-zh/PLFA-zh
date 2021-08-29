@@ -356,7 +356,7 @@ there is a way to get the benefits of both.
 ## The best of both worlds
 -->
 
-## 取二者之精华
+## 取二者之精华 {name=the-best-of-both-worlds}
 
 <!--
 A function that returns a boolean returns exactly a single bit of information:
@@ -566,7 +566,7 @@ postulate
 ## Decidables from booleans, and booleans from decidables
 -->
 
-## 从可判定的值到布尔值，从布尔值到可判定的值
+## 从可判定的值到布尔值，从布尔值到可判定的值 {name=decidables-from-booleans-and-booleans-from-decidables}
 
 <!--
 Curious readers might wonder if we could reuse the definition of

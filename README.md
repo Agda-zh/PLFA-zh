@@ -44,7 +44,7 @@ However, if you wish to interact with the code or complete the exercises, you ne
 
   - [Stack](#install-the-haskell-tool-stack)
   - [Git](#install-git)
-  - [Agda](#install-agda-using-stack)
+  - [Agda](#installing-agda-using-stack)
   - [Agda 标准库](#install-plfa-and-the-agda-standard-library)
   - [PLFA](#install-plfa-and-the-agda-standard-library)
 
@@ -86,7 +86,7 @@ xcode-select --install
 ### Install the Haskell Tool Stack
 -->
 
-### 安装 Haskell 工具 Stack
+### 安装 Haskell 工具 Stack {name=install-the-haskell-tool-stack}
 
 <!--
 Agda is written in Haskell, so to install it we’ll need the *Haskell Tool Stack*, or *Stack* for short. Stack is a program for managing different Haskell compilers and packages:
@@ -129,7 +129,7 @@ Stack 是管理不同版本的 Haskell 编译器和包的管理程序。
 ### Install Git
 -->
 
-### 安装 Git
+### 安装 Git {name=install-git}
 
 <!--
 If you do not already have Git installed, see [the Git downloads page][git].
@@ -141,7 +141,7 @@ If you do not already have Git installed, see [the Git downloads page][git].
 ### Installing Agda using Stack
 -->
 
-### 用 Stack 安装 Agda
+### 用 Stack 安装 Agda {name=installing-agda-using-stack}
 
 
 <!--
@@ -238,7 +238,7 @@ Finished hello.
 ### Install PLFA and the Agda standard library
 -->
 
-### 安装 PLFA 和 Agda 标准库
+### 安装 PLFA 和 Agda 标准库 {name=install-plfa-and-the-agda-standard-library}
 
 <!--
 You can get the latest version of Programming Language Foundations in Agda from GitHub, either by cloning the repository, or by downloading [the zip archive][plfa-dev]:
