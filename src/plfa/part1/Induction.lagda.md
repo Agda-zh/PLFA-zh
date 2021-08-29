@@ -1335,10 +1335,10 @@ which is left as an exercise for the reader.
 还有一种完全有限的方法来生成同样的等式，它的证明留作读者的练习。
 
 {::comment}
-#### Exercise `finite-+-assoc` (stretch) {name=finite-plus-assoc}
+#### Exercise `finite-|-assoc` (stretch) {name=finite-plus-assoc}
 {:/}
 
-#### 练习 `finite-+-assoc`（延伸） {name=finite-plus-assoc}
+#### 练习 `finite-|-assoc`（延伸） {name=finite-plus-assoc}
 
 {::comment}
 Write out what is known about associativity of addition on each of the
@@ -1781,10 +1781,10 @@ for all naturals `n`. Did your proof require induction?
 
 
 {::comment}
-#### Exercise `∸-+-assoc` (practice) {name=monus-plus-assoc}
+#### Exercise `∸-|-assoc` (practice) {name=monus-plus-assoc}
 {:/}
 
-#### 练习 `∸-+-assoc`（实践） {name=monus-plus-assoc}
+#### 练习 `∸-|-assoc`（实践） {name=monus-plus-assoc}
 
 {::comment}
 Show that monus associates with addition, that is,

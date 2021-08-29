@@ -246,7 +246,8 @@ You can get the latest version of Programming Language Foundations in Agda from 
 [Zip 包][plfa-dev]来获取最新版的《编程语言基础：Agda 语言描述》：
 
 ```bash
-git clone --recurse-submodules https://github.com/plfa/plfa.github.io plfa
+git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/plfa/plfa.github.io plfa
+# Remove `--depth 1` and `--shallow-submodules` if you want the complete git history of PLFA and the standard library.
 ```
 
 <!--
@@ -263,7 +264,8 @@ If you forgot to add the `--recurse-submodules` flag, no worries, we can fix tha
 
 ```bash
 cd plfa/
-git submodule update --recursive
+git submodule update --init --recursive --depth 1
+# Remove `--depth 1` if you want the complete git history of the standard library.
 ```
 
 <!--
@@ -274,9 +276,8 @@ If you obtained PLFA by downloading the zip archive, you can get the required ve
 你可以从正确的分支克隆代码仓库，或者下载 [Zip 包][agda-stdlib]。
 
 ```bash
-git clone https://github.com/agda/agda-stdlib.git agda-stdlib
-cd agda-stdlib
-git checkout v1.3
+git clone https://github.com/agda/agda-stdlib.git --branch v1.6 --depth 1 agda-stdlib
+# Remove `--depth 1` if you want the complete git history of the standard library.
 ```
 
 <!--
@@ -841,9 +842,7 @@ You can install [fix-whitespace][fix-whitespace] by running:
 你可以运行以下命令来安装 [fix-whitespace][fix-whitespace]：
 
 ```bash
-git clone https://github.com/agda/fix-whitespace
-cd fix-whitespace/
-stack install --stack-yaml stack-8.8.3.yaml
+stack install fix-whitespace
 ```
 
 <!--

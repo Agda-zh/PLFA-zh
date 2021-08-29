@@ -195,7 +195,7 @@ Show that a disjunction of universals implies a universal of disjunctions:
 ```
 postulate
   ⊎∀-implies-∀⊎ : ∀ {A : Set} {B C : A → Set} →
-    (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x)  →  ∀ (x : A) → B x ⊎ C x
+    (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x) → ∀ (x : A) → B x ⊎ C x
 ```
 
 {::comment}
@@ -881,22 +881,22 @@ And to establish the following properties:
 
 {::comment}
 Using the above, establish that there is an isomorphism between `ℕ` and
-`∃[ b ](Can b)`.
+`∃[ b ] Can b`.
 
 使用上述，证明 `ℕ` 与 `∃[ b ](Can b)` 之间存在同构。
 
 我们建议证明以下引理，它描述了对于给定的二进制数 `b`，`One b` 只有一个证明，
 `Can b`，也是如此。
 
-    ≡One : ∀{b : Bin} (o o' : One b) → o ≡ o'
+    ≡One : ∀ {b : Bin} (o o′ : One b) → o ≡ o′
 
-    ≡Can : ∀{b : Bin} (cb : Can b) (cb' : Can b) → cb ≡ cb'
+    ≡Can : ∀ {b : Bin} (cb cb′ : Can b) → cb ≡ cb′
 
 Many of the alternatives for proving `to∘from` turn out to be tricky.
 However, the proof can be straightforward if you use the following lemma,
 which is a corollary of `≡Can`.
 
-    proj₁≡→Can≡ : {cb cb′ : ∃[ b ](Can b)} → proj₁ cb ≡ proj₁ cb′ → cb ≡ cb′
+    proj₁≡→Can≡ : {cb cb′ : ∃[ b ] Can b} → proj₁ cb ≡ proj₁ cb′ → cb ≡ cb′
 
 {::comment}
 ```

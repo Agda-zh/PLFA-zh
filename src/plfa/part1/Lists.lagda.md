@@ -1717,10 +1717,10 @@ You will need to use extensionality.
 #### 练习 `All-∀`（实践）
 
 {::comment}
-Show that `All P xs` is isomorphic to `∀ {x} → x ∈ xs → P x`.
+Show that `All P xs` is isomorphic to `∀ x → x ∈ xs → P x`.
 {:/}
 
-请证明 `All P xs` 同构于 `∀ {x} → x ∈ xs → P x`.
+请证明 `All P xs` 同构于 `∀ x → x ∈ xs → P x`.
 
 {::comment}
 ```
