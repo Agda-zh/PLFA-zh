@@ -53,13 +53,13 @@ siteWriterOptions = defaultHakyllWriterOptions
 
 siteContext :: Context String
 siteContext = mconcat
-  [ constField "pagetitle" "Programming Language Foundations in Agda"
-  , constField "pageurl" "https://plfa.github.io"
-  , constField "description" "An introduction to programming language theory using the proof assistant Agda."
-  , constField "language" "en-US"
+  [ constField "pagetitle" "编程语言基础：Agda 语言描述"
+  , constField "pageurl" "https://agda-zh.github.io/PLFA-zh/"
+  , constField "description" "本书是对编程语言理论的介绍。书中的程序使用证明助理 Agda 编写。"
+  , constField "language" "zh-CN"
   , constField "rights" "Creative Commons Attribution 4.0 International License"
   , constField "rights_url" "https://creativecommons.org/licenses/by/4.0/"
-  , constField "repository" "plfa/plfa.github.io"
+  , constField "repository" "Agda-zh/PLFA-zh"
   , constField "branch" "dev"
   , modificationTimeField "modified" "%0Y-%m-%dT%H:%M:%SZ"
   , field "source" (return . toFilePath . itemIdentifier)

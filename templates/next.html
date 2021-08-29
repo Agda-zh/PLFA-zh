@@ -1,15 +1,16 @@
 <nav class="pager">
     <ul class="pagination">
         $if(prev)$
-        <li><a class="pagelink" href="$prev$">Prev</a></li>
+        <li><a class="pagelink" href="$prev$">上一章</a></li>
         <li class="separator">&bullet;</li>
         $endif$
         $if(source)$
-        <li><a class="pagelink" href="https://github.com/$repository$/blob/$branch$/$source$">Source</a></li>
+        <li><a class="pagelink"
+                href="https://github.com/$repository$/blob/$branch$/$source$">源文件</a></li>
         <li class="separator">&bullet;</li>
         $endif$
         $if(next)$
-        <li><a class="pagelink" href="$next$">Next</a></li>
+        <li><a class="pagelink" href="$next$">下一章</a></li>
         <li class="separator">&bullet;</li>
         $endif$
     </ul>

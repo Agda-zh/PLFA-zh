@@ -1,13 +1,13 @@
 ---
 parts:
 - frontmatter: True
-  title: "Front matter"
+  title: "前言"
   sections:
   - include: src/plfa/frontmatter/dedication.md
   - include: src/plfa/frontmatter/preface.md
   - include: README.md
 - mainmatter: True
-  title: "Part 1: Logical Foundations"
+  title: "第一分册：逻辑基础"
   sections:
   - include: src/plfa/part1/Naturals.lagda.md
   - include: src/plfa/part1/Induction.lagda.md
@@ -19,7 +19,7 @@ parts:
   - include: src/plfa/part1/Quantifiers.lagda.md
   - include: src/plfa/part1/Decidable.lagda.md
   - include: src/plfa/part1/Lists.lagda.md
-- title: "Part 2: Programming Language Foundations"
+- title: "第二分册：编程语言基础"
   sections:
   - include: src/plfa/part2/Lambda.lagda.md
   - include: src/plfa/part2/Properties.lagda.md
@@ -38,10 +38,10 @@ parts:
   - include: src/plfa/part3/Adequacy.lagda.md
   - include: src/plfa/part3/ContextualEquivalence.lagda.md
 - backmatter: True
-  title: "Appendix"
+  title: "附录"
   sections:
   - include: src/plfa/part2/Substitution.lagda.md
-- title: "Back matter"
+- title: "后记"
   sections:
   - include: src/plfa/backmatter/acknowledgements.md
   - include: src/plfa/backmatter/Fonts.lagda.md

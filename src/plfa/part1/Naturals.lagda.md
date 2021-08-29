@@ -1,5 +1,5 @@
 ---
-title     : "Naturals：自然数"
+title     : "Naturals: 自然数"
 layout    : page
 prev      : /GettingStarted/
 permalink : /Naturals/
