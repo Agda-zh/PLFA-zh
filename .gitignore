@@ -37,3 +37,4 @@ versions/plfa.github.io-web-*/
 
 ## Include plfa.pdf
 !plfa.pdf
+!courses/tspl/2019/*.pdf
