@@ -983,7 +983,7 @@ Remember to indent all code by two spaces.
   ext∋ : ∀ {Γ B x y}
     → x ≢ y
     → ¬ ∃[ A ]( Γ ∋ x ⦂ A )
-      ------------------------------
+      -----------------------------
     → ¬ ∃[ A ]( Γ , y ⦂ B ∋ x ⦂ A )
   ext∋ x≢y _  ⟨ A , Z ⟩       =  x≢y refl
   ext∋ _   ¬∃ ⟨ A , S _ ⊢x ⟩  =  ¬∃ ⟨ A , ⊢x ⟩
