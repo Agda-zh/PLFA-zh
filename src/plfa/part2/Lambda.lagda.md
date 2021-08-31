@@ -1215,6 +1215,7 @@ defined above.)
 2.  `` (ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z")) · `zero ``
 3.  `` `zero ``
 
+
 <!--
 ## Reflexive and transitive closure
 -->
@@ -1886,15 +1887,23 @@ variable with the same name to its left in the list.
 构造子 `Z` 和 `S` 大致与列表包含关系 `_∈_` 的 `here` 和 `there` 构造子对应。
 但是构造子 `S` 多取一个参数，来保证查询时我们不会查询一个被**遮盖**的同名变量。
 
+<!--
 It can be rather tedious to use the `S` constructor, as you have to provide
 proofs that `x ≢ y` each time. For example:
+-->
+
+用 `S` 构造子会比较麻烦，因为每次都需要提供 `x ≢ y` 的证明。例如：
 
 ```
 _ : ∅ , "x" ⦂ `ℕ ⇒ `ℕ , "y" ⦂ `ℕ , "z" ⦂ `ℕ ∋ "x" ⦂ `ℕ ⇒ `ℕ
 _ = S (λ()) (S (λ()) Z)
 ```
 
+<!--
 Instead, we'll use a "smart constructor", which uses [proof by reflection](/Decidable/#proof-by-reflection) to check the inequality while type checking:
+-->
+
+取而代之的是，我们在类型检查时可以使用以[互映证明](/Decidable/#proof-by-reflection)来检查不等性的「智慧构造子」：
 
 ```
 S′ : ∀ {Γ x y A B}
@@ -2037,6 +2046,7 @@ The rules are deterministic, in that at most one rule applies to every term.
 
 这些规则是确定的，对于每一项至多有一条规则使用。
 
+<!--
 ### Example type derivations {#derivation}
 -->
 
@@ -2128,15 +2138,15 @@ to use them inside other binding contexts as well as at the top level.
 Here the two lookup judgments `∋m` and `∋m′` refer to two different
 bindings of variables named `"m"`.  In contrast, the two judgments `∋n` and
 `∋n′` both refer to the same binding of `"n"` but accessed in different
-contexts, the first where "n" is the last binding in the context, and
-the second after "m" is bound in the successor branch of the case.
+contexts, the first where `"n"` is the last binding in the context, and
+the second after `"m"` is bound in the successor branch of the case.
 -->
 
 与之前的例子不同，我们以任意上下文，而不是空上下文来赋型。
 这让我们能够在其他除了顶层之外的上下文中使用这个推导。
-这里的查询判断 `∋m` 和 `∋m′` 指代两个变量 "m" 的绑定。
-作为对比，查询判断 `∋n` 和 `∋n′` 指代同一个变量 "n" 的绑定，但是查询的上下文不同，
-第一次 "n" 出现在在上下文的最后，第二次在 "m" 之后。
+这里的查询判断 `∋m` 和 `∋m′` 指代两个变量 `"m"` 的绑定。
+作为对比，查询判断 `∋n` 和 `∋n′` 指代同一个变量 `"n"` 的绑定，但是查询的上下文不同，
+第一次 `"n"` 出现在在上下文的最后，第二次在 `"m"` 之后。
 
 <!--
 And here are typings for the remainder of the Church example:
@@ -2317,6 +2327,7 @@ nope₂ (⊢ƛ (⊢` ∋x · ⊢` ∋x′))  =  contradiction (∋-injective ∋
   contradiction : ∀ {A B} → ¬ (A ⇒ B ≡ A)
   contradiction ()
 ```
+
 
 <!--
 #### Quiz
