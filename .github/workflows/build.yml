@@ -63,4 +63,6 @@ jobs:
 
     - name: Publish
       run: |
+        git config user.name "FangyiBot"
+        git config user.email "fangyibot@outlook.com"
         make publish
