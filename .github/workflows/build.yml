@@ -33,9 +33,11 @@ jobs:
         ghc-version: ${{ matrix.ghc-ver }}
         enable-stack: true
 
+    - name: Install tex
+      run: sudo apt-get install -y texlive texlive-luatex latexmk texlive-latex-extra texlive-lang-chinese texlive-xetex
+
     - name: Put stack programs in PATH
       run: echo "~/.local/bin" >> $GITHUB_PATH
-
 
     - name: Put stdlib library in Agda library list
       run: |
