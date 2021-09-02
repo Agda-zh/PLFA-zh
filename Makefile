@@ -147,7 +147,7 @@ publish: setup-check-rsync
 		--filter='P .nojekyll'     \
 		--filter='P CNAME'         \
 		--delete-excluded          \
-		$(SITE_DIR) .
+		$(SITE_DIR)/ .
 	git add -A
 	@echo "Publishing web branch"
 	git commit -m "Publish."
