@@ -148,7 +148,7 @@ publish: setup-check-rsync
 		--filter='P CNAME'         \
 		--delete-excluded          \
 		$(SITE_DIR)/ .
-	git add -A
+	git add -A || echo "No changes to publish!"
 	@echo "Publishing web branch"
 	git commit -m "Publish."
 	git push origin web:web
