@@ -1,5 +1,5 @@
 ---
-title     : "DeBruijn: Intrinsically-typed de Bruijn representation"
+title     : "DeBruijn: 内在类型的 de Bruijn 表示法"
 layout    : page
 prev      : /Properties/
 permalink : /DeBruijn/
@@ -10,6 +10,7 @@ next      : /More/
 module plfa.part2.DeBruijn where
 ```
 
+<!--
 The previous two chapters introduced lambda calculus, with a
 formalisation based on named variables, and terms defined
 separately from types.  We began with that approach because it
@@ -18,7 +19,14 @@ chapter presents an alternative approach, where named
 variables are replaced by de Bruijn indices and terms are
 indexed by their types.  Our new presentation is more compact, using
 substantially fewer lines of code to cover the same ground.
+-->
 
+前面两个章节介绍了 λ-演算，用以带名字的变量进行形式化，而且将项与类型分开定义。
+我们之所以使用这样的方法，是因为这是传统的定义方法，但不是我们推荐的方法。
+在本节中，我们使用另一种方法，用 de Bruijn 因子来代替带名字的变量，并且用项的类型来索引项。
+这种新的表示法更加紧凑，可以使用更少的代码来证明相同的内容。
+
+<!--
 There are two fundamental approaches to typed lambda calculi.
 One approach, followed in the last two chapters,
 is to first define terms and then define types.
@@ -30,7 +38,17 @@ Terms and type rules are intertwined, and it makes no sense to talk
 of a term without a type.
 The two approaches are sometimes called _Curry style_ and _Church style_.
 Following Reynolds, we will refer to them as _extrinsic_ and _intrinsic_.
+-->
 
+表示带类型的 λ-演算有两种基本的方法。
+其一是我们在前两章中使用的方法，先定义项，再定义类型。
+项独立于类型存在，其类型由另外的赋型规则指派。
+其二是我们在本章中使用的方法，先定义类型，再定义项。
+项和类型的规则相互环绕，并且讨论不带类型的项将没有意义。
+这两种方法有的时候被称为**柯里法**（Curry Style）和**邱奇法**（Church Style）。
+沿用 Reynolds 的叫法，我们把两种方法称为**外在法**（Extrinsic）和**内在法**（Intrinsic）。
+
+<!--
 The particular representation described here
 was first proposed by
 Thorsten Altenkirch and Bernhard Reus.
@@ -38,9 +56,17 @@ The formalisation of renaming and substitution
 we use is due to Conor McBride.
 Related work has been carried out by
 James Chapman, James McKinna, and many others.
+-->
 
+我们在这里使用的这种表示法最先由 Thorsten Altenkirch 和 Bernhard Reus 提出。
+使用的将重命名和代换形式化的方法由 Conor McBride 提出。
+James Chapman、James McKinna 和许多其他人也进行了相关的研究。
 
+<!--
 ## Imports
+-->
+
+## 导入
 
 ```
 import Relation.Binary.PropositionalEquality as Eq
@@ -51,17 +77,29 @@ open import Relation.Nullary using (¬_)
 open import Relation.Nullary.Decidable using (True; toWitness)
 ```
 
+<!--
 ## Introduction
+-->
 
+## 简介
+
+<!--
 There is a close correspondence between the structure of a
 term and the structure of the derivation showing that it is
 well typed.  For example, here is the term for the Church
 numeral two:
+-->
+
+项的结构和其良类型的推导的结构联系很紧密。例如，这里是 Church 法表示的二：
 
     twoᶜ : Term
     twoᶜ = ƛ "s" ⇒ ƛ "z" ⇒ ` "s" · (` "s" · ` "z")
 
+<!--
 And here is its corresponding type derivation:
+-->
+
+这里是它对应的赋型推导：
 
     ⊢twoᶜ : ∀ {A} → ∅ ⊢ twoᶜ ⦂ Ch A
     ⊢twoᶜ = ⊢ƛ (⊢ƛ (⊢` ∋s · (⊢` ∋s · ⊢` ∋z)))
@@ -69,17 +107,29 @@ And here is its corresponding type derivation:
       ∋s = S ("s" ≠ "z") Z
       ∋z = Z
 
+<!--
 (These are both taken from Chapter
 [Lambda](/Lambda/)
 and you can see the corresponding derivation tree written out
 in full
 [here](/Lambda/#derivation).)
 The two definitions are in close correspondence, where:
+-->
 
+（两者都摘自 [Lambda](/Lambda/) 章节，你可以在[这里](/Lambda/#derivation)查看完整的推导树。）
+两者的定义对应的很紧密，其中：
+
+<!--
   * `` `_ `` corresponds to `` ⊢` ``
   * `ƛ_⇒_`   corresponds to `⊢ƛ`
   * `_·_`    corresponds to `_·_`
+-->
 
+  * `` `_ `` 对应了 `` ⊢` ``
+  * `ƛ_⇒_`   对应了 `⊢ƛ`
+  * `_·_`    对应了 `_·_`
+
+<!--
 Further, if we think of `Z` as zero and `S` as successor, then
 the lookup derivation for each variable corresponds to a
 number which tells us how many enclosing binding terms to
@@ -88,21 +138,41 @@ corresponds to `Z` or zero and `"s"` corresponds to `S Z` or
 one.  And, indeed, `"z"` is bound by the inner abstraction
 (count outward past zero abstractions) and `"s"` is bound by the
 outer abstraction (count outward past one abstraction).
+-->
 
+此外，如果我们将 `Z` 看作零，将 `S` 看做后继，那么每个变量的查询推导对应了
+一个自然数：它告诉我们到达此变量的约束之前，经过了多少约束项。
+这里的 `"z"` 对应了 `Z` 或者零，`"s"` 对应了 `S Z` 或者一。
+的确，`"z"` 被里面的抽象约束（向外跨过 0 个抽象），
+`"s"` 被外面的抽象约束（向外跨过 1 个抽象）。
+
+<!--
 In this chapter, we are going to exploit this correspondence,
 and introduce a new notation for terms that simultaneously
 represents the term and its type derivation.  Now we will
 write the following:
+-->
+
+本章中，我们利用这个对应特性，引入一种新的项的记法，其同时表示了项以及它的类型推导。
+现在，我们写出如下：
+
 
     twoᶜ  :  ∅ ⊢ Ch `ℕ
     twoᶜ  =  ƛ ƛ (# 1 · (# 1 · # 0))
 
+<!--
 A variable is represented by a natural number (written with
 `Z` and `S`, and abbreviated in the usual way), and tells us
 how many enclosing binding terms to count to find the binding
 of that variable. Thus, `# 0` is bound at the inner `ƛ`, and
 `# 1` at the outer `ƛ`.
+-->
 
+变量由一个自然数表示（用 `Z` 和 `S` 表示，简写为常见形式），它告诉我们
+这个变量的约束在多少个约束之外。因此，`# 0` 由里面的 `ƛ` 约束，`# 1`
+由外面的 `ƛ` 约束。
+
+<!--
 Replacing variables by numbers in this way is called _de
 Bruijn representation_, and the numbers themselves are called
 _de Bruijn indices_, after the Dutch mathematician Nicolaas
@@ -111,7 +181,15 @@ of proof assistants.  One advantage of replacing named
 variables with de Bruijn indices is that each term now has a
 unique representation, rather than being represented by the
 equivalence class of terms under alpha renaming.
+-->
 
+用数字代替变量的这种表示方法叫做 **de Bruijn 表示法**，这些数字本身被称为
+**de Bruijn 因子**（de Bruijn Indices），得名于荷兰数学家
+Nicolaas Govert (Dick) de Bruijn （1918 - 2012），一位创造证明助理的先锋。
+使用 de Bruijn 因子表示变量的一个好处是：每个项有一个唯一的表示方法，而不是
+在 α-重命名下的一个相等类。
+
+<!--
 The other important feature of our chosen representation is
 that it is _intrinsically typed_.  In the previous two chapters,
 the definition of terms and the definition of types are
@@ -122,20 +200,43 @@ exist independent of types are sometimes called _preterms_ or
 _raw terms_.  Here we are going to replace the type `Term` of
 raw terms by the type `Γ ⊢ A` of intrinsically-typed terms
 which in context `Γ` have type `A`.
+-->
 
+我们选择的表示方式的另一个重要特性是：他是**内在类型**的（Intrinsically Typed）。
+在前两章中，项和类型的定义是完全分离的。所有的项拥有 `Term` 类型，Agda 并不会
+阻止我们写出例如 `` `zero · `suc `zero `` 的没有类型的无意义的项。
+这样独立于类型存在的项有时被称为**原项**（Preterms）或者**源项**（Raw Terms）。
+我们将用 `Γ ⊢ A` 类型的内在类型的项，表示它在 `Γ` 上下文中拥有类型 `A`，
+来取代 `Term` 类型的源项。
+
+<!--
 While these two choices fit well, they are independent.  One
 can use de Bruijn indices in raw terms, or
 have intrinsically-typed terms with names.  In
 Chapter [Untyped](/Untyped/),
 we will introduce terms with de Bruijn indices that
 are intrinsically scoped but not typed.
+-->
 
+尽管这两个选择很适合我们，这两个选择仍然是独立的。
+可以用 de Bruijn 因子配合源项，也可以用内在类型的项配合变量名。
+在 [Untyped](/Untyped/) 章节中，我们将使用 de Bruijn 表示内在作用域的项，
+但不包含类型。
 
+<!--
 ## A second example
+-->
 
+## 第二个例子
+
+<!--
 De Bruijn indices can be tricky to get the hang of, so before
 proceeding further let's consider a second example.  Here is
 the term that adds two naturals:
+-->
+
+De Bruijn 因子可能掌握起来有点棘手。在我们继续之前，我们先来考虑第二个例子。
+下面是一个将两个自然数相加的一个项：
 
     plus : Term
     plus = μ "+" ⇒ ƛ "m" ⇒ ƛ "n" ⇒
@@ -143,12 +244,21 @@ the term that adds two naturals:
                [zero⇒ ` "n"
                |suc "m" ⇒ `suc (` "+" · ` "m" · ` "n") ]
 
+<!--
 Note variable `"m"` is bound twice, once in a lambda abstraction
 and once in the successor branch of the case.  Any appearance
 of `"m"` in the successor branch must refer to the latter
 binding, due to shadowing.
+-->
 
+注意变量 `"m"` 被约束了两次，一次在 λ 抽象中，另一次在匹配表达式的后继分支中。
+由于屏蔽效应，在匹配表达式后继分支出现的 `"m"` 必须指代后面的约束。
+
+<!--
 Here is its corresponding type derivation:
+-->
+
+下面是它对应的类型推导：
 
     ⊢plus : ∅ ⊢ plus ⦂ `ℕ ⇒ `ℕ ⇒ `ℕ
     ⊢plus = ⊢μ (⊢ƛ (⊢ƛ (⊢case (⊢` ∋m) (⊢` ∋n)
@@ -160,35 +270,69 @@ Here is its corresponding type derivation:
       ∋m′ = Z
       ∋n′ = (S ("n" ≠ "m") Z)
 
+<!--
 The two definitions are in close correspondence, where in
 addition to the previous correspondences we have:
+-->
 
+两者的定义对应的很紧密，除去之前的对应，我们注意到：
+
+<!--
   * `` `zero `` corresponds to `⊢zero`
   * `` `suc_ `` corresponds to `⊢suc`
   * `` case_[zero⇒_|suc_⇒_] `` corresponds to `⊢case`
   * `μ_⇒_` corresponds to `⊢μ`
+-->
 
+  * `` `zero `` 对应了 `⊢zero`
+  * `` `suc_ `` 对应了 `⊢suc`
+  * `` case_[zero⇒_|suc_⇒_] `` 对应了 `⊢case`
+  * `μ_⇒_` 对应了 `⊢μ`
+
+<!--
 Note the two lookup judgments `∋m` and `∋m′` refer to two
 different bindings of variables named `"m"`.  In contrast, the
 two judgments `∋n` and `∋n′` both refer to the same binding
 of `"n"` but accessed in different contexts, the first where
 `"n"` is the last binding in the context, and the second after
 `"m"` is bound in the successor branch of the case.
+-->
 
+注意到，查询判断 `∋m` 和 `∋m′` 表示了两个名称同为 `"m"` 变量的不同约束。
+作为对比， 判断 `∋n` 和 `∋n′` 都表示变量 `"n"` 的约束，但是其上下文不同，
+前者中 `"n"` 是上下文中最后一个约束，后者中则是在匹配表达式后继分支中 `"m"` 约束之后。
+
+<!--
 Here is the term and its type derivation in the notation of this chapter:
+-->
+
+下面是用本章中的记法表示的这个项极其类型推导：
 
     plus : ∀ {Γ} → Γ ⊢ `ℕ ⇒ `ℕ ⇒ `ℕ
     plus = μ ƛ ƛ case (# 1) (# 0) (`suc (# 3 · # 0 · # 1))
 
+<!--
 Reading from left to right, each de Bruijn index corresponds
 to a lookup derivation:
+-->
 
+从左往右，每个 de Bruijn 因子对应了一个查询判断：
+
+<!--
   * `# 1` corresponds to `∋m`
   * `# 0` corresponds to `∋n`
   * `# 3` corresponds to `∋+`
   * `# 0` corresponds to `∋m′`
   * `# 1` corresponds to `∋n′`
+-->
 
+  * `# 1` 对应了 `∋m`
+  * `# 0` 对应了 `∋n`
+  * `# 3` 对应了 `∋+`
+  * `# 0` 对应了 `∋m′`
+  * `# 1` 对应了 `∋n′`
+
+<!--
 The de Bruijn index counts the number of `S` constructs in the
 corresponding lookup derivation.  Variable `"n"` bound in the
 inner abstraction is referred to as `# 0` in the zero branch
@@ -200,20 +344,43 @@ case is referred to by the second `# 0`.  There is no
 shadowing: with variable names, there is no way to refer to
 the former binding in the scope of the latter, but with de
 Bruijn indices it could be referred to as `# 2`.
+-->
 
+De Bruijn 因子计算了对应查询推断中 `S` 构造子的数量。
+里面抽象约束的变量 `"n"` 在匹配表达式零分支中由 `# 0` 表示， 但在后继分支中由
+`# 1` 表示，因为中间产生了约束。
+抽象约束的变量 `"m"` 第一次出现是由 `# 1` 表示，然而第二次出现在匹配表达式
+的后继分支时则由 `# 0` 表示。这里没有屏蔽效应————使用变量名时，我们无法
+在后者的作用域内指代外部的约束，但是我们可以用 de Bruijn 因子 `# 2` 来指代。
+
+<!--
 ## Order of presentation
+-->
 
+## 展示的顺序
+
+<!--
 In the current chapter, the use of intrinsically-typed terms
 necessitates that we cannot introduce operations such as
 substitution or reduction without also showing that they
 preserve types.  Hence, the order of presentation must change.
+-->
 
+在本章中，使用内在类型的项要求我们在引入诸如重命名或者代换等操作的同时，证明它们保留了类型。
+因此，我们必须改变展示的顺序。
+
+<!--
 The syntax of terms now incorporates their typing rules, and the
 definition of values now incorporates the Canonical Forms lemma.  The
 definition of substitution is somewhat more involved, but incorporates
 the trickiest part of the previous proof, the lemma establishing that
 substitution preserves types.  The definition of reduction
 incorporates preservation, which no longer requires a separate proof.
+-->
+
+项的语法现在包含了它们的赋型规则，值的语法现在包含了它们的标准式引理。
+代换的定义现在更加深入，但包括了之前证明中最棘手的部分，即代换保留了类型。
+规约的定义现在包括了保型性，不需要额外的证明。
 
 ## Syntax
 
