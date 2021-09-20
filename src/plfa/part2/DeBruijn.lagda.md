@@ -1623,30 +1623,63 @@ _ =
   ∎
 ```
 
+<!--
 ## Values do not reduce
+-->
 
+## 值不再规约
+
+<!--
 We have now completed all the definitions, which of
 necessity subsumed some of the propositions from the
 earlier development: Canonical Forms,
 Substitution preserves types, and Preservation.
 We now turn to proving the remaining results from the
 previous development.
+-->
 
+我们现在完成了所有的定义，包含了之前证明的一些推论：标准式、代换保存类型和保型性。
+我们接下来证明剩下的结论。
+
+<!--
 #### Exercise `V¬—→` (practice)
+-->
 
+#### 练习 `V¬—→` （习题）
+
+<!--
 Following the previous development, show values do
 not reduce, and its corollary, terms that reduce are not
 values.
+-->
 
+使用上文的表示方法，证明值不再规约；以及它的推论：可规约的项不是值。
+
+<!--
 ```
 -- Your code goes here
 ```
+-->
 
+```
+-- 在此处写出你的代码
+```
+
+<!--
 ## Progress
+-->
 
+## 进行性
+
+<!--
 As before, every term that is well typed and closed is either
 a value or takes a reduction step.  The formulation of progress
 is just as before, but annotated with types:
+-->
+
+和之前一样，每一个良类型的闭项要么是一个值，要么可以进行规约。
+进行性的形式化与之前一样，但是附上了类型：
+
 ```
 data Progress {A} (M : ∅ ⊢ A) : Set where
 
@@ -1661,10 +1694,16 @@ data Progress {A} (M : ∅ ⊢ A) : Set where
     → Progress M
 ```
 
+<!--
 The statement and proof of progress is much as before,
 appropriately annotated.  We no longer need
 to explicitly refer to the Canonical Forms lemma, since it
 is built-in to the definition of value:
+-->
+
+进行性的声明和证明与之前大抵相同，加上了适当的附注。
+我们不再需要显式地参考标准式引理，因为它内置于值的定义中：
+
 ```
 progress : ∀ {A} → (M : ∅ ⊢ A) → Progress M
 progress (` ())
@@ -1686,21 +1725,41 @@ progress (μ N)                          =  step (β-μ)
 ```
 
 
+<!--
 ## Evaluation
+-->
 
+## 求值
+
+<!--
 Before, we combined progress and preservation to evaluate a term.
 We can do much the same here, but we no longer need to explicitly
 refer to preservation, since it is built-in to the definition of reduction.
+-->
 
+之前，我们将保型性和进行性结合来对一个项求值。
+我们在此处也可以这么做，但是我们不再需要显式地参考保型性，因为它内置于规约的定义中。
+
+<!--
 As previously, gas is specified by a natural number:
+-->
+
+如同之前，汽油由自然数表示：
+
 ```
 record Gas : Set where
   constructor gas
   field
     amount : ℕ
 ```
+
+<!--
 When our evaluator returns a term `N`, it will either give evidence that
 `N` is a value or indicate that it ran out of gas:
+-->
+
+当求值器返回项 `N` 时，它要么给出 `N` 是值的证明，要么提示汽油耗尽：
+
 ```
 data Finished {Γ A} (N : Γ ⊢ A) : Set where
 
@@ -1713,9 +1772,15 @@ data Finished {Γ A} (N : Γ ⊢ A) : Set where
        ----------
        Finished N
 ```
+
+<!--
 Given a term `L` of type `A`, the evaluator will, for some `N`, return
 a reduction sequence from `L` to `N` and an indication of whether
 reduction finished:
+-->
+
+给定类型为 `A` 的项 `L`，求值器会返回一个从 `L` 到某个 `N` 的求值序列，并提示规约是否完成：
+
 ```
 data Steps {A} : ∅ ⊢ A → Set where
 
@@ -1725,7 +1790,13 @@ data Steps {A} : ∅ ⊢ A → Set where
       ----------
     → Steps L
 ```
+
+<!--
 The evaluator takes gas and a term and returns the corresponding steps:
+-->
+
+求值器取汽油和项，返回对应的步骤：
+
 ```
 eval : ∀ {A}
   → Gas
@@ -1738,19 +1809,39 @@ eval (gas (suc m)) L with progress L
 ... | step {M} L—→M with eval (gas m) M
 ...    | steps M—↠N fin                  =  steps (L —→⟨ L—→M ⟩ M—↠N) fin
 ```
+
+<!--
 The definition is a little simpler than previously, as we no longer need
 to invoke preservation.
+-->
 
+由于我们不再需要使用保型性，定义比之前略微简单。
+
+<!--
 ## Examples
+-->
 
+## 例子
+
+<!--
 We reiterate each of our previous examples.  We re-define the term
 `sucμ` that loops forever:
+-->
+
+我们重复之前的例子，重新定义无限循环的项 `sucμ`：
+
 ```
 sucμ : ∅ ⊢ `ℕ
 sucμ = μ (`suc (# 0))
 ```
+
+<!--
 To compute the first three steps of the infinite reduction sequence,
 we evaluate with three steps worth of gas:
+-->
+
+为了计算无限规约序列的前三步，我们使用满足三步的汽油：
+
 ```
 _ : eval (gas 3) sucμ ≡
   steps
@@ -1766,7 +1857,12 @@ _ : eval (gas 3) sucμ ≡
 _ = refl
 ```
 
+<!--
 The Church numeral two applied to successor and zero:
+-->
+
+将 Church 法表示的二应用于后继函数和零：
+
 ```
 _ : eval (gas 100) (twoᶜ · sucᶜ · `zero) ≡
   steps
@@ -1784,7 +1880,12 @@ _ : eval (gas 100) (twoᶜ · sucᶜ · `zero) ≡
 _ = refl
 ```
 
+<!--
 Two plus two is four:
+-->
+
+二加二等于四：
+
 ```
 _ : eval (gas 100) (plus · two · two) ≡
   steps
@@ -1926,7 +2027,12 @@ _ : eval (gas 100) (plus · two · two) ≡
 _ = refl
 ```
 
+<!--
 And the corresponding term for Church numerals:
+-->
+
+以及 Church 法表示的对应的项：
+
 ```
 _ : eval (gas 100) (plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero) ≡
   steps
@@ -1986,39 +2092,75 @@ _ : eval (gas 100) (plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero) ≡
 _ = refl
 ```
 
+<!--
 We omit the proof that reduction is deterministic, since it is
 tedious and almost identical to the previous proof.
+-->
 
+我们省去规约是确定的证明，因为它很繁琐，而且与之前的证明几乎完全相同。
 
+<!--
 #### Exercise `mul-example` (recommended)
+-->
 
+#### 练习 `mul-example` （推荐）
+
+<!--
 Using the evaluator, confirm that two times two is four.
+-->
 
+使用求值器，确认二乘二等于四。
+
+<!--
 ```
 -- Your code goes here
 ```
+-->
+
+```
+-- 在此处写出你的带吗
+```
 
 
+<!--
 ## Intrinsic typing is golden
+-->
 
+## 内在类型是黄金的
+
+<!--
 Counting the lines of code is instructive.  While this chapter
 covers the same formal development as the previous two
 chapters, it has much less code.  Omitting all the examples,
 and all proofs that appear in Properties but not DeBruijn
 (such as the proof that reduction is deterministic), the
 number of lines of code is as follows:
+-->
+
+代码行数是有提示性的。
+这一章虽然包括了前两章涵盖的形式化内容，却用了更少的代码。
+除去所有的例子，和 Properties 中出现且没有在 DeBruijn 中出现的证明
+（例如规约是确定的证明），代码行数如下：
 
     Lambda                      216
     Properties                  235
     DeBruijn                    276
 
+<!--
 The relation between the two approaches approximates the
 golden ratio: extrinsically-typed terms
 require about 1.6 times as much code as intrinsically-typed.
+-->
+
+两种方法的比例接近于黄金比例：外在类型的项代码行数大约是内在类型项的 1.6 倍。
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章中使用了以下 Unicode：
 
     σ  U+03C3  GREEK SMALL LETTER SIGMA (\Gs or \sigma)
     ₀  U+2080  SUBSCRIPT ZERO (\_0)
