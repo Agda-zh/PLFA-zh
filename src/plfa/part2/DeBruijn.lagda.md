@@ -699,35 +699,62 @@ The final term represents the Church numeral two.
 
 最后的项表示了 Church 法表示的二。
 
+<!--
 ### Abbreviating de Bruijn indices
+-->
+### 简化 de Bruijn 因子
 
+<!--
 We define a helper function that computes the length of a context,
 which will be useful in making sure an index is within context bounds:
+-->
+
+我们定义一个辅助函数来计算上下文的长度，它会在之后确保一个因子在上下文约束中有帮助：
+
 ```
 length : Context → ℕ
 length ∅        =  zero
 length (Γ , _)  =  suc (length Γ)
 ```
 
+<!--
 We can use a natural number to select a type from a context:
+-->
+
+我们可以用一个自然数来从上下文中选择一个类型：
+
 ```
 lookup : {Γ : Context} → {n : ℕ} → (p : n < length Γ) → Type
 lookup {(_ , A)} {zero}    (s≤s z≤n)  =  A
 lookup {(Γ , _)} {(suc n)} (s≤s p)    =  lookup p
 ```
 
+<!--
 We intend to apply the function only when the natural is shorter than
 the length of the context, which is witnessed by `p`.
+-->
 
+我们希望只在自然数小于上下文长度的时候应用这个函数，由 `p` 来印证。
+
+<!--
 Given the above, we can convert a natural to a corresponding
 de Bruijn index, looking up its type in the context:
+-->
+
+结合上述，我们可以将一个自然数转换成其对应的 de Bruijn 因子，从上下文中查询它的类型：
+
 ```
 count : ∀ {Γ} → {n : ℕ} → (p : n < length Γ) → Γ ∋ lookup p
 count {_ , _} {zero}    (s≤s z≤n)  =  Z
 count {Γ , _} {(suc n)} (s≤s p)    =  S (count p)
 ```
 
+<!--
 We can then introduce a convenient abbreviation for variables:
+-->
+
+然后，我们可以引入一个变量的简略表示方法：
+
 ```
 #_ : ∀ {Γ}
   → (n : ℕ)
@@ -736,6 +763,8 @@ We can then introduce a convenient abbreviation for variables:
   → Γ ⊢ lookup (toWitness n∈Γ)
 #_ n {n∈Γ}  =  ` count (toWitness n∈Γ)
 ```
+
+<!--
 Function `#_` takes an implicit argument `n∈Γ` that provides evidence for `n` to
 be within the context's bounds. Recall that
 [`True`](/Decidable/#proof-by-reflection),
@@ -744,19 +773,47 @@ be within the context's bounds. Recall that
 are defined in Chapter [Decidable](/Decidable/). The type of `n∈Γ` guards
 against invoking `#_` on an `n` that is out of context bounds. Finally, in the
 return type `n∈Γ` is converted to a witness that `n` is within the bounds.
+-->
 
+函数 `#_` 取一个隐式参数 `n∈Γ` 来证明 `n` 在上下文的约束内。
+回忆 [`True`](/Decidable/#proof-by-reflection)、
+[`_≤?_`](/Decidable/#the-best-of-both-worlds) 和
+[`toWitness`](/Decidable/#decidables-from-booleans-and-booleans-from-decidables)
+在 [Decidable](/Decidable/) 章节中定义。
+`n∈Γ` 的类型保证了 `#_` 不会在 `n` 超出上下文约束时被应用。
+最后，在返回类型中，`n∈Γ` 被转换为 `n` 在上下文约束内的证明。
+
+<!--
 With this abbreviation, we can rewrite the Church numeral two more compactly:
+-->
+
+使用这种缩略方法，我们可以用更简洁的方法写出 Church 法表示的二：
+
 ```
 _ : ∅ ⊢ (`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ
 _ = ƛ ƛ (# 1 · (# 1 · # 0))
 ```
 
-
+<!--
 ### Test examples
+-->
+
+### 测试例子
+
+<!--
 We repeat the test examples from Chapter [Lambda](/Lambda/). You can find them
 [here](/Lambda/#derivation) for comparison.
+-->
 
+我们重复 [Lambda](/Lambda/) 中的测试例子。
+你可以在[这里](/Lambda/#derivation)找到它们，并加以对比。
+
+<!--
 First, computing two plus two on naturals:
+-->
+
+首先计算自然数二加二：
+
 ```
 two : ∀ {Γ} → Γ ⊢ `ℕ
 two = `suc `suc `zero
@@ -767,10 +824,20 @@ plus = μ ƛ ƛ (case (# 1) (# 0) (`suc (# 3 · # 0 · # 1)))
 2+2 : ∀ {Γ} → Γ ⊢ `ℕ
 2+2 = plus · two · two
 ```
+
+<!--
 We generalise to arbitrary contexts because later we will give examples
 where `two` appears nested inside binders.
+-->
 
+我们推广到任意上下文，因为我们在稍后给出 `two` 在内部约束时出现的例子。
+
+<!--
 Next, computing two plus two on Church numerals:
+-->
+
+接下来，计算 Church 法表示的二加二：
+
 ```
 Ch : Type → Type
 Ch A  =  (A ⇒ A) ⇒ A ⇒ A
@@ -787,37 +854,72 @@ sucᶜ = ƛ `suc (# 0)
 2+2ᶜ : ∀ {Γ} → Γ ⊢ `ℕ
 2+2ᶜ = plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero
 ```
+
+<!--
 As before we generalise everything to arbitrary
 contexts.  While we are at it, we also generalise `twoᶜ` and
 `plusᶜ` to Church numerals over arbitrary types.
+-->
+
+如同之前那样，我们推广到任意上下文。
+同时，我们将 `twoᶜ` 和 `plusᶜ` 推广至任意类型的 Church 法表示的自然数。
 
 
-
+<!--
 #### Exercise `mul` (recommended)
+-->
 
+#### 练习 `mul` （推荐）
+
+<!--
 Write out the definition of a lambda term that multiplies
 two natural numbers, now adapted to the intrinsically-typed
 de Bruijn representation.
+-->
 
+用内在类型和 de Bruijn 法写出一个将两个自然数相乘的项。
+
+<!--
 ```
 -- Your code goes here
 ```
+-->
 
+```
+-- 在此处写出你的代码
+```
 
+<!--
 ## Renaming
+-->
 
+## 重命名
+
+<!--
 Renaming is a necessary prelude to substitution, enabling us
 to "rebase" a term from one context to another.  It
 corresponds directly to the renaming result from the previous
 chapter, but here the theorem that ensures renaming preserves
 typing also acts as code that performs renaming.
+-->
 
+重命名是代换之前重要的一步，让我们可以将一个项从一个上下文中“转移”至另一个上下文。
+它直接对应了上一章中的关于重命名的结论，但此处重命名保留类型的定理同时是进行重命名的代码。
+
+<!--
 As before, we first need an extension lemma that allows us to
 extend the context when we encounter a binder. Given a map
 from variables in one context to variables in another,
 extension yields a map from the first context extended to the
 second context similarly extended.  It looks exactly like the
 old extension lemma, but with all names and terms dropped:
+-->
+
+和之前一样，我们首先需要一条扩充引理，使我们可以到遇到约束时扩充我们的上下文。
+给定一个将一个上下文中的变量映射至另一个上下文中变量的映射，扩充会生成一个
+从扩充后的第一个上下文至以相同方法扩充的第二个上下文的映射。
+它看上去和之前的扩充引理完全一样，只是舍去了名字和项：
+
 ```
 ext : ∀ {Γ Δ}
   → (∀ {A} →       Γ ∋ A →     Δ ∋ A)
@@ -826,21 +928,41 @@ ext : ∀ {Γ Δ}
 ext ρ Z      =  Z
 ext ρ (S x)  =  S (ρ x)
 ```
+
+<!--
 Let `ρ` be the name of the map that takes variables in `Γ`
 to variables in `Δ`.  Consider the de Bruijn index of the
 variable in `Γ , B`:
+-->
 
+令 `ρ` 为从 `Γ` 中变量至 `Δ` 中变量的映射的名称。
+考虑 `Γ , B` 中变量的 de Bruijn 因子：
+
+<!--
 * If it is `Z`, which has type `B` in `Γ , B`,
   then we return `Z`, which also has type `B` in `Δ , B`.
 
 * If it is `S x`, for some variable `x` in `Γ`, then `ρ x`
   is a variable in `Δ`, and hence `S (ρ x)` is a variable in
   `Δ , B`.
+-->
 
+* 如果它是 `Z`，在 `Γ , B` 中的类型是 `B`，那么返回 `Z`，在 `Δ , B` 中的类型也是 `B`。
+
+* 如果它是 `S x`，其中 `x` 是某个 `Γ` 中的变量，那么 `ρ x` 是 `Δ` 中的一个变量，
+  因此 `S (ρ x)` 是一个 `Δ , B` 中的变量。
+
+<!--
 With extension under our belts, it is straightforward
 to define renaming.  If variables in one context map to
 variables in another, then terms in the first context map to
 terms in the second:
+-->
+
+定义了扩充过后，重命名的定义就变得很直接了。
+如果一个上下文中的变量映射至另一个上下文中的变量，那么第一个上下文
+中的项映射至第二个上下文中：
+
 ```
 rename : ∀ {Γ Δ}
   → (∀ {A} → Γ ∋ A → Δ ∋ A)
@@ -854,9 +976,16 @@ rename ρ (`suc M)       =  `suc (rename ρ M)
 rename ρ (case L M N)   =  case (rename ρ L) (rename ρ M) (rename (ext ρ) N)
 rename ρ (μ N)          =  μ (rename (ext ρ) N)
 ```
+
+<!--
 Let `ρ` be the name of the map that takes variables in `Γ`
 to variables in `Δ`.  Let's unpack the first three cases:
+-->
 
+令 `ρ` 为从 `Γ` 中变量至 `Δ` 中变量的映射的名称。
+我们首先来解释前三种情况：
+
+<!--
 * If the term is a variable, simply apply `ρ`.
 
 * If the term is an abstraction, use the previous result
@@ -865,11 +994,24 @@ to variables in `Δ`.  Let's unpack the first three cases:
 
 * If the term is an application, recursively rename both
   the function and the argument.
+-->
 
+* 如果项是一个变量，直接应用 `ρ`。
+
+* 如果项是一个抽象，使用之前的扩充结论来扩充映射 `ρ`，
+  然后在递归地对于抽象本体进行重命名。
+
+* 如果项是一个应用，递归地重命名函数及其参数。
+
+<!--
 The remaining cases are similar, recursing on each subterm,
 and extending the map whenever the construct introduces a
 bound variable.
+-->
 
+剩下的情况都很类似，在各个项中递归，并在引入约束变量的时候扩充映射。
+
+<!--
 Whereas before renaming was a result that carried evidence
 that a term is well typed in one context to evidence that it
 is well typed in another context, now it actually transforms
@@ -877,9 +1019,20 @@ the term, suitably altering the bound variables. Type checking
 the code in Agda ensures that it is only passed and returns
 terms that are well typed by the rules of simply-typed lambda
 calculus.
+-->
 
+之前，重命名是一个将项在一个上下文中良类型的证明转换成项在另一个上下文中
+良类型的结论；而现在，它直接转换了整个项，调整了其中的约束变了。
+在 Agda 中类型检查这段代码保证了只有在简单类型的 λ-盐酸中良类型的项
+可以作为参数或者作为返回项。
+
+<!--
 Here is an example of renaming a term with one free
 and one bound variable:
+-->
+
+下面的例子将带有一个自由变量，一个约束变量的项进行重命名：
+
 ```
 M₀ : ∅ , `ℕ ⇒ `ℕ ⊢ `ℕ ⇒ `ℕ
 M₀ = ƛ (# 1 · (# 1 · # 0))
@@ -890,13 +1043,22 @@ M₁ = ƛ (# 2 · (# 2 · # 0))
 _ : rename S_ M₀ ≡ M₁
 _ = refl
 ```
+
+<!--
 In general, `rename S_` will increment the de Bruijn index for
 each free variable by one, while leaving the index for each
 bound variable unchanged.  The code achieves this naturally:
 the map originally increments each variable by one, and is
 extended for each bound variable by a map that leaves it
 unchanged.
+-->
 
+通常来说，`rename S_` 会把所有自由变量的 de Bruijn 因子增加一，
+而不改变约束变量的 de Bruijn 因子。
+这个代码自然地完成了这样的操作：映射将所有的变量增加一，然而在扩充作用下，
+每个约束变量的因子不变。
+
+<!--
 We will see below that renaming by `S_` plays a key role in
 substitution.  For traditional uses of de Bruijn indices
 without intrinsic typing, this is a little tricky. The code
@@ -906,7 +1068,13 @@ than the number. It's easy to have off-by-one errors.  But
 it's hard to imagine an off-by-one error that preserves
 typing, and hence the Agda code for intrinsically-typed de Bruijn
 terms is intrinsically reliable.
+-->
 
+我们稍后可以看到，使用 `S_` 进行重命名在代换中起到了重要作用。
+对于没有使用内在类型的 de Bruijn 因子表示法来说，这会有一点棘手。
+这种方法需要记忆一个因子数，更大的因子为自由变量，更小的因子为约束变量。
+这样很容易出现差一错误，而出现差一错误以后很难保证类型的保存性。
+因此这里内在类型的 de Bruijn 项的 Agda 代码是本质上更加可靠。
 
 ## Simultaneous Substitution
 
