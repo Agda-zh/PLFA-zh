@@ -1076,8 +1076,13 @@ terms is intrinsically reliable.
 这样很容易出现差一错误，而出现差一错误以后很难保证类型的保存性。
 因此这里内在类型的 de Bruijn 项的 Agda 代码是本质上更加可靠。
 
+<!--
 ## Simultaneous Substitution
+-->
 
+## 同时代换
+
+<!--
 Because de Bruijn indices free us of concerns with renaming,
 it becomes easy to provide a definition of substitution that
 is more general than the one considered previously.  Instead
@@ -1085,7 +1090,13 @@ of substituting a closed term for a single variable, it
 provides a map that takes each free variable of the original
 term to another term. Further, the substituted terms are over
 an arbitrary context, and need not be closed.
+-->
 
+由于 de Bruijn 因子让我们免去了重命名的顾虑，给出一个更广义的代换的定义更加方便。
+与其用一个闭项来代换一个单一的变量，广义的代换提供一个将原来项中各个自由变量至另一个项的映射。
+除此之外，被代换的项可以在任意上下文之中，不需要为闭项。
+
+<!--
 The structure of the definition and the proof is remarkably
 close to that for renaming.  Again, we first need an extension
 lemma that allows us to extend the context when we encounter a
@@ -1095,6 +1106,15 @@ map from variables in one context to _terms_ in another.
 Given a map from variables in one context to terms over
 another, extension yields a map from the first context
 extended to the second context similarly extended:
+-->
+
+定义和证明的结构与重命名项类似。
+同样，我们首先需要一个扩充引理，让我们能够在遇到约束时扩充上下文。
+对比在重命名中我们使用从一个上下文中的变量至另一上下文中变量的映射，
+代换使用的是将一个上下文中的变量至另一上下文中**项**的映射。
+给定一个将一个上下文中的变量映射至另一个上下文中项的映射，扩充会生成一个
+从扩充后的第一个上下文至以相同方法扩充的第二个上下文的映射。
+
 ```
 exts : ∀ {Γ Δ}
   → (∀ {A} →       Γ ∋ A →     Δ ⊢ A)
@@ -1103,10 +1123,17 @@ exts : ∀ {Γ Δ}
 exts σ Z      =  ` Z
 exts σ (S x)  =  rename S_ (σ x)
 ```
+
+<!--
 Let `σ` be the name of the map that takes variables in `Γ`
 to terms over `Δ`.  Consider the de Bruijn index of the
 variable in `Γ , B`:
+-->
 
+令 `σ` 为从 `Γ` 中变量至 `Δ` 中变量的项的名称。
+考虑 `Γ , B` 中变量的 de Bruijn 因子：
+
+<!--
 * If it is `Z`, which has type `B` in `Γ , B`,
   then we return the term `` ` Z``, which also has
   type `B` in `Δ , B`.
@@ -1114,15 +1141,34 @@ variable in `Γ , B`:
 * If it is `S x`, for some variable `x` in `Γ`, then
   `σ x` is a term in `Δ`, and hence `rename S_ (σ x)`
   is a term in `Δ , B`.
+-->
 
+* 如果它是 `Z`，在 `Γ , B` 中的类型是 `B`，
+  那么返回 `` ` Z`` 项，在 `Δ , B` 中的类型也是 `B`。
+
+* 如果它是 `S x`，其中 `x` 是某个 `Γ` 中的变量，那么 `σ x` 是 `Δ` 中的一个项，
+  因此 `S_ (σ x)` 是一个 `Δ , B` 中的项。
+
+<!--
 This is why we had to define renaming first, since
 we require it to convert a term over context `Δ`
 to a term over the extended context `Δ , B`.
+-->
 
+这也是为什么我们需要先定义重命名，因为我们需要这个定义来将
+上下文 `Δ` 中的项重命名至扩充后的上下文 `Δ , B`。
+
+<!--
 With extension under our belts, it is straightforward
 to define substitution.  If variables in one context map
 to terms over another, then terms in the first context
 map to terms in the second:
+-->
+
+定义了扩充过后，代换的定义就变得很直接了。
+如果一个上下文中的变量映射至另一个上下文中的项，那么第一个上下文
+中的项映射至第二个上下文中：
+
 ```
 subst : ∀ {Γ Δ}
   → (∀ {A} → Γ ∋ A → Δ ⊢ A)
@@ -1136,9 +1182,16 @@ subst σ (`suc M)       =  `suc (subst σ M)
 subst σ (case L M N)   =  case (subst σ L) (subst σ M) (subst (exts σ) N)
 subst σ (μ N)          =  μ (subst (exts σ) N)
 ```
+
+<!--
 Let `σ` be the name of the map that takes variables in `Γ`
 to terms over `Δ`.  Let's unpack the first three cases:
+-->
 
+令 `σ` 为从 `Γ` 中变量至 `Δ` 中项的映射的名称。
+我们首先来解释前三种情况：
+
+<!--
 * If the term is a variable, simply apply `σ`.
 
 * If the term is an abstraction, use the previous result
@@ -1147,16 +1200,37 @@ to terms over `Δ`.  Let's unpack the first three cases:
 
 * If the term is an application, recursively substitute over
   both the function and the argument.
+-->
 
+* 如果项是一个变量，直接应用 `σ`。
+
+* 如果项是一个抽象，使用之前的扩充结论来扩充映射 `σ`，
+  然后在递归地对于抽象本体进行进行代换。
+
+* 如果项是一个应用，递归地代换函数及其参数。
+
+<!--
 The remaining cases are similar, recursing on each subterm,
 and extending the map whenever the construct introduces a
 bound variable.
+-->
 
+剩下的情况都很类似，在各个项中递归，并在引入约束变量的时候扩充映射。
+
+<!--
 ## Single substitution
+-->
 
+## 单个替换
+
+<!--
 From the general case of substitution for multiple free
 variables it is easy to define the special case of
 substitution for one free variable:
+-->
+
+从广义的代换多个自由变量，我们可以定义只代换单个变量的特殊情况：
+
 ```
 _[_] : ∀ {Γ A B}
   → Γ , B ⊢ A
@@ -1169,18 +1243,40 @@ _[_] {Γ} {A} {B} N M =  subst {Γ , B} {Γ} σ {A} N
   σ Z      =  M
   σ (S x)  =  ` x
 ```
+
+<!--
 In a term of type `A` over context `Γ , B`, we replace the
 variable of type `B` by a term of type `B` over context `Γ`.
 To do so, we use a map from the context `Γ , B` to the context
 `Γ`, that maps the last variable in the context to the term of
 type `B` and every other free variable to itself.
+-->
 
+在一个上下文 `Γ , B` 中类型为 `A` 的项，我们将类型为 `B` 的变量
+代换为上下文 `Γ` 中一个类型为 `B` 的项。
+为了这么做，我们用一个从 `Γ , B` 上下文至 `Γ` 上下文的映射，
+令上下文中最后一个变量映射至类型为 `B` 的代换项，令任何其他自由变量映射至其本身。
+
+<!--
 Consider the previous example:
+-->
 
+考虑之前的例子：
+
+<!--
 * `` (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) [ "s" := sucᶜ ] `` yields
   `` ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z") ``
+-->
 
+* `` (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) [ "s" := sucᶜ ] `` 得
+  `` ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z") ``
+
+<!--
 Here is the example formalised:
+-->
+
+下面是形式化后的例子：
+
 ```
 M₂ : ∅ , `ℕ ⇒ `ℕ ⊢ `ℕ ⇒ `ℕ
 M₂ = ƛ # 1 · (# 1 · # 0)
@@ -1195,16 +1291,32 @@ _ : M₂ [ M₃ ] ≡ M₄
 _ = refl
 ```
 
+<!--
 Previously, we presented an example of substitution that we
 did not implement, since it needed to rename the bound
 variable to avoid capture:
+-->
 
+之前，我们展示了一个我们没有实现的代换的例子，因为它需要将约束变量重命名来防止捕捉：
+
+<!--
 * `` (ƛ "x" ⇒ ` "x" · ` "y") [ "y" := ` "x" · `zero ] `` should yield
   `` ƛ "z" ⇒ ` "z" · (` "x" · `zero) ``
+-->
 
+* `` (ƛ "x" ⇒ ` "x" · ` "y") [ "y" := ` "x" · `zero ] `` 应当得
+  `` ƛ "z" ⇒ ` "z" · (` "x" · `zero) ``
+
+<!--
 Say the bound `"x"` has type `` `ℕ ⇒ `ℕ ``, the substituted
 `"y"` has type `` `ℕ ``, and the free `"x"` also has type `` `ℕ ⇒ `ℕ ``.
 Here is the example formalised:
+-->
+
+假设约束的 `"x"` 的类型是 `` `ℕ ⇒ `ℕ ``，被代换的 `"y"` 的类型是 `` `ℕ ``，
+自由的 `"x"` 的类型也是 `` `ℕ ⇒ `ℕ ``。
+下面是形式化后的例子：
+
 ```
 M₅ : ∅ , `ℕ ⇒ `ℕ , `ℕ ⊢ (`ℕ ⇒ `ℕ) ⇒ `ℕ
 M₅ = ƛ # 0 · # 1
@@ -1219,6 +1331,7 @@ _ : M₅ [ M₆ ] ≡ M₇
 _ = refl
 ```
 
+<!--
 The logician Haskell Curry observed that getting the
 definition of substitution right can be a tricky business.  It
 can be even trickier when using de Bruijn indices, which can
@@ -1228,13 +1341,28 @@ types.  While this makes the definition more involved, it
 means that once it is done the hardest work is out of the way.
 And combining definition with proof makes it harder for errors
 to sneak in.
+-->
 
+逻辑学家 Haskell Curry 注意到，正确地定义代换可能很棘手。
+使用 de Bruijn 因子来定义代换可能更加棘手，且不易理解。
+在现在的方法中，任何代换的定义必须保存类型。
+虽然这样让定义更加深入，但这也意味着一旦定义完成以后最难的部分就完成了。
+将定义和证明结合在一起可以让错误更不易出现。
 
+<!--
 ## Values
+-->
 
+## 值
+
+<!--
 The definition of value is much as before, save that the
 added types incorporate the same information found in the
 Canonical Forms lemma:
+-->
+
+值的定义与之前差不多，除去附加的类型中包括了标准式引理中包含的信息：
+
 ```
 data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 
@@ -1252,18 +1380,31 @@ data Value : ∀ {Γ A} → Γ ⊢ A → Set where
     → Value (`suc V)
 ```
 
+<!--
 Here `zero` requires an implicit parameter to aid inference,
 much in the same way that `[]` did in
 [Lists](/Lists/).
+-->
 
+此处的 `zero` 需要一个隐式函数来帮助类型推测，与 [Lists](/Lists/) 中 `[]` 的情况类似。
 
+<!--
 ## Reduction
+-->
 
+## 规约
+
+<!--
 The reduction rules are the same as those given earlier, save
 that for each term we must specify its types.  As before, we
 have compatibility rules that reduce a part of a term,
 labelled with `ξ`, and rules that simplify a constructor
 combined with a destructor, labelled with `β`:
+-->
+
+规约规则和之前给出的类似，除去我们必须给出每个项的类型。
+如同之前，兼容性规则规约一个项的一部分，用 `ξ` 标出；
+简化构造子与其析构子的规则用 `β` 标出：
 
 ```
 infix 2 _—→_
@@ -1309,6 +1450,8 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
       ----------------
     → μ N —→ N [ μ N ]
 ```
+
+<!--
 The definition states that `M —→ N` can only hold of terms `M`
 and `N` which _both_ have type `Γ ⊢ A` for some context `Γ`
 and type `A`.  In other words, it is _built-in_ to our
@@ -1318,12 +1461,29 @@ validates that each term preserves types.  In the case of `β`
 rules, preservation depends on the fact that substitution
 preserves types, which is built-in to our
 definition of substitution.
+-->
 
+定义中指出，`M —→ N` 只能由类型**都**是 `Γ ⊢ A` 的两个项 `M` 和 `N` 组成，
+其中 `Γ` 是一个上下文，`A` 是一个类型。
+换句话说，我们的定义中**内置**了规约保存类型的证明。
+我们不需要额外证明保型性。
+Agda 的类型检查器检验了每个项保存了类型。
+在 `β` 规则的情况中，保型性依赖于代换保存类型的性质，而它内置于代换的定义之中。
 
+<!--
 ## Reflexive and transitive closure
+-->
 
+## 自反传递闭包
+
+<!--
 The reflexive and transitive closure is exactly as before.
 We simply cut-and-paste the previous definition:
+-->
+
+自反传递闭包的定义与之前完全一样。
+我们直接复制粘贴之前的定义：
+
 ```
 infix  2 _—↠_
 infix  1 begin_
@@ -1350,11 +1510,21 @@ begin M—↠N = M—↠N
 ```
 
 
+<!--
 ## Examples
+-->
 
+## 例子
+
+<!--
 We reiterate each of our previous examples.  First, the Church
 numeral two applied to the successor function and zero yields
 the natural number two:
+-->
+
+我们重复之前的每一个例子。
+首先，将 Church 法表示的二应用于后继函数和零得自然数二：
+
 ```
 _ : twoᶜ · sucᶜ · `zero {∅} —↠ `suc `suc `zero
 _ =
@@ -1370,9 +1540,18 @@ _ =
    `suc (`suc `zero)
   ∎
 ```
+<!--
 As before, we need to supply an explicit context to `` `zero ``.
+-->
 
+和之前一样，我们需要给出为 `` `zero `` 给出显式的上下文。
+
+<!--
 Next, a sample reduction demonstrating that two plus two is four:
+-->
+
+接下来，展示二加二得四的规约例子：
+
 ```
 _ : plus {∅} · two · two —↠ `suc `suc `suc `suc `zero
 _ =
@@ -1406,7 +1585,12 @@ _ =
   ∎
 ```
 
+<!--
 And finally, a similar sample reduction for Church numerals:
+-->
+
+最后，用 Church 数规约同样的例子：
+
 ```
 _ : plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero {∅}
 _ =
@@ -1844,4 +2028,3 @@ This chapter uses the following unicode:
     ₆  U+2086  SUBSCRIPT SIX (\_6)
     ₇  U+2087  SUBSCRIPT SEVEN (\_7)
     ≠  U+2260  NOT EQUAL TO (\=n)
-
