@@ -382,12 +382,25 @@ incorporates preservation, which no longer requires a separate proof.
 代换的定义现在更加深入，但包括了之前证明中最棘手的部分，即代换保留了类型。
 规约的定义现在包括了保型性，不需要额外的证明。
 
+<!--
 ## Syntax
+-->
 
+## 语法
+
+<!--
 We now begin our formal development.
+-->
 
+现在，我们开始正式的定义。
+
+<!--
 First, we get all our infix declarations out of the way.
 We list separately operators for judgments, types, and terms:
+-->
+
+我们首先定义中缀声明。我们分别列出判断、类型和项的运算符：
+
 ```
 infix  4 _⊢_
 infix  4 _∋_
@@ -404,54 +417,105 @@ infix  9 S_
 infix  9 #_
 ```
 
+<!--
 Since terms are intrinsically typed, we must define types and
 contexts before terms.
+-->
 
+由于项是内在类型的，我们必须在定义项之前先定义类型和上下文。
+
+<!--
 ### Types
+-->
 
+### 类型
+
+<!--
 As before, we have just two types, functions and naturals.
 The formal definition is unchanged:
+-->
+
+与以前一样，我们只有两种类型：函数和自然数。它的形式化定义没有变化：
+
 ```
 data Type : Set where
   _⇒_ : Type → Type → Type
   `ℕ  : Type
 ```
 
+<!--
 ### Contexts
+-->
 
+<!--
 Contexts are as before, but we drop the names.
 Contexts are formalised as follows:
+-->
+
+上下文如同之前一样，但是我们舍去了名字。
+上下文如下形式化：
+
 ```
 data Context : Set where
   ∅   : Context
   _,_ : Context → Type → Context
 ```
+
+<!--
 A context is just a list of types, with the type of the most
 recently bound variable on the right.  As before, we let `Γ`
 and `Δ` range over contexts.  We write `∅` for the empty
 context, and `Γ , A` for the context `Γ` extended by type `A`.
 For example
+-->
+
+上下文就是一个类型的列表，其最近约束的变量出现在右边。
+如之前一样，我们使用 `Γ` 和 `Δ` 来表示上下文。
+我们用 `∅` 表示空上下文，用 `Γ , A` 表示以 `A` 扩充的上下文 `Γ`。
+例如：
+
 ```
 _ : Context
 _ = ∅ , `ℕ ⇒ `ℕ , `ℕ
 ```
+
+<!--
 is a context with two variables in scope, where the outer
 bound one has type `` `ℕ ⇒ `ℕ ``, and the inner bound one has
 type `` `ℕ ``.
+-->
 
+在作用域中有两个变量，外部约束的变量的类型是 `` `ℕ ⇒ `ℕ ``，内部约束的类型是 `` `ℕ ``。
+
+<!--
 ### Variables and the lookup judgment
+-->
 
+### 变量及查询判断
+
+<!--
 Intrinsically-typed variables correspond to the lookup judgment.
 They are represented by de Bruijn indices, and hence also
 correspond to natural numbers.  We write
+-->
+
+内在类型的变量对应着查询判断。它们由 de Bruijn 因子表示，因此也对应着自然数。
+我们用
 
     Γ ∋ A
 
+<!--
 for variables which in context `Γ` have type `A`.
 The lookup judgement is formalised by a datatype indexed
 by a context and a type.
 It looks exactly like the old lookup judgment, but
 with all variable names dropped:
+-->
+
+表示上下文 `Γ` 中带有类型 `A` 的变量。
+查询判断由一个以上下文和类型索引的数据类型来形式化。
+它和之前的查询判断看上去一样，但是变量名被舍去了：
+
 ```
 data _∋_ : Context → Type → Set where
 
@@ -464,20 +528,36 @@ data _∋_ : Context → Type → Set where
       ---------
     → Γ , B ∋ A
 ```
+
+<!--
 Constructor `S` no longer requires an additional parameter,
 since without names shadowing is no longer an issue.  Now
 constructors `Z` and `S` correspond even more closely to the
 constructors `here` and `there` for the element-of relation
 `_∈_` on lists, as well as to constructors `zero` and `suc`
 for natural numbers.
+-->
 
+`S` 构造子不再需要额外的参数，由于没有名字以后就不需要处理屏蔽效应。
+现在的构造子 `Z` 和 `S` 更紧密地对应了列表中成员关系的构造子 `here` 和 `there`，
+以及自然数的构造子 `zero` 和 `suc`。
+
+<!--
 For example, consider the following old-style lookup
 judgments:
+-->
+
+例如，我们考虑下面的旧式查询判断：
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ∋ "z" ⦂ `ℕ ``
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ∋ "s" ⦂ `ℕ ⇒ `ℕ ``
 
+<!--
 They correspond to the following intrinsically-typed variables:
+-->
+
+它们对应了下列内在类型的变量：
+
 ```
 _ : ∅ , `ℕ ⇒ `ℕ , `ℕ ∋ `ℕ
 _ = Z
@@ -485,23 +565,44 @@ _ = Z
 _ : ∅ , `ℕ ⇒ `ℕ , `ℕ ∋ `ℕ ⇒ `ℕ
 _ = S Z
 ```
+
+<!--
 In the given context, `"z"` is represented by `Z`
 (as the most recently bound variable),
 and `"s"` by `S Z`
 (as the next most recently bound variable).
+-->
 
+在给出的上下文中，`"z"` 由 `Z` 表示（最近约束的变量），
+`"s"` 由 `S Z` 表示（下一个最近约束的变量）。
+
+<!--
 ### Terms and the typing judgment
+-->
 
+### 项以及赋型判断
+
+<!--
 Intrinsically-typed terms correspond to the typing judgment.
 We write
+-->
+
+内在类型的项对应了其赋型判断。我们用
 
     Γ ⊢ A
 
+<!--
 for terms which in context `Γ` have type `A`.
 The judgement is formalised by a datatype indexed
 by a context and a type.
 It looks exactly like the old typing judgment, but
 with all terms and variable names dropped:
+-->
+
+表示在上下文 `Γ` 中类型为 `A` 的项。
+这个判断用由上下文和类型索引的数据类型进行形式化。
+它和之前的查询判断看上去一样，但是变量名被舍去了：
+
 ```
 data _⊢_ : Context → Type → Set where
 
@@ -542,12 +643,22 @@ data _⊢_ : Context → Type → Set where
       ---------
     → Γ ⊢ A
 ```
+
+<!--
 The definition exploits the close correspondence between the
 structure of terms and the structure of a derivation showing
 that it is well typed: now we use the derivation _as_ the
 term.
+-->
 
+这个定义利用了项的结构和其良类型推导的结构之间紧密的对应关系：我们现在
+使用推导**当作**项。
+
+<!--
 For example, consider the following old-style typing judgments:
+-->
+
+例如，考虑下列旧式的赋型判断：
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "z" ⦂ `ℕ ``
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "s" ⦂ `ℕ ⇒ `ℕ ``
@@ -556,7 +667,12 @@ For example, consider the following old-style typing judgments:
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ ⊢ (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) ⦂  `ℕ ⇒ `ℕ ``
 * `` ∅ ⊢ ƛ "s" ⇒ ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) ⦂  (`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ ``
 
+<!--
 They correspond to the following intrinsically-typed terms:
+-->
+
+它们对应了下列内在类型的项：
+
 ```
 _ : ∅ , `ℕ ⇒ `ℕ , `ℕ ⊢ `ℕ
 _ = ` Z
@@ -576,7 +692,12 @@ _ = ƛ (` S Z · (` S Z · ` Z))
 _ : ∅ ⊢ (`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ
 _ = ƛ ƛ (` S Z · (` S Z · ` Z))
 ```
+
+<!--
 The final term represents the Church numeral two.
+-->
+
+最后的项表示了 Church 法表示的二。
 
 ### Abbreviating de Bruijn indices
 
