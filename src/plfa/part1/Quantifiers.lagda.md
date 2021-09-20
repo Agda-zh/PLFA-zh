@@ -733,10 +733,10 @@ restated in this way.
 ```
 
 <!--
-#### Exercise `∃-|-≤` (practice)
+#### Exercise `∃-+-≤` (practice)
 -->
 
-#### 练习 `∃-|-≤`（实践）
+#### 练习 `∃-+-≤`（实践）
 
 <!--
 Show that `y ≤ z` holds if and only if there exists a `x` such that

@@ -919,8 +919,8 @@ variant that returns the flipped case:
 ≤-total″ m       zero                      =  flipped z≤n
 ≤-total″ zero    (suc n)                   =  forward z≤n
 ≤-total″ (suc m) (suc n) with ≤-total″ m n
-...                        | forward m≤n   =  forward (s≤s m≤n)
-...                        | flipped n≤m   =  flipped (s≤s n≤m)
+...                         | forward m≤n  =  forward (s≤s m≤n)
+...                         | flipped n≤m  =  flipped (s≤s n≤m)
 ```
 
 <!--
