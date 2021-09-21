@@ -62,6 +62,7 @@ jobs:
         make test
 
     - name: Publish
+      if: github.ref == 'refs/heads/dev'
       run: |
         git config user.name "FangyiBot"
         git config user.email "fangyibot@outlook.com"
