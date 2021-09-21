@@ -1514,7 +1514,7 @@ begin M—↠N = M—↠N
 ## Examples
 -->
 
-## 例子
+## 例子 {name=examples}
 
 <!--
 We reiterate each of our previous examples.  First, the Church
