@@ -1,5 +1,5 @@
 ---
-title     : "More: Additional constructs of simply-typed lambda calculus"
+title     : "More: 简单类型 λ-演算的更多构造"
 layout    : page
 prev      : /DeBruijn/
 permalink : /More/
@@ -10,10 +10,16 @@ next      : /Bisimulation/
 module plfa.part2.More where
 ```
 
+<!--
 So far, we have focussed on a relatively minimal language, based on
 Plotkin's PCF, which supports functions, naturals, and fixpoints.  In
 this chapter we extend our calculus to support the following:
+-->
 
+到此，我们主要集中于一门基于 Plotkin 的 PCF 的相对轻便的语言，包括了函数、自然数和不动点。
+在本章中，我们将扩展我们的演算，来支持下列特性：
+
+<!--
   * primitive numbers
   * _let_ bindings
   * products
@@ -23,33 +29,75 @@ this chapter we extend our calculus to support the following:
   * an alternative formulation of unit type
   * empty type
   * lists
+-->
 
+  * 原语数字
+  * _let_ 绑定
+  * 积
+  * 积的替代表示方法
+  * 和
+  * 单元类型
+  * 单元类型的替代表示方法
+  * 空类型
+  * 列表
+
+<!--
 All of the data types should be familiar from Part I of this textbook.
 For _let_ and the alternative formulations we show how they translate
 to other constructs in the calculus.  Most of the description will be
 informal. We show how to formalise the first four constructs and leave
 the rest as an exercise for the reader.
+-->
 
+所有上述数据类型和本书第一部分描述的相近。
+对于 _let_ 和数据类型的“替代表示方法”，我们展示如何将它们翻译至演算中其他的构造。
+介绍的大部分将由非形式化的方式展示。
+我们展示如何形式化前四种构造，并将其余留给读者作为习题。
+
+<!--
 Our informal descriptions will be in the style of
 Chapter [Lambda](/Lambda/),
 using extrinsically-typed terms,
 while our formalisation will be in the style of
 Chapter [DeBruijn](/DeBruijn/),
 using intrinsically-typed terms.
+-->
 
+非形式化的表述会以类似于 [Lambda](/Lambda/) 章节中的形式，使用外在类型的项给出。
+而形式化的表述会以类似于 [DeBruijn](/DeBruijn/) 章节中的形式，使用内在类型的项给出。
+
+<!--
 By now, explaining with symbols should be more concise, more precise,
 and easier to follow than explaining in prose.
 For each construct, we give syntax, typing, reductions, and an example.
 We also give translations where relevant; formally establishing the
 correctness of translations will be the subject of the next chapter.
+-->
 
+到现在，使用符号来解释应该可以比文字更简洁、更精确、更易于跟随。
+对于每一种构造，我们给出它的语法、赋型、规约和例子。
+在需要的时候，我们也会给出构造的翻译；在下个章节我们会正式地证明翻译的正确性。
+
+<!--
 ## Primitive numbers
+-->
 
+## 原语数字
+
+<!--
 We define a `Nat` type equivalent to the built-in natural number type
 with multiplication as a primitive operation on numbers:
+-->
 
+我们定义 `Nat` 类型，等同于内置的自然数类型，并定义乘法作为数字的基本运算：
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     A, B, C ::= ...                     Types
       Nat                                 primitive natural numbers
 
@@ -59,12 +107,33 @@ with multiplication as a primitive operation on numbers:
 
     V, W ::= ...                        Values
       con c                               constant
+-->
 
+    A, B, C ::= ...                     类型
+      Nat                                 原语自然数
+
+    L, M, N ::= ...                     项
+      con c                               常量
+      L `* M                              乘法
+
+    V, W ::= ...                        值
+      con c                               常量
+
+
+<!--
 ### Typing
+-->
 
+### 赋型
+
+<!--
 The hypothesis of the `con` rule is unusual, in that
 it refers to a typing judgment of Agda rather than a
 typing judgment of the defined calculus:
+-->
+
+`con` 规则的前提不同寻常，它指代了一个 Agda 的赋型判断，而不是
+我们定义的演算中的赋型判断。
 
     c : ℕ
     --------------- con
@@ -75,12 +144,21 @@ typing judgment of the defined calculus:
     ---------------- _`*_
     Γ ⊢ L `* M : Nat
 
+<!--
 ### Reduction
+-->
 
+### 规约
+
+<!--
 A rule that defines a primitive directly, such as the last rule below,
 is called a δ rule.  Here the δ rule defines multiplication of
 primitive numbers in terms of multiplication of naturals as given
 by the Agda standard prelude:
+-->
+
+直接定义原语的规则，例如下面的最后一条规则，被称为 δ 规则。
+这里的 δ 规则使用 Agda 标准库中的自然数乘法来定义原语数字的乘法。
 
     L —→ L′
     ----------------- ξ-*₁
@@ -93,32 +171,65 @@ by the Agda standard prelude:
     ----------------------------- δ-*
     con c `* con d —→ con (c * d)
 
+<!--
 ### Example
+-->
 
+### 例子
+
+<!--
 Here is a function to cube a primitive number:
+-->
+
+下面是一个求立方的函数的例子：
 
     cube : ∅ ⊢ Nat ⇒ Nat
     cube = ƛ x ⇒ x `* x `* x
 
 
+<!--
 ## Let bindings
+-->
 
+## Let 绑定
+
+<!--
 Let bindings affect only the syntax of terms; they introduce no new
 types or values:
+-->
 
+Let 绑定只影响项的语法；不引入新的值或者类型：
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     L, M, N ::= ...                     Terms
       `let x `= M `in N                   let
+-->
 
+    L, M, N ::= ...                     项
+      `let x `= M `in N                   let
+
+<!--
 ### Typing
+-->
+
+### 赋型
 
     Γ ⊢ M ⦂ A
     Γ , x ⦂ A ⊢ N ⦂ B
     ------------------------- `let
     Γ ⊢ `let x `= M `in N ⦂ B
 
+<!--
 ### Reduction
+-->
+
+### 规约
 
     M —→ M′
     --------------------------------------- ξ-let
@@ -127,9 +238,15 @@ types or values:
     --------------------------------- β-let
     `let x `= V `in N —→ N [ x := V ]
 
+<!--
 ### Example
+-->
 
+<!--
 Here is a function to raise a primitive number to the tenth power:
+-->
+
+下面是一个求十次方的函数：
 
     exp10 : ∅ ⊢ Nat ⇒ Nat
     exp10 = ƛ x ⇒ `let x2  `= x  `* x  `in
@@ -137,20 +254,40 @@ Here is a function to raise a primitive number to the tenth power:
                   `let x5  `= x4 `* x  `in
                   x5 `* x5
 
+<!--
 ### Translation
+-->
 
+### 翻译
+
+<!--
 We can translate each _let_ term into an application of an abstraction:
+-->
+
+我们可以将每个 _let_ 项翻译成一个抽象：
 
     (`let x `= M `in N) †  =  (ƛ x ⇒ (N †)) · (M †)
 
+<!--
 Here `M †` is the translation of term `M` from a calculus with the
 construct to a calculus without the construct.
+-->
 
+此处的 `M †` 代表了将项 `M` 从带有此构造的演算到不带此构造演算的翻译。
 
+<!--
 ## Products {#products}
+-->
 
+## 积 {#products}
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     A, B, C ::= ...                     Types
       A `× B                              product type
 
@@ -161,8 +298,24 @@ construct to a calculus without the construct.
 
     V, W ::= ...                        Values
       `⟨ V , W ⟩                          pair
+-->
 
+    A, B, C ::= ...                     类型
+      A `× B                              积类型
+
+    L, M, N ::= ...                     项
+      `⟨ M , N ⟩                          有序对
+      `proj₁ L                            投影第一分量
+      `proj₂ L                            投影第二分量
+
+    V, W ::= ...                        值
+      `⟨ V , W ⟩                          有序对
+
+<!--
 ### Typing
+-->
+
+### 赋型
 
     Γ ⊢ M ⦂ A
     Γ ⊢ N ⦂ B
@@ -177,7 +330,11 @@ construct to a calculus without the construct.
     ---------------- `proj₂ or `×-E₂
     Γ ⊢ `proj₂ L ⦂ B
 
+<!--
 ### Reduction
+-->
+
+### 规约
 
     M —→ M′
     ------------------------- ξ-⟨,⟩₁
@@ -201,23 +358,46 @@ construct to a calculus without the construct.
     ---------------------- β-proj₂
     `proj₂ `⟨ V , W ⟩ —→ W
 
+<!--
 ### Example
+-->
 
+### 例子
+
+<!--
 Here is a function to swap the components of a pair:
+-->
+
+下面是一个交换有序对中分量的函数：
 
     swap× : ∅ ⊢ A `× B ⇒ B `× A
     swap× = ƛ z ⇒ `⟨ `proj₂ z , `proj₁ z ⟩
 
 
+<!--
 ## Alternative formulation of products
+-->
 
+## 积的替代表示方法
+
+<!--
 There is an alternative formulation of products, where in place of two
 ways to eliminate the type we have a case term that binds two
 variables.  We repeat the syntax in full, but only give the new type
 and reduction rules:
+-->
 
+与其使用两种消去积累性的方法，我们可以使用一个匹配表达式来同时绑定两个变量，
+作为积的替代表示方法。
+我们重复完整的语法，但只给出新的赋型和规约规则：
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     A, B, C ::= ...                     Types
       A `× B                              product type
 
@@ -227,15 +407,34 @@ and reduction rules:
 
     V, W ::=                            Values
       `⟨ V , W ⟩                          pair
+-->
 
+    A, B, C ::= ...                     类型
+      A `× B                              积累性
+
+    L, M, N ::= ...                     项
+      `⟨ M , N ⟩                          有序对
+      case× L [⟨ x , y ⟩⇒ M ]             匹配
+
+    V, W ::=                            值
+      `⟨ V , W ⟩                          有序对
+
+<!--
 ### Typing
+-->
+
+### 赋型
 
     Γ ⊢ L ⦂ A `× B
     Γ , x ⦂ A , y ⦂ B ⊢ N ⦂ C
     ------------------------------- case× or ×-E
     Γ ⊢ case× L [⟨ x , y ⟩⇒ N ] ⦂ C
 
+<!--
 ### Reduction
+-->
+
+### 规约
 
     L —→ L′
     --------------------------------------------------- ξ-case×
@@ -244,17 +443,31 @@ and reduction rules:
     --------------------------------------------------------- β-case×
     case× `⟨ V , W ⟩ [⟨ x , y ⟩⇒ N ] —→ N [ x := V ][ y := W ]
 
+<!--
 ### Example
+-->
 
+<!--
 Here is a function to swap the components of a pair rewritten in the new notation:
+-->
+
+下面是用新记法重写的交换有序对中分量的函数：
 
     swap×-case : ∅ ⊢ A `× B ⇒ B `× A
     swap×-case = ƛ z ⇒ case× z
                          [⟨ x , y ⟩⇒ `⟨ y , x ⟩ ]
 
+<!--
 ### Translation
+-->
 
+### 翻译
+
+<!--
 We can translate the alternative formulation into the one with projections:
+-->
+
+我们可以将替代表示方法翻译到用投影的表示方法：
 
       (case× L [⟨ x , y ⟩⇒ N ]) †
     =
@@ -263,24 +476,52 @@ We can translate the alternative formulation into the one with projections:
       `let y `= `proj₂ z `in
       (N †)
 
+<!--
 Here `z` is a variable that does not appear free in `N`.  We refer
 to such a variable as _fresh_.
+-->
 
+这里 `z` 是一个不在 `N` 中以自由变量出现的变量。
+我们将这样的变量叫做**新鲜**（Fresh）的变量。
+
+<!--
 One might think that we could instead use a more compact translation:
+-->
 
+可能有人认为我们可以使用下面更紧凑的翻译：
+
+<!--
     -- WRONG
       (case× L [⟨ x , y ⟩⇒ N ]) †
     =
       (N †) [ x := `proj₁ (L †) ] [ y := `proj₂ (L †) ]
+-->
 
+    -- 错误
+      (case× L [⟨ x , y ⟩⇒ N ]) †
+    =
+      (N †) [ x := `proj₁ (L †) ] [ y := `proj₂ (L †) ]
+
+<!--
 But this behaves differently.  The first term always reduces `L`
 before `N`, and it computes ```proj₁`` and ```proj₂`` exactly once.  The
 second term does not reduce `L` to a value before reducing `N`, and
 depending on how many times and where `x` and `y` appear in `N`, it
 may reduce `L` many times or not at all, and it may compute ```proj₁``
 and ```proj₂`` many times or not at all.
+-->
 
+但是这样的话它们表现的不一样。
+第一项总是在规约 `N` 之前规约 `L`，它只计算 `` `proj₁ `` 和 `` `proj₂ ``一次。
+第二项在规约 `N` 之前不先将 `L` 规约至值，取决于 `x` 和 `y` 在 `N` 中出现的次数，
+它将规约 `L` 很多次或者根本不规约，因此它会计算 `` `proj₁ `` 和 `` `proj₂ ``
+很多次或者根本不计算。
+
+<!--
 We can also translate back the other way:
+-->
+
+我们也可以反向的翻译：
 
     (`proj₁ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ x ]
     (`proj₂ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ y ]
