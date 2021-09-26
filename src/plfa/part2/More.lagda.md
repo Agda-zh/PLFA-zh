@@ -317,6 +317,7 @@ construct to a calculus without the construct.
 
 ### 赋型
 
+<!--
     Γ ⊢ M ⦂ A
     Γ ⊢ N ⦂ B
     ----------------------- `⟨_,_⟩ or `×-I
@@ -329,6 +330,21 @@ construct to a calculus without the construct.
     Γ ⊢ L ⦂ A `× B
     ---------------- `proj₂ or `×-E₂
     Γ ⊢ `proj₂ L ⦂ B
+-->
+
+    Γ ⊢ M ⦂ A
+    Γ ⊢ N ⦂ B
+    ----------------------- `⟨_,_⟩ 或 `×-I
+    Γ ⊢ `⟨ M , N ⟩ ⦂ A `× B
+
+    Γ ⊢ L ⦂ A `× B
+    ---------------- `proj₁ 或 `×-E₁
+    Γ ⊢ `proj₁ L ⦂ A
+
+    Γ ⊢ L ⦂ A `× B
+    ---------------- `proj₂ 或 `×-E₂
+    Γ ⊢ `proj₂ L ⦂ B
+
 
 <!--
 ### Reduction
@@ -387,7 +403,7 @@ variables.  We repeat the syntax in full, but only give the new type
 and reduction rules:
 -->
 
-与其使用两种消去积累性的方法，我们可以使用一个匹配表达式来同时绑定两个变量，
+与其使用两种消去积类型的方法，我们可以使用一个匹配表达式来同时绑定两个变量，
 作为积的替代表示方法。
 我们重复完整的语法，但只给出新的赋型和规约规则：
 
@@ -425,9 +441,16 @@ and reduction rules:
 
 ### 赋型
 
+<!--
     Γ ⊢ L ⦂ A `× B
     Γ , x ⦂ A , y ⦂ B ⊢ N ⦂ C
     ------------------------------- case× or ×-E
+    Γ ⊢ case× L [⟨ x , y ⟩⇒ N ] ⦂ C
+-->
+
+    Γ ⊢ L ⦂ A `× B
+    Γ , x ⦂ A , y ⦂ B ⊢ N ⦂ C
+    ------------------------------- case× 或 ×-E
     Γ ⊢ case× L [⟨ x , y ⟩⇒ N ] ⦂ C
 
 <!--
@@ -526,10 +549,19 @@ We can also translate back the other way:
     (`proj₁ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ x ]
     (`proj₂ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ y ]
 
+<!--
 ## Sums {#sums}
+-->
 
+## 和 {#sums}
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     A, B, C ::= ...                     Types
       A `⊎ B                              sum type
 
@@ -541,9 +573,27 @@ We can also translate back the other way:
     V, W ::= ...                        Values
       `inj₁ V                             inject first component
       `inj₂ W                             inject second component
+-->
 
+    A, B, C ::= ...                     类型
+      A `⊎ B                              和类型
+
+    L, M, N ::= ...                     项
+      `inj₁ M                             注入第一分量
+      `inj₂ N                             注入第二分量
+      case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ]   匹配
+
+    V, W ::= ...                        值
+      `inj₁ V                             注入第一分量
+      `inj₂ W                             注入第二分量
+
+<!--
 ### Typing
+-->
 
+### 赋型
+
+<!--
     Γ ⊢ M ⦂ A
     -------------------- `inj₁ or ⊎-I₁
     Γ ⊢ `inj₁ M ⦂ A `⊎ B
@@ -557,8 +607,27 @@ We can also translate back the other way:
     Γ , y ⦂ B ⊢ N ⦂ C
     ----------------------------------------- case⊎ or ⊎-E
     Γ ⊢ case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] ⦂ C
+-->
 
+    Γ ⊢ M ⦂ A
+    -------------------- `inj₁ 或 ⊎-I₁
+    Γ ⊢ `inj₁ M ⦂ A `⊎ B
+
+    Γ ⊢ N ⦂ B
+    -------------------- `inj₂ 或 ⊎-I₂
+    Γ ⊢ `inj₂ N ⦂ A `⊎ B
+
+    Γ ⊢ L ⦂ A `⊎ B
+    Γ , x ⦂ A ⊢ M ⦂ C
+    Γ , y ⦂ B ⊢ N ⦂ C
+    ----------------------------------------- case⊎ 或 ⊎-E
+    Γ ⊢ case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] ⦂ C
+
+<!--
 ### Reduction
+-->
+
+### 规约
 
     M —→ M′
     ------------------- ξ-inj₁
@@ -578,9 +647,17 @@ We can also translate back the other way:
     --------------------------------------------------------- β-inj₂
     case⊎ (`inj₂ W) [inj₁ x ⇒ M |inj₂ y ⇒ N ] —→ N [ y := W ]
 
+<!--
 ### Example
+-->
 
+### 例子
+
+<!--
 Here is a function to swap the components of a sum:
+-->
+
+下面是交换和的两个分量的函数：
 
     swap⊎ : ∅ ⊢ A `⊎ B ⇒ B `⊎ A
     swap⊎ = ƛ z ⇒ case⊎ z
@@ -588,14 +665,28 @@ Here is a function to swap the components of a sum:
                     |inj₂ y ⇒ `inj₁ y ]
 
 
+<!--
 ## Unit type
+-->
 
+## 单元类型
+
+<!--
 For the unit type, there is a way to introduce
 values of the type but no way to eliminate values of the type.
 There are no reduction rules.
+-->
 
+对于单元类型来说，有一种方法引入单元类型，但是没有消去单元类型的方法。
+单元类型没有规约规则。
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     A, B, C ::= ...                     Types
       `⊤                                  unit type
 
@@ -604,19 +695,54 @@ There are no reduction rules.
 
     V, W ::= ...                        Values
       `tt                                 unit value
+-->
 
+    A, B, C ::= ...                     类型
+      `⊤                                  单元类型
+
+    L, M, N ::= ...                     项
+      `tt                                 单元值
+
+    V, W ::= ...                        值
+      `tt                                 单元值
+
+<!--
 ### Typing
+-->
 
+### 赋型
+
+<!--
     ------------ `tt or ⊤-I
     Γ ⊢ `tt ⦂ `⊤
+-->
 
+    ------------ `tt 或 ⊤-I
+    Γ ⊢ `tt ⦂ `⊤
+
+<!--
 ### Reduction
+-->
 
+### 规约
+
+<!--
 (none)
+-->
 
+（无）
+
+<!--
 ### Example
+-->
 
+### 例子
+
+<!--
 Here is the isomorphism between `A` and ``A `× `⊤``:
+-->
+
+下面是 `A` 和 ``A `× `⊤``的同构：
 
     to×⊤ : ∅ ⊢ A ⇒ A `× `⊤
     to×⊤ = ƛ x ⇒ `⟨ x , `tt ⟩
@@ -625,14 +751,29 @@ Here is the isomorphism between `A` and ``A `× `⊤``:
     from×⊤ = ƛ z ⇒ `proj₁ z
 
 
+<!--
 ## Alternative formulation of unit type
+-->
 
+## 单元类型的替代表达方法
+
+<!--
 There is an alternative formulation of the unit type, where in place of
 no way to eliminate the type we have a case term that binds zero variables.
 We repeat the syntax in full, but only give the new type and reduction rules:
+-->
 
+与其没有消去单元类型的方法，我们可以使用一个匹配表达式来绑定零个变量，
+作为单元类型的替代表示方法。
+我们重复完整的语法，但只给出新的赋型和规约规则：
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     A, B, C ::= ...                     Types
       `⊤                                  unit type
 
@@ -642,15 +783,41 @@ We repeat the syntax in full, but only give the new type and reduction rules:
 
     V, W ::= ...                        Values
       `tt                                 unit value
+-->
 
+    A, B, C ::= ...                     类型
+      `⊤                                  单元类型
+
+    L, M, N ::= ...                     项
+      `tt                                 单元值
+      `case⊤ L [tt⇒ N ]                   匹配
+
+    V, W ::= ...                        值
+      `tt                                 单元值
+
+<!--
 ### Typing
+-->
 
+### 赋型
+
+<!--
     Γ ⊢ L ⦂ `⊤
     Γ ⊢ M ⦂ A
     ------------------------ case⊤ or ⊤-E
     Γ ⊢ case⊤ L [tt⇒ M ] ⦂ A
+-->
 
+    Γ ⊢ L ⦂ `⊤
+    Γ ⊢ M ⦂ A
+    ------------------------ case⊤ 或者 ⊤-E
+    Γ ⊢ case⊤ L [tt⇒ M ] ⦂ A
+
+<!--
 ### Reduction
+-->
+
+### 规约
 
     L —→ L′
     ------------------------------------- ξ-case⊤
@@ -659,9 +826,15 @@ We repeat the syntax in full, but only give the new type and reduction rules:
     ----------------------- β-case⊤
     case⊤ `tt [tt⇒ M ] —→ M
 
+<!--
 ### Example
+-->
 
+<!--
 Here is half the isomorphism between `A` and ``A `× `⊤`` rewritten in the new notation:
+-->
+
+下面是用新记法重新 `A` 和 ``A ‵× `⊤`` 的同构的一半：
 
     from×⊤-case : ∅ ⊢ A `× `⊤ ⇒ A
     from×⊤-case = ƛ z ⇒ case× z
@@ -669,45 +842,100 @@ Here is half the isomorphism between `A` and ``A `× `⊤`` rewritten in the new
                                         [tt⇒ x ] ]
 
 
+<!--
 ### Translation
+-->
 
+### 翻译
+
+<!--
 We can translate the alternative formulation into one without case:
+-->
+
+我们可以将替代表示方法翻译到用没有匹配式的表示方法：
 
     (case⊤ L [tt⇒ M ]) †  =  `let z `= (L †) `in (M †)
 
+<!--
 Here `z` is a variable that does not appear free in `M`.
+-->
 
+此处 `z` 是一个在 `M` 中不以自由变量出现的变量。
 
+<!--
 ## Empty type
+-->
 
+## 空类型
+
+<!--
 For the empty type, there is a way to eliminate values of
 the type but no way to introduce values of the type.  There are no
 values of the type and no β rule, but there is a ξ rule.  The `case⊥`
 construct plays a role similar to `⊥-elim` in Agda:
+-->
 
+对于空类型来说，只有一种消去此类型的值的方法，但是没有引入此类型的值的方法。
+没有空类型的值，也没有规约规则，但是有 β 规则。
+`case⊥` 构造和 Agda 中的 `⊥-elim` 的作用相似：
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     A, B, C ::= ...                     Types
       `⊥                                  empty type
 
     L, M, N ::= ...                     Terms
       case⊥ L []                          case
+-->
 
+    A, B, C ::= ...                     类型
+      `⊥                                  空类型
+
+    L, M, N ::= ...                     项
+      case⊥ L []                          匹配
+
+<!--
 ### Typing
+-->
 
+### 赋型
+
+<!--
     Γ ⊢ L ⦂ `⊥
     ------------------ case⊥ or ⊥-E
     Γ ⊢ case⊥ L [] ⦂ A
+-->
 
+    Γ ⊢ L ⦂ `⊥
+    ------------------ case⊥ 或 ⊥-E
+    Γ ⊢ case⊥ L [] ⦂ A
+
+<!--
 ### Reduction
+-->
+
+### 规约
 
     L —→ L′
     ------------------------- ξ-case⊥
     case⊥ L [] —→ case⊥ L′ []
 
+<!--
 ### Example
+-->
 
+### 例子
+
+<!--
 Here is the isomorphism between `A` and ``A `⊎ `⊥``:
+-->
+
+下面是 `A` 和 ``A `⊎ `⊥`` 的同构：
 
     to⊎⊥ : ∅ ⊢ A ⇒ A `⊎ `⊥
     to⊎⊥ = ƛ x ⇒ `inj₁ x
@@ -718,10 +946,19 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
                      |inj₂ y ⇒ case⊥ y
                                  [] ]
 
+<!--
 ## Lists
+-->
 
+## 列表
+
+<!--
 ### Syntax
+-->
 
+### 语法
+
+<!--
     A, B, C ::= ...                     Types
       `List A                             list type
 
@@ -733,9 +970,27 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
     V, W ::= ...                        Values
       `[]                                 nil
       V `∷ W                              cons
+-->
 
+    A, B, C ::= ...                     类型
+      `List A                             列表类型
+
+    L, M, N ::= ...                     项
+      `[]                                 空列表
+      M `∷ N                              构造列表
+      caseL L [[]⇒ M | x ∷ y ⇒ N ]        匹配
+
+    V, W ::= ...                        值
+      `[]                                 空列表
+      V `∷ W                              构造列表
+
+<!--
 ### Typing
+-->
 
+### 赋型
+
+<!--
     ----------------- `[] or List-I₁
     Γ ⊢ `[] ⦂ `List A
 
@@ -749,8 +1004,27 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
     Γ , x ⦂ A , xs ⦂ `List A ⊢ N ⦂ B
     -------------------------------------- caseL or List-E
     Γ ⊢ caseL L [[]⇒ M | x ∷ xs ⇒ N ] ⦂ B
+-->
 
+    ----------------- `[] 或 List-I₁
+    Γ ⊢ `[] ⦂ `List A
+
+    Γ ⊢ M ⦂ A
+    Γ ⊢ N ⦂ `List A
+    -------------------- _`∷_ 或 List-I₂
+    Γ ⊢ M `∷ N ⦂ `List A
+
+    Γ ⊢ L ⦂ `List A
+    Γ ⊢ M ⦂ B
+    Γ , x ⦂ A , xs ⦂ `List A ⊢ N ⦂ B
+    -------------------------------------- caseL 或 List-E
+    Γ ⊢ caseL L [[]⇒ M | x ∷ xs ⇒ N ] ⦂ B
+
+<!--
 ### Reduction
+-->
+
+### 规约
 
     M —→ M′
     ----------------- ξ-∷₁
@@ -770,9 +1044,17 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
     --------------------------------------------------------------- β-∷
     caseL (V `∷ W) [[]⇒ M | x ∷ xs ⇒ N ] —→ N [ x := V ][ xs := W ]
 
+<!--
 ### Example
+-->
 
+### 例子
+
+<!--
 Here is the map function for lists:
+-->
+
+下面是列表的映射函数：
 
     mapL : ∅ ⊢ (A ⇒ B) ⇒ `List A ⇒ `List B
     mapL = μ mL ⇒ ƛ f ⇒ ƛ xs ⇒
@@ -781,19 +1063,41 @@ Here is the map function for lists:
                | x ∷ xs ⇒ f · x `∷ mL · f · xs ]
 
 
+<!--
 ## Formalisation
+-->
 
+## 形式化
+
+<!--
 We now show how to formalise
+-->
 
+我们接下来展示如何形式化：
+
+<!--
   * primitive numbers
   * _let_ bindings
   * products
   * an alternative formulation of products
+-->
 
+  * 原语数字
+  * _let_ 绑定
+  * 积
+  * 积的替代表示方法
+
+<!--
 and leave formalisation of the remaining constructs as an exercise.
+-->
 
+其余构造的形式化作为练习留给读者。
 
+<!--
 ### Imports
+-->
+
+### 导入
 
 ```
 import Relation.Binary.PropositionalEquality as Eq
@@ -805,7 +1109,11 @@ open import Relation.Nullary.Decidable using (True; toWitness)
 ```
 
 
+<!--
 ### Syntax
+-->
+
+### 语法
 
 ```
 infix  4 _⊢_
@@ -825,7 +1133,11 @@ infix  9 S_
 infix  9 #_
 ```
 
+<!--
 ### Types
+-->
+
+### 类型
 
 ```
 data Type : Set where
@@ -835,7 +1147,11 @@ data Type : Set where
   _`×_  : Type → Type → Type
 ```
 
+<!--
 ### Contexts
+-->
+
+### 上下文
 
 ```
 data Context : Set where
@@ -843,7 +1159,11 @@ data Context : Set where
   _,_ : Context → Type → Context
 ```
 
+<!--
 ### Variables and the lookup judgment
+-->
+
+### 变量及查询判断
 
 ```
 data _∋_ : Context → Type → Set where
@@ -858,9 +1178,16 @@ data _∋_ : Context → Type → Set where
     → Γ , A ∋ B
 ```
 
+<!--
 ### Terms and the typing judgment
+-->
 
+### 项以及赋型判断
+
+<!--
 ```
+{-
+
 data _⊢_ : Context → Type → Set where
 
   -- variables
@@ -955,9 +1282,112 @@ data _⊢_ : Context → Type → Set where
       --------------
     → Γ ⊢ C
 
+-}
+```
+-->
+
+```
+data _⊢_ : Context → Type → Set where
+
+  -- 变量
+
+  `_ : ∀ {Γ A}
+    → Γ ∋ A
+      -----
+    → Γ ⊢ A
+
+  -- 函数
+
+  ƛ_  :  ∀ {Γ A B}
+    → Γ , A ⊢ B
+      ---------
+    → Γ ⊢ A ⇒ B
+
+  _·_ : ∀ {Γ A B}
+    → Γ ⊢ A ⇒ B
+    → Γ ⊢ A
+      ---------
+    → Γ ⊢ B
+
+  -- 自然数
+
+  `zero : ∀ {Γ}
+      ------
+    → Γ ⊢ `ℕ
+
+  `suc_ : ∀ {Γ}
+    → Γ ⊢ `ℕ
+      ------
+    → Γ ⊢ `ℕ
+
+  case : ∀ {Γ A}
+    → Γ ⊢ `ℕ
+    → Γ ⊢ A
+    → Γ , `ℕ ⊢ A
+      -----
+    → Γ ⊢ A
+
+  -- 不动点
+
+  μ_ : ∀ {Γ A}
+    → Γ , A ⊢ A
+      ----------
+    → Γ ⊢ A
+
+  -- 原语数字
+
+  con : ∀ {Γ}
+    → ℕ
+      -------
+    → Γ ⊢ Nat
+
+  _`*_ : ∀ {Γ}
+    → Γ ⊢ Nat
+    → Γ ⊢ Nat
+      -------
+    → Γ ⊢ Nat
+
+  -- let
+
+  `let : ∀ {Γ A B}
+    → Γ ⊢ A
+    → Γ , A ⊢ B
+      ----------
+    → Γ ⊢ B
+
+  -- 积
+
+  `⟨_,_⟩ : ∀ {Γ A B}
+    → Γ ⊢ A
+    → Γ ⊢ B
+      -----------
+    → Γ ⊢ A `× B
+
+  `proj₁ : ∀ {Γ A B}
+    → Γ ⊢ A `× B
+      -----------
+    → Γ ⊢ A
+
+  `proj₂ : ∀ {Γ A B}
+    → Γ ⊢ A `× B
+      -----------
+    → Γ ⊢ B
+
+  -- 积的替代表示方法
+
+  case× : ∀ {Γ A B C}
+    → Γ ⊢ A `× B
+    → Γ , A , B ⊢ C
+      --------------
+    → Γ ⊢ C
+
 ```
 
+<!--
 ### Abbreviating de Bruijn indices
+-->
+
+### 缩减 de Bruijn 因子
 
 ```
 length : Context → ℕ
@@ -980,7 +1410,11 @@ count {Γ , _} {(suc n)} (s≤s p)    =  S (count p)
 #_ n {n∈Γ}  =  ` count (toWitness n∈Γ)
 ```
 
+<!--
 ## Renaming
+-->
+
+## 重命名
 
 ```
 ext : ∀ {Γ Δ}
@@ -1010,7 +1444,11 @@ rename ρ (`proj₂ L)     =  `proj₂ (rename ρ L)
 rename ρ (case× L M)    =  case× (rename ρ L) (rename (ext (ext ρ)) M)
 ```
 
+<!--
 ## Simultaneous Substitution
+-->
+
+## 同时代换
 
 ```
 exts : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ⊢ A) → (∀ {A B} → Γ , A ∋ B → Δ , A ⊢ B)
@@ -1034,7 +1472,11 @@ subst σ (`proj₂ L)     =  `proj₂ (subst σ L)
 subst σ (case× L M)    =  case× (subst σ L) (subst (exts (exts σ)) M)
 ```
 
+<!--
 ## Single and double substitution
+-->
+
+## 单个和双重代换
 
 ```
 substZero : ∀ {Γ}{A B} → Γ ⊢ A → Γ , A ∋ B → Γ ⊢ B
@@ -1062,9 +1504,15 @@ _[_][_] {Γ} {A} {B} N V W =  subst {Γ , A , B} {Γ} σ N
   σ (S (S x))  =  ` x
 ```
 
+<!--
 ## Values
+-->
 
+## 值
+
+<!--
 ```
+{-
 data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 
   -- functions
@@ -1097,14 +1545,62 @@ data Value : ∀ {Γ A} → Γ ⊢ A → Set where
     → Value W
       ----------------
     → Value `⟨ V , W ⟩
+-}
+```
+-->
+
+```
+data Value : ∀ {Γ A} → Γ ⊢ A → Set where
+
+  -- 函数
+
+  V-ƛ : ∀ {Γ A B} {N : Γ , A ⊢ B}
+      ---------------------------
+    → Value (ƛ N)
+
+  -- 自然数
+
+  V-zero : ∀ {Γ}
+      -----------------
+    → Value (`zero {Γ})
+
+  V-suc_ : ∀ {Γ} {V : Γ ⊢ `ℕ}
+    → Value V
+      --------------
+    → Value (`suc V)
+
+  -- 原语数字
+
+  V-con : ∀ {Γ n}
+      -----------------
+    → Value (con {Γ} n)
+
+  -- 积
+
+  V-⟨_,_⟩ : ∀ {Γ A B} {V : Γ ⊢ A} {W : Γ ⊢ B}
+    → Value V
+    → Value W
+      ----------------
+    → Value `⟨ V , W ⟩
+
 ```
 
+<!--
 Implicit arguments need to be supplied when they are
 not fixed by the given arguments.
+-->
 
+在给出的参数无法确定隐式参数时，我们需要给出隐式参数。
+
+<!--
 ## Reduction
+-->
 
+## 规约
+
+<!--
 ```
+{-
 infix 2 _—→_
 
 data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
@@ -1231,9 +1727,143 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
       ----------------------------------
     → case× `⟨ V , W ⟩ M —→ M [ V ][ W ]
 
+-}
+```
+-->
+
+```
+infix 2 _—→_
+
+data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
+
+  -- 函数
+
+  ξ-·₁ : ∀ {Γ A B} {L L′ : Γ ⊢ A ⇒ B} {M : Γ ⊢ A}
+    → L —→ L′
+      ---------------
+    → L · M —→ L′ · M
+
+  ξ-·₂ : ∀ {Γ A B} {V : Γ ⊢ A ⇒ B} {M M′ : Γ ⊢ A}
+    → Value V
+    → M —→ M′
+      ---------------
+    → V · M —→ V · M′
+
+  β-ƛ : ∀ {Γ A B} {N : Γ , A ⊢ B} {V : Γ ⊢ A}
+    → Value V
+      --------------------
+    → (ƛ N) · V —→ N [ V ]
+
+  -- 自然数
+
+  ξ-suc : ∀ {Γ} {M M′ : Γ ⊢ `ℕ}
+    → M —→ M′
+      -----------------
+    → `suc M —→ `suc M′
+
+  ξ-case : ∀ {Γ A} {L L′ : Γ ⊢ `ℕ} {M : Γ ⊢ A} {N : Γ , `ℕ ⊢ A}
+    → L —→ L′
+      -------------------------
+    → case L M N —→ case L′ M N
+
+  β-zero :  ∀ {Γ A} {M : Γ ⊢ A} {N : Γ , `ℕ ⊢ A}
+      -------------------
+    → case `zero M N —→ M
+
+  β-suc : ∀ {Γ A} {V : Γ ⊢ `ℕ} {M : Γ ⊢ A} {N : Γ , `ℕ ⊢ A}
+    → Value V
+      ----------------------------
+    → case (`suc V) M N —→ N [ V ]
+
+  -- 不动点
+
+  β-μ : ∀ {Γ A} {N : Γ , A ⊢ A}
+      ----------------
+    → μ N —→ N [ μ N ]
+
+  -- 原语数字
+
+  ξ-*₁ : ∀ {Γ} {L L′ M : Γ ⊢ Nat}
+    → L —→ L′
+      -----------------
+    → L `* M —→ L′ `* M
+
+  ξ-*₂ : ∀ {Γ} {V M M′ : Γ ⊢ Nat}
+    → Value V
+    → M —→ M′
+      -----------------
+    → V `* M —→ V `* M′
+
+  δ-* : ∀ {Γ c d}
+      ---------------------------------
+    → con {Γ} c `* con d —→ con (c * d)
+
+  -- let
+
+  ξ-let : ∀ {Γ A B} {M M′ : Γ ⊢ A} {N : Γ , A ⊢ B}
+    → M —→ M′
+      ---------------------
+    → `let M N —→ `let M′ N
+
+  β-let : ∀ {Γ A B} {V : Γ ⊢ A} {N : Γ , A ⊢ B}
+    → Value V
+      -------------------
+    → `let V N —→ N [ V ]
+
+  -- 积
+
+  ξ-⟨,⟩₁ : ∀ {Γ A B} {M M′ : Γ ⊢ A} {N : Γ ⊢ B}
+    → M —→ M′
+      -------------------------
+    → `⟨ M , N ⟩ —→ `⟨ M′ , N ⟩
+
+  ξ-⟨,⟩₂ : ∀ {Γ A B} {V : Γ ⊢ A} {N N′ : Γ ⊢ B}
+    → Value V
+    → N —→ N′
+      -------------------------
+    → `⟨ V , N ⟩ —→ `⟨ V , N′ ⟩
+
+  ξ-proj₁ : ∀ {Γ A B} {L L′ : Γ ⊢ A `× B}
+    → L —→ L′
+      ---------------------
+    → `proj₁ L —→ `proj₁ L′
+
+  ξ-proj₂ : ∀ {Γ A B} {L L′ : Γ ⊢ A `× B}
+    → L —→ L′
+      ---------------------
+    → `proj₂ L —→ `proj₂ L′
+
+  β-proj₁ : ∀ {Γ A B} {V : Γ ⊢ A} {W : Γ ⊢ B}
+    → Value V
+    → Value W
+      ----------------------
+    → `proj₁ `⟨ V , W ⟩ —→ V
+
+  β-proj₂ : ∀ {Γ A B} {V : Γ ⊢ A} {W : Γ ⊢ B}
+    → Value V
+    → Value W
+      ----------------------
+    → `proj₂ `⟨ V , W ⟩ —→ W
+
+  -- 积的替代表示方式
+
+  ξ-case× : ∀ {Γ A B C} {L L′ : Γ ⊢ A `× B} {M : Γ , A , B ⊢ C}
+    → L —→ L′
+      -----------------------
+    → case× L M —→ case× L′ M
+
+  β-case× : ∀ {Γ A B C} {V : Γ ⊢ A} {W : Γ ⊢ B} {M : Γ , A , B ⊢ C}
+    → Value V
+    → Value W
+      ----------------------------------
+    → case× `⟨ V , W ⟩ M —→ M [ V ][ W ]
 ```
 
+<!--
 ## Reflexive and transitive closure
+-->
+
+## 自反传递闭包
 
 ```
 infix  2 _—↠_
@@ -1260,8 +1890,11 @@ begin_ : ∀ {Γ A} {M N : Γ ⊢ A}
 begin M—↠N = M—↠N
 ```
 
-
+<!--
 ## Values do not reduce
+-->
+
+## 值不再规约
 
 ```
 V¬—→ : ∀ {Γ A} {M N : Γ ⊢ A}
@@ -1277,7 +1910,11 @@ V¬—→ V-⟨ _ , VN ⟩ (ξ-⟨,⟩₂ _ N—→N′)  =  V¬—→ VN N—�
 ```
 
 
+<!--
 ## Progress
+-->
+
+## 进行性
 
 ```
 data Progress {A} (M : ∅ ⊢ A) : Set where
@@ -1338,7 +1975,11 @@ progress (case× L M) with progress L
 ```
 
 
+<!--
 ## Evaluation
+-->
+
+## 求值
 
 ```
 record Gas : Set where
@@ -1378,7 +2019,11 @@ eval (gas (suc m)) L with progress L
 ```
 
 
+<!--
 ## Examples
+-->
+
+## 例子
 
 ```
 cube : ∅ ⊢ Nat ⇒ Nat
@@ -1453,43 +2098,89 @@ _ =
    ∎
 ```
 
+<!--
 #### Exercise `More` (recommended and practice)
+-->
 
+#### 练习 `More` （推荐和实践）
+
+<!--
 Formalise the remaining constructs defined in this chapter.
 Make your changes in this file.
 Evaluate each example, applied to data as needed,
 to confirm it returns the expected answer:
+-->
 
+形式化本章中定义的剩余构造。
+修改本文件来完成你的改动。
+求值每一个例子，如果需要时将其应用于数据，来确认它返回期待的答案：
+
+<!--
   * sums (recommended)
   * unit type (practice)
   * an alternative formulation of unit type (practice)
   * empty type (recommended)
   * lists (practice)
+-->
 
+  * 和（推荐）
+  * 单元类型（实践）
+  * 单元类型的替代表示方法（实践）
+  * 空类型（推荐）
+  * 列表（实践）
+
+<!--
 Please delimit any code you add as follows:
+-->
+
+用下面的分隔符来标出你添加的代码：
 
     -- begin
     -- end
 
 
+<!--
 #### Exercise `double-subst` (stretch)
+-->
 
+#### 练习 `double-subst`（延伸）
+
+<!--
 Show that a double substitution is equivalent to two single
 substitutions.
+-->
+
+证明双重代换等同于两个单独代换。
+
 ```
 postulate
   double-subst :
     ∀ {Γ A B C} {V : Γ ⊢ A} {W : Γ ⊢ B} {N : Γ , A , B ⊢ C} →
       N [ V ][ W ] ≡ (N [ rename S_ W ]) [ V ]
 ```
+
+<!--
 Note the arguments need to be swapped and `W` needs to have
 its context adjusted via renaming in order for the right-hand
 side to be well typed.
+-->
 
+注意到我们需要交换参数，而且 `W` 的上下文需要用重命名来调整，使得右手边的项保持良类型。
+
+<!--
 ## Test examples
+-->
 
+## 测试例子
+
+<!--
 We repeat the [test examples](/DeBruijn/#examples) from Chapter [DeBruijn](/DeBruijn/),
 in order to make sure we have not broken anything in the process of extending our base calculus.
+-->
+
+我们重复 [DeBruijn](/DeBruijn) 章节中的[测试例子](/DeBruijn/#examples)，
+来保证我们在扩展基本演算时没有破坏原演算的任何性质。
+
 ```
 two : ∀ {Γ} → Γ ⊢ `ℕ
 two = `suc `suc `zero
@@ -1518,7 +2209,11 @@ sucᶜ = ƛ `suc (# 0)
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章中使用了以下 Unicode：
 
     σ  U+03C3  GREEK SMALL LETTER SIGMA (\Gs or \sigma)
     †  U+2020  DAGGER (\dag)
