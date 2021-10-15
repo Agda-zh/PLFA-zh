@@ -2118,7 +2118,7 @@ Using the evaluator, confirm that two times two is four.
 -->
 
 ```
--- 在此处写出你的带吗
+-- 在此处写出你的代码
 ```
 
 
