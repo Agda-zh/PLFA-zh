@@ -137,8 +137,8 @@ term, and `V` is the result value.  A _value_ is a closure whose term
 is a lambda abstraction.
 -->
 
-大步语义被表现为一个三元关系，写作 `γ ⊢ M ⇓ V`,其中 `γ` 是环境，`M`是输入项，`V` 是结果值。
-**值（value）**是一个项是 λ-抽象的闭包。
+大步语义被表现为一个三元关系，写作 `γ ⊢ M ⇓ V`，
+其中 `γ` 是环境，`M`是输入项，`V` 是结果值。**值（value）**是一个项是 λ-抽象的闭包。
 
 ```
 data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
@@ -189,8 +189,12 @@ data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
 #### 练习 `big-step-eg`（实践）
 
 
+<!--
 Show that `(ƛ ƛ # 1) · ((ƛ # 0 · # 0) · (ƛ # 0 · # 0))`
 terminates under big-step call-by-name evaluation.
+-->
+
+证明 `(ƛ ƛ # 1) · ((ƛ # 0 · # 0) · (ƛ # 0 · # 0))` 能在大步传名调用求值下终止。
 
 <!--
 ```
@@ -208,10 +212,15 @@ terminates under big-step call-by-name evaluation.
 
 ## 大步语义是确定性的
 
+<!--
 If the big-step relation evaluates a term `M` to both `V` and
 `V′`, then `V` and `V′` must be identical. In other words, the
 call-by-name relation is a partial function. The proof is a
 straightforward induction on the two big-step derivations.
+-->
+
+如果大步关系将一个项 `M` 求值为 `V` 和 `V′`，则 `V` 和 `V′` 必然相同。
+也就是说，传名调用关系是一个{ }函数。该证明是两个大步语义推论的简单归纳。
 
 ```
 ⇓-determ : ∀{Γ}{γ : ClosEnv Γ}{M : Γ ⊢ ★}{V V' : Clos}
@@ -231,11 +240,14 @@ straightforward induction on the two big-step derivations.
 ## Big-step evaluation implies beta reduction to a lambda
 -->
 
-## 大步求值蕴含β-规约
+## 大步求值蕴含 β-规约
 
-
+<!--
 If big-step evaluation produces a value, then the input term can
 reduce to a lambda abstraction by beta reduction:
+-->
+
+如果大步求值能够产出值，那么输入项能被 β-规约规约为一个 λ-抽象：
 
       ∅' ⊢ M ⇓ clos (ƛ N′) δ
       -----------------------------
