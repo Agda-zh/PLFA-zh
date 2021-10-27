@@ -1,5 +1,5 @@
 ---
-title     : "BigStep: Big-step semantics of untyped lambda calculus"
+title     : "BigStep: 无类型 λ-演算的大步语义"
 layout    : page
 prev      : /Confluence/
 permalink : /BigStep/
@@ -9,9 +9,13 @@ next      : /Denotational/
 ```
 module plfa.part2.BigStep where
 ```
-
+<!--
 ## Introduction
+-->
 
+## 简介
+
+<!--
 The call-by-name evaluation strategy is a deterministic method for
 computing the value of a program in the lambda calculus.  That is,
 call-by-name produces a value if and only if beta reduction can reduce
@@ -23,15 +27,35 @@ of that proof, due to Plotkin, but postpone the proof in Agda until
 after we have developed a denotational semantics for the lambda
 calculus, at which point the proof is an easy corollary of properties
 of the denotational semantics.
+-->
 
+传名调用求值策略是在 λ-演算中计算程序值的一种确定性方法。
+也就是说，传名调用能够求出值当且仅当 β-规约能将程序规约为一个 λ-抽象。
+在这一章节，我们将定义传名调用求值并且证明这个等价命题的正向部分。
+反向的部分较为复杂，通常通过 Curry-Feys 标准化证明。
+根据 Plotkin 的工作，我们给出这个证明的概要，
+但是由于这是 λ-演算中指称语义的一个简单性质，
+我们将在发展出指称语义后在 Agda 中完整地证明它。
+
+<!--
 We present the call-by-name strategy as a relation between an input
 term and an output value. Such a relation is often called a _big-step
 semantics_, written `M ⇓ V`, as it relates the input term `M` directly
 to the final result `V`, in contrast to the small-step reduction
 relation, `M —→ M′`, that maps `M` to another term `M′` in which a
 single sub-computation has been completed.
+-->
 
+我们将传名调用策略表示为一个输入表达式与输出值间的关系。
+因为这样的关系将输入表达式 `M` 和最终结果 `V` 直接相联系，它通常被叫做大步语义，写做 `M ⇓ V`。
+相对的小步规约关系被写做 `M —→ M′`，它仅完成一步子计算来将 `M` 规约为另一个表达式 `M′`。
+
+
+<!--
 ## Imports
+-->
+
+## 导入
 
 ```
 open import Relation.Binary.PropositionalEquality
@@ -46,8 +70,13 @@ open import plfa.part2.Untyped
 open import plfa.part2.Substitution using (Subst; ids)
 ```
 
+<!--
 ## Environments
+-->
 
+## 环境
+
+<!--
 To handle variables and function application, there is the choice
 between using substitution, as in `—→`, or to use an _environment_.
 An environment in call-by-name is a map from variables to closures,
@@ -57,8 +86,18 @@ call-by-name strategy is to be closer to an implementation of the
 language. Also, the denotational semantics introduced in later
 chapters uses environments and the proof of adequacy
 is made easier by aligning these choices.
+-->
 
+为了表示变量和函数应用，我们要么像在 `—→` 中一样使用替换，要么使用一个**环境（environment）**。
+传名调用中的环境是一个从变量到闭包（即项与环境的值对）的映射。
+我们之所以使用环境取代替换是因为传名调用的核心更接近于语言的实现。
+在后续章节中介绍的指称语义也会用到环境，而且对｛｝的证明也会变得更加容易。
+
+<!--
 We define environments and closures as follows.
+-->
+
+我们如下定义环境和闭包。
 
 ```
 ClosEnv : Context → Set
@@ -69,8 +108,12 @@ data Clos : Set where
 ClosEnv Γ = ∀ (x : Γ ∋ ★) → Clos
 ```
 
+<!--
 As usual, we have the empty environment, and we can extend an
 environment.
+-->
+
+通常，我们有空环境，也可以扩展一个环境。
 
 ```
 ∅' : ClosEnv ∅
@@ -81,12 +124,21 @@ _,'_ : ∀ {Γ} → ClosEnv Γ → Clos → ClosEnv (Γ , ★)
 (γ ,' c) (S x) = γ x
 ```
 
+<!--
 ## Big-step evaluation
+-->
 
+## 大步求值
+
+<!--
 The big-step semantics is represented as a ternary relation,
 written `γ ⊢ M ⇓ V`, where `γ` is the environment, `M` is the input
 term, and `V` is the result value.  A _value_ is a closure whose term
 is a lambda abstraction.
+-->
+
+大步语义被表现为一个三元关系，写作 `γ ⊢ M ⇓ V`,其中 `γ` 是环境，`M`是输入项，`V` 是结果值。
+**值（value）**是一个项是 λ-抽象的闭包。
 
 ```
 data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
@@ -106,6 +158,7 @@ data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
     → γ ⊢ L · M ⇓ V
 ```
 
+<!--
 * The `⇓-var` rule evaluates a variable by finding the associated
   closure in the environment and then evaluating the closure.
 
@@ -118,19 +171,42 @@ data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
   environment extended with the argument `M`. Note that `M` is not
   evaluated in rule `⇓-app` because this is call-by-name and not
   call-by-value.
+-->
+
+* `⇓-var` 规则通过对环境中找到的相关闭包求值，从而完成对变量的求值。
+
+* `⇓-lam` 规则通过将一个 λ-抽象与其环境包装，将其转变为一个闭包。
+
+* `⇓-app` 规则分两步处理函数应用。首先对操作位的项 `L` 求值，如果产生了一个包含 λ-抽象 `ƛ N` 的闭包，
+  就在扩展了参数 `M` 的环境中对 `N` 求值。注意到 `M` 并未在 `⇓-app` 规则中被求值，
+  因为进行的是传名调用而不是传值调用。
 
 
+<!--
 #### Exercise `big-step-eg` (practice)
+-->
+
+#### 练习 `big-step-eg`（实践）
+
 
 Show that `(ƛ ƛ # 1) · ((ƛ # 0 · # 0) · (ƛ # 0 · # 0))`
 terminates under big-step call-by-name evaluation.
 
+<!--
 ```
 -- Your code goes here
 ```
+-->
 
+```
+-- 请将代码写在此处。
+```
 
+<!--
 ## The big-step semantics is deterministic
+-->
+
+## 大步语义是确定性的
 
 If the big-step relation evaluates a term `M` to both `V` and
 `V′`, then `V` and `V′` must be identical. In other words, the
@@ -151,7 +227,12 @@ straightforward induction on the two big-step derivations.
 ```
 
 
+<!--
 ## Big-step evaluation implies beta reduction to a lambda
+-->
+
+## 大步求值蕴含β-规约
+
 
 If big-step evaluation produces a value, then the input term can
 reduce to a lambda abstraction by beta reduction:
@@ -383,7 +464,11 @@ with `M`. Prove that `M ↓ N` implies `M —↠ N`.
 -- Your code goes here
 ```
 
+<!--
 ## Beta reduction to a lambda implies big-step evaluation
+-->
+
+## β-规约蕴含大步求值
 
 The proof of the backward direction, that beta reduction to a lambda
 implies that the call-by-name semantics produces a result, is more
@@ -440,7 +525,11 @@ soundness and adequacy of the denotational semantics.
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章中使用了以下 Unicode：
 
     ≈  U+2248  ALMOST EQUAL TO (\~~ or \approx)
     ₑ  U+2091  LATIN SUBSCRIPT SMALL LETTER E (\_e)
