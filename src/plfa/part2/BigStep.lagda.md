@@ -138,7 +138,7 @@ is a lambda abstraction.
 -->
 
 大步语义被表现为一个三元关系，写作 `γ ⊢ M ⇓ V`，
-其中 `γ` 是环境，`M`是输入项，`V` 是结果值。**值（value）**是一个项是 λ-抽象的闭包。
+其中 `γ` 是环境，`M`是输入项，`V` 是结果值。 **值（value）** 是一个项是 λ-抽象的闭包。
 
 ```
 data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
@@ -247,7 +247,7 @@ If big-step evaluation produces a value, then the input term can
 reduce to a lambda abstraction by beta reduction:
 -->
 
-如果大步求值能够产出值，那么输入项能被 β-规约规约为一个 λ-抽象：
+如果大步求值能够求出值，那么输入项能被 β-规约规约为一个 λ-抽象：
 
       ∅' ⊢ M ⇓ clos (ƛ N′) δ
       -----------------------------
@@ -282,32 +282,56 @@ _≈ₑ_ : ∀{Γ} → ClosEnv Γ → Subst Γ ∅ → Set
 γ ≈ₑ σ = ∀{x} → (γ x) ≈ (σ x)
 ```
 
+<!--
 We can now state the main lemma:
+-->
 
+现在我们可以给出主要的引理。
+
+<!--
     If γ ⊢ M ⇓ V  and  γ ≈ₑ σ,
     then  subst σ M —↠ N  and  V ≈ N  for some N.
+-->
 
+    如果 γ ⊢ M ⇓ V  且  γ ≈ₑ σ,
+    那么有  subst σ M —↠ N  以及  V ≈ N  对于一些 N。
+
+<!--
 Before starting the proof, we establish a couple lemmas
 about equivalent environments and substitutions.
+-->
 
+在开始证明之前，我们需要建立一些有关等价环境和替换的引理。
+
+<!--
 The empty environment is equivalent to the identity substitution
 `ids`, which we import from Chapter [Substitution](/Substitution/).
+-->
+
+空环境与我们从 [Substitution](/Substitution/) 章中导入的恒等替换等价。
 
 ```
 ≈ₑ-id : ∅' ≈ₑ ids
 ≈ₑ-id {()}
 ```
 
+<!--
 Of course, applying the identity substitution to a term returns
 the same term.
+-->
+
+显然，对项应用恒等替换会得到相同的项。
 
 ```
 sub-id : ∀{Γ} {A} {M : Γ ⊢ A} → subst ids M ≡ M
 sub-id = plfa.part2.Substitution.sub-id
 ```
 
-
+<!--
 We define an auxiliary function for extending a substitution.
+-->
+
+我们定义一个辅助函数来扩展替换。
 
 ```
 ext-subst : ∀{Γ Δ} → Subst Γ Δ → Δ ⊢ ★ → Subst (Γ , ★) Δ
@@ -345,19 +369,34 @@ So the proof of `≈ₑ-ext` is as follows.
   rewrite subst-zero-exts {σ = σ}{M = N}{x} = γ≈ₑσ
 ```
 
+<!--
 We proceed by induction on the input variable.
+-->
 
+我们通过对输入项进行归纳来证明。
+
+<!--
 * If it is `Z`, then we immediately conclude using the
   premise `V ≈ N`.
 
 * If it is `S x`, then we rewrite using the
   `subst-zero-exts` lemma and use the premise `γ ≈ₑ σ`
   to conclude.
+-->
+
+* 如果它是 `Z`，那么我们使用假定 `V ≈ N` 立即得出结论。
+
+* 如果它是 `S x`，那么我们使用 `subst-zero-exts` 引理来重写，并使用假定 `γ ≈ₑ σ` 来得出结论。
 
 
+<!--
 To prove the main lemma, we need another technical lemma about
 substitution. Applying one substitution after another is the same as
 composing the two substitutions and then applying them.
+-->
+
+为了证明主要的引理，我们需要另一个关于替换的技术性的引理。
+接连应用两个替换与先将两个替换连接起来再应用等价。
 
 ```
 sub-sub : ∀{Γ Δ Σ}{A}{M : Γ ⊢ A} {σ₁ : Subst Γ Δ}{σ₂ : Subst Δ Σ}
@@ -365,10 +404,15 @@ sub-sub : ∀{Γ Δ Σ}{A}{M : Γ ⊢ A} {σ₁ : Subst Γ Δ}{σ₂ : Subst Δ 
 sub-sub {M = M} = plfa.part2.Substitution.sub-sub {M = M}
 ```
 
+<!--
 We arive at the main lemma: if `M` big steps to a
 closure `V` in environment `γ`, and if `γ ≈ₑ σ`, then `subst σ M` reduces
 to some term `N` that is equivalent to `V`. We describe the proof
 below.
+-->
+
+我们到达了主要引理：如果 `M` 在环境 `γ` 中大步求值为闭包 `V`，并且 `γ ≈ₑ σ`，
+那么 `subst σ M` 将规约为一些等价于 `V` 的项 `N`。我们如下叙述该证明。
 
 ```
 ⇓→—↠×≈ : ∀{Γ}{γ : ClosEnv Γ}{σ : Subst Γ ∅}{M : Γ ⊢ ★}{V : Clos}
@@ -396,8 +440,12 @@ below.
         ⟨ N' , ⟨ g , V≈N' ⟩ ⟩
 ```
 
+<!--
 The proof is by induction on `γ ⊢ M ⇓ V`. We have three cases
 to consider.
+-->
+
+该证明对 `γ ⊢ M ⇓ V` 进行归纳。我们有三种情况需要考虑。
 
 * Case `⇓-var`.
   So we have `γ x ≡ clos L δ` and `δ ⊢ L ⇓ V`.
@@ -464,7 +512,11 @@ cbn→reduce {M}{Δ}{δ}{N′} M⇓c
       ⟨ subst (exts σ) N′ , rs ⟩
 ```
 
+<!--
 #### Exercise `big-alt-implies-multi` (practice)
+-->
+
+#### 练习 `big-alt-implies-multi`（实践）
 
 Formulate an alternative big-step semantics, of the form `M ↓ N`, for
 call-by-name that uses substitution instead of environments.  That is,
