@@ -338,6 +338,7 @@ ext-subst : ∀{Γ Δ} → Subst Γ Δ → Δ ⊢ ★ → Subst (Γ , ★) Δ
 ext-subst{Γ}{Δ} σ N {A} = subst (subst-zero N) ∘ exts σ
 ```
 
+<!--
 The next lemma we need to prove states that if you start with an
 equivalent environment and substitution `γ ≈ₑ σ`, extending them with
 an equivalent closure and term `c ≈ N` produces an equivalent
@@ -349,6 +350,15 @@ which states that applying the composition of `exts σ`
 and `subst-zero` to `S x` is the same as just `σ x`,
 which is a corollary of a theorem in
 Chapter [Substitution](/Substitution/).
+-->
+
+下一个需要证明的引理声称如果从等价的环境和替换 `γ ≈ₑ σ` 开始，
+将它们用等价的闭包和项 `c ≈ N` 扩展，
+将得到等价的环境和替换 `(γ ,' V) ≈ₑ (ext-subst σ N)`，
+即对于任何变量 `x` 有 `(γ ,' V) x ≈ₑ (ext-subst σ N) x`。
+证明将通过归纳 `x` 完成，并且我们需要如下引理。
+该引理声称将`exts σ` 和 `subst-zero` 的组合应用至 `S x` 等同于 `σ x`。
+这是 [Substitution](/Substitution/) 章节中一个定理的推论。
 
 ```
 subst-zero-exts : ∀{Γ Δ}{σ : Subst Γ Δ}{B}{M : Δ ⊢ B}{x : Γ ∋ ★}
@@ -357,7 +367,11 @@ subst-zero-exts {Γ}{Δ}{σ}{B}{M}{x} =
    cong-app (plfa.part2.Substitution.subst-zero-exts-cons{σ = σ}) (S x)
 ```
 
+<!--
 So the proof of `≈ₑ-ext` is as follows.
+-->
+
+所以 `≈ₑ-ext` 的证明如下。
 
 ```
 ≈ₑ-ext : ∀ {Γ} {γ : ClosEnv Γ} {σ : Subst Γ ∅} {V} {N : ∅ ⊢ ★}
@@ -447,6 +461,7 @@ to consider.
 
 该证明对 `γ ⊢ M ⇓ V` 进行归纳。我们有三种情况需要考虑。
 
+<!--
 * Case `⇓-var`.
   So we have `γ x ≡ clos L δ` and `δ ⊢ L ⇓ V`.
   We need to show that `subst σ x —↠ N` and `V ≈ N` for some `N`.
@@ -457,11 +472,28 @@ to consider.
   the induction hypothesis gives us
   `subst τ L —↠ N` and `V ≈ N` for some `N`.
   So we have shown that `subst σ x —↠ N` and `V ≈ N` for some `N`.
+-->
 
+* 情况 `⇓-var`：
+  此时我们有 `γ x ≡ clos L δ` 和 `δ ⊢ L ⇓ V`。
+  我们需要证明对于某些 `N` 有`subst σ x —↠ N` 和 `V ≈ N`。
+  假设 `γ ≈ₑ σ` 告诉我们 `γ x ≈ σ x`，所以有 `clos L δ ≈ σ x`。
+  根据 `≈` 的定义， 存在一个 `τ` 使得 `δ ≈ₑ τ` 且 `σ x ≡ subst τ L `。
+  使用 `δ ⊢ L ⇓ V` 和 `δ ≈ₑ τ`，
+  归纳假设使得对于某些 `N` 有 `subst τ L —↠ N` 和 `V ≈ N`。
+  所以我们证明了对于某些 `N`，有 `subst σ x —↠ N` 和 `V ≈ N`。
+
+<!--
 * Case `⇓-lam`.
   We immediately have `subst σ (ƛ N) —↠ subst σ (ƛ N)`
   and `clos (subst σ (ƛ N)) γ ≈ subst σ (ƛ N)`.
+-->
 
+* 情况 `⇓-lam`：
+  我们立刻获得 `subst σ (ƛ N) —↠ subst σ (ƛ N)`
+  和 `clos (subst σ (ƛ N)) γ ≈ subst σ (ƛ N)`。
+
+<!--
 * Case `⇓-app`.
   Using `γ ⊢ L ⇓ clos N δ` and `γ ≈ₑ σ`,
   the induction hypothesis gives us
@@ -496,10 +528,49 @@ to consider.
   which we combine with (4) to conclude that
 
         subst σ L · subst σ M —↠ N'
+-->
 
+* 情况 `⇓-app`：
+  使用 `γ ⊢ L ⇓ clos N δ` 和 `γ ≈ₑ σ`，
+  归纳假设给我们
 
+        subst σ L —↠ ƛ subst (exts τ) N                                     (1)
+
+  并且对于某些 `τ` 有 `δ ≈ₑ τ`。
+  根据 `γ≈ₑσ` 我们有 `clos M γ ≈ subst σ M`。
+  与 `(δ ,' clos M γ) ⊢ N ⇓ V` 一同，
+  归纳假设给我们 `V ≈ N'` 和
+
+        subst (subst (subst-zero (subst σ M)) ∘ (exts τ)) N —↠ N'         (2)
+
+  同时根据 `β`，我们有
+
+        (ƛ subst (exts τ) N) · subst σ M
+        —→ subst (subst-zero (subst σ M)) (subst (exts τ) N)
+
+  通过 `sub-sub`，这等价于
+
+        (ƛ subst (exts τ) N) · subst σ M
+        —→ subst (subst (subst-zero (subst σ M)) ∘ exts τ) N              (3)
+
+  使用 (3) 和 (2) 我们有
+
+        (ƛ subst (exts τ) N) · subst σ M —↠ N'                             (4)
+
+  根据 (1) 我们有
+
+        subst σ L · subst σ M —↠ (ƛ subst (exts τ) N) · subst σ M
+
+  与 (4) 相结合，我们得出结论
+
+        subst σ L · subst σ M —↠ N'
+
+<!--
 With the main lemma complete, we establish the forward direction
 of the equivalence between the big-step semantics and beta reduction.
+-->
+
+证明了主要引理后，我们可以建立大步语义与 β-规约等价关系的正向部分。
 
 ```
 cbn→reduce :  ∀{M : ∅ ⊢ ★}{Δ}{δ : ClosEnv Δ}{N′ : Δ , ★ ⊢ ★}
