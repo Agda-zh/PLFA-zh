@@ -605,6 +605,7 @@ with `M`. Prove that `M ↓ N` implies `M —↠ N`.
 
 ## β-规约蕴含大步求值
 
+<!--
 The proof of the backward direction, that beta reduction to a lambda
 implies that the call-by-name semantics produces a result, is more
 difficult to prove. The difficulty stems from reduction proceeding
@@ -619,32 +620,84 @@ as a half-way point between full beta reduction and call-by-name by
 expanding call-by-name to also include reduction underneath
 lambda. Plotkin proves that `M` reduces to `L` if and only if `M` is
 related to `L` by a standard reduction sequence.
+-->
 
+反向的证明，也就是项的 β-规约蕴含大步语义求值是更困难的。
+The difficulty stems from reduction proceeding
+underneath lambda abstractions via the `ζ` rule. 
+传名调用语义在 λ-演算中并不会规约，因此直接通过归纳规约序列来证明是不可能的
+在文章**Call-by-name, call-by-value, and the λ-calculus**中，
+Plotkin使用两个辅助规约关系分两步完成了证明。
+第一步使用了 Curry-Feys 标准化这一经典方法，
+It relies on the notion of _standard reduction sequence_, which acts
+as a half-way point between full beta reduction and call-by-name by
+expanding call-by-name to also include reduction underneath
+lambda.
+Plotkin证明了 `M` 能被规约为 `L` 当且仅当 `M` 与 `L` 通过一个标准规约序列相关。
+
+<!--
     Theorem 1 (Standardisation)
     `M —↠ L` if and only if `M` goes to `L` via a standard reduction sequence.
+-->
 
+    定理 1（标准化）
+    `M —↠ L` 当且仅当 `M` 能通过一个标准规约序列规约成 `L`。
+
+<!--
 Plotkin then introduces _left reduction_, a small-step version of
 call-by-name and uses the above theorem to prove that beta reduction
 and left reduction are equivalent in the following sense.
+-->
 
+Plotkin 接着引入了**左规约（left reduction）** 作为传名调用的小步描述，并且用上方的定理
+证明了 β-规约与左规约在下述情况下等价。
+
+<!--
     Corollary 1
     `M —↠ ƛ N` if and only if `M` goes to `ƛ N′`, for some `N′`, by left reduction.
+-->
 
+    推论 1
+    `M —↠ ƛ N` 当且仅当对于某些 `N′`，`M`能通过左规约成 `ƛ N′`。
+
+<!--
 The second step of the proof connects left reduction to call-by-name
 evaluation.
+-->
 
+证明的下一步将左规约与传名调用求值联系起来。
+
+<!--
     Theorem 2
-    `M` left reduces to `ƛ N` if and only if `⊢ M ⇓ ƛ N`.
+    `M` left reduces to `ƛ N` if and only if `⊢ M ⇓ ƛ N`。
+-->
 
+    定理 2
+    `M` 左规约成 `ƛ N` 当且仅当 `⊢ M ⇓ ƛ N`。
+
+<!--
 (Plotkin's call-by-name evaluator uses substitution instead of
 environments, which explains why the environment is omitted in `⊢ M ⇓
 ƛ N` in the above theorem statement.)
+-->
 
+（Plotkin 的传名调用求值使用替换而不是环境，这解释了为何在上文定理的
+描述中环境被隐去了。）
+
+<!--
 Putting Corollary 1 and Theorem 2 together, Plotkin proves that
 call-by-name evaluation is equivalent to beta reduction.
+-->
 
+将推论 1 和定理 2 相结合，Plotkin 证明了传名调用求值与 β-规约等价。
+
+<!--
     Corollary 2
     `M —↠ ƛ N` if and only if `⊢ M ⇓ ƛ N′` for some `N′`.
+-->
+
+    推论 2
+    `M —↠ ƛ N` 当且仅当对某些 `N′`，`⊢ M ⇓ ƛ N′`。
 
 Plotkin also proves an analogous result for the λᵥ calculus, relating
 it to call-by-value evaluation. For a nice exposition of that proof,
