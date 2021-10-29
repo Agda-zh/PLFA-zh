@@ -91,7 +91,7 @@ is made easier by aligning these choices.
 为了表示变量和函数应用，我们要么像在 `—→` 中一样使用替换，要么使用一个**环境（environment）**。
 传名调用中的环境是一个从变量到闭包（即项与环境的值对）的映射。
 我们之所以使用环境取代替换是因为传名调用的核心更接近于语言的实现。
-在后续章节中介绍的指称语义也会用到环境，而且对｛｝的证明也会变得更加容易。
+在后续章节中介绍的指称语义也会用到环境，而且对 adequacy 的证明也会变得更加容易。
 
 <!--
 We define environments and closures as follows.
@@ -220,7 +220,7 @@ straightforward induction on the two big-step derivations.
 -->
 
 如果大步关系将一个项 `M` 求值为 `V` 和 `V′`，则 `V` 和 `V′` 必然相同。
-也就是说，传名调用关系是一个{ }函数。该证明是两个大步语义推论的简单归纳。
+也就是说，传名调用关系是一个 partial function。该证明是两个大步语义推论的简单归纳。
 
 ```
 ⇓-determ : ∀{Γ}{γ : ClosEnv Γ}{M : Γ ⊢ ★}{V V' : Clos}
@@ -253,6 +253,7 @@ reduce to a lambda abstraction by beta reduction:
       -----------------------------
     → Σ[ N ∈ ∅ , ★ ⊢ ★ ] (M —↠ ƛ N)
 
+<!--
 The proof is by induction on the big-step derivation. As is often
 necessary, one must generalize the statement to get the induction to
 go through. In the case for `⇓-app` (function application), the
@@ -261,7 +262,14 @@ non-empty. The corresponding β reduction substitutes the argument into
 the body of the lambda abstraction.  So we generalize the lemma to
 allow an arbitrary environment `γ` and we add a premise that relates
 the environment `γ` to an equivalent substitution `σ`.
+-->
 
+该证明通过归纳大步推导完成。通常，我们需要推广命题以完成归纳。
+在 `⇓-app`（函数应用）的情况下，参数被添加到环境中，导致环境变得非空。
+相应的 β-规约将参数替换进 λ-抽象的主体中。
+所以我们将引理推广为允许任意环境 `γ` 并且添加一个前提将环境 `γ` 与等价的替代 `σ` 相关联。
+
+<!--
 The case for `⇓-app` also requires that we strengthen the
 conclusion. In the case for `⇓-app` we have `γ ⊢ L ⇓ clos (λ N) δ` and
 the induction hypothesis gives us `L —↠ ƛ N′`, but we need to know
@@ -269,9 +277,20 @@ that `N` and `N′` are equivalent. In particular, that `N′ ≡ subst τ N`
 where `τ` is the substitution that is equivalent to `δ`. Therefore we
 expand the conclusion of the statement, stating that the results are
 equivalent.
+-->
 
+`⇓-app` 的情况也要求我们加强结论。
+对于 `⇓-app`，有 `γ ⊢ L ⇓ clos (λ N) δ` 以及归纳假设给我们 `L —↠ ƛ N′`，
+但我们需要知道 `N` 和 `N′` 是等价的。
+特别地，`N' ≡ subst τ N`，其中 `τ` 是等价于 `δ` 的替换。
+因此我们扩展命题的结论，以说明这两个结果是等价的。
+
+<!--
 We make the two notions of equivalence precise by defining the
 following two mutually-recursive predicates `V ≈ M` and `γ ≈ₑ σ`.
+-->
+
+我们通过定义以下两个相互递归的谓词 `V ≈ M` 和 `γ ≈ₑ σ` 来得到两个精确等价的概念
 
 ```
 _≈_ : Clos → (∅ ⊢ ★) → Set
@@ -398,9 +417,9 @@ We proceed by induction on the input variable.
   to conclude.
 -->
 
-* 如果它是 `Z`，那么我们使用假定 `V ≈ N` 立即得出结论。
+* 如果它是 `Z`，那么我们使用前提 `V ≈ N` 立即得出结论。
 
-* 如果它是 `S x`，那么我们使用 `subst-zero-exts` 引理来重写，并使用假定 `γ ≈ₑ σ` 来得出结论。
+* 如果它是 `S x`，那么我们使用 `subst-zero-exts` 引理来重写，并使用前提 `γ ≈ₑ σ` 来得出结论。
 
 
 <!--
@@ -477,7 +496,7 @@ to consider.
 * 情况 `⇓-var`：
   此时我们有 `γ x ≡ clos L δ` 和 `δ ⊢ L ⇓ V`。
   我们需要证明对于某些 `N` 有`subst σ x —↠ N` 和 `V ≈ N`。
-  假设 `γ ≈ₑ σ` 告诉我们 `γ x ≈ σ x`，所以有 `clos L δ ≈ σ x`。
+  前提 `γ ≈ₑ σ` 告诉我们 `γ x ≈ σ x`，所以有 `clos L δ ≈ σ x`。
   根据 `≈` 的定义， 存在一个 `τ` 使得 `δ ≈ₑ τ` 且 `σ x ≡ subst τ L `。
   使用 `δ ⊢ L ⇓ V` 和 `δ ≈ₑ τ`，
   归纳假设使得对于某些 `N` 有 `subst τ L —↠ N` 和 `V ≈ N`。
@@ -570,7 +589,7 @@ With the main lemma complete, we establish the forward direction
 of the equivalence between the big-step semantics and beta reduction.
 -->
 
-证明了主要引理后，我们可以建立大步语义与 β-规约等价关系的正向部分。
+证明了主要引理后，我们便建立起大步语义与 β-规约等价关系的正向部分。
 
 ```
 cbn→reduce :  ∀{M : ∅ ⊢ ★}{Δ}{δ : ClosEnv Δ}{N′ : Δ , ★ ⊢ ★}
@@ -589,14 +608,26 @@ cbn→reduce {M}{Δ}{δ}{N′} M⇓c
 
 #### 练习 `big-alt-implies-multi`（实践）
 
+<!--
 Formulate an alternative big-step semantics, of the form `M ↓ N`, for
 call-by-name that uses substitution instead of environments.  That is,
 the analogue of the application rule `⇓-app` should perform
 substitution, as in `N [ M ]`, instead of extending the environment
 with `M`. Prove that `M ↓ N` implies `M —↠ N`.
+-->
 
+为使用替换而不是环境的传名调用表达另一种大步语义，形式为 `M ↓ N`。
+即应用规则 `⇓-app` 应像在 `N [ M ]` 中一样执行替换而不是用 `M` 扩展环境。
+证明 `M ↓ N` 蕴含 `M —↠ N`。
+
+<!--
 ```
 -- Your code goes here
+```
+-->
+
+```
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -623,16 +654,14 @@ related to `L` by a standard reduction sequence.
 -->
 
 反向的证明，也就是项的 β-规约蕴含大步语义求值是更困难的。
-The difficulty stems from reduction proceeding
-underneath lambda abstractions via the `ζ` rule. 
-传名调用语义在 λ-演算中并不会规约，因此直接通过归纳规约序列来证明是不可能的
+困难源于通过 `ζ` 规则在 λ-抽象下的规约过程。
+传名调用语义在 λ-演算中并不会规约，因此直接通过归纳规约序列来证明是不可能的。
 在文章**Call-by-name, call-by-value, and the λ-calculus**中，
 Plotkin使用两个辅助规约关系分两步完成了证明。
 第一步使用了 Curry-Feys 标准化这一经典方法，
-It relies on the notion of _standard reduction sequence_, which acts
-as a half-way point between full beta reduction and call-by-name by
-expanding call-by-name to also include reduction underneath
-lambda.
+它依赖于 **标准规约序列（standard reduction sequence）** 的概念，
+通过在 λ-演算下将传名调用扩展以包括规约，
+标准规约序列充当了完整 β-规约与传名调用求值的中间点。
 Plotkin证明了 `M` 能被规约为 `L` 当且仅当 `M` 与 `L` 通过一个标准规约序列相关。
 
 <!--
@@ -699,17 +728,28 @@ call-by-name evaluation is equivalent to beta reduction.
     推论 2
     `M —↠ ƛ N` 当且仅当对某些 `N′`，`⊢ M ⇓ ƛ N′`。
 
+<!--
 Plotkin also proves an analogous result for the λᵥ calculus, relating
 it to call-by-value evaluation. For a nice exposition of that proof,
 we recommend Chapter 5 of _Semantics Engineering with PLT Redex_ by
 Felleisen, Findler, and Flatt.
+-->
 
+Plotkin 还证明了 λᵥ-演算中的类似结果，将其与传值调用求值相联系。
+为了更好阐述该证明，我们推荐阅读由 Felleisen，Findler，和 Flatt 所著的
+**Semantics Engineering with PLT Redex** 的第五章。
+
+<!--
 Instead of proving the backwards direction via standardisation, as
 sketched above, we defer the proof until after we define a
 denotational semantics for the lambda calculus, at which point the
 proof of the backwards direction will fall out as a corollary to the
 soundness and adequacy of the denotational semantics.
+-->
 
+我们不通过上文描述的标准化方式来完成反向部分的证明，
+而是将其推迟到发展出 λ-演算的指称语义后，
+此时该证明是指称语义中 soundness 和 adequacy 的推论。
 
 ## Unicode
 
