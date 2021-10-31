@@ -47,7 +47,8 @@ single sub-computation has been completed.
 -->
 
 我们将传名调用策略表示为一个输入表达式与输出值间的关系。
-因为这样的关系将输入表达式 `M` 和最终结果 `V` 直接相联系，它通常被叫做大步语义，写做 `M ⇓ V`。
+因为这样的关系将输入表达式 `M` 和最终结果 `V` 直接相联系，
+它通常被叫做 **大步语义（big-stepsemantics）**，写做 `M ⇓ V`。
 相对的小步规约关系被写做 `M —→ M′`，它仅完成一步子计算来将 `M` 规约为另一个表达式 `M′`。
 
 
@@ -264,7 +265,7 @@ allow an arbitrary environment `γ` and we add a premise that relates
 the environment `γ` to an equivalent substitution `σ`.
 -->
 
-该证明通过归纳大步推导完成。通常，我们需要推广命题以完成归纳。
+该证明通过对大步语义归纳来完成。通常，我们需要推广命题以完成归纳。
 在 `⇓-app`（函数应用）的情况下，参数被添加到环境中，导致环境变得非空。
 相应的 β-规约将参数替换进 λ-抽象的主体中。
 所以我们将引理推广为允许任意环境 `γ` 并且添加一个前提将环境 `γ` 与等价的替代 `σ` 相关联。
@@ -678,8 +679,8 @@ call-by-name and uses the above theorem to prove that beta reduction
 and left reduction are equivalent in the following sense.
 -->
 
-Plotkin 接着引入了**左规约（left reduction）** 作为传名调用的小步描述，并且用上方的定理
-证明了 β-规约与左规约在下述情况下等价。
+Plotkin 接着引入了**左规约（left reduction）** 作为传名调用的小步描述，
+并且用上方的定理证明了 β-规约与左规约在下述情况下等价。
 
 <!--
     Corollary 1
@@ -710,8 +711,8 @@ environments, which explains why the environment is omitted in `⊢ M ⇓
 ƛ N` in the above theorem statement.)
 -->
 
-（Plotkin 的传名调用求值使用替换而不是环境，这解释了为何在上文定理的
-描述中环境被隐去了。）
+（Plotkin 的传名调用求值使用替换而不是环境，
+这解释了为何在上文定理的描述中环境被隐去了。）
 
 <!--
 Putting Corollary 1 and Theorem 2 together, Plotkin proves that
