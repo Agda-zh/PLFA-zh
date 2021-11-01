@@ -768,7 +768,7 @@ make build
 If you’d like to serve PLFA locally, rebuilding the website when any of the source files are changed, run:
 -->
 
-如果你想在本地架起 PLFA，并且在源文件修改时重新构造，润性：
+如果你想在本地架起 PLFA，并且在源文件修改时重构网页，运行：
 
 ```bash
 make watch
