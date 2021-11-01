@@ -29,13 +29,13 @@ calculus, at which point the proof is an easy corollary of properties
 of the denotational semantics.
 -->
 
-传名调用求值策略是在 λ-演算中计算程序值的一种确定性方法。
+传名调用求值策略（call-by-name evaluation strategy）是在 λ-演算中计算程序值的一种确定性方法。
 也就是说，传名调用能够求出值当且仅当 β-规约能将程序规约为一个 λ-抽象。
 在这一章节，我们将定义传名调用求值并且证明这个等价命题的正向部分。
 反向的部分较为复杂，通常通过 Curry-Feys 标准化证明。
 根据 Plotkin 的工作，我们给出这个证明的概要，
-但是由于这是 λ-演算中指称语义的一个简单性质，
-我们将在发展出指称语义后在 Agda 中完整地证明它。
+但是由于这是指称语义的一个简单性质，
+我们将在为 λ-演算发展出指称语义后在 Agda 中完整地证明它。
 
 <!--
 We present the call-by-name strategy as a relation between an input
@@ -49,7 +49,7 @@ single sub-computation has been completed.
 我们将传名调用策略表示为一个输入表达式与输出值间的关系。
 因为这样的关系将输入表达式 `M` 和最终结果 `V` 直接相联系，
 它通常被叫做 **大步语义（big-stepsemantics）**，写做 `M ⇓ V`。
-相对的小步规约关系被写做 `M —→ M′`，它仅完成一步子计算来将 `M` 规约为另一个表达式 `M′`。
+而小步规约关系则被写做 `M —→ M′`，它仅完成一次子计算来将 `M` 规约为另一个表达式 `M′`。
 
 
 <!--
@@ -89,8 +89,8 @@ chapters uses environments and the proof of adequacy
 is made easier by aligning these choices.
 -->
 
-为了表示变量和函数应用，我们要么像在 `—→` 中一样使用替换，要么使用一个**环境（environment）**。
-传名调用中的环境是一个从变量到闭包（即项与环境的值对）的映射。
+为了处理变量和函数应用，我们要么像在 `—→` 中一样使用替换，要么使用一个**环境（environment）**。
+传名调用中的环境是一个从变量到闭包（即项与其对应的环境）的映射。
 我们之所以使用环境取代替换是因为传名调用的核心更接近于语言的实现。
 在后续章节中介绍的指称语义也会用到环境，而且对 adequacy 的证明也会变得更加容易。
 
@@ -176,7 +176,7 @@ data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
 
 * `⇓-var` 规则通过对环境中找到的相关闭包求值，从而完成对变量的求值。
 
-* `⇓-lam` 规则通过将一个 λ-抽象与其环境包装，将其转变为一个闭包。
+* `⇓-lam` 规则通过包装 λ-抽象与其环境，将其转变为一个闭包。
 
 * `⇓-app` 规则分两步处理函数应用。首先对操作位的项 `L` 求值，如果产生了一个包含 λ-抽象 `ƛ N` 的闭包，
   就在扩展了参数 `M` 的环境中对 `N` 求值。注意到 `M` 并未在 `⇓-app` 规则中被求值，
@@ -211,7 +211,7 @@ terminates under big-step call-by-name evaluation.
 ## The big-step semantics is deterministic
 -->
 
-## 大步语义是确定性的
+## 大步语义是确定的
 
 <!--
 If the big-step relation evaluates a term `M` to both `V` and
@@ -265,7 +265,7 @@ allow an arbitrary environment `γ` and we add a premise that relates
 the environment `γ` to an equivalent substitution `σ`.
 -->
 
-该证明通过对大步语义归纳来完成。通常，我们需要推广命题以完成归纳。
+该证明通过对大步推导归纳来完成。通常，我们需要推广命题以完成归纳。
 在 `⇓-app`（函数应用）的情况下，参数被添加到环境中，导致环境变得非空。
 相应的 β-规约将参数替换进 λ-抽象的主体中。
 所以我们将引理推广为允许任意环境 `γ` 并且添加一个前提将环境 `γ` 与等价的替代 `σ` 相关联。
