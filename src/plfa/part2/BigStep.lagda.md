@@ -29,7 +29,7 @@ calculus, at which point the proof is an easy corollary of properties
 of the denotational semantics.
 -->
 
-传名调用求值策略（call-by-name evaluation strategy）是在 λ-演算中计算程序值的一种确定性方法。
+传名调用求值策略（Call-by-name Evaluation Strategy）是在 λ-演算中计算程序值的一种确定性方法。
 也就是说，传名调用能够求出值当且仅当 β-规约能将程序规约为一个 λ-抽象。
 在这一章节，我们将定义传名调用求值并且证明这个等价命题的正向部分。
 反向的部分较为复杂，通常通过 Curry-Feys 标准化证明。
@@ -48,8 +48,8 @@ single sub-computation has been completed.
 
 我们将传名调用策略表示为一个输入表达式与输出值间的关系。
 因为这样的关系将输入表达式 `M` 和最终结果 `V` 直接相联系，
-它通常被叫做 **大步语义（big-stepsemantics）**，写做 `M ⇓ V`。
-而小步规约关系则被写做 `M —→ M′`，它仅完成一次子计算来将 `M` 规约为另一个表达式 `M′`。
+它通常被叫做 **大步语义（Big-stepsemantics）**，写做 `M ⇓ V`。
+而小步规约关系则被写做 `M —→ M′`，它仅通过一步子计算来将 `M` 规约为另一个表达式 `M′`。
 
 
 <!--
@@ -89,7 +89,7 @@ chapters uses environments and the proof of adequacy
 is made easier by aligning these choices.
 -->
 
-为了处理变量和函数应用，我们要么像在 `—→` 中一样使用替换，要么使用一个**环境（environment）**。
+为了处理变量和函数应用，我们要么像在 `—→` 中一样使用替换，要么使用一个**环境（Environment）**。
 传名调用中的环境是一个从变量到闭包（即项与其对应的环境）的映射。
 我们之所以使用环境取代替换是因为传名调用的核心更接近于语言的实现。
 在后续章节中介绍的指称语义也会用到环境，而且对 adequacy 的证明也会变得更加容易。
@@ -139,7 +139,7 @@ is a lambda abstraction.
 -->
 
 大步语义被表现为一个三元关系，写作 `γ ⊢ M ⇓ V`，
-其中 `γ` 是环境，`M`是输入项，`V` 是结果值。 **值（value）** 是一个项是 λ-抽象的闭包。
+其中 `γ` 是环境，`M`是输入项，`V` 是结果值。 **值（Value）** 是一个项是 λ-抽象的闭包。
 
 ```
 data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
@@ -221,7 +221,7 @@ straightforward induction on the two big-step derivations.
 -->
 
 如果大步关系将一个项 `M` 求值为 `V` 和 `V′`，则 `V` 和 `V′` 必然相同。
-也就是说，传名调用关系是一个 partial function。该证明是两个大步语义推论的简单归纳。
+也就是说，传名调用关系是一个部分函数。该证明由两个大步语义的推论归纳得出。
 
 ```
 ⇓-determ : ∀{Γ}{γ : ClosEnv Γ}{M : Γ ⊢ ★}{V V' : Clos}
@@ -321,7 +321,7 @@ Before starting the proof, we establish a couple lemmas
 about equivalent environments and substitutions.
 -->
 
-在开始证明之前，我们需要建立一些有关等价环境和替换的引理。
+在开始证明之前，我们需要建立一些有关等价的环境和替换的引理。
 
 <!--
 The empty environment is equivalent to the identity substitution
@@ -657,10 +657,10 @@ related to `L` by a standard reduction sequence.
 反向的证明，也就是项的 β-规约蕴含大步语义求值是更困难的。
 困难源于通过 `ζ` 规则在 λ-抽象下的规约过程。
 传名调用语义在 λ-演算中并不会规约，因此直接通过归纳规约序列来证明是不可能的。
-在文章**Call-by-name, call-by-value, and the λ-calculus**中，
+在文章 **Call-by-name, call-by-value, and the λ-calculus** 中，
 Plotkin使用两个辅助规约关系分两步完成了证明。
 第一步使用了 Curry-Feys 标准化这一经典方法，
-它依赖于 **标准规约序列（standard reduction sequence）** 的概念，
+它依赖于 **标准规约序列（Standard Reduction Sequence）** 的概念，
 通过在 λ-演算下将传名调用扩展以包括规约，
 标准规约序列充当了完整 β-规约与传名调用求值的中间点。
 Plotkin证明了 `M` 能被规约为 `L` 当且仅当 `M` 与 `L` 通过一个标准规约序列相关。
@@ -679,7 +679,7 @@ call-by-name and uses the above theorem to prove that beta reduction
 and left reduction are equivalent in the following sense.
 -->
 
-Plotkin 接着引入了**左规约（left reduction）** 作为传名调用的小步描述，
+Plotkin 接着引入了**左规约（Left Reduction）** 作为传名调用的小步描述，
 并且用上方的定理证明了 β-规约与左规约在下述情况下等价。
 
 <!--
@@ -737,8 +737,8 @@ Felleisen, Findler, and Flatt.
 -->
 
 Plotkin 还证明了 λᵥ-演算中的类似结果，将其与传值调用求值相联系。
-为了更好阐述该证明，我们推荐阅读由 Felleisen，Findler，和 Flatt 所著的
-**Semantics Engineering with PLT Redex** 的第五章。
+为了更好阐述该证明，我们推荐阅读由 Felleisen、Findler 和 Flatt 所著的
+_Semantics Engineering with PLT Redex_ 的第五章。
 
 <!--
 Instead of proving the backwards direction via standardisation, as
