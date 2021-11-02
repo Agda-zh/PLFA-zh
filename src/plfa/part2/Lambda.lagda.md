@@ -29,13 +29,13 @@ recursive function definitions.
 
 **λ-演算**，最早由逻辑学家 Alonzo Church 发表，是一种只含有三种构造的演算——
 变量（Variable）、抽象（Abstraction）与应用（Application）。
-**λ-演算**刻画了**函数抽象**（Functional Abstract）的核心概念。这样的概念
+**λ-演算**刻画了**函数抽象（Functional Abstract）**的核心概念。这样的概念
 以函数、过程和方法的形式，在基本上每一个编程语言中都有体现。
 简单类型的 λ-演算 （Simply-Typed Lambda Calculus，简写为 STLC）是 λ-演算的一种变体，
 由 Church 在 1940 年发表。
 除去之前提到的三种构造，简单类型的 λ-演算还拥有函数类型和任何所需的基本类型。
 Church 使用了最简单的没有任何操作的基本类型。
-我们在这里使用 Plotkin 的**可编程的可计算函数**（Programmable Computable Functions，PCF），
+我们在这里使用 Plotkin 的**可编程的可计算函数（Programmable Computable Functions，PCF）**，
 并加入自然数和递归函数及其相关操作。
 
 <!--
@@ -261,7 +261,7 @@ FIXME: shadow 应该翻译成什么？
 `_+_` 相似。
 在这里，变量「m」被约束了两次，一个在 λ-抽象中，另一次在匹配表达式的后继分支中。
 第一次使用的「m」指代前者，第二次使用的指代后者。
-任何在后继分支中的「m」必须指代后者，因此我们称之为后者**屏蔽**（Shadow）了前者。
+任何在后继分支中的「m」必须指代后者，因此我们称之为后者**屏蔽（Shadow）**了前者。
 后面我们会证实二加二得四，也就是说下面的项
 
     plus · two · two
@@ -492,8 +492,8 @@ object language, as compared to `λ x → N` and `L M` in our
 meta-language, Agda.
 -->
 
-相似地来说，非正式的表达在**对象语言**（Object Language，我们正在描述的语言）
-和**元语言**（Meta-Language，我们用来描述对象语言的语言）
+相似地来说，非正式的表达在**对象语言（Object Language）**（我们正在描述的语言）
+和**元语言（Meta-Language）**（我们用来描述对象语言的语言）
 中使用相同的记法来表示函数类型、λ-抽象和函数应用，相信读者可以通过上下文区分两种语言。
 而 Agda 并不能做到这样，因此我们在目标语言中使用 `ƛ x ⇒ N` 和 `L · M` ，
 与我们使用的元语言 Agda 中的 `λ x → N` 和 `L M` 相对。
@@ -642,7 +642,7 @@ Following convention, we treat all function abstractions
 as values; thus, `` plus `` by itself is considered a value.
 -->
 
-**值**（Value）是一个对应着答案的项。
+**值（Value）**是一个对应着答案的项。
 因此，`` `suc `suc `suc `suc `zero `` 是一个值，
 而 `` plus · two · two `` 不是。
 根据惯例，我们将所有的抽象当作值；所以 `` plus ``本身是一个值。
@@ -1056,9 +1056,9 @@ as the _actual parameter_ of the function application.  Beta reduction
 replaces the formal parameter by the actual parameter.
 -->
 
-一些额外的术语：可以匹配规约规则左手边的项被称之为**可规约项**（Redex）。
-在可规约项 `(ƛ x ⇒ N) · V` 中，我们把 `x` 叫做函数的**形式参数**（形参，Formal Parameter），
-把 `V` 叫做函数应用的**实际参数**（实参，Actual Parameter）。
+一些额外的术语：可以匹配规约规则左手边的项被称之为**可规约项（Redex）**。
+在可规约项 `(ƛ x ⇒ N) · V` 中，我们把 `x` 叫做函数的**形式参数（形参，Formal Parameter）**，
+把 `V` 叫做函数应用的**实际参数（实参，Actual Parameter）**。
 β-规约将形参用实参来替换。
 
 <!--
@@ -1143,7 +1143,7 @@ This is referred to as _call-by-value_ reduction.
 -->
 
 我们小心地设计这些规约规则，使得一个项的子项在整项被规约之前先被规约。
-这被称为**传值**（Call-by-value）规约。
+这被称为**传值（Call-by-value）**规约。
 
 <!--
 Further, we have arranged that subterms are reduced in a
@@ -1153,7 +1153,7 @@ Put another way, our reduction relation `—→` is in fact a function.
 -->
 
 除此之外，我们规定规约的顺序是从左向右的。
-这意味着规约是**确定的**（Deterministic）：对于任何一个项，最多存在一个可以被规约至的项。
+这意味着规约是**确定的（Deterministic）**：对于任何一个项，最多存在一个可以被规约至的项。
 换句话说，我们的规约关系 `—→` 实际上是一个函数。
 
 <!--
@@ -1165,8 +1165,8 @@ another reduction rule in its premise; so a step always consists
 of a beta rule, possibly adjusted by zero or more compatibility rules.
 -->
 
-这种解释一个项的含义的方法叫做**小步操作语义**（Small-step Operational Semantics）。
-如果 `M —→ N`，我们称之为项 `M` **规约** 至项 `N`，也称之为项 `M` **步进**至（Step to）
+这种解释一个项的含义的方法叫做**小步操作语义（Small-step Operational Semantics）**。
+如果 `M —→ N`，我们称之为项 `M` **规约** 至项 `N`，也称之为项 `M` **步进（Step to）**至
 项 `N`。
 每条兼容性规则以另一条规约规则作为前提；因此每一步都会用到一条 β-规则，用零或多条兼容性规则进行调整。
 
@@ -1369,7 +1369,7 @@ to be _confluent_.  If term `L` reduces to two other terms,
 It can be illustrated as follows:
 -->
 
-在讨论规约关系时，有一个重要的性质是**合流性**（Confluence）。
+在讨论规约关系时，有一个重要的性质是**合流性（Confluence）**。
 如果项 `L` 规约至两个项 `M` 和项 `N`，那么它们都可以规约至同一个项 `P`。
 我们可以用下面的图来展示这个性质：
 
@@ -1821,7 +1821,7 @@ It is called _lookup_.
 For example,
 -->
 
-表示在上下文 `Γ` 中变量 `x` 的类型是 `A`。这样的判断叫做**查询**（Lookup）判断。
+表示在上下文 `Γ` 中变量 `x` 的类型是 `A`。这样的判断叫做**查询（Lookup）**判断。
 例如，
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ∋ "z" ⦂ `ℕ ``
@@ -1844,7 +1844,7 @@ should return the most recently bound variable, which _shadows_
 the other variables.  For example,
 -->
 
-如果上下文中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮盖**（Shadow）
+如果上下文中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮盖（Shadow）**
 了另一个变量。例如：
 
 * `` ∅ , "x" ⦂ `ℕ ⇒ `ℕ , "x" ⦂ `ℕ ∋ "x" ⦂ `ℕ ``.
