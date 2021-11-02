@@ -692,7 +692,7 @@ quantifier_, and it is discussed further in Chapter [Quantifiers](/Quantifiers/)
 -->
 
 在结合律的陈述中出现的符号 `∀` 表示它对于所有的 `m`、`n` 和 `p` 都成立。
-我们将 `∀` 称为**全称量词**（Universal Quantifier），我们会在
+我们将 `∀` 称为**全称量词（Universal Quantifier）**，我们会在
 [Quantifiers](/Quantifiers/) 章节中进一步讨论。
 
 <!--
@@ -720,7 +720,7 @@ are called _dependent functions_.
 
 是等价的。和 `ℕ → ℕ → ℕ` 这样的函数类型不同，上述函数中的变量
 与每一个实参类型相关联，且其结果类型可能会涉及（或依赖于）这些变量，
-因此它们叫做**依赖函数**（Dependent Function）。
+因此它们叫做**依赖函数（Dependent Function）**。
 
 
 <!--
