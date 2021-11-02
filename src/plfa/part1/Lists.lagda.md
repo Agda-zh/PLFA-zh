@@ -72,7 +72,7 @@ has precedence level 5 and associates to the right.
 -->
 
 我们来仔细研究这个定义。如果 `A` 是个集合，那么 `List A` 也是一个集合。接下来的两行告诉我们
-`[]` （读作 *nil*）是一个类型为 `A` 的列表（通常被叫做*空*列表），`_∷_`（读作 *cons*，是
+`[]` （读作 *nil*）是一个类型为 `A` 的列表（通常被叫做**空**列表），`_∷_`（读作 *cons*，是
 *constructor* 的简写）取一个类型为 `A` 的值，和一个类型为 `List A` 的值，返回一个类型为
 `List A` 的值。`_∷_` 运算符的优先级是 5，向右结合。
 
@@ -97,8 +97,8 @@ nothing in between, and the tail is itself another list!
 -->
 
 表示了一个三个自然数的列表。因为 `_∷_` 向右结合，这一项被解析成 `0 ∷ (1 ∷ (2 ∷ []))`。
-在这里，`0` 是列表的第一个元素，称之为*头*（Head），`1 ∷ (2 ∷ [])` 是剩下元素的列表，
-称之为*尾*（Tail）。列表是一个奇怪的怪兽：它有一头一尾，中间没有东西，然而它的尾巴又是一个列表！
+在这里，`0` 是列表的第一个元素，称之为**头（Head）**，`1 ∷ (2 ∷ [])` 是剩下元素的列表，
+称之为**尾（Tail）**。列表是一个奇怪的怪兽：它有一头一尾，中间没有东西，然而它的尾巴又是一个列表！
 
 <!--
 As we've seen, parameterised types can be translated to
@@ -191,7 +191,7 @@ Our first function on lists is written `_++_` and pronounced
 _append_:
 -->
 
-我们对于列表的第一个函数写作 `_++_`，读作*附加*（Append）：
+我们对于列表的第一个函数写作 `_++_`，读作**附加（Append）**：
 
 ```
 infixr 5 _++_
@@ -365,7 +365,7 @@ these three properties establish that `_++_` and `[]` form
 a _monoid_ over lists.
 -->
 
-我们之后会了解到，这三条性质表明了 `_++_` 和 `[]` 在列表上构成了一个*幺半群*（Monoid）。
+我们之后会了解到，这三条性质表明了 `_++_` 和 `[]` 在列表上构成了一个**幺半群（Monoid）**。
 
 <!--
 ## Length
@@ -589,7 +589,7 @@ A function is an _involution_ if when applied twice it acts
 as the identity function.  Show that reverse is an involution:
 -->
 
-当一个函数应用两次后与恒等函数作用相同，那么这个函数是一个**对合**（Involution）。
+当一个函数应用两次后与恒等函数作用相同，那么这个函数是一个**对合（Involution）**。
 证明反转是一个对合：
 
     reverse (reverse xs) ≡ xs
@@ -756,7 +756,7 @@ argument or returns a function as a result:
 -->
 
 映射将一个函数应用于列表中的所有元素，生成一个对应的列表。
-映射是一个**高阶函数**（Higher-Order Function）的例子，它取一个函数作为参数，返回一个函数作为结果：
+映射是一个**高阶函数（Higher-Order Function）**的例子，它取一个函数作为参数，返回一个函数作为结果：
 
 ```
 map : ∀ {A B : Set} → (A → B) → List A → List B
@@ -1234,7 +1234,7 @@ operator and the value form a _monoid_.
 -->
 
 一般来说，我们会对于折叠函数使用一个满足结合律的运算符，和这个运算符的左右幺元。
-这意味着这个运算符和这个值形成了一个**幺半群（Monoid）**。
+这意味着这个运算符和这个值形成了一个**幺半群**。
 
 <!--
 We can define a monoid as a suitable record type:
@@ -1794,7 +1794,7 @@ if we have a function that for a given `x` can decide `P x`:
 
 正如所希望的那样，如果我们将布尔值替换成可判定值，这与 `All` 是相似的。首先，回到将 `P`
 当作一个类型为 `A → Set` 的函数的概念，将一个类型为 `A` 的值 `x` 转换成 `P x` 对 `x` 成立
-的证明。我们成 `P` 为**可判定的**（Decidable），如果我们有一个函数，其在给定 `x` 时能够判定 `P x`：
+的证明。我们成 `P` 为**可判定的（Decidable）**，如果我们有一个函数，其在给定 `x` 时能够判定 `P x`：
 
 ```
 Decidable : ∀ {A : Set} → (A → Set) → Set
