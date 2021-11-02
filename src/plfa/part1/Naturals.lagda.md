@@ -171,6 +171,7 @@ and the conclusion asserts that `zero` is a natural.  The second rule
 is the inductive case. It has one hypothesis, which assumes that `m`
 is a natural, and the conclusion asserts that `suc m`
 is also a natural.
+-->
 
 我们来分析一下刚才的两条推导规则。每条推导规则包含写在一条水平直线上的
 零条或多条**判断（Judgment）**，称之为**假设（Hypothesis）**；以及写在

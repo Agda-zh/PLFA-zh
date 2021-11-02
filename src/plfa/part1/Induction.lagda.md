@@ -1836,6 +1836,11 @@ for all `m`, `n`, and `p`.
 ```
 -- Your code goes here
 ```
+-->
+
+```
+-- 请将代码写在此处。
+```
 
 <!--
 #### Exercise `Bin-laws` (stretch) {name=Bin-laws}
