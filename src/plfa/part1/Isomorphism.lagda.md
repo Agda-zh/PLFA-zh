@@ -60,7 +60,7 @@ _Lambda expressions_ provide a compact way to define functions without
 naming them.  A term of the form
 -->
 
-*Lambda 表达式*提供了一种简洁的定义函数的方法，且不需要提供函数名。一个如同这样的项：
+**Lambda 表达式**提供了一种简洁的定义函数的方法，且不需要提供函数名。一个如同这样的项：
 
     λ{ P₁ → N₁; ⋯ ; Pₙ → Nₙ }
 
@@ -290,8 +290,8 @@ of four things:
 我们来一一展开这个定义。一个集合 `A` 和 `B` 之间的同构有四个要素：
 + 从 `A` 到 `B` 的函数 `to`
 + 从 `B` 回到 `A` 的函数 `from`
-+ `from` 是 `to` 的*左逆*（left-inverse）的证明 `from∘to`
-+ `from` 是 `to` 的*右逆*（right-inverse）的证明 `to∘from`
++ `from` 是 `to` 的**左逆（left-inverse）**的证明 `from∘to`
++ `from` 是 `to` 的**右逆（right-inverse）**的证明 `to∘from`
 
 <!--
 In particular, the third asserts that `from ∘ to` is the identity, and
@@ -522,7 +522,7 @@ included in the second; or, equivalently, that there is a many-to-one
 correspondence between the second type and the first.
 -->
 
-我们同时也需要*嵌入*的概念，它是同构的弱化概念。同构要求证明两个类型之间的一一对应，
+我们同时也需要**嵌入**的概念，它是同构的弱化概念。同构要求证明两个类型之间的一一对应，
 而嵌入只需要第一种类型涵盖在第二种类型内，所以两个类型之间有一对多的对应关系。
 
 <!--
