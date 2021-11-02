@@ -246,7 +246,7 @@ Equality satisfies _congruence_.  If two terms are equal,
 they remain so after the same function is applied to both:
 -->
 
-相等性满足 *合同性*（Congruence）。如果两个项相等，那么对它们使用相同的函数，
+相等性满足 **合同性（Congruence）**。如果两个项相等，那么对它们使用相同的函数，
 其结果仍然相等：
 
 ```
@@ -293,7 +293,7 @@ Equality also satisfies *substitution*.
 If two values are equal and a predicate holds of the first then it also holds of the second:
 -->
 
-相等性也满足*替换性*（Substitution）。
+相等性也满足**替换性（Substitution）**。
 如果两个值相等，其中一个满足某谓词，那么另一个也满足此谓词。
 
 ```
@@ -496,7 +496,7 @@ caution.  If we postulate something false then we could use Agda to
 prove anything whatsoever.
 -->
 
-这是我们第一次使用*假设*（Postulate）。假设为一个标识符指定一个签名，但是不提供定义。
+这是我们第一次使用**假设（Postulate）**。假设为一个标识符指定一个签名，但是不提供定义。
 我们在这里假设之前证明过的东西，来节约空间。假设在使用时必须加以注意。如果假设的内容为假，
 那么我们可以证明出任何东西。
 
@@ -822,7 +822,7 @@ reversing the order of the clauses will cause Agda to report an error.
 
 总的来着，我们可以在 `with` 后面跟上任何数量的表达式，用竖线分隔开，并且在每个等式中使用相同个数的模式。
 我们经常将表达式和模式如上对齐。这个第一列表明了 `m + n` 和 `n + m` 是相同的，第二列使用相应等式来证明的前述的断言。
-注意在这里使用的*点模式*（Dot Pattern），`.(n + m)`。点模式由一个点和一个表达式组成，
+注意在这里使用的**点模式（Dot Pattern）**，`.(n + m)`。点模式由一个点和一个表达式组成，
 在其他信息迫使这个值和点模式中的值相等时使用。在这里，`m + n` 和 `n + m` 由后续的
 `+-comm m n` 与 `refl` 的匹配来识别。我们可能会认为第一种情况是多余的，因为第二种情况中才蕴涵了需要的信息。
 但实际上 Agda 在这件事上很挑剔——省略第一条或者更换顺序会让 Agda 报告一个错误。（试一试你就知道！）
@@ -869,7 +869,7 @@ satisfy Martin-Löf equality.
 -->
 
 我们使用的相等性断言的形式源于 Martin-Löf，于 1975 年发表。一个更早的形式源于莱布尼兹，
-于 1686 年发表。莱布尼兹断言的相等性表示*不可分辨的实体*（Identity of Indiscernibles）：
+于 1686 年发表。莱布尼兹断言的相等性表示**不可分辨的实体（Identity of Indiscernibles）**：
 两个对象相等当且仅当它们满足完全相同的性质。这条原理有时被称作莱布尼兹定律（Leibniz' Law），
 与史波克定律紧密相关：“一个不造成区别的区别不是区别”。我们在这里定义莱布尼兹相等性，
 并证明两个项满足莱布尼兹相等性当且仅当其满足 Martin-Löf 相等性。
@@ -916,7 +916,7 @@ mentions `Set` on the right-hand side, the corresponding signature
 must use `Set₁`.  We say a bit more about levels below.
 -->
 
-这是我们第一次使用*等级*（Levels）。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
+这是我们第一次使用**等级（Levels）**。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
 比如罗素悖论（Russell's Paradox）或者 Girard 悖论。不同的是，我们有一个阶级的类型：其中
 `Set : Set₁`，`Set₁ : Set₂`，以此类推。实际上，`Set` 本身就是 `Set₀` 的缩写。定义
 `_≐_` 的等式在右手边提到了 `Set`，因此签名中必须使用 `Set₁`。我们稍后将进一步介绍等级。
@@ -1080,7 +1080,7 @@ with respect to an arbitrary level `ℓ`. To make use of levels, we
 first import the following:
 -->
 
-答案是*全体多态*（Universe Polymorphism），一个定义可以根据任何等级 `ℓ` 来做出。
+答案是**全体多态（Universe Polymorphism）**，一个定义可以根据任何等级 `ℓ` 来做出。
 为了使用等级，我们首先导入下列内容：
 
 ```

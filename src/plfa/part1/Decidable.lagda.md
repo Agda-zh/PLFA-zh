@@ -22,10 +22,10 @@ but later discover that these are best avoided in favour
 of a new notion of _decidable_.
 -->
 
-我们有两种不同的方式来表示关系：一是表示为由关系成立的*证明*（Evidence）所构成的数据类型；
-二是表示为一个*计算*（Compute）关系是否成立的函数。在本章中，我们将探讨这两种方式之间的关系。
-我们首先研究大家熟悉的*布尔值*（Boolean）记法，但是之后我们会发现，相较布尔值记法，
-使用一种新的*可判定性*（Decidable）记法将会是更好的选择。
+我们有两种不同的方式来表示关系：一是表示为由关系成立的**证明（Evidence）**所构成的数据类型；
+二是表示为一个**计算（Compute）**关系是否成立的函数。在本章中，我们将探讨这两种方式之间的关系。
+我们首先研究大家熟悉的**布尔值（Boolean）**记法，但是之后我们会发现，相较布尔值记法，
+使用一种新的**可判定性（Decidable）**记法将会是更好的选择。
 
 <!--
 ## Imports
@@ -123,7 +123,7 @@ Given booleans, we can define a function of two numbers that
 _computes_ to `true` if the comparison holds and to `false` otherwise:
 -->
 
-给定了布尔类型，我们可以定义一个两个数的函数在比较关系成立时来*计算*出 `true`，
+给定了布尔类型，我们可以定义一个两个数的函数在比较关系成立时来**计算**出 `true`，
 否则计算出 `false`：
 
 ```
@@ -349,7 +349,7 @@ there is a way to get the benefits of both.
 -->
 
 从另一个角度来说，有时计算的性质可能正是我们所需要的。面对一个大数值上的非显然关系，
-使用电脑来计算出答案可能会更加方便。幸运的是，比起在*证明*或*计算*之中犹豫，
+使用电脑来计算出答案可能会更加方便。幸运的是，比起在**证明**或**计算**之中犹豫，
 我们有一种更好的方法来兼取其优。
 
 <!--
@@ -368,7 +368,7 @@ both approaches.  It is called `Dec A`, where `Dec` is short for _decidable_:
 
 一个返回布尔值的函数提供恰好一比特的信息：这个关系成立或是不成立。相反地，证明的形式告诉我们
 为什么这个关系成立，但却需要我们自行完成这个证明。不过，我们其实可以简单地定义一个类型来取二者之精华。
-我们把它叫做：`Dec A`，其中 `Dec` 是*可判定的*（Decidable）的意思。
+我们把它叫做：`Dec A`，其中 `Dec` 是**可判定的（Decidable）**的意思。
 
 ```
 data Dec (A : Set) : Set where
@@ -478,7 +478,7 @@ We can use our new function to _compute_ the _evidence_ that earlier we had to
 think up on our own:
 -->
 
-我们可以使用我们新的函数来*计算*出我们之前需要自己想出来的*证明*。
+我们可以使用我们新的函数来**计算**出我们之前需要自己想出来的**证明**。
 
 ```
 _ : 2 ≤? 4 ≡ yes (s≤s (s≤s z≤n))
@@ -1021,7 +1021,7 @@ from `m` only if `n ≤ m`:
 
 让我们回顾一下章节[自然数](/Naturals/)中 `monus` 的定义。
 如果从一个较小的数中减去一个较大的数，结果为零。毕竟我们总是要得到一个结果。
-我们可以用其他方式定义吗？可以定义一版带有*守卫（guarded）*的减法──只有当 `n ≤ m` 时才能从 `m` 中减去 `n` ：
+我们可以用其他方式定义吗？可以定义一版带有**守卫（guarded）**的减法──只有当 `n ≤ m` 时才能从 `m` 中减去 `n` ：
 
 ```
 minus : (m n : ℕ) (n≤m : n ≤ m) → ℕ
@@ -1048,7 +1048,7 @@ know the two numbers *statically*. In that case, we can use a technique called
 equality `n ≤? m` while type checking, and make sure that `n ≤ m`!
 -->
 
-这个问题没有通用的解决方案，但是在上述的情景下，我们恰好*静态地*知道这两个数字。这种情况下，我们可以使用一种被称为*互映证明（proof by reflection）*的技术。
+这个问题没有通用的解决方案，但是在上述的情景下，我们恰好**静态地**知道这两个数字。这种情况下，我们可以使用一种被称为**互映证明（proof by reflection）**的技术。
 实质上，在类型检查的时候我们可以让 Agda 运行可判定的等式 `n ≤? m` 并且保证 `n ≤ m`！
 
 <!--
@@ -1129,7 +1129,7 @@ True Q = T ⌊ Q ⌋
 Give analogues of `True`, `toWitness`, and `fromWitness` which work with *negated* properties. Call these `False`, `toWitnessFalse`, and `fromWitnessFalse`.
 -->
 
-给出 `True`，`toWitness` 和 `fromWitness` 的相反定义。分别称为 `False`，`toWitnessFalse` 和 `fromWitnessFalse`。
+给出 `True`，`toWitness` 和 `fromWitness` 的**相反**定义。分别称为 `False`，`toWitnessFalse` 和 `fromWitnessFalse`。
 
 <!--
 ## Standard Library

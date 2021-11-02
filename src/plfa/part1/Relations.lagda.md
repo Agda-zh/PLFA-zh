@@ -1106,7 +1106,7 @@ It is also monotonic with regards to addition and multiplication.
 
 显然，严格不等关系不是自反的，而是**非自反的（Irreflexive）**，表示 `n < n` 对于
 任何值 `n` 都不成立。和不等关系一样，严格不等关系是传递的。严格不等关系不是完全的，但是满足
-一个相似的性质：*三分律*（Trichotomy）：对于任意的 `m` 和 `n`，`m < n`、`m ≡ n` 或者
+一个相似的性质：**三分律（Trichotomy）**：对于任意的 `m` 和 `n`，`m < n`、`m ≡ n` 或者
 `m > n` 三者有且仅有一者成立。（我们定义 `m > n` 当且仅当 `n < m` 成立时成立）
 严格不等关系对于加法和乘法也是单调的。
 

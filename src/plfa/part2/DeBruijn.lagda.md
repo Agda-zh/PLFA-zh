@@ -45,8 +45,8 @@ Following Reynolds, we will refer to them as _extrinsic_ and _intrinsic_.
 项独立于类型存在，其类型由另外的赋型规则指派。
 其二是我们在本章中使用的方法，先定义类型，再定义项。
 项和类型的规则相互环绕，并且讨论不带类型的项将没有意义。
-这两种方法有的时候被称为**柯里法**（Curry Style）和**邱奇法**（Church Style）。
-沿用 Reynolds 的叫法，我们把两种方法称为**外在法**（Extrinsic）和**内在法**（Intrinsic）。
+这两种方法有的时候被称为**柯里法（Curry Style）**和**邱奇法（Church Style）**。
+沿用 Reynolds 的叫法，我们把两种方法称为**外在法（Extrinsic）**和**内在法（Intrinsic）**。
 
 <!--
 The particular representation described here
@@ -184,7 +184,7 @@ equivalence class of terms under alpha renaming.
 -->
 
 用数字代替变量的这种表示方法叫做 **de Bruijn 表示法**，这些数字本身被称为
-**de Bruijn 因子**（de Bruijn Indices），得名于荷兰数学家
+**de Bruijn 因子（de Bruijn Indices）**，得名于荷兰数学家
 Nicolaas Govert (Dick) de Bruijn （1918 - 2012），一位创造证明助理的先锋。
 使用 de Bruijn 因子表示变量的一个好处是：每个项有一个唯一的表示方法，而不是
 在 α-重命名下的一个相等类。
@@ -202,10 +202,10 @@ raw terms by the type `Γ ⊢ A` of intrinsically-typed terms
 which in context `Γ` have type `A`.
 -->
 
-我们选择的表示方式的另一个重要特性是：他是**内在类型**的（Intrinsically Typed）。
+我们选择的表示方式的另一个重要特性是：他是**内在类型（Intrinsically Typed）**的。
 在前两章中，项和类型的定义是完全分离的。所有的项拥有 `Term` 类型，Agda 并不会
 阻止我们写出例如 `` `zero · `suc `zero `` 的没有类型的无意义的项。
-这样独立于类型存在的项有时被称为**原项**（Preterms）或者**源项**（Raw Terms）。
+这样独立于类型存在的项有时被称为**原项（Preterms）**或者**源项（Raw Terms）**。
 我们将用 `Γ ⊢ A` 类型的内在类型的项，表示它在 `Γ` 上下文中拥有类型 `A`，
 来取代 `Term` 类型的源项。
 
