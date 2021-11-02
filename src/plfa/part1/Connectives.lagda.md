@@ -25,7 +25,7 @@ principle known as _Propositions as Types_:
 -->
 
 本章节介绍基础的逻辑运算符。我们使用逻辑运算符与数据类型之间的对应关系，
-即*命题即类型*原理（Propositions as Types）。
+即**命题即类型（Propositions as Types）**原理。
 
 <!--
   * _conjunction_ is _product_,
@@ -35,11 +35,11 @@ principle known as _Propositions as Types_:
   * _implication_ is _function space_.
 -->
 
-  * *合取*（Conjunction）即是*积*（Product）
-  * *析取*（Disjunction）即是*和*（Sum）
-  * *真*（True）即是*单元类型*（Unit Type）
-  * *假*（False）即是*空类型*（Empty Type）
-  * *蕴涵*（Implication）即是*函数空间*（Function Space）
+  * **合取（Conjunction）**即是**积（Product）**
+  * **析取（Disjunction）**即是**和（Sum）**
+  * **真（True）**即是**单元类型（Unit Type）**
+  * **假（False）**即是**空类型（Empty Type）**
+  * **蕴涵（Implication）**即是**函数空间（Function Space）**
 
 <!--
 ## Imports
@@ -129,8 +129,8 @@ We may also refer to `proj₁` and `proj₂` as destructors, since they
 play a similar role.
 -->
 
-当 `⟨_,_⟩` 在等式右手边的项中出现的时候，我们将其称作*构造子*（Constructor），
-当它出现在等式左边时，我们将其称作*析构器*（Destructor）。我们亦可将 `proj₁` 和 `proj₂`
+当 `⟨_,_⟩` 在等式右手边的项中出现的时候，我们将其称作**构造子（Constructor）**，
+当它出现在等式左边时，我们将其称作**析构器（Destructor）**。我们亦可将 `proj₁` 和 `proj₂`
 称作析构器，因为它们起到相似的效果。
 
 <!--
@@ -148,12 +148,12 @@ elimination rule describes what we may conclude when the connective
 holds---how to _use_ the connective.[^from-wadler-2015]
 -->
 
-其他的术语将 `⟨_,_⟩` 称作*引入*（Introduce）合取，将 `proj₁` 和 `proj₂` 称作*消去*（Eliminate）合取。
+其他的术语将 `⟨_,_⟩` 称作**引入（Introduce）**合取，将 `proj₁` 和 `proj₂` 称作**消去（Eliminate）**合取。
 前者亦记作 `×-I`，后者 `×-E₁` 和 `×-E₂`。如果我们从上到下来阅读这些规则，引入和消去
-正如其名字所说的那样：第一条*引入*一个运算符，所以运算符出现在结论中，而不是假设中；
-第二条*消去*一个带有运算符的式子，而运算符出现在假设中，而不是结论中。引入规则描述了
-运算符在什么情况下成立——即怎么样*定义*一个运算符。消去规则描述了运算符成立时，可以得出
-什么样的结论——即怎么样*使用*一个运算符。[^from-wadler-2015]
+正如其名字所说的那样：第一条**引入**一个运算符，所以运算符出现在结论中，而不是假设中；
+第二条**消去**一个带有运算符的式子，而运算符出现在假设中，而不是结论中。引入规则描述了
+运算符在什么情况下成立——即怎么样**定义**一个运算符。消去规则描述了运算符成立时，可以得出
+什么样的结论——即怎么样**使用**一个运算符。[^from-wadler-2015]
 
 <!--
 In this case, applying each destructor and reassembling the results with the
@@ -234,8 +234,8 @@ For instance, consider a type `Bool` with two members, and
 a type `Tri` with three members:
 -->
 
-给定两个类型 `A` 和 `B`，我们将 `A × B` 称为 `A` 与 `B` 的*积*。
-在集合论中它也被称作*笛卡尔积*（Cartesian Product），在计算机科学中它对应*记录*类型。
+给定两个类型 `A` 和 `B`，我们将 `A × B` 称为 `A` 与 `B` 的**积**。
+在集合论中它也被称作**笛卡尔积（Cartesian Product）**，在计算机科学中它对应**记录**类型。
 如果类型 `A` 有 `m` 个不同的成员，类型 `B` 有 `n` 个不同的成员，
 那么类型 `A × B` 有 `m * n` 个不同的成员。这也是它被称为积的原因之一。
 例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型：
@@ -285,7 +285,7 @@ isomorphism_.
 -->
 
 类型上的积与数的积有相似的性质——它们满足交换律和结合律。
-更确切地说，积在*在同构意义下*满足交换律和结合率。
+更确切地说，积在**在同构意义下**满足交换律和结合率。
 
 <!--
 For commutativity, the `to` function swaps a pair, taking `⟨ x , y ⟩` to
@@ -316,7 +316,7 @@ Being _commutative_ is different from being _commutative up to
 isomorphism_.  Compare the two statements:
 -->
 
-满足*交换律*和*在同构意义下满足交换律*是不一样的。比较下列两个命题：
+满足**交换律**和**在同构意义下满足交换律**是不一样的。比较下列两个命题：
 
     m * n ≡ n * m
     A × B ≃ B × A
@@ -332,7 +332,7 @@ former, corresponds to `⟨ aa , true ⟩`, which is a member of the latter.
 
 在第一个情况下，我们可能有 `m` 是 `2`、`n` 是 `3`，那么 `m * n` 和 `n * m` 都是 `6`。
 在第二个情况下，我们可能有 `A` 是 `Bool` 和 `B` 是 `Tri`，但是 `Bool × Tri` 和
-`Tri × Bool` *不是*一样的。但是存在一个两者之间的同构。例如：`⟨ true , aa ⟩` 是前者的成员，
+`Tri × Bool` **不是**一样的。但是存在一个两者之间的同构。例如：`⟨ true , aa ⟩` 是前者的成员，
 其对应后者的成员 `⟨ aa , true ⟩`。
 
 <!--
@@ -361,7 +361,7 @@ Being _associative_ is not the same as being _associative
 up to isomorphism_.  Compare the two statements:
 -->
 
-满足*结合律*和*在同构意义下满足结合律*是不一样的。比较下列两个命题：
+满足**结合律**和**在同构意义下满足结合律**是不一样的。比较下列两个命题：
 
     (m * n) * p ≡ m * (n * p)
     (A × B) × C ≃ A × (B × C)
@@ -373,7 +373,7 @@ instance `⟨ ⟨ 1 , true ⟩ , aa ⟩`, which is a member of the former,
 corresponds to `⟨ 1 , ⟨ true , aa ⟩ ⟩`, which is a member of the latter.
 -->
 
-举个例子，`(ℕ × Bool) × Tri` 与 `ℕ × (Bool × Tri)` *不同*，但是两个类型之间
+举个例子，`(ℕ × Bool) × Tri` 与 `ℕ × (Bool × Tri)` **不同**，但是两个类型之间
 存在同构。例如 `⟨ ⟨ 1 , true ⟩ , aa ⟩`，一个前者的成员，与 `⟨ 1 , ⟨ true , aa ⟩ ⟩`，
 一个后者的成员，相对应。
 
@@ -486,7 +486,7 @@ type `⊤` has exactly one member, `tt`.  For example, the following
 function enumerates all possible arguments of type `⊤`:
 -->
 
-我们将 `⊤` 称为*单元*类型（Unit Type）。实际上，`⊤` 类型只有一个成员 `tt`。
+我们将 `⊤` 称为**单元（Unit Type）**类型。实际上，`⊤` 类型只有一个成员 `tt`。
 例如，下面的函数枚举了所有 `⊤` 类型的参数：
 
 -->
@@ -503,7 +503,7 @@ function does the inverse.  The evidence of left inverse requires
 matching against a suitable pattern to enable simplification:
 -->
 
-对于数来说，1 是乘法的幺元。对应地，单元是积的幺元（*在同构意义下*）。对于左幺元来说，
+对于数来说，1 是乘法的幺元。对应地，单元是积的幺元（**在同构意义下**）。对于左幺元来说，
 `to` 函数将 `⟨ tt , x ⟩` 转换成 `x`， `from` 函数则是其反函数。左逆的证明需要
 匹配一个合适的模式来化简：
 
@@ -523,7 +523,7 @@ Having an _identity_ is different from having an identity
 _up to isomorphism_.  Compare the two statements:
 -->
 
-*幺元*和*在同构意义下的幺元*是不一样的。比较下列两个命题：
+**幺元**和**在同构意义下的幺元**是不一样的。比较下列两个命题：
 
     1 * m ≡ m
     ⊤ × A ≃ A
@@ -640,10 +640,10 @@ the former are sometimes given the names `⊎-I₁` and `⊎-I₂` and the
 latter the name `⊎-E`.
 -->
 
-当 `inj₁` 和 `inj₂` 在等式右手边出现的时候，我们将其称作*构造子*，
-当它出现在等式左边时，我们将其称作*析构器*。我们亦可将 `case-⊎`
-称作析构器，因为它们起到相似的效果。其他术语将 `inj₁` 和 `inj₂` 称为*引入*析取，
-将 `case-⊎` 称为*消去*析取。前者亦被称为 `⊎-I₁` 和 `⊎-I₂`，后者 `⊎-E`。
+当 `inj₁` 和 `inj₂` 在等式右手边出现的时候，我们将其称作**构造子**，
+当它出现在等式左边时，我们将其称作**析构器**。我们亦可将 `case-⊎`
+称作析构器，因为它们起到相似的效果。其他术语将 `inj₁` 和 `inj₂` 称为**引入**析取，
+将 `case-⊎` 称为**消去**析取。前者亦被称为 `⊎-I₁` 和 `⊎-I₂`，后者 `⊎-E`。
 
 <!--
 Applying the destructor to each of the constructors is the identity:
@@ -710,8 +710,8 @@ Then the type `Bool ⊎ Tri` has five
 members:
 -->
 
-给定两个类型 `A` 和 `B`，我们将 `A ⊎ B` 称为 `A` 与 `B` 的*和*。
-在集合论中它也被称作*不交并*（Disjoint Union），在计算机科学中它对应*变体记录*类型。
+给定两个类型 `A` 和 `B`，我们将 `A ⊎ B` 称为 `A` 与 `B` 的**和**。
+在集合论中它也被称作**不交并（Disjoint Union）**，在计算机科学中它对应**变体记录**类型。
 如果类型 `A` 有 `m` 个不同的成员，类型 `B` 有 `n` 个不同的成员，
 那么类型 `A ⊎ B` 有 `m + n` 个不同的成员。这也是它被称为和的原因之一。
 例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型，如之前的定义。
@@ -743,7 +743,7 @@ commutative and associative _up to isomorphism_.
 -->
 
 类型上的和与数的和有相似的性质——它们满足交换律和结合律。
-更确切地说，和在*在同构意义下*是交换和结合的。
+更确切地说，和在**在同构意义下**是交换和结合的。
 
 <!--
 #### Exercise `⊎-comm` (recommended)
@@ -849,7 +849,7 @@ _never_ possible to match against a value of this type by using
 the pattern `()`.
 -->
 
-这是我们第一次使用*荒谬模式*（Absurd Pattern） `()`。在这里，因为 `⊥`
+这是我们第一次使**用荒谬模式（Absurd Pattern）** `()`。在这里，因为 `⊥`
 是一个没有成员的类型，我们用 `()` 模式来指明这里不可能匹配任何这个类型的值。
 
 <!--
@@ -884,11 +884,11 @@ so the equation holds trivially.
 We refer to `⊥` as the _empty_ type. And, indeed,
 type `⊥` has no members. For example, the following function
 enumerates all possible arguments of type `⊥`:
+-->
 
-我们将 `⊥` 成为*空*类型（Empty Type）。实际上，`⊥` 类型没有成员。
+我们将 `⊥` 成为**空（Empty）**类型。实际上，`⊥` 类型没有成员。
 例如，下面的函数枚举了所有 `⊥` 类型的参数：
 
--->
 ```
 ⊥-count : ⊥ → ℕ
 ⊥-count ()
@@ -906,7 +906,7 @@ For numbers, zero is the identity of addition. Correspondingly, empty
 is the identity of sums _up to isomorphism_.
 -->
 
-对于数来说，0 是加法的幺元。对应地，空是和的幺元（*在同构意义下*）。
+对于数来说，0 是加法的幺元。对应地，空是和的幺元（**在同构意义下**）。
 
 <!--
 #### Exercise `⊥-identityˡ` (recommended)
@@ -1015,8 +1015,8 @@ is referred to as _introducing_ a function,
 while applying a function is referred to as _eliminating_ the function.
 -->
 
-定义一个函数，不管是带名字的定义或是使用 Lambda 抽象，被称为*引入*一个函数，
-使用一个函数被称为*消去*一个函数。
+定义一个函数，不管是带名字的定义或是使用 Lambda 抽象，被称为**引入**一个函数，
+使用一个函数被称为**消去**一个函数。
 
 <!--
 Elimination followed by introduction is the identity:
@@ -1048,8 +1048,8 @@ as defined earlier. Then the type `Bool → Tri` has nine (that is,
 three squared) members:
 -->
 
-给定两个类型 `A` 和 `B`，我们将 `A → B` 称为从 `A` 到 `B` 的*函数*空间。
-它有时也被称作以 `B` 为底，`A` 为次数的*幂*。如果类型 `A` 有 `m` 个不同的成员，
+给定两个类型 `A` 和 `B`，我们将 `A → B` 称为从 `A` 到 `B` 的**函数**空间。
+它有时也被称作以 `B` 为底，`A` 为次数的**幂**。如果类型 `A` 有 `m` 个不同的成员，
 类型 `B` 有 `n` 个不同的成员，那么类型 `A → B` 有 `nᵐ` 个不同的成员。
 这也是它被称为幂的原因之一。例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型，
 如之前的定义。那么，`Bool → Tri` 类型有如下的九个成员（三的平方）：
@@ -1111,7 +1111,7 @@ The proof of the right inverse requires extensionality:
 -->
 
 两个类型可以被看作给定 `A` 成立的证据和 `B` 成立的证据，返回 `C` 成立的证据。
-这个同构有时也被称作*柯里化*（Currying）。右逆的证明需要外延性：
+这个同构有时也被称作**柯里化（Currying）**。右逆的证明需要外延性：
 
 ```
 currying : ∀ {A B C : Set} → (A → B → C) ≃ (A × B → C)
@@ -1337,7 +1337,7 @@ This is called a _weak distributive law_. Give the corresponding
 distributive law, and explain how it relates to the weak version.
 -->
 
-这被称为*弱分配律*。给出相对应的分配律，并解释分配律与弱分配律的关系。
+这被称为**弱分配律（Weak Distributive Law）**。给出相对应的分配律，并解释分配律与弱分配律的关系。
 
 <!--
 ```
