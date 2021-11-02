@@ -527,11 +527,11 @@ One might think that we could instead use a more compact translation:
 
 <!--
 But this behaves differently.  The first term always reduces `L`
-before `N`, and it computes ```proj₁`` and ```proj₂`` exactly once.  The
+before `N`, and it computes `` `proj₁ `` and `` `proj₂ `` exactly once.  The
 second term does not reduce `L` to a value before reducing `N`, and
 depending on how many times and where `x` and `y` appear in `N`, it
-may reduce `L` many times or not at all, and it may compute ```proj₁``
-and ```proj₂`` many times or not at all.
+may reduce `L` many times or not at all, and it may compute `` `proj₁ ``
+and `` `proj₂ `` many times or not at all.
 -->
 
 但是这样的话它们表现的不一样。

@@ -1833,6 +1833,11 @@ for all `m`, `n`, and `p`.
 对于所有 `m`、`n` 和 `p` 成立。
 
 <!--
+```
+-- Your code goes here
+```
+
+<!--
 #### Exercise `Bin-laws` (stretch) {name=Bin-laws}
 -->
 
