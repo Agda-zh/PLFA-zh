@@ -1,10 +1,10 @@
 /* This is Pandoc's default ebook CSS, modified slightly. */
 /* https://github.com/jgm/pandoc/blob/master/data/epub.css */
 @font-face {
-    font-family: 'DejaVu-mononoki-Symbola-Droid';
+    font-family: 'Frankenfont';
     font-weight: normal;
     font-style: normal;
-    src: url('../fonts/DejaVu-mononoki-Symbola-Droid.woff');
+    src: url('../fonts/Frankenfont.woff');
 }
 
 body {
@@ -14,7 +14,7 @@ body {
 }
 
 code {
-    font-family: 'DejaVu-mononoki-Symbola-Droid', monospace;
+    font-family: 'Frankenfont', monospace;
 }
 
 h1,

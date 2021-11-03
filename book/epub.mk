@@ -8,7 +8,7 @@ EPUB_LUA_DIR      := $(EPUB_DIR)/lua
 EPUB_LUA_SCRIPTS  := $(wildcard $(EPUB_LUA_DIR)/*.lua)
 MD_DIR            := src
 MD_FILES          := README.md $(wildcard $(MD_DIR)/plfa/**/*.md)
-FRANKENFONT       := public/webfonts/DejaVu-mononoki-Symbola-Droid.woff
+FRANKENFONT       := public/webfonts/Frankenfont.woff
 
 
 #################################################################################

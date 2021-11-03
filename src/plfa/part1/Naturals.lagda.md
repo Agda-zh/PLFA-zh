@@ -170,7 +170,7 @@ _conclusion_.  The first rule is the base case. It has no hypotheses,
 and the conclusion asserts that `zero` is a natural.  The second rule
 is the inductive case. It has one hypothesis, which assumes that `m`
 is a natural, and the conclusion asserts that `suc m`
-is a also a natural.
+is also a natural.
 -->
 
 我们来分析一下刚才的两条推导规则。每条推导规则包含写在一条水平直线上的
@@ -215,7 +215,7 @@ corresponding `data` declaration.  The lines
 <!--
 give _signatures_ specifying the types of the constructors `zero` and `suc`.
 They tell us that `zero` is a natural number and that `suc` takes a natural
-number as argument and returns a natural number.
+number as an argument and returns a natural number.
 -->
 
 这两行给出了构造子 `zero` 和 `suc` 的类型**签名（Signature）**。

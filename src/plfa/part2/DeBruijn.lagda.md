@@ -45,8 +45,8 @@ Following Reynolds, we will refer to them as _extrinsic_ and _intrinsic_.
 项独立于类型存在，其类型由另外的赋型规则指派。
 其二是我们在本章中使用的方法，先定义类型，再定义项。
 项和类型的规则相互环绕，并且讨论不带类型的项将没有意义。
-这两种方法有的时候被称为**柯里法**（Curry Style）和**邱奇法**（Church Style）。
-沿用 Reynolds 的叫法，我们把两种方法称为**外在法**（Extrinsic）和**内在法**（Intrinsic）。
+这两种方法有的时候被称为**柯里法（Curry Style）**和**邱奇法（Church Style）**。
+沿用 Reynolds 的叫法，我们把两种方法称为**外在法（Extrinsic）**和**内在法（Intrinsic）**。
 
 <!--
 The particular representation described here
@@ -59,7 +59,7 @@ James Chapman, James McKinna, and many others.
 -->
 
 我们在这里使用的这种表示法最先由 Thorsten Altenkirch 和 Bernhard Reus 提出。
-使用的将重命名和代换形式化的方法由 Conor McBride 提出。
+使用的将重命名和替换形式化的方法由 Conor McBride 提出。
 James Chapman、James McKinna 和许多其他人也进行了相关的研究。
 
 <!--
@@ -184,7 +184,7 @@ equivalence class of terms under alpha renaming.
 -->
 
 用数字代替变量的这种表示方法叫做 **de Bruijn 表示法**，这些数字本身被称为
-**de Bruijn 因子**（de Bruijn Indices），得名于荷兰数学家
+**de Bruijn 因子（de Bruijn Indices）**，得名于荷兰数学家
 Nicolaas Govert (Dick) de Bruijn （1918 - 2012），一位创造证明助理的先锋。
 使用 de Bruijn 因子表示变量的一个好处是：每个项有一个唯一的表示方法，而不是
 在 α-重命名下的一个相等类。
@@ -202,10 +202,10 @@ raw terms by the type `Γ ⊢ A` of intrinsically-typed terms
 which in context `Γ` have type `A`.
 -->
 
-我们选择的表示方式的另一个重要特性是：他是**内在类型**的（Intrinsically Typed）。
+我们选择的表示方式的另一个重要特性是：他是**内在类型（Intrinsically Typed）**的。
 在前两章中，项和类型的定义是完全分离的。所有的项拥有 `Term` 类型，Agda 并不会
 阻止我们写出例如 `` `zero · `suc `zero `` 的没有类型的无意义的项。
-这样独立于类型存在的项有时被称为**原项**（Preterms）或者**源项**（Raw Terms）。
+这样独立于类型存在的项有时被称为**原项（Preterms）**或者**源项（Raw Terms）**。
 我们将用 `Γ ⊢ A` 类型的内在类型的项，表示它在 `Γ` 上下文中拥有类型 `A`，
 来取代 `Term` 类型的源项。
 
@@ -366,7 +366,7 @@ substitution or reduction without also showing that they
 preserve types.  Hence, the order of presentation must change.
 -->
 
-在本章中，使用内在类型的项要求我们在引入诸如重命名或者代换等操作的同时，证明它们保留了类型。
+在本章中，使用内在类型的项要求我们在引入诸如重命名或者替换等操作的同时，证明它们保留了类型。
 因此，我们必须改变展示的顺序。
 
 <!--
@@ -379,7 +379,7 @@ incorporates preservation, which no longer requires a separate proof.
 -->
 
 项的语法现在包含了它们的赋型规则，值的语法现在包含了它们的标准式引理。
-代换的定义现在更加深入，但包括了之前证明中最棘手的部分，即代换保留了类型。
+替换的定义现在更加深入，但包括了之前证明中最棘手的部分，即替换保留了类型。
 规约的定义现在包括了保型性，不需要额外的证明。
 
 <!--
@@ -903,7 +903,7 @@ chapter, but here the theorem that ensures renaming preserves
 typing also acts as code that performs renaming.
 -->
 
-重命名是代换之前重要的一步，让我们可以将一个项从一个上下文中“转移”至另一个上下文。
+重命名是替换之前重要的一步，让我们可以将一个项从一个上下文中“转移”至另一个上下文。
 它直接对应了上一章中的关于重命名的结论，但此处重命名保留类型的定理同时是进行重命名的代码。
 
 <!--
@@ -1070,7 +1070,7 @@ typing, and hence the Agda code for intrinsically-typed de Bruijn
 terms is intrinsically reliable.
 -->
 
-我们稍后可以看到，使用 `S_` 进行重命名在代换中起到了重要作用。
+我们稍后可以看到，使用 `S_` 进行重命名在替换中起到了重要作用。
 对于没有使用内在类型的 de Bruijn 因子表示法来说，这会有一点棘手。
 这种方法需要记忆一个因子数，更大的因子为自由变量，更小的因子为约束变量。
 这样很容易出现差一错误，而出现差一错误以后很难保证类型的保存性。
@@ -1080,7 +1080,7 @@ terms is intrinsically reliable.
 ## Simultaneous Substitution
 -->
 
-## 同时代换
+## 同时替换
 
 <!--
 Because de Bruijn indices free us of concerns with renaming,
@@ -1092,9 +1092,9 @@ term to another term. Further, the substituted terms are over
 an arbitrary context, and need not be closed.
 -->
 
-由于 de Bruijn 因子让我们免去了重命名的顾虑，给出一个更广义的代换的定义更加方便。
-与其用一个闭项来代换一个单一的变量，广义的代换提供一个将原来项中各个自由变量至另一个项的映射。
-除此之外，被代换的项可以在任意上下文之中，不需要为闭项。
+由于 de Bruijn 因子让我们免去了重命名的顾虑，给出一个更广义的替换的定义更加方便。
+与其用一个闭项来替换一个单一的变量，广义的替换提供一个将原来项中各个自由变量至另一个项的映射。
+除此之外，被替换的项可以在任意上下文之中，不需要为闭项。
 
 <!--
 The structure of the definition and the proof is remarkably
@@ -1111,7 +1111,7 @@ extended to the second context similarly extended:
 定义和证明的结构与重命名项类似。
 同样，我们首先需要一个扩充引理，让我们能够在遇到约束时扩充上下文。
 对比在重命名中我们使用从一个上下文中的变量至另一上下文中变量的映射，
-代换使用的是将一个上下文中的变量至另一上下文中**项**的映射。
+替换使用的是将一个上下文中的变量至另一上下文中**项**的映射。
 给定一个将一个上下文中的变量映射至另一个上下文中项的映射，扩充会生成一个
 从扩充后的第一个上下文至以相同方法扩充的第二个上下文的映射。
 
@@ -1165,7 +1165,7 @@ to terms over another, then terms in the first context
 map to terms in the second:
 -->
 
-定义了扩充过后，代换的定义就变得很直接了。
+定义了扩充过后，替换的定义就变得很直接了。
 如果一个上下文中的变量映射至另一个上下文中的项，那么第一个上下文
 中的项映射至第二个上下文中：
 
@@ -1205,9 +1205,9 @@ to terms over `Δ`.  Let's unpack the first three cases:
 * 如果项是一个变量，直接应用 `σ`。
 
 * 如果项是一个抽象，使用之前的扩充结论来扩充映射 `σ`，
-  然后在递归地对于抽象本体进行进行代换。
+  然后在递归地对于抽象本体进行进行替换。
 
-* 如果项是一个应用，递归地代换函数及其参数。
+* 如果项是一个应用，递归地替换函数及其参数。
 
 <!--
 The remaining cases are similar, recursing on each subterm,
@@ -1229,7 +1229,7 @@ variables it is easy to define the special case of
 substitution for one free variable:
 -->
 
-从广义的代换多个自由变量，我们可以定义只代换单个变量的特殊情况：
+从广义的替换多个自由变量，我们可以定义只替换单个变量的特殊情况：
 
 ```
 _[_] : ∀ {Γ A B}
@@ -1253,9 +1253,9 @@ type `B` and every other free variable to itself.
 -->
 
 在一个上下文 `Γ , B` 中类型为 `A` 的项，我们将类型为 `B` 的变量
-代换为上下文 `Γ` 中一个类型为 `B` 的项。
+替换为上下文 `Γ` 中一个类型为 `B` 的项。
 为了这么做，我们用一个从 `Γ , B` 上下文至 `Γ` 上下文的映射，
-令上下文中最后一个变量映射至类型为 `B` 的代换项，令任何其他自由变量映射至其本身。
+令上下文中最后一个变量映射至类型为 `B` 的替换项，令任何其他自由变量映射至其本身。
 
 <!--
 Consider the previous example:
@@ -1297,7 +1297,7 @@ did not implement, since it needed to rename the bound
 variable to avoid capture:
 -->
 
-之前，我们展示了一个我们没有实现的代换的例子，因为它需要将约束变量重命名来防止捕捉：
+之前，我们展示了一个我们没有实现的替换的例子，因为它需要将约束变量重命名来防止捕捉：
 
 <!--
 * `` (ƛ "x" ⇒ ` "x" · ` "y") [ "y" := ` "x" · `zero ] `` should yield
@@ -1313,7 +1313,7 @@ Say the bound `"x"` has type `` `ℕ ⇒ `ℕ ``, the substituted
 Here is the example formalised:
 -->
 
-假设约束的 `"x"` 的类型是 `` `ℕ ⇒ `ℕ ``，被代换的 `"y"` 的类型是 `` `ℕ ``，
+假设约束的 `"x"` 的类型是 `` `ℕ ⇒ `ℕ ``，被替换的 `"y"` 的类型是 `` `ℕ ``，
 自由的 `"x"` 的类型也是 `` `ℕ ⇒ `ℕ ``。
 下面是形式化后的例子：
 
@@ -1343,9 +1343,9 @@ And combining definition with proof makes it harder for errors
 to sneak in.
 -->
 
-逻辑学家 Haskell Curry 注意到，正确地定义代换可能很棘手。
-使用 de Bruijn 因子来定义代换可能更加棘手，且不易理解。
-在现在的方法中，任何代换的定义必须保存类型。
+逻辑学家 Haskell Curry 注意到，正确地定义替换可能很棘手。
+使用 de Bruijn 因子来定义替换可能更加棘手，且不易理解。
+在现在的方法中，任何替换的定义必须保存类型。
 虽然这样让定义更加深入，但这也意味着一旦定义完成以后最难的部分就完成了。
 将定义和证明结合在一起可以让错误更不易出现。
 
@@ -1468,7 +1468,7 @@ definition of substitution.
 换句话说，我们的定义中**内置**了规约保存类型的证明。
 我们不需要额外证明保型性。
 Agda 的类型检查器检验了每个项保存了类型。
-在 `β` 规则的情况中，保型性依赖于代换保存类型的性质，而它内置于代换的定义之中。
+在 `β` 规则的情况中，保型性依赖于替换保存类型的性质，而它内置于替换的定义之中。
 
 <!--
 ## Reflexive and transitive closure
@@ -1638,7 +1638,7 @@ We now turn to proving the remaining results from the
 previous development.
 -->
 
-我们现在完成了所有的定义，包含了之前证明的一些推论：标准式、代换保存类型和保型性。
+我们现在完成了所有的定义，包含了之前证明的一些推论：标准式、替换保存类型和保型性。
 我们接下来证明剩下的结论。
 
 <!--
