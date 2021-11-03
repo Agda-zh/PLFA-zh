@@ -1,22 +1,36 @@
 ---
-title     : "Confluence: Confluence of untyped lambda calculus"
+title     : "Confluence: 无类型 λ-演算的合流性"
 layout    : page
 prev      : /Untyped/
 permalink : /Confluence/
 next      : /BigStep/
+translators : ["starxingchenc"]
+progress  : 20
 ---
 
 ```
 module plfa.part2.Confluence where
 ```
 
+<!--
 ## Introduction
+-->
 
+## 简介
+
+<!--
 In this chapter we prove that beta reduction is _confluent_, a
 property also known as _Church-Rosser_. That is, if there are
 reduction sequences from any term `L` to two different terms `M₁` and
 `M₂`, then there exist reduction sequences from those two terms to
 some common term `N`. In pictures:
+-->
+
+在这一章我们将证明 β-规约是**合流的（Confluent）**，
+该性质同样以 *Church-Rosser* 闻名。也就是说，
+如果有从任一项 `L` 至两个不同项 `M₁` 和 `M₂` 的规约序列，
+那么一定存在从这两个项至一些相同项 `N` 的规约序列。
+如图：
 
         L
        / \
@@ -58,7 +72,11 @@ Thus, we can reduce the proof of confluence for beta reduction to
 confluence for parallel reduction.
 
 
+<!--
 ## Imports
+-->
+
+## 导入
 
 ```
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
@@ -73,9 +91,17 @@ open import plfa.part2.Untyped
   rename; ext; exts; Z; S_; subst; subst-zero)
 ```
 
+<!--
 ## Parallel Reduction
+-->
 
+## 平行规约
+
+<!--
 The parallel reduction relation is defined as follows.
+-->
+
+平行规约关系被定义如下。
 
 ```
 infix 2 _⇛_
@@ -119,7 +145,12 @@ par-refl {Γ} {A} {` x} = pvar
 par-refl {Γ} {★} {ƛ N} = pabs par-refl
 par-refl {Γ} {★} {L · M} = papp par-refl par-refl
 ```
+
+<!--
 We define the sequences of parallel reduction as follows.
+-->
+
+我们定义平行规约序列如下。
 
 ```
 infix  2 _⇛*_
@@ -140,23 +171,43 @@ data _⇛*_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
 ```
 
 
+<!--
 #### Exercise `par-diamond-eg` (practice)
+-->
+
+#### 练习 `par-diamond-eg`（实践）
 
 Revisit the counter example to the diamond property for reduction by
 showing that the diamond property holds for parallel reduction in that
 case.
 
+<!--
 ```
 -- Your code goes here
 ```
+-->
+
+```
+-- 请将代码写在此处。
+```
 
 
+<!--
 ## Equivalence between parallel reduction and reduction
+-->
 
+## 平行规约与规约间等价性
+
+<!--
 Here we prove that for any `M` and `N`, `M ⇛* N` if and only if `M —↠ N`.
 The only-if direction is particularly easy. We start by showing
 that if `M —→ N`, then `M ⇛ N`. The proof is by induction on
 the reduction `M —→ N`.
+-->
+
+此处我们证明对于任何 `M` 和 `N`，`M ⇛* N` 当且仅当 `M —↠ N`。
+必要性的证明非常容易，我们开始于说明若 `M —→ N`，则 `M ⇛ N`。
+该证明通过对规约 `M —→ N` 进行归纳。
 
 ```
 beta-par : ∀{Γ A}{M N : Γ ⊢ A}
@@ -169,9 +220,14 @@ beta-par {Γ} {★} {(ƛ N) · M} β = pbeta par-refl par-refl
 beta-par {Γ} {★} {ƛ N} (ζ r) = pabs (beta-par r)
 ```
 
+<!--
 With this lemma in hand we complete the only-if direction,
 that `M —↠ N` implies `M ⇛* N`. The proof is a straightforward
 induction on the reduction sequence `M —↠ N`.
+-->
+
+证明了该引理后我们便可完成证明，
+即 `M —↠ N` 蕴含 `M ⇛* N`。该证明是对 `M —↠ N` 规约序列的简单归纳。
 
 ```
 betas-pars : ∀{Γ A} {M N : Γ ⊢ A}
@@ -183,10 +239,17 @@ betas-pars {Γ} {A} {.L} {N} (L —→⟨ b ⟩ bs) =
    L ⇛⟨ beta-par b ⟩ betas-pars bs
 ```
 
+<!--
 Now for the other direction, that `M ⇛* N` implies `M —↠ N`.  The
 proof of this direction is a bit different because it's not the case
 that `M ⇛ N` implies `M —→ N`. After all, `M ⇛ N` performs many
 reductions. So instead we shall prove that `M ⇛ N` implies `M —↠ N`.
+-->
+
+现在考虑命题的充分性，即 `M ⇛* N` 蕴含 `M —↠ N`。
+该方向的证明有一点不通，因为它不是 `M ⇛ N` 蕴含 `M —→ N` 的情形。
+毕竟 `M ⇛ N` 执行了许多规约，
+所以我们应当证明 `M ⇛ N` 蕴含 `M —↠ N`。
 
 ```
 par-betas : ∀{Γ A}{M N : Γ ⊢ A}
@@ -210,8 +273,13 @@ par-betas {Γ} {★} {(ƛ N) · M} (pbeta{N′ = N′}{M′ = M′} p₁ p₂) =
     ∎
 ```
 
+<!--
 The proof is by induction on `M ⇛ N`.
+-->
 
+该证明通过对 `M ⇛ N` 进行归纳。
+
+<!--
 * Suppose `x ⇛ x`. We immediately have `x —↠ x`.
 
 * Suppose `ƛ N ⇛ ƛ N′` because `N ⇛ N′`. By the induction hypothesis
@@ -228,9 +296,30 @@ The proof is by induction on `M ⇛ N`.
   `(ƛ N) · M —↠ (ƛ N′) · M′`
   which we can following with the β reduction
   `(ƛ N′) · M′ —→ N′ [ M′ ]`.
+-->
 
+* 假定 `x ⇛ x`。我们立刻有 `x —↠ x`。
+
+* 假定 `ƛ N ⇛ ƛ N′` 因为 `N ⇛ N′`。根据归纳假设我们有 `N —↠ N′`。
+  我们得出 `ƛ N —↠ ƛ N′` 因为 `—↠` 是 a congruence。
+
+* Suppose `L · M ⇛ L′ · M′` because `L ⇛ L′` and `M ⇛ M′`.
+  By the induction hypothesis, we have `L —↠ L′` and `M —↠ M′`.
+  So `L · M —↠ L′ · M` and then `L′ · M  —↠ L′ · M′`
+  because `—↠` is a congruence.
+
+* Suppose `(ƛ N) · M  ⇛  N′ [ M′ ]` because `N ⇛ N′` and `M ⇛ M′`.
+  By similar reasoning, we have
+  `(ƛ N) · M —↠ (ƛ N′) · M′`
+  which we can following with the β reduction
+  `(ƛ N′) · M′ —→ N′ [ M′ ]`.
+
+<!--
 With this lemma in hand, we complete the proof that `M ⇛* N` implies
 `M —↠ N` with a simple induction on `M ⇛* N`.
+-->
+
+证明了该引理后我们便可通过对 `M ⇛* N` 的一步简单归纳完成 `M ⇛* N` 蕴含 `M —↠ N` 的证明。
 
 ```
 pars-betas : ∀{Γ A} {M N : Γ ⊢ A}
@@ -242,7 +331,11 @@ pars-betas (L ⇛⟨ p ⟩ ps) = —↠-trans (par-betas p) (pars-betas ps)
 ```
 
 
+<!--
 ## Substitution lemma for parallel reduction
+-->
+
+## 平行规约的替换引理
 
 Our next goal is the prove the diamond property for parallel
 reduction. But to do that, we need to prove that substitution
@@ -499,7 +592,11 @@ par-diamond {M = M} p1 p2 = ⟨ M ⁺ , ⟨ par-triangle p1 , par-triangle p2 �
 
 This step is optional, though, in the presence of triangle property.
 
+<!--
 #### Exercise (practice)
+-->
+
+#### 练习（实践）
 
 * Prove the diamond property `par-diamond` directly by induction on `M ⇛ N` and `M ⇛ N′`.
 
@@ -508,7 +605,11 @@ This step is optional, though, in the presence of triangle property.
   and directed edges, where each node is labeled with a term and each
   edge represents parallel reduction.
 
+<!--
 ## Proof of confluence for parallel reduction
+-->
+
+## 平行规约合流性的证明
 
 As promised at the beginning, the proof that parallel reduction is
 confluent is easy now that we know it satisfies the triangle property.
@@ -585,7 +686,11 @@ they are marked. Here `(a)` holds by `strip` and `(b)` holds by
 induction.
 
 
+<!--
 ## Proof of confluence for reduction
+-->
+
+## 规约合流性的证明
 
 Confluence of reduction is a corollary of confluence for parallel
 reduction. From
@@ -608,7 +713,11 @@ confluence L↠M₁ L↠M₂
 ```
 
 
+<!--
 ## Notes
+-->
+
+## 注记
 
 Broadly speaking, this proof of confluence, based on parallel
 reduction, is due to W. Tait and P. Martin-Löf (see Barendregt 1984,
