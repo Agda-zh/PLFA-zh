@@ -20,7 +20,7 @@ sequences for us.
 
 本章涵盖了上一章所介绍的简单类型 λ-演算的性质。
 在这些性质中最为重要的是进行性（Progress）与保型性（Preservation）。
-我们将在稍后介绍它们，并展示如何通过组合它们来使 Agda 为我们所用以计算归约序列。
+我们将在稍后介绍它们，并展示如何通过组合它们来使 Agda 为我们计算归约序列。
 
 <!--
 ## Imports
@@ -152,8 +152,8 @@ types without needing to develop a separate inductive definition of the
 -->
 
 （这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language Foundations_）中对应的 _StlcProp_ 的内容。
-事实上我们技术选择中的一个 —— 通过显示地引入一条判断 `Γ ∋ x ⦂ A`，
-而不是将上下文视作为一个从标识符映射到类型的函数 —— 简化了开发过程。
+事实上我们技术选择中的一个——通过显示地引入一条判断 `Γ ∋ x ⦂ A`，
+而不是将上下文视作为一个从标识符映射到类型的函数——简化了开发过程。
 特别地，我们不需要额外地去归纳定义关系 `appears_free_in` 就可以证明替换保留了类型。）
 
 <!--
@@ -271,8 +271,13 @@ data Canonical_⦂_ : Term → Type → Set where
     → Canonical `suc V ⦂ `ℕ
 ```
 
+<!--
 Show that `Canonical V ⦂ A` is isomorphic to `(∅ ⊢ V ⦂ A) × (Value V)`,
 that is, the canonical forms are exactly the well-typed values.
+-->
+
+证明 `Canonical V ⦂ A` 与 `(∅ ⊢ V ⦂ A) × (Value V)` 同构，
+也就是标准式即良类型的值。
 
 <!--
 ```
@@ -295,7 +300,7 @@ We would like to show that every term is either a value or takes a
 reduction step.  However, this is not true in general.  The term
 -->
 
-我们可能希望任意一项要么是值，要么可以进行一步规约。
+我们可能希望任意一个项要么是值，要么可以进行一步规约。
 但并不是所有情况都是这样。考虑这样的项
 
     `zero · `suc `zero
@@ -333,7 +338,7 @@ To formulate this property, we first introduce a relation that
 captures what it means for a term `M` to make progress:
 -->
 
-要陈述这一性质，我们首先需要引入一个关系来刻画怎么样一个项 `M` 才是进行的：
+要陈述这一性质，我们首先需要引入一个关系来刻画什么样的项 `M` 才是进行的：
 
 ```
 data Progress (M : Term) : Set where
@@ -355,8 +360,8 @@ exists a term `N` such that `M —→ N`, or if it is done, meaning that
 `M` is a value.
 -->
 
-一个进行的项 `M` 要么可以进行一步规约，意味着存在一个项 `N` 使得 `M —→ N`，
-要么已经完成了规约，意味着 `M` 是一个值。
+一个进行的项 `M` 要么可以进行一步规约，这意味着存在一个项 `N` 使得 `M —→ N`，
+要么已经完成了规约，这意味着 `M` 是一个值。
 
 <!--
 If a term is well typed in the empty context then it satisfies progress:
@@ -393,7 +398,7 @@ Let's unpack the first three cases:
 -->
 
 我们对这个项良类型的论据做归纳。
-让我们首先考察前三个情况：
+让我们首先分析前三个情况：
 
 <!--
 * The term cannot be a variable, since no variable is well typed
@@ -423,7 +428,7 @@ Let's unpack the first three cases:
 * 如果这个项是一个函数应用 `L · M`，则考虑对项 `L` 良类型的推导过程递归应用进行性：
 
   + 如果这个项还能够进行一步规约，我们就有了 `L —→ L′` 的证据，再由 `ξ-·₁`，
-    可知原来的项进行到 `L′ · M`
+    可知原来的项进行到 `L′ · M`。
 
   + 如果这个项的规约结束了，我们就有了 `L` 是一个值的证据。
     则考虑对项 `L` 良类型的推导过程递归应用进行性：
@@ -842,7 +847,7 @@ first three cases:
 -->
 
 像之前一样，令 `ρ` 为变量 `x` 出现在上下文 `Γ` 中的论据至 `x` 出现在 `Δ` 中变量的映射。
-我们对项 `M` 在上下文 `Γ` 中是良赋型的论据做归纳。我们首先来解释前三种情况：
+我们对项 `M` 在上下文 `Γ` 中是良赋型的论据做归纳。我们首先来分析前三种情况：
 
 <!--
 * If the term is a variable, then applying `ρ` to the evidence
@@ -875,7 +880,7 @@ extending the map whenever the construct introduces a bound variable.
 -->
 
 对剩下情况的证明大致相同，都是通过对各个子项做归纳，并且在构造
-引入一个约束变量时拓展映射来证明的。
+引入一个约束变量时拓展映射。
 
 <!--
 The induction is over the derivation that the term is well typed,
@@ -1104,7 +1109,7 @@ choose type names as convenient.
 Now that naming is resolved, let's unpack the first three cases:
 -->
 
-解决了命名问题，接下来我们来解释前三种情况：
+解决了命名问题，接下来我们来分析前三种情况：
 
 <!--
 * In the variable case, we must show
@@ -1125,7 +1130,11 @@ Now that naming is resolved, let's unpack the first three cases:
 
       Γ , y ⦂ B ∋ x ⦂ A
 
+<!--
   There are two subcases, depending on the evidence for this judgment:
+-->
+
+  此处有两种子情况，取决于该命题的论据：
 
   + The lookup judgment is evidenced by rule `Z`:
 
@@ -1244,11 +1253,18 @@ Now that naming is resolved, let's unpack the first three cases:
   Applying the induction hypothesis for `L` and `M` and the typing
   rule for applications yields the required conclusion.
 
+<!--
 The remaining cases are similar, using induction for each subterm.
 Where the construct introduces a bound variable we need to compare it
 with the substituted variable, applying the drop lemma if they are
 equal and the swap lemma if they are distinct.
+-->
 
+对剩下情况的证明大致相同，都是通过对各个子项做归纳。
+当构造引入一个约束变量时我们需要将其与被替换的变量进行比较，
+如果它们相同则应用去除引理，如果它们不同则应用交换引理。
+
+<!--
 For Agda it makes a difference whether we write `x ≟ y` or
 `y ≟ x`. In an interactive proof, Agda will show which residual `with`
 clauses in the definition of `_[_:=_]` need to be simplified, and the
@@ -1256,6 +1272,13 @@ clauses in the definition of `_[_:=_]` need to be simplified, and the
 that Agda knows nothing about symmetry or commutativity, which require
 invoking appropriate lemmas, so it is important to think about order of
 arguments and to be consistent.
+-->
+
+对于 Agda 来说，我们写 `x ≟ y` 还是写 `y ≟ x` 是有区别的。
+在交互式证明中，Agda 将显示 `_[_:=_]` 定义中的哪些剩余 `with` 子句需要简化，
+而 `subst` 中的 `with` 子句需要精确匹配这些子句。
+指导准则是 Agda 对于对称性和交换性一无所知，这需要调用适当的引理，
+因此考虑参数的顺序和保持一致性非常重要。
 
 <!--
 #### Exercise `subst′` (stretch)
@@ -1287,10 +1310,18 @@ preserves types.
 ```
 
 
+<!--
 ## Preservation
+-->
 
+## 保型性
+
+<!--
 Once we have shown that substitution preserves types, showing
 that reduction preserves types is straightforward:
+-->
+
+一旦我们证明了替换保持类型，证明规约保持类型是简单的：
 
 ```
 preserve : ∀ {M N A}
@@ -1310,10 +1341,20 @@ preserve (⊢case ⊢zero ⊢M ⊢N)     (β-zero)         =  ⊢M
 preserve (⊢case (⊢suc ⊢V) ⊢M ⊢N) (β-suc VV)       =  subst ⊢V ⊢N
 preserve (⊢μ ⊢M)                 (β-μ)            =  subst (⊢μ ⊢M) ⊢M
 ```
+
+<!--
 The proof never mentions the types of `M` or `N`,
 so in what follows we choose type name as convenient.
+-->
 
+证明从来没有提到 `M` 或 `N` 的类型，
+因此在下面的内容中，我们尽可能方便地选择类型名称。
+
+<!--
 Let's unpack the cases for two of the reduction rules:
+-->
+
+让我们分析规约规则的两种情况：
 
 * Rule `ξ-·₁`.  We have
 
@@ -1823,7 +1864,11 @@ Using the evaluator, confirm that two times two is four.
 ```
 
 
+<!--
 #### Exercise: `progress-preservation` (practice)
+-->
+
+#### 练习 `progress-preservation` （实践）
 
 Without peeking at their statements above, write down the progress
 and preservation theorems for the simply typed lambda-calculus.
@@ -1839,7 +1884,11 @@ and preservation theorems for the simply typed lambda-calculus.
 ```
 
 
+<!--
 #### Exercise `subject_expansion` (practice)
+-->
+
+#### 联系 `subject_expansion` （实践）
 
 We say that `M` _reduces_ to `N` if `M —→ N`,
 but we can also describe the same situation by saying
@@ -1912,7 +1961,11 @@ Milner, who used denotational rather than operational semantics. He
 introduced `wrong` as the denotation of a term with a type error, and
 showed _well-typed terms don't go wrong_.)
 
+<!--
 #### Exercise `stuck` (practice)
+-->
+
+#### 练习 `stuck` （实践）
 
 Give an example of an ill-typed term that does get stuck.
 
@@ -1926,7 +1979,11 @@ Give an example of an ill-typed term that does get stuck.
 -- 请将代码写在此处。
 ```
 
+<!--
 #### Exercise `unstuck` (recommended)
+-->
+
+#### 练习 `unstuck` （推荐）
 
 Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` above.
 
@@ -1940,7 +1997,11 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 -- 请将代码写在此处。
 ```
 
+<!--
 ## Reduction is deterministic
+-->
+
+## 规约是确定的
 
 When we introduced reduction, we claimed it was deterministic.
 For completeness, we present a formal proof here.
