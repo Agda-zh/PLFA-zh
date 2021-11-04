@@ -247,7 +247,7 @@ reductions. So instead we shall prove that `M ⇛ N` implies `M —↠ N`.
 -->
 
 现在考虑命题的充分性，即 `M ⇛* N` 蕴含 `M —↠ N`。
-该方向的证明有一点不通，因为它不是 `M ⇛ N` 蕴含 `M —→ N` 的情形。
+该方向的证明有一点不同，因为它不是 `M ⇛ N` 蕴含 `M —→ N` 的情形。
 毕竟 `M ⇛ N` 执行了许多规约，
 所以我们应当证明 `M ⇛ N` 蕴含 `M —↠ N`。
 

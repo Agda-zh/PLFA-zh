@@ -1,5 +1,5 @@
 ---
-title     : "性质：进行性与保型性"
+title     : "Properties: 进行性与保型性"
 layout    : page
 prev      : /Lambda/
 permalink : /Properties/
@@ -10,7 +10,7 @@ next      : /DeBruijn/
 module plfa.part2.Properties where
 ```
 
-<--!
+<!--
 This chapter covers properties of the simply-typed lambda calculus, as
 introduced in the previous chapter.  The most important of these
 properties are progress and preservation.  We introduce these below,
@@ -154,7 +154,7 @@ types without needing to develop a separate inductive definition of the
 （这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language Foundations_）中对应的 _StlcProp_ 的内容。
 事实上我们技术选择中的一个 —— 通过显示地引入一条判断 `Γ ∋ x ⦂ A`，
 而不是将上下文视作为一个从标识符映射到类型的函数 —— 简化了开发过程。
-特别地，我们不需要额外地去归纳定义关系 `appears_free_in` 就可以证明代换保留了类型。）
+特别地，我们不需要额外地去归纳定义关系 `appears_free_in` 就可以证明替换保留了类型。）
 
 <!--
 ## Values do not reduce
@@ -213,6 +213,7 @@ As a corollary, terms that reduce are not values:
   → ¬ Value M
 —→¬V M—→N VM  =  V¬—→ VM M—→N
 ```
+
 <!--
 If we expand out the negations, we have
 -->
@@ -228,7 +229,11 @@ which are the same function with the arguments swapped.
 
 可知原命题与推论是同一个函数，只是交换了参数顺序。
 
+<!--
 #### Exercise `Canonical-≃` (practice)
+-->
+
+#### 练习 `Canonical-≃` （实践）
 
 <!--
 Well-typed values must take one of a small number of _canonical forms_,
@@ -240,7 +245,7 @@ containing only its bound variable, and the argument of successor
 must itself be canonical:
 -->
 
-良型的式子都属于少数几种**标准式**中的一种。
+良型的式子都属于少数几种**标准式（CanConical Form）**中的一种。
 标准式提供了一种类似于 `Value` 的关系，关联值和它们所属的类型。
 一个 λ-表达式一定属于函数类型，同时零和后继表达式都属于自然数。
 更进一步说，此时函数的函数体必须在只包含它的约束变量的上下文中是良型的，
@@ -269,13 +274,15 @@ data Canonical_⦂_ : Term → Type → Set where
 Show that `Canonical V ⦂ A` is isomorphic to `(∅ ⊢ V ⦂ A) × (Value V)`,
 that is, the canonical forms are exactly the well-typed values.
 
-```
 <!--
-The proofs are straightforward, and again use induction in the
-case of successor.
+```
+-- Your code goes here
+```
 -->
 
-证明的思路直截了当，另外在后继的情况又一次使用了归纳。
+```
+-- 请将代码写在此处。
+```
 
 <!--
 ## Progress
@@ -341,6 +348,7 @@ data Progress (M : Term) : Set where
       ----------
     → Progress M
 ```
+
 <!--
 A term `M` makes progress if either it can take a step, meaning there
 exists a term `N` such that `M —→ N`, or if it is done, meaning that
@@ -378,6 +386,7 @@ progress (⊢case ⊢L ⊢M ⊢N) with progress ⊢L
 ... | done (V-suc VL)                       =  step (β-suc VL)
 progress (⊢μ ⊢M)                            =  step β-μ
 ```
+
 <!--
 We induct on the evidence that the term is well typed.
 Let's unpack the first three cases:
@@ -482,6 +491,7 @@ have formulated progress using disjunction and existentials:
 postulate
   progress′ : ∀ M {A} → ∅ ⊢ M ⦂ A → Value M ⊎ ∃[ N ](M —→ N)
 ```
+
 <!--
 This leads to a less perspicuous proof.  Instead of the mnemonic `done`
 and `step` we use `inj₁` and `inj₂`, and the term `N` is no longer
@@ -501,7 +511,7 @@ determine its bound variable and body, `ƛ x ⇒ N`, so we can show that
 #### Exercise `Progress-≃` (practice)
 -->
 
-#### 练习 `Progress-≃`（习题）
+#### 练习 `Progress-≃`（实践）
 
 <!--
 Show that `Progress M` is isomorphic to `Value M ⊎ ∃[ N ](M —→ N)`.
@@ -516,14 +526,14 @@ Show that `Progress M` is isomorphic to `Value M ⊎ ∃[ N ](M —→ N)`.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 <!--
 #### Exercise `progress′` (practice)
 -->
 
-#### 练习 `progress′`（习题）
+#### 练习 `progress′`（实践）
 
 <!--
 Write out the proof of `progress′` in full, and compare it to the
@@ -539,14 +549,14 @@ proof of `progress` above.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 <!--
 #### Exercise `value?` (practice)
 -->
 
-#### 练习 `value?`（习题）
+#### 练习 `value?`（实践）
 
 <!--
 Combine `progress` and `—→¬V` to write a program that decides
@@ -615,10 +625,10 @@ context remains well typed if we swap two variables.
 -->
 
 接下来是三个重要的结论。
-**弱化**引理断言说如果一个项在空上下文中是良类型的，那么它在任意上下文中都是良类型的。
-**去除**引理断言说如果一个项在给定上下文中是良类型的，且此上下文中同一个变量出现了两次，
+**弱化（Weaken）**引理断言说如果一个项在空上下文中是良类型的，那么它在任意上下文中都是良类型的。
+**去除（Drop）**引理断言说如果一个项在给定上下文中是良类型的，且此上下文中同一个变量出现了两次，
 此时去除上下文中被遮盖的变量，这个项仍然是良类型的。
-**交换**引理断言说如果一个项在给定上下文中是良类型的，那么在通过交换上下文中两个变量后得到的
+**交换（Swap）**引理断言说如果一个项在给定上下文中是良类型的，那么在通过交换上下文中两个变量后得到的
 上下文中，这个项仍然是良类型的。
 
 <!--
@@ -635,7 +645,7 @@ The second step is to show that types are preserved by
 _substitution_.
 -->
 
-证明的第二步是论述**代换**保持类型。
+证明的第二步是论述**替换**保持类型。
 
 <!--
 _Substitution_:
@@ -645,9 +655,9 @@ Then substituting `V` for `x` in `N` yields a term that
 also has type `B`.
 -->
 
-**代换**：
+**替换**：
 如果我们有一个类型为 `A` 的闭项 `V`，同时假定变量 `x` 的类型是 `A`、项 `N` 的类型是 `B`。
-此时用项 `V` 代换掉项 `N` 中的变量 `x` 得到的项的类型也为 `B`。
+此时用项 `V` 替换掉项 `N` 中的变量 `x` 得到的项的类型也为 `B`。
 
 <!--
 In symbols:
@@ -671,9 +681,9 @@ in `Γ`.
 -->
 
 此结论不依赖于项 `V` 是一个值，但要求 `V` 是一个闭项；
-回忆我们之所以只关注闭项的代换，是为了避免重命名约束变量。
-我们将要做代换的项在上下文 `Γ` 扩充上一个变量 `x` 中是良类型的；
-同时完成代换后的项在上下文 `Γ` 中是良类型的。
+回忆我们之所以只关注闭项的替换，是为了避免重命名约束变量。
+我们将要做替换的项在上下文 `Γ` 扩充上一个变量 `x` 中是良类型的；
+同时完成替换后的项在上下文 `Γ` 中是良类型的。
 
 <!--
 The lemma establishes that substitution composes well with typing:
@@ -681,7 +691,7 @@ typing the components separately guarantees that the result of
 combining them is also well typed.
 -->
 
-这条引理证明了代换与赋型是可组合的：
+这条引理证明了替换与赋型是可组合的：
 独立地对各组件赋型保证组合的结果也是良类型的。
 
 <!--
@@ -698,13 +708,16 @@ If `∅ ⊢ M ⦂ A` and `M —→ N` then `∅ ⊢ N ⦂ A`.
 **保型性**：
 如果 `∅ ⊢ M ⦂ A` 且 `M —→ N`，那么 `∅ ⊢ N ⦂ A`。
 
+
+<!--
 The proof is by induction over the possible reductions, and
 the substitution lemma is crucial in showing that each of the
 `β` rules that uses substitution preserves types.
+-->
 
 我们对所有可能的规约步骤进行归纳来证明保型性，
-在证明的过程中代换引理起到了重要的作用，
-它论证了在代换过程中用到的每一条 `β`-规则都保留了类型。
+在证明的过程中替换引理起到了重要的作用，
+它论证了在替换过程中用到的每一条 `β`-规则都保留了类型。
 
 <!--
 We now proceed with our three-step programme.
@@ -764,6 +777,7 @@ ext : ∀ {Γ Δ}
 ext ρ Z           =  Z
 ext ρ (S x≢y ∋x)  =  S x≢y (ρ ∋x)
 ```
+
 <!--
 Let `ρ` be the name of the map that takes evidence that
 `x` appears in `Γ` to evidence that `x` appears in `Δ`.
@@ -819,6 +833,7 @@ rename ρ (⊢suc ⊢M)         =  ⊢suc (rename ρ ⊢M)
 rename ρ (⊢case ⊢L ⊢M ⊢N)  =  ⊢case (rename ρ ⊢L) (rename ρ ⊢M) (rename (ext ρ) ⊢N)
 rename ρ (⊢μ ⊢M)           =  ⊢μ (rename (ext ρ) ⊢M)
 ```
+
 <!--
 As before, let `ρ` be the name of the map that takes evidence that
 `x` appears in `Γ` to evidence that `x` appears in `Δ`.  We induct
@@ -883,7 +898,9 @@ a suitable map between contexts.
 <!--
 First, a closed term can be weakened to any context:
 -->
+
 第一，一个闭项可以被弱化到任意上下文：
+
 ```
 weaken : ∀ {Γ M A}
   → ∅ ⊢ M ⦂ A
@@ -897,17 +914,21 @@ weaken {Γ} ⊢M = rename ρ ⊢M
     → Γ ∋ z ⦂ C
   ρ ()
 ```
+
 <!--
 Here the map `ρ` is trivial, since there are no possible
 arguments in the empty context `∅`.
 -->
+
 这里的映射 `ρ` 是平凡的，由于在空上下文 `∅` 中不会出现可能的参数。
 
 <!--
 Second, if the last two variables in a context are equal then we can
 drop the shadowed one:
 -->
+
 第二，如果上下文中的最后两个变量相等，我们就可以去除掉被遮盖的一个：
+
 ```
 drop : ∀ {Γ x M A B C}
   → Γ , x ⦂ A , x ⦂ B ⊢ M ⦂ C
@@ -923,6 +944,7 @@ drop {Γ} {x} {M} {A} {B} {C} ⊢M = rename ρ ⊢M
   ρ (S x≢x Z)         =  ⊥-elim (x≢x refl)
   ρ (S z≢x (S _ ∋z))  =  S z≢x ∋z
 ```
+
 <!--
 Here map `ρ` can never be invoked on the inner occurrence of `x` since
 it is masked by the outer occurrence.  Skipping over the `x` in the
@@ -940,7 +962,9 @@ contradiction (evidenced by `x≢x refl`).
 <!--
 Third, if the last two variables in a context differ then we can swap them:
 -->
+
 第三，如果上下文中的最后两个变量不同，我们可以交换它们：
+
 ```
 swap : ∀ {Γ x y M A B C}
   → x ≢ y
@@ -957,12 +981,14 @@ swap {Γ} {x} {y} {M} {A} {B} {C} x≢y ⊢M = rename ρ ⊢M
   ρ (S z≢x Z)           =  Z
   ρ (S z≢x (S z≢y ∋z))  =  S z≢y (S z≢x ∋z)
 ```
+
 <!--
 Here the renaming map takes a variable at the end into a variable one
 from the end, and vice versa.  The first line is responsible for
 moving `x` from a position at the end to a position one from the end
 with `y` at the end, and requires the provided evidence that `x ≢ y`.
 -->
+
 在这里重命名将上下文的最后一个变量映射到倒数第二个，反之亦然。
 第一行负责将 `x` 从上下文的最后一个位置移动到倒数第二个，并且
 将 `y` 置于最后，这要求提供 `x ≢ y` 的论据。
@@ -972,14 +998,15 @@ with `y` at the end, and requires the provided evidence that `x ≢ y`.
 ## Substitution
 -->
 
-## 代换
+## 替换
 
 <!--
 The key to preservation – and the trickiest bit of the proof – is
 the lemma establishing that substitution preserves types.
 -->
-证明保型性的关键 —— 也正是证明最具有技巧性的部分 —— 是
-一条证明代换保持赋型的引理。
+
+证明保型性的关键——也正是证明最具有技巧性的部分——是
+一条证明替换保持赋型的引理。
 
 <!--
 Recall that in order to avoid renaming bound variables,
@@ -988,8 +1015,9 @@ This restriction was not enforced by our definition of substitution,
 but it is captured by our lemma to assert that substitution
 preserves typing.
 -->
-回忆为了避免重命名约束变量，代换被限制为只代换闭项。
-我们所定义的代换并没有强加这一约束，而是由一条断言代换
+
+回忆为了避免重命名约束变量，替换被限制为只替换闭项。
+我们所定义的替换并没有强加这一约束，而是由一条断言替换
 保持赋型的引理刻画的。
 
 <!--
@@ -1003,8 +1031,8 @@ we require an arbitrary context `Γ`, as in the statement of the lemma.
 -->
 
 我们所关注的是规约闭项，这意味着每当我们应用 `β`-规约时，
-所代换的项只含有一个自由变量（也就是所对应 λ-抽象、
-对自然数分项或不动点表达式的绑定变量）。然而，代换是通过
+所替换的项只含有一个自由变量（也就是所对应 λ-抽象、
+对自然数分项或不动点表达式的绑定变量）。然而，替换是通过
 递归定义的，在我们逐层深入项时遇到的绑定变量增长了上下文。
 所以为了进行归纳，我们需要一个任意的上下文 `Γ`，正如这条引理
 中所陈述的。
@@ -1013,7 +1041,7 @@ we require an arbitrary context `Γ`, as in the statement of the lemma.
 Here is the formal statement and proof that substitution preserves types:
 -->
 
-下面是代换保持赋型的形式化陈述及其证明：
+下面是替换保持赋型的形式化陈述及其证明：
 
 ```
 subst : ∀ {Γ x N V A B}
@@ -1040,6 +1068,7 @@ subst {x = y} ⊢V (⊢μ {x = x} ⊢M) with x ≟ y
 ... | yes refl        =  ⊢μ (drop ⊢M)
 ... | no  x≢y         =  ⊢μ (subst ⊢V (swap x≢y ⊢M))
 ```
+
 <!--
 We induct on the evidence that `N` is well typed in the
 context `Γ` extended by `x`.
@@ -1063,11 +1092,11 @@ choose type names as convenient.
 -->
 
 首先我们注意到一个有关命名的问题。
-在引理的陈述中，被代换的变量 `x` 是一个隐式参数，同时在变量、抽象、
+在引理的陈述中，被替换的变量 `x` 是一个隐式参数，同时在变量、抽象、
 对自然数分项和不动点的赋型规则中，相关变量 `x` 是一个隐式参数，因此
-我们使用形同 `{x = y}` 的语法来将 `y` 与被代换的变量绑定，
+我们使用形同 `{x = y}` 的语法来将 `y` 与被替换的变量绑定，
 用 `{x = x}` 来将 `x` 与 `` ⊢` ``、`⊢ƛ`、`⊢case` 和 `⊢μ` 中相关的变量绑定。
-在这里用 `y` 这一名字业余前一章中代换的原始定义一致。
+在这里用 `y` 这一名字业余前一章中替换的原始定义一致。
 在证明中从来没有提及过 `x`、`y`、`V` 或 `N` 的类型，所以接下来我们按照惯例
 选取类型的名字：
 
@@ -1080,6 +1109,7 @@ Now that naming is resolved, let's unpack the first three cases:
 <!--
 * In the variable case, we must show
 -->
+
 * 当处于变量的情况时，我们必须证明
 
       ∅ ⊢ V ⦂ B
@@ -1090,6 +1120,7 @@ Now that naming is resolved, let's unpack the first three cases:
   <!--
   where the second hypothesis follows from:
   -->
+  
   此时第二个假设形如：
 
       Γ , y ⦂ B ∋ x ⦂ A
@@ -1241,7 +1272,7 @@ preserves types.
 -->
 
 重写 `subst` 的定义，使得它与在上一章练习中修改过的 `_[_:=_]′` 定义相兼容。
-和之前一样，需要将处理约束变量的部分提取成一个单独的函数，与代换保持类型的
+和之前一样，需要将处理约束变量的部分提取成一个单独的函数，与替换保持类型的
 证明一同互递归定义。
 
 
@@ -1252,7 +1283,7 @@ preserves types.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 
@@ -1788,7 +1819,7 @@ Using the evaluator, confirm that two times two is four.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 
@@ -1804,7 +1835,7 @@ and preservation theorems for the simply typed lambda-calculus.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 
@@ -1826,7 +1857,7 @@ with case expressions and one not involving case expressions.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 
@@ -1892,7 +1923,7 @@ Give an example of an ill-typed term that does get stuck.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 #### Exercise `unstuck` (recommended)
@@ -1906,7 +1937,7 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 ## Reduction is deterministic
