@@ -1478,7 +1478,7 @@ per unit of gas.
 一个长期运行或非终止的程序可能会导致矿工在验证合同上投入任意多的努力，
 但回报很少或没有回报。为了避免这种情况，
 每笔交易都伴随着一定数量的**燃料（gas）**可用于计算。
-在 EVM 上执行的每个步骤都会收取广告数量的燃料，
+在 EVM 上执行的每个步骤都会收取公告数量的燃料，
 交易以公布的费率支付燃料：每单位燃料支付给定数量的以太币（以太坊的货币）。 
 
 <!--
@@ -1843,10 +1843,18 @@ _ : eval (gas 100) ⊢2+2 ≡
 _ = refl
 ```
 
+<!--
 Again, the derivation in the previous chapter was derived by
 editing the above.
+-->
 
+再一次地，上一章中的推导是通过编辑上述内容得出的。
+
+<!--
 Similarly, we can evaluate the corresponding term for Church numerals:
+-->
+
+类似地，我们可以计算 Church 表示法表示的数字的相应项。
 
 ```
 _ : eval (gas 100) ⊢2+2ᶜ ≡
@@ -1913,17 +1921,24 @@ _ : eval (gas 100) ⊢2+2ᶜ ≡
    (done (V-suc (V-suc (V-suc (V-suc V-zero)))))
 _ = refl
 ```
+
+<!--
 And again, the example in the previous section was derived by editing the
 above.
+-->
+
+再一次地，上一节中的示例是通过编辑上述内容得出的。
 
 <!--
 #### Exercise `mul-eval` (recommended)
 -->
 
 #### 练习 `mul-eval`（推荐）
+
 <!--
 Using the evaluator, confirm that two times two is four.
 -->
+
 用这个求值器来验证二乘以二的积是四。
 
 <!--
@@ -1943,8 +1958,13 @@ Using the evaluator, confirm that two times two is four.
 
 #### 练习 `progress-preservation` （实践）
 
+<!--
 Without peeking at their statements above, write down the progress
 and preservation theorems for the simply typed lambda-calculus.
+-->
+
+不阅读上面的陈述，
+写下简单类型 λ-演算进行性和保型性的定理。
 
 <!--
 ```
@@ -1956,13 +1976,13 @@ and preservation theorems for the simply typed lambda-calculus.
 -- 请将代码写在此处。
 ```
 
-
 <!--
 #### Exercise `subject_expansion` (practice)
 -->
 
 #### 练习 `subject_expansion` （实践）
 
+<!--
 We say that `M` _reduces_ to `N` if `M —→ N`,
 but we can also describe the same situation by saying
 that `N` _expands_ to `M`.
@@ -1971,6 +1991,14 @@ Its opposite is _subject expansion_, which holds if
 `M —→ N` and `∅ ⊢ N ⦂ A` imply `∅ ⊢ M ⦂ A`.
 Find two counter-examples to subject expansion, one
 with case expressions and one not involving case expressions.
+-->
+
+我们说 `M` **规约**至 `N` 如果 `M —→ N`，
+但是我们可以通过说 `N` **扩展（Expand）**至 `M` 来描述相同的情形。
+保型性有时也被叫做**子规约（Subject Reduction）**。
+它的对应是**子扩展（Subject Expansion）**，
+如果 `M —→ N` 和 `∅ ⊢ N ⦂ A` 蕴含 `∅ ⊢ M ⦂ A`。
+找到两个子扩展的反例，一个涉及 case 表达式而另一个不涉及。
 
 <!--
 ```
@@ -1986,6 +2014,7 @@ with case expressions and one not involving case expressions.
 ## Well-typed terms don't get stuck
 
 A term is _normal_ if it cannot reduce:
+
 ```
 Normal : Term → Set
 Normal M  =  ∀ {N} → ¬ (M —→ N)
