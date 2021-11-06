@@ -430,6 +430,7 @@ Agda will return an answer warning us that the impossible has occurred:
 -->
 
 Agda 会警告我们出现了不可能的情况。
+
     ⊥-elim (plfa.part2.Lambda.impossible (`` `suc (`suc `zero)) (`suc (`suc `zero)) ``)
 
 <!--
@@ -1265,6 +1266,7 @@ begin_ : ∀ {M N}
   → M —↠ N
 begin M—↠N = M—↠N
 ```
+
 <!--
 We can read this as follows:
 -->
@@ -1395,7 +1397,7 @@ steps it is called the diamond property. In symbols:
 图中，`L`、`M` 和 `N` 由全称量词涵盖，而 `P` 由存在量词涵盖。
 如果图中的每条线代表了零或多步规约步骤，这样的性质被成为合流性。
 如果上面的两条线代表一步规约步骤，下面的两条线代表零或多步规约步骤，
-这样的性质被成为菱形性质。用符号表示为：
+这样的性质被称为菱形性质（Diamond Property）。用符号表示为：
 
 ```
 postulate
