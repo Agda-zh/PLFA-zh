@@ -154,7 +154,7 @@ Abstraction is also called _lambda abstraction_, and is the construct
 from which the calculus takes its name.
 -->
 
-抽象也被叫做 *λ-抽象*，这也是 λ-演算名字的由来。
+抽象也被叫做 **λ-抽象**，这也是 λ-演算名字的由来。
 
 <!--
 With the exception of variables and fixpoints, each term
@@ -1643,7 +1643,7 @@ associate to the right and `_·_` to associate to the left.
 Thus:
 -->
 
-与 Agda 中一致，两个或多个参数的函数以科里化的形式表示。
+与 Agda 中一致，两个或多个参数的函数以柯里化的形式表示。
 以右结合的方式定义 `_⇒_`、左结合的方式定义 `_·_` 更加方面。
 因此：
 
