@@ -5,7 +5,7 @@ prev      : /Untyped/
 permalink : /Confluence/
 next      : /BigStep/
 translators : ["starxingchenc"]
-progress  : 20
+progress  : 70
 ---
 
 ```
@@ -60,7 +60,7 @@ If we write `⇛*` for the reflexive and transitive closure of `⇛`, then
 confluence of `⇛*` follows immediately from the diamond property.
 -->
 
-合流性也在许多 λ-演算外的重写系统中被研究，
+合流性（Confluence）也在许多 λ-演算外的重写系统中被研究，
 并且如何在满足**菱形性质（Diamond Property）**，
 一种合流性的单步版本中证明合流性是广为人知的。
 令 `⇛` 为一个关系。`⇛` 具有菱形性质，
@@ -708,12 +708,19 @@ This step is optional, though, in the presence of triangle property.
 
 #### 练习（实践）
 
+<!--
 * Prove the diamond property `par-diamond` directly by induction on `M ⇛ N` and `M ⇛ N′`.
 
 * Draw pictures that represent the proofs of each of the six cases in
   the direct proof of `par-diamond`. The pictures should consist of nodes
   and directed edges, where each node is labeled with a term and each
   edge represents parallel reduction.
+-->
+
+* 通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳直接证明菱形性质 `par-diamond`。
+
+* 作图表示 `par-diamond` 的直接证明中的六种情况。
+  图应当包含节点和有向边，其中节点用项标号，边代表平行规约。
 
 <!--
 ## Proof of confluence for parallel reduction
@@ -721,12 +728,20 @@ This step is optional, though, in the presence of triangle property.
 
 ## 平行规约合流性的证明
 
+<!--
 As promised at the beginning, the proof that parallel reduction is
 confluent is easy now that we know it satisfies the triangle property.
 We just need to prove the strip lemma, which states that
 if `M ⇛ N` and `M ⇛* N′`, then
 `N ⇛* L` and `N′ ⇛ L` for some `L`.
 The following diagram illustrates the strip lemma
+-->
+
+像在开始承诺的那样，平行规约合流性的证明现在十分简单，
+因为我们知道它满足三角性质。
+我们只需证明 strip 引理，它声称若有 `M ⇛ N` 和 `M ⇛* N′`，
+则对于某些 `L` 有 `N ⇛* L` 和 `N′ ⇛ L`。
+下图解释了 strip 引理：
 
         M
        / \
@@ -738,11 +753,19 @@ The following diagram illustrates the strip lemma
        \ /
         L
 
+<!--
 where downward lines are instances of `⇛` or `⇛*`, depending on how
 they are marked.
+-->
 
+此处向下的线是 `⇛` 或 `⇛*` 的实例，取决于它们如何被标记。
+
+<!--
 The proof of the strip lemma is a straightforward induction on `M ⇛* N′`,
 using the triangle property in the induction step.
+-->
+
+strip 引理的证明是对 `M ⇛* N′` 的简单归纳，并在归纳步骤使用三角性质。
 
 ```
 strip : ∀{Γ A} {M N N′ : Γ ⊢ A}
@@ -756,9 +779,13 @@ strip{Γ}{A}{M}{N}{N′} mn (M ⇛⟨ mm' ⟩ m'n')
 ... | ⟨ L , ⟨ ll' , n'l' ⟩ ⟩ = ⟨ L , ⟨ N ⇛⟨ par-triangle mn ⟩ ll' , n'l' ⟩ ⟩
 ```
 
+<!--
 The proof of confluence for parallel reduction is now proved by
 induction on the sequence `M ⇛* N`, using the above lemma in the
 induction step.
+-->
+
+平行规约合流性的证明现在通过对序列 `M ⇛* N` 归纳来完成，并在归纳步骤使用上述引理。
 
 ```
 par-confluence : ∀{Γ A} {L M₁ M₂ : Γ ⊢ A}
@@ -775,7 +802,11 @@ par-confluence {Γ}{A}{L}{M₁′}{M₂} (L ⇛⟨ L⇛M₁ ⟩ M₁⇛*M₁′)
         ⟨ N′ , ⟨ M₁′⇛*N′ , (M₂ ⇛⟨ M₂⇛N ⟩ N⇛*N′) ⟩ ⟩
 ```
 
+<!--
 The step case may be illustrated as follows:
+-->
+
+归纳步骤可以如下图解释：
 
             L
            / \
@@ -791,9 +822,14 @@ The step case may be illustrated as follows:
        \ /
         N′
 
+<!--
 where downward lines are instances of `⇛` or `⇛*`, depending on how
 they are marked. Here `(a)` holds by `strip` and `(b)` holds by
 induction.
+-->
+
+此处向下的线是 `⇛` 或 `⇛*` 的实例，取决于它们如何被标记。
+此处 `(a)` 根据 `strip` 而成立，`(b)` 根据归纳假设而成立。
 
 
 <!--
@@ -802,6 +838,7 @@ induction.
 
 ## 规约合流性的证明
 
+<!--
 Confluence of reduction is a corollary of confluence for parallel
 reduction. From
 `L —↠ M₁` and `L —↠ M₂` we have
@@ -809,6 +846,12 @@ reduction. From
 Then by confluence we obtain some `L` such that
 `M₁ ⇛* N` and `M₂ ⇛* N`, from which we conclude that
 `M₁ —↠ N` and `M₂ —↠ N` by `pars-betas`.
+-->
+
+规约的合流性是平行规约合流性的一个推论。
+从 `L —↠ M₁` 和 `L —↠ M₂` 根据 `betas-pars` 我们有 `L ⇛* M₁` 和 `L ⇛* M₂`。
+接着根据合流性我们得到对于某些 `L` 有 `M₁ ⇛* N` 和 `M₂ ⇛* N`。
+因此我们根据 `pars-betas` 得出 `M₁ —↠ N` 和 `M₂ —↠ N`。
 
 ```
 confluence : ∀{Γ A} {L M₁ M₂ : Γ ⊢ A}
