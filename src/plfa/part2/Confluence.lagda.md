@@ -164,11 +164,20 @@ The first three rules are congruences that reduce each of their
 parts simultaneously. The last rule reduces a lambda term and
 term in parallel followed by a beta step.
 
+<!--
 We remark that the `pabs`, `papp`, and `pbeta` rules perform reduction
 on all their subexpressions simultaneously. Also, the `pabs` rule is
 akin to the `ζ` rule and `pbeta` is akin to `β`.
+-->
 
+我们注意到 `pabs`、`papp` 和 `pbeta` 规则同时对它们的所有子表达式执行归约。
+此外，`pabs` 规则类似于 `ζ` 规则，`pbeta` 类似于 `β` 规则。
+
+<!--
 Parallel reduction is reflexive.
+-->
+
+平行规约是自反的。
 
 ```
 par-refl : ∀{Γ A}{M : Γ ⊢ A} → M ⇛ M
@@ -338,12 +347,12 @@ The proof is by induction on `M ⇛ N`.
 * 假定 `ƛ N ⇛ ƛ N′` 因为 `N ⇛ N′`。根据归纳假设我们有 `N —↠ N′`。
   我们得出 `ƛ N —↠ ƛ N′` 因为 `—↠` 是 a congruence。
 
-* Suppose `L · M ⇛ L′ · M′` because `L ⇛ L′` and `M ⇛ M′`.
-  By the induction hypothesis, we have `L —↠ L′` and `M —↠ M′`.
-  So `L · M —↠ L′ · M` and then `L′ · M  —↠ L′ · M′`
-  because `—↠` is a congruence.
+* 假定 `L · M ⇛ L′ · M′` 因为 `L ⇛ L′` 和 `M ⇛ M′`。
+  根据归纳假设，我们有 `L —↠ L′` 和 `M —↠ M′`。
+  所以有 `L · M —↠ L′ · M` 以及 `L′ · M  —↠ L′ · M′`
+  因为 `—↠` 是一个 congruence。
 
-* 假定 `(ƛ N) · M  ⇛  N′ [ M′ ]` 因为 `N ⇛ N′` 和 `M ⇛ M′`.
+* 假定 `(ƛ N) · M  ⇛  N′ [ M′ ]` 因为 `N ⇛ N′` 和 `M ⇛ M′`。
   根据类似的原因，我们有 `(ƛ N) · M —↠ (ƛ N′) · M′`，
   接着应用 β-规约我们得到 `(ƛ N′) · M′ —→ N′ [ M′ ]`。
 
@@ -438,9 +447,8 @@ are straightforward so we just consider the last one for `pbeta`.
 * 假定 `(ƛ N) · M  ⇛  N′ [ M′ ]` 因为 `N ⇛ N′` 和 `M ⇛ M′`。
   根据归纳假设，我们有 `rename (ext ρ) N ⇛ rename (ext ρ) N′` 和 `rename ρ M ⇛ rename ρ M′`。
   所以根据 `pbeta` 我们有 `(ƛ rename (ext ρ) N) · (rename ρ M) ⇛ (rename (ext ρ) N) [ rename ρ M ]`。
-  However, to conclude we instead need parallel reduction to
-  `rename ρ (N [ M ])`. But thankfully, renaming and substitution
-  commute with one another.
+  然而，为了得出结论我们需要平行规约至 `rename ρ (N [ M ])`。
+  值得庆幸的是，重命名和规约可以相互交换。
 
 
 With the `par-rename` lemma in hand, it is straightforward to show
@@ -571,8 +579,8 @@ development_. The desired property may be illustrated as
 
 然而，一个更简单的方法是对 `M` 执行尽可能多次平行 β-规约，
 称其为 `M ⁺`，然后证明 `N` 也可以平行规约至 `M ⁺`。
-This is the idea of Takahashi's _complete development_. 
-The desired property may be illustrated as
+这就是 Takahashi 的 _complete development_ 的想法。 
+所需的性质可以表示为：
 
         M
        /|
@@ -660,9 +668,7 @@ The proof of the triangle property is an induction on `M ⇛ N`.
   * 假定 `x · M ⇛ x · M′`。
   根据归纳假设我们有 `M′ ⇛ M ⁺` 和 `x ⇛ x ⁺`，因此 `x · M′ ⇛ x · M ⁺`。
   剩余的情况可以以相同方式证明，所以我们忽略它。
-  (As there is currently no way in Agda to expand the catch-all pattern in
-  the definition of `_⁺` for us before checking the right-hand side,
-  we have to write down the remaining case explicitly.)
+  （由于 Agda 目前没有办法在检查右侧之前为我们扩展 `_⁺` 定义中的 catch-all 模式，我们必须明确地写下剩余的情况。）
 
 <!--
 The diamond property then follows by halving the diamond into two triangles.
@@ -872,6 +878,7 @@ confluence L↠M₁ L↠M₂
 
 ## 注记
 
+<!--
 Broadly speaking, this proof of confluence, based on parallel
 reduction, is due to W. Tait and P. Martin-Löf (see Barendregt 1984,
 Section 3.2).  Details of the mechanization come from several sources.
@@ -882,10 +889,25 @@ by Takahashi (1995) and Pfenning's 1992 technical report about the
 Church-Rosser theorem. In addition, we consulted Nipkow and
 Berghofer's mechanization in Isabelle, which is based on an earlier
 article by Nipkow (JAR 1996).
+-->
+
+总而言之，这种基于平行规约的合流性的证明
+归功于 W. Tait 和 P. Martin-Löf （参见 Barendregt 1984，章节 3.2）。
+机械化的细节有多个来源。
+`subst-par` 引理是 Shafer、Tebbi 和 Smolka (ITP 2015) 的 “强替换性（Strong Substitutivity）” 引理。
+`par-triangle`、`strip` 和 `par-confluence` 的证明是基于 
+Takahashi (1995) 的 complete development 
+和 Pfenning 1992 年关于 Church-Rosser 定理的技术报告。
+此外，我们在 Isabelle 中咨询了 Nipkow 和 Berghofer 的机械化，
+它基于 Nipkow 的早期文章（JAR 1996）。
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章中使用了以下 Unicode：
 
     ⇛  U+21DB  RIGHTWARDS TRIPLE ARROW (\r== or \Rrightarrow)
     ⁺  U+207A  SUPERSCRIPT PLUS SIGN   (\^+)

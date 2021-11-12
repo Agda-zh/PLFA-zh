@@ -1221,7 +1221,7 @@ bound variable.
 ## Single substitution
 -->
 
-## 单个代换
+## 单个替换
 
 <!--
 From the general case of substitution for multiple free
