@@ -31,7 +31,7 @@ recursive function definitions.
 变量（Variable）、抽象（Abstraction）与应用（Application）。
 **λ-演算**刻画了**函数抽象（Functional Abstract）**的核心概念。这样的概念
 以函数、过程和方法的形式，在基本上每一个编程语言中都有体现。
-简单类型的 λ-演算 （Simply-Typed Lambda Calculus，简写为 STLC）是 λ-演算的一种变体，
+简单类型的 λ-演算（Simply-Typed Lambda Calculus，简写为 STLC）是 λ-演算的一种变体，
 由 Church 在 1940 年发表。
 除去之前提到的三种构造，简单类型的 λ-演算还拥有函数类型和任何所需的基本类型。
 Church 使用了最简单的没有任何操作的基本类型。
@@ -49,7 +49,7 @@ of variants of lambda calculus.
 
 在本章中，我们将形式化简单类型的 λ-演算，给出它的语法、小步语义和类型规则。
 在下一章 [Properties](/Properties/) 中，我们将
-证明它的主要性质，包括可进性与保型性。
+证明它的主要性质，包括进行性与保型性。
 后续的章节将研究 λ-演算的不同变体。
 
 <!--
@@ -167,7 +167,7 @@ correspond to introduction rules and deconstructors to eliminators.
 
 除了变量和不动点以外，每一个项要么构造了一个给定类型的值
 （抽象产生了函数，零和后继产生了自然数），
-要么析构了一个这样的值 （应用使用了函数，匹配使用了自然数）。
+要么析构了一个这样的值（应用使用了函数，匹配使用了自然数）。
 我们在给项赋予类型的时候将重新探讨这一对应关系。
 构造子对应了引入规则，析构子对应了消去规则。
 
@@ -368,7 +368,7 @@ definition may use `plusᶜ` as defined earlier (or may not
 
 写出一个项来定义两个用 Church 法表示的自然数的乘法。
 你可以使用之前定义的 `plusᶜ`。
-（当然也可以不用，用或不使都有很好的表示方法）
+（当然也可以不用，用或不用都有很好的表示方法）
 
 <!--
 ```
@@ -496,7 +496,7 @@ meta-language, Agda.
 相似地来说，非正式的表达在**对象语言（Object Language）**（我们正在描述的语言）
 和**元语言（Meta-Language）**（我们用来描述对象语言的语言）
 中使用相同的记法来表示函数类型、λ-抽象和函数应用，相信读者可以通过上下文区分两种语言。
-而 Agda 并不能做到这样，因此我们在目标语言中使用 `ƛ x ⇒ N` 和 `L · M` ，
+而 Agda 并不能做到这样，因此我们在对象语言中使用 `ƛ x ⇒ N` 和 `L · M` ，
 与我们使用的元语言 Agda 中的 `λ x → N` 和 `L M` 相对。
 
 <!--
@@ -594,7 +594,7 @@ avoid confusions that may arise if bound and free variables have the
 same names.
 -->
 
-在此之中 `y` 是约束变量，`x` 是自由变量。**Barendregt 约定**，一个常见的约定，使用 α-重命名
+此处 `y` 是约束变量，`x` 是自由变量。**Barendregt 约定**，一个常见的约定，使用 α-重命名
 来保证约束变量与自由变量完全不同。这样可以避免因为约束变量和自由变量名称相同而造成的混乱。
 
 <!--
@@ -675,7 +675,7 @@ data Value : Term → Set where
 In what follows, we let `V` and `W` range over values.
 -->
 
-后续文中，我们用 `V` 和 `W` 来表示值。
+后文中我们用 `V` 和 `W` 来表示值。
 
 <!--
 ### Formal vs informal
@@ -1005,7 +1005,7 @@ the argument for the variable in the abstraction.
 
 我们接下来给出 λ-演算的传值规约规则。
 规约一个应用时，我们首先规约左手边，直到它变成一个值（必须是抽象）；
-接下来我们规约后手边，直到它变成一个值；
+接下来我们规约右手边，直到它变成一个值；
 最后我们使用替换，把变量替换成参数。
 
 <!--
@@ -1090,7 +1090,7 @@ case where we substitute by a term that is not a value.
 Here are the rules formalised in Agda:
 -->
 
-我们用下面的形式在 Agda 里形式化这些规则：
+我们在 Agda 里这样形式化这些规则：
 
 ```
 infix 4 _—→_
@@ -1167,8 +1167,7 @@ of a beta rule, possibly adjusted by zero or more compatibility rules.
 -->
 
 这种解释一个项的含义的方法叫做**小步操作语义（Small-step Operational Semantics）**。
-如果 `M —→ N`，我们称之为项 `M` **规约** 至项 `N`，也称之为项 `M` **步进（Step to）**至
-项 `N`。
+如果 `M —→ N`，我们称之为项 `M` **规约**至项 `N`，也称之为项 `M` **步进（Step to）**至项 `N`。
 每条兼容性规则以另一条规约规则作为前提；因此每一步都会用到一条 β-规则，用零或多条兼容性规则进行调整。
 
 
@@ -1395,7 +1394,7 @@ steps it is called the diamond property. In symbols:
 -->
 
 图中，`L`、`M` 和 `N` 由全称量词涵盖，而 `P` 由存在量词涵盖。
-如果图中的每条线代表了零或多步规约步骤，这样的性质被成为合流性。
+如果图中的每条线代表了零或多步规约步骤，这样的性质被称为合流性。
 如果上面的两条线代表一步规约步骤，下面的两条线代表零或多步规约步骤，
 这样的性质被称为菱形性质（Diamond Property）。用符号表示为：
 
@@ -1436,7 +1435,7 @@ systems studied in this text are trivially confluent.
 
 我们可以简单地证明任何确定的规约关系满足菱形性质，
 任何满足菱形性质的规约关系满足合流性。
-因为，我们研究的规则系统平凡地满足了合流性。
+因此，我们研究的规则系统平凡地满足了合流性。
 
 <!--
 ## Examples
