@@ -27,9 +27,9 @@ Functions_ (PCF), and add operations on natural numbers and
 recursive function definitions.
 -->
 
-**λ-演算**，最早由逻辑学家 Alonzo Church 发表，是一种只含有三种构造的演算——
+**λ-演算**，最早由逻辑学家 Alonzo Church 在 1932 年发表，是一种只含有三种构造的演算——
 变量（Variable）、抽象（Abstraction）与应用（Application）。
-**λ-演算**刻画了**函数抽象（Functional Abstract）**的核心概念。这样的概念
+**λ-演算**刻画了**函数抽象（Functional Abstraction）**的核心概念。这样的概念
 以函数、过程和方法的形式，在基本上每一个编程语言中都有体现。
 简单类型的 λ-演算（Simply-Typed Lambda Calculus，简写为 STLC）是 λ-演算的一种变体，
 由 Church 在 1940 年发表。
@@ -67,7 +67,7 @@ and partly because the development is more traditional.
 固有类型的项（我们会在 [DeBruijn](/DeBruijn/) 章节中进一步研究），
 可以让我们的形式化更简洁。
 不过，我们先从使用带名字的变量和外在类型的项来表示 λ-演算开始。
-一方面是因为这样表述的项更易于阅读，另一方面是因为这样的表述更加传统。
+一方面是因为名字比索引更易于阅读，另一方面是因为这样的表述更加传统。
 
 <!--
 The development in this chapter was inspired by the corresponding
@@ -142,7 +142,7 @@ And one is for recursion:
 三个与自然数有关的构造：
 
   * 零 `` `zero ``
-  * 后继 `` `suc ``
+  * 后继 `` `suc M ``
   * 匹配 `` case L [zero⇒ M |suc x ⇒ N ] ``
 
 一个与递归有关的构造：
@@ -493,7 +493,7 @@ object language, as compared to `λ x → N` and `L M` in our
 meta-language, Agda.
 -->
 
-相似地来说，非正式的表达在**对象语言（Object Language）**（我们正在描述的语言）
+相似地来说，非正式的表达通常在**对象语言（Object Language）**（我们正在描述的语言）
 和**元语言（Meta-Language）**（我们用来描述对象语言的语言）
 中使用相同的记法来表示函数类型、λ-抽象和函数应用，相信读者可以通过上下文区分两种语言。
 而 Agda 并不能做到这样，因此我们在对象语言中使用 `ƛ x ⇒ N` 和 `L · M` ，
@@ -1166,7 +1166,7 @@ another reduction rule in its premise; so a step always consists
 of a beta rule, possibly adjusted by zero or more compatibility rules.
 -->
 
-这种解释一个项的含义的方法叫做**小步操作语义（Small-step Operational Semantics）**。
+这种解释项的含义的方法叫做**小步操作语义（Small-step Operational Semantics）**。
 如果 `M —→ N`，我们称之为项 `M` **规约**至项 `N`，也称之为项 `M` **步进（Step to）**至项 `N`。
 每条兼容性规则以另一条规约规则作为前提；因此每一步都会用到一条 β-规则，用零或多条兼容性规则进行调整。
 
@@ -1435,7 +1435,7 @@ systems studied in this text are trivially confluent.
 
 我们可以简单地证明任何确定的规约关系满足菱形性质，
 任何满足菱形性质的规约关系满足合流性。
-因此，我们研究的规则系统平凡地满足了合流性。
+因此，我们研究的规约系统平凡地满足了合流性。
 
 <!--
 ## Examples
