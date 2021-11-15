@@ -11,6 +11,7 @@
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
 \usepackage{fancyvrb}
+\usepackage{fvextra}
 \usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{setspace}
@@ -58,8 +59,8 @@
 \newenvironment{pre}{
   \VerbatimEnvironment
   \begin{agda}
-  \begin{verbatim}
-}{\end{verbatim}
+  \begin{Verbatim}[breaklines=true]%
+}{\end{Verbatim}
   \end{agda}
 }
 
