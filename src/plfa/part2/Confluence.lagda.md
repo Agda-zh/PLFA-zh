@@ -5,7 +5,7 @@ prev      : /Untyped/
 permalink : /Confluence/
 next      : /BigStep/
 translators : ["starxingchenc"]
-progress  : 70
+progress  : 100
 ---
 
 ```
@@ -160,9 +160,15 @@ data _⇛_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
       -----------------------
     → (ƛ N) · M  ⇛  N′ [ M′ ]
 ```
+
+<!--
 The first three rules are congruences that reduce each of their
 parts simultaneously. The last rule reduces a lambda term and
 term in parallel followed by a beta step.
+-->
+
+前三种规则是同时规约每个部分的合同性。
+最后一个规则平行地规约一个 λ-项和另一个项，接着是一步 β-规约。
 
 <!--
 We remark that the `pabs`, `papp`, and `pbeta` rules perform reduction
@@ -345,12 +351,12 @@ The proof is by induction on `M ⇛ N`.
 * 假定 `x ⇛ x`。我们立刻有 `x —↠ x`。
 
 * 假定 `ƛ N ⇛ ƛ N′` 因为 `N ⇛ N′`。根据归纳假设我们有 `N —↠ N′`。
-  我们得出 `ƛ N —↠ ƛ N′` 因为 `—↠` 是 a congruence。
+  我们得出 `ƛ N —↠ ƛ N′` 因为 `—↠` 具有合同性。
 
 * 假定 `L · M ⇛ L′ · M′` 因为 `L ⇛ L′` 和 `M ⇛ M′`。
   根据归纳假设，我们有 `L —↠ L′` 和 `M —↠ M′`。
   所以有 `L · M —↠ L′ · M` 以及 `L′ · M  —↠ L′ · M′`
-  因为 `—↠` 是一个 congruence。
+  因为 `—↠` 具有合同性。
 
 * 假定 `(ƛ N) · M  ⇛  N′ [ M′ ]` 因为 `N ⇛ N′` 和 `M ⇛ M′`。
   根据类似的原因，我们有 `(ƛ N) · M —↠ (ƛ N′) · M′`，
@@ -379,6 +385,7 @@ pars-betas (L ⇛⟨ p ⟩ ps) = —↠-trans (par-betas p) (pars-betas ps)
 
 ## 平行规约的替换引理
 
+<!--
 Our next goal is the prove the diamond property for parallel
 reduction. But to do that, we need to prove that substitution
 respects parallel reduction. That is, if
@@ -388,12 +395,22 @@ generalize it to: if `N ⇛ N′` and
 the substitution `σ` pointwise parallel reduces to `τ`,
 then `subst σ N ⇛ subst τ N′`. We define the notion
 of pointwise parallel reduction as follows.
+-->
+
+我们的下一个目标是对平行规约证明菱形性质。
+为了完成该证明，我们还需证明替换遵从平行规约。
+也就是说，如果有 `N ⇛ N′` 和 `M ⇛ M′`，那么 `N [ M ] ⇛ N′ [ M′ ]`。
+我们不能直接通过归纳证明它，所以我们将其推广为：
+如果 `N ⇛ N′` 并且替换 `σ` 逐点（pointwise）平行规约至 `τ`，
+则 `subst σ N ⇛ subst τ N′`。
+我们如下定义逐点平行规约。
 
 ```
 par-subst : ∀{Γ Δ} → Subst Γ Δ → Subst Γ Δ → Set
 par-subst {Γ}{Δ} σ σ′ = ∀{A}{x : Γ ∋ A} → σ x ⇛ σ′ x
 ```
 
+<!--
 Because substitution depends on the extension function `exts`, which
 in turn relies on `rename`, we start with a version of the
 substitution lemma, called `par-rename`, that is specialized to
@@ -401,6 +418,12 @@ renamings.  The proof of `par-rename` relies on the fact that renaming
 and substitution commute with one another, which is a lemma that we
 import from Chapter [Substitution](/Substitution/)
 and restate here.
+-->
+
+因为替换依赖于扩展函数 `exts`，而其又依赖于 `rename`，
+我们开始于被称为 `par=rename` 的替换引理的一种版本，该引理专门用于重命名。
+`par-rename` 依赖于重命名和替换可以相互交换的事实，
+这是一个我们在 [Substitution](/Substitution/) 章节引入并在此处重申的引理。
 
 ```
 rename-subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{ρ : Rename Γ Δ }
@@ -408,7 +431,11 @@ rename-subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{ρ : Ren
 rename-subst-commute {N = N} = plfa.part2.Substitution.rename-subst-commute {N = N}
 ```
 
+<!--
 Now for the `par-rename` lemma.
+-->
+
+现在证明 `par-rename` 引理。
 
 ```
 par-rename : ∀{Γ Δ A} {ρ : Rename Γ Δ} {M M′ : Γ ⊢ A}
@@ -451,9 +478,13 @@ are straightforward so we just consider the last one for `pbeta`.
   值得庆幸的是，重命名和规约可以相互交换。
 
 
+<!--
 With the `par-rename` lemma in hand, it is straightforward to show
 that extending substitutions preserves the pointwise parallel
 reduction relation.
+-->
+
+有了 `par-rename` 引理，很容易证明扩展替换保留了逐点并行归约关系。
 
 ```
 par-subst-exts : ∀{Γ Δ} {σ τ : Subst Γ Δ}
@@ -464,11 +495,18 @@ par-subst-exts s {x = Z} = pvar
 par-subst-exts s {x = S x} = par-rename s
 ```
 
+<!--
 The next lemma that we need for proving that substitution respects
 parallel reduction is the following which states that
 simultaneoous substitution commutes with single substitution. We import this
 lemma from Chapter [Substitution](/Substitution/)
 and restate it below.
+-->
+
+下一个我们需要证明的引理是替换遵从平行规约关系，如下文所示，
+它声称同时规约可以与单步规约相交换。
+我们从 [Substitution](/Substitution/) 章节导入这个引理，
+并重申如下。
 
 ```
 subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{σ : Subst Γ Δ }
@@ -476,7 +514,11 @@ subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{σ : Subst Γ �
 subst-commute {N = N} = plfa.part2.Substitution.subst-commute {N = N}
 ```
 
+<!--
 We are ready to prove that substitution respects parallel reduction.
+-->
+
+我们准备好去证明替换遵从平行规约。
 
 ```
 subst-par : ∀{Γ Δ A} {σ τ : Subst Γ Δ} {M M′ : Γ ⊢ A}
@@ -496,8 +538,13 @@ subst-par {Γ} {Δ} {★} {σ} {τ} {(ƛ N) · M} s (pbeta{N′ = N′}{M′ = M
 ... | G rewrite subst-commute{N = N′}{M = M′}{σ = τ} = G
 ```
 
+<!--
 We proceed by induction on `M ⇛ M′`.
+-->
 
+我们通过对 `M ⇛ M′` 归纳来证明。
+
+<!--
 * Suppose `x ⇛ x`. We conclude that `σ x ⇛ τ x` using
   the premise `par-subst σ τ`.
 
@@ -524,10 +571,39 @@ We proceed by induction on `M ⇛ M′`.
         (subst (exts σ) N) [ subst σ M ] ≡ subst σ (N [ M ])
 
   So we have parallel reduction to `subst τ (N′ [ M′ ])`.
+-->
+
+* 假定 `x ⇛ x`。我们使用前提 `par-subst σ τ` 来得出 `σ x ⇛ τ x`。
+
+* 假定 `ƛ N ⇛ ƛ N′` 因为 `N ⇛ N′`。
+  为了使用归纳假设，我们需要 `par-subst (exts σ) (exts τ)`，
+  它通过 `par-subst-exts` 得出。
+  所以我们有 `subst (exts σ) N ⇛ subst (exts τ) N′`
+  并且通过规则 `pabs` 来完成证明。
+
+* 假定 `L · M ⇛ L′ · M′` 因为 `L ⇛ L′` 和 `M ⇛ M′`。
+  根据归纳假设我们有 `subst σ L ⇛ subst τ L′` 和 `subst σ M ⇛ subst τ M′`，
+  所以我们通过规则 `papp` 来完成证明。
+
+* 假定 `(ƛ N) · M  ⇛  N′ [ M′ ]` 因为 `N ⇛ N′` 和 `M ⇛ M′`。
+  同样我们根据 `par-subst-exts` 来得到 `par-subst (exts σ) (exts τ)`。
+  所以根据归纳假设，我们有
+  `subst (exts σ) N ⇛ subst (exts τ) N′` 和 `subst σ M ⇛ subst τ M′`。
+  接着根据 `pbeta` 规则，我们平行规约至 `subst (exts τ) N′ [ subst τ M′ ]`。
+  替换在以下意义中与自身交换：
+  对于任意 σ、 N 和 M， 我们有
+
+        (subst (exts σ) N) [ subst σ M ] ≡ subst σ (N [ M ])
+
+  所以我们平行规约得到 `subst τ (N′ [ M′ ])`。
 
 
+<!--
 Of course, if `M ⇛ M′`, then `subst-zero M` pointwise parallel reduces
 to `subst-zero M′`.
+-->
+
+显然，若 `M ⇛ M′`，则 `subst-zero M` 逐点平行规约至 `subst-zero M′`。
 
 ```
 par-subst-zero : ∀{Γ}{A}{M M′ : Γ ⊢ A}
@@ -537,8 +613,12 @@ par-subst-zero {M} {M′} p {A} {Z} = p
 par-subst-zero {M} {M′} p {A} {S x} = pvar
 ```
 
+<!--
 We conclude this section with the desired corollary, that substitution
 respects parallel reduction.
+-->
+
+我们以所期望的推论来结束本节，即替换遵从平行规约。
 
 ```
 sub-par : ∀{Γ A B} {N N′ : Γ , A ⊢ B} {M M′ : Γ ⊢ A}
@@ -564,7 +644,8 @@ so that every possible pair gives rise to a witness `L` given by
 performing enough beta reductions in parallel.
 -->
 
-The heart of the confluence proof is made of stone, or rather, of diamond! 
+合流性证明的核心是石头制成的，更确切地说，是钻石！
+【译注：在英文中 diamond 一词既指钻石，又指菱形。】
 我们将证明平行规约满足菱形性质，即若有 `M ⇛ N` 和 `M ⇛ N′`，
 那么对某些 `L` 有 `N ⇛ L` 和 `N′ ⇛ L`。
 典型的证明通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳来完成，
@@ -656,9 +737,8 @@ The proof of the triangle property is an induction on `M ⇛ N`.
   并且根据定义我们有 `(λ M) ⁺ = λ (M ⁺)`，所以我们得出 `λ N ⇛ λ(M ⁺)`。
 
   * 假定 `(λ N) · M ⇛ N′ [ M′ ]`。根据归纳假设我们有 `N′ ⇛ N ⁺` 和 `M′ ⇛ M ⁺`。
-  Since substitution respects parallel reduction，
-  于是得到 `N′ [ M′ ] ⇛ N ⁺ [ M ⁺ ]`，而右侧即为 `((λ N) · M) ⁺`，
-  因此有 `N′ [ M′ ] ⇛ ((λ N) · M) ⁺`。
+  因为替换遵从平行规约，于是得到 `N′ [ M′ ] ⇛ N ⁺ [ M ⁺ ]`，
+  而右侧即为 `((λ N) · M) ⁺`，因此有 `N′ [ M′ ] ⇛ ((λ N) · M) ⁺`。
 
   * 假定 `(λ L) · M ⇛ (λ L′) · M′`。
   根据归纳假设我们有 `L′ ⇛ L ⁺` 和 `M′ ⇛ M ⁺`；
@@ -745,9 +825,9 @@ The following diagram illustrates the strip lemma
 
 像在开始承诺的那样，平行规约合流性的证明现在十分简单，
 因为我们知道它满足三角性质。
-我们只需证明 strip 引理，它声称若有 `M ⇛ N` 和 `M ⇛* N′`，
+我们只需证明带状引理（Strip Lemma），它声称若有 `M ⇛ N` 和 `M ⇛* N′`，
 则对于某些 `L` 有 `N ⇛* L` 和 `N′ ⇛ L`。
-下图解释了 strip 引理：
+下图解释了带状引理：
 
         M
        / \
@@ -771,7 +851,7 @@ The proof of the strip lemma is a straightforward induction on `M ⇛* N′`,
 using the triangle property in the induction step.
 -->
 
-strip 引理的证明是对 `M ⇛* N′` 的简单归纳，并在归纳步骤使用三角性质。
+带状引理的证明是对 `M ⇛* N′` 的简单归纳，并在归纳步骤使用三角性质。
 
 ```
 strip : ∀{Γ A} {M N N′ : Γ ⊢ A}
