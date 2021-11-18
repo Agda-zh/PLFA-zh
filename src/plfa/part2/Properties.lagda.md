@@ -963,7 +963,7 @@ contradiction (evidenced by `x≢x refl`).
 在这里映射 `ρ` 不可能调用较里出现的 `x`，由于它被较外的出现遮盖了。
 忽略掉在首位的 `x` 的情况只可能发生在当前寻找的变量不同于 `x` 的情
 况（由 `x≢x` 或 `z≢x` 论证），但如果变量在第二个位置被发现了，
-并且也包含 `x`，便会到处矛盾（由 `x≢x refl` 论证）。
+并且也包含 `x`，便会导出矛盾（由 `x≢x refl` 论证）。
 
 <!--
 Third, if the last two variables in a context differ then we can swap them:
@@ -1477,7 +1477,7 @@ per unit of gas.
 例如，验证以太坊上的交易可能需要为以太坊虚拟机（EVM）执行一个程序。
 一个长期运行或非终止的程序可能会导致矿工在验证合同上投入任意多的努力，
 但回报很少或没有回报。为了避免这种情况，
-每笔交易都伴随着一定数量的**燃料（gas）**可用于计算。
+每笔交易都伴随着一定数量的**燃料（Gas）**可用于计算。
 在 EVM 上执行的每个步骤都会收取公告数量的燃料，
 交易以公布的费率支付燃料：每单位燃料支付给定数量的以太币（以太坊的货币）。 
 
@@ -1523,7 +1523,7 @@ a reduction sequence from `L` to `N` and an indication of whether
 reduction finished:
 -->
 
-给定一个类型为 `A` 的项 `L`，对于某些 `N`，
+给定一个类型为 `A` 的项 `L`，对于某个 `N`，
 求值器将返回从 `L` 到 `N` 的规约序列以及规约是否完成的指示：
 
 ```
@@ -2087,7 +2087,11 @@ Give an example of an ill-typed term that does get stuck.
 
 #### 练习 `unstuck` （推荐）
 
+<!--
 Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` above.
+-->
+
+提供上文中 `unstuck`、`preserves` 和 `wttdgs` 三个假设的证明。
 
 <!--
 ```

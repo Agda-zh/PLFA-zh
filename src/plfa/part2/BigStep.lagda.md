@@ -316,7 +316,7 @@ We can now state the main lemma:
 -->
 
     如果 γ ⊢ M ⇓ V  且  γ ≈ₑ σ,
-    那么有  subst σ M —↠ N  以及  V ≈ N  对于一些 N。
+    那么有  subst σ M —↠ N  以及  V ≈ N  对于某个 N。
 
 <!--
 Before starting the proof, we establish a couple lemmas
@@ -448,7 +448,7 @@ below.
 -->
 
 我们到达了主要引理：如果 `M` 在环境 `γ` 中大步求值为闭包 `V`，并且 `γ ≈ₑ σ`，
-那么 `subst σ M` 将规约为一些等价于 `V` 的项 `N`。我们如下叙述该证明。
+那么 `subst σ M` 将规约为某个等价于 `V` 的项 `N`。我们如下叙述该证明。
 
 ```
 ⇓→—↠×≈ : ∀{Γ}{γ : ClosEnv Γ}{σ : Subst Γ ∅}{M : Γ ⊢ ★}{V : Clos}
@@ -498,12 +498,12 @@ to consider.
 
 * 情况 `⇓-var`：
   此时我们有 `γ x ≡ clos L δ` 和 `δ ⊢ L ⇓ V`。
-  我们需要证明对于某些 `N` 有`subst σ x —↠ N` 和 `V ≈ N`。
+  我们需要证明对于某个 `N` 有`subst σ x —↠ N` 和 `V ≈ N`。
   前提 `γ ≈ₑ σ` 告诉我们 `γ x ≈ σ x`，所以有 `clos L δ ≈ σ x`。
   根据 `≈` 的定义， 存在一个 `τ` 使得 `δ ≈ₑ τ` 且 `σ x ≡ subst τ L `。
   使用 `δ ⊢ L ⇓ V` 和 `δ ≈ₑ τ`，
-  归纳假设使得对于某些 `N` 有 `subst τ L —↠ N` 和 `V ≈ N`。
-  所以我们证明了对于某些 `N`，有 `subst σ x —↠ N` 和 `V ≈ N`。
+  归纳假设使得对于某个 `N` 有 `subst τ L —↠ N` 和 `V ≈ N`。
+  所以我们证明了对于某个 `N`，有 `subst σ x —↠ N` 和 `V ≈ N`。
 
 <!--
 * Case `⇓-lam`.
@@ -558,7 +558,7 @@ to consider.
 
         subst σ L —↠ ƛ subst (exts τ) N                                     (1)
 
-  并且对于某些 `τ` 有 `δ ≈ₑ τ`。
+  并且对于某个 `τ` 有 `δ ≈ₑ τ`。
   根据 `γ≈ₑσ` 我们有 `clos M γ ≈ subst σ M`。
   与 `(δ ,' clos M γ) ⊢ N ⇓ V` 一同，
   归纳假设给我们 `V ≈ N'` 和
@@ -690,7 +690,7 @@ Plotkin 接着引入了**左规约（Left Reduction）** 作为传名调用的�
 -->
 
     推论 1
-    `M —↠ ƛ N` 当且仅当对于某些 `N′`，`M`能通过左规约成 `ƛ N′`。
+    `M —↠ ƛ N` 当且仅当对于某个 `N′`，`M`能通过左规约成 `ƛ N′`。
 
 <!--
 The second step of the proof connects left reduction to call-by-name
@@ -729,7 +729,7 @@ call-by-name evaluation is equivalent to beta reduction.
 -->
 
     推论 2
-    `M —↠ ƛ N` 当且仅当对某些 `N′`，`⊢ M ⇓ ƛ N′`。
+    `M —↠ ƛ N` 当且仅当对某个 `N′`，`⊢ M ⇓ ƛ N′`。
 
 <!--
 Plotkin also proves an analogous result for the λᵥ calculus, relating

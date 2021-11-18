@@ -29,7 +29,7 @@ some common term `N`. In pictures:
 在这一章我们将证明 β-规约是**合流的（Confluent）**，
 该性质同样以 *Church-Rosser* 闻名。也就是说，
 如果有从任一项 `L` 至两个不同项 `M₁` 和 `M₂` 的规约序列，
-那么一定存在从这两个项至一些相同项 `N` 的规约序列。
+那么一定存在从这两个项至某个相同项 `N` 的规约序列。
 如图：
 
         L
@@ -62,7 +62,7 @@ confluence of `⇛*` follows immediately from the diamond property.
 
 合流性（Confluence）也在许多 λ-演算外的重写系统中被研究，
 并且如何在满足**菱形性质（Diamond Property）**，
-一种合流性的单步版本中证明合流性是广为人知的。
+一种合流性的单步版本的重写系统中证明合流性是广为人知的。
 令 `⇛` 为一个关系。`⇛` 具有菱形性质，
 如果对于任何 `L ⇛ M₁` 和 `L ⇛ M₂` 都存在 `N` ，
 使得 `M₁ ⇛ N` 和 `M₂ ⇛ N`。
@@ -97,7 +97,7 @@ Thus, we can reduce the proof of confluence for beta reduction to
 confluence for parallel reduction.
 -->
 
-为了回避这歌问题，我们将定义一个辅助规约关系，
+为了回避这个问题，我们将定义一个辅助规约关系，
 称为**平行规约（Parallel Reduction）** ，
 它可以同时执行许多规约并因此满足菱形性质。
 更进一步地，我们将证明在两个项间存在平行规约序列当且仅当这两个项间存在 β-规约序列。
@@ -401,7 +401,7 @@ of pointwise parallel reduction as follows.
 为了完成该证明，我们还需证明替换遵从平行规约。
 也就是说，如果有 `N ⇛ N′` 和 `M ⇛ M′`，那么 `N [ M ] ⇛ N′ [ M′ ]`。
 我们不能直接通过归纳证明它，所以我们将其推广为：
-如果 `N ⇛ N′` 并且替换 `σ` 逐点（pointwise）平行规约至 `τ`，
+如果 `N ⇛ N′` 并且替换 `σ` 逐点（Pointwise）平行规约至 `τ`，
 则 `subst σ N ⇛ subst τ N′`。
 我们如下定义逐点平行规约。
 
@@ -421,7 +421,7 @@ and restate here.
 -->
 
 因为替换依赖于扩展函数 `exts`，而其又依赖于 `rename`，
-我们开始于被称为 `par=rename` 的替换引理的一种版本，该引理专门用于重命名。
+我们开始于被称为 `par-rename` 的替换引理的一种版本，该引理专门用于重命名。
 `par-rename` 依赖于重命名和替换可以相互交换的事实，
 这是一个我们在 [Substitution](/Substitution/) 章节引入并在此处重申的引理。
 
@@ -484,7 +484,7 @@ that extending substitutions preserves the pointwise parallel
 reduction relation.
 -->
 
-有了 `par-rename` 引理，很容易证明扩展替换保留了逐点并行归约关系。
+有了 `par-rename` 引理，很容易证明扩展替换保留了逐点平行归约关系。
 
 ```
 par-subst-exts : ∀{Γ Δ} {σ τ : Subst Γ Δ}
@@ -647,7 +647,7 @@ performing enough beta reductions in parallel.
 合流性证明的核心是石头制成的，更确切地说，是钻石！
 【译注：在英文中 diamond 一词既指钻石，又指菱形。】
 我们将证明平行规约满足菱形性质，即若有 `M ⇛ N` 和 `M ⇛ N′`，
-那么对某些 `L` 有 `N ⇛ L` 和 `N′ ⇛ L`。
+那么对某个 `L` 有 `N ⇛ L` 和 `N′ ⇛ L`。
 典型的证明通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳来完成，
 因此每一个可能的对都会在执行足够多次平行 β-规约后产生一个见证 `L`。
 
@@ -826,7 +826,7 @@ The following diagram illustrates the strip lemma
 像在开始承诺的那样，平行规约合流性的证明现在十分简单，
 因为我们知道它满足三角性质。
 我们只需证明带状引理（Strip Lemma），它声称若有 `M ⇛ N` 和 `M ⇛* N′`，
-则对于某些 `L` 有 `N ⇛* L` 和 `N′ ⇛ L`。
+则对于某个 `L` 有 `N ⇛* L` 和 `N′ ⇛ L`。
 下图解释了带状引理：
 
         M
@@ -936,7 +936,7 @@ Then by confluence we obtain some `L` such that
 
 规约的合流性是平行规约合流性的一个推论。
 从 `L —↠ M₁` 和 `L —↠ M₂` 根据 `betas-pars` 我们有 `L ⇛* M₁` 和 `L ⇛* M₂`。
-接着根据合流性我们得到对于某些 `L` 有 `M₁ ⇛* N` 和 `M₂ ⇛* N`。
+接着根据合流性我们得到对于某个 `L` 有 `M₁ ⇛* N` 和 `M₂ ⇛* N`。
 因此我们根据 `pars-betas` 得出 `M₁ —↠ N` 和 `M₂ —↠ N`。
 
 ```
