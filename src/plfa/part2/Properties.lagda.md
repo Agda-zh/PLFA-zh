@@ -4,6 +4,8 @@ layout    : page
 prev      : /Lambda/
 permalink : /Properties/
 next      : /DeBruijn/
+translators : ["starxingchenc","alissa-tung"]
+progress  : 80
 ---
 
 ```
@@ -428,10 +430,10 @@ Let's unpack the first three cases:
 
 * 如果这个项是一个函数应用 `L · M`，则考虑对项 `L` 良类型的推导过程递归应用进行性：
 
-  + 如果这个项还能够进行一步规约，我们就有了 `L —→ L′` 的证据，再由 `ξ-·₁`，
+  + 如果这个项还能够进行一步规约，我们就有了 `L —→ L′` 的论据，再由 `ξ-·₁`，
     可知原来的项进行到 `L′ · M`。
 
-  + 如果这个项的规约结束了，我们就有了 `L` 是一个值的证据。
+  + 如果这个项的规约结束了，我们就有了 `L` 是一个值的论据。
     则考虑对项 `L` 良类型的推导过程递归应用进行性：
 
     <!--
@@ -442,7 +444,7 @@ Let's unpack the first three cases:
       subterm has already supplied the required evidence.
     -->
 
-    - 如果这个项还能够进行一步规约，我们就有了 `M —→ M′` 的证据，再由 `ξ-·₂`，
+    - 如果这个项还能够进行一步规约，我们就有了 `M —→ M′` 的论据，再由 `ξ-·₂`，
       可知原来的项进行到 `L′ · M`。要应用规约步骤 `ξ-·₂` 需要我们提供项 `L` 是
       一个值的论据，而之前对子项进行性的分析已经提供了需要的证明。
 
@@ -815,7 +817,7 @@ applying `ρ` to find the evidence that `x` appears in `Δ`.
 -->
 
 * 如果 `x` 与 `y` 不相同，我们则使用 `S` 来跳过拓展后 `Γ` 中的最后一个变量，
-  在这里 `x≢y` 即是变量 `x` 与 `y` 不相同的证据，同时 `∋x` 是变量 `x` 出现在
+  在这里 `x≢y` 即是变量 `x` 与 `y` 不相同的论据，同时 `∋x` 是变量 `x` 出现在
   上下文 `Γ` 中的论据；类似地，我们使用 `S` 来跳过拓展后 `Δ` 的最后一个变量，
   应用 `ρ` 来寻找变量 `x` 出现在上下文 `Δ` 中的论据。
 
@@ -1567,18 +1569,34 @@ remaining.  There are two possibilities:
 令 `L` 是我们要规约的项的名称，`⊢L` 是项 `L` 是良类型的论据。
 我们考虑剩余的燃料量。
 
+<!--
 * It is zero, so we stop early.  We return the trivial reduction
   sequence `L —↠ L`, evidence that `L` is well typed, and an
   indication that we are out of gas.
+-->
 
+* 如果是零，则我们过早地停止了。我们将返回简单的规约序列 `L —↠ L`，
+  证明 `L` 是良类型，并标明我们用尽了燃料。
+
+<!--
 * It is non-zero and after the next step we have `m` gas remaining.
   Apply progress to the evidence that term `L` is well typed.  There
   are two possibilities:
+-->
 
+* 如果非零，则在下一个步骤中我们还剩下 `m` 燃料。将进度应用于项 `L` 是良类型的论据。
+  此处有两种可能：
+
+<!--
   + Term `L` is a value, so we are done. We return the
     trivial reduction sequence `L —↠ L`, evidence that `L` is
     well typed, and the evidence that `L` is a value.
+-->
 
+  + 项 `L` 是一个值，则我们已经完成了。
+    我们将返回简单的规约序列 `L —↠ L`，证明 `L` 是良类型，以及 `L` 是值的论据。
+
+<!--
   + Term `L` steps to another term `M`.  Preservation provides
     evidence that `M` is also well typed, and we recursively invoke
     `eval` on the remaining gas.  The result is evidence that
@@ -1586,6 +1604,12 @@ remaining.  There are two possibilities:
     indication of whether reduction finished.  We combine the evidence
     that `L —→ M` and `M —↠ N` to return evidence that `L —↠ N`,
     together with the other relevant evidence.
+-->
+
+  + 项 `L` 步进至另一个项 `M`。保型性提供了 `M` 也是良类型的论据，
+    我们对剩余的燃料递归调用 `eval`。
+    结果将得到 `M —↠ N` 的论据以及 `N` 是良类型的论据和规约是否完成的标识。
+    我们将 `L —→ M` 和 `M —↠ N` 的论据结合来得到 `L —↠ N` 以及其它有关的的论据。
 
 
 <!--
@@ -2011,22 +2035,40 @@ with case expressions and one not involving case expressions.
 ```
 
 
+<!--
 ## Well-typed terms don't get stuck
+-->
 
+## 良类型的项不会卡住
+
+<!--
 A term is _normal_ if it cannot reduce:
+-->
+
+一个项是**范式**，如果它不能被规约。
 
 ```
 Normal : Term → Set
 Normal M  =  ∀ {N} → ¬ (M —→ N)
 ```
 
+<!--
 A term is _stuck_ if it is normal yet not a value:
+-->
+
+一个项被**卡住**，如果它是一个范式但不是一个值。
+
 ```
 Stuck : Term → Set
 Stuck M  =  Normal M × ¬ Value M
 ```
 
+<!--
 Using progress, it is easy to show that no well-typed term is stuck:
+-->
+
+使用进行性，很容易证明没有良类型的项会被卡住。
+
 ```
 postulate
   unstuck : ∀ {M A}
@@ -2035,8 +2077,14 @@ postulate
     → ¬ (Stuck M)
 ```
 
+<!--
 Using preservation, it is easy to show that after any number of steps,
 a well-typed term remains well typed:
+-->
+
+使用保型性，很容易证明在经过任意多次步进后，
+良类型的项依旧是良类型的。
+
 ```
 postulate
   preserves : ∀ {M N A}
@@ -2046,8 +2094,14 @@ postulate
     → ∅ ⊢ N ⦂ A
 ```
 
+<!--
 An easy consequence is that starting from a well-typed term, taking
 any number of reduction steps leads to a term that is not stuck:
+-->
+
+一个简单地结果是，从一个良类型的项开始，进行任意多次步进，
+将得到一个不被卡住的项。
+
 ```
 postulate
   wttdgs : ∀ {M N A}
@@ -2056,6 +2110,7 @@ postulate
       -----------
     → ¬ (Stuck N)
 ```
+
 Felleisen and Wright, who introduced proofs via progress and
 preservation, summarised this result with the slogan _well-typed terms
 don't get stuck_.  (They were referring to earlier work by Robin
@@ -2069,7 +2124,11 @@ showed _well-typed terms don't go wrong_.)
 
 #### 练习 `stuck` （实践）
 
+<!--
 Give an example of an ill-typed term that does get stuck.
+-->
+
+给出一个会被卡住的不良类型的项的例子。
 
 <!--
 ```
@@ -2196,7 +2255,11 @@ checker complains, because the arguments have merely switched order
 and neither is smaller.
 
 
+<!--
 #### Quiz
+-->
+
+#### 小测验
 
 Suppose we add a new term `zap` with the following reduction rule
 
@@ -2220,7 +2283,11 @@ false, give a counterexample:
   - Preservation
 
 
+<!--
 #### Quiz
+-->
+
+#### 小测验
 
 Suppose instead that we add a new term `foo` with the following
 reduction rules:
@@ -2243,7 +2310,11 @@ false, give a counterexample:
   - Preservation
 
 
+<!--
 #### Quiz
+-->
+
+#### 小测验
 
 Suppose instead that we remove the rule `ξ·₁` from the step
 relation. Which of the following properties remain
@@ -2258,7 +2329,11 @@ false, give a counterexample:
   - Preservation
 
 
+<!--
 #### Quiz
+-->
+
+#### 小测验
 
 We can enumerate all the computable function from naturals to
 naturals, by writing out all programs of type `` `ℕ ⇒ `ℕ`` in
