@@ -2168,13 +2168,24 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 
 ## 规约是确定的
 
+<!--
 When we introduced reduction, we claimed it was deterministic.
 For completeness, we present a formal proof here.
+-->
 
+当我们引入归约时，我们声称它是确定的。
+为完整起见，我们在此提供正式的证明。
+
+<!--
 Our proof will need a variant
 of congruence to deal with functions of four arguments
 (to deal with `case_[zero⇒_|suc_⇒_]`).  It
 is exactly analogous to `cong` and `cong₂` as defined previously:
+-->
+
+我们的证明需要一个合同变体来处理四个参数的函数（处理`case_[zero⇒_|suc_⇒_]`）。
+它与之前定义的 `cong` 和 `cong₂` 完全类似：
+
 ```
 cong₄ : ∀ {A B C D E : Set} (f : A → B → C → D → E)
   {s w : A} {t x : B} {u y : C} {v z : D}
@@ -2182,7 +2193,12 @@ cong₄ : ∀ {A B C D E : Set} (f : A → B → C → D → E)
 cong₄ f refl refl refl refl = refl
 ```
 
+<!--
 It is now straightforward to show that reduction is deterministic:
+-->
+
+现在证明规约是确定的十分简单。
+
 ```
 det : ∀ {M M′ M″}
   → (M —→ M′)
@@ -2209,8 +2225,13 @@ det (β-suc VL)     (ξ-case L—→L″)   =  ⊥-elim (V¬—→ (V-suc VL) L�
 det (β-suc _)      (β-suc _)        =  refl
 det β-μ            β-μ              =  refl
 ```
+
+<!--
 The proof is by induction over possible reductions.  We consider
 three typical cases:
+-->
+
+证明通过对可能的规约进行归纳来完成。我们考虑三种典型的情况：
 
 * Two instances of `ξ-·₁`:
 
@@ -2242,6 +2263,7 @@ three typical cases:
   Since the left-hand sides are identical, the right-hand sides are
   also identical. The formal proof simply invokes `refl`.
 
+<!--
 Five of the 18 lines in the above proof are redundant, e.g., the case
 when one rule is `ξ-·₁` and the other is `ξ-·₂` is considered twice,
 once with `ξ-·₁` first and `ξ-·₂` second, and the other time with the
@@ -2253,6 +2275,16 @@ and add
 to the bottom of the proof. But this does not work: the termination
 checker complains, because the arguments have merely switched order
 and neither is smaller.
+-->
+
+上述证明中的 18 行中有 5 行是多余的，
+例如，当一个规则是 `ξ-·₁` 而另一个是 `ξ-·₂` 的情况被考虑两次，
+一次是先有 `ξ-·₁`，然后有 `ξ-·₂`，另一次将两者互换。
+我们可能想做的是删除多余的行并在证明的底部添加
+
+    det M—→M′ M—→M″ = sym (det M—→M″ M—→M′)
+
+但这不起作用：终结检查器报错，因为参数只是切换了顺序，而且没有任何一个变得更小。
 
 
 <!--
@@ -2261,26 +2293,48 @@ and neither is smaller.
 
 #### 小测验
 
+<!--
 Suppose we add a new term `zap` with the following reduction rule
+-->
+
+假设我们加入了一个新项 `zap` 以及以下规约规则
 
     -------- β-zap
     M —→ zap
 
+<!--
 and the following typing rule:
+-->
+
+和以下赋型规则：
 
     ----------- ⊢zap
     Γ ⊢ zap ⦂ A
 
+<!--
 Which of the following properties remain true in
 the presence of these rules?  For each property, write either
 "remains true" or "becomes false." If a property becomes
 false, give a counterexample:
+-->
 
+在这些规则存在的情况下，以下哪些属性仍然成立？
+对于每个属性，写下 “仍为真” 或 “变为假”。
+如果一个属性变为假，请举出一个反例：
+
+<!--
   - Determinism of `step`
 
   - Progress
 
   - Preservation
+-->
+
+  - `step` 的确定性
+
+  - 进行性
+
+  - 保型性
 
 
 <!--
@@ -2289,8 +2343,12 @@ false, give a counterexample:
 
 #### 小测验
 
+<!--
 Suppose instead that we add a new term `foo` with the following
 reduction rules:
+-->
+
+假设我们加入了一个新项 `foo` 以及以下规约规则：
 
     ------------------ β-foo₁
     (λ x ⇒ ` x) —→ foo
@@ -2298,16 +2356,30 @@ reduction rules:
     ----------- β-foo₂
     foo —→ zero
 
+<!--
 Which of the following properties remain true in
 the presence of this rule?  For each one, write either
 "remains true" or else "becomes false." If a property becomes
 false, give a counterexample:
+-->
 
+在此规则存在的情况下，以下哪些属性仍然成立？
+对于每个属性，写下 “仍为真” 或 “变为假”。
+如果一个属性变为假，请举出一个反例：
+
+<!--
   - Determinism of `step`
 
   - Progress
 
   - Preservation
+-->
+
+  - `step` 的确定性
+
+  - 进行性
+
+  - 保型性
 
 
 <!--
@@ -2316,17 +2388,32 @@ false, give a counterexample:
 
 #### 小测验
 
+<!--
 Suppose instead that we remove the rule `ξ·₁` from the step
 relation. Which of the following properties remain
 true in the absence of this rule?  For each one, write either
 "remains true" or else "becomes false." If a property becomes
 false, give a counterexample:
+-->
 
+假设我们从步进关系中移除了规则 `ξ·₁`。
+在此规则不存在的情况下，以下哪些属性仍然成立？
+对于每个属性，写下 “仍为真” 或 “变为假”。
+如果一个属性变为假，请举出一个反例：
+
+<!--
   - Determinism of `step`
 
   - Progress
 
   - Preservation
+-->
+
+  - `step` 的确定性
+
+  - 进行性
+
+  - 保型性
 
 
 <!--
@@ -2335,37 +2422,70 @@ false, give a counterexample:
 
 #### 小测验
 
+<!--
 We can enumerate all the computable function from naturals to
 naturals, by writing out all programs of type `` `ℕ ⇒ `ℕ`` in
 lexical order.  Write `fᵢ` for the `i`'th function in this list.
+-->
 
+我们可以通过按照字典序写出所有类型为 `` `ℕ ⇒ `ℕ`` 的程序来遍历所有从自然数到自然数的可计算函数。
+将这个列表中的第 `i` 个函数写作 `fᵢ`。
+
+<!--
 Say we add a typing rule that applies the above enumeration
 to interpret a natural as a function from naturals to naturals:
+-->
+
+假设我们添加了一个赋性规则，应用上述遍历来将一个自然数解释为一个从自然数到自然数的函数：
+
 
     Γ ⊢ L ⦂ `ℕ
     Γ ⊢ M ⦂ `ℕ
     -------------- _·ℕ_
     Γ ⊢ L · M ⦂ `ℕ
 
+<!--
 And that we add the corresponding reduction rule:
+-->
+
+并且我们添加了相应的归约规则：
 
     fᵢ(m) —→ n
     ---------- δ
     i · m —→ n
 
+<!--
 Which of the following properties remain true in
 the presence of this rule?  For each one, write either
 "remains true" or else "becomes false." If a property becomes
 false, give a counterexample:
+-->
 
+在此规则存在的情况下，以下哪些属性仍然成立？
+对于每个属性，写下 “仍为真” 或 “变为假”。
+如果一个属性变为假，请举出一个反例：
+
+<!--
   - Determinism of `step`
 
   - Progress
 
   - Preservation
+-->
 
+  - `step` 的确定性
+
+  - 进行性
+
+  - 保型性
+
+<!--
 Are all properties preserved in this case? Are there any
 other alterations we would wish to make to the system?
+-->
+
+在这种情况下是否保留了所有属性？
+我们是否希望对系统进行任何其他更改？
 
 ## Unicode
 
