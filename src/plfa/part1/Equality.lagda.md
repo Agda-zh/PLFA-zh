@@ -21,7 +21,7 @@ here we show how to define it as an inductive datatype.
 
 我们在论证的过程中经常会使用相等性。给定两个都为 `A` 类型的项 `M` 和 `N`，
 我们用 `M ≡ N` 来表示 `M` 和 `N` 可以相互替换。在此之前，
-我们将相等性作为一个基础运算，而现在我们来说明如果将其定义为一个归纳的数据类型。
+我们将相等性作为一个基础运算，而现在我们来说明如何将其定义为一个归纳的数据类型。
 
 
 <!--
@@ -75,7 +75,7 @@ an index, so it can be required to be equal to the first.
 而第二个参数（Argument）则是由 `A → Set` 的索引给出。
 这和我们尽可能多的使用参数（Parameter）的理念相符。`_≡_` 的第一个参数（Argument）
 可以作为一个参数（Parameter），因为它不会变，而第二个参数（Argument）则必须是一个索引，
-这样它才可以等用于第一个。
+这样它才可以等于第一个。
 
 <!--
 We declare the precedence of equality as follows:
@@ -318,7 +318,7 @@ named `≡-Reasoning`, to match the format used in Agda's standard
 library:
 -->
 
-我们在此演示如何使用等式串来论证，正如本书中使用证明形式。我们讲声明放在一个叫做
+我们在此演示如何使用等式串来论证，正如本书中使用证明形式。我们将声明放在一个叫做
 `≡-Reasoning` 的模块里，与 Agda 标准库中的格式相对应。
 
 ```
@@ -369,7 +369,7 @@ available in the current environment.
 这是我们第一次使用嵌套的模块。它包括了关键字 `module` 和后续的模块名、隐式或显式参数，
 关键字 `where`，和模块中的内容（在缩进内）。模块里可以包括任何形式的声明，也可以包括其他模块。
 嵌套的模块和本书每章节所定义的顶层模块相似，只是顶层模块不需要缩进。
-打开（Open）一个模块会把模块内的所有定义导入进当前的环境中。
+打开（`open`）一个模块会把模块内的所有定义导入进当前的环境中。
 
 <!--
 As an example, let's look at a proof of transitivity
@@ -881,7 +881,7 @@ surprisingly, this definition is sufficient to also ensure the
 converse, that every property `P` that holds of `y` also holds of `x`.
 -->
 
-莱布尼兹不等式一般如下来定义：`x ≐ y` 当每个对于 `x` 成立的性质 `P` 对于 `y` 也成立时成立。
+莱布尼兹相等性一般如下来定义：`x ≐ y` 当每个对于 `x` 成立的性质 `P` 对于 `y` 也成立时成立。
 可能这有些出乎意料，但是这个定义亦足够保证其相反的命题：每个对于 `y` 成立的性质 `P` 对于 `x` 也成立。
 
 <!--
@@ -1158,7 +1158,7 @@ the text, but most definitions in the standard library, including those for
 equality, are generalised to arbitrary levels as above.
 -->
 
-为了简介，我们在本书中给出的定义将避免使用全体多态，但是大多数标准库中的定义，
+为了简洁，我们在本书中给出的定义将避免使用全体多态，但是大多数标准库中的定义，
 包括相等性的定义，都推广到了任意等级，如上所示。
 
 <!--
