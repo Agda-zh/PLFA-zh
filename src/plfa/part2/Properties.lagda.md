@@ -1105,8 +1105,8 @@ choose type names as convenient.
 我们使用形同 `{x = y}` 的语法来将 `y` 与被替换的变量绑定，
 用 `{x = x}` 来将 `x` 与 `` ⊢` ``、`⊢ƛ`、`⊢case` 和 `⊢μ` 中相关的变量绑定。
 在这里用 `y` 这一名字业余前一章中替换的原始定义一致。
-在证明中从来没有提及过 `x`、`y`、`V` 或 `N` 的类型，所以接下来我们按照惯例
-选取类型的名字：
+在证明中从来没有提及过 `x`、`y`、`V` 或 `N` 的类型，
+因此在下面的内容中，我们尽可能方便地选择类型名称。
 
 <!--
 Now that naming is resolved, let's unpack the first three cases:
