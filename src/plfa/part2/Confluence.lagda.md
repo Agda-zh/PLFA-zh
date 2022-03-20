@@ -385,8 +385,7 @@ pars-betas (L ⇛⟨ p ⟩ ps) = —↠-trans (par-betas p) (pars-betas ps)
 
 ## 平行规约的替换引理
 
-<!--
-Our next goal is the prove the diamond property for parallel
+Our next goal is to prove the diamond property for parallel
 reduction. But to do that, we need to prove that substitution
 respects parallel reduction. That is, if
 `N ⇛ N′` and `M ⇛ M′`, then `N [ M ] ⇛ N′ [ M′ ]`.
@@ -452,11 +451,11 @@ par-rename {Γ}{Δ}{A}{ρ} (pbeta{Γ}{N}{N′}{M}{M′} p₁ p₂)
 ```
 
 <!--
-The proof is by induction on `M ⇛ M′`. The first four cases
+The proof is by induction on `M ⇛ M′`. The first three cases
 are straightforward so we just consider the last one for `pbeta`.
 -->
 
-证明通过对 `M ⇛ M′` 进行归纳来完成。前四种情况很简单，
+证明通过对 `M ⇛ M′` 进行归纳来完成。前三种情况很简单，
 所以我们只考虑最后一种，即 `pbeta`。
 
 <!--
@@ -498,7 +497,7 @@ par-subst-exts s {x = S x} = par-rename s
 <!--
 The next lemma that we need for proving that substitution respects
 parallel reduction is the following which states that
-simultaneoous substitution commutes with single substitution. We import this
+simultaneous substitution commutes with single substitution. We import this
 lemma from Chapter [Substitution](/Substitution/)
 and restate it below.
 -->
@@ -708,7 +707,7 @@ The proof of the triangle property is an induction on `M ⇛ N`.
 三角性质的证明通过对 `M ⇛ N` 归纳来完成。
 
 <!--
-* Suppose `x ⇛ x`. Clearly `x ⁺ = x`, so `x ⇛ x`.
+* Suppose `x ⇛ x`. Clearly `x ⁺ = x`, so `x ⇛ x ⁺`.
 
 * Suppose `ƛ M ⇛ ƛ N`. By the induction hypothesis we have `N ⇛ M ⁺`
   and by definition `(λ M) ⁺ = λ (M ⁺)`, so we conclude that `λ N ⇛ λ
@@ -731,7 +730,7 @@ The proof of the triangle property is an induction on `M ⇛ N`.
   we have to write down the remaining case explicitly.)
 -->
 
-  * 假定 `x ⇛ x`。显然 `x ⁺ = x`，所以 `x ⇛ x`。
+  * 假定 `x ⇛ x`。显然 `x ⁺ = x`，所以 `x ⇛ x ⁺`。
 
   * 假定 `ƛ M ⇛ ƛ N`。根据归纳假设我们有 `N ⇛ M ⁺`，
   并且根据定义我们有 `(λ M) ⁺ = λ (M ⁺)`，所以我们得出 `λ N ⇛ λ(M ⁺)`。
