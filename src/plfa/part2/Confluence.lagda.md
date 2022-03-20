@@ -276,7 +276,7 @@ that `M —↠ N` implies `M ⇛* N`. The proof is a straightforward
 induction on the reduction sequence `M —↠ N`.
 -->
 
-证明了该引理后我们便可完成证明，
+证明了该引理后我们便可完成必要性的证明，
 即 `M —↠ N` 蕴含 `M ⇛* N`。该证明是对 `M —↠ N` 规约序列的简单归纳。
 
 ```
