@@ -2076,7 +2076,7 @@ with case expressions and one not involving case expressions.
 保型性有时也被叫做**子规约（Subject Reduction）**。
 它的对应是**子扩展（Subject Expansion）**，
 如果 `M —→ N` 和 `∅ ⊢ N ⦂ A` 蕴含 `∅ ⊢ M ⦂ A`。
-找到两个子扩展的反例，一个涉及 case 表达式而另一个不涉及。
+找到两个子扩展的反例，一个涉及 `case` 表达式而另一个不涉及。
 
 <!--
 ```
