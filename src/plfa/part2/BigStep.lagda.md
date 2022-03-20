@@ -4,6 +4,8 @@ layout    : page
 prev      : /Confluence/
 permalink : /BigStep/
 next      : /Denotational/
+translators : ["starxingchenc"]
+progress  : 100
 ---
 
 ```
@@ -31,8 +33,8 @@ of the denotational semantics.
 
 传名调用求值策略（Call-by-name Evaluation Strategy）是在 λ-演算中计算程序值的一种确定性方法。
 也就是说，传名调用能够求出值当且仅当 β-规约能将程序规约为一个 λ-抽象。
-在这一章节，我们将定义传名调用求值并且证明这个等价命题的正向部分。
-反向的部分较为复杂，通常通过 Curry-Feys 标准化证明。
+在这一章节，我们将定义传名调用求值并且证明这个等价命题的必要性。
+充分性的部分较为复杂，通常通过 Curry-Feys 标准化证明。
 根据 Plotkin 的工作，我们给出这个证明的概要，
 但是由于这是指称语义的一个简单性质，
 我们将在为 λ-演算发展出指称语义后在 Agda 中完整地证明它。
@@ -48,7 +50,7 @@ single sub-computation has been completed.
 
 我们将传名调用策略表示为一个输入表达式与输出值间的关系。
 因为这样的关系将输入表达式 `M` 和最终结果 `V` 直接相联系，
-它通常被叫做 **大步语义（Big-stepsemantics）**，写做 `M ⇓ V`。
+它通常被叫做**大步语义（Big-stepsemantics）**，写做 `M ⇓ V`。
 而小步规约关系则被写做 `M —→ M′`，它仅通过一步子计算来将 `M` 规约为另一个表达式 `M′`。
 
 
@@ -241,7 +243,7 @@ straightforward induction on the two big-step derivations.
 ## Big-step evaluation implies beta reduction to a lambda
 -->
 
-## 大步求值蕴含 β-规约
+## 大步求值蕴含 β-规约至 λ-抽象
 
 <!--
 If big-step evaluation produces a value, then the input term can
@@ -314,7 +316,7 @@ We can now state the main lemma:
 -->
 
     如果 γ ⊢ M ⇓ V  且  γ ≈ₑ σ,
-    那么有  subst σ M —↠ N  以及  V ≈ N  对于一些 N。
+    那么有  subst σ M —↠ N  以及  V ≈ N  对于某个 N。
 
 <!--
 Before starting the proof, we establish a couple lemmas
@@ -446,7 +448,7 @@ below.
 -->
 
 我们到达了主要引理：如果 `M` 在环境 `γ` 中大步求值为闭包 `V`，并且 `γ ≈ₑ σ`，
-那么 `subst σ M` 将规约为一些等价于 `V` 的项 `N`。我们如下叙述该证明。
+那么 `subst σ M` 将规约为某个等价于 `V` 的项 `N`。我们如下叙述该证明。
 
 ```
 ⇓→—↠×≈ : ∀{Γ}{γ : ClosEnv Γ}{σ : Subst Γ ∅}{M : Γ ⊢ ★}{V : Clos}
@@ -496,12 +498,12 @@ to consider.
 
 * 情况 `⇓-var`：
   此时我们有 `γ x ≡ clos L δ` 和 `δ ⊢ L ⇓ V`。
-  我们需要证明对于某些 `N` 有`subst σ x —↠ N` 和 `V ≈ N`。
+  我们需要证明对于某个 `N` 有`subst σ x —↠ N` 和 `V ≈ N`。
   前提 `γ ≈ₑ σ` 告诉我们 `γ x ≈ σ x`，所以有 `clos L δ ≈ σ x`。
   根据 `≈` 的定义， 存在一个 `τ` 使得 `δ ≈ₑ τ` 且 `σ x ≡ subst τ L `。
   使用 `δ ⊢ L ⇓ V` 和 `δ ≈ₑ τ`，
-  归纳假设使得对于某些 `N` 有 `subst τ L —↠ N` 和 `V ≈ N`。
-  所以我们证明了对于某些 `N`，有 `subst σ x —↠ N` 和 `V ≈ N`。
+  归纳假设使得对于某个 `N` 有 `subst τ L —↠ N` 和 `V ≈ N`。
+  所以我们证明了对于某个 `N`，有 `subst σ x —↠ N` 和 `V ≈ N`。
 
 <!--
 * Case `⇓-lam`.
@@ -556,7 +558,7 @@ to consider.
 
         subst σ L —↠ ƛ subst (exts τ) N                                     (1)
 
-  并且对于某些 `τ` 有 `δ ≈ₑ τ`。
+  并且对于某个 `τ` 有 `δ ≈ₑ τ`。
   根据 `γ≈ₑσ` 我们有 `clos M γ ≈ subst σ M`。
   与 `(δ ,' clos M γ) ⊢ N ⇓ V` 一同，
   归纳假设给我们 `V ≈ N'` 和
@@ -590,7 +592,7 @@ With the main lemma complete, we establish the forward direction
 of the equivalence between the big-step semantics and beta reduction.
 -->
 
-证明了主要引理后，我们便建立起大步语义与 β-规约等价关系的正向部分。
+证明了主要引理后，我们便建立起大步语义与 β-规约等价关系的必要性。
 
 ```
 cbn→reduce :  ∀{M : ∅ ⊢ ★}{Δ}{δ : ClosEnv Δ}{N′ : Δ , ★ ⊢ ★}
@@ -635,7 +637,7 @@ with `M`. Prove that `M ↓ N` implies `M —↠ N`.
 ## Beta reduction to a lambda implies big-step evaluation
 -->
 
-## β-规约蕴含大步求值
+## β-规约至 λ-抽象蕴含大步求值
 
 <!--
 The proof of the backward direction, that beta reduction to a lambda
@@ -654,7 +656,7 @@ lambda. Plotkin proves that `M` reduces to `L` if and only if `M` is
 related to `L` by a standard reduction sequence.
 -->
 
-反向的证明，也就是项的 β-规约蕴含大步语义求值是更困难的。
+充分性的证明，也就是 β-规约至 λ-抽象蕴含大步语义求值是更困难的。
 困难源于通过 `ζ` 规则在 λ-抽象下的规约过程。
 传名调用语义在 λ-演算中并不会规约，因此直接通过归纳规约序列来证明是不可能的。
 在文章 **Call-by-name, call-by-value, and the λ-calculus** 中，
@@ -688,7 +690,7 @@ Plotkin 接着引入了**左规约（Left Reduction）** 作为传名调用的�
 -->
 
     推论 1
-    `M —↠ ƛ N` 当且仅当对于某些 `N′`，`M`能通过左规约成 `ƛ N′`。
+    `M —↠ ƛ N` 当且仅当对于某个 `N′`，`M`能通过左规约成 `ƛ N′`。
 
 <!--
 The second step of the proof connects left reduction to call-by-name
@@ -727,7 +729,7 @@ call-by-name evaluation is equivalent to beta reduction.
 -->
 
     推论 2
-    `M —↠ ƛ N` 当且仅当对某些 `N′`，`⊢ M ⇓ ƛ N′`。
+    `M —↠ ƛ N` 当且仅当对某个 `N′`，`⊢ M ⇓ ƛ N′`。
 
 <!--
 Plotkin also proves an analogous result for the λᵥ calculus, relating
@@ -748,7 +750,7 @@ proof of the backwards direction will fall out as a corollary to the
 soundness and adequacy of the denotational semantics.
 -->
 
-我们不通过上文描述的标准化方式来完成反向部分的证明，
+我们不通过上文描述的标准化方式来完成充分性的证明，
 而是将其推迟到发展出 λ-演算的指称语义后，
 此时该证明是指称语义中 soundness 和 adequacy 的推论。
 
