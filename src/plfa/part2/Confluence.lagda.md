@@ -26,8 +26,8 @@ reduction sequences from any term `L` to two different terms `M₁` and
 some common term `N`. In pictures:
 -->
 
-在这一章我们将证明 β-规约是**合流的（Confluent）**，
-该性质同样以 *Church-Rosser* 闻名。也就是说，
+在这一章我们将证明 β-规约是**合流的（Confluent）**
+（又被称作 *Church-Rosser* 性质）：
 如果有从任一项 `L` 至两个不同项 `M₁` 和 `M₂` 的规约序列，
 那么一定存在从这两个项至某个相同项 `N` 的规约序列。
 如图：
@@ -660,7 +660,7 @@ development_. The desired property may be illustrated as
 
 然而，一个更简单的方法是对 `M` 执行尽可能多次平行 β-规约，
 称其为 `M ⁺`，然后证明 `N` 也可以平行规约至 `M ⁺`。
-这就是 Takahashi 的 _complete development_ 的想法。 
+这就是 Takahashi 的 _complete development_ 的想法。
 所需的性质可以表示为：
 
         M
@@ -975,8 +975,8 @@ article by Nipkow (JAR 1996).
 归功于 W. Tait 和 P. Martin-Löf （参见 Barendregt 1984，章节 3.2）。
 机械化的细节有多个来源。
 `subst-par` 引理是 Shafer、Tebbi 和 Smolka (ITP 2015) 的 “强替换性（Strong Substitutivity）” 引理。
-`par-triangle`、`strip` 和 `par-confluence` 的证明是基于 
-Takahashi (1995) 的 complete development 
+`par-triangle`、`strip` 和 `par-confluence` 的证明是基于
+Takahashi (1995) 的 complete development
 和 Pfenning 1992 年关于 Church-Rosser 定理的技术报告。
 此外，我们在 Isabelle 中咨询了 Nipkow 和 Berghofer 的机械化，
 它基于 Nipkow 的早期文章（JAR 1996）。
