@@ -153,7 +153,7 @@ types without needing to develop a separate inductive definition of the
 `appears_free_in` relation.)
 -->
 
-（这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language Foundations_）中对应的 _StlcProp_ 的内容。
+（这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language Foundations_）中对应的 _StlcProp_ 一章。
 事实上我们技术选择中的一个——通过显示地引入一条判断 `Γ ∋ x ⦂ A`，
 而不是将上下文视作为一个从标识符映射到类型的函数——简化了开发过程。
 特别地，我们不需要额外地去归纳定义关系 `appears_free_in` 就可以证明替换保留了类型。）
