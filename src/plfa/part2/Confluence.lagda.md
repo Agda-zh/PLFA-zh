@@ -503,7 +503,7 @@ lemma from Chapter [Substitution](/Substitution/)
 and restate it below.
 -->
 
-下一个我们需要证明的引理是替换遵从平行规约关系，如下文所示，
+为了证明替换遵从平行规约关系，我们需要证明的下一个引理如下文所示，
 它声称同时规约可以与单步规约相交换。
 我们从 [Substitution](/Substitution/) 章节导入这个引理，
 并重申如下。
