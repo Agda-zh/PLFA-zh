@@ -1358,6 +1358,7 @@ Let's unpack the cases for two of the reduction rules:
 
 让我们分析规约规则的两种情况：
 
+<!--
 * Rule `ξ-·₁`.  We have
 
       L —→ L′
@@ -1405,6 +1406,59 @@ Let's unpack the cases for two of the reduction rules:
 
 The remaining cases are similar.  Each `ξ` rule follows by induction,
 and each `β` rule follows by the substitution lemma.
+-->
+
+* 规则 `ξ-·₁`。我们有
+
+      L —→ L′
+      ----------------
+      L · M —→ L′ · M
+
+  其中左手侧由
+
+      Γ ⊢ L ⦂ A ⇒ B
+      Γ ⊢ M ⦂ A
+      -------------
+      Γ ⊢ L · M ⦂ B
+  
+  赋型。
+
+  根据归纳，我们有
+
+      Γ ⊢ L ⦂ A ⇒ B
+      L —→ L′
+      --------------
+      Γ ⊢ L′ ⦂ A ⇒ B
+
+  其中右手侧的赋型可以直接得出。
+
+* 规则 `β-ƛ`。我们有
+
+      Value V
+      -----------------------------
+      (ƛ x ⇒ N) · V —→ N [ x := V ]
+
+  其中左手侧由
+
+      Γ , x ⦂ A ⊢ N ⦂ B
+      -------------------
+      Γ ⊢ ƛ x ⇒ N ⦂ A ⇒ B    Γ ⊢ V ⦂ A
+      --------------------------------
+      Γ ⊢ (ƛ x ⇒ N) · V ⦂ B
+
+  赋型。
+
+  根据替换引理，我们有
+
+      Γ ⊢ V ⦂ A
+      Γ , x ⦂ A ⊢ N ⦂ B
+      --------------------
+      Γ ⊢ N [ x := V ] ⦂ B
+
+  其中右手侧的赋型可以直接得出。
+
+剩余情况与此类似，对每个 `ξ` 规则使用归纳，
+对每个 `β` 规则使用替换引理。
 
 
 <!--
@@ -2111,12 +2165,18 @@ postulate
     → ¬ (Stuck N)
 ```
 
+<!--
 Felleisen and Wright, who introduced proofs via progress and
 preservation, summarised this result with the slogan _well-typed terms
 don't get stuck_.  (They were referring to earlier work by Robin
 Milner, who used denotational rather than operational semantics. He
 introduced `wrong` as the denotation of a term with a type error, and
 showed _well-typed terms don't go wrong_.)
+-->
+
+Felleisen 与 Wright 通过进行性和保型性引入了证明，并将其总结为 **良类型的项不会卡住** 的口号。
+（他们提及了 Robin Milner 早期的工作，他使用指称而非操作语义。
+他引入了“错误”作为带有类型错误的术语的指称，并展示了 **良类型的项不会出错**。）
 
 <!--
 #### Exercise `stuck` (practice)
@@ -2233,6 +2293,7 @@ three typical cases:
 
 证明通过对可能的规约进行归纳来完成。我们考虑三种典型的情况：
 
+<!--
 * Two instances of `ξ-·₁`:
 
       L —→ L′                 L —→ L″
@@ -2262,6 +2323,35 @@ three typical cases:
 
   Since the left-hand sides are identical, the right-hand sides are
   also identical. The formal proof simply invokes `refl`.
+-->
+
+* 两个关于 `ξ-·₁` 的实例：
+
+      L —→ L′                 L —→ L″
+      --------------- ξ-·₁    --------------- ξ-·₁
+      L · M —→ L′ · M         L · M —→ L″ · M
+
+  根据归纳我们有 `L′ ≡ L″`，因此根据合同性有 `L′ · M ≡ L″ · M`。
+
+* 一个关于 `ξ-·₁` 的实例和一个关于 `ξ-·₂` 的实例：
+
+                              Value L
+      L —→ L′                 M —→ M″
+      --------------- ξ-·₁    --------------- ξ-·₂
+      L · M —→ L′ · M         L · M —→ L · M″
+
+  左侧的规则要求 `L` 被规约，但右侧的规则要求 `L` 是一个值。
+  这是一个矛盾，因为值无法被规约。如果值的约束从 `ξ-·₂` 或任何其他规约规则中被移除，
+  那么确定性将不再适用。
+
+* 两个关于 `β-ƛ` 的实例：
+
+      Value V                              Value V
+      ----------------------------- β-ƛ    ----------------------------- β-ƛ
+      (ƛ x ⇒ N) · V —→ N [ x := V ]        (ƛ x ⇒ N) · V —→ N [ x := V ]
+
+  因为左侧是相同的，所以右侧也是相同的。
+  形式证明只是对 `refl` 的调用。
 
 <!--
 Five of the 18 lines in the above proof are redundant, e.g., the case
