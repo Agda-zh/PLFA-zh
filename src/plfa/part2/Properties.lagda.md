@@ -1099,7 +1099,7 @@ mentions the types of `x`, `y`, `V`, or `N`, so in what follows we
 choose type names as convenient.
 -->
 
-首先我们注意到一个有关命名的问题。
+首先我们注意到一个有关命名的小问题。
 在引理的陈述中，被替换的变量 `x` 是一个隐式参数，同时在变量、抽象、
 对自然数分项和不动点的赋型规则中，相关变量 `x` 是一个隐式参数，因此
 我们使用形同 `{x = y}` 的语法来将 `y` 与被替换的变量绑定，
