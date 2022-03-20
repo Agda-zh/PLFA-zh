@@ -1128,7 +1128,7 @@ Now that naming is resolved, let's unpack the first three cases:
   <!--
   where the second hypothesis follows from:
   -->
-  
+
   此时第二个假设形如：
 
       Γ , y ⦂ B ∋ x ⦂ A
@@ -1420,7 +1420,7 @@ and each `β` rule follows by the substitution lemma.
       Γ ⊢ M ⦂ A
       -------------
       Γ ⊢ L · M ⦂ B
-  
+
   赋型。
 
   根据归纳，我们有
@@ -1535,7 +1535,7 @@ per unit of gas.
 但回报很少或没有回报。为了避免这种情况，
 每笔交易都伴随着一定数量的**燃料（Gas）**可用于计算。
 在 EVM 上执行的每个步骤都会收取公告数量的燃料，
-交易以公布的费率支付燃料：每单位燃料支付给定数量的以太币（以太坊的货币）。 
+交易以公布的费率支付燃料：每单位燃料支付给定数量的以太币（以太坊的货币）。
 
 <!--
 By analogy, we will use the name _gas_ for the parameter which puts a
@@ -2374,7 +2374,7 @@ and neither is smaller.
 
     det M—→M′ M—→M″ = sym (det M—→M″ M—→M′)
 
-但这不起作用：终结检查器报错，因为参数只是切换了顺序，而且没有任何一个变得更小。
+但这不起作用：停机检查器报错，因为参数只是切换了顺序，而且没有任何一个变得更小。
 
 
 <!--
