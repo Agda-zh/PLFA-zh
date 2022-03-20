@@ -248,10 +248,10 @@ containing only its bound variable, and the argument of successor
 must itself be canonical:
 -->
 
-良型的式子都属于少数几种**标准式（Canonical Form）**中的一种。
+良类型的式子都属于少数几种**标准式（Canonical Form）**中的一种。
 标准式提供了一种类似于 `Value` 的关系，关联值和它们所属的类型。
 一个 λ-表达式一定属于函数类型，同时零和后继表达式都属于自然数。
-更进一步说，此时函数的函数体必须在只包含它的约束变量的上下文中是良型的，
+更进一步说，此时函数的函数体必须在只包含它的约束变量的上下文中是良类型的，
 后继的参数本身也必须是标准式：
 
 ```
