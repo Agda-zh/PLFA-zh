@@ -1082,7 +1082,7 @@ We induct on the evidence that `N` is well typed in the
 context `Γ` extended by `x`.
 -->
 
-我们对 `N` 在由 `x`拓展 `Γ` 后得到的上下文中是良赋型的论据做归纳。
+我们对 `N` 在由 `x` 拓展 `Γ` 后得到的上下文中是良赋型的论据做归纳。
 
 <!--
 First, we note a wee issue with naming.  In the lemma
