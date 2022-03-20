@@ -2071,8 +2071,8 @@ Find two counter-examples to subject expansion, one
 with case expressions and one not involving case expressions.
 -->
 
-我们说 `M` **规约**至 `N` 如果 `M —→ N`，
-但是我们可以通过说 `N` **扩展（Expand）**至 `M` 来描述相同的情形。
+如果 `M —→ N`，我们便称 `M` **规约**至 `N`，
+相同的情形也被称作 `N` **扩展（Expand）**至 `M`。
 保型性有时也被叫做**子规约（Subject Reduction）**。
 它的对应是**子扩展（Subject Expansion）**，
 如果 `M —→ N` 和 `∅ ⊢ N ⦂ A` 蕴含 `∅ ⊢ M ⦂ A`。
