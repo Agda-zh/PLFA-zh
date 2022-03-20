@@ -2017,7 +2017,7 @@ above.
 Using the evaluator, confirm that two times two is four.
 -->
 
-用这个求值器来验证二乘以二的积是四。
+用这个求值器来验证二乘二的积是四。
 
 <!--
 ```
