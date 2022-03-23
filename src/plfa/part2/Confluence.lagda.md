@@ -806,7 +806,7 @@ This step is optional, though, in the presence of triangle property.
 * 通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳直接证明菱形性质 `par-diamond`。
 
 * 作图表示 `par-diamond` 的直接证明中的六种情况。
-  图应当包含节点和有向边，其中节点用项标号，边代表平行规约。
+  图应当包含节点和有向边，其中节点用项标记，边代表平行规约。
 
 <!--
 ## Proof of confluence for parallel reduction
