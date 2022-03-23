@@ -1621,7 +1621,7 @@ remaining.  There are two possibilities:
 -->
 
 令 `L` 是我们要规约的项的名称，`⊢L` 是项 `L` 是良类型的论据。
-我们考虑剩余的燃料量。
+我们考虑剩余的燃料量。此处有两种可能：
 
 <!--
 * It is zero, so we stop early.  We return the trivial reduction
