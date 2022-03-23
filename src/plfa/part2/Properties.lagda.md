@@ -51,7 +51,7 @@ open import plfa.part2.Lambda
 ## Introduction
 -->
 
-## 导言
+## 简介
 
 <!--
 The last chapter introduced simply-typed lambda calculus,
