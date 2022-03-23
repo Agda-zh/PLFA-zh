@@ -978,7 +978,7 @@ article by Nipkow (JAR 1996).
 `par-triangle`、`strip` 和 `par-confluence` 的证明是基于
 Takahashi (1995) 的 complete development
 和 Pfenning 1992 年关于 Church-Rosser 定理的技术报告。
-此外，我们在 Isabelle 中咨询了 Nipkow 和 Berghofer 的机械化，
+此外，我们咨询了 Nipkow 和 Berghofer 在 Isabelle 中的机械化，
 它基于 Nipkow 的早期文章（JAR 1996）。
 
 ## Unicode
