@@ -453,7 +453,7 @@ Let's unpack the first three cases:
       a value, so our original term steps by `β-ƛ`.
     -->
 
-    - 如果这个项的规约已经完成了，我们便有了项 `M` 是值的论据。
+    - 如果这个项的规约结束了，我们便有了项 `M` 是一个值的论据。
       我们项 `L` 是一个良类型的值的论据应用标准式引理
 
 <!--
