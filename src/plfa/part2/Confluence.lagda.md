@@ -649,7 +649,7 @@ performing enough beta reductions in parallel.
 我们将证明平行规约满足菱形性质，即若有 `M ⇛ N` 和 `M ⇛ N′`，
 那么对某个 `L` 有 `N ⇛ L` 和 `N′ ⇛ L`。
 典型的证明通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳来完成，
-因此每一个可能的对都会在执行足够多次平行 β-规约后产生一个见证 `L`。
+因此每一个可能的对都会在执行足够多次平行 β-规约后产生一个证明 `L`。
 
 <!--
 However, a simpler approach is to perform as many beta reductions in
