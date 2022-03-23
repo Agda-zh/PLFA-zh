@@ -804,7 +804,7 @@ preference to indexed types when possible.
 类型里的每个参数都转换成构造子的一个隐式参数。索引数据类型中的索引可以变化，正如在
 `zero ≤ n` 和 `suc m ≤ suc n` 中那样，而参数化数据类型不一样，其参数必须保持相同，
 正如在 `Total m n` 中那样。参数化的声明更短，更易于阅读，而且有时可以帮助到 Agda 的
-终结检查器，所以我们尽可能地使用它们，而不是索引数据类型。
+停机检查器，所以我们尽可能地使用它们，而不是索引数据类型。
 
 <!--
 With that preliminary out of the way, we specify and prove totality:

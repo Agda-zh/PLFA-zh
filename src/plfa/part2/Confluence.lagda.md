@@ -26,10 +26,10 @@ reduction sequences from any term `L` to two different terms `M₁` and
 some common term `N`. In pictures:
 -->
 
-在这一章我们将证明 β-规约是**合流的（Confluent）**，
-该性质同样以 *Church-Rosser* 闻名。也就是说，
+在这一章我们将证明 β-规约是**合流的（Confluent）**
+（又被称作 *Church-Rosser* 性质）：
 如果有从任一项 `L` 至两个不同项 `M₁` 和 `M₂` 的规约序列，
-那么一定存在从这两个项至一些相同项 `N` 的规约序列。
+那么一定存在从这两个项至某个相同项 `N` 的规约序列。
 如图：
 
         L
@@ -62,7 +62,7 @@ confluence of `⇛*` follows immediately from the diamond property.
 
 合流性（Confluence）也在许多 λ-演算外的重写系统中被研究，
 并且如何在满足**菱形性质（Diamond Property）**，
-一种合流性的单步版本中证明合流性是广为人知的。
+一种合流性的单步版本的重写系统中证明合流性是广为人知的。
 令 `⇛` 为一个关系。`⇛` 具有菱形性质，
 如果对于任何 `L ⇛ M₁` 和 `L ⇛ M₂` 都存在 `N` ，
 使得 `M₁ ⇛ N` 和 `M₂ ⇛ N`。
@@ -97,7 +97,7 @@ Thus, we can reduce the proof of confluence for beta reduction to
 confluence for parallel reduction.
 -->
 
-为了回避这歌问题，我们将定义一个辅助规约关系，
+为了回避这个问题，我们将定义一个辅助规约关系，
 称为**平行规约（Parallel Reduction）** ，
 它可以同时执行许多规约并因此满足菱形性质。
 更进一步地，我们将证明在两个项间存在平行规约序列当且仅当这两个项间存在 β-规约序列。
@@ -276,7 +276,7 @@ that `M —↠ N` implies `M ⇛* N`. The proof is a straightforward
 induction on the reduction sequence `M —↠ N`.
 -->
 
-证明了该引理后我们便可完成证明，
+证明了该引理后我们便可完成必要性的证明，
 即 `M —↠ N` 蕴含 `M ⇛* N`。该证明是对 `M —↠ N` 规约序列的简单归纳。
 
 ```
@@ -297,7 +297,7 @@ reductions. So instead we shall prove that `M ⇛ N` implies `M —↠ N`.
 -->
 
 现在考虑命题的充分性，即 `M ⇛* N` 蕴含 `M —↠ N`。
-该方向的证明有一点不同，因为它不是 `M ⇛ N` 蕴含 `M —→ N` 的情形。
+充分性的证明有一点不同，因为它不是 `M ⇛ N` 蕴含 `M —→ N` 的情形。
 毕竟 `M ⇛ N` 执行了许多规约，
 所以我们应当证明 `M ⇛ N` 蕴含 `M —↠ N`。
 
@@ -386,7 +386,7 @@ pars-betas (L ⇛⟨ p ⟩ ps) = —↠-trans (par-betas p) (pars-betas ps)
 ## 平行规约的替换引理
 
 <!--
-Our next goal is the prove the diamond property for parallel
+Our next goal is to prove the diamond property for parallel
 reduction. But to do that, we need to prove that substitution
 respects parallel reduction. That is, if
 `N ⇛ N′` and `M ⇛ M′`, then `N [ M ] ⇛ N′ [ M′ ]`.
@@ -401,7 +401,7 @@ of pointwise parallel reduction as follows.
 为了完成该证明，我们还需证明替换遵从平行规约。
 也就是说，如果有 `N ⇛ N′` 和 `M ⇛ M′`，那么 `N [ M ] ⇛ N′ [ M′ ]`。
 我们不能直接通过归纳证明它，所以我们将其推广为：
-如果 `N ⇛ N′` 并且替换 `σ` 逐点（pointwise）平行规约至 `τ`，
+如果 `N ⇛ N′` 并且替换 `σ` 逐点（Pointwise）平行规约至 `τ`，
 则 `subst σ N ⇛ subst τ N′`。
 我们如下定义逐点平行规约。
 
@@ -421,7 +421,7 @@ and restate here.
 -->
 
 因为替换依赖于扩展函数 `exts`，而其又依赖于 `rename`，
-我们开始于被称为 `par=rename` 的替换引理的一种版本，该引理专门用于重命名。
+我们开始于被称为 `par-rename` 的替换引理的一种版本，该引理专门用于重命名。
 `par-rename` 依赖于重命名和替换可以相互交换的事实，
 这是一个我们在 [Substitution](/Substitution/) 章节引入并在此处重申的引理。
 
@@ -452,11 +452,11 @@ par-rename {Γ}{Δ}{A}{ρ} (pbeta{Γ}{N}{N′}{M}{M′} p₁ p₂)
 ```
 
 <!--
-The proof is by induction on `M ⇛ M′`. The first four cases
+The proof is by induction on `M ⇛ M′`. The first three cases
 are straightforward so we just consider the last one for `pbeta`.
 -->
 
-证明通过对 `M ⇛ M′` 进行归纳来完成。前四种情况很简单，
+证明通过对 `M ⇛ M′` 进行归纳来完成。前三种情况很简单，
 所以我们只考虑最后一种，即 `pbeta`。
 
 <!--
@@ -484,7 +484,7 @@ that extending substitutions preserves the pointwise parallel
 reduction relation.
 -->
 
-有了 `par-rename` 引理，很容易证明扩展替换保留了逐点并行归约关系。
+有了 `par-rename` 引理，很容易证明扩展替换保留了逐点平行归约关系。
 
 ```
 par-subst-exts : ∀{Γ Δ} {σ τ : Subst Γ Δ}
@@ -498,12 +498,12 @@ par-subst-exts s {x = S x} = par-rename s
 <!--
 The next lemma that we need for proving that substitution respects
 parallel reduction is the following which states that
-simultaneoous substitution commutes with single substitution. We import this
+simultaneous substitution commutes with single substitution. We import this
 lemma from Chapter [Substitution](/Substitution/)
 and restate it below.
 -->
 
-下一个我们需要证明的引理是替换遵从平行规约关系，如下文所示，
+为了证明替换遵从平行规约关系，我们需要证明的下一个引理如下文所示，
 它声称同时规约可以与单步规约相交换。
 我们从 [Substitution](/Substitution/) 章节导入这个引理，
 并重申如下。
@@ -647,9 +647,9 @@ performing enough beta reductions in parallel.
 合流性证明的核心是石头制成的，更确切地说，是钻石！
 【译注：在英文中 diamond 一词既指钻石，又指菱形。】
 我们将证明平行规约满足菱形性质，即若有 `M ⇛ N` 和 `M ⇛ N′`，
-那么对某些 `L` 有 `N ⇛ L` 和 `N′ ⇛ L`。
+那么对某个 `L` 有 `N ⇛ L` 和 `N′ ⇛ L`。
 典型的证明通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳来完成，
-因此每一个可能的对都会在执行足够多次平行 β-规约后产生一个见证 `L`。
+因此每一个可能的对都会在执行足够多次平行 β-规约后产生一个证明 `L`。
 
 <!--
 However, a simpler approach is to perform as many beta reductions in
@@ -708,7 +708,7 @@ The proof of the triangle property is an induction on `M ⇛ N`.
 三角性质的证明通过对 `M ⇛ N` 归纳来完成。
 
 <!--
-* Suppose `x ⇛ x`. Clearly `x ⁺ = x`, so `x ⇛ x`.
+* Suppose `x ⇛ x`. Clearly `x ⁺ = x`, so `x ⇛ x ⁺`.
 
 * Suppose `ƛ M ⇛ ƛ N`. By the induction hypothesis we have `N ⇛ M ⁺`
   and by definition `(λ M) ⁺ = λ (M ⁺)`, so we conclude that `λ N ⇛ λ
@@ -731,7 +731,7 @@ The proof of the triangle property is an induction on `M ⇛ N`.
   we have to write down the remaining case explicitly.)
 -->
 
-  * 假定 `x ⇛ x`。显然 `x ⁺ = x`，所以 `x ⇛ x`。
+  * 假定 `x ⇛ x`。显然 `x ⁺ = x`，所以 `x ⇛ x ⁺`。
 
   * 假定 `ƛ M ⇛ ƛ N`。根据归纳假设我们有 `N ⇛ M ⁺`，
   并且根据定义我们有 `(λ M) ⁺ = λ (M ⁺)`，所以我们得出 `λ N ⇛ λ(M ⁺)`。
@@ -806,7 +806,7 @@ This step is optional, though, in the presence of triangle property.
 * 通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳直接证明菱形性质 `par-diamond`。
 
 * 作图表示 `par-diamond` 的直接证明中的六种情况。
-  图应当包含节点和有向边，其中节点用项标号，边代表平行规约。
+  图应当包含节点和有向边，其中节点用项标记，边代表平行规约。
 
 <!--
 ## Proof of confluence for parallel reduction
@@ -826,7 +826,7 @@ The following diagram illustrates the strip lemma
 像在开始承诺的那样，平行规约合流性的证明现在十分简单，
 因为我们知道它满足三角性质。
 我们只需证明带状引理（Strip Lemma），它声称若有 `M ⇛ N` 和 `M ⇛* N′`，
-则对于某些 `L` 有 `N ⇛* L` 和 `N′ ⇛ L`。
+则对于某个 `L` 有 `N ⇛* L` 和 `N′ ⇛ L`。
 下图解释了带状引理：
 
         M
@@ -936,7 +936,7 @@ Then by confluence we obtain some `L` such that
 
 规约的合流性是平行规约合流性的一个推论。
 从 `L —↠ M₁` 和 `L —↠ M₂` 根据 `betas-pars` 我们有 `L ⇛* M₁` 和 `L ⇛* M₂`。
-接着根据合流性我们得到对于某些 `L` 有 `M₁ ⇛* N` 和 `M₂ ⇛* N`。
+接着根据合流性我们得到对于某个 `L` 有 `M₁ ⇛* N` 和 `M₂ ⇛* N`。
 因此我们根据 `pars-betas` 得出 `M₁ —↠ N` 和 `M₂ —↠ N`。
 
 ```
@@ -978,7 +978,7 @@ article by Nipkow (JAR 1996).
 `par-triangle`、`strip` 和 `par-confluence` 的证明是基于
 Takahashi (1995) 的 complete development
 和 Pfenning 1992 年关于 Church-Rosser 定理的技术报告。
-此外，我们在 Isabelle 中咨询了 Nipkow 和 Berghofer 的机械化，
+此外，我们咨询了 Nipkow 和 Berghofer 在 Isabelle 中的机械化，
 它基于 Nipkow 的早期文章（JAR 1996）。
 
 ## Unicode
