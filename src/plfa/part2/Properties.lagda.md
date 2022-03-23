@@ -454,7 +454,7 @@ Let's unpack the first three cases:
     -->
 
     - 如果这个项的规约结束了，我们便有了项 `M` 是一个值的论据。
-      我们项 `L` 是一个良类型的值的论据应用标准式引理
+      因此原来的项可以使用 `β-ƛ` 来进行一步规约。
 
 <!--
 The remaining cases are similar.  If by induction we have a
