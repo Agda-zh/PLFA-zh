@@ -4,8 +4,6 @@ layout    : page
 prev      : /Lambda/
 permalink : /Properties/
 next      : /DeBruijn/
-translators : ["starxingchenc","alissa-tung"]
-progress  : 80
 ---
 
 ```
@@ -51,7 +49,7 @@ open import plfa.part2.Lambda
 ## Introduction
 -->
 
-## 简介
+## 导言
 
 <!--
 The last chapter introduced simply-typed lambda calculus,
@@ -69,7 +67,7 @@ that two plus two is four,
 -->
 
 最终，我们将要展示我们能够通过持续地对一个项做归约，直到它达到一个值。
-例如，在上一章中我们展示了二加二的和是四，
+例如，在上一章中我们展示了二加上二的和是四，
 
 
     plus · two · two  —↠  `suc `suc `suc `suc `zero
@@ -110,8 +108,8 @@ well-typed term.
 -->
 
 所以要么我们有一个值，这时我们已经完成了规约；要么我们可以进行一步规约。
-当处于后者的情况时，我们想要再一次应用进行性。
-但这样做需要我们首先知道通过规约得到的项本身是良类型的闭项。
+当处于后者的情况时，我们可以再一次应用进行性。
+但要这样做需要我们首先知道通过规约得到的项本身是良类型的闭项。
 事实上，只要我们规约的起点是一个良类型的闭项，所得到的项就满足这个性质。
 
 <!--
@@ -153,7 +151,7 @@ types without needing to develop a separate inductive definition of the
 `appears_free_in` relation.)
 -->
 
-（这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language Foundations_）中对应的 _StlcProp_ 一章。
+（这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language Foundations_）中对应的 _StlcProp_ 的内容。
 事实上我们技术选择中的一个——通过显示地引入一条判断 `Γ ∋ x ⦂ A`，
 而不是将上下文视作为一个从标识符映射到类型的函数——简化了开发过程。
 特别地，我们不需要额外地去归纳定义关系 `appears_free_in` 就可以证明替换保留了类型。）
@@ -248,10 +246,10 @@ containing only its bound variable, and the argument of successor
 must itself be canonical:
 -->
 
-良类型的式子都属于少数几种**标准式（Canonical Form）**中的一种。
+良型的式子都属于少数几种**标准式（Canonical Form）**中的一种。
 标准式提供了一种类似于 `Value` 的关系，关联值和它们所属的类型。
 一个 λ-表达式一定属于函数类型，同时零和后继表达式都属于自然数。
-更进一步说，此时函数的函数体必须在只包含它的约束变量的上下文中是良类型的，
+更进一步说，此时函数的函数体必须在只包含它的约束变量的上下文中是良型的，
 后继的参数本身也必须是标准式：
 
 ```
@@ -430,10 +428,10 @@ Let's unpack the first three cases:
 
 * 如果这个项是一个函数应用 `L · M`，则考虑对项 `L` 良类型的推导过程递归应用进行性：
 
-  + 如果这个项还能够进行一步规约，我们就有了 `L —→ L′` 的论据，再由 `ξ-·₁`，
+  + 如果这个项还能够进行一步规约，我们就有了 `L —→ L′` 的证据，再由 `ξ-·₁`，
     可知原来的项进行到 `L′ · M`。
 
-  + 如果这个项的规约结束了，我们就有了 `L` 是一个值的论据。
+  + 如果这个项的规约结束了，我们就有了 `L` 是一个值的证据。
     则考虑对项 `L` 良类型的推导过程递归应用进行性：
 
     <!--
@@ -444,7 +442,7 @@ Let's unpack the first three cases:
       subterm has already supplied the required evidence.
     -->
 
-    - 如果这个项还能够进行一步规约，我们就有了 `M —→ M′` 的论据，再由 `ξ-·₂`，
+    - 如果这个项还能够进行一步规约，我们就有了 `M —→ M′` 的证据，再由 `ξ-·₂`，
       可知原来的项进行到 `L′ · M`。要应用规约步骤 `ξ-·₂` 需要我们提供项 `L` 是
       一个值的论据，而之前对子项进行性的分析已经提供了需要的证明。
 
@@ -453,8 +451,8 @@ Let's unpack the first three cases:
       a value, so our original term steps by `β-ƛ`.
     -->
 
-    - 如果这个项的规约结束了，我们便有了项 `M` 是一个值的论据。
-      因此原来的项可以使用 `β-ƛ` 来进行一步规约。
+    - 如果这个项的规约已经完成了，我们便有了项 `M` 是值的论据。
+      我们项 `L` 是一个良类型的值的论据应用标准式引理
 
 <!--
 The remaining cases are similar.  If by induction we have a
@@ -464,7 +462,7 @@ no induction is required as the `β` rule applies immediately.
 -->
 
 剩下的情况都很类似。如果我们由归纳得到了一个可以继续进行规约的
-情况 `step` 则应用一条 `ξ` 规则；如果得到的是已经完成规约的
+情况 `case` 则应用一条 `ξ` 规则；如果得到的是已经完成规约的
 情况 `done` 则要么我们已经得到了一个值，要么应用一条 `β` 规则。
 对于不动点，由于可以直接应用所对应的 `β` 规则，不需要再做归纳。
 
@@ -512,7 +510,7 @@ determine its bound variable and body, `ƛ x ⇒ N`, so we can show that
 但这会导致证明变得不那么明晰易懂。
 比起有助于记忆的 `done` 与 `step`，现在我们只能用 `inj₁` 和 `inj₂`；
 同时项 `N` 也不再是隐式的，从而我们需要将其完整写出。
-当遇到 `β-ƛ` 的情况时，需要我们对 λ-表达式 `L` 做匹配，以决定它的约束变量和函数体，
+当遇到 `β-ƛ` 的情况时，需要我们对 λ-表达式做匹配，以决定它的约束变量和函数体，
 也就是形如 `ƛ x ⇒ N` 的形式，从而我们才能证明项 `L · M` 规约到了 `N [ x := M ]`。
 
 <!--
@@ -817,7 +815,7 @@ applying `ρ` to find the evidence that `x` appears in `Δ`.
 -->
 
 * 如果 `x` 与 `y` 不相同，我们则使用 `S` 来跳过拓展后 `Γ` 中的最后一个变量，
-  在这里 `x≢y` 即是变量 `x` 与 `y` 不相同的论据，同时 `∋x` 是变量 `x` 出现在
+  在这里 `x≢y` 即是变量 `x` 与 `y` 不相同的证据，同时 `∋x` 是变量 `x` 出现在
   上下文 `Γ` 中的论据；类似地，我们使用 `S` 来跳过拓展后 `Δ` 的最后一个变量，
   应用 `ρ` 来寻找变量 `x` 出现在上下文 `Δ` 中的论据。
 
@@ -849,7 +847,7 @@ on the evidence that `M` is well typed in `Γ`.  Let's unpack the
 first three cases:
 -->
 
-像之前一样，令 `ρ` 为 “变量 `x` 出现在上下文 `Γ` 中的论据” 至 “变量 `x` 出现在 `Δ` 的论据” 的映射。
+像之前一样，令 `ρ` 为变量 `x` 出现在上下文 `Γ` 中的论据至 `x` 出现在 `Δ` 中变量的映射。
 我们对项 `M` 在上下文 `Γ` 中是良赋型的论据做归纳。我们首先来分析前三种情况：
 
 <!--
@@ -962,10 +960,10 @@ found in the second position, which also contains `x`, this leads to a
 contradiction (evidenced by `x≢x refl`).
 -->
 
-在这里映射 `ρ` 不可能被较里出现的 `x` 调用，由于它被较外的出现遮盖了。
-忽略掉在首位的 `x` 的情况只可能发生在当前寻找的变量不同于 `x` 时
-（由 `x≢x` 或 `z≢x` 论证），但如果变量在第二个位置被发现了，
-并且也包含 `x`，便会导出矛盾（由 `x≢x refl` 论证）。
+在这里映射 `ρ` 不可能调用较里出现的 `x`，由于它被较外的出现遮盖了。
+忽略掉在首位的 `x` 的情况只可能发生在当前寻找的变量不同于 `x` 的情
+况（由 `x≢x` 或 `z≢x` 论证），但如果变量在第二个位置被发现了，
+并且也包含 `x`，便会到处矛盾（由 `x≢x refl` 论证）。
 
 <!--
 Third, if the last two variables in a context differ then we can swap them:
@@ -1082,7 +1080,7 @@ We induct on the evidence that `N` is well typed in the
 context `Γ` extended by `x`.
 -->
 
-我们对 `N` 在由 `x` 拓展 `Γ` 后得到的上下文中是良赋型的论据做归纳。
+我们对 `N` 在由 `x`拓展 `Γ` 后得到的上下文中是良赋型的论据做归纳。
 
 <!--
 First, we note a wee issue with naming.  In the lemma
@@ -1099,14 +1097,14 @@ mentions the types of `x`, `y`, `V`, or `N`, so in what follows we
 choose type names as convenient.
 -->
 
-首先我们注意到一个有关命名的小问题。
-在引理的陈述中，变量 `x` 是一个关于被替换的变量的隐式参数，同时在变量、抽象、
-对自然数分项和不动点的赋型规则中，变量 `x` 是一个关于关联变量的隐式参数。
-因此我们使用形同 `{x = y}` 的语法来将 `y` 与被替换的变量绑定，
-用 `{x = x}` 来将 `x` 与 `` ⊢` ``、`⊢ƛ`、`⊢case` 和 `⊢μ` 中关联变量绑定。
-在这里用 `y` 这一名字也与前一章中替换的原始定义一致。
-在证明中从来没有提及过 `x`、`y`、`V` 或 `N` 的类型，
-因此在下面的内容中，我们尽可能方便地选择类型名称。
+首先我们注意到一个有关命名的问题。
+在引理的陈述中，被替换的变量 `x` 是一个隐式参数，同时在变量、抽象、
+对自然数分项和不动点的赋型规则中，相关变量 `x` 是一个隐式参数，因此
+我们使用形同 `{x = y}` 的语法来将 `y` 与被替换的变量绑定，
+用 `{x = x}` 来将 `x` 与 `` ⊢` ``、`⊢ƛ`、`⊢case` 和 `⊢μ` 中相关的变量绑定。
+在这里用 `y` 这一名字业余前一章中替换的原始定义一致。
+在证明中从来没有提及过 `x`、`y`、`V` 或 `N` 的类型，所以接下来我们按照惯例
+选取类型的名字：
 
 <!--
 Now that naming is resolved, let's unpack the first three cases:
@@ -1358,7 +1356,6 @@ Let's unpack the cases for two of the reduction rules:
 
 让我们分析规约规则的两种情况：
 
-<!--
 * Rule `ξ-·₁`.  We have
 
       L —→ L′
@@ -1406,59 +1403,6 @@ Let's unpack the cases for two of the reduction rules:
 
 The remaining cases are similar.  Each `ξ` rule follows by induction,
 and each `β` rule follows by the substitution lemma.
--->
-
-* 规则 `ξ-·₁`。我们有
-
-      L —→ L′
-      ----------------
-      L · M —→ L′ · M
-
-  其中左手侧由
-
-      Γ ⊢ L ⦂ A ⇒ B
-      Γ ⊢ M ⦂ A
-      -------------
-      Γ ⊢ L · M ⦂ B
-
-  赋型。
-
-  根据归纳，我们有
-
-      Γ ⊢ L ⦂ A ⇒ B
-      L —→ L′
-      --------------
-      Γ ⊢ L′ ⦂ A ⇒ B
-
-  其中右手侧的赋型可以直接得出。
-
-* 规则 `β-ƛ`。我们有
-
-      Value V
-      -----------------------------
-      (ƛ x ⇒ N) · V —→ N [ x := V ]
-
-  其中左手侧由
-
-      Γ , x ⦂ A ⊢ N ⦂ B
-      -------------------
-      Γ ⊢ ƛ x ⇒ N ⦂ A ⇒ B    Γ ⊢ V ⦂ A
-      --------------------------------
-      Γ ⊢ (ƛ x ⇒ N) · V ⦂ B
-
-  赋型。
-
-  根据替换引理，我们有
-
-      Γ ⊢ V ⦂ A
-      Γ , x ⦂ A ⊢ N ⦂ B
-      --------------------
-      Γ ⊢ N [ x := V ] ⦂ B
-
-  其中右手侧的赋型可以直接得出。
-
-剩余情况与此类似，对每个 `ξ` 规则使用归纳，
-对每个 `β` 规则使用替换引理。
 
 
 <!--
@@ -1533,7 +1477,7 @@ per unit of gas.
 例如，验证以太坊上的交易可能需要为以太坊虚拟机（EVM）执行一个程序。
 一个长期运行或非终止的程序可能会导致矿工在验证合同上投入任意多的努力，
 但回报很少或没有回报。为了避免这种情况，
-每笔交易都伴随着一定数量的**燃料（Gas）**可用于计算。
+每笔交易都伴随着一定数量的**燃料（gas）**可用于计算。
 在 EVM 上执行的每个步骤都会收取公告数量的燃料，
 交易以公布的费率支付燃料：每单位燃料支付给定数量的以太币（以太坊的货币）。
 
@@ -1579,7 +1523,7 @@ a reduction sequence from `L` to `N` and an indication of whether
 reduction finished:
 -->
 
-给定一个类型为 `A` 的项 `L`，对于某个 `N`，
+给定一个类型为 `A` 的项 `L`，对于某些 `N`，
 求值器将返回从 `L` 到 `N` 的规约序列以及规约是否完成的指示：
 
 ```
@@ -1621,36 +1565,20 @@ remaining.  There are two possibilities:
 -->
 
 令 `L` 是我们要规约的项的名称，`⊢L` 是项 `L` 是良类型的论据。
-我们考虑剩余的燃料量。此处有两种可能：
+我们考虑剩余的燃料量。
 
-<!--
 * It is zero, so we stop early.  We return the trivial reduction
   sequence `L —↠ L`, evidence that `L` is well typed, and an
   indication that we are out of gas.
--->
 
-* 如果是零，则我们过早地停止了。我们将返回简单的规约序列 `L —↠ L`，
-  证明 `L` 是良类型，并标明我们用尽了燃料。
-
-<!--
 * It is non-zero and after the next step we have `m` gas remaining.
   Apply progress to the evidence that term `L` is well typed.  There
   are two possibilities:
--->
 
-* 如果非零，则在下一个步骤中我们还剩下 `m` 燃料。将进度应用于项 `L` 是良类型的论据。
-  此处有两种可能：
-
-<!--
   + Term `L` is a value, so we are done. We return the
     trivial reduction sequence `L —↠ L`, evidence that `L` is
     well typed, and the evidence that `L` is a value.
--->
 
-  + 项 `L` 是一个值，则我们已经完成了。
-    我们将返回简单的规约序列 `L —↠ L`，证明 `L` 是良类型，以及 `L` 是值的论据。
-
-<!--
   + Term `L` steps to another term `M`.  Preservation provides
     evidence that `M` is also well typed, and we recursively invoke
     `eval` on the remaining gas.  The result is evidence that
@@ -1658,12 +1586,6 @@ remaining.  There are two possibilities:
     indication of whether reduction finished.  We combine the evidence
     that `L —→ M` and `M —↠ N` to return evidence that `L —↠ N`,
     together with the other relevant evidence.
--->
-
-  + 项 `L` 步进至另一个项 `M`。保型性提供了 `M` 也是良类型的论据，
-    我们对剩余的燃料递归调用 `eval`。
-    结果将得到 `M —↠ N` 的论据以及 `N` 是良类型的论据和规约是否完成的标识。
-    我们将 `L —→ M` 和 `M —↠ N` 的论据结合来得到 `L —↠ N` 以及其它有关的的论据。
 
 
 <!--
@@ -2017,7 +1939,7 @@ above.
 Using the evaluator, confirm that two times two is four.
 -->
 
-用这个求值器来验证二乘二的积是四。
+用这个求值器来验证二乘以二的积是四。
 
 <!--
 ```
@@ -2071,12 +1993,12 @@ Find two counter-examples to subject expansion, one
 with case expressions and one not involving case expressions.
 -->
 
-如果 `M —→ N`，我们便称 `M` **规约**至 `N`，
-相同的情形也被称作 `N` **扩展（Expand）**至 `M`。
+我们说 `M` **规约**至 `N` 如果 `M —→ N`，
+但是我们可以通过说 `N` **扩展（Expand）**至 `M` 来描述相同的情形。
 保型性有时也被叫做**子规约（Subject Reduction）**。
 它的对应是**子扩展（Subject Expansion）**，
 如果 `M —→ N` 和 `∅ ⊢ N ⦂ A` 蕴含 `∅ ⊢ M ⦂ A`。
-找到两个子扩展的反例，一个涉及 `case` 表达式而另一个不涉及。
+找到两个子扩展的反例，一个涉及 case 表达式而另一个不涉及。
 
 <!--
 ```
@@ -2089,40 +2011,22 @@ with case expressions and one not involving case expressions.
 ```
 
 
-<!--
 ## Well-typed terms don't get stuck
--->
 
-## 良类型的项不会卡住
-
-<!--
 A term is _normal_ if it cannot reduce:
--->
-
-一个项是**范式**，如果它不能被规约。
 
 ```
 Normal : Term → Set
 Normal M  =  ∀ {N} → ¬ (M —→ N)
 ```
 
-<!--
 A term is _stuck_ if it is normal yet not a value:
--->
-
-一个项被**卡住**，如果它是一个范式但不是一个值。
-
 ```
 Stuck : Term → Set
 Stuck M  =  Normal M × ¬ Value M
 ```
 
-<!--
 Using progress, it is easy to show that no well-typed term is stuck:
--->
-
-使用进行性，很容易证明没有良类型的项会被卡住。
-
 ```
 postulate
   unstuck : ∀ {M A}
@@ -2131,14 +2035,8 @@ postulate
     → ¬ (Stuck M)
 ```
 
-<!--
 Using preservation, it is easy to show that after any number of steps,
 a well-typed term remains well typed:
--->
-
-使用保型性，很容易证明在经过任意多次步进后，
-良类型的项依旧是良类型的。
-
 ```
 postulate
   preserves : ∀ {M N A}
@@ -2148,14 +2046,8 @@ postulate
     → ∅ ⊢ N ⦂ A
 ```
 
-<!--
 An easy consequence is that starting from a well-typed term, taking
 any number of reduction steps leads to a term that is not stuck:
--->
-
-一个简单地结果是，从一个良类型的项开始，进行任意多次步进，
-将得到一个不被卡住的项。
-
 ```
 postulate
   wttdgs : ∀ {M N A}
@@ -2164,19 +2056,12 @@ postulate
       -----------
     → ¬ (Stuck N)
 ```
-
-<!--
 Felleisen and Wright, who introduced proofs via progress and
 preservation, summarised this result with the slogan _well-typed terms
 don't get stuck_.  (They were referring to earlier work by Robin
 Milner, who used denotational rather than operational semantics. He
 introduced `wrong` as the denotation of a term with a type error, and
 showed _well-typed terms don't go wrong_.)
--->
-
-Felleisen 与 Wright 通过进行性和保型性引入了证明，并将其总结为 **良类型的项不会卡住** 的口号。
-（他们提及了 Robin Milner 早期的工作，他使用指称而非操作语义。
-他引入了“错误”作为带有类型错误的术语的指称，并展示了 **良类型的项不会出错**。）
 
 <!--
 #### Exercise `stuck` (practice)
@@ -2184,11 +2069,7 @@ Felleisen 与 Wright 通过进行性和保型性引入了证明，并将其总�
 
 #### 练习 `stuck` （实践）
 
-<!--
 Give an example of an ill-typed term that does get stuck.
--->
-
-给出一个会被卡住的不良类型的项的例子。
 
 <!--
 ```
@@ -2206,11 +2087,7 @@ Give an example of an ill-typed term that does get stuck.
 
 #### 练习 `unstuck` （推荐）
 
-<!--
 Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` above.
--->
-
-提供上文中 `unstuck`、`preserves` 和 `wttdgs` 三个假设的证明。
 
 <!--
 ```
@@ -2228,24 +2105,13 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 
 ## 规约是确定的
 
-<!--
 When we introduced reduction, we claimed it was deterministic.
 For completeness, we present a formal proof here.
--->
 
-当我们引入归约时，我们声称它是确定的。
-为完整起见，我们在此提供正式的证明。
-
-<!--
 Our proof will need a variant
 of congruence to deal with functions of four arguments
 (to deal with `case_[zero⇒_|suc_⇒_]`).  It
 is exactly analogous to `cong` and `cong₂` as defined previously:
--->
-
-我们的证明需要一个合同变体来处理四个参数的函数（处理`case_[zero⇒_|suc_⇒_]`）。
-它与之前定义的 `cong` 和 `cong₂` 完全类似：
-
 ```
 cong₄ : ∀ {A B C D E : Set} (f : A → B → C → D → E)
   {s w : A} {t x : B} {u y : C} {v z : D}
@@ -2253,12 +2119,7 @@ cong₄ : ∀ {A B C D E : Set} (f : A → B → C → D → E)
 cong₄ f refl refl refl refl = refl
 ```
 
-<!--
 It is now straightforward to show that reduction is deterministic:
--->
-
-现在证明规约是确定的十分简单。
-
 ```
 det : ∀ {M M′ M″}
   → (M —→ M′)
@@ -2285,15 +2146,9 @@ det (β-suc VL)     (ξ-case L—→L″)   =  ⊥-elim (V¬—→ (V-suc VL) L�
 det (β-suc _)      (β-suc _)        =  refl
 det β-μ            β-μ              =  refl
 ```
-
-<!--
 The proof is by induction over possible reductions.  We consider
 three typical cases:
--->
 
-证明通过对可能的规约进行归纳来完成。我们考虑三种典型的情况：
-
-<!--
 * Two instances of `ξ-·₁`:
 
       L —→ L′                 L —→ L″
@@ -2323,37 +2178,7 @@ three typical cases:
 
   Since the left-hand sides are identical, the right-hand sides are
   also identical. The formal proof simply invokes `refl`.
--->
 
-* 两个关于 `ξ-·₁` 的实例：
-
-      L —→ L′                 L —→ L″
-      --------------- ξ-·₁    --------------- ξ-·₁
-      L · M —→ L′ · M         L · M —→ L″ · M
-
-  根据归纳我们有 `L′ ≡ L″`，因此根据合同性有 `L′ · M ≡ L″ · M`。
-
-* 一个关于 `ξ-·₁` 的实例和一个关于 `ξ-·₂` 的实例：
-
-                              Value L
-      L —→ L′                 M —→ M″
-      --------------- ξ-·₁    --------------- ξ-·₂
-      L · M —→ L′ · M         L · M —→ L · M″
-
-  左侧的规则要求 `L` 被规约，但右侧的规则要求 `L` 是一个值。
-  这是一个矛盾，因为值无法被规约。如果值的约束从 `ξ-·₂` 或任何其他规约规则中被移除，
-  那么确定性将不再适用。
-
-* 两个关于 `β-ƛ` 的实例：
-
-      Value V                              Value V
-      ----------------------------- β-ƛ    ----------------------------- β-ƛ
-      (ƛ x ⇒ N) · V —→ N [ x := V ]        (ƛ x ⇒ N) · V —→ N [ x := V ]
-
-  因为左侧是相同的，所以右侧也是相同的。
-  形式证明只是对 `refl` 的调用。
-
-<!--
 Five of the 18 lines in the above proof are redundant, e.g., the case
 when one rule is `ξ-·₁` and the other is `ξ-·₂` is considered twice,
 once with `ξ-·₁` first and `ξ-·₂` second, and the other time with the
@@ -2365,80 +2190,36 @@ and add
 to the bottom of the proof. But this does not work: the termination
 checker complains, because the arguments have merely switched order
 and neither is smaller.
--->
-
-上述证明中的 18 行中有 5 行是多余的，
-例如，当一个规则是 `ξ-·₁` 而另一个是 `ξ-·₂` 的情况被考虑两次，
-一次是先有 `ξ-·₁`，然后有 `ξ-·₂`，另一次将两者互换。
-我们可能想做的是删除多余的行并在证明的底部添加
-
-    det M—→M′ M—→M″ = sym (det M—→M″ M—→M′)
-
-但这不起作用：停机检查器报错，因为参数只是被交换了顺序，而且没有任何一个变得更小。
 
 
-<!--
 #### Quiz
--->
 
-#### 小测验
-
-<!--
 Suppose we add a new term `zap` with the following reduction rule
--->
-
-假设我们加入了一个新项 `zap` 以及以下规约规则
 
     -------- β-zap
     M —→ zap
 
-<!--
 and the following typing rule:
--->
-
-和以下赋型规则：
 
     ----------- ⊢zap
     Γ ⊢ zap ⦂ A
 
-<!--
 Which of the following properties remain true in
 the presence of these rules?  For each property, write either
 "remains true" or "becomes false." If a property becomes
 false, give a counterexample:
--->
 
-在这些规则存在的情况下，以下哪些属性仍然成立？
-对于每个属性，写下 “仍为真” 或 “变为假”。
-如果一个属性变为假，请举出一个反例：
-
-<!--
   - Determinism of `step`
 
   - Progress
 
   - Preservation
--->
-
-  - `step` 的确定性
-
-  - 进行性
-
-  - 保型性
 
 
-<!--
 #### Quiz
--->
 
-#### 小测验
-
-<!--
 Suppose instead that we add a new term `foo` with the following
 reduction rules:
--->
-
-假设我们加入了一个新项 `foo` 以及以下规约规则：
 
     ------------------ β-foo₁
     (λ x ⇒ ` x) —→ foo
@@ -2446,136 +2227,66 @@ reduction rules:
     ----------- β-foo₂
     foo —→ zero
 
-<!--
 Which of the following properties remain true in
 the presence of this rule?  For each one, write either
 "remains true" or else "becomes false." If a property becomes
 false, give a counterexample:
--->
 
-在此规则存在的情况下，以下哪些属性仍然成立？
-对于每个属性，写下 “仍为真” 或 “变为假”。
-如果一个属性变为假，请举出一个反例：
-
-<!--
   - Determinism of `step`
 
   - Progress
 
   - Preservation
--->
-
-  - `step` 的确定性
-
-  - 进行性
-
-  - 保型性
 
 
-<!--
 #### Quiz
--->
 
-#### 小测验
-
-<!--
 Suppose instead that we remove the rule `ξ·₁` from the step
 relation. Which of the following properties remain
 true in the absence of this rule?  For each one, write either
 "remains true" or else "becomes false." If a property becomes
 false, give a counterexample:
--->
 
-假设我们从步进关系中移除了规则 `ξ·₁`。
-在此规则不存在的情况下，以下哪些属性仍然成立？
-对于每个属性，写下 “仍为真” 或 “变为假”。
-如果一个属性变为假，请举出一个反例：
-
-<!--
   - Determinism of `step`
 
   - Progress
 
   - Preservation
--->
-
-  - `step` 的确定性
-
-  - 进行性
-
-  - 保型性
 
 
-<!--
 #### Quiz
--->
 
-#### 小测验
-
-<!--
 We can enumerate all the computable function from naturals to
 naturals, by writing out all programs of type `` `ℕ ⇒ `ℕ`` in
 lexical order.  Write `fᵢ` for the `i`'th function in this list.
--->
 
-我们可以通过按照字典序写出所有类型为 `` `ℕ ⇒ `ℕ`` 的程序来遍历所有从自然数到自然数的可计算函数。
-将这个列表中的第 `i` 个函数写作 `fᵢ`。
-
-<!--
 Say we add a typing rule that applies the above enumeration
 to interpret a natural as a function from naturals to naturals:
--->
-
-假设我们添加了一个赋性规则，应用上述遍历来将一个自然数解释为一个从自然数到自然数的函数：
-
 
     Γ ⊢ L ⦂ `ℕ
     Γ ⊢ M ⦂ `ℕ
     -------------- _·ℕ_
     Γ ⊢ L · M ⦂ `ℕ
 
-<!--
 And that we add the corresponding reduction rule:
--->
-
-并且我们添加了相应的归约规则：
 
     fᵢ(m) —→ n
     ---------- δ
     i · m —→ n
 
-<!--
 Which of the following properties remain true in
 the presence of this rule?  For each one, write either
 "remains true" or else "becomes false." If a property becomes
 false, give a counterexample:
--->
 
-在此规则存在的情况下，以下哪些属性仍然成立？
-对于每个属性，写下 “仍为真” 或 “变为假”。
-如果一个属性变为假，请举出一个反例：
-
-<!--
   - Determinism of `step`
 
   - Progress
 
   - Preservation
--->
 
-  - `step` 的确定性
-
-  - 进行性
-
-  - 保型性
-
-<!--
 Are all properties preserved in this case? Are there any
 other alterations we would wish to make to the system?
--->
-
-在这种情况下是否保留了所有属性？
-我们是否希望对系统进行任何其他更改？
 
 ## Unicode
 

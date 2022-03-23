@@ -886,7 +886,7 @@ de Bruijn representation.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -1662,7 +1662,7 @@ values.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -2118,7 +2118,7 @@ Using the evaluator, confirm that two times two is four.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 
