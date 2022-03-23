@@ -886,7 +886,7 @@ de Bruijn representation.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -903,7 +903,7 @@ chapter, but here the theorem that ensures renaming preserves
 typing also acts as code that performs renaming.
 -->
 
-重命名是替换之前重要的一步，让我们可以将一个项从一个上下文中“转移”至另一个上下文。
+重命名是替换之前重要的一步，让我们可以将一个项从一个上下文中 “转移” 至另一个上下文。
 它直接对应了上一章中的关于重命名的结论，但此处重命名保留类型的定理同时是进行重命名的代码。
 
 <!--
@@ -1645,7 +1645,7 @@ previous development.
 #### Exercise `V¬—→` (practice)
 -->
 
-#### 练习 `V¬—→` （习题）
+#### 练习 `V¬—→`（习题）
 
 <!--
 Following the previous development, show values do
@@ -1662,7 +1662,7 @@ values.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -2118,7 +2118,7 @@ Using the evaluator, confirm that two times two is four.
 -->
 
 ```
--- 在此处写出你的代码
+-- 请将代码写在此处。
 ```
 
 

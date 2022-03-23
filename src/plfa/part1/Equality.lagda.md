@@ -586,9 +586,9 @@ it to write out an alternative proof that addition is monotonic with
 regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mono-≤`.
 -->
 
-[Relations](/Relations/) 章节中的单调性证明亦可以用相似于 `≡-Reasoning` 的，更易于理解的形式给出。
+章节 [Relations](/Relations/) 中的单调性证明亦可以用相似于 `≡-Reasoning` 的，更易于理解的形式给出。
 相似地来定义 `≤-Reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤`、`+-monoʳ-≤`
-和 `+-mono-≤`。
+和 `+-mono-≤` 的定义。
 
 <!--
 ```
