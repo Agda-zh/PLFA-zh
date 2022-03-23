@@ -962,7 +962,7 @@ found in the second position, which also contains `x`, this leads to a
 contradiction (evidenced by `x≢x refl`).
 -->
 
-在这里映射 `ρ` 不可能调用较里出现的 `x`，由于它被较外的出现遮盖了。
+在这里映射 `ρ` 不可能被较里出现的 `x` 调用，由于它被较外的出现遮盖了。
 忽略掉在首位的 `x` 的情况只可能发生在当前寻找的变量不同于 `x` 的情
 况（由 `x≢x` 或 `z≢x` 论证），但如果变量在第二个位置被发现了，
 并且也包含 `x`，便会导出矛盾（由 `x≢x refl` 论证）。
