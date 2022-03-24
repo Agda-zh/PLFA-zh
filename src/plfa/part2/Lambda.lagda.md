@@ -412,7 +412,6 @@ case′ L [zero⇒ M |suc (` x) ⇒ N ]  =  case L [zero⇒ M |suc x ⇒ N ]
 μ′ (` x) ⇒ N  =  μ x ⇒ N
 ```
 
-<!--
 Recall that `T` is a function that maps from the computation world to
 the evidence world, as
 [defined]({{ site.baseurl }}/Decidable/#relating-evidence-and-computation)
@@ -421,7 +420,6 @@ use the primed functions only when the respective term argument is a
 variable, which we do by providing implicit evidence.  For example, if
 we tried to define an abstraction term that binds anything but a
 variable:
--->
 
     _ : Term
     _ = ƛ′ two ⇒ two
