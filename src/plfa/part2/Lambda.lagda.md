@@ -97,12 +97,13 @@ Foundations_）中对应的 _Stlc_ 的内容。
 ## 导入
 
 ```
-open import Data.Bool using (T; not)
+open import Data.Bool using (Bool; true; false; T; not)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.List using (List; _∷_; [])
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Product using (∃-syntax; _×_)
 open import Data.String using (String; _≟_)
+open import Data.Unit using (tt)
 open import Relation.Nullary using (Dec; yes; no; ¬_)
 open import Relation.Nullary.Decidable using (False; toWitnessFalse)
 open import Relation.Nullary.Negation using (¬?)
@@ -397,50 +398,37 @@ by adding the following definitions:
 我们可以加入下面的定义，来帮助我们表示项的例子：
 
 ```
-ƛ′_⇒_ : Term → Term → Term
-ƛ′ (` x) ⇒ N  =  ƛ x ⇒ N
-ƛ′ _ ⇒ _      =  ⊥-elim impossible
-  where postulate impossible : ⊥
+var? : (t : Term) → Bool
+var? (` _)  =  true
+var? _      =  false
 
-case′_[zero⇒_|suc_⇒_] : Term → Term → Term → Term → Term
+ƛ′_⇒_ : (t : Term) → {_ : T (var? t)} → Term → Term
+ƛ′_⇒_ (` x) N = ƛ x ⇒ N
+
+case′_[zero⇒_|suc_⇒_] : Term → Term → (t : Term) → {_ : T (var? t)} → Term → Term
 case′ L [zero⇒ M |suc (` x) ⇒ N ]  =  case L [zero⇒ M |suc x ⇒ N ]
-case′ _ [zero⇒ _ |suc _ ⇒ _ ]      =  ⊥-elim impossible
-  where postulate impossible : ⊥
 
-μ′_⇒_ : Term → Term → Term
+μ′_⇒_ : (t : Term) → {_ : T (var? t)} → Term → Term
 μ′ (` x) ⇒ N  =  μ x ⇒ N
-μ′ _ ⇒ _      =  ⊥-elim impossible
-  where postulate impossible : ⊥
 ```
 
 <!--
-We intend to apply the function only when the first term is a variable, which we
-indicate by postulating a term `impossible` of the empty type `⊥`.  If we use
-C-c C-n to normalise the term
+Recall that `T` is a function that maps from the computation world to
+the evidence world, as
+[defined]({{ site.baseurl }}/Decidable/#relating-evidence-and-computation)
+in Chapter [Decidable]({{ site.baseurl }}/Decidable/).  We ensure to
+use the primed functions only when the respective term argument is a
+variable, which we do by providing implicit evidence.  For example, if
+we tried to define an abstraction term that binds anything but a
+variable:
 -->
 
-我们希望只在第一个项是变量的时候应用这个函数；
-我们引入一个空类型 `⊥` 的项 `impossible` 作为公设，用来表示第二种情况不会发生。
-如果我们使用 C-c C-n 来范式化这个项
+    _ : Term
+    _ = ƛ′ two ⇒ two
 
-    ƛ′ two ⇒ two
-
-<!--
-Agda will return an answer warning us that the impossible has occurred:
--->
-
-Agda 会警告我们出现了不可能的情况。
-
-    ⊥-elim (plfa.part2.Lambda.impossible (`` `suc (`suc `zero)) (`suc (`suc `zero)) ``)
-
-<!--
-While postulating the impossible is a useful technique, it must be
-used with care, since such postulation could allow us to provide
-evidence of _any_ proposition whatsoever, regardless of its truth.
--->
-
-假设一件不可能的事情是一个有用的方法，但是我们必须加以注意。因为这样的假设能让我们
-构造出**任何**命题，不论真假。
+Agda would complain it cannot find a value of the bottom type for the
+implicit argument. Note the implicit argument's type reduces to `⊥`
+when term `t` is anything but a variable.
 
 <!--
 The definition of `plus` can now be written as follows:

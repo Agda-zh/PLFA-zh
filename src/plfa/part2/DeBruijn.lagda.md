@@ -104,7 +104,7 @@ And here is its corresponding type derivation:
     ⊢twoᶜ : ∀ {A} → ∅ ⊢ twoᶜ ⦂ Ch A
     ⊢twoᶜ = ⊢ƛ (⊢ƛ (⊢` ∋s · (⊢` ∋s · ⊢` ∋z)))
       where
-      ∋s = S ("s" ≠ "z") Z
+      ∋s = S′ Z
       ∋z = Z
 
 <!--
@@ -264,11 +264,11 @@ Here is its corresponding type derivation:
     ⊢plus = ⊢μ (⊢ƛ (⊢ƛ (⊢case (⊢` ∋m) (⊢` ∋n)
              (⊢suc (⊢` ∋+ · ⊢` ∋m′ · ⊢` ∋n′)))))
       where
-      ∋+  = (S ("+" ≠ "m") (S ("+" ≠ "n") (S ("+" ≠ "m") Z)))
-      ∋m  = (S ("m" ≠ "n") Z)
+      ∋+  = (S′ (S′ (S′ Z)))
+      ∋m  = (S′ Z)
       ∋n  = Z
       ∋m′ = Z
-      ∋n′ = (S ("n" ≠ "m") Z)
+      ∋n′ = (S′ Z)
 
 <!--
 The two definitions are in close correspondence, where in

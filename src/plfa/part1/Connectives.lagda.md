@@ -67,11 +67,11 @@ open plfa.part1.Isomorphism.≃-Reasoning
 <!--
 Given two propositions `A` and `B`, the conjunction `A × B` holds
 if both `A` holds and `B` holds.  We formalise this idea by
-declaring a suitable record type:
+declaring a suitable datatype:
 -->
 
 给定两个命题 `A` 和 `B`，其合取 `A × B` 成立当 `A` 成立和 `B` 成立。
-我们将这样的概念形式化，使用如下的记录类型：
+我们用一个合适的数据类型将这样的概念形式化：
 
 ```
 data _×_ (A B : Set) : Set where
@@ -408,10 +408,9 @@ is isomorphic to `(A → B) × (B → A)`.
 
 <!--
 Truth `⊤` always holds. We formalise this idea by
-declaring a suitable record type:
--->
+declaring a suitable datatype:
 
-恒真 `⊤` 恒成立。我们将这个概念用合适的记录类型来形式化：
+恒真 `⊤` 恒成立。我们将这个概念用合适的数据类型来形式化：
 
 ```
 data ⊤ : Set where

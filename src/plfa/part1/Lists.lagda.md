@@ -1332,10 +1332,11 @@ postulate
 ```
 
 <!--
-As a consequence, using a previous exercise, we have the following:
+As a consequence we can decompose fold over append in a monoid
+into two folds as follows.
 -->
 
-使用之前练习中的一个结论，我们可以得到如下推论：
+由此，我们可以将幺半群中附加的折叠如下分解成两个折叠：
 
 ```
 foldr-monoid-++ : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) → IsMonoid _⊗_ e →

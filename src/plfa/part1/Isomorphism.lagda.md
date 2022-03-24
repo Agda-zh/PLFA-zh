@@ -281,17 +281,17 @@ open _≃_
 <!--
 Let's unpack the definition. An isomorphism between sets `A` and `B` consists
 of four things:
-+ A function `to` from `A` to `B`,
-+ A function `from` from `B` back to `A`,
-+ Evidence `from∘to` asserting that `from` is a *left-inverse* for `to`,
-+ Evidence `to∘from` asserting that `from` is a *right-inverse* for `to`.
+  1. A function `to` from `A` to `B`,
+  2. A function `from` from `B` back to `A`,
+  3. Evidence `from∘to` asserting that `from` is a *left-inverse* for `to`,
+  4. Evidence `to∘from` asserting that `from` is a *right-inverse* for `to`.
 -->
 
 我们来一一展开这个定义。一个集合 `A` 和 `B` 之间的同构有四个要素：
-+ 从 `A` 到 `B` 的函数 `to`
-+ 从 `B` 回到 `A` 的函数 `from`
-+ `from` 是 `to` 的**左逆（left-inverse）**的证明 `from∘to`
-+ `from` 是 `to` 的**右逆（right-inverse）**的证明 `to∘from`
+  1. 从 `A` 到 `B` 的函数 `to`
+  2. 从 `B` 回到 `A` 的函数 `from`
+  3. `from` 是 `to` 的**左逆（left-inverse）**的证明 `from∘to`
+  4. `from` 是 `to` 的**右逆（right-inverse）**的证明 `to∘from`
 
 <!--
 In particular, the third asserts that `from ∘ to` is the identity, and

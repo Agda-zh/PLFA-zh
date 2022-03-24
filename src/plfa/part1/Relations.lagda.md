@@ -1130,6 +1130,7 @@ exploiting the corresponding properties of inequality.
 我们可以直接地来证明 `suc m ≤ n` 蕴涵了 `m < n`，及其逆命题。
 因此我们亦可从不等关系的性质中，使用此性质来证明严格不等关系的性质。
 
+<<<<<<< HEAD
 
 <!--
 #### Exercise `<-trans` (recommended) {name=less-trans}
@@ -1138,10 +1139,11 @@ exploiting the corresponding properties of inequality.
 #### 练习 `<-trans` （推荐） {name=less-trans}
 
 <!--
-Show that strict inequality is transitive.
+Show that strict inequality is transitive. Use a direct proof. (A later
+exercise exploits the relation between < and ≤.)
 -->
 
-证明严格不等是传递的。
+证明严格不等是传递的。请直接证明。（后续的练习中我们将使用 < 和 ≤ 的关系。）
 
 <!--
 ```
