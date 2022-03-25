@@ -409,6 +409,7 @@ is isomorphic to `(A → B) × (B → A)`.
 <!--
 Truth `⊤` always holds. We formalise this idea by
 declaring a suitable datatype:
+-->
 
 恒真 `⊤` 恒成立。我们将这个概念用合适的数据类型来形式化：
 
