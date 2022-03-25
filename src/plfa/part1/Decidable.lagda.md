@@ -192,7 +192,7 @@ and the one use of `()` when showing there can be no evidence that `4 ≤ 2`.
 ## Relating evidence and computation
 -->
 
-## 将证明与计算相联系
+## 将证明与计算相联系 {name=relating-evidence-and-computation}
 
 <!--
 We would hope to be able to show these two approaches are related, and
