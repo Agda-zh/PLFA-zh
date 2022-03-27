@@ -1641,7 +1641,7 @@ you might use, if there is a choice.  In this case, it displays the following:
 
     Don't know which constructor to introduce of zero or suc
 
-即“不知道在 `zero` 和 `suc` 中该引入哪一个构造子”。
+即「不知道在 `zero` 和 `suc` 中该引入哪一个构造子」。
 
 <!--
 Filling the hole with `suc ?` and typing `C-c C-space` results in the following:

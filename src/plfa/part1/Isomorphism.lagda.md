@@ -709,7 +709,7 @@ postulate
 Define equivalence of propositions (also known as "if and only if") as follows:
 -->
 
-按下列形式定义命题的等价性（又名“当且仅当“）：
+按下列形式定义命题的等价性（又名「当且仅当」）：
 
 ```
 record _⇔_ (A B : Set) : Set where

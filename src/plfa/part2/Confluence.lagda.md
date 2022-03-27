@@ -974,7 +974,7 @@ article by Nipkow (JAR 1996).
 总而言之，这种基于平行规约的合流性的证明
 归功于 W. Tait 和 P. Martin-Löf （参见 Barendregt 1984，章节 3.2）。
 机械化的细节有多个来源。
-`subst-par` 引理是 Shafer、Tebbi 和 Smolka (ITP 2015) 的 “强替换性（Strong Substitutivity）” 引理。
+`subst-par` 引理是 Shafer、Tebbi 和 Smolka (ITP 2015) 的 「强替换性（Strong Substitutivity）」 引理。
 `par-triangle`、`strip` 和 `par-confluence` 的证明是基于
 Takahashi (1995) 的 complete development
 和 Pfenning 1992 年关于 Church-Rosser 定理的技术报告。
