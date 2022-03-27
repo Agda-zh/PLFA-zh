@@ -412,6 +412,7 @@ case′ L [zero⇒ M |suc (` x) ⇒ N ]  =  case L [zero⇒ M |suc x ⇒ N ]
 μ′ (` x) ⇒ N  =  μ x ⇒ N
 ```
 
+<!--
 Recall that `T` is a function that maps from the computation world to
 the evidence world, as
 [defined](/Decidable/#relating-evidence-and-computation)
@@ -420,13 +421,24 @@ use the primed functions only when the respective term argument is a
 variable, which we do by providing implicit evidence.  For example, if
 we tried to define an abstraction term that binds anything but a
 variable:
+-->
+
+回顾 `T` 是一个将计算映射到证明的函数，如同在 [Decidable](/Decidable)
+章节中的[定义](/Decidable/#relating-evidence-and-computation)。
+我们只在项参数是变量时使用带一撇的函数，用隐式证明来保证这一点。
+例如，如果我们试着定义一个绑定非变量的抽象：
 
     _ : Term
     _ = ƛ′ two ⇒ two
 
+<!--
 Agda would complain it cannot find a value of the bottom type for the
 implicit argument. Note the implicit argument's type reduces to `⊥`
 when term `t` is anything but a variable.
+-->
+
+Agda 会抱怨它无法为隐式参数找到一个底类型的值。
+注意此处隐式参数的类型在 `t` 不是变量时会规约至 `⊥`。
 
 <!--
 The definition of `plus` can now be written as follows:
