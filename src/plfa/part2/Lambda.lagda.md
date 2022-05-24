@@ -227,12 +227,11 @@ Case expressions are self-bracketing.
 ### 项的例子
 
 <!--
-Here are some example terms: the natural number two,
-a function that adds naturals,
-and a term that computes two plus two:
+Here are a couple of example terms: the natural number two
+and a function that adds naturals:
 -->
 
-下面是一些项的例子：自然数二、一个将自然数相加的函数和一个计算二加二的项：
+下面是一些项的例子：自然数二和一个将自然数相加的函数：
 
 ```
 two : Term
@@ -278,17 +277,17 @@ As a second example, we use higher-order functions to represent
 natural numbers.  In particular, the number _n_ is represented by a
 function that accepts two arguments and applies the first _n_ times to the
 second.  This is called the _Church representation_ of the
-naturals.  Here are some example terms: the Church numeral two, a
-function that adds Church numerals, a function to compute successor,
-and a term that computes two plus two:
+naturals.  Here are a few example terms: the Church numeral two, a
+function that adds Church numerals, and a function to compute successor:
 -->
 
 第二个例子里，我们使用高阶函数来表示自然数。
 具体来说，数字 _n_ 由一个接受两个参数的函数来表示，这个函数将第一个参数
 应用于第二个参数上 _n_ 次。
 这样的表示方法叫做自然数的 **Church 表示法**。
-下面是一个项的例子：Church 表示法的数字二、一个将两个用 Church 表示法表示的数字相加的函数、
-一个计算后继的函数和一个计算二加二的项：
+下面是一些项的例子：Church 表示法的数字二、一个将两个用 Church
+表示法表示的数字相加的函数和 一个计算后继的函数：
+
 ```
 twoᶜ : Term
 twoᶜ =  ƛ "s" ⇒ ƛ "z" ⇒ ` "s" · (` "s" · ` "z")
@@ -300,6 +299,7 @@ plusᶜ =  ƛ "m" ⇒ ƛ "n" ⇒ ƛ "s" ⇒ ƛ "z" ⇒
 sucᶜ : Term
 sucᶜ = ƛ "n" ⇒ `suc (` "n")
 ```
+
 <!--
 The Church numeral for two takes two arguments `s` and `z`
 and applies `s` twice to `z`.
@@ -803,7 +803,7 @@ the body of the abstraction stands for a _different_ variable than
 
 <!--
 We will give a definition of substitution that is only valid
-when term substituted for the variable is closed. This is because
+when the term substituted for the variable is closed. This is because
 substitution by terms that are _not_ closed may require renaming
 of bound variables. For example:
 -->
@@ -855,20 +855,20 @@ infix 9 _[_:=_]
 
 _[_:=_] : Term → Id → Term → Term
 (` x) [ y := V ] with x ≟ y
-... | yes _          =  V
-... | no  _          =  ` x
+... | yes _         = V
+... | no  _         = ` x
 (ƛ x ⇒ N) [ y := V ] with x ≟ y
-... | yes _          =  ƛ x ⇒ N
-... | no  _          =  ƛ x ⇒ N [ y := V ]
-(L · M) [ y := V ]   =  L [ y := V ] · M [ y := V ]
-(`zero) [ y := V ]   =  `zero
-(`suc M) [ y := V ]  =  `suc M [ y := V ]
+... | yes _         = ƛ x ⇒ N
+... | no  _         = ƛ x ⇒ N [ y := V ]
+(L · M) [ y := V ]  = L [ y := V ] · M [ y := V ]
+(`zero) [ y := V ]  = `zero
+(`suc M) [ y := V ] = `suc M [ y := V ]
 (case L [zero⇒ M |suc x ⇒ N ]) [ y := V ] with x ≟ y
-... | yes _          =  case L [ y := V ] [zero⇒ M [ y := V ] |suc x ⇒ N ]
-... | no  _          =  case L [ y := V ] [zero⇒ M [ y := V ] |suc x ⇒ N [ y := V ] ]
+... | yes _         = case L [ y := V ] [zero⇒ M [ y := V ] |suc x ⇒ N ]
+... | no  _         = case L [ y := V ] [zero⇒ M [ y := V ] |suc x ⇒ N [ y := V ] ]
 (μ x ⇒ N) [ y := V ] with x ≟ y
-... | yes _          =  μ x ⇒ N
-... | no  _          =  μ x ⇒ N [ y := V ]
+... | yes _         = μ x ⇒ N
+... | no  _         = μ x ⇒ N [ y := V ]
 ```
 
 <!--
@@ -924,7 +924,8 @@ Here is confirmation that the examples above are correct:
 下面是上述替换正确性的证明：
 
 ```
-_ : (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) [ "s" := sucᶜ ] ≡ ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z")
+_ : (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) [ "s" := sucᶜ ]
+      ≡ ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z")
 _ = refl
 
 _ : (sucᶜ · (sucᶜ · ` "z")) [ "z" := `zero ] ≡ sucᶜ · (sucᶜ · `zero)
@@ -1296,12 +1297,12 @@ appealing way, as we will see in the next section.
 在下一部分我们可以看到，这样的记法可以让我们用清晰的步骤来表示规约的例子。
 
 <!--
-An alternative is to define reflexive and transitive closure directly,
-as the smallest relation that includes `—→` and is also reflexive
-and transitive.  We could do so as follows:
+Alternatively, we might define reflexive and transitive closure directly
+as the smallest relation that includes `—→` and is reflexive
+and transitive.  We do so as follows:
 -->
 
-我们也可以用包括 `—→` 的最小的自反传递关系作为另一种定义：
+我们也可以用包括 `—→` 的最小的自反传递关系来定义：
 
 ```
 data _—↠′_ : Term → Term → Set where
@@ -1727,7 +1728,7 @@ body of an abstraction its bound variable may appear free.
 <!--
 A _context_ associates variables with types.  We let `Γ` and `Δ` range
 over contexts.  We write `∅` for the empty context, and `Γ , x ⦂ A`
-for the context that extends `Γ` by mapping variable `x` to type `A`.
+for the context that extends `Γ` by associating variable `x` with type `A`.
 For example,
 -->
 
