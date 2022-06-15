@@ -110,7 +110,7 @@ If you do not have Git, see [the Git downloads page][git].
 ### Install GHC and Cabal
 -->
 
-### 安装 GHC 和 Cabal
+### 安装 GHC 和 Cabal {name=install-ghc-and-cabal}
 
 <!--
 Agda is written in Haskell, so to install it we’ll need the *Glorious Haskell Compiler* version 8.10.7 and it's package managed *Cabal*. We recommend installing both of these using [ghcup][ghcup].
@@ -124,7 +124,7 @@ Agda 是用 Haskell 写成的，所以为了安装它我们需要 *Glorious Hask
 ### Install Agda
 -->
 
-### 安装 Agda
+### 安装 Agda {name=install-agda}
 
 <!--
 The easiest way to install Agda is using Cabal. PLFA uses Agda version 2.6.2.2. Run the following command:
