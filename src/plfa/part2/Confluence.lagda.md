@@ -1,14 +1,11 @@
 ---
 title     : "Confluence: 无类型 λ-演算的合流性"
-layout    : page
-prev      : /Untyped/
 permalink : /Confluence/
-next      : /BigStep/
 translators : ["starxingchenc"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part2.Confluence where
 ```
 
@@ -109,7 +106,7 @@ confluence for parallel reduction.
 
 ## 导入
 
-```
+```agda
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Function using (_∘_)
 open import Data.Product using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
@@ -134,7 +131,7 @@ The parallel reduction relation is defined as follows.
 
 平行规约关系被定义如下。
 
-```
+```agda
 infix 2 _⇛_
 
 data _⇛_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
@@ -185,7 +182,7 @@ Parallel reduction is reflexive.
 
 平行规约是自反的。
 
-```
+```agda
 par-refl : ∀{Γ A}{M : Γ ⊢ A} → M ⇛ M
 par-refl {Γ} {A} {` x} = pvar
 par-refl {Γ} {★} {ƛ N} = pabs par-refl
@@ -198,7 +195,7 @@ We define the sequences of parallel reduction as follows.
 
 我们定义平行规约序列如下。
 
-```
+```agda
 infix  2 _⇛*_
 infixr 2 _⇛⟨_⟩_
 infix  3 _∎
@@ -232,12 +229,12 @@ case.
 回顾上文中菱形性质的反例，证明在这种情况下平行规约具有菱形性质。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -259,7 +256,7 @@ the reduction `M —→ N`.
 必要性的证明非常容易，我们开始于说明若 `M —→ N`，则 `M ⇛ N`。
 该证明通过对规约 `M —→ N` 进行归纳。
 
-```
+```agda
 beta-par : ∀{Γ A}{M N : Γ ⊢ A}
   → M —→ N
     ------
@@ -279,7 +276,7 @@ induction on the reduction sequence `M —↠ N`.
 证明了该引理后我们便可完成必要性的证明，
 即 `M —↠ N` 蕴含 `M ⇛* N`。该证明是对 `M —↠ N` 规约序列的简单归纳。
 
-```
+```agda
 betas-pars : ∀{Γ A} {M N : Γ ⊢ A}
   → M —↠ N
     ------
@@ -301,7 +298,7 @@ reductions. So instead we shall prove that `M ⇛ N` implies `M —↠ N`.
 毕竟 `M ⇛ N` 执行了许多规约，
 所以我们应当证明 `M ⇛ N` 蕴含 `M —↠ N`。
 
-```
+```agda
 par-betas : ∀{Γ A}{M N : Γ ⊢ A}
   → M ⇛ N
     ------
@@ -369,7 +366,7 @@ With this lemma in hand, we complete the proof that `M ⇛* N` implies
 
 证明了该引理后我们便可通过对 `M ⇛* N` 的一步简单归纳完成 `M ⇛* N` 蕴含 `M —↠ N` 的证明。
 
-```
+```agda
 pars-betas : ∀{Γ A} {M N : Γ ⊢ A}
   → M ⇛* N
     ------
@@ -405,7 +402,7 @@ of pointwise parallel reduction as follows.
 则 `subst σ N ⇛ subst τ N′`。
 我们如下定义逐点平行规约。
 
-```
+```agda
 par-subst : ∀{Γ Δ} → Subst Γ Δ → Subst Γ Δ → Set
 par-subst {Γ}{Δ} σ σ′ = ∀{A}{x : Γ ∋ A} → σ x ⇛ σ′ x
 ```
@@ -425,7 +422,7 @@ and restate here.
 `par-rename` 依赖于重命名和替换可以相互交换的事实，
 这是一个我们在 [Substitution](/Substitution/) 章节引入并在此处重申的引理。
 
-```
+```agda
 rename-subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{ρ : Rename Γ Δ }
     → (rename (ext ρ) N) [ rename ρ M ] ≡ rename ρ (N [ M ])
 rename-subst-commute {N = N} = plfa.part2.Substitution.rename-subst-commute {N = N}
@@ -437,7 +434,7 @@ Now for the `par-rename` lemma.
 
 现在证明 `par-rename` 引理。
 
-```
+```agda
 par-rename : ∀{Γ Δ A} {ρ : Rename Γ Δ} {M M′ : Γ ⊢ A}
   → M ⇛ M′
     ------------------------
@@ -486,7 +483,7 @@ reduction relation.
 
 有了 `par-rename` 引理，很容易证明扩展替换保留了逐点平行归约关系。
 
-```
+```agda
 par-subst-exts : ∀{Γ Δ} {σ τ : Subst Γ Δ}
   → par-subst σ τ
     ------------------------------------------
@@ -508,7 +505,7 @@ and restate it below.
 我们从 [Substitution](/Substitution/) 章节导入这个引理，
 并重申如下。
 
-```
+```agda
 subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{σ : Subst Γ Δ }
   → subst (exts σ) N [ subst σ M ] ≡ subst σ (N [ M ])
 subst-commute {N = N} = plfa.part2.Substitution.subst-commute {N = N}
@@ -520,7 +517,7 @@ We are ready to prove that substitution respects parallel reduction.
 
 我们准备好去证明替换遵从平行规约。
 
-```
+```agda
 subst-par : ∀{Γ Δ A} {σ τ : Subst Γ Δ} {M M′ : Γ ⊢ A}
   → par-subst σ τ  →  M ⇛ M′
     --------------------------
@@ -605,7 +602,7 @@ to `subst-zero M′`.
 
 显然，若 `M ⇛ M′`，则 `subst-zero M` 逐点平行规约至 `subst-zero M′`。
 
-```
+```agda
 par-subst-zero : ∀{Γ}{A}{M M′ : Γ ⊢ A}
        → M ⇛ M′
        → par-subst (subst-zero M) (subst-zero M′)
@@ -620,7 +617,7 @@ respects parallel reduction.
 
 我们以所期望的推论来结束本节，即替换遵从平行规约。
 
-```
+```agda
 sub-par : ∀{Γ A B} {N N′ : Γ , A ⊢ B} {M M′ : Γ ⊢ A}
   → N ⇛ N′
   → M ⇛ M′
@@ -680,7 +677,7 @@ property_.
 
 其中向下的线是 `⇛` 的实例。因此我们称其为**三角性质（Triangle Property）**。
 
-```
+```agda
 _⁺ : ∀ {Γ A}
   → Γ ⊢ A → Γ ⊢ A
 (` x) ⁺       =  ` x
@@ -773,7 +770,7 @@ triangle property on each side with the same confluent term `M ⁺`.
 
 也就是说，菱形性质通过在两侧应用具有相同合流项 `M ⁺`的三角性质而证明。
 
-```
+```agda
 par-diamond : ∀{Γ A} {M N N′ : Γ ⊢ A}
   → M ⇛ N
   → M ⇛ N′
@@ -853,7 +850,7 @@ using the triangle property in the induction step.
 
 带状引理的证明是对 `M ⇛* N′` 的简单归纳，并在归纳步骤使用三角性质。
 
-```
+```agda
 strip : ∀{Γ A} {M N N′ : Γ ⊢ A}
   → M ⇛ N
   → M ⇛* N′
@@ -873,7 +870,7 @@ induction step.
 
 平行规约合流性的证明现在通过对序列 `M ⇛* N` 归纳来完成，并在归纳步骤使用上述引理。
 
-```
+```agda
 par-confluence : ∀{Γ A} {L M₁ M₂ : Γ ⊢ A}
   → L ⇛* M₁
   → L ⇛* M₂
@@ -939,7 +936,7 @@ Then by confluence we obtain some `L` such that
 接着根据合流性我们得到对于某个 `L` 有 `M₁ ⇛* N` 和 `M₂ ⇛* N`。
 因此我们根据 `pars-betas` 得出 `M₁ —↠ N` 和 `M₂ —↠ N`。
 
-```
+```agda
 confluence : ∀{Γ A} {L M₁ M₂ : Γ ⊢ A}
   → L —↠ M₁
   → L —↠ M₂

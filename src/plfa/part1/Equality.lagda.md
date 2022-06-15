@@ -1,14 +1,11 @@
 ---
 title     : "Equality: 相等性与等式推理"
-layout    : page
-prev      : /Relations/
 permalink : /Equality/
-next      : /Isomorphism/
 translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Equality where
 ```
 
@@ -51,8 +48,7 @@ We declare equality as follows:
 -->
 
 我们如下定义相等性：
-
-```
+```agda
 data _≡_ {A : Set} (x : A) : A → Set where
   refl : x ≡ x
 ```
@@ -83,7 +79,7 @@ We declare the precedence of equality as follows:
 
 我们如下定义相等性的优先级：
 
-```
+```agda
 infix 4 _≡_
 ```
 
@@ -113,7 +109,7 @@ constructor `refl`.  It is straightforward to show symmetry:
 一个等价关系是自反、对称和传递的。其中自反性可以通过构造子 `refl` 直接从相等性的定义中得来。
 我们可以直接地证明其对称性：
 
-```
+```agda
 sym : ∀ {A : Set} {x y : A}
   → x ≡ y
     -----
@@ -218,7 +214,7 @@ Transitivity is equally straightforward:
 
 传递性亦是很直接：
 
-```
+```agda
 trans : ∀ {A : Set} {x y z : A}
   → x ≡ y
   → y ≡ z
@@ -249,7 +245,7 @@ they remain so after the same function is applied to both:
 相等性满足 **合同性（Congruence）**。如果两个项相等，那么对它们使用相同的函数，
 其结果仍然相等：
 
-```
+```agda
 cong : ∀ {A B : Set} (f : A → B) {x y : A}
   → x ≡ y
     ---------
@@ -263,7 +259,7 @@ Congruence of functions with two arguments is similar:
 
 两个参数的函数也满足合同性：
 
-```
+```agda
 cong₂ : ∀ {A B C : Set} (f : A → B → C) {u x : A} {v y : B}
   → u ≡ x
   → v ≡ y
@@ -280,7 +276,7 @@ yields equal terms:
 
 在函数上的等价性也满足合同性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
 
-```
+```agda
 cong-app : ∀ {A B : Set} {f g : A → B}
   → f ≡ g
     ---------------------
@@ -296,7 +292,7 @@ If two values are equal and a predicate holds of the first then it also holds of
 相等性也满足**替换性（Substitution）**。
 如果两个值相等，其中一个满足某谓词，那么另一个也满足此谓词。
 
-```
+```agda
 subst : ∀ {A : Set} {x y : A} (P : A → Set)
   → x ≡ y
     ---------
@@ -321,7 +317,7 @@ library:
 我们在此演示如何使用等式串来论证，正如本书中使用证明形式。我们将声明放在一个叫做
 `≡-Reasoning` 的模块里，与 Agda 标准库中的格式相对应。
 
-```
+```agda
 module ≡-Reasoning {A : Set} where
 
   infix  1 begin_
@@ -378,7 +374,7 @@ as a chain of equations:
 
 举个例子，我们来看看如何用等式串证明传递性：
 
-```
+```agda
 trans′ : ∀ {A : Set} {x y z : A}
   → x ≡ y
   → y ≡ z
@@ -446,7 +442,7 @@ alone would do.
 Sadly, we cannot use the definition of trans' using ≡-Reasoning as the definition
 for trans. Can you see why? (Hint: look at the definition of `_≡⟨_⟩_`)
 
-```
+```agda
 -- Your code goes here
 ```
 
@@ -466,7 +462,7 @@ it would cause a conflict:
 我们重新证明加法的交换律来作为等式串的第二个例子。我们首先重复自然数和加法的定义。
 我们不能导入它们（正如本章节开头中所解释的那样），因为那样会产生一个冲突：
 
-```
+```agda
 data ℕ : Set where
   zero : ℕ
   suc  : ℕ → ℕ
@@ -482,7 +478,7 @@ To save space we postulate (rather than prove in full) two lemmas:
 
 为了节约空间，我们假设两条引理（而不是证明它们）：
 
-```
+```agda
 postulate
   +-identity : ∀ (m : ℕ) → m + zero ≡ m
   +-suc : ∀ (m n : ℕ) → m + suc n ≡ suc (m + n)
@@ -506,7 +502,7 @@ We then repeat the proof of commutativity:
 
 我们接下来重复交换律的证明：
 
-```
+```agda
 +-comm : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm m zero =
   begin
@@ -591,12 +587,12 @@ regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mon
 和 `+-mono-≤` 的定义。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -614,7 +610,7 @@ We repeat the earlier definition:
 
 考虑一个自然数的性质，比如说一个数是偶数。我们重复之前给出的定义：
 
-```
+```agda
 data even : ℕ → Set
 data odd  : ℕ → Set
 
@@ -653,7 +649,7 @@ corresponds to equality:
 Agda 对这种论证有特殊记法的支持——我们之前提到过的 `rewrite` 记法。来启用这种记法，
 我们只用编译程序指令来告诉 Agda 什么类型对应相等性：
 
-```
+```agda
 {-# BUILTIN EQUALITY _≡_ #-}
 ```
 
@@ -663,7 +659,7 @@ We can then prove the desired property as follows:
 
 我们然后就可以如下证明求证的性质：
 
-```
+```agda
 even-comm : ∀ (m n : ℕ)
   → even (m + n)
     ------------
@@ -758,7 +754,7 @@ than chains of equalities:
 
 我们可以多次使用重写，以竖线隔开。举个例子，这里是加法交换律的第二个证明，使用重写而不是等式串：
 
-```
+```agda
 +-comm′ : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm′ zero    n  rewrite +-identity n             =  refl
 +-comm′ (suc m) n  rewrite +-suc n m | +-comm′ m n  =  refl
@@ -792,7 +788,7 @@ abstraction:
 
 `rewrite` 记法实际上是 `with` 抽象的一种应用：
 
-```
+```agda
 even-comm′ : ∀ (m n : ℕ)
   → even (m + n)
     ------------
@@ -834,7 +830,7 @@ function defined earlier:
 
 在这种情况中，我们也可以使用之前定义的替换函数来避免使用重写：
 
-```
+```agda
 even-comm″ : ∀ (m n : ℕ)
   → even (m + n)
     ------------
@@ -892,7 +888,7 @@ for every predicate `P` over type `A` we have that `P x` implies `P y`:
 令 `x` 和 `y` 为类型 `A` 的对象。我们定义 `x ≐ y` 成立，当每个对于类型 `A` 成立的谓词 `P`，
 我们有 `P x` 蕴涵了 `P y`：
 
-```
+```agda
 _≐_ : ∀ {A : Set} (x y : A) → Set₁
 _≐_ {A} x y = ∀ (P : A → Set) → P x → P y
 ```
@@ -929,7 +925,7 @@ and the second by a variant of function composition:
 
 莱布尼兹相等性是自反和传递的。自反性由恒等函数的变种得来，传递性由函数组合的变种得来：
 
-```
+```agda
 refl-≐ : ∀ {A : Set} {x : A}
   → x ≐ x
 refl-≐ P Px  =  Px
@@ -951,7 +947,7 @@ as well:
 对称性就没有那么显然了。我们需要证明如果对于所有谓词 `P`，`P x` 蕴涵 `P y`，
 那么反方向的蕴涵也成立。
 
-```
+```agda
 sym-≐ : ∀ {A : Set} {x y : A}
   → x ≐ y
     -----
@@ -991,7 +987,7 @@ of `P x` is also a proof of `P y`:
 如果我们已知 `x ≡ y`，我们需要对于任意的 `P`，将 `P x` 的证明转换为 `P y` 的证明。
 我们很容易就可以做到这一点，因为 `x` 与 `y` 相等意味着任何 `P x` 的证明即是 `P y` 的证明。
 
-```
+```agda
 ≡-implies-≐ : ∀ {A : Set} {x y : A}
   → x ≡ y
     -----
@@ -1013,7 +1009,7 @@ to a proof of `P y` we need to show `x ≡ y`:
 在反方向上，我们已知对于任何 `P`，我们可以将 `P x` 的证明转换成 `P y` 的证明，
 我们需要证明 `x ≡ y`：
 
-```
+```agda
 ≐-implies-≡ : ∀ {A : Set} {x y : A}
   → x ≐ y
     -----
@@ -1083,7 +1079,7 @@ first import the following:
 答案是**全体多态（Universe Polymorphism）**，一个定义可以根据任何等级 `ℓ` 来做出。
 为了使用等级，我们首先导入下列内容：
 
-```
+```agda
 open import Level using (Level; _⊔_) renaming (zero to lzero; suc to lsuc)
 ```
 
@@ -1133,7 +1129,7 @@ Here is the definition of equality, generalised to an arbitrary level:
 
 下面是相等性的定义，推广到任意等级：
 
-```
+```agda
 data _≡′_ {ℓ : Level} {A : Set ℓ} (x : A) : A → Set ℓ where
   refl′ : x ≡′ x
 ```
@@ -1144,7 +1140,7 @@ Similarly, here is the generalised definition of symmetry:
 
 相似的，下面是对称性的推广定义：
 
-```
+```agda
 sym′ : ∀ {ℓ : Level} {A : Set ℓ} {x y : A}
   → x ≡′ y
     ------
@@ -1167,7 +1163,7 @@ Here is the generalised definition of Leibniz equality:
 
 下面是莱布尼兹相等性的推广定义：
 
-```
+```agda
 _≐′_ : ∀ {ℓ : Level} {A : Set ℓ} (x y : A) → Set (lsuc ℓ)
 _≐′_ {ℓ} {A} x y = ∀ (P : A → Set ℓ) → P x → P y
 ```
@@ -1188,7 +1184,7 @@ arbitrary levels. For instance, here is the definition of composition.
 
 标准库中的大部分函数都泛化到了任意层级。例如，以下是复合的定义。
 
-```
+```agda
 _∘_ : ∀ {ℓ₁ ℓ₂ ℓ₃ : Level} {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃}
   → (B → C) → (A → B) → A → C
 (g ∘ f) x  =  g (f x)
@@ -1221,7 +1217,7 @@ recovers the original argument order:
 [它反转了参数的顺序][step-≡]。标准库还定义了一个语法宏，它可以在你导入 `step-≡`
 时被自动导入，它能够恢复原始的参数顺序：
 
-```
+```agda
 -- import Relation.Binary.PropositionalEquality as Eq
 -- open Eq using (_≡_; refl; trans; sym; cong; cong-app; subst)
 -- open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; step-≡; _∎)

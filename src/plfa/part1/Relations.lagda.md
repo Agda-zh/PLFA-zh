@@ -1,14 +1,11 @@
 ---
 title     : "Relations: 关系的归纳定义"
-layout    : page
-prev      : /Induction/
 permalink : /Relations/
-next      : /Equality/
 translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Relations where
 ```
 
@@ -26,7 +23,7 @@ the next step is to define relations, such as _less than or equal_.
 
 ## 导入
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong)
 open import Data.Nat using (ℕ; zero; suc; _+_)
@@ -75,7 +72,7 @@ And here is the definition in Agda:
 
 以及其 Agda 定义：
 
-```
+```agda
 data _≤_ : ℕ → ℕ → Set where
 
   z≤n : ∀ {n : ℕ}
@@ -155,7 +152,7 @@ And here is the corresponding Agda proof:
 
 下面是对应的 Agda 证明：
 
-```
+```agda
 _ : 2 ≤ 4
 _ = s≤s (s≤s z≤n)
 ```
@@ -204,7 +201,7 @@ explicit:
 如果有希望的话，我们也可以在大括号里显式声明隐式参数。例如，下面是 `2 ≤ 4` 的 Agda
 证明，包括了显式声明了的隐式参数：
 
-```
+```agda
 _ : 2 ≤ 4
 _ = s≤s {1} {3} (s≤s {0} {2} (z≤n {2}))
 ```
@@ -215,7 +212,7 @@ One may also identify implicit arguments by name:
 
 也可以额外加上参数的名字：
 
-```
+```agda
 _ : 2 ≤ 4
 _ = s≤s {m = 1} {n = 3} (s≤s {m = 0} {n = 2} (z≤n {n = 2}))
 ```
@@ -226,7 +223,7 @@ In the latter format, you can choose to only supply some implicit arguments:
 
 在后者的形式中，也可以选择只声明一部分隐式参数：
 
-```
+```agda
 _ : 2 ≤ 4
 _ = s≤s {n = 3} (s≤s {n = 2} z≤n)
 ```
@@ -246,7 +243,7 @@ by writing `_`. For instance, we can define a variant of the proposition
 我们可以写出 `_` 来让 Agda 用相同的推导方式试着推导一个**显式**的项。
 例如，我们可以为命题 `+-identityʳ` 定义一个带有隐式参数的变体：
 
-```
+```agda
 +-identityʳ′ : ∀ {m : ℕ} → m + zero ≡ m
 +-identityʳ′ = +-identityʳ _
 ```
@@ -275,7 +272,7 @@ We declare the precedence for comparison as follows:
 
 我们如下定义比较的优先级：
 
-```
+```agda
 infix 4 _≤_
 ```
 
@@ -336,7 +333,7 @@ and `n`.  This lets us invert our previous rule.
 只有一种方式能够证明对于任意 `m` 和 `n` 有 `suc m ≤ suc n`。
 这让我们能够反演（invert）之前的规则。
 
-```
+```agda
 inv-s≤s : ∀ {m n : ℕ}
   → suc m ≤ suc n
     -------------
@@ -371,7 +368,7 @@ only one way a number can be less than or equal to zero.
 
 反演的另一个例子是证明只存在一种情况使得一个数字能够小于或等于零。
 
-```
+```agda
 inv-z≤n : ∀ {m : ℕ}
   → m ≤ zero
     --------
@@ -463,12 +460,12 @@ Give an example of a preorder that is not a partial order.
 给出一个不是偏序的预序的例子。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -479,12 +476,12 @@ Give an example of a partial order that is not a total order.
 给出一个不是全序的偏序的例子。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -505,7 +502,7 @@ as that will make it easier to invoke reflexivity:
 我们第一个来证明的性质是自反性：对于任意自然数 `n`，关系 `n ≤ n` 成立。我们使用标准库
 的惯例来隐式申明参数，在使用自反性的证明时这样可以更加方便。
 
-```
+```agda
 ≤-refl : ∀ {n : ℕ}
     -----
   → n ≤ n
@@ -548,7 +545,7 @@ hold, then `m ≤ p` holds.  Again, `m`, `n`, and `p` are implicit:
 我们第二个证明的性质是传递性：对于任意自然数 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ p`
 成立，那么 `m ≤ p` 成立。同样，`m`、`n` 和 `p` 是隐式参数：
 
-```
+```agda
 ≤-trans : ∀ {m n p : ℕ}
   → m ≤ n
   → n ≤ p
@@ -599,7 +596,7 @@ Alternatively, we could make the implicit parameters explicit:
 
 我们也可以将隐式参数显式地声明。
 
-```
+```agda
 ≤-trans′ : ∀ (m n p : ℕ)
   → m ≤ n
   → n ≤ p
@@ -652,7 +649,7 @@ antisymmetric: for all naturals `m` and `n`, if both `m ≤ n` and
 我们证明的第三个性质是反对称性：对于所有的自然数 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ m`
 同时成立，那么 `m ≡ n` 成立：
 
-```
+```agda
 ≤-antisym : ∀ {m n : ℕ}
   → m ≤ n
   → n ≤ m
@@ -706,12 +703,12 @@ argument is `s≤s`.  Why is it ok to omit them?
 上面的证明中省略了一个参数是 `z≤n`，另一个参数是 `s≤s` 的情况。为什么可以省略这种情况？
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -737,7 +734,7 @@ We specify what it means for inequality to be total:
 
 我们首先来说明怎么样不等式才是完全的：
 
-```
+```agda
 data Total (m n : ℕ) : Set where
 
   forward :
@@ -777,7 +774,7 @@ indexed datatype:
 
 这是我们第一次使用带*参数*的数据类型，这里 `m` 和 `n` 是参数。这等同于下面的索引数据类型：
 
-```
+```agda
 data Total′ : ℕ → ℕ → Set where
 
   forward′ : ∀ {m n : ℕ}
@@ -812,7 +809,7 @@ With that preliminary out of the way, we specify and prove totality:
 
 在上述准备工作完成后，我们定义并证明完全性。
 
-```
+```agda
 ≤-total : ∀ (m n : ℕ) → Total m n
 ≤-total zero    n                         =  forward z≤n
 ≤-total (suc m) zero                      =  flipped z≤n
@@ -881,7 +878,7 @@ example, the definition above is equivalent to the following:
 
 使用 `with` 语句等同于定义一个辅助函数。比如说，上面的定义和下面的等价：
 
-```
+```agda
 ≤-total′ : ∀ (m n : ℕ) → Total m n
 ≤-total′ zero    n        =  forward z≤n
 ≤-total′ (suc m) zero     =  flipped z≤n
@@ -914,7 +911,7 @@ variant that returns the flipped case:
 如果两个参数相同，那么两个情况同时成立，我们可以返回任一证明。上面的代码中我们返回 forward 条件，
 但是我们也可以返回 flipped 条件，如下：
 
-```
+```agda
 ≤-total″ : ∀ (m n : ℕ) → Total m n
 ≤-total″ m       zero                      =  flipped z≤n
 ≤-total″ zero    (suc n)                   =  forward z≤n
@@ -957,7 +954,7 @@ addition is monotonic on the right:
 这个证明可以用我们学会的方法，很直接的来完成。我们最好把它分成三个部分，首先我们证明加法对于
 小于等于在右手边是单调的：
 
-```
+```agda
 +-monoʳ-≤ : ∀ (n p q : ℕ)
   → p ≤ q
     -------------
@@ -996,7 +993,7 @@ result and the commutativity of addition:
 
 接下来，我们证明加法对于小于等于在左手边是单调的。我们可以用之前的结论和加法的交换律来证明：
 
-```
+```agda
 +-monoˡ-≤ : ∀ (m n p : ℕ)
   → m ≤ n
     -------------
@@ -1018,7 +1015,7 @@ Third, we combine the two previous results:
 
 最后，我们把前两步的结论结合起来：
 
-```
+```agda
 +-mono-≤ : ∀ (m n p q : ℕ)
   → m ≤ n
   → p ≤ q
@@ -1050,12 +1047,12 @@ Show that multiplication is monotonic with regard to inequality.
 证明乘法对于小于等于是单调的。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1072,7 +1069,7 @@ We can define strict inequality similarly to inequality:
 
 我们可以用类似于定义不等关系的方法来定义严格不等关系。
 
-```
+```agda
 infix 4 _<_
 
 data _<_ : ℕ → ℕ → Set where
@@ -1144,12 +1141,12 @@ exercise exploits the relation between < and ≤.)
 证明严格不等是传递的。请直接证明。（后续的练习中我们将使用 < 和 ≤ 的关系。）
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1185,12 +1182,12 @@ similar to that used for totality.
 （我们会在介绍完[否定](/Negation/)之后证明三者是互斥的。）
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1208,12 +1205,12 @@ As with inequality, some additional definitions may be required.
 证明加法对于严格不等关系是单调的。正如不等关系中那样，你可以需要额外的定义。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1231,12 +1228,12 @@ Show that `suc m ≤ n` implies `m < n`, and conversely.
 证明 `suc m ≤ n` 蕴涵了 `m < n`，及其逆命题。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1256,12 +1253,12 @@ the fact that inequality is transitive.
 以及不等关系的传递性。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1281,7 +1278,7 @@ _unary relations_, sometimes called _predicates_:
 作为一个额外的例子，我们来定义奇数和偶数。不等关系和严格不等关系是**二元关系**，而奇偶性
 是**一元关系**，有时也被叫做**谓词（Predicate）**：
 
-```
+```agda
 data even : ℕ → Set
 data odd  : ℕ → Set
 
@@ -1362,7 +1359,7 @@ We show that the sum of two even numbers is even:
 
 我们证明两个偶数之和是偶数：
 
-```
+```agda
 e+e≡e : ∀ {m n : ℕ}
   → even m
   → even n
@@ -1438,12 +1435,12 @@ Show that the sum of two odd numbers is even.
 证明两个奇数之和为偶数。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1538,12 +1535,12 @@ if `One b` then `1` is less or equal to the result of `from b`.)
 `One b` 成立，则 `1` 小于或等于 `from b` 的结果。）
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1560,7 +1557,7 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 标准库中有类似于本章介绍的定义：
 
-```
+```agda
 import Data.Nat using (_≤_; z≤n; s≤s)
 import Data.Nat.Properties using (≤-refl; ≤-trans; ≤-antisym; ≤-total;
                                   +-monoʳ-≤; +-monoˡ-≤; +-mono-≤)

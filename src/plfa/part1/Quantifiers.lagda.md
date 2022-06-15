@@ -1,14 +1,11 @@
 ---
 title     : "Quantifiers: 全称量词与存在量词"
-layout    : page
-prev      : /Negation/
 permalink : /Quantifiers/
-next      : /Decidable/
 translators: ["Fangyi Zhou"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Quantifiers where
 ```
 
@@ -24,7 +21,7 @@ This chapter introduces universal and existential quantification.
 
 ## 导入
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
@@ -106,7 +103,7 @@ is a term of type `A` then we may conclude that `B M` holds:
 再换句话说，如果我们知道 `∀ (x : A) → B x` 成立，又知道 `M` 是一个类型为 `A` 的项，
 那么我们可以推导出 `B M` 成立：
 
-```
+```agda
 ∀-elim : ∀ {A : Set} {B : A → Set}
   → (L : ∀ (x : A) → B x)
   → (M : A)
@@ -168,7 +165,7 @@ Show that universals distribute over conjunction:
 
 证明全称量词对于合取满足分配律：
 
-```
+```agda
 postulate
   ∀-distrib-× : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x × C x) ≃ (∀ (x : A) → B x) × (∀ (x : A) → C x)
@@ -194,7 +191,7 @@ Show that a disjunction of universals implies a universal of disjunctions:
 
 证明全称命题的析取蕴涵了析取的全称命题：
 
-```
+```agda
 postulate
   ⊎∀-implies-∀⊎ : ∀ {A : Set} {B C : A → Set} →
     (∀ (x : A) → B x) ⊎ (∀ (x : A) → C x) → ∀ (x : A) → B x ⊎ C x
@@ -218,7 +215,7 @@ Consider the following type.
 
 参考下面的类型：
 
-```
+```agda
 data Tri : Set where
   aa : Tri
   bb : Tri
@@ -265,7 +262,7 @@ inductive type:
 
 我们定义一个合适的归纳数据类型来形式化存在量化：
 
-```
+```agda
 data Σ (A : Set) (B : A → Set) : Set where
   ⟨_,_⟩ : (x : A) → B x → Σ A B
 ```
@@ -276,7 +273,7 @@ We define a convenient syntax for existentials as follows:
 
 我们为存在量词定义一个方便的语法：
 
-```
+```agda
 Σ-syntax = Σ
 infix 2 Σ-syntax
 syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
@@ -308,7 +305,7 @@ Equivalently, we could also declare existentials as a record type:
 
 我们也可以用记录类型来等价地定义存在量化。
 
-```
+```agda
 record Σ′ (A : Set) (B : A → Set) : Set where
   field
     proj₁′ : A
@@ -390,7 +387,7 @@ notation for the case where the domain of the bound variable is left implicit:
 存在量词的普通记法是 `∃` （与全程量词的 `∀` 记法相类似）。我们使用 Agda 标准库中的惯例，
 使用一种隐式申明约束变量定义域的记法。
 
-```
+```agda
 ∃ : ∀ {A : Set} (B : A → Set) → Set
 ∃ {A} B = Σ A B
 
@@ -415,7 +412,7 @@ may conclude that `C` holds:
 给定 `∀ x → B x → C` 成立的证明，其中 `C` 不包括自由变量 `x`，给定 `∃[ x ] B x` 成立的
 证明，我们可以推导出 `C` 成立。
 
-```
+```agda
 ∃-elim : ∀ {A : Set} {B : A → Set} {C : Set}
   → (∀ x → B x → C)
   → ∃[ x ] B x
@@ -444,7 +441,7 @@ Indeed, the converse also holds, and the two together form an isomorphism:
 
 的确，逆命题也成立，两者合起来构成一个同构：
 
-```
+```agda
 ∀∃-currying : ∀ {A : Set} {B : A → Set} {C : Set}
   → (∀ x → B x → C) ≃ (∃[ x ] B x → C)
 ∀∃-currying =
@@ -477,7 +474,7 @@ Show that existentials distribute over disjunction:
 
 证明存在量词对于析取满足分配律：
 
-```
+```agda
 postulate
   ∃-distrib-⊎ : ∀ {A : Set} {B C : A → Set} →
     ∃[ x ] (B x ⊎ C x) ≃ (∃[ x ] B x) ⊎ (∃[ x ] C x)
@@ -495,7 +492,7 @@ Show that an existential of conjunctions implies a conjunction of existentials:
 
 证明合取的存在命题蕴涵了存在命题的合取：
 
-```
+```agda
 postulate
   ∃×-implies-×∃ : ∀ {A : Set} {B C : A → Set} →
     ∃[ x ] (B x × C x) → (∃[ x ] B x) × (∃[ x ] C x)
@@ -535,7 +532,7 @@ Chapter [Relations](/Relations/):
 回忆我们在 [Relations](/Relations/)
 章节中定义的 `even` 和 `odd`：
 
-```
+```agda
 data even : ℕ → Set
 data odd  : ℕ → Set
 
@@ -596,7 +593,7 @@ Here is the proof in the forward direction:
 
 这是向前方向的证明：
 
-```
+```agda
 even-∃ : ∀ {n : ℕ} → even n → ∃[ m ] (    m * 2 ≡ n)
 odd-∃  : ∀ {n : ℕ} →  odd n → ∃[ m ] (1 + m * 2 ≡ n)
 
@@ -658,7 +655,7 @@ Here is the proof in the reverse direction:
 
 接下来是反方向的证明：
 
-```
+```agda
 ∃-even : ∀ {n : ℕ} → ∃[ m ] (    m * 2 ≡ n) → even n
 ∃-odd  : ∀ {n : ℕ} → ∃[ m ] (1 + m * 2 ≡ n) →  odd n
 
@@ -723,12 +720,12 @@ restated in this way.
 用这种方法来重写 `∃-even` 和 `∃-odd`。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -746,12 +743,12 @@ Show that `y ≤ z` holds if and only if there exists a `x` such that
 证明当且仅当存在一个 `x` 使得 `x + y ≡ z` 成立时 `y ≤ z` 成立。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -772,7 +769,7 @@ of a disjunction is isomorphic to a conjunction of negations:
 存在量化的否定与否定的全称量化是同构的。考虑到存在量化是析构的推广，全称量化是合构的推广，
 这样的结果与析构的否定与否定的合构是同构的结果相似。
 
-```
+```agda
 ¬∃≃∀¬ : ∀ {A : Set} {B : A → Set}
   → (¬ ∃[ x ] B x) ≃ ∀ x → ¬ B x
 ¬∃≃∀¬ =
@@ -828,7 +825,7 @@ Show that existential of a negation implies negation of a universal:
 
 证明否定的存在量化蕴涵了全称量化的否定：
 
-```
+```agda
 postulate
   ∃¬-implies-¬∀ : ∀ {A : Set} {B : A → Set}
     → ∃[ x ] (¬ B x)
@@ -908,12 +905,12 @@ which is a corollary of `≡Can`.
     proj₁≡→Can≡ : {cb cb′ : ∃[ b ] Can b} → proj₁ cb ≡ proj₁ cb′ → cb ≡ cb′
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -929,7 +926,7 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 标准库中可以找到与本章中相似的定义：
 
-```
+```agda
 import Data.Product using (Σ; _,_; ∃; Σ-syntax; ∃-syntax)
 ```
 

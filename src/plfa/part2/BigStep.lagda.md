@@ -1,14 +1,11 @@
 ---
 title     : "BigStep: 无类型 λ-演算的大步语义"
-layout    : page
-prev      : /Confluence/
 permalink : /BigStep/
-next      : /Denotational/
 translators : ["starxingchenc"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part2.BigStep where
 ```
 <!--
@@ -60,7 +57,7 @@ single sub-computation has been completed.
 
 ## 导入
 
-```
+```agda
 open import Relation.Binary.PropositionalEquality
   using (_≡_; refl; trans; sym; cong-app)
 open import Data.Product using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
@@ -102,7 +99,7 @@ We define environments and closures as follows.
 
 我们如下定义环境和闭包。
 
-```
+```agda
 ClosEnv : Context → Set
 
 data Clos : Set where
@@ -118,7 +115,7 @@ environment.
 
 通常，我们有空环境，也可以扩展一个环境。
 
-```
+```agda
 ∅' : ClosEnv ∅
 ∅' ()
 
@@ -143,7 +140,7 @@ is a lambda abstraction.
 大步语义被表现为一个三元关系，写作 `γ ⊢ M ⇓ V`，
 其中 `γ` 是环境，`M`是输入项，`V` 是结果值。 **值（Value）** 是一个项是 λ-抽象的闭包。
 
-```
+```agda
 data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
 
   ⇓-var : ∀{Γ}{γ : ClosEnv Γ}{x : Γ ∋ ★}{Δ}{δ : ClosEnv Δ}{M : Δ ⊢ ★}{V}
@@ -200,7 +197,7 @@ terminates under big-step call-by-name evaluation.
 证明 `(ƛ ƛ # 1) · ((ƛ # 0 · # 0) · (ƛ # 0 · # 0))` 能在大步传名调用求值下终止。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
@@ -225,7 +222,7 @@ straightforward induction on the two big-step derivations.
 如果大步关系将一个项 `M` 求值为 `V` 和 `V′`，则 `V` 和 `V′` 必然相同。
 也就是说，传名调用关系是一个部分函数。该证明由两个大步语义的推论归纳得出。
 
-```
+```agda
 ⇓-determ : ∀{Γ}{γ : ClosEnv Γ}{M : Γ ⊢ ★}{V V' : Clos}
   → γ ⊢ M ⇓ V → γ ⊢ M ⇓ V'
   → V ≡ V'
@@ -295,13 +292,13 @@ following two mutually-recursive predicates `V ≈ M` and `γ ≈ₑ σ`.
 
 我们通过定义以下两个相互递归的谓词 `V ≈ M` 和 `γ ≈ₑ σ` 来得到两个精确等价的概念
 
-```
+```agda
 _≈_ : Clos → (∅ ⊢ ★) → Set
 _≈ₑ_ : ∀{Γ} → ClosEnv Γ → Subst Γ ∅ → Set
 
 (clos {Γ} M γ) ≈ N = Σ[ σ ∈ Subst Γ ∅ ] γ ≈ₑ σ × (N ≡ subst σ M)
 
-γ ≈ₑ σ = ∀{x} → (γ x) ≈ (σ x)
+γ ≈ₑ σ = ∀ x → (γ x) ≈ (σ x)
 ```
 
 <!--
@@ -332,9 +329,9 @@ The empty environment is equivalent to the identity substitution
 
 空环境与我们从 [Substitution](/Substitution/) 章中导入的恒等替换等价。
 
-```
+```agda
 ≈ₑ-id : ∅' ≈ₑ ids
-≈ₑ-id {()}
+≈ₑ-id ()
 ```
 
 <!--
@@ -344,7 +341,7 @@ the same term.
 
 显然，对项应用恒等替换会得到相同的项。
 
-```
+```agda
 sub-id : ∀{Γ} {A} {M : Γ ⊢ A} → subst ids M ≡ M
 sub-id = plfa.part2.Substitution.sub-id
 ```
@@ -355,7 +352,7 @@ We define an auxiliary function for extending a substitution.
 
 我们定义一个辅助函数来扩展替换。
 
-```
+```agda
 ext-subst : ∀{Γ Δ} → Subst Γ Δ → Δ ⊢ ★ → Subst (Γ , ★) Δ
 ext-subst{Γ}{Δ} σ N {A} = subst (subst-zero N) ∘ exts σ
 ```
@@ -382,7 +379,7 @@ Chapter [Substitution](/Substitution/).
 该引理声称将`exts σ` 和 `subst-zero` 的组合应用至 `S x` 等同于 `σ x`。
 这是 [Substitution](/Substitution/) 章节中一个定理的推论。
 
-```
+```agda
 subst-zero-exts : ∀{Γ Δ}{σ : Subst Γ Δ}{B}{M : Δ ⊢ B}{x : Γ ∋ ★}
   → (subst (subst-zero M) ∘ exts σ) (S x) ≡ σ x
 subst-zero-exts {Γ}{Δ}{σ}{B}{M}{x} =
@@ -395,14 +392,14 @@ So the proof of `≈ₑ-ext` is as follows.
 
 所以 `≈ₑ-ext` 的证明如下。
 
-```
+```agda
 ≈ₑ-ext : ∀ {Γ} {γ : ClosEnv Γ} {σ : Subst Γ ∅} {V} {N : ∅ ⊢ ★}
   → γ ≈ₑ σ  →  V ≈ N
     --------------------------
   → (γ ,' V) ≈ₑ (ext-subst σ N)
-≈ₑ-ext {Γ} {γ} {σ} {V} {N} γ≈ₑσ V≈N {Z} = V≈N
-≈ₑ-ext {Γ} {γ} {σ} {V} {N} γ≈ₑσ V≈N {S x}
-  rewrite subst-zero-exts {σ = σ}{M = N}{x} = γ≈ₑσ
+≈ₑ-ext {Γ} {γ} {σ} {V} {N} γ≈ₑσ V≈N Z = V≈N
+≈ₑ-ext {Γ} {γ} {σ} {V} {N} γ≈ₑσ V≈N (S x)
+  rewrite subst-zero-exts {σ = σ}{M = N}{x} = γ≈ₑσ x
 ```
 
 <!--
@@ -434,7 +431,7 @@ composing the two substitutions and then applying them.
 为了证明主要的引理，我们需要另一个关于替换的技术性的引理。
 接连应用两个替换与先将两个替换连接起来再应用等价。
 
-```
+```agda
 sub-sub : ∀{Γ Δ Σ}{A}{M : Γ ⊢ A} {σ₁ : Subst Γ Δ}{σ₂ : Subst Δ Σ}
   → subst σ₂ (subst σ₁ M) ≡ subst (subst σ₂ ∘ σ₁) M
 sub-sub {M = M} = plfa.part2.Substitution.sub-sub {M = M}
@@ -450,13 +447,13 @@ below.
 我们到达了主要引理：如果 `M` 在环境 `γ` 中大步求值为闭包 `V`，并且 `γ ≈ₑ σ`，
 那么 `subst σ M` 将规约为某个等价于 `V` 的项 `N`。我们如下叙述该证明。
 
-```
+```agda
 ⇓→—↠×≈ : ∀{Γ}{γ : ClosEnv Γ}{σ : Subst Γ ∅}{M : Γ ⊢ ★}{V : Clos}
        → γ ⊢ M ⇓ V  →  γ ≈ₑ σ
          ---------------------------------------
        → Σ[ N ∈ ∅ ⊢ ★ ] (subst σ M —↠ N) × V ≈ N
 ⇓→—↠×≈ {γ = γ} (⇓-var{x = x} γx≡Lδ δ⊢L⇓V) γ≈ₑσ
-    with γ x | γ≈ₑσ {x} | γx≡Lδ
+    with γ x | γ≈ₑσ x | γx≡Lδ
 ... | clos L δ | ⟨ τ , ⟨ δ≈ₑτ , σx≡τL ⟩ ⟩ | refl
       with ⇓→—↠×≈{σ = τ} δ⊢L⇓V δ≈ₑτ
 ...   | ⟨ N , ⟨ τL—↠N , V≈N ⟩ ⟩ rewrite σx≡τL =
@@ -467,7 +464,7 @@ below.
     with ⇓→—↠×≈{σ = σ} L⇓ƛNδ γ≈ₑσ
 ... | ⟨ _ , ⟨ σL—↠ƛτN , ⟨ τ , ⟨ δ≈ₑτ , ≡ƛτN ⟩ ⟩ ⟩ ⟩ rewrite ≡ƛτN
       with ⇓→—↠×≈ {σ = ext-subst τ (subst σ M)} N⇓V
-             (λ {x} → ≈ₑ-ext{σ = τ} δ≈ₑτ ⟨ σ , ⟨ γ≈ₑσ , refl ⟩ ⟩ {x})
+             (λ x → ≈ₑ-ext{σ = τ} δ≈ₑτ ⟨ σ , ⟨ γ≈ₑσ , refl ⟩ ⟩ x)
            | β{∅}{subst (exts τ) N}{subst σ M}
 ...   | ⟨ N' , ⟨ —↠N' , V≈N' ⟩ ⟩ | ƛτN·σM—→
         rewrite sub-sub{M = N}{σ₁ = exts τ}{σ₂ = subst-zero (subst σ M)} =
@@ -594,7 +591,7 @@ of the equivalence between the big-step semantics and beta reduction.
 
 证明了主要引理后，我们便建立起大步语义与 β-规约等价关系的必要性。
 
-```
+```agda
 cbn→reduce :  ∀{M : ∅ ⊢ ★}{Δ}{δ : ClosEnv Δ}{N′ : Δ , ★ ⊢ ★}
   → ∅' ⊢ M ⇓ clos (ƛ N′) δ
     -----------------------------
@@ -624,12 +621,12 @@ with `M`. Prove that `M ↓ N` implies `M —↠ N`.
 证明 `M ↓ N` 蕴含 `M —↠ N`。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 

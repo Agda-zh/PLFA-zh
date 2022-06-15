@@ -1,14 +1,11 @@
 ---
 title     : "Induction: 归纳证明"
-layout    : page
-prev      : /Naturals/
 permalink : /Induction/
-next      : /Relations/
 translators : ["Oling Cat"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Induction where
 ```
 
@@ -41,19 +38,20 @@ _induction_.
 
 <!--
 We require equality as in the previous chapter, plus the naturals
-and some operations upon them.  We also import a couple of new operations,
+and some operations upon them.  We also require a couple of new operations,
 `cong`, `sym`, and `_≡⟨_⟩_`, which are explained below:
 -->
 
 我们需要上一章中的相等性，加上自然数及其运算。我们还导入了一些新的运算：
 `cong`、`sym` 和 `_≡⟨_⟩_`，之后会解释它们：
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong; sym)
 open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; step-≡; _∎)
 open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_)
 ```
+(Importing `step-≡` defines `_≡⟨_⟩_`.)
 
 
 <!--
@@ -82,11 +80,10 @@ on names for some of the most common properties.
 * _Commutativity_.   Operator `+` is commutative if order of
   arguments does not matter: `m + n ≡ n + m`, for all `m` and `n`.
 
-* _Distributivity_.   Operator `*` distributes over operator `+` from the
-  left if `(m + n) * p ≡ (m * p) + (n * p)`, for all `m`, `n`, and `p`,
-  and from the right if `m * (p + q) ≡ (m * p) + (m * q)`, for all `m`,
-  `p`, and `q`.
--->
+* _Distributivity_.  Operator `*` distributes over operator `+` from
+  the left if `m * (p + q) ≡ (m * p) + (m * q)`, for all `m`, `p`, and
+  `q`, and from the right if `(m + n) * p ≡ (m * p) + (n * p)`, for all
+  `m`, `n`, and `p`.
 
 * **幺元（Identity）**：对于所有的 `n`，若 `0 + n ≡ n`，则 `+` 有左幺元 `0`；
   若 `n + 0 ≡ n`，则 `+` 有右幺元 `0`。同时为左幺元和右幺元的值称简称幺元。
@@ -99,8 +96,8 @@ on names for some of the most common properties.
   即对于所有的 `m` 和 `n`，有 `m + n ≡ n + m`。
 
 * **分配律（Distributivity）**：对于所有的 `m`、`n` 和 `p`，若
-  `(m + n) * p ≡ (m * p) + (n * p)`，则运算符 `*` 对运算符 `+` 满足左分配律；
-  对于所有的 `m`、`n` 和 `p`，若 `m * (p + q) ≡ (m * p) + (m * q)`，则满足右分配律。
+  `m * (p + q) ≡ (m * p) + (m * q)`，则运算符 `*` 对运算符 `+` 满足左分配律；
+  对于所有的 `m`、`n` 和 `p`，若 `(m + n) * p ≡ (m * p) + (n * p)`，则满足右分配律。
 
 <!--
 Addition has identity `0` and multiplication has identity `1`;
@@ -206,7 +203,7 @@ variables:
 
 我们可以为这三个变量选取特定的数值来验证此命题：
 
-```
+```agda
 _ : (3 + 4) + 5 ≡ 3 + (4 + 5)
 _ =
   begin
@@ -465,7 +462,7 @@ Here is the proposition's statement and proof:
 
 以下为此性质的陈述和证明：
 
-```
+```agda
 +-assoc : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
 +-assoc zero n p =
   begin
@@ -638,7 +635,7 @@ proof of associativity.
 下面是归纳如何对应于递归的具体例子，它是在结合律的证明中，将 `m` 实例化为 `2`
 时的计算过程。
 
-```
+```agda
 +-assoc-2 : ∀ (n p : ℕ) → (2 + n) + p ≡ 2 + (n + p)
 +-assoc-2 n p =
   begin
@@ -771,9 +768,9 @@ Our first lemma states that zero is also a right-identity:
 Here is the lemma's statement and proof:
 -->
 
-以下是此引理的证明：
+下面是该引理的陈述和证明：
 
-```
+```agda
 +-identityʳ : ∀ (m : ℕ) → m + zero ≡ m
 +-identityʳ zero =
   begin
@@ -899,7 +896,7 @@ Here is the lemma's statement and proof:
 
 下面是该引理的陈述和证明：
 
-```
+```agda
 +-suc : ∀ (m n : ℕ) → m + suc n ≡ suc (m + n)
 +-suc zero n =
   begin
@@ -1012,7 +1009,7 @@ Finally, here is our proposition's statement and proof:
 
 最后，以下是我们的命题的陈述和证明：
 
-```
+```agda
 +-comm : ∀ (m n : ℕ) → m + n ≡ n + m
 +-comm m zero =
   begin
@@ -1142,16 +1139,14 @@ Here is an example:
 
 我们可以随意应用结合律来重排括号。例如：
 
-```
+```agda
 +-rearrange : ∀ (m n p q : ℕ) → (m + n) + (p + q) ≡ m + (n + p) + q
 +-rearrange m n p q =
   begin
     (m + n) + (p + q)
-  ≡⟨ +-assoc m n (p + q) ⟩
-    m + (n + (p + q))
-  ≡⟨ cong (m +_) (sym (+-assoc n p q)) ⟩
-    m + ((n + p) + q)
-  ≡⟨ sym (+-assoc m (n + p) q) ⟩
+  ≡⟨ sym (+-assoc (m + n) p q) ⟩
+    ((m + n) + p) + q
+  ≡⟨ cong (_+ q) (+-assoc m n p) ⟩
     (m + (n + p)) + q
   ∎
 ```
@@ -1172,12 +1167,12 @@ stands for `(m + (n + p)) + q`.
 
 <!--
 Second, we use `sym` to interchange the sides of an equation.
-Proposition `+-assoc n p q` shifts parentheses from right to left:
+Proposition `+-assoc (m + n) p q` shifts parentheses from left to right:
 -->
 
-第二，我们用 `sym` 来交换等式的两边。命题 `+-assoc n p q` 会将括号从右边移到左边：
+第二，我们用 `sym` 来交换等式的两边。命题 `+-assoc (m + n) p q` 会将括号从右边移到左边：
 
-    (n + p) + q ≡ n + (p + q)
+    ((m + n) + p) + q ≡ (m + n) + (p + q)
 
 <!--
 To shift them the other way, we use `sym (+-assoc m n p)`:
@@ -1185,7 +1180,7 @@ To shift them the other way, we use `sym (+-assoc m n p)`:
 
 要往另一个方向移动括号，我们要用 `sym (+-assoc m n p)`：
 
-    n + (p + q) ≡ (n + p) + q
+    (m + n) + (p + q) ≡ ((m + n) + p) + q
 
 <!--
 In general, if `e` provides evidence for `x ≡ y` then `sym e` provides
@@ -1196,23 +1191,27 @@ evidence for `y ≡ x`.
 
 <!--
 Third, Agda supports a variant of the _section_ notation introduced by
-Richard Bird.  We write `(x +_)` for the function that applied to `y`
-returns `x + y`.  Thus, applying the congruence `cong (m +_)` takes
-the above equation into:
+Richard Bird.  We write `(_+ y)` for the function that applied to `x`
+returns `x + y`.  Thus, applying the congruence `cong (_+ q)` to
+`assoc m n p` takes the equation:
+into the equation:
+
+    ((m + n) + p) + q  ≡  (m + (n + p)) + q
+
 -->
 
 第三，Agda 支持 Richard Bird 引入的**片段（Section）**记法。我们将应用到
-`y` 并返回 `x + y` 的函数写作 `(x +_)`。因此，应用合同性 `cong (m +_)`
-会将上面的等式转换成：
+`x` 并返回 `x + y` 的函数写作 `(_+ y)`。因此，对于 `assoc m n p` 应用合同性
+`cong (_+ q)` 会将上面的等式转换成：
 
-    m + (n + (p + q)) ≡ m + ((n + p) + q)
+    (m + n) + p  ≡  m + (n + p)
 
 <!--
-Similarly, we write `(_+ x)` for the function that applied to `y`
-returns `y + x`; the same works for any infix operator.
+Similarly, we write `(x +_)` for the function that applied to `y`
+returns `x + y`; the same works for any infix operator.
 -->
 
-类似地，我们将应用到 `y` 并返回 `y + x` 的函数写作 `(_+ x)`。
+类似地，我们将应用到 `x` 并返回 `x + y` 的函数写作 `(x +_ )`。
 这同样适用于任何中缀运算符。
 
 
@@ -1349,12 +1348,12 @@ first four days using a finite story of creation, as
 请参考[前文](/Naturals/#finite-creation)写出前四天已知的加法结合律的创世故事。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1373,7 +1372,7 @@ equations:
 证明可不止一种方法。下面是第二种在 Agda 中证明加法结合律的方法，使用 `rewrite`（改写）
 而非等式链：
 
-```
+```agda
 +-assoc′ : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
 +-assoc′ zero    n p                          =  refl
 +-assoc′ (suc m) n p  rewrite +-assoc′ m n p  =  refl
@@ -1417,16 +1416,20 @@ Simplifying both sides with the inductive case of addition yields the equation:
 
     suc ((m + n) + p) ≡ suc (m + (n + p))
 
-<!--
-After rewriting with the inductive hypothesis these two terms are equal, and the
-proof is again given by `refl`.  Rewriting by a given equation is indicated by
-the keyword `rewrite` followed by a proof of that equation.  Rewriting avoids
+This is our goal to be proved.  Rewriting by a given equation is
+indicated by the keyword `rewrite` followed by a proof of that
+equation.  Rewriting replaces each occurrence of the left-hand side of
+the equation in the goal by the right-hand side.  In this case, after
+rewriting by the inductive hypothesis our goal becomes
+
+    suc (m + (n + p)) ≡ suc (m + (n + p))
+
+<--
+and the proof is again given by `refl`.  Rewriting avoids
 not only chains of equations but also the need to invoke `cong`.
 -->
 
-在根据归纳假设改写后，这两项相等，其证明同样由 `refl` 给出。根据给定的等式进行改写
-可用关键字 `rewrite` 后跟一个该等式的证明来表示。改写不仅可以省去等式链还可以避免
-调用 `cong`.
+其证明同样由 `refl` 给出。改写不仅可以省去等式链还可以避免调用 `cong`.
 
 
 <!--
@@ -1442,7 +1445,7 @@ chains of equations:
 
 下面是加法交换律的第二个证明，使用 `rewrite` 而非等式链：
 
-```
+```agda
 +-identity′ : ∀ (n : ℕ) → n + zero ≡ n
 +-identity′ zero = refl
 +-identity′ (suc n) rewrite +-identity′ n = refl
@@ -1647,12 +1650,12 @@ is associative and commutative.
 成立。无需归纳证明，只需应用前面满足结合律和交换律的结果即可。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1677,12 +1680,12 @@ for all naturals `m`, `n`, and `p`.
 成立。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1707,12 +1710,12 @@ for all naturals `m`, `n`, and `p`.
 成立。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1738,12 +1741,12 @@ you will need to formulate and prove suitable lemmas.
 成立。和加法交换律一样，你需要陈述并证明配套的引理。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1769,12 +1772,12 @@ for all naturals `n`. Did your proof require induction?
 成立。你的证明需要归纳法吗？
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1800,12 +1803,12 @@ for all naturals `m`, `n`, and `p`.
 成立。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1881,12 +1884,12 @@ For each law: if it holds, prove; if not, give a counterexample.
 对于每一条定律：若它成立，请证明；若不成立，请给出一个反例。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1903,7 +1906,7 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 本章中类似的定义可在标准库中找到：
 
-```
+```agda
 import Data.Nat.Properties using (+-assoc; +-identityʳ; +-suc; +-comm)
 ```
 

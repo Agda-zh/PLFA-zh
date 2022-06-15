@@ -1,12 +1,9 @@
 ---
 title     : "More: 简单类型 λ-演算的更多构造"
-layout    : page
-prev      : /DeBruijn/
 permalink : /More/
-next      : /Bisimulation/
 ---
 
-```
+```agda
 module plfa.part2.More where
 ```
 
@@ -1099,7 +1096,7 @@ and leave formalisation of the remaining constructs as an exercise.
 
 ### 导入
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open import Data.Empty using (⊥; ⊥-elim)
@@ -1115,7 +1112,7 @@ open import Relation.Nullary.Decidable using (True; toWitness)
 
 ### 语法
 
-```
+```agda
 infix  4 _⊢_
 infix  4 _∋_
 infixl 5 _,_
@@ -1139,7 +1136,7 @@ infix  9 #_
 
 ### 类型
 
-```
+```agda
 data Type : Set where
   `ℕ    : Type
   _⇒_   : Type → Type → Type
@@ -1153,7 +1150,7 @@ data Type : Set where
 
 ### 上下文
 
-```
+```agda
 data Context : Set where
   ∅   : Context
   _,_ : Context → Type → Context
@@ -1165,7 +1162,7 @@ data Context : Set where
 
 ### 变量及查询判断
 
-```
+```agda
 data _∋_ : Context → Type → Set where
 
   Z : ∀ {Γ A}
@@ -1286,7 +1283,7 @@ data _⊢_ : Context → Type → Set where
 ```
 -->
 
-```
+```agda
 data _⊢_ : Context → Type → Set where
 
   -- 变量
@@ -1389,7 +1386,7 @@ data _⊢_ : Context → Type → Set where
 
 ### 缩减 de Bruijn 因子
 
-```
+```agda
 length : Context → ℕ
 length ∅        =  zero
 length (Γ , _)  =  suc (length Γ)
@@ -1416,7 +1413,7 @@ count {Γ , _} {(suc n)} (s≤s p)    =  S (count p)
 
 ## 重命名
 
-```
+```agda
 ext : ∀ {Γ Δ}
   → (∀ {A}   →     Γ ∋ A →     Δ ∋ A)
     ---------------------------------
@@ -1450,7 +1447,7 @@ rename ρ (case× L M)    =  case× (rename ρ L) (rename (ext (ext ρ)) M)
 
 ## 同时代换
 
-```
+```agda
 exts : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ⊢ A) → (∀ {A B} → Γ , A ∋ B → Δ , A ⊢ B)
 exts σ Z      =  ` Z
 exts σ (S x)  =  rename S_ (σ x)
@@ -1478,7 +1475,7 @@ subst σ (case× L M)    =  case× (subst σ L) (subst (exts (exts σ)) M)
 
 ## 单个和双重代换
 
-```
+```agda
 substZero : ∀ {Γ}{A B} → Γ ⊢ A → Γ , A ∋ B → Γ ⊢ B
 substZero V Z      =  V
 substZero V (S x)  =  ` x
@@ -1511,7 +1508,7 @@ _[_][_] {Γ} {A} {B} N V W =  subst {Γ , A , B} {Γ} σ N
 ## 值
 
 <!--
-```
+```agda
 {-
 data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 
@@ -1549,7 +1546,7 @@ data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 ```
 -->
 
-```
+```agda
 data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 
   -- 函数
@@ -1599,7 +1596,7 @@ not fixed by the given arguments.
 ## 规约
 
 <!--
-```
+```agda
 {-
 infix 2 _—→_
 
@@ -1731,7 +1728,7 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
 ```
 -->
 
-```
+```agda
 infix 2 _—→_
 
 data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
@@ -1865,7 +1862,7 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
 
 ## 自反传递闭包
 
-```
+```agda
 infix  2 _—↠_
 infix  1 begin_
 infixr 2 _—→⟨_⟩_
@@ -1896,7 +1893,7 @@ begin M—↠N = M—↠N
 
 ## 值不再规约
 
-```
+```agda
 V¬—→ : ∀ {Γ A} {M N : Γ ⊢ A}
   → Value M
     ----------
@@ -1916,7 +1913,7 @@ V¬—→ V-⟨ _ , VN ⟩ (ξ-⟨,⟩₂ _ N—→N′)  =  V¬—→ VN N—�
 
 ## 进行性
 
-```
+```agda
 data Progress {A} (M : ∅ ⊢ A) : Set where
 
   step : ∀ {N : ∅ ⊢ A}
@@ -1981,7 +1978,7 @@ progress (case× L M) with progress L
 
 ## 求值
 
-```
+```agda
 record Gas : Set where
   constructor gas
   field
@@ -2025,7 +2022,7 @@ eval (gas (suc m)) L with progress L
 
 ## 例子
 
-```
+```agda
 cube : ∅ ⊢ Nat ⇒ Nat
 cube = ƛ (# 0 `* # 0 `* # 0)
 
@@ -2152,7 +2149,7 @@ substitutions.
 
 证明双重代换等同于两个单独代换。
 
-```
+```agda
 postulate
   double-subst :
     ∀ {Γ A B C} {V : Γ ⊢ A} {W : Γ ⊢ B} {N : Γ , A , B ⊢ C} →
@@ -2181,7 +2178,7 @@ in order to make sure we have not broken anything in the process of extending ou
 我们重复 [DeBruijn](/DeBruijn) 章节中的[测试例子](/DeBruijn/#examples)，
 来保证我们在扩展基本演算时没有破坏原演算的任何性质。
 
-```
+```agda
 two : ∀ {Γ} → Γ ⊢ `ℕ
 two = `suc `suc `zero
 

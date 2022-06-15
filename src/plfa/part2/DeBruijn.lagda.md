@@ -1,12 +1,9 @@
 ---
 title     : "DeBruijn: 内在类型的 de Bruijn 表示法"
-layout    : page
-prev      : /Properties/
 permalink : /DeBruijn/
-next      : /More/
 ---
 
-```
+```agda
 module plfa.part2.DeBruijn where
 ```
 
@@ -68,7 +65,7 @@ James Chapman、James McKinna 和许多其他人也进行了相关的研究。
 
 ## 导入
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open import Data.Empty using (⊥; ⊥-elim)
@@ -401,7 +398,7 @@ We list separately operators for judgments, types, and terms:
 
 我们首先定义中缀声明。我们分别列出判断、类型和项的运算符：
 
-```
+```agda
 infix  4 _⊢_
 infix  4 _∋_
 infixl 5 _,_
@@ -437,7 +434,7 @@ The formal definition is unchanged:
 
 与以前一样，我们只有两种类型：函数和自然数。它的形式化定义没有变化：
 
-```
+```agda
 data Type : Set where
   _⇒_ : Type → Type → Type
   `ℕ  : Type
@@ -455,7 +452,7 @@ Contexts are formalised as follows:
 上下文如同之前一样，但是我们舍去了名字。
 上下文如下形式化：
 
-```
+```agda
 data Context : Set where
   ∅   : Context
   _,_ : Context → Type → Context
@@ -474,7 +471,7 @@ For example
 我们用 `∅` 表示空上下文，用 `Γ , A` 表示以 `A` 扩充的上下文 `Γ`。
 例如：
 
-```
+```agda
 _ : Context
 _ = ∅ , `ℕ ⇒ `ℕ , `ℕ
 ```
@@ -516,7 +513,7 @@ with all variable names dropped:
 查询判断由一个以上下文和类型索引的数据类型来形式化。
 它和之前的查询判断看上去一样，但是变量名被舍去了：
 
-```
+```agda
 data _∋_ : Context → Type → Set where
 
   Z : ∀ {Γ A}
@@ -558,7 +555,7 @@ They correspond to the following intrinsically-typed variables:
 
 它们对应了下列内在类型的变量：
 
-```
+```agda
 _ : ∅ , `ℕ ⇒ `ℕ , `ℕ ∋ `ℕ
 _ = Z
 
@@ -603,7 +600,7 @@ with all terms and variable names dropped:
 这个判断用由上下文和类型索引的数据类型进行形式化。
 它和之前的查询判断看上去一样，但是变量名被舍去了：
 
-```
+```agda
 data _⊢_ : Context → Type → Set where
 
   `_ : ∀ {Γ A}
@@ -673,7 +670,7 @@ They correspond to the following intrinsically-typed terms:
 
 它们对应了下列内在类型的项：
 
-```
+```agda
 _ : ∅ , `ℕ ⇒ `ℕ , `ℕ ⊢ `ℕ
 _ = ` Z
 
@@ -711,7 +708,7 @@ which will be useful in making sure an index is within context bounds:
 
 我们定义一个辅助函数来计算上下文的长度，它会在之后确保一个因子在上下文约束中有帮助：
 
-```
+```agda
 length : Context → ℕ
 length ∅        =  zero
 length (Γ , _)  =  suc (length Γ)
@@ -723,7 +720,7 @@ We can use a natural number to select a type from a context:
 
 我们可以用一个自然数来从上下文中选择一个类型：
 
-```
+```agda
 lookup : {Γ : Context} → {n : ℕ} → (p : n < length Γ) → Type
 lookup {(_ , A)} {zero}    (s≤s z≤n)  =  A
 lookup {(Γ , _)} {(suc n)} (s≤s p)    =  lookup p
@@ -743,7 +740,7 @@ de Bruijn index, looking up its type in the context:
 
 结合上述，我们可以将一个自然数转换成其对应的 de Bruijn 因子，从上下文中查询它的类型：
 
-```
+```agda
 count : ∀ {Γ} → {n : ℕ} → (p : n < length Γ) → Γ ∋ lookup p
 count {_ , _} {zero}    (s≤s z≤n)  =  Z
 count {Γ , _} {(suc n)} (s≤s p)    =  S (count p)
@@ -755,7 +752,7 @@ We can then introduce a convenient abbreviation for variables:
 
 然后，我们可以引入一个变量的简略表示方法：
 
-```
+```agda
 #_ : ∀ {Γ}
   → (n : ℕ)
   → {n∈Γ : True (suc n ≤? length Γ)}
@@ -789,7 +786,7 @@ With this abbreviation, we can rewrite the Church numeral two more compactly:
 
 使用这种缩略方法，我们可以用更简洁的方法写出 Church 法表示的二：
 
-```
+```agda
 _ : ∅ ⊢ (`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ
 _ = ƛ ƛ (# 1 · (# 1 · # 0))
 ```
@@ -814,7 +811,7 @@ First, computing two plus two on naturals:
 
 首先计算自然数二加二：
 
-```
+```agda
 two : ∀ {Γ} → Γ ⊢ `ℕ
 two = `suc `suc `zero
 
@@ -838,7 +835,7 @@ Next, computing two plus two on Church numerals:
 
 接下来，计算 Church 法表示的二加二：
 
-```
+```agda
 Ch : Type → Type
 Ch A  =  (A ⇒ A) ⇒ A ⇒ A
 
@@ -880,7 +877,7 @@ de Bruijn representation.
 用内在类型和 de Bruijn 法写出一个将两个自然数相乘的项。
 
 <!--
-```
+```agda
 mul : ∀ {Γ} → Γ ⊢ `ℕ ⇒ `ℕ ⇒ `ℕ
 mul = μ ƛ ƛ (case (# 1) (`zero) (plus · # 1 · (# 3 · # 0 · # 1)))
 
@@ -924,7 +921,7 @@ old extension lemma, but with all names and terms dropped:
 从扩充后的第一个上下文至以相同方法扩充的第二个上下文的映射。
 它看上去和之前的扩充引理完全一样，只是舍去了名字和项：
 
-```
+```agda
 ext : ∀ {Γ Δ}
   → (∀ {A} →       Γ ∋ A →     Δ ∋ A)
     ---------------------------------
@@ -967,7 +964,7 @@ terms in the second:
 如果一个上下文中的变量映射至另一个上下文中的变量，那么第一个上下文
 中的项映射至第二个上下文中：
 
-```
+```agda
 rename : ∀ {Γ Δ}
   → (∀ {A} → Γ ∋ A → Δ ∋ A)
     -----------------------
@@ -1037,7 +1034,7 @@ and one bound variable:
 
 下面的例子将带有一个自由变量，一个约束变量的项进行重命名：
 
-```
+```agda
 M₀ : ∅ , `ℕ ⇒ `ℕ ⊢ `ℕ ⇒ `ℕ
 M₀ = ƛ (# 1 · (# 1 · # 0))
 
@@ -1119,7 +1116,7 @@ extended to the second context similarly extended:
 给定一个将一个上下文中的变量映射至另一个上下文中项的映射，扩充会生成一个
 从扩充后的第一个上下文至以相同方法扩充的第二个上下文的映射。
 
-```
+```agda
 exts : ∀ {Γ Δ}
   → (∀ {A} →       Γ ∋ A →     Δ ⊢ A)
     ---------------------------------
@@ -1173,7 +1170,7 @@ map to terms in the second:
 如果一个上下文中的变量映射至另一个上下文中的项，那么第一个上下文
 中的项映射至第二个上下文中：
 
-```
+```agda
 subst : ∀ {Γ Δ}
   → (∀ {A} → Γ ∋ A → Δ ⊢ A)
     -----------------------
@@ -1235,7 +1232,7 @@ substitution for one free variable:
 
 从广义的替换多个自由变量，我们可以定义只替换单个变量的特殊情况：
 
-```
+```agda
 _[_] : ∀ {Γ A B}
   → Γ , B ⊢ A
   → Γ ⊢ B
@@ -1281,7 +1278,7 @@ Here is the example formalised:
 
 下面是形式化后的例子：
 
-```
+```agda
 M₂ : ∅ , `ℕ ⇒ `ℕ ⊢ `ℕ ⇒ `ℕ
 M₂ = ƛ # 1 · (# 1 · # 0)
 
@@ -1321,7 +1318,7 @@ Here is the example formalised:
 自由的 `"x"` 的类型也是 `` `ℕ ⇒ `ℕ ``。
 下面是形式化后的例子：
 
-```
+```agda
 M₅ : ∅ , `ℕ ⇒ `ℕ , `ℕ ⊢ (`ℕ ⇒ `ℕ) ⇒ `ℕ
 M₅ = ƛ # 0 · # 1
 
@@ -1367,7 +1364,7 @@ Canonical Forms lemma:
 
 值的定义与之前差不多，除去附加的类型中包括了标准式引理中包含的信息：
 
-```
+```agda
 data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 
   V-ƛ : ∀ {Γ A B} {N : Γ , A ⊢ B}
@@ -1410,7 +1407,7 @@ combined with a destructor, labelled with `β`:
 如同之前，兼容性规则规约一个项的一部分，用 `ξ` 标出；
 简化构造子与其析构子的规则用 `β` 标出：
 
-```
+```agda
 infix 2 _—→_
 
 data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
@@ -1488,7 +1485,7 @@ We simply cut-and-paste the previous definition:
 自反传递闭包的定义与之前完全一样。
 我们直接复制粘贴之前的定义：
 
-```
+```agda
 infix  2 _—↠_
 infix  1 begin_
 infixr 2 _—→⟨_⟩_
@@ -1529,7 +1526,7 @@ the natural number two:
 我们重复之前的每一个例子。
 首先，将 Church 法表示的二应用于后继函数和零得自然数二：
 
-```
+```agda
 _ : twoᶜ · sucᶜ · `zero {∅} —↠ `suc `suc `zero
 _ =
   begin
@@ -1556,7 +1553,7 @@ Next, a sample reduction demonstrating that two plus two is four:
 
 接下来，展示二加二得四的规约例子：
 
-```
+```agda
 _ : plus {∅} · two · two —↠ `suc `suc `suc `suc `zero
 _ =
     plus · two · two
@@ -1595,7 +1592,7 @@ And finally, a similar sample reduction for Church numerals:
 
 最后，用 Church 数规约同样的例子：
 
-```
+```agda
 _ : plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero {∅}
 _ =
   begin
@@ -1660,12 +1657,12 @@ values.
 使用上文的表示方法，证明值不再规约；以及它的推论：可规约的项不是值。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1684,7 +1681,7 @@ is just as before, but annotated with types:
 和之前一样，每一个良类型的闭项要么是一个值，要么可以进行规约。
 进行性的形式化与之前一样，但是附上了类型：
 
-```
+```agda
 data Progress {A} (M : ∅ ⊢ A) : Set where
 
   step : ∀ {N : ∅ ⊢ A}
@@ -1708,7 +1705,7 @@ is built-in to the definition of value:
 进行性的声明和证明与之前大抵相同，加上了适当的附注。
 我们不再需要显式地参考标准式引理，因为它内置于值的定义中：
 
-```
+```agda
 progress : ∀ {A} → (M : ∅ ⊢ A) → Progress M
 progress (` ())
 progress (ƛ N)                          =  done V-ƛ
@@ -1750,7 +1747,7 @@ As previously, gas is specified by a natural number:
 
 如同之前，汽油由自然数表示：
 
-```
+```agda
 record Gas : Set where
   constructor gas
   field
@@ -1764,7 +1761,7 @@ When our evaluator returns a term `N`, it will either give evidence that
 
 当求值器返回项 `N` 时，它要么给出 `N` 是值的证明，要么提示汽油耗尽：
 
-```
+```agda
 data Finished {Γ A} (N : Γ ⊢ A) : Set where
 
    done :
@@ -1785,7 +1782,7 @@ reduction finished:
 
 给定类型为 `A` 的项 `L`，求值器会返回一个从 `L` 到某个 `N` 的求值序列，并提示规约是否完成：
 
-```
+```agda
 data Steps {A} : ∅ ⊢ A → Set where
 
   steps : {L N : ∅ ⊢ A}
@@ -1801,7 +1798,7 @@ The evaluator takes gas and a term and returns the corresponding steps:
 
 求值器取汽油和项，返回对应的步骤：
 
-```
+```agda
 eval : ∀ {A}
   → Gas
   → (L : ∅ ⊢ A)
@@ -1834,7 +1831,7 @@ We reiterate each of our previous examples.  We re-define the term
 
 我们重复之前的例子，重新定义无限循环的项 `sucμ`：
 
-```
+```agda
 sucμ : ∅ ⊢ `ℕ
 sucμ = μ (`suc (# 0))
 ```
@@ -1846,7 +1843,7 @@ we evaluate with three steps worth of gas:
 
 为了计算无限规约序列的前三步，我们使用满足三步的汽油：
 
-```
+```agda
 _ : eval (gas 3) sucμ ≡
   steps
    (μ `suc ` Z
@@ -1867,7 +1864,7 @@ The Church numeral two applied to successor and zero:
 
 将 Church 法表示的二应用于后继函数和零：
 
-```
+```agda
 _ : eval (gas 100) (twoᶜ · sucᶜ · `zero) ≡
   steps
    ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · `zero
@@ -1890,7 +1887,7 @@ Two plus two is four:
 
 二加二等于四：
 
-```
+```agda
 _ : eval (gas 100) (plus · two · two) ≡
   steps
    ((μ
@@ -2037,7 +2034,7 @@ And the corresponding term for Church numerals:
 
 以及 Church 法表示的对应的项：
 
-```
+```agda
 _ : eval (gas 100) (plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero) ≡
   steps
    ((ƛ
@@ -2116,12 +2113,12 @@ Using the evaluator, confirm that two times two is four.
 使用求值器，确认二乘二等于四。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 

@@ -1,14 +1,11 @@
 ---
 title     : "Naturals: 自然数"
-layout    : page
-prev      : /GettingStarted/
 permalink : /Naturals/
-next      : /Induction/
 translators : ["Rongxiao Fu"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Naturals where
 ```
 
@@ -79,7 +76,7 @@ And here is the definition in Agda:
 
 以及用 Agda 定义的自然数：
 
-```
+```agda
 data ℕ : Set where
   zero : ℕ
   suc  : ℕ → ℕ
@@ -147,14 +144,18 @@ Write out `7` in longhand.
 请写出 `7` 的完整定义。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
+
+You will need to give both a type signature and definition for the
+variable `seven`. Type `C-c C-l` in Emacs to instruct Agda to re-load.
+
 
 <!--
 ## Unpacking the inference rules
@@ -472,7 +473,7 @@ _pragma_, which is enclosed between `{-#` and `#-}`.
 Including the line
 -->
 
-```
+```agda
 {-# BUILTIN NATURAL ℕ #-}
 ```
 
@@ -519,7 +520,7 @@ about it from the Agda standard library:
 我们很快就能写一些包含自然数的等式了。在此之前，我们需要从 Agda 标准库
 中导入**相等性（Equality）**的定义和用于等式推理的记法：
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; _∎)
@@ -602,7 +603,7 @@ Here is the definition of addition in Agda:
 
 这是用 Agda 编写的加法定义：
 
-```
+```agda
 _+_ : ℕ → ℕ → ℕ
 zero + n = n
 (suc m) + n = suc (m + n)
@@ -687,7 +688,7 @@ For example, let's add two and three:
 
 例如，我们来计算二加三：
 
-```
+```agda
 _ : 2 + 3 ≡ 5
 _ =
   begin
@@ -712,7 +713,7 @@ expanding shorthand as needed:
 
 我们可以按需展开简写，把同样的推导过程写得更加紧凑。
 
-```
+```agda
 _ : 2 + 3 ≡ 5
 _ =
   begin
@@ -770,7 +771,7 @@ with the following:
 
 其实，以上两种证明都比实际所需的要长，下面的证明就足以让 Agda 满意了。
 
-```
+```agda
 _ : 2 + 3 ≡ 5
 _ = refl
 ```
@@ -835,12 +836,13 @@ Compute `3 + 4`, writing out your reasoning as a chain of equations, using the e
 计算 `3 + 4`，将你的推导过程写成等式链，为 `+` 使用等式。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
+-- Your code goes here
 -- 请将代码写在此处。
 ```
 
@@ -857,7 +859,7 @@ as repeated addition:
 
 一旦我们定义了加法，我们就可以将乘法定义为重复的加法。
 
-```
+```agda
 _*_ : ℕ → ℕ → ℕ
 zero    * n  =  zero
 (suc m) * n  =  n + (m * n)
@@ -912,7 +914,7 @@ For example, let's multiply two and three:
 
 例如，我们来计算二乘三：
 
-```
+```agda
 _ =
   begin
     2 * 3
@@ -954,12 +956,12 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations, using the e
 （不必写出 `+` 求值的每一步。）
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -985,12 +987,12 @@ Check that `3 ^ 4` is `81`.
 检查 `3 ^ 4` 是否等于 `81`。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1017,7 +1019,7 @@ matching against both arguments:
 
 饱和减法是我们首次在定义中对两个参数都使用模式匹配：
 
-```
+```agda
 _∸_ : ℕ → ℕ → ℕ
 m     ∸ zero   =  m
 zero  ∸ suc n  =  zero
@@ -1058,7 +1060,7 @@ For example, let's subtract two from three:
 
 例如，我们来计算三减二：
 
-```
+```agda
 _ =
   begin
     3 ∸ 2
@@ -1078,7 +1080,7 @@ if we try to subtract a larger number from a smaller one:
 
 我们没有使用第二个等式，但是如果被减数比减数小，我们还是会用到它。
 
-```
+```agda
 _ =
   begin
     2 ∸ 3
@@ -1104,12 +1106,12 @@ Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equati
 计算 `5 ∸ 3` 和 `3 ∸ 5`，将你的推导过程写成等式链。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1142,7 +1144,7 @@ needs to be declared:
 
 在 Agda 中，中缀运算符的优先级和结合性需要被声明：
 
-```
+```agda
 infixl 6  _+_  _∸_
 infixl 7  _*_
 ```
@@ -1694,7 +1696,7 @@ More pragmas
 Including the lines
 -->
 
-```
+```agda
 {-# BUILTIN NATPLUS _+_ #-}
 {-# BUILTIN NATTIMES _*_ #-}
 {-# BUILTIN NATMINUS _∸_ #-}
@@ -1734,7 +1736,7 @@ rather than a unary system.  We represent a number as a bitstring:
 
 使用二进制系统能提供比一进制系统更高效的自然数表示。我们可以用一个比特串来表示一个数：
 
-```
+```agda
 data Bin : Set where
   ⟨⟩ : Bin
   _O : Bin → Bin
@@ -1811,12 +1813,12 @@ Confirm that these both give the correct answer for zero through four.
 验证这两个函数都能对零到四给出正确结果。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1836,7 +1838,7 @@ library module `Data.Nat`:
 在每一章的结尾，我们将展示如何在标准库中找到相关的定义。
 自然数，它们的构造子，以及用于自然数的基本运算符，都在标准库模块 `Data.Nat` 中定义：
 
-```
+```agda
 -- import Data.Nat using (ℕ; zero; suc; _+_; _*_; _^_; _∸_)
 ```
 

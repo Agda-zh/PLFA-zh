@@ -1,14 +1,11 @@
 ---
 title     : "Lists: 列表与高阶函数"
-layout    : page
-prev      : /Decidable/
 permalink : /Lists/
-next      : /Lambda/
 translators: ["Fangyi Zhou"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Lists where
 ```
 
@@ -27,7 +24,7 @@ examples of polymorphic types and higher-order functions.
 
 ## 导入
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; sym; trans; cong)
 open Eq.≡-Reasoning
@@ -54,7 +51,7 @@ Lists are defined in Agda as follows:
 -->
 
 Agda 中的列表如下定义：
-```
+```agda
 data List (A : Set) : Set where
   []  : List A
   _∷_ : A → List A → List A
@@ -82,7 +79,7 @@ For example,
 
 例如：
 
-```
+```agda
 _ : List ℕ
 _ = 0 ∷ 1 ∷ 2 ∷ []
 ```
@@ -107,7 +104,7 @@ indexed types. The definition above is equivalent to the following:
 
 正如我们所见，参数化的类型可以被转换成索引类型。上面的定义与下列等价：
 
-```
+```agda
 data List′ : Set → Set where
   []′  : ∀ {A : Set} → List′ A
   _∷′_ : ∀ {A : Set} → A → List′ A → List′ A
@@ -120,7 +117,7 @@ Thus, our example list could also be written:
 
 每个构造子将参数作为隐式参数。因此我们列表的例子也可以写作：
 
-```
+```agda
 _ : List ℕ
 _ = _∷_ {ℕ} 0 (_∷_ {ℕ} 1 (_∷_ {ℕ} 2 ([] {ℕ})))
 ```
@@ -160,7 +157,7 @@ We can write lists more conveniently by introducing the following definitions:
 
 我们可以用下面的定义，更简便地表示列表：
 
-```
+```agda
 pattern [_] z = z ∷ []
 pattern [_,_] y z = y ∷ z ∷ []
 pattern [_,_,_] x y z = x ∷ y ∷ z ∷ []
@@ -193,7 +190,7 @@ _append_:
 
 我们对于列表的第一个函数写作 `_++_`，读作**附加（Append）**：
 
-```
+```agda
 infixr 5 _++_
 
 _++_ : ∀ {A : Set} → List A → List A → List A
@@ -220,7 +217,7 @@ of appending two lists:
 
 我们举个例子，来展示将两个列表附加的计算过程：
 
-```
+```agda
 _ : [ 0 , 1 , 2 ] ++ [ 3 , 4 ] ≡ [ 0 , 1 , 2 , 3 , 4 ]
 _ =
   begin
@@ -256,7 +253,7 @@ about numbers.  Here is the proof that append is associative:
 -->
 
 我们可以与用论证数几乎相同的方法来论证列表。下面是附加满足结合律的证明：
-```
+```agda
 ++-assoc : ∀ {A : Set} (xs ys zs : List A)
   → (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
 ++-assoc [] ys zs =
@@ -326,7 +323,7 @@ That it is a left identity is immediate from the definition:
 我们也可以简单地证明 `[]` 是 `_++_` 的左幺元和右幺元。
 左幺元的证明从定义中即可得：
 
-```
+```agda
 ++-identityˡ : ∀ {A : Set} (xs : List A) → [] ++ xs ≡ xs
 ++-identityˡ xs =
   begin
@@ -341,7 +338,7 @@ That it is a right identity follows by simple induction:
 -->
 
 右幺元的证明可由简单的归纳得到：
-```
+```agda
 ++-identityʳ : ∀ {A : Set} (xs : List A) → xs ++ [] ≡ xs
 ++-identityʳ [] =
   begin
@@ -379,7 +376,7 @@ Our next function finds the length of a list:
 
 在下一个函数里，我们来寻找列表的长度：
 
-```
+```agda
 length : ∀ {A : Set} → List A → ℕ
 length []        =  zero
 length (x ∷ xs)  =  suc (length xs)
@@ -400,7 +397,7 @@ Here is an example showing how to compute the length of a list:
 -->
 
 我们用下面的例子来展示如何计算列表的长度：
-```
+```agda
 _ : length [ 0 , 1 , 2 ] ≡ 3
 _ =
   begin
@@ -445,7 +442,7 @@ sum of the lengths of the lists:
 
 两个附加在一起的列表的长度是两列表长度之和：
 
-```
+```agda
 length-++ : ∀ {A : Set} (xs ys : List A)
   → length (xs ++ ys) ≡ length xs + length ys
 length-++ {A} [] ys =
@@ -496,7 +493,7 @@ Using append, it is easy to formulate a function to reverse a list:
 -->
 
 我们可以使用附加，来简单地构造一个函数来反转一个列表：
-```
+```agda
 reverse : ∀ {A : Set} → List A → List A
 reverse []        =  []
 reverse (x ∷ xs)  =  reverse xs ++ [ x ]
@@ -517,7 +514,7 @@ Here is an example showing how to reverse a list:
 -->
 
 下面的例子展示了如何反转一个列表。
-```
+```agda
 _ : reverse [ 0 , 1 , 2 ] ≡ [ 2 , 1 , 0 ]
 _ =
   begin
@@ -610,7 +607,7 @@ The idea is that we generalise reverse to take an additional argument:
 上面的定义虽然论证起来方便，但是它比期望中的实现更低效，因为它的运行时间是关于列表长度的二次函数。
 我们可以将反转进行推广，使用一个额外的参数：
 
-```
+```agda
 shunt : ∀ {A : Set} → List A → List A → List A
 shunt []       ys  =  ys
 shunt (x ∷ xs) ys  =  shunt xs (x ∷ ys)
@@ -630,7 +627,7 @@ Shunt is related to reverse as follows:
 -->
 
 转移（Shunt）与反转的关系如下：
-```
+```agda
 shunt-reverse : ∀ {A : Set} (xs ys : List A)
   → shunt xs ys ≡ reverse xs ++ ys
 shunt-reverse [] ys =
@@ -686,7 +683,7 @@ give a more efficient definition of reverse:
 
 在定义了推广的转移之后，我们可以将其特化，作为一个更高效的反转的定义：
 
-```
+```agda
 reverse′ : ∀ {A : Set} → List A → List A
 reverse′ xs = shunt xs []
 ```
@@ -698,7 +695,7 @@ the two definitions equivalent:
 
 因为我们之前证明的引理，我们可以直接地证明两个定义是等价的：
 
-```
+```agda
 reverses : ∀ {A : Set} (xs : List A)
   → reverse′ xs ≡ reverse xs
 reverses xs =
@@ -719,7 +716,7 @@ Here is an example showing fast reverse of the list `[ 0 , 1 , 2 ]`:
 
 下面的例子展示了如何快速反转列表 `[ 0 , 1 , 2 ]`：
 
-```
+```agda
 _ : reverse′ [ 0 , 1 , 2 ] ≡ [ 2 , 1 , 0 ]
 _ =
   begin
@@ -758,7 +755,7 @@ argument or returns a function as a result:
 映射将一个函数应用于列表中的所有元素，生成一个对应的列表。
 映射是一个**高阶函数（Higher-Order Function）**的例子，它取一个函数作为参数，返回一个函数作为结果：
 
-```
+```agda
 map : ∀ {A B : Set} → (A → B) → List A → List B
 map f []        =  []
 map f (x ∷ xs)  =  f x ∷ map f xs
@@ -781,7 +778,7 @@ Here is an example showing how to use map to increment every element of a list:
 
 下面的例子展示了如何使用映射来增加列表中的每一个元素：
 
-```
+```agda
 _ : map suc [ 0 , 1 , 2 ] ≡ [ 1 , 2 , 3 ]
 _ =
   begin
@@ -813,7 +810,7 @@ point applying the resulting function:
 
 我们常常可以利用柯里化，将映射作用于一个函数，获得另一个函数，然后在之后的时候应用获得的函数：
 
-```
+```agda
 sucs : List ℕ → List ℕ
 sucs = map suc
 
@@ -861,7 +858,7 @@ The last step of the proof requires extensionality.
 
 证明的最后一步需要外延性。
 
-```
+```agda
 -- Your code goes here
 ```
 
@@ -879,7 +876,7 @@ Prove the following relationship between map and append:
 
     map f (xs ++ ys) ≡ map f xs ++ map f ys
 
-```
+```agda
 -- Your code goes here
 ```
 
@@ -896,7 +893,7 @@ nodes of type `B`:
 
 定义一个树数据类型，其叶节点类型为 `A`，内部节点类型为 `B`：
 
-```
+```agda
 data Tree (A B : Set) : Set where
   leaf : A → Tree A B
   node : Tree A B → B → Tree A B → Tree A B
@@ -910,7 +907,7 @@ Define a suitable map operator over trees:
 
     map-Tree : ∀ {A B C D : Set} → (A → C) → (B → D) → Tree A B → Tree C D
 
-```
+```agda
 -- Your code goes here
 ```
 
@@ -929,7 +926,7 @@ for the empty list:
 折叠取一个运算符和一个值，并使用运算符将列表中的元素合并至一个值，如果给定的列表为空，
 则使用给定的值：
 
-```
+```agda
 foldr : ∀ {A B : Set} → (A → B → B) → B → List A → B
 foldr _⊗_ e []        =  e
 foldr _⊗_ e (x ∷ xs)  =  x ⊗ foldr _⊗_ e xs
@@ -950,7 +947,7 @@ Here is an example showing how to use fold to find the sum of a list:
 
 下面的例子展示了如何使用折叠来对一个列表求和：
 
-```
+```agda
 _ : foldr _+_ 0 [ 1 , 2 , 3 , 4 ] ≡ 10
 _ =
   begin
@@ -984,7 +981,7 @@ and at a later point applying the resulting function:
 我们常常可以利用柯里化，将折叠作用于一个运算符和一个值，获得另一个函数，
 然后在之后的时候应用获得的函数：
 
-```
+```agda
 sum : List ℕ → ℕ
 sum = foldr _+_ 0
 
@@ -1052,12 +1049,12 @@ For example:
     product [ 1 , 2 , 3 , 4 ] ≡ 24
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1075,7 +1072,7 @@ Show that fold and append are related as follows:
 
     foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ (foldr _⊗_ e ys) xs
 
-```
+```agda
 -- Your code goes here
 ```
 
@@ -1101,7 +1098,7 @@ Show that map can be defined using fold:
 
 证明映射可以用折叠定义：
 
-```
+```agda
 -- Your code goes here
 ```
 
@@ -1131,7 +1128,7 @@ The proof requires extensionality.
 
 此证明需要外延性。
 
-```
+```agda
 -- Your code goes here
 ```
 
@@ -1151,12 +1148,12 @@ Define a suitable fold function for the type of trees given earlier:
 
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1173,12 +1170,12 @@ Demonstrate an analogue of `map-is-foldr` for the type of trees.
 对于树数据类型，证明与 `map-is-foldr` 相似的性质。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1194,7 +1191,7 @@ Define a function that counts down as follows:
 
 定义一个向下数数的函数：
 
-```
+```agda
 downFrom : ℕ → List ℕ
 downFrom zero     =  []
 downFrom (suc n)  =  n ∷ downFrom n
@@ -1206,7 +1203,7 @@ For example:
 
 例如：
 
-```
+```agda
 _ : downFrom 3 ≡ [ 2 , 1 , 0 ]
 _ = refl
 ```
@@ -1242,7 +1239,7 @@ We can define a monoid as a suitable record type:
 
 我们可以用一个合适的记录类型来定义幺半群：
 
-```
+```agda
 record IsMonoid {A : Set} (_⊗_ : A → A → A) (e : A) : Set where
   field
     assoc : ∀ (x y z : A) → (x ⊗ y) ⊗ z ≡ x ⊗ (y ⊗ z)
@@ -1259,7 +1256,7 @@ list, are all examples of monoids:
 
 举例来说，加法和零，乘法和一，附加和空列表，都是幺半群：
 
-```
+```agda
 +-monoid : IsMonoid _+_ 0
 +-monoid =
   record
@@ -1292,7 +1289,7 @@ same operator and an arbitrary value:
 
 如果 `_⊗_` 和 `e` 构成一个幺半群，那么我们可以用相同的运算符和一个任意的值来表示折叠：
 
-```
+```agda
 foldr-monoid : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) → IsMonoid _⊗_ e →
   ∀ (xs : List A) (y : A) → foldr _⊗_ y xs ≡ foldr _⊗_ e xs ⊗ y
 foldr-monoid _⊗_ e ⊗-monoid [] y =
@@ -1325,7 +1322,7 @@ In a previous exercise we showed the following.
 
 在之前的练习中，我们证明了以下定理：
 
-```
+```agda
 postulate
   foldr-++ : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) (xs ys : List A) →
     foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ (foldr _⊗_ e ys) xs
@@ -1338,7 +1335,7 @@ into two folds as follows.
 
 由此，我们可以将幺半群中附加的折叠如下分解成两个折叠：
 
-```
+```agda
 foldr-monoid-++ : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) → IsMonoid _⊗_ e →
   ∀ (xs ys : List A) → foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ e xs ⊗ foldr _⊗_ e ys
 foldr-monoid-++ _⊗_ e monoid-⊗ xs ys =
@@ -1368,12 +1365,12 @@ operations associate to the left rather than the right.  For example:
     foldl _⊗_ e [ x , y , z ]  =  ((e ⊗ x) ⊗ y) ⊗ z
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1393,12 +1390,12 @@ Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 永远是相同的。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1422,7 +1419,7 @@ Predicate `All P` holds if predicate `P` is satisfied by every element of a list
 
 谓词 `All P` 当列表里的所有元素满足 `P` 时成立：
 
-```
+```agda
 data All {A : Set} (P : A → Set) : List A → Set where
   []  : All P []
   _∷_ : ∀ {x : A} {xs : List A} → P x → All P xs → All P (x ∷ xs)
@@ -1453,7 +1450,7 @@ suc n`, for any `m` and `n`:
 对于任意 `m` 和 `n`，如果 `m≤n` 证明了 `m ≤ n`，那么 `s≤s m≤n` 证明了 `suc m ≤
 suc n`:
 
-```
+```agda
 _ : All (_≤ 2) [ 0 , 1 , 2 ]
 _ = z≤n ∷ s≤s z≤n ∷ s≤s (s≤s z≤n) ∷ []
 ```
@@ -1491,7 +1488,7 @@ Predicate `Any P` holds if predicate `P` is satisfied by some element of a list:
 
 谓词 `Any P` 当列表里的一些元素满足 `P` 时成立：
 
-```
+```agda
 data Any {A : Set} (P : A → Set) : List A → Set where
   here  : ∀ {x : A} {xs : List A} → P x → Any P (x ∷ xs)
   there : ∀ {x : A} {xs : List A} → Any P xs → Any P (x ∷ xs)
@@ -1507,7 +1504,7 @@ membership as follows:
 第一个构造子证明了列表的头元素满足 `P`，第二个构造子证明的列表的尾列表中的一些元素满足 `P`。
 举例来说，我们可以如下定义列表的成员关系：
 
-```
+```agda
 infix 4 _∈_ _∉_
 
 _∈_ : ∀ {A : Set} (x : A) (xs : List A) → Set
@@ -1526,7 +1523,7 @@ occurrences of zero in the list, as the first element and as the third element:
 比如说，零是列表 `[ 0 , 1 , 0 , 2 ]` 中的一个元素。
 我们可以用两种方法来展示这个事实，对应零在列表中出现了两次：第一个元素和第三个元素：
 
-```
+```agda
 _ : 0 ∈ [ 0 , 1 , 0 , 2 ]
 _ = here refl
 
@@ -1541,7 +1538,7 @@ any possible proof that it is in the list leads to contradiction:
 
 除此之外，我们可以展示三不在列表之中，因为任何它在列表中的证明会推导出矛盾：
 
-```
+```agda
 not-in : 3 ∉ [ 0 , 1 , 0 , 2 ]
 not-in (here ())
 not-in (there (here ()))
@@ -1572,7 +1569,7 @@ only if it holds for every element of both lists:
 
 一个谓词对两个附加在一起的列表的每个元素都成立，当且仅当这个谓词对两个列表的每个元素都成立：
 
-```
+```agda
 All-++-⇔ : ∀ {A : Set} {P : A → Set} (xs ys : List A) →
   All P (xs ++ ys) ⇔ (All P xs × All P ys)
 All-++-⇔ xs ys =
@@ -1609,12 +1606,12 @@ replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 作为结论，展示关联 `_∈_` 和 `_++_` 的一个等价关系。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1631,12 +1628,12 @@ Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
 证明 `All-++-⇔` 的等价关系可以被扩展至一个同构关系。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1678,7 +1675,7 @@ If so, prove; if not, explain why.
 若成立，请证明；否则请解释原因。
 
 
-```
+```agda
 -- Your code goes here
 ```
 
@@ -1697,12 +1694,12 @@ You will need to use extensionality.
 你需要使用外延性。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -1719,12 +1716,12 @@ Show that `All P xs` is isomorphic to `∀ x → x ∈ xs → P x`.
 请证明 `All P xs` 同构于 `∀ x → x ∈ xs → P x`.
 
 <!--
-```
+```agda
 -- You code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -1742,12 +1739,12 @@ Show that `Any P xs` is isomorphic to `∃[ x ] (x ∈ xs × P x)`.
 请证明 `Any P xs` 同构于 `∃[ x ] (x ∈ xs × P x)`.
 
 <!--
-```
+```agda
 -- You code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -1773,7 +1770,7 @@ a given predicate returns true for every element of a list:
 如果我们将一个谓词看作一个返回布尔值的函数，那么我们可以简单的定义一个类似于 `All`
 的函数，其当给定谓词对于列表每个元素返回真时返回真：
 
-```
+```agda
 all : ∀ {A : Set} → (A → Bool) → List A → Bool
 all p  =  foldr _∧_ true ∘ map p
 ```
@@ -1797,7 +1794,7 @@ if we have a function that for a given `x` can decide `P x`:
 当作一个类型为 `A → Set` 的函数的概念，将一个类型为 `A` 的值 `x` 转换成 `P x` 对 `x` 成立
 的证明。我们成 `P` 为**可判定的（Decidable）**，如果我们有一个函数，其在给定 `x` 时能够判定 `P x`：
 
-```
+```agda
 Decidable : ∀ {A : Set} → (A → Set) → Set
 Decidable {A} P  =  ∀ (x : A) → Dec (P x)
 ```
@@ -1808,7 +1805,7 @@ element of a list satisfies the predicate:
 -->
 
 那么当谓词 `P` 可判定时，我们亦可判定列表中的每一个元素是否满足这个谓词：
-```
+```agda
 All? : ∀ {A : Set} {P : A → Set} → Decidable P → Decidable (All P)
 All? P? []                                 =  yes []
 All? P? (x ∷ xs) with P? x   | All? P? xs
@@ -1847,12 +1844,12 @@ for some element of a list.  Give their definitions.
 给出它们的定义。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1868,7 +1865,7 @@ The relation `merge` holds when two lists merge to give a third list.
 
 关系 `merge` 在两个列表合并的结果为给定的第三个列表时成立。
 
-```
+```agda
 data merge {A : Set} : (xs ys zs : List A) → Set where
 
   [] :
@@ -1892,7 +1889,7 @@ For example,
 
 例如
 
-```
+```agda
 _ : merge [ 1 , 4 ] [ 2 , 3 ] [ 1 , 2 , 3 , 4 ]
 _ = left-∷ (right-∷ (right-∷ (left-∷ [])))
 ```
@@ -1923,12 +1920,12 @@ with their corresponding proofs.
       → ∃[ xs ] ∃[ ys ] ( merge xs ys zs × All P xs × All (¬_ ∘ P) ys )
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -1945,7 +1942,7 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 标准库中可以找到与本章节中相似的定义：
 
-```
+```agda
 import Data.List using (List; _++_; length; reverse; map; foldr; downFrom)
 import Data.List.Relation.Unary.All using (All; []; _∷_)
 import Data.List.Relation.Unary.Any using (Any; here; there)

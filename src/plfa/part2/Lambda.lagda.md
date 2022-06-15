@@ -1,14 +1,11 @@
 ---
 title     : "Lambda: λ-演算简介"
-layout    : page
-prev      : /Lists/
 permalink : /Lambda/
-next      : /Properties/
 translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part2.Lambda where
 ```
 
@@ -96,7 +93,7 @@ Foundations_）中对应的 _Stlc_ 的内容。
 
 ## 导入
 
-```
+```agda
 open import Data.Bool using (Bool; true; false; T; not)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.List using (List; _∷_; [])
@@ -189,7 +186,7 @@ And here it is formalised in Agda:
 
 而下面是用 Agda 形式化后的代码：
 
-```
+```agda
 Id : Set
 Id = String
 
@@ -233,7 +230,7 @@ and a function that adds naturals:
 
 下面是一些项的例子：自然数二和一个将自然数相加的函数：
 
-```
+```agda
 two : Term
 two = `suc `suc `zero
 
@@ -288,7 +285,7 @@ function that adds Church numerals, and a function to compute successor:
 下面是一些项的例子：Church 表示法的数字二、一个将两个用 Church
 表示法表示的数字相加的函数和 一个计算后继的函数：
 
-```
+```agda
 twoᶜ : Term
 twoᶜ =  ƛ "s" ⇒ ƛ "z" ⇒ ` "s" · (` "s" · ` "z")
 
@@ -345,12 +342,12 @@ defined earlier.
 写出一个项来定义两个自然数的乘法。你可以使用之前定义的 `plus`。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -372,12 +369,12 @@ definition may use `plusᶜ` as defined earlier (or may not
 （当然也可以不用，用或不用都有很好的表示方法）
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -397,7 +394,7 @@ by adding the following definitions:
 用 `` ` "x" `` 而不是 `x` 来表示变量可能并不是每个人都喜欢。
 我们可以加入下面的定义，来帮助我们表示项的例子：
 
-```
+```agda
 var? : (t : Term) → Bool
 var? (` _)  =  true
 var? _      =  false
@@ -446,7 +443,7 @@ The definition of `plus` can now be written as follows:
 
 现在我们可以用下面的形式重新写出 `plus` 的定义：
 
-```
+```agda
 plus′ : Term
 plus′ = μ′ + ⇒ ƛ′ m ⇒ ƛ′ n ⇒
           case′ m
@@ -652,7 +649,7 @@ The predicate `Value M` holds if term `M` is a value:
 
 谓词 `Value M` 当一个项 `M` 是一个值时成立：
 
-```
+```agda
 data Value : Term → Set where
 
   V-ƛ : ∀ {x N}
@@ -850,7 +847,7 @@ Here is the formal definition of substitution by closed terms in Agda:
 
 下面是对于封闭项替换的 Agda 定义：
 
-```
+```agda
 infix 9 _[_:=_]
 
 _[_:=_] : Term → Id → Term → Term
@@ -923,7 +920,7 @@ Here is confirmation that the examples above are correct:
 
 下面是上述替换正确性的证明：
 
-```
+```agda
 _ : (ƛ "z" ⇒ ` "s" · (` "s" · ` "z")) [ "s" := sucᶜ ]
       ≡ ƛ "z" ⇒ sucᶜ · (sucᶜ · ` "z")
 _ = refl
@@ -978,12 +975,12 @@ substitution.
 将上述语句的共同部分提取成一个函数，然后用共同递归重写替换的定义。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1091,7 +1088,7 @@ Here are the rules formalised in Agda:
 
 我们在 Agda 里这样形式化这些规则：
 
-```
+```agda
 infix 4 _—→_
 
 data _—→_ : Term → Term → Set where
@@ -1241,7 +1238,7 @@ Chapter [Equality](/Equality/):
 我们以一个零或多步的步进关系的序列来定义这样的自反传递闭包，这样的形式与
 [Equality](/Equality/) 章节中的等式链论证形式相似：
 
-```
+```agda
 infix  2 _—↠_
 infix  1 begin_
 infixr 2 _—→⟨_⟩_
@@ -1304,7 +1301,7 @@ and transitive.  We do so as follows:
 
 我们也可以用包括 `—→` 的最小的自反传递关系来定义：
 
-```
+```agda
 data _—↠′_ : Term → Term → Set where
 
   step′ : ∀ {M N}
@@ -1347,12 +1344,12 @@ above embeds into the second. Why are they not isomorphic?
 为什么它们不是同构的？
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1397,7 +1394,7 @@ steps it is called the diamond property. In symbols:
 如果上面的两条线代表一步规约步骤，下面的两条线代表零或多步规约步骤，
 这样的性质被称为菱形性质（Diamond Property）。用符号表示为：
 
-```
+```agda
 postulate
   confluence : ∀ {L M N}
     → ((L —↠ M) × (L —↠ N))
@@ -1417,7 +1414,7 @@ In symbols:
 
 在本章中我们讨论的规约系统是确定的。用符号表示为：
 
-```
+```agda
 postulate
   deterministic : ∀ {L M N}
     → L —→ M
@@ -1448,7 +1445,7 @@ successor function and zero yields the natural number two:
 -->
 
 我们用一个简单的例子开始。Church 数二应用于后继函数和零可以得到自然数二：
-```
+```agda
 _ : twoᶜ · sucᶜ · `zero —↠ `suc `suc `zero
 _ =
   begin
@@ -1469,7 +1466,7 @@ Here is a sample reduction demonstrating that two plus two is four:
 -->
 
 下面的例子中我们规约二加二至四：
-```
+```agda
 _ : plus · two · two —↠ `suc `suc `suc `suc `zero
 _ =
   begin
@@ -1518,7 +1515,7 @@ And here is a similar sample reduction for Church numerals:
 -->
 
 我们用 Church 数规约同样的例子：
-```
+```agda
 _ : plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero
 _ =
   begin
@@ -1571,12 +1568,12 @@ Write out the reduction sequence demonstrating that one plus one is two.
 使用规约序列，证明一加一得二。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1620,7 +1617,7 @@ And here it is formalised in Agda:
 
 下面是用 Agda 的形式化：
 
-```
+```agda
 infixr 7 _⇒_
 
 data Type : Set where
@@ -1753,7 +1750,7 @@ Contexts are formalised as follows:
 
 上下文如下形式化：
 
-```
+```agda
 infixl 5  _,_⦂_
 
 data Context : Set where
@@ -1792,12 +1789,12 @@ to the list
     [ ⟨ "z" , `ℕ ⟩ , ⟨ "s" , `ℕ ⇒ `ℕ ⟩ ]
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1860,7 +1857,7 @@ Lookup is formalised as follows:
 -->
 
 我们如下形式化查询：
-```
+```agda
 infix  4  _∋_⦂_
 
 data _∋_⦂_ : Context → Id → Type → Set where
@@ -1894,7 +1891,7 @@ proofs that `x ≢ y` each time. For example:
 
 用 `S` 构造子会比较麻烦，因为每次都需要提供 `x ≢ y` 的证明。例如：
 
-```
+```agda
 _ : ∅ , "x" ⦂ `ℕ ⇒ `ℕ , "y" ⦂ `ℕ , "z" ⦂ `ℕ ∋ "x" ⦂ `ℕ ⇒ `ℕ
 _ = S (λ()) (S (λ()) Z)
 ```
@@ -1905,7 +1902,7 @@ Instead, we'll use a "smart constructor", which uses [proof by reflection](/Deci
 
 取而代之的是，我们在类型检查时可以使用以[互映证明](/Decidable/#proof-by-reflection)来检查不等性的「智慧构造子」：
 
-```
+```agda
 S′ : ∀ {Γ x y A B}
    → {x≢y : False (x ≟ y)}
    → Γ ∋ x ⦂ A
@@ -1951,7 +1948,7 @@ Typing is formalised as follows:
 -->
 
 赋型可以如下形式化：
-```
+```agda
 infix  4  _⊢_⦂_
 
 data _⊢_⦂_ : Context → Term → Type → Set where
@@ -2097,7 +2094,7 @@ Here is the above typing derivation formalised in Agda:
 -->
 
 上面的推导可以如下用 Agda 形式化：
-```
+```agda
 Ch : Type → Type
 Ch A = (A ⇒ A) ⇒ A ⇒ A
 
@@ -2113,7 +2110,7 @@ Here are the typings corresponding to computing two plus two:
 -->
 
 下面是针对二加二的赋型：
-```
+```agda
 ⊢two : ∀ {Γ} → Γ ⊢ two ⦂ `ℕ
 ⊢two = ⊢suc (⊢suc ⊢zero)
 
@@ -2153,7 +2150,7 @@ And here are typings for the remainder of the Church example:
 -->
 
 对 Church 数赋型的余下推导如下：
-```
+```agda
 ⊢plusᶜ : ∀ {Γ A} → Γ  ⊢ plusᶜ ⦂ Ch A ⇒ Ch A ⇒ Ch A
 ⊢plusᶜ = ⊢ƛ (⊢ƛ (⊢ƛ (⊢ƛ (⊢` ∋m · ⊢` ∋s · (⊢` ∋n · ⊢` ∋s · ⊢` ∋z)))))
   where
@@ -2271,7 +2268,7 @@ there is at most one `A` such that the judgment holds:
 查询关系 `Γ ∋ x ⦂ A` 是一个函数。 对于所有的 `Γ` 和 `x`，
 至多有一个 `A` 满足这个判断：
 
-```
+```agda
 ∋-functional : ∀ {Γ x A B} → Γ ∋ x ⦂ A → Γ ∋ x ⦂ B → A ≡ B
 ∋-functional Z        Z          =  refl
 ∋-functional Z        (S x≢ _)   =  ⊥-elim (x≢ refl)
@@ -2305,7 +2302,7 @@ a function:
 `` `zero · `suc `zero `` 是不可赋型的。
 原因在于我们需要使得 `` `zero`` 既是一个函数又是一个自然数。
 
-```
+```agda
 nope₁ : ∀ {A} → ¬ (∅ ⊢ `zero · `suc `zero ⦂ A)
 nope₁ (() · _)
 ```
@@ -2320,7 +2317,7 @@ doing so requires types `A` and `B` such that `A ⇒ B ≡ A`:
 `` ƛ "x" ⇒ ` "x" · ` "x" `` 是不可赋型的。
 原因在于我们需要满足 `A ⇒ B ≡ A` 的两个类型 `A` 和 `B`：
 
-```
+```agda
 nope₂ : ∀ {A} → ¬ (∅ ⊢ ƛ "x" ⇒ ` "x" · ` "x" ⦂ A)
 nope₂ (⊢ƛ (⊢` ∋x · ⊢` ∋x′))  =  contradiction (∋-functional ∋x ∋x′)
   where
@@ -2371,12 +2368,12 @@ showing that it is well typed.
 使用你之前写出的项 `mul`，给出其良类型的推导。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -2394,12 +2391,12 @@ showing that it is well typed.
 使用你之前写出的项 `mulᶜ`，给出其良类型的推导。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 

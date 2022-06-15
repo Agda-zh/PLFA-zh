@@ -1,14 +1,11 @@
 ---
 title     : "Connectives: 合取、析取与蕴涵"
-layout    : page
-prev      : /Isomorphism/
 permalink : /Connectives/
-next      : /Negation/
 translators : ["Fangyi Zhou"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Connectives where
 ```
 
@@ -47,7 +44,7 @@ principle known as _Propositions as Types_:
 
 ## 导入
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open Eq.≡-Reasoning
@@ -73,7 +70,7 @@ declaring a suitable datatype:
 给定两个命题 `A` 和 `B`，其合取 `A × B` 成立当 `A` 成立和 `B` 成立。
 我们用一个合适的数据类型将这样的概念形式化：
 
-```
+```agda
 data _×_ (A B : Set) : Set where
 
   ⟨_,_⟩ :
@@ -99,7 +96,7 @@ Given evidence that `A × B` holds, we can conclude that both
 
 给定 `A × B` 成立的证明，我们可以得出 `A` 成立和 `B` 成立。
 
-```
+```agda
 proj₁ : ∀ {A B : Set}
   → A × B
     -----
@@ -162,7 +159,7 @@ constructor is the identity over products:
 
 在这样的情况下，先使用析构器，再使用构造子将结果重组，得到还是原来的积。
 
-```
+```agda
 η-× : ∀ {A B : Set} (w : A × B) → ⟨ proj₁ w , proj₂ w ⟩ ≡ w
 η-× ⟨ x , y ⟩ = refl
 ```
@@ -182,7 +179,7 @@ tightly than anything save disjunction:
 
 我们设置合取的优先级，使它与除了析取之外结合的都不紧密：
 
-```
+```agda
 infixr 2 _×_
 ```
 
@@ -194,7 +191,7 @@ Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
 
 Alternatively, we can declare conjunction as a record type:
 
-```
+```agda
 record _×′_ (A B : Set) : Set where
   constructor ⟨_,_⟩′
   field
@@ -213,7 +210,7 @@ difference is that for data types we have to prove η-equality, but for record
 types, η-equality holds *by definition*. While proving `η-×′`, we do not have to
 pattern match on `w` to know that η-equality holds:
 
-```
+```agda
 η-×′ : ∀ {A B : Set} (w : A ×′ B) → ⟨ proj₁′ w , proj₂′ w ⟩′ ≡ w
 η-×′ w = refl
 ```
@@ -240,7 +237,7 @@ a type `Tri` with three members:
 那么类型 `A × B` 有 `m * n` 个不同的成员。这也是它被称为积的原因之一。
 例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型：
 
-```
+```agda
 data Bool : Set where
   true  : Bool
   false : Bool
@@ -267,7 +264,7 @@ possible arguments of type `Bool × Tri`:
 
 下面的函数枚举了所有类型为 `Bool × Tri` 的参数：
 
-```
+```agda
 ×-count : Bool × Tri → ℕ
 ×-count ⟨ true  , aa ⟩  =  1
 ×-count ⟨ true  , bb ⟩  =  2
@@ -300,7 +297,7 @@ and similarly for `to∘from`:
 在 `from∘to` 和 `to∘from` 中正确地实例化要匹配的模式是很重要的。
 使用 `λ w → refl` 作为 `from∘to` 的定义是不可行的，`to∘from` 同理。
 
-```
+```agda
 ×-comm : ∀ {A B : Set} → A × B ≃ B × A
 ×-comm =
   record
@@ -345,7 +342,7 @@ matching against a suitable pattern to enable simplification:
 对于结合律来说，`to` 函数将两个有序对进行重组：将 `⟨ ⟨ x , y ⟩ , z ⟩` 转换为 `⟨ x , ⟨ y , z ⟩ ⟩`，
 `from` 函数则为其逆。同样，左逆和右逆的证明需要在一个合适的模式来匹配，从而可以直接化简：
 
-```
+```agda
 ×-assoc : ∀ {A B C : Set} → (A × B) × C ≃ A × (B × C)
 ×-assoc =
   record
@@ -391,12 +388,12 @@ is isomorphic to `(A → B) × (B → A)`.
 证明[之前](/Isomorphism/#iff)定义的 `A ⇔ B` 与 `(A → B) × (B → A)` 同构。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -413,7 +410,7 @@ declaring a suitable datatype:
 
 恒真 `⊤` 恒成立。我们将这个概念用合适的数据类型来形式化：
 
-```
+```agda
 data ⊤ : Set where
 
   tt :
@@ -444,7 +441,7 @@ value of type `⊤` must be equal to `tt`:
 
 `η-×` 的 零元形式是 `η-⊤`，其断言了任何 `⊤` 类型的值一定等于 `tt`：
 
-```
+```agda
 η-⊤ : ∀ (w : ⊤) → tt ≡ w
 η-⊤ tt = refl
 ```
@@ -458,7 +455,7 @@ simplify to the same term.
 左手边的模式匹配是必要的。将 `w` 替换为 `tt` 让等式两边可以化简为相同的值。
 
 Alternatively, we can declare truth as an empty record:
-```
+```agda
 record ⊤′ : Set where
   constructor tt′
 ```
@@ -469,13 +466,13 @@ As with the product, the data type `⊤` and the record type `⊤′` behave
 similarly, but η-equality holds *by definition* for the record type. While
 proving `η-⊤′`, we do not have to pattern match on `w`---Agda *knows* it is
 equal to `tt′`:
-```
+```agda
 η-⊤′ : ∀ (w : ⊤′) → tt′ ≡ w
 η-⊤′ w = refl
 ```
 Agda knows that *any* value of type `⊤′` must be `tt′`, so any time we need a
 value of type `⊤′`, we can tell Agda to figure it out:
-```
+```agda
 truth′ : ⊤′
 truth′ = _
 ```
@@ -489,8 +486,7 @@ function enumerates all possible arguments of type `⊤`:
 我们将 `⊤` 称为**单元（Unit Type）**类型。实际上，`⊤` 类型只有一个成员 `tt`。
 例如，下面的函数枚举了所有 `⊤` 类型的参数：
 
--->
-```
+```agda
 ⊤-count : ⊤ → ℕ
 ⊤-count tt = 1
 ```
@@ -507,7 +503,7 @@ matching against a suitable pattern to enable simplification:
 `to` 函数将 `⟨ tt , x ⟩` 转换成 `x`， `from` 函数则是其反函数。左逆的证明需要
 匹配一个合适的模式来化简：
 
-```
+```agda
 ⊤-identityˡ : ∀ {A : Set} → ⊤ × A ≃ A
 ⊤-identityˡ =
   record
@@ -547,7 +543,7 @@ Right identity follows from commutativity of product and left identity:
 
 右幺元可以由积的交换律得来：
 
-```
+```agda
 ⊤-identityʳ : ∀ {A : Set} → (A × ⊤) ≃ A
 ⊤-identityʳ {A} =
   ≃-begin
@@ -581,7 +577,7 @@ declaring a suitable inductive type:
 给定两个命题 `A` 和 `B`，析取 `A ⊎ B` 在 `A` 成立或者 `B` 成立时成立。
 我们将这个概念用合适的归纳类型来形式化：
 
-```
+```agda
 data _⊎_ (A B : Set) : Set where
 
   inj₁ :
@@ -611,7 +607,7 @@ evidence that `A ⊎ B` holds we can conclude that `C` holds:
 
 给定 `A → C` 和 `B → C` 成立的证明，那么给定一个 `A ⊎ B` 的证明，我们可以得出 `C` 成立：
 
-```
+```agda
 case-⊎ : ∀ {A B C : Set}
   → (A → C)
   → (B → C)
@@ -651,7 +647,7 @@ Applying the destructor to each of the constructors is the identity:
 
 对每个构造子使用析构器得到的是原来的值：
 
-```
+```agda
 η-⊎ : ∀ {A B : Set} (w : A ⊎ B) → case-⊎ inj₁ inj₂ w ≡ w
 η-⊎ (inj₁ x) = refl
 η-⊎ (inj₂ y) = refl
@@ -663,7 +659,7 @@ More generally, we can also throw in an arbitrary function from a disjunction:
 
 更普遍地来说，我们亦可对于析取使用一个任意的函数：
 
-```
+```agda
 uniq-⊎ : ∀ {A B C : Set} (h : A ⊎ B → C) (w : A ⊎ B) →
   case-⊎ (h ∘ inj₁) (h ∘ inj₂) w ≡ h w
 uniq-⊎ h (inj₁ x) = refl
@@ -686,7 +682,7 @@ than any other declared operator:
 
 我们设置析取的优先级，使它与任何已经定义的运算符都结合的不紧密：
 
-```
+```agda
 infixr 1 _⊎_
 ```
 
@@ -728,7 +724,7 @@ possible arguments of type `Bool ⊎ Tri`:
 
 下面的函数枚举了所有类型为 `Bool ⊎ Tri` 的参数：
 
-```
+```agda
 ⊎-count : Bool ⊎ Tri → ℕ
 ⊎-count (inj₁ true)   =  1
 ⊎-count (inj₁ false)  =  2
@@ -758,12 +754,12 @@ Show sum is commutative up to isomorphism.
 证明和类型在同构意义下满足交换律。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -780,12 +776,12 @@ Show sum is associative up to isomorphism.
 证明和类型在同构意义下满足结合律。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -808,7 +804,7 @@ data ⊥ : Set where
   -- no clauses!
 -->
 
-```
+```agda
 data ⊥ : Set where
   -- 没有语句！
 ```
@@ -834,7 +830,7 @@ Sheba".  We formalise it as follows:
 这是逻辑学的基本原理，又由中世纪的拉丁文词组 _ex falso_ 为名。小孩子也由诸如
 「如果猪有翅膀，那我就是示巴女王」的词组中知晓。我们如下将它形式化：
 
-```
+```agda
 ⊥-elim : ∀ {A : Set}
   → ⊥
     --
@@ -868,7 +864,7 @@ is equal to any arbitrary function from `⊥`:
 
 `uniq-⊎` 的零元形式是 `uniq-⊥`，其断言了 `⊥-elim` 和任何取 `⊥` 的函数是等价的。
 
-```
+```agda
 uniq-⊥ : ∀ {C : Set} (h : ⊥ → C) (w : ⊥) → ⊥-elim w ≡ h w
 uniq-⊥ h ()
 ```
@@ -889,7 +885,7 @@ enumerates all possible arguments of type `⊥`:
 我们将 `⊥` 成为**空（Empty）**类型。实际上，`⊥` 类型没有成员。
 例如，下面的函数枚举了所有 `⊥` 类型的参数：
 
-```
+```agda
 ⊥-count : ⊥ → ℕ
 ⊥-count ()
 ```
@@ -921,12 +917,12 @@ Show empty is the left identity of sums up to isomorphism.
 证明空在同构意义下是和的左幺元。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -941,12 +937,12 @@ Show empty is the right identity of sums up to isomorphism.
 证明空在同构意义下是和的右幺元。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -993,7 +989,7 @@ then we may conclude that `B` holds:
 
 换句话说，如果知道 `A → B` 和 `A` 同时成立，那么我们可以推出 `B` 成立：
 
-```
+```agda
 →-elim : ∀ {A B : Set}
   → (A → B)
   → A
@@ -1024,7 +1020,7 @@ Elimination followed by introduction is the identity:
 
 引入后接着消去，得到的还是原来的值：
 
-```
+```agda
 η-→ : ∀ {A B : Set} (f : A → B) → (λ (x : A) → f x) ≡ f
 η-→ f = refl
 ```
@@ -1065,7 +1061,7 @@ arguments of the type `Bool → Tri`:
 
 下面的函数枚举了所有类型为 `Bool → Tri` 的参数：
 
-```
+```agda
 →-count : (Bool → Tri) → ℕ
 →-count f with f true | f false
 ...          | aa     | aa      =   1
@@ -1113,7 +1109,7 @@ The proof of the right inverse requires extensionality:
 两个类型可以被看作给定 `A` 成立的证据和 `B` 成立的证据，返回 `C` 成立的证据。
 这个同构有时也被称作**柯里化（Currying）**。右逆的证明需要外延性：
 
-```
+```agda
 currying : ∀ {A B C : Set} → (A → B → C) ≃ (A × B → C)
 currying =
   record
@@ -1178,7 +1174,7 @@ is the same as the assertion that if `A` holds then `C` holds and if
 命题如果 `A` 成立或者 `B` 成立，那么 `C` 成立，和命题如果 `A` 成立，那么 `C` 成立以及
 如果 `B` 成立，那么 `C` 成立，是一样的。左逆的证明需要外延性：
 
-```
+```agda
 →-distrib-⊎ : ∀ {A B C : Set} → (A ⊎ B → C) ≃ ((A → C) × (B → C))
 →-distrib-⊎ =
   record
@@ -1215,7 +1211,7 @@ and the rule `η-×` for products:
 命题如果 `A` 成立，那么 `B` 成立和 `C` 成立，和命题如果 `A` 成立，那么 `B` 成立以及
 如果 `A` 成立，那么 `C` 成立，是一样的。左逆的证明需要外延性和积的 `η-×` 规则：
 
-```
+```agda
 →-distrib-× : ∀ {A B C : Set} → (A → B × C) ≃ (A → B) × (A → C)
 →-distrib-× =
   record
@@ -1240,7 +1236,7 @@ this fact is similar in structure to our previous results:
 
 在同构意义下，积对于和满足分配律。验证这条形式的代码和之前的证明相似：
 
-```
+```agda
 ×-distrib-⊎ : ∀ {A B C : Set} → (A ⊎ B) × C ≃ (A × C) ⊎ (B × C)
 ×-distrib-⊎ =
   record
@@ -1265,7 +1261,7 @@ Sums do not distribute over products up to isomorphism, but it is an embedding:
 
 和对于积不满足分配律，但满足嵌入：
 
-```
+```agda
 ⊎-distrib-× : ∀ {A B C : Set} → (A × B) ⊎ C ≲ (A ⊎ C) × (B ⊎ C)
 ⊎-distrib-× =
   record
@@ -1327,7 +1323,7 @@ Show that the following property holds:
 
 证明如下性质成立：
 
-```
+```agda
 postulate
   ⊎-weak-× : ∀ {A B C : Set} → (A ⊎ B) × C → A ⊎ (B × C)
 ```
@@ -1340,12 +1336,12 @@ distributive law, and explain how it relates to the weak version.
 这被称为**弱分配律（Weak Distributive Law）**。给出相对应的分配律，并解释分配律与弱分配律的关系。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1362,7 +1358,7 @@ Show that a disjunct of conjuncts implies a conjunct of disjuncts:
 
 证明合取的析取蕴涵了析取的合取：
 
-```
+```agda
 postulate
   ⊎×-implies-×⊎ : ∀ {A B C D : Set} → (A × B) ⊎ (C × D) → (A ⊎ C) × (B ⊎ D)
 ```
@@ -1374,12 +1370,12 @@ Does the converse hold? If so, prove; if not, give a counterexample.
 反命题成立吗？如果成立，给出证明；如果不成立，给出反例。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1395,7 +1391,7 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 标准库中可以找到与本章节中相似的定义：
 
-```
+```agda
 import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
 import Data.Unit using (⊤; tt)
 import Data.Sum using (_⊎_; inj₁; inj₂) renaming ([_,_] to case-⊎)

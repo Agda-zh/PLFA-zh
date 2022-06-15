@@ -1,14 +1,11 @@
 ---
 title     : "Negation: 直觉逻辑与命题逻辑中的否定"
-layout    : page
-prev      : /Connectives/
 permalink : /Negation/
-next      : /Quantifiers/
 translators : ["Oling Cat"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Negation where
 ```
 
@@ -21,7 +18,7 @@ and classical logic.
 
 ## Imports
 
-```
+```agda
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Empty using (⊥; ⊥-elim)
@@ -46,7 +43,7 @@ as implication of false:
 给定命题 `A`，当 `A` 不成立时，它的否定形式 `¬ A` 成立。
 我们将否定阐述为「蕴涵假」来形式化此概念。
 
-```
+```agda
 ¬_ : Set → Set
 ¬ A = A → ⊥
 ```
@@ -84,7 +81,7 @@ In other words, if both `¬ A` and `A` hold, then we have a contradiction:
 给定 `¬ A` 和 `A` 均成立的证据，我们可以得出 `⊥` 成立。换言之，若 `¬ A` 和 `A` 均成立，
 那么我们就得到了矛盾：
 
-```
+```agda
 ¬-elim : ∀ {A : Set}
   → ¬ A
   → A
@@ -109,7 +106,7 @@ than disjunction and conjunction, but less tightly than anything else:
 
 我们将否定的优先级设定为高于析取和合取，但低于其它运算：
 
-```
+```agda
 infix 3 ¬_
 ```
 
@@ -128,7 +125,7 @@ we have only half of this equivalence, namely that `A` implies `¬ ¬ A`:
 在**经典逻辑**中，`A` 等价于 `¬ ¬ A`。而如前文所述，Agda 中使用了**直觉逻辑**，
 因此我们只有该等价关系的一半，即 `A` 蕴涵 `¬ ¬ A`：
 
-```
+```agda
 ¬¬-intro : ∀ {A : Set}
   → A
     -----
@@ -154,7 +151,7 @@ An equivalent way to write the above is as follows:
 
 以上描述的等价写法如下：
 
-```
+```agda
 ¬¬-intro′ : ∀ {A : Set}
   → A
     -----
@@ -178,7 +175,7 @@ We cannot show that `¬ ¬ A` implies `A`, but we can show that
 
 我们无法证明 `¬ ¬ A` 蕴涵 `A`，但可以证明 `¬ ¬ ¬ A` 蕴涵 `¬ A`：
 
-```
+```agda
 ¬¬¬-elim : ∀ {A : Set}
   → ¬ ¬ ¬ A
     -------
@@ -208,7 +205,7 @@ stating that if `A` implies `B`, then `¬ B` implies `¬ A`:
 另一个逻辑规则是**换质换位律（contraposition）**，它陈述了若 `A` 蕴涵 `B`，
 则 `¬ B` 蕴涵 `¬ A`：
 
-```
+```agda
 contraposition : ∀ {A B : Set}
   → (A → B)
     -----------
@@ -236,7 +233,7 @@ Using negation, it is straightforward to define inequality:
 利用否定可直接定义不等性：
 
 
-```
+```agda
 _≢_ : ∀ {A : Set} → A → A → Set
 x ≢ y  =  ¬ (x ≡ y)
 ```
@@ -247,7 +244,7 @@ It is trivial to show distinct numbers are not equal:
 
 要证明不同的数不相等很简单：
 
-```
+```agda
 _ : 1 ≢ 2
 _ = λ()
 ```
@@ -266,7 +263,7 @@ Peano's postulate that zero is not the successor of any number:
 会化简为不同的正规形式，因此 Agda 判定没有证据可证明 `1 ≡ 2`。
 第二个例子是，很容易验证皮亚诺公理中「零不是任何数的后继数」的假设：
 
-```
+```agda
 peano : ∀ {m : ℕ} → zero ≢ suc m
 peano = λ()
 ```
@@ -298,7 +295,7 @@ this proof two different ways:
 
 确实，只有一个 `⊥ → ⊥` 的证明。我们可以用两种方式写出此证明：
 
-```
+```agda
 id : ⊥ → ⊥
 id x = x
 
@@ -312,7 +309,7 @@ But, using extensionality, we can prove these equal:
 
 不过使用外延性，我们可以证明二者相等：
 
-```
+```agda
 id≡id′ : id ≡ id′
 id≡id′ = extensionality (λ())
 ```
@@ -332,7 +329,7 @@ Indeed, we can show any two proofs of a negation are equal:
 
 实际上，我们可以证明任意两个否定的证明都是相等的：
 
-```
+```agda
 assimilation : ∀ {A : Set} (¬x ¬x′ : ¬ A) → ¬x ≡ ¬x′
 assimilation ¬x ¬x′ = extensionality (λ x → ⊥-elim (¬x x))
 ```
@@ -365,12 +362,12 @@ is irreflexive, that is, `n < n` holds for no `n`.
 即 `n < n` 对于任何 `n` 都不成立。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -402,12 +399,12 @@ but that when one holds the negation of the other two must also hold.
 其它二者的否定也必定成立。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -433,12 +430,12 @@ This result is an easy consequence of something we've proved previously.
 此结果是我们之前证明的定理的简单推论。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -555,7 +552,7 @@ The law of the excluded middle can be formulated as follows:
 
 排中律可形式化如下：
 
-```
+```agda
 postulate
   em : ∀ {A : Set} → A ⊎ ¬ A
 ```
@@ -570,7 +567,7 @@ its negation is never provable):
 如之前所言，排中律在直觉逻辑中并不成立。然而，我们可以证明它是
 **不可辩驳（Irrefutable）**的，即其否定的否定是可证明的（因而其否定式不可证明）：
 
-```
+```agda
 em-irrefutable : ∀ {A : Set} → ¬ ¬ (A ⊎ ¬ A)
 em-irrefutable = λ k → k (inj₂ (λ x → k (inj₁ x)))
 ```
@@ -760,12 +757,12 @@ Show that each of these implies all the others.
 请证明其中任意一条定律都蕴涵其它所有定律。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -782,7 +779,7 @@ Say that a formula is _stable_ if double negation elimination holds for it:
 
 若双重否定消去对某个式子成立，我们就说它是**稳定（Stable）**的：
 
-```
+```agda
 Stable : Set → Set
 Stable A = ¬ ¬ A → A
 ```
@@ -795,12 +792,12 @@ of two stable formulas is stable.
 请证明任何否定式都是稳定的，并且两个稳定式的合取也是稳定的。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处
 ```
 
@@ -816,7 +813,7 @@ Definitions similar to those in this chapter can be found in the standard librar
 
 本章中的类似定义可在标准库中找到：
 
-```
+```agda
 import Relation.Nullary using (¬_)
 import Relation.Nullary.Negation using (contraposition)
 ```

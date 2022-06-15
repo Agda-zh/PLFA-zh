@@ -1,14 +1,11 @@
 ---
 title     : "Properties: 进行性与保型性"
-layout    : page
-prev      : /Lambda/
 permalink : /Properties/
-next      : /DeBruijn/
 translators : ["starxingchenc","alissa-tung"]
 progress  : 80
 ---
 
-```
+```agda
 module plfa.part2.Properties where
 ```
 
@@ -30,7 +27,7 @@ sequences for us.
 
 ## 导入
 
-```
+```agda
 open import Relation.Binary.PropositionalEquality
   using (_≡_; _≢_; refl; sym; cong; cong₂)
 open import Data.String using (String; _≟_)
@@ -170,7 +167,7 @@ We start with an easy observation. Values do not reduce:
 
 我们从一个简单的观察开始。值无法被规约：
 
-```
+```agda
 V¬—→ : ∀ {M N}
   → Value M
     ----------
@@ -209,7 +206,7 @@ As a corollary, terms that reduce are not values:
 
 作为推论，可以再进行规约的项不是值：
 
-```
+```agda
 —→¬V : ∀ {M N}
   → M —→ N
     ---------
@@ -254,7 +251,7 @@ must itself be canonical:
 更进一步说，此时函数的函数体必须在只包含它的约束变量的上下文中是良类型的，
 后继的参数本身也必须是标准式：
 
-```
+```agda
 infix  4 Canonical_⦂_
 
 data Canonical_⦂_ : Term → Type → Set where
@@ -343,7 +340,7 @@ captures what it means for a term `M` to make progress:
 
 要陈述这一性质，我们首先需要引入一个关系来刻画什么样的项 `M` 才是进行的：
 
-```
+```agda
 data Progress (M : Term) : Set where
 
   step : ∀ {N}
@@ -372,7 +369,7 @@ If a term is well typed in the empty context then it satisfies progress:
 
 如果一个项在空上下文中是良类型的，那么它满足进行性：
 
-```
+```agda
 progress : ∀ {M A}
   → ∅ ⊢ M ⦂ A
     ----------
@@ -495,7 +492,7 @@ have formulated progress using disjunction and existentials:
 也可以用析取和存在量化来形式化进行性，
 而不是为 `Progress M` 定义一个数据类型：
 
-```
+```agda
 postulate
   progress′ : ∀ M {A} → ∅ ⊢ M ⦂ A → Value M ⊎ ∃[ N ](M —→ N)
 ```
@@ -528,12 +525,12 @@ Show that `Progress M` is isomorphic to `Value M ⊎ ∃[ N ](M —→ N)`.
 证明 `Progress M` 与 `Value M ⊎ ∃[ N ](M —→ N)` 是同构的。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -551,12 +548,12 @@ proof of `progress` above.
 补全 `progress′` 的证明，并与之前 `progress` 的证明相对比。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -574,7 +571,7 @@ whether a well-typed term is a value:
 通过将 `progress` 与 `—→¬V` 相组合，
 写一个程序判断一个良类型的项是否是一个值：
 
-```
+```agda
 postulate
   value? : ∀ {A M} → ∅ ⊢ M ⦂ A → Dec (Value M)
 ```
@@ -777,7 +774,7 @@ both contexts:
 要处理这类情况，我们首先证明一条论述 「如果一个上下文和另一个上下文之间存在映射，
 在对两者添加同一个变量后映射仍然存在」 的引理：
 
-```
+```agda
 ext : ∀ {Γ Δ}
   → (∀ {x A}     →         Γ ∋ x ⦂ A →         Δ ∋ x ⦂ A)
     -----------------------------------------------------
@@ -828,7 +825,7 @@ prove renaming preserves types:
 
 有了拓展引理为我们所用，就可以直接写出重命名保持赋型的证明了：
 
-```
+```agda
 rename : ∀ {Γ Δ}
   → (∀ {x A} → Γ ∋ x ⦂ A → Δ ∋ x ⦂ A)
     ----------------------------------
@@ -910,7 +907,7 @@ First, a closed term can be weakened to any context:
 
 第一，一个闭项可以被弱化到任意上下文：
 
-```
+```agda
 weaken : ∀ {Γ M A}
   → ∅ ⊢ M ⦂ A
     ----------
@@ -938,7 +935,7 @@ drop the shadowed one:
 
 第二，如果上下文中的最后两个变量相等，我们就可以去除掉被遮盖的一个：
 
-```
+```agda
 drop : ∀ {Γ x M A B C}
   → Γ , x ⦂ A , x ⦂ B ⊢ M ⦂ C
     --------------------------
@@ -974,7 +971,7 @@ Third, if the last two variables in a context differ then we can swap them:
 
 第三，如果上下文中的最后两个变量不同，我们可以交换它们：
 
-```
+```agda
 swap : ∀ {Γ x y M A B C}
   → x ≢ y
   → Γ , y ⦂ B , x ⦂ A ⊢ M ⦂ C
@@ -1052,7 +1049,7 @@ Here is the formal statement and proof that substitution preserves types:
 
 下面是替换保持赋型的形式化陈述及其证明：
 
-```
+```agda
 subst : ∀ {Γ x N V A B}
   → ∅ ⊢ V ⦂ A
   → Γ , x ⦂ A ⊢ N ⦂ B
@@ -1306,12 +1303,12 @@ preserves types.
 
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1328,7 +1325,7 @@ that reduction preserves types is straightforward:
 
 一旦我们证明了替换保持类型，证明规约保持类型是简单的：
 
-```
+```agda
 preserve : ∀ {M N A}
   → ∅ ⊢ M ⦂ A
   → M —→ N
@@ -1487,7 +1484,7 @@ Some terms may reduce forever.  Here is a simple example:
 
 一些项将永远规约下去。这是一个例子：
 
-```
+```agda
 sucμ  =  μ "x" ⇒ `suc (` "x")
 
 _ =
@@ -1548,7 +1545,7 @@ bound on the number of reduction steps.  `Gas` is specified by a natural number:
 以此类推，我们将使用**燃料**作为参数的名称，
 该参数限制了规约步骤的数量。`Gas` 由一个自然数指定。
 
-```
+```agda
 record Gas : Set where
   constructor gas
   field
@@ -1563,7 +1560,7 @@ When our evaluator returns a term `N`, it will either give evidence that
 当我们的求值器返回了一个项 `N`，它要么证明 `N` 是一个值，
 要么表明它耗尽了燃料：
 
-```
+```agda
 data Finished (N : Term) : Set where
 
   done :
@@ -1585,7 +1582,7 @@ reduction finished:
 给定一个类型为 `A` 的项 `L`，对于某个 `N`，
 求值器将返回从 `L` 到 `N` 的规约序列以及规约是否完成的指示：
 
-```
+```agda
 data Steps (L : Term) : Set where
 
   steps : ∀ {N}
@@ -1603,8 +1600,7 @@ and returns the corresponding steps:
 求值器使用燃料和项是良类型的论据，
 并返回相应的步骤：
 
-```
-
+```agda
 eval : ∀ {L A}
   → Gas
   → ∅ ⊢ L ⦂ A
@@ -1684,7 +1680,7 @@ is well typed:
 现在我们可以用 Agda 来计算之前给出的不停机的规约序列。
 首先我们证明项 `sucμ` 是良赋型的：
 
-```
+```agda
 ⊢sucμ : ∅ ⊢ μ "x" ⇒ `suc ` "x" ⦂ `ℕ
 ⊢sucμ = ⊢μ (⊢suc (⊢` ∋x))
   where
@@ -1699,7 +1695,7 @@ sequence, we evaluate with three steps worth of gas:
 我们花三步量的燃料来进行求值，
 以展示这个无穷规约序列的前三步：
 
-```
+```agda
 _ : eval (gas 3) ⊢sucμ ≡
   steps
    (μ "x" ⇒ `suc ` "x"
@@ -1724,7 +1720,7 @@ applied to successor and zero.  Supplying 100 steps of gas is more than enough:
 我们从计算 Church 表示法表示数字的数字二应用到后继和数字零开始。
 提供 100 步量的燃料就已远超过需求了：
 
-```
+```agda
 _ : eval (gas 100) (⊢twoᶜ · ⊢sucᶜ · ⊢zero) ≡
   steps
    ((ƛ "s" ⇒ (ƛ "z" ⇒ ` "s" · (` "s" · ` "z"))) · (ƛ "n" ⇒ `suc ` "n")
@@ -1762,7 +1758,7 @@ Next, we show two plus two is four:
 
 接下来，我们来证明二加二的和是四：
 
-```
+```agda
 _ : eval (gas 100) ⊢2+2 ≡
   steps
    ((μ "+" ⇒
@@ -1937,7 +1933,7 @@ Similarly, we can evaluate the corresponding term for Church numerals:
 
 类似地，我们可以计算 Church 表示法表示的数字的相应项。
 
-```
+```agda
 _ : eval (gas 100) ⊢2+2ᶜ ≡
   steps
    ((ƛ "m" ⇒
@@ -2023,12 +2019,12 @@ Using the evaluator, confirm that two times two is four.
 用这个求值器来验证二乘二的积是四。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -2048,12 +2044,12 @@ and preservation theorems for the simply typed lambda-calculus.
 写下简单类型 λ-演算进行性和保型性的定理。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -2082,12 +2078,12 @@ with case expressions and one not involving case expressions.
 找到两个子扩展的反例，一个涉及 `case` 表达式而另一个不涉及。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -2104,7 +2100,7 @@ A term is _normal_ if it cannot reduce:
 
 一个项是**范式**，如果它不能被规约。
 
-```
+```agda
 Normal : Term → Set
 Normal M  =  ∀ {N} → ¬ (M —→ N)
 ```
@@ -2115,7 +2111,7 @@ A term is _stuck_ if it is normal yet not a value:
 
 一个项被**卡住**，如果它是一个范式但不是一个值。
 
-```
+```agda
 Stuck : Term → Set
 Stuck M  =  Normal M × ¬ Value M
 ```
@@ -2126,7 +2122,7 @@ Using progress, it is easy to show that no well-typed term is stuck:
 
 使用进行性，很容易证明没有良类型的项会被卡住。
 
-```
+```agda
 postulate
   unstuck : ∀ {M A}
     → ∅ ⊢ M ⦂ A
@@ -2142,7 +2138,7 @@ a well-typed term remains well typed:
 使用保型性，很容易证明在经过任意多次步进后，
 良类型的项依旧是良类型的。
 
-```
+```agda
 postulate
   preserves : ∀ {M N A}
     → ∅ ⊢ M ⦂ A
@@ -2159,7 +2155,7 @@ any number of reduction steps leads to a term that is not stuck:
 一个简单地结果是，从一个良类型的项开始，进行任意多次步进，
 将得到一个不被卡住的项。
 
-```
+```agda
 postulate
   wttdgs : ∀ {M N A}
     → ∅ ⊢ M ⦂ A
@@ -2194,12 +2190,12 @@ Give an example of an ill-typed term that does get stuck.
 给出一个会被卡住的不良类型的项的例子。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -2216,12 +2212,12 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 提供上文中 `unstuck`、`preserves` 和 `wttdgs` 三个假设的证明。
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -2249,7 +2245,7 @@ is exactly analogous to `cong` and `cong₂` as defined previously:
 我们的证明需要一个合同变体来处理四个参数的函数（处理`case_[zero⇒_|suc_⇒_]`）。
 它与之前定义的 `cong` 和 `cong₂` 完全类似：
 
-```
+```agda
 cong₄ : ∀ {A B C D E : Set} (f : A → B → C → D → E)
   {s w : A} {t x : B} {u y : C} {v z : D}
   → s ≡ w → t ≡ x → u ≡ y → v ≡ z → f s t u v ≡ f w x y z
@@ -2262,7 +2258,7 @@ It is now straightforward to show that reduction is deterministic:
 
 现在证明规约是确定的十分简单。
 
-```
+```agda
 det : ∀ {M M′ M″}
   → (M —→ M′)
   → (M —→ M″)

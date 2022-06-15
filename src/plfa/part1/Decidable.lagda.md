@@ -1,14 +1,11 @@
 ---
 title     : "Decidable: 布尔值与判定过程"
-layout    : page
-prev      : /Quantifiers/
 permalink : /Decidable/
-next      : /Lists/
 translators : ["Fangyi Zhou", "Oshmkufa2010"]
 progress  : 100
 ---
 
-```
+```agda
 module plfa.part1.Decidable where
 ```
 
@@ -33,7 +30,7 @@ of a new notion of _decidable_.
 
 ## 导入
 
-```
+```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open Eq.≡-Reasoning
@@ -65,7 +62,7 @@ is less than or equal to another:
 回忆我们在 [Relations](/Relations/)
 章节中将比较定义为一个归纳数据类型，其提供了一个数小于或等于另外一个数的证明：
 
-```
+```agda
 infix 4 _≤_
 
 data _≤_ : ℕ → ℕ → Set where
@@ -87,7 +84,7 @@ and show there is no possible evidence that `4 ≤ 2`:
 
 举例来说，我们提供 `2 ≤ 4` 成立的证明，也可以证明没有 `4 ≤ 2` 成立的证明。
 
-```
+```agda
 2≤4 : 2 ≤ 4
 2≤4 = s≤s (s≤s z≤n)
 
@@ -112,7 +109,7 @@ type of booleans:
 
 作为替代的定义，我们可以定义一个大家可能比较熟悉的布尔类型：
 
-```
+```agda
 data Bool : Set where
   true  : Bool
   false : Bool
@@ -126,7 +123,7 @@ _computes_ to `true` if the comparison holds and to `false` otherwise:
 给定了布尔类型，我们可以定义一个两个数的函数在比较关系成立时来**计算**出 `true`，
 否则计算出 `false`：
 
-```
+```agda
 infix 4 _≤ᵇ_
 
 _≤ᵇ_ : ℕ → ℕ → Bool
@@ -148,7 +145,7 @@ and we can compute that `4 ≤ᵇ 2` does not hold:
 `suc m ≤ zero` 的证明，我们使用中间一条定义来表示。
 举个例子，我们可以计算 `2 ≤ᵇ 4` 成立，也可以计算 `4 ≤ᵇ 2` 不成立：
 
-```
+```agda
 _ : (2 ≤ᵇ 4) ≡ true
 _ =
   begin
@@ -203,7 +200,7 @@ computation world to the evidence world:
 我们希望能够证明这两种方法是有联系的，而我们的确可以。
 首先，我们定义一个函数来把计算世界映射到证明世界：
 
-```
+```agda
 T : Bool → Set
 T true   =  ⊤
 T false  =  ⊥
@@ -229,7 +226,7 @@ In the forward direction, we need to do a case analysis on the boolean `b`:
 
 换句话说，`T b` 当且仅当 `b ≡ true` 成立时成立。在向前的方向，我们需要针对 `b` 进行情况分析：
 
-```
+```agda
 T→≡ : ∀ (b : Bool) → T b → b ≡ true
 T→≡ true tt   =  refl
 T→≡ false ()
@@ -249,7 +246,7 @@ In the reverse direction, there is no need for a case analysis on the boolean `b
 
 在向后的方向，不需要针对布尔值 `b` 的情况分析：
 
-```
+```agda
 ≡→T : ∀ {b : Bool} → b ≡ true → T b
 ≡→T refl  =  tt
 ```
@@ -274,7 +271,7 @@ of `_≤ᵇ_`:
 
 在向前的方向，我们考虑 `_≤ᵇ_` 定义中的三条语句：
 
-```
+```agda
 ≤ᵇ→≤ : ∀ (m n : ℕ) → T (m ≤ᵇ n) → m ≤ n
 ≤ᵇ→≤ zero    n       tt  =  z≤n
 ≤ᵇ→≤ (suc m) zero    ()
@@ -308,7 +305,7 @@ that `m ≤ n`:
 
 在向后的方向，我们考虑 `m ≤ n` 成立证明的可能形式：
 
-```
+```agda
 ≤→≤ᵇ : ∀ {m n : ℕ} → m ≤ n → T (m ≤ᵇ n)
 ≤→≤ᵇ z≤n        =  tt
 ≤→≤ᵇ (s≤s m≤n)  =  ≤→≤ᵇ m≤n
@@ -370,7 +367,7 @@ both approaches.  It is called `Dec A`, where `Dec` is short for _decidable_:
 为什么这个关系成立，但却需要我们自行完成这个证明。不过，我们其实可以简单地定义一个类型来取二者之精华。
 我们把它叫做：`Dec A`，其中 `Dec` 是**可判定的（Decidable）**的意思。
 
-```
+```agda
 data Dec (A : Set) : Set where
   yes :   A → Dec A
   no  : ¬ A → Dec A
@@ -401,7 +398,7 @@ an inequality does not hold:
 
 首先，我们使用两个有用的函数，用于构造不等式不成立的证明：
 
-```
+```agda
 ¬s≤z : ∀ {m : ℕ} → ¬ (suc m ≤ zero)
 ¬s≤z ()
 
@@ -431,7 +428,7 @@ Using these, it is straightforward to decide an inequality:
 
 使用这些，我们可以直接的判定不等关系：
 
-```
+```agda
 _≤?_ : ∀ (m n : ℕ) → Dec (m ≤ n)
 zero  ≤? n                   =  yes z≤n
 suc m ≤? zero                =  no ¬s≤z
@@ -480,7 +477,7 @@ think up on our own:
 
 我们可以使用我们新的函数来**计算**出我们之前需要自己想出来的**证明**。
 
-```
+```agda
 _ : 2 ≤? 4 ≡ yes (s≤s (s≤s z≤n))
 _ = refl
 
@@ -519,18 +516,18 @@ Analogous to the function above, define a function to decide strict inequality:
 
 与上面的函数相似，定义一个判定严格不等性的函数：
 
-```
+```agda
 postulate
   _<?_ : ∀ (m n : ℕ) → Dec (m < n)
 ```
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -546,18 +543,18 @@ Define a function to decide whether two naturals are equal:
 
 定义一个函数来判定两个自然数是否相等。
 
-```
+```agda
 postulate
   _≡ℕ?_ : ∀ (m n : ℕ) → Dec (m ≡ n)
 ```
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -577,7 +574,7 @@ decidability.  Indeed, we can do so as follows:
 好奇的读者可能会思考能不能重用 `m ≤ᵇ n` 的定义，加上它与 `m ≤ n` 等价的证明，
 来证明可判定性。的确，我们是可以做到的：
 
-```
+```agda
 _≤?′_ : ∀ (m n : ℕ) → Dec (m ≤ n)
 m ≤?′ n with m ≤ᵇ n | ≤ᵇ→≤ m n | ≤→≤ᵇ {m} {n}
 ...        | true   | p        | _            = yes (p tt)
@@ -640,7 +637,7 @@ Erasure takes a decidable value to a boolean:
 
 擦除（Erasure）将一个可判定的值转换为一个布尔值：
 
-```
+```agda
 ⌊_⌋ : ∀ {A : Set} → Dec A → Bool
 ⌊ yes x ⌋  =  true
 ⌊ no ¬x ⌋  =  false
@@ -652,7 +649,7 @@ Using erasure, we can easily derive `_≤ᵇ_` from `_≤?_`:
 
 使用擦除，我们可以简单地从 `_≤?_` 中派生出 `_≤ᵇ_`：
 
-```
+```agda
 _≤ᵇ′_ : ℕ → ℕ → Bool
 m ≤ᵇ′ n  =  ⌊ m ≤? n ⌋
 ```
@@ -664,7 +661,7 @@ inhabited exactly when `A` is inhabited:
 
 更进一步来说，如果 `D` 是一个类型为 `Dec A` 的值，那么 `T ⌊ D ⌋`
 当且仅当 `A` 成立时成立：
-```
+```agda
 toWitness : ∀ {A : Set} {D : Dec A} → T ⌊ D ⌋ → A
 toWitness {A} {yes x} tt  =  x
 toWitness {A} {no ¬x} ()
@@ -681,7 +678,7 @@ exactly when `m ≤ n` is inhabited:
 
 使用这些，我们可以简单地派生出 `T (m ≤ᵇ′ n)` 当且仅当 `m ≤ n` 成立时成立。
 
-```
+```agda
 ≤ᵇ′→≤ : ∀ {m n : ℕ} → T (m ≤ᵇ′ n) → m ≤ n
 ≤ᵇ′→≤  =  toWitness
 
@@ -717,7 +714,7 @@ and false if either is false:
 
 两个布尔值的合取当两者都为真时为真，当任一为假时为假：
 
-```
+```agda
 infixr 6 _∧_
 
 _∧_ : Bool → Bool → Bool
@@ -743,7 +740,7 @@ decide their conjunction:
 
 相应地，给定两个可判定的命题，我们可以判定它们的合取：
 
-```
+```agda
 infixr 6 _×-dec_
 
 _×-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A × B)
@@ -782,7 +779,7 @@ and false if both are false:
 
 两个布尔值的析取当任意为真时为真，当两者为假时为假：
 
-```
+```agda
 infixr 5 _∨_
 
 _∨_ : Bool → Bool → Bool
@@ -808,7 +805,7 @@ decide their disjunction:
 
 相应地，给定两个可判定的命题，我们可以判定它们的析取：
 
-```
+```agda
 infixr 5 _⊎-dec_
 
 _⊎-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⊎ B)
@@ -847,7 +844,7 @@ and vice versa:
 
 一个布尔值的否定当值为真时为假，反之亦然：
 
-```
+```agda
 not : Bool → Bool
 not true  = false
 not false = true
@@ -860,7 +857,7 @@ can decide its negation:
 
 相应地，给定一个可判定的命题，我们可以判定它的否定：
 
-```
+```agda
 ¬? : ∀ {A : Set} → Dec A → Dec (¬ A)
 ¬? (yes x)  =  no (¬¬-intro x)
 ¬? (no ¬x)  =  yes ¬x
@@ -883,7 +880,7 @@ corresponding to implication:
 
 还有一个与蕴涵相对应，但是稍微不那么知名的运算符：
 
-```
+```agda
 _⊃_ : Bool → Bool → Bool
 _     ⊃ true   =  true
 false ⊃ _      =  true
@@ -914,7 +911,7 @@ we can decide if the first implies the second:
 
 相应地，给定两个可判定的命题，我们可以判定它们的析取：
 
-```
+```agda
 _→-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A → B)
 _     →-dec yes y  =  yes (λ _ → y)
 no ¬x →-dec _      =  yes (λ x → ⊥-elim (¬x x))
@@ -965,7 +962,7 @@ Show that erasure relates corresponding boolean and decidable operations:
 
 证明擦除将对应的布尔值和可判定的值的操作联系了起来：
 
-```
+```agda
 postulate
   ∧-× : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∧ ⌊ y ⌋ ≡ ⌊ x ×-dec y ⌋
   ∨-⊎ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ ∨ ⌊ y ⌋ ≡ ⌊ x ⊎-dec y ⌋
@@ -987,7 +984,7 @@ operation on booleans and decidables, and also show the corresponding erasure:
 给出与[同构与嵌入](/Isomorphism/#iff)章节中 `_↔_` 相对应的布尔值与可判定的值的操作，
 并证明其对应的擦除：
 
-```
+```agda
 postulate
   _iff_ : Bool → Bool → Bool
   _⇔-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⇔ B)
@@ -995,12 +992,12 @@ postulate
 ```
 
 <!--
-```
+```agda
 -- Your code goes here
 ```
 -->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1023,7 +1020,7 @@ from `m` only if `n ≤ m`:
 如果从一个较小的数中减去一个较大的数，结果为零。毕竟我们总是要得到一个结果。
 我们可以用其他方式定义吗？可以定义一版带有**守卫（guarded）**的减法──只有当 `n ≤ m` 时才能从 `m` 中减去 `n` ：
 
-```
+```agda
 minus : (m n : ℕ) (n≤m : n ≤ m) → ℕ
 minus m       zero    _         = m
 minus (suc m) (suc n) (s≤s n≤m) = minus m n n≤m
@@ -1036,7 +1033,7 @@ the proof that `n ≤ m`:
 
 然而这种定义难以使用，因为我们必须显式地为 `n ≤ m` 提供证明：
 
-```
+```agda
 _ : minus 5 3 (s≤s (s≤s (s≤s z≤n))) ≡ 2
 _ = refl
 ```
@@ -1092,7 +1089,7 @@ We obtain the witness for `n ≤ m` using `toWitness`, which we defined earlier:
 
 我们使用之前定义的 `toWitness` 获得了 `n ≤ m` 的证据：
 
-```
+```agda
 _-_ : (m n : ℕ) {n≤m : T ⌊ n ≤? m ⌋} → ℕ
 _-_ m n {n≤m} = minus m n (toWitness n≤m)
 ```
@@ -1103,7 +1100,7 @@ We can safely use `_-_` as long as we statically know the two numbers:
 
 我们现在只要能静态地知道这两个数就可以安全地使用 `_-_` 了：
 
-```
+```agda
 _ : 5 - 3 ≡ 2
 _ = refl
 ```
@@ -1115,7 +1112,7 @@ synonym for `T ⌊ ? ⌋` called `True`:
 
 事实上，这种惯用语法非常普遍。标准库为 `T ⌊ ? ⌋` 定义了叫做 `True` 的同义词：
 
-```
+```agda
 True : ∀ {Q} → Dec Q → Set
 True Q = T ⌊ Q ⌋
 ```
@@ -1137,7 +1134,7 @@ Give analogues of `True`, `toWitness`, and `fromWitness` which work with *negate
 
 ## 标准库
 
-```
+```agda
 import Data.Bool.Base using (Bool; true; false; T; _∧_; _∨_; not)
 import Data.Nat using (_≤?_)
 import Relation.Nullary using (Dec; yes; no)

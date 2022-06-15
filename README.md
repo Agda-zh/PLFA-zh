@@ -1,9 +1,6 @@
 ---
-layout    : page
 title     : 使用说明
-prev      : /Preface/
-permalink : /GettingStarted/
-next      : /Naturals/
+permalink: /GettingStarted/
 translators : ["Rongxiao Fu", "Oling Cat"]
 ---
 
@@ -12,6 +9,7 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 [![Calendar Version][plfa-calver]][plfa-latest]
 [![Agda][agda-version]][agda]
 [![agda-stdlib][agda-stdlib-version]][agda-stdlib]
+[![Build Status][plfa-status]][plfa-ci]
 
 《编程语言基础：Agda 语言描述》的使用方法与《Programming Language Foundations in Agda》一致。
 
@@ -21,30 +19,31 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 
 
 <!--
-## Dependencies for users
+## Installing Agda and PLFA
 -->
 
-## 用户依赖
+## 安装 Agda 和 PLFA
 
 <!--
-You can read PLFA [online][plfa] without installing anything.
-However, if you wish to interact with the code or complete the exercises, you need several things:
+You can read PLFA [online][plfa] without installing anything. However, if you wish to interact with the code or complete the exercises, you need several things:
 -->
 
 你可以[在线阅读][plfa-zh] PLFA，无需安装任何东西。
 然而，如果你想要交互式编写代码或完成习题，那么就需要几样东西：
 
 <!--
-  - [Stack](#install-the-haskell-tool-stack)
+  - On macOS: [The XCode Command Line Tools](#on-macos-install-the-xcode-command-line-tools)
   - [Git](#install-git)
-  - [Agda](#install-agda-using-stack)
+  - [GHC and Cabal](#install-ghc-and-cabal)
+  - [Agda](#install-agda)
   - [Agda standard library](#install-plfa-and-the-agda-standard-library)
   - [PLFA](#install-plfa-and-the-agda-standard-library)
 -->
 
-  - [Stack](#install-the-haskell-tool-stack)
+  - macOS 上：[XCode 命令行工具](#on-macos-install-the-xcode-command-line-tools)
   - [Git](#install-git)
-  - [Agda](#install-agda-using-stack)
+  - [GHC and Cabal](#install-ghc-and-cabal)
+  - [Agda](#install-agda)
   - [Agda 标准库](#install-plfa-and-the-agda-standard-library)
   - [PLFA](#install-plfa-and-the-agda-standard-library)
 
@@ -69,10 +68,10 @@ apt），Agda 的版本可能不是最新的。除此之外，Agda
 ### On macOS: Install the XCode Command Line Tools
 -->
 
-### macOS 平台：安装 XCode 命令行工具
+### macOS 平台：安装 XCode 命令行工具{name=on-macos-install-the-xcode-command-line-tools}
 
 <!--
-On macOS, you’ll need to install the [XCode Command Line Tools][xcode]. For most versions of macOS, you can install these by running the following command:
+On macOS, you’ll need to install [The XCode Command Line Tools][xcode]. For most versions of macOS, you can install these by running the following command:
 -->
 
 在 macOS 平台，你需要安装 [XCode 命令行工具][xcode]。
@@ -82,48 +81,6 @@ On macOS, you’ll need to install the [XCode Command Line Tools][xcode]. For mo
 xcode-select --install
 ```
 
-<!--
-### Install the Haskell Tool Stack
--->
-
-### 安装 Haskell 工具 Stack {name=install-the-haskell-tool-stack}
-
-<!--
-Agda is written in Haskell, so to install it we’ll need the *Haskell Tool Stack*, or *Stack* for short. Stack is a program for managing different Haskell compilers and packages:
--->
-
-Agda 使用 Haskell 写的，因此我们需要 Haskell 工具 Stack （简称 Stack）来安装 Agda。
-Stack 是管理不同版本的 Haskell 编译器和包的管理程序。
-
-<!--
-- *On UNIX and macOS.* If your package manager has a package for Stack, that’s probably your easiest option. For instance, Homebrew on macOS  and APT on Debian offer the “haskell-stack” package. Otherwise, you can follow the instructions on [the Stack website][haskell-stack]. Usually, Stack installs binaries at `HOME/.local/bin`. Please ensure this is on your PATH, by including the following in your shell configuration, e.g., in `HOME/.bash_profile`:
-  ```bash
-  export PATH="${HOME}/.local/bin:${PATH}"
-  ```
-  Finally, ensure that you’ve got the latest version of Stack, by running:
-  ```bash
-  stack upgrade
-  ```
-- *On Windows.* There is a Windows installer on [the Stack website][haskell-stack].
--->
-
-- **UNIX 和 macOS** 平台：如果你的包管理程序有 Stack
-  的包，这是大概是最简单的方法。 比如说 macOS 的 Homebrew 或者 Debian 的 APT
-  提供了「haskell-stack」包。
-  不然，你可以按照 [Stack 网站上][haskell-stack] 的指示进行安装。
-  在一般情况下，Stack 将二进制文件安装至 `HOME/.local/bin`。
-  请务必保证这个目录在你的 PATH 之内，你可以将下面的内容加入你的 shell
-  配置中，例如 `HOME/.bash_profile` 中：
-
-  ```bash
-  export PATH="${HOME}/.local/bin:${PATH}"
-  ```
-
-  最后，请保证你有最新版的 Stack，运行：
-  ```bash
-  stack upgrade
-  ```
-- **Windows** 平台：[Stack 网站上][haskell-stack]提供 Windows 安装包。
 
 <!--
 ### Install Git
@@ -132,39 +89,53 @@ Stack 是管理不同版本的 Haskell 编译器和包的管理程序。
 ### 安装 Git {name=install-git}
 
 <!--
-If you do not already have Git installed, see [the Git downloads page][git].
+You can check whether you have Git by running the following command:
 -->
 
-如果你没有已经安装 Git，请参阅 [Git 下载页面][git]。
-
-<!--
-### Install Agda using Stack
--->
-
-### 用 Stack 安装 Agda {name=install-agda-using-stack}
-
-
-<!--
-The easiest way to install a *specific version* of Agda is using [Stack][haskell-stack]. You can get the required version of Agda from GitHub, either by cloning the repository and switching to the correct branch, or by downloading [the zip archive][agda]:
--->
-
-安装 **特定** Agda 版本的最简方式是使用 [Stack][haskell-stack]。你可以从 GitHub 上获取需要的版本，
-可以通过克隆源码库并切换到合适的分支，也可以直接下载 [Zip 包][agda]：
+你可以使用下面的命令来检查你是否安装了 Git。
 
 ```bash
-git clone https://github.com/agda/agda.git
-cd agda
-git checkout v2.6.1.3
+git --version
 ```
 
+
 <!--
-To install Agda, run Stack from the Agda source directory:
+If you do not have Git, see [the Git downloads page][git].
 -->
 
-要安装 Agda，请在其源码目录中运行 Stack：
+如果你没有 Git，请参阅 [Git 下载页面][git]。
+
+
+<!--
+### Install GHC and Cabal
+-->
+
+### 安装 GHC 和 Cabal
+
+<!--
+Agda is written in Haskell, so to install it we’ll need the *Glorious Haskell Compiler* version 8.10.7 and it's package managed *Cabal*. We recommend installing both of these using [ghcup][ghcup].
+-->
+
+Agda 是用 Haskell 写成的，所以为了安装它我们需要 *Glorious Haskell Compiler*
+版本 8.10.7 和它的包管理器 *Cabal*。我们建议使用 [ghcup][ghcup] 来安装两者。
+
+
+<!--
+### Install Agda
+-->
+
+### 安装 Agda
+
+<!--
+The easiest way to install Agda is using Cabal. PLFA uses Agda version 2.6.2.2. Run the following command:
+-->
+
+安装 Agda 最简单的方法是通过 Cabal。PLFA 使用 Agda 版本
+2.6.2.2。运行下面的命令：
 
 ```bash
-stack install --stack-yaml stack-8.8.3.yaml
+cabal update
+cabal install Agda-2.6.2.2
 ```
 
 <!--
@@ -174,65 +145,17 @@ stack install --stack-yaml stack-8.8.3.yaml
 **这一步会消耗很长时间和很多内存来完成。**
 
 <!--
-#### Using an existing installation of GHC
+For further information, see the [Agda installation instructions][agda-installation].
 -->
 
-#### 使用已安装的 GHC
+更多参考信息可参阅 [Agda 安装指引][agda-installation]。
 
 <!--
-Stack is perfectly capable of installing and managing versions of the [Glasgow Haskell Compiler][haskell-ghc] for you. However, if you already have a copy of GHC installed, and you want Stack to use your system installation, you can pass the `--system-ghc` flag and select the appropriate `stack-*.yaml` file. For instance, if you have GHC 8.2.2 installed, run:
+If you'd like, you can [test to see if you've installed Agda correctly][agda-hello-world].
 -->
 
-Stack 可以为你安装和管理 [Glasgow Haskell 编译器（GHC）][haskell-ghc]。
-然而，如果你已经安装了 GHC 并且想让 Stack 使用你系统上安装的 GHC 版本，可以传递
-`--system-ghc` 选项并选择对应的 `stack-*.yaml` 文件。例如，若你安装了 GHC
-8.2.2，请运行：
+如果你愿意，你可以[测试 Agda 是否已正确安装][agda-hello-world]。
 
-```bash
-stack install --system-ghc --stack-yaml stack-8.2.2.yaml
-```
-
-<!--
-#### Check if Agda was installed correctly
--->
-
-#### 检查 Agda 是否被正确地安装
-
-<!--
-If you’d like, you can test to see if you’ve installed Agda correctly. Create a file called `hello.agda` with these lines:
--->
-
-如果你愿意，你可以检查 Agda 是否已正确安装。
-创建一个名为 `hello.agda` 的文件，并输入下面的内容：
-
-```agda
-data Greeting : Set where
-  hello : Greeting
-
-greet : Greeting
-greet = hello
-```
-
-<!--
-From a command line, change to the same directory where your `hello.agda` file is located. Then run:
--->
-
-从命令行中，切换到 `hello.agda` 所在的文件夹内，然后运行：
-
-```bash
-agda -v 2 hello.agda
-```
-
-<!--
-You should see a short message like the following, but no errors:
--->
-
-你会看到如下的消息，而不是错误：
-
-```
-Checking hello (/path/to/hello.agda).
-Finished hello.
-```
 
 <!--
 ### Install PLFA and the Agda standard library
@@ -241,15 +164,13 @@ Finished hello.
 ### 安装 PLFA 和 Agda 标准库 {name=install-plfa-and-the-agda-standard-library}
 
 <!--
-You can get the latest version of Programming Language Foundations in Agda from GitHub, either by cloning the repository, or by downloading [the zip archive][plfa-dev]:
+We recommend installing PLFA from Github into your home directory, by running the following command:
 -->
 
-你也可以从 GitHub 克隆源码库，或者下载
-[Zip 包][plfa-dev]来获取最新版的《编程语言基础：Agda 语言描述》：
+我们建议您使用下面的命令把 PLFA 安装至你的家目录：
 
 ```bash
 git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/plfa/plfa.github.io plfa
-# Remove `--depth 1` and `--shallow-submodules` if you want the complete git history of PLFA and the standard library.
 ```
 
 
@@ -260,46 +181,46 @@ PLFA ships with the required version of the Agda standard library, so if you clo
 PLFA 包括了所需要的 Agda 标准库版本，如果你在克隆时使用了 `--recurse-submodule` 选项，你在 `standard-library` 文件夹中已经有了 Agda 标准库！
 
 <!--
-If you forgot to add the `--recurse-submodules` flag, no worries, we can fix that!
--->
-
-如果你忘记使用了 `--recurse-submodules` 选项，也没有关系，我们可以修复它！
-
-```bash
-cd plfa/
-git submodule update --init --recursive --depth 1
-# Remove `--depth 1` if you want the complete git history of the standard library.
-```
-
-<!--
-If you obtained PLFA by downloading the zip archive, you can get the required version of the Agda standard library from GitHub. You can either clone the repository and switch to the correct branch, or you can download the [the zip archive][agda-stdlib]:
--->
-
-如果你用 Zip 包下载了 PLFA，你可以从 GitHub 上下载所需要的 Agda 标准库版本。
-你可以从正确的分支克隆代码仓库，或者下载 [Zip 包][agda-stdlib]。
-
-```bash
-git clone https://github.com/agda/agda-stdlib.git --branch v1.6 --depth 1 agda-stdlib
-# Remove `--depth 1` if you want the complete git history of the standard library.
-```
-
-<!--
-Finally, we need to let Agda know where to find the Agda standard library.
-You'll need the path where you installed the standard library. Check to see that the file “standard-library.agda-lib” exists, and make a note of the path to this file.
-You will need to create two configuration files in `AGDA_DIR`. On UNIX and macOS, `AGDA_DIR` defaults to `~/.agda`. On Windows, `AGDA_DIR` usually defaults to `%AppData%\agda`, where `%AppData%` usually defaults to `C:\Users\USERNAME\AppData\Roaming`.
+Finally, we need to let Agda know where to find the Agda standard library and PLFA. Two configuration files are required, one which lists paths to the libraries and one which specifies which libraries to load by default.
 -->
 
 最后，我们需要让 Agda 知道如何找到标准库。
-你需要知道标准库安装的目录。
-检查 `standard-library.agda-lib` 文件是否存在，并记录这个文件的路径。
-你需要在 `AGDA_DIR` 创建两个配置文件。在 UNIX 和 macOS 平台，`AGDA_DIR` 默认为
+你需要两个配置文件，一个用于指定库的路径，一个用于指定默认载入的库。
+
+
+<!--
+On macOS and Unix, if PLFA is installed in your home directory and you have no existing library configuration files you wish to preserve,run the following commands:
+-->
+
+在 macOS 和 Unix 上，如果 PLFA
+已经安装至家目录，且你没有希望保存的配置文件，运行下面的命令：
+
+```bash
+mkdir -p ~/.agda
+cp ~/plfa/data/dotagda/* ~/.agda
+```
+
+<!--
+This provides access to both the Agda standard library and to PLFA as an Agda library.
+-->
+
+这条命令提供了 Agda 标准库，也让 PLFA 可以当作一个 Agda 库来使用。
+
+<!--
+Otherwise, you will need to edit the appropriate files. Both configuration files are located in the directory `AGDA_DIR`. On UNIX and macOS, `AGDA_DIR` defaults to `~/.agda`. On Windows, `AGDA_DIR` usually defaults to `%AppData%\agda`, where `%AppData%` usually defaults to `C:\Users\USERNAME\AppData\Roaming`.
+-->
+
+否则，你需要手动编辑相关的配置文件。两者都位于 `AGDA_DIR` 目录下。
+在 UNIX 和 macOS 平台，`AGDA_DIR` 默认为
 `~/.agda`。在 Windows 平台，`AGDA_DIR` 一般默认为 `%AppData%\agda`，而
 `%AppData%` 默认为 `C:\Users\USERNAME\AppData\Roaming`。
 
 <!--
 - If the `AGDA_DIR` directory does not already exist, create it.
-- In `AGDA_DIR`, create a plain-text file called `libraries` containing the `/path/to/standard-library.agda-lib`. This lets Agda know that an Agda library called `standard-library` is available.
+- In `AGDA_DIR`, create a plain-text file called `libraries` containing `AGDA_STDLIB/standard-library.agda-lib`, where `AGDA_STDLIB` is the path to where the Agda standard library is located (e.g., `~/plfa/standard-library/`). This lets Agda know that an Agda library called `standard-library` is available.
 - In `AGDA_DIR`, create a plain-text file called `defaults` containing *just* the line `standard-library`.
+- If you want to complete the exercises or to import modules from the book, you will also need to provide access to PLFA as an Agda library.  To do so, let `PLFA` b the path to the root directory for PLFA.
+ Add `PLFA/src/plfa.agda-lib` to `AGDA_DIR/libraries` and add `plfa` to `AGDA_DIR/defaults`, each on a line of their own.
 -->
 
 - 如果 `AGDA_DIR` 文件夹不存在，创建它。
@@ -307,6 +228,10 @@ You will need to create two configuration files in `AGDA_DIR`. On UNIX and macOS
     `/path/to/standard-library.agda-lib` （即上文中记录的路径）。
   这个文件让 Agda 知道有一个名为 `standard-library` 的库可用。
 - 在 `AGDA_DIR` 中，创建一个纯文本文件 `defaults`，内容**仅**为 `standard-library` 这一行。
+- 如果你想完成 的习题，或者想导入书中的模块，
+  那么需要将 PLFA 设置为 Agda 库。如果 `PLFA` 是 PLFA
+  的根目录，完成此设置需要将 `PLFA/src/plfa.agda-lib` 作为单独的一行添加到
+  `AGDA_DIR/libraries`，并将 `plfa` 作为单独的一行添加到 `AGDA_DIR/defaults`。
 
 <!--
 More information about placing the standard libraries is available from [the Library Management page][agda-docs-package-system] of the Agda documentation.
@@ -314,64 +239,6 @@ More information about placing the standard libraries is available from [the Lib
 
 关于放置标准库的更多信息可以参阅 Agda 文档中的[库管理][agda-docs-package-system]。
 
-<!--
-It is possible to set up PLFA as an Agda library as well.  If you want to complete the exercises found in the `courses` folder, or to import modules from the book, you need to do this.  To do so, add the path to `plfa.agda-lib` to `AGDA_DIR/libraries` and add `plfa` to `AGDA_DIR/defaults`, each on a line of their own.
--->
-
-PLFA 也可以设置为一个 Agda 库。
-如果你想完成 `courses` 目录中的习题，或者想导入书中的模块，
-那么需要将 PLFA 设置为 Agda 库。完成此设置需要将 `plfa.agda-lib`
-所在的路径作为单独的一行添加到 `AGDA_DIR/libraries`，并将 `plfa`
-作为单独的一行添加到 `AGDA_DIR/defaults`。
-
-<!--
-#### Check if the Agda standard library was installed correctly
--->
-
-#### 检查 Agda 标准库是否正确安装
-
-<!--
-If you’d like, you can test to see if you’ve installed the Agda standard library correctly. Create a file called `nats.agda` with these lines:
--->
-
-如果你愿意，你可以测试 Agda 标准库是否已正确。创建一个名为 `nats.agda`
-的文件，包括以下内容：
-
-```agda
-open import Data.Nat
-
-ten : ℕ
-ten = 10
-```
-<!--
-(Note that the ℕ is a Unicode character, not a plain capital N. You should be able to just copy-and-paste it from this page into your file.)
--->
-
-（注意 ℕ 是一个 Unicode 字符，而不是普通的大写字母 N。你可以直接从本页复制粘贴它到文件中。）
-
-<!--
-From a command line, change to the same directory where your `nats.agda` file is located. Then run:
--->
-
-从命令行中，切换到 `nats.agda` 所在的文件夹内，然后运行：
-
-```bash
-agda -v 2 nats.agda
-```
-
-<!--
-You should see a several lines describing the files which Agda loads while checking your file, but no errors:
--->
-
-你会看见数行来描述 Agda 在检查你的文件时载入的文件，但是没有错误：
-
-```
-Checking nats (/path/to/nats.agda).
-Loading  Agda.Builtin.Equality (…).
-…
-Loading  Data.Nat (…).
-Finished nats.
-```
 <!--
 ## Setting up an editor for Agda
 -->
@@ -730,129 +597,6 @@ Visual Studio 市场中有 [Agda 插件][vscode-agda]。
 [Atom][atom] 是一个 GitHub 开发的开源代码编辑器。
 Atom 包管理器中有 [Agda 插件][atom-agda]。
 
-<!--
-## Dependencies for developers
--->
-
-## 开发者依赖
-
-<!--
-PLFA is written in literate Agda with [Pandoc Markdown][pandoc-markdown].
-PLFA is available as both a website and an EPUB e-book, both of which can be built on UNIX and macOS.
-Finally, to help developers avoid common mistakes, we provide a set of Git hooks.
--->
-
-PLFA 是以 [Pandoc Markdown][pandoc-markdown] 格式的文学化 Agda 编写的。
-PLFA 可同时在网站上和作为 EPUB 电子书来阅读，二者均可在 UNIX 和 macOS 上构建。
-最后，为了帮助开发者避免常见错误，我们提供一系列 Git 钩子脚本。
-
-<!--
-### Building the website and e-book
--->
-
-### 构建网站和电子书
-
-<!--
-If you’d like to build the web version of PLFA locally, [Stack](#install-the-haskell-tool-stack) is all you need! PLFA is built using [Hakyll][hakyll], a Haskell library for building static websites. We’ve setup a Makefile to help you run common tasks. For instance, to build PLFA, run:
--->
-
-如果你想在本地构建 PLFA 的网站版，你只需要
-[Stack](#install-the-haskell-tool-stack)！
-PLFA 用 [Hakyll][hakyll] （一个构造静态网页的 Haskell 库）来构建。
-我们配置了一个用于执行常见任务的 Makefile。例如，要构建 PLFA，运行：
-
-```bash
-make build
-```
-
-<!--
-If you’d like to serve PLFA locally, rebuilding the website when any of the source files are changed, run:
--->
-
-如果你想在本地架起 PLFA，并且在源文件修改时重构网页，运行：
-
-```bash
-make watch
-```
-
-<!--
-The Makefile offers more than just building and watching, it also offers the following useful options:
--->
-
-Makefile 除了构造和监视之外，还提供了下列有用的其他功能：
-
-```make
-build                      # 构造 PLFA
-watch                      # 构造并架起 PLFA，监视文件变更并重新构造
-test                       # 测试网页版是否有坏链、不合法的 HTML 等
-test-epub                  # 测试 EPUB 电子书版是否符合 EPUB3 标准
-clean                      # 清理 PLFA 构造
-init                       # 设置 Git 钩子脚本（见下文）
-update-contributors        # 从 GitHub 中拉取新贡献者信息至 contributors/
-list                       # 列出所有构造功能
-```
-
-<!--
-For completeness, the Makefile also offers the following options, but you’re unlikely to need these:
--->
-
-完整来说，Makefile 还提供了下列选项，但你可能不会需要用到：
-
-```make
-legacy-versions            # 构造老版本的 PLFA
-setup-install-bundler      # 安装 Ruby Bundler （‘legacy-versions’ 所需要）
-setup-install-htmlproofer  # 安装 HTMLProofer （‘test’ 和 Git 钩子脚本所需要）
-setup-check-fix-whitespace # 检查 fix-whitespace 是否已安装 （Git 钩子脚本所需要）
-setup-check-epubcheck      # 检查 epubcheck 是否已安装 （EPUB 测试所需要）
-setup-check-gem            # 检查 RubyGems 是否已安装
-setup-check-npm            # 检查 Node 包管理器是否已安装
-setup-check-stack          # 检查 Haskell 工具 Stack 是否已安装
-```
-
-<!--
-The [EPUB version][epub] of the book is built as part of the website, since it’s hosted on the website.
--->
-
-本书的 [EPUB 电子书版本][epub]会随着网站一起构造，因为网站上包括了电子书版本。
-
-<!--
-### Git hooks
--->
-
-### Git 钩子脚本
-
-<!--
-The repository comes with several Git hooks:
-
- 1. The [fix-whitespace][fix-whitespace] program is run to check for whitespace violations.
-
- 2. The test suite is run to check if everything type checks.
--->
-
-本源码库包含了几个 Git 钩子：
-
- 1. [fix-whitespace][fix-whitespace] 程序用来检查错误的空格。
-
- 2. 可运行的测试套件用来保证一切都能通过类型检查。
-
-<!--
-You can install these Git hooks by calling `make init`.
-You can install [fix-whitespace][fix-whitespace] by running:
--->
-
-你可以运行 `make init` 来安装这些 Git 钩子。
-你可以运行以下命令来安装 [fix-whitespace][fix-whitespace]：
-
-```bash
-stack install fix-whitespace
-```
-
-<!--
-If you want Stack to use your system installation of GHC, you can pass the `--system-ghc` flag and select the appropriate `stack-*.yaml` file, like when installing [Agda](#installing-agda-using-stack).
--->
-
-如果你想让 Stack 使用你系统中安装的 GHC，那么可以传入 `--system-ghc` 参数并选择对应的
-`stack-*.yaml` 文件，就像在安装 [Agda](#install-agda-using-stack) 时那样。
 
 <!-- Links -->
 [epub-zh]: https://agda-zh.github.io/PLFA-zh/out/epub/plfa.epub
@@ -868,21 +612,21 @@ If you want Stack to use your system installation of GHC, you can pass the `--sy
 
 [epub]: https://plfa.github.io/plfa.epub
 [plfa]: http://plfa.inf.ed.ac.uk
-[plfa-dev]: https://github.com/plfa/plfa.github.io/archive/dev.zip
-[plfa-status]: https://travis-ci.org/plfa/plfa.github.io.svg?branch=dev
-[plfa-travis]: https://travis-ci.org/plfa/plfa.github.io
 [plfa-calver]: https://img.shields.io/badge/calver-20.07-22bfda
 [plfa-latest]: https://github.com/plfa/plfa.github.io/releases/latest
 [plfa-master]: https://github.com/plfa/plfa.github.io/archive/master.zip
-[haskell-stack]:  https://docs.haskellstack.org/en/stable/README/
-[haskell-ghc]: https://www.haskell.org/ghc/
+[plfa-status]: https://github.com/plfa/plfa.github.io/actions/workflows/ci.yml/badge.svg
+[plfa-ci]: https://github.com/plfa/plfa.github.io/actions/workflows/ci.yml
+[ghcup]: https://www.haskell.org/ghcup/
 [git]: https://git-scm.com/downloads
-[agda]: https://github.com/agda/agda/releases/tag/v2.6.1.3
-[agda-version]: https://img.shields.io/badge/agda-v2.6.1.3-blue.svg
-[agda-docs-holes]: https://agda.readthedocs.io/en/v2.6.1.3/getting-started/quick-guide.html
-[agda-docs-emacs-mode]: https://agda.readthedocs.io/en/v2.6.1.3/tools/emacs-mode.html
-[agda-docs-emacs-notation]: https://agda.readthedocs.io/en/v2.6.1.3/tools/emacs-mode.html#notation-for-key-combinations
-[agda-docs-package-system]: https://agda.readthedocs.io/en/v2.6.1.3/tools/package-system.html#example-using-the-standard-library
+[agda]: https://github.com/agda/agda/releases/tag/v2.6.2.2
+[agda-installation]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/installation.html
+[agda-hello-world]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/hello-world.html
+[agda-version]: https://img.shields.io/badge/agda-v2.6.2.2-blue.svg
+[agda-docs-holes]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/quick-guide.html
+[agda-docs-emacs-mode]: https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html
+[agda-docs-emacs-notation]: https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html#notation-for-key-combinations
+[agda-docs-package-system]: https://agda.readthedocs.io/en/v2.6.2.2/tools/package-system.html#example-using-the-standard-library
 [emacs]: https://www.gnu.org/software/emacs/download.html
 [emacs-tour]: https://www.gnu.org/software/emacs/tour/
 [emacs-home]: https://www.gnu.org/software/emacs/manual/html_node/efaq-w32/Location-of-init-file.html
@@ -900,7 +644,6 @@ If you want Stack to use your system installation of GHC, you can pass the `--sy
 [ruby-bundler]: https://bundler.io/#getting-started
 [ruby-jekyll]: https://jekyllrb.com/
 [ruby-html-proofer]: https://github.com/gjtorikian/html-proofer
-[hakyll]: https://jaspervdj.be/hakyll/
 [pandoc]: https://pandoc.org/installing.html
 [pandoc-markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
 [commonmark]: https://commonmark.org/
