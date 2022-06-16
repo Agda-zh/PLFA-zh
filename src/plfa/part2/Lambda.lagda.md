@@ -341,11 +341,7 @@ defined earlier.
 
 写出一个项来定义两个自然数的乘法。你可以使用之前定义的 `plus`。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -368,11 +364,7 @@ definition may use `plusᶜ` as defined earlier (or may not
 你可以使用之前定义的 `plusᶜ`。
 （当然也可以不用，用或不用都有很好的表示方法）
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -974,11 +966,7 @@ substitution.
 上面的替换定义中有三条语句（`ƛ`、 `case` 和 `μ`） 使用了 `with` 语句来处理约束变量。
 将上述语句的共同部分提取成一个函数，然后用共同递归重写替换的定义。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1343,11 +1331,7 @@ above embeds into the second. Why are they not isomorphic?
 证明自反传递闭包的第一种记法嵌入了第二种记法。
 为什么它们不是同构的？
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1567,11 +1551,7 @@ Write out the reduction sequence demonstrating that one plus one is two.
 
 使用规约序列，证明一加一得二。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1788,11 +1768,7 @@ to the list
 
     [ ⟨ "z" , `ℕ ⟩ , ⟨ "s" , `ℕ ⇒ `ℕ ⟩ ]
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -2367,11 +2343,7 @@ showing that it is well typed.
 
 使用你之前写出的项 `mul`，给出其良类型的推导。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -2390,11 +2362,7 @@ showing that it is well typed.
 
 使用你之前写出的项 `mulᶜ`，给出其良类型的推导。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

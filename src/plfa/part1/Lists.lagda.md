@@ -859,7 +859,7 @@ The last step of the proof requires extensionality.
 证明的最后一步需要外延性。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -877,7 +877,7 @@ Prove the following relationship between map and append:
     map f (xs ++ ys) ≡ map f xs ++ map f ys
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -908,7 +908,7 @@ Define a suitable map operator over trees:
     map-Tree : ∀ {A B C D : Set} → (A → C) → (B → D) → Tree A B → Tree C D
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -1048,11 +1048,7 @@ For example:
 
     product [ 1 , 2 , 3 , 4 ] ≡ 24
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1073,7 +1069,7 @@ Show that fold and append are related as follows:
     foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ (foldr _⊗_ e ys) xs
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 #### Exercise `foldr-∷` (practice)
@@ -1099,7 +1095,7 @@ Show that map can be defined using fold:
 证明映射可以用折叠定义：
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -1129,7 +1125,7 @@ The proof requires extensionality.
 此证明需要外延性。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -1147,11 +1143,7 @@ Define a suitable fold function for the type of trees given earlier:
     fold-Tree : ∀ {A B C : Set} → (A → C) → (C → B → C → C) → Tree A B → C
 
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1169,11 +1161,7 @@ Demonstrate an analogue of `map-is-foldr` for the type of trees.
 
 对于树数据类型，证明与 `map-is-foldr` 相似的性质。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1364,11 +1352,7 @@ operations associate to the left rather than the right.  For example:
     foldr _⊗_ e [ x , y , z ]  =  x ⊗ (y ⊗ (z ⊗ e))
     foldl _⊗_ e [ x , y , z ]  =  ((e ⊗ x) ⊗ y) ⊗ z
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1389,11 +1373,7 @@ Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 证明如果 `_⊗_` 和 `e` 构成幺半群，那么 `foldr _⊗_ e` 和 `foldl _⊗_ e` 的结果
 永远是相同的。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1605,11 +1585,7 @@ replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 使用 `Any` 代替 `All` 与一个合适的 `_×_` 的替代，证明一个类似于 `All-++-⇔` 的结果。
 作为结论，展示关联 `_∈_` 和 `_++_` 的一个等价关系。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1627,11 +1603,7 @@ Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
 
 证明 `All-++-⇔` 的等价关系可以被扩展至一个同构关系。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1676,7 +1648,7 @@ If so, prove; if not, explain why.
 
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 <!--
@@ -1693,11 +1665,7 @@ You will need to use extensionality.
 请证明等价的 `¬Any⇔All¬` 可以被扩展成一个同构。
 你需要使用外延性。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处
@@ -1715,11 +1683,6 @@ Show that `All P xs` is isomorphic to `∀ x → x ∈ xs → P x`.
 
 请证明 `All P xs` 同构于 `∀ x → x ∈ xs → P x`.
 
-<!--
-```agda
--- You code goes here
-```
--->
 
 ```agda
 -- 请将代码写在此处
@@ -1738,11 +1701,6 @@ Show that `Any P xs` is isomorphic to `∃[ x ] (x ∈ xs × P x)`.
 
 请证明 `Any P xs` 同构于 `∃[ x ] (x ∈ xs × P x)`.
 
-<!--
-```agda
--- You code goes here
-```
--->
 
 ```agda
 -- 请将代码写在此处
@@ -1843,11 +1801,7 @@ for some element of a list.  Give their definitions.
 那么 `Any` 也有类似的 `any` 和 `Any?` 形式，来判断列表的一些元素是否满足给定的谓词。
 给出它们的定义。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1919,11 +1873,7 @@ with their corresponding proofs.
     split : ∀ {A : Set} {P : A → Set} (P? : Decidable P) (zs : List A)
       → ∃[ xs ] ∃[ ys ] ( merge xs ys zs × All P xs × All (¬_ ∘ P) ys )
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处

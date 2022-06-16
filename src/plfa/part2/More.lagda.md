@@ -317,15 +317,15 @@ construct to a calculus without the construct.
 <!--
     Γ ⊢ M ⦂ A
     Γ ⊢ N ⦂ B
-    ----------------------- `⟨_,_⟩ or `×-I
+    `⟨_,_⟩ or `×-I
     Γ ⊢ `⟨ M , N ⟩ ⦂ A `× B
 
     Γ ⊢ L ⦂ A `× B
-    ---------------- `proj₁ or `×-E₁
+    `proj₁ or `×-E₁
     Γ ⊢ `proj₁ L ⦂ A
 
     Γ ⊢ L ⦂ A `× B
-    ---------------- `proj₂ or `×-E₂
+    `proj₂ or `×-E₂
     Γ ⊢ `proj₂ L ⦂ B
 -->
 
@@ -441,7 +441,7 @@ and reduction rules:
 <!--
     Γ ⊢ L ⦂ A `× B
     Γ , x ⦂ A , y ⦂ B ⊢ N ⦂ C
-    ------------------------------- case× or ×-E
+    case× or ×-E
     Γ ⊢ case× L [⟨ x , y ⟩⇒ N ] ⦂ C
 -->
 
@@ -511,7 +511,7 @@ One might think that we could instead use a more compact translation:
 可能有人认为我们可以使用下面更紧凑的翻译：
 
 <!--
-    -- WRONG
+    WRONG
       (case× L [⟨ x , y ⟩⇒ N ]) †
     =
       (N †) [ x := `proj₁ (L †) ] [ y := `proj₂ (L †) ]
@@ -592,17 +592,17 @@ We can also translate back the other way:
 
 <!--
     Γ ⊢ M ⦂ A
-    -------------------- `inj₁ or ⊎-I₁
+    `inj₁ or ⊎-I₁
     Γ ⊢ `inj₁ M ⦂ A `⊎ B
 
     Γ ⊢ N ⦂ B
-    -------------------- `inj₂ or ⊎-I₂
+    `inj₂ or ⊎-I₂
     Γ ⊢ `inj₂ N ⦂ A `⊎ B
 
     Γ ⊢ L ⦂ A `⊎ B
     Γ , x ⦂ A ⊢ M ⦂ C
     Γ , y ⦂ B ⊢ N ⦂ C
-    ----------------------------------------- case⊎ or ⊎-E
+    case⊎ or ⊎-E
     Γ ⊢ case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] ⦂ C
 -->
 
@@ -710,7 +710,7 @@ There are no reduction rules.
 ### 赋型
 
 <!--
-    ------------ `tt or ⊤-I
+    `tt or ⊤-I
     Γ ⊢ `tt ⦂ `⊤
 -->
 
@@ -801,7 +801,7 @@ We repeat the syntax in full, but only give the new type and reduction rules:
 <!--
     Γ ⊢ L ⦂ `⊤
     Γ ⊢ M ⦂ A
-    ------------------------ case⊤ or ⊤-E
+    case⊤ or ⊤-E
     Γ ⊢ case⊤ L [tt⇒ M ] ⦂ A
 -->
 
@@ -904,7 +904,7 @@ construct plays a role similar to `⊥-elim` in Agda:
 
 <!--
     Γ ⊢ L ⦂ `⊥
-    ------------------ case⊥ or ⊥-E
+    case⊥ or ⊥-E
     Γ ⊢ case⊥ L [] ⦂ A
 -->
 
@@ -988,18 +988,18 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
 ### 赋型
 
 <!--
-    ----------------- `[] or List-I₁
+    `[] or List-I₁
     Γ ⊢ `[] ⦂ `List A
 
     Γ ⊢ M ⦂ A
     Γ ⊢ N ⦂ `List A
-    -------------------- _`∷_ or List-I₂
+    _`∷_ or List-I₂
     Γ ⊢ M `∷ N ⦂ `List A
 
     Γ ⊢ L ⦂ `List A
     Γ ⊢ M ⦂ B
     Γ , x ⦂ A , xs ⦂ `List A ⊢ N ⦂ B
-    -------------------------------------- caseL or List-E
+    caseL or List-E
     Γ ⊢ caseL L [[]⇒ M | x ∷ xs ⇒ N ] ⦂ B
 -->
 
@@ -1187,96 +1187,82 @@ data _∋_ : Context → Type → Set where
 
 data _⊢_ : Context → Type → Set where
 
-  -- variables
+  variables
 
   `_ : ∀ {Γ A}
     → Γ ∋ A
-      -----
     → Γ ⊢ A
 
-  -- functions
+  functions
 
   ƛ_  :  ∀ {Γ A B}
     → Γ , A ⊢ B
-      ---------
     → Γ ⊢ A ⇒ B
 
   _·_ : ∀ {Γ A B}
     → Γ ⊢ A ⇒ B
     → Γ ⊢ A
-      ---------
     → Γ ⊢ B
 
-  -- naturals
+  naturals
 
   `zero : ∀ {Γ}
-      ------
     → Γ ⊢ `ℕ
 
   `suc_ : ∀ {Γ}
     → Γ ⊢ `ℕ
-      ------
     → Γ ⊢ `ℕ
 
   case : ∀ {Γ A}
     → Γ ⊢ `ℕ
     → Γ ⊢ A
     → Γ , `ℕ ⊢ A
-      -----
     → Γ ⊢ A
 
-  -- fixpoint
+  fixpoint
 
   μ_ : ∀ {Γ A}
     → Γ , A ⊢ A
-      ----------
     → Γ ⊢ A
 
-  -- primitive numbers
+  primitive numbers
 
   con : ∀ {Γ}
     → ℕ
-      -------
     → Γ ⊢ Nat
 
   _`*_ : ∀ {Γ}
     → Γ ⊢ Nat
     → Γ ⊢ Nat
-      -------
     → Γ ⊢ Nat
 
-  -- let
+  let
 
   `let : ∀ {Γ A B}
     → Γ ⊢ A
     → Γ , A ⊢ B
-      ----------
     → Γ ⊢ B
 
-  -- products
+  products
 
   `⟨_,_⟩ : ∀ {Γ A B}
     → Γ ⊢ A
     → Γ ⊢ B
-      -----------
     → Γ ⊢ A `× B
 
   `proj₁ : ∀ {Γ A B}
     → Γ ⊢ A `× B
-      -----------
     → Γ ⊢ A
 
   `proj₂ : ∀ {Γ A B}
     → Γ ⊢ A `× B
-      -----------
     → Γ ⊢ B
 
-  -- alternative formulation of products
+  alternative formulation of products
 
   case× : ∀ {Γ A B C}
     → Γ ⊢ A `× B
     → Γ , A , B ⊢ C
-      --------------
     → Γ ⊢ C
 
 -}
@@ -1512,35 +1498,30 @@ _[_][_] {Γ} {A} {B} N V W =  subst {Γ , A , B} {Γ} σ N
 {-
 data Value : ∀ {Γ A} → Γ ⊢ A → Set where
 
-  -- functions
+  functions
 
   V-ƛ : ∀ {Γ A B} {N : Γ , A ⊢ B}
-      ---------------------------
     → Value (ƛ N)
 
-  -- naturals
+  naturals
 
   V-zero : ∀ {Γ}
-      -----------------
     → Value (`zero {Γ})
 
   V-suc_ : ∀ {Γ} {V : Γ ⊢ `ℕ}
     → Value V
-      --------------
     → Value (`suc V)
 
-  -- primitives
+  primitives
 
   V-con : ∀ {Γ n}
-      -----------------
     → Value (con {Γ} n)
 
-  -- products
+  products
 
   V-⟨_,_⟩ : ∀ {Γ A B} {V : Γ ⊢ A} {W : Γ ⊢ B}
     → Value V
     → Value W
-      ----------------
     → Value `⟨ V , W ⟩
 -}
 ```
@@ -1602,126 +1583,105 @@ infix 2 _—→_
 
 data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
 
-  -- functions
+  functions
 
   ξ-·₁ : ∀ {Γ A B} {L L′ : Γ ⊢ A ⇒ B} {M : Γ ⊢ A}
     → L —→ L′
-      ---------------
     → L · M —→ L′ · M
 
   ξ-·₂ : ∀ {Γ A B} {V : Γ ⊢ A ⇒ B} {M M′ : Γ ⊢ A}
     → Value V
     → M —→ M′
-      ---------------
     → V · M —→ V · M′
 
   β-ƛ : ∀ {Γ A B} {N : Γ , A ⊢ B} {V : Γ ⊢ A}
     → Value V
-      --------------------
     → (ƛ N) · V —→ N [ V ]
 
-  -- naturals
+  naturals
 
   ξ-suc : ∀ {Γ} {M M′ : Γ ⊢ `ℕ}
     → M —→ M′
-      -----------------
     → `suc M —→ `suc M′
 
   ξ-case : ∀ {Γ A} {L L′ : Γ ⊢ `ℕ} {M : Γ ⊢ A} {N : Γ , `ℕ ⊢ A}
     → L —→ L′
-      -------------------------
     → case L M N —→ case L′ M N
 
   β-zero :  ∀ {Γ A} {M : Γ ⊢ A} {N : Γ , `ℕ ⊢ A}
-      -------------------
     → case `zero M N —→ M
 
   β-suc : ∀ {Γ A} {V : Γ ⊢ `ℕ} {M : Γ ⊢ A} {N : Γ , `ℕ ⊢ A}
     → Value V
-      ----------------------------
     → case (`suc V) M N —→ N [ V ]
 
-  -- fixpoint
+  fixpoint
 
   β-μ : ∀ {Γ A} {N : Γ , A ⊢ A}
-      ----------------
     → μ N —→ N [ μ N ]
 
-  -- primitive numbers
+  primitive numbers
 
   ξ-*₁ : ∀ {Γ} {L L′ M : Γ ⊢ Nat}
     → L —→ L′
-      -----------------
     → L `* M —→ L′ `* M
 
   ξ-*₂ : ∀ {Γ} {V M M′ : Γ ⊢ Nat}
     → Value V
     → M —→ M′
-      -----------------
     → V `* M —→ V `* M′
 
   δ-* : ∀ {Γ c d}
-      ---------------------------------
     → con {Γ} c `* con d —→ con (c * d)
 
-  -- let
+  let
 
   ξ-let : ∀ {Γ A B} {M M′ : Γ ⊢ A} {N : Γ , A ⊢ B}
     → M —→ M′
-      ---------------------
     → `let M N —→ `let M′ N
 
   β-let : ∀ {Γ A B} {V : Γ ⊢ A} {N : Γ , A ⊢ B}
     → Value V
-      -------------------
     → `let V N —→ N [ V ]
 
-  -- products
+  products
 
   ξ-⟨,⟩₁ : ∀ {Γ A B} {M M′ : Γ ⊢ A} {N : Γ ⊢ B}
     → M —→ M′
-      -------------------------
     → `⟨ M , N ⟩ —→ `⟨ M′ , N ⟩
 
   ξ-⟨,⟩₂ : ∀ {Γ A B} {V : Γ ⊢ A} {N N′ : Γ ⊢ B}
     → Value V
     → N —→ N′
-      -------------------------
     → `⟨ V , N ⟩ —→ `⟨ V , N′ ⟩
 
   ξ-proj₁ : ∀ {Γ A B} {L L′ : Γ ⊢ A `× B}
     → L —→ L′
-      ---------------------
     → `proj₁ L —→ `proj₁ L′
 
   ξ-proj₂ : ∀ {Γ A B} {L L′ : Γ ⊢ A `× B}
     → L —→ L′
-      ---------------------
     → `proj₂ L —→ `proj₂ L′
 
   β-proj₁ : ∀ {Γ A B} {V : Γ ⊢ A} {W : Γ ⊢ B}
     → Value V
     → Value W
-      ----------------------
     → `proj₁ `⟨ V , W ⟩ —→ V
 
   β-proj₂ : ∀ {Γ A B} {V : Γ ⊢ A} {W : Γ ⊢ B}
     → Value V
     → Value W
-      ----------------------
     → `proj₂ `⟨ V , W ⟩ —→ W
 
-  -- alternative formulation of products
+  alternative formulation of products
 
   ξ-case× : ∀ {Γ A B C} {L L′ : Γ ⊢ A `× B} {M : Γ , A , B ⊢ C}
     → L —→ L′
-      -----------------------
     → case× L M —→ case× L′ M
 
   β-case× : ∀ {Γ A B C} {V : Γ ⊢ A} {W : Γ ⊢ B} {M : Γ , A , B ⊢ C}
     → Value V
     → Value W
-      ----------------------------------
     → case× `⟨ V , W ⟩ M —→ M [ V ][ W ]
 
 -}

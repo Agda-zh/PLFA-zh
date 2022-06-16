@@ -182,7 +182,7 @@ If we go into the hole again and type `C-c C-,` then Agda now reports:
      .A : Set
 
 <!--
-This is the key step---Agda has worked out that `x` and `y` must be
+This is the key step-Agda has worked out that `x` and `y` must be
 the same to match the pattern `refl`!
 -->
 
@@ -586,11 +586,7 @@ regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mon
 相似地来定义 `≤-Reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤`、`+-monoʳ-≤`
 和 `+-mono-≤` 的定义。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

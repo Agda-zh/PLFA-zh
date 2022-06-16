@@ -438,8 +438,8 @@ preorder, partial order, or total order.
 Less frivolously, if you ever bump into a relation while reading a
 technical paper, this gives you a way to orient yourself, by checking
 whether or not it is a preorder, partial order, or total order.  A
-careful author will often call out these properties---or their
-lack---for instance by saying that a newly introduced relation is a
+careful author will often call out these properties-or their
+lack-for instance by saying that a newly introduced relation is a
 partial order but not a total order.
 -->
 
@@ -459,11 +459,7 @@ Give an example of a preorder that is not a partial order.
 
 给出一个不是偏序的预序的例子。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -475,11 +471,7 @@ Give an example of a partial order that is not a total order.
 
 给出一个不是全序的偏序的例子。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -617,8 +609,8 @@ shorter proofs.
 
 <!--
 The technique of induction on evidence that a property holds (e.g.,
-inducting on evidence that `m ≤ n`)---rather than induction on
-values of which the property holds (e.g., inducting on `m`)---will turn
+inducting on evidence that `m ≤ n`)-rather than induction on
+values of which the property holds (e.g., inducting on `m`)-will turn
 out to be immensely valuable, and one that we use often.
 -->
 
@@ -702,11 +694,7 @@ argument is `s≤s`.  Why is it ok to omit them?
 
 上面的证明中省略了一个参数是 `z≤n`，另一个参数是 `s≤s` 的情况。为什么可以省略这种情况？
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1046,11 +1034,7 @@ Show that multiplication is monotonic with regard to inequality.
 
 证明乘法对于小于等于是单调的。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1140,11 +1124,7 @@ exercise exploits the relation between < and ≤.)
 
 证明严格不等是传递的。请直接证明。（后续的练习中我们将使用 < 和 ≤ 的关系。）
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1181,11 +1161,7 @@ similar to that used for totality.
 定义 `m > n` 为 `n < m`。你需要一个合适的数据类型声明，如同我们在证明完全性中使用的那样。
 （我们会在介绍完[否定](/Negation/)之后证明三者是互斥的。）
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1204,11 +1180,7 @@ As with inequality, some additional definitions may be required.
 
 证明加法对于严格不等关系是单调的。正如不等关系中那样，你可以需要额外的定义。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1227,11 +1199,7 @@ Show that `suc m ≤ n` implies `m < n`, and conversely.
 
 证明 `suc m ≤ n` 蕴涵了 `m < n`，及其逆命题。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1252,11 +1220,7 @@ the fact that inequality is transitive.
 用另外一种方法证明严格不等是传递的，使用之前证明的不等关系和严格不等关系的联系，
 以及不等关系的传递性。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1434,11 +1398,7 @@ Show that the sum of two odd numbers is even.
 
 证明两个奇数之和为偶数。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1534,11 +1494,7 @@ if `One b` then `1` is less or equal to the result of `from b`.)
 （提示：对于每一条习题，先从 `One` 的性质开始。此外，你或许还需要证明若
 `One b` 成立，则 `1` 小于或等于 `from b` 的结果。）
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

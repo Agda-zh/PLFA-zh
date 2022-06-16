@@ -140,9 +140,9 @@ _introduces_ a formula for the connective, which appears in the
 conclusion but not in the hypotheses; the second _eliminates_ a
 formula for the connective, which appears in a hypothesis but not in
 the conclusion. An introduction rule describes under what conditions
-we say the connective holds---how to _define_ the connective. An
+we say the connective holds-how to _define_ the connective. An
 elimination rule describes what we may conclude when the connective
-holds---how to _use_ the connective.[^from-wadler-2015]
+holds-how to _use_ the connective.[^from-wadler-2015]
 -->
 
 其他的术语将 `⟨_,_⟩` 称作**引入（Introduce）**合取，将 `proj₁` 和 `proj₂` 称作**消去（Eliminate）**合取。
@@ -386,12 +386,6 @@ is isomorphic to `(A → B) × (B → A)`.
 -->
 
 证明[之前](/Isomorphism/#iff)定义的 `A ⇔ B` 与 `(A → B) × (B → A)` 同构。
-
-<!--
-```agda
--- Your code goes here
-```
--->
 
 ```agda
 -- 请将代码写在此处。
@@ -753,11 +747,6 @@ Show sum is commutative up to isomorphism.
 
 证明和类型在同构意义下满足交换律。
 
-<!--
-```agda
--- Your code goes here
-```
--->
 
 ```agda
 -- 请将代码写在此处。
@@ -775,11 +764,6 @@ Show sum is associative up to isomorphism.
 
 证明和类型在同构意义下满足结合律。
 
-<!--
-```agda
--- Your code goes here
-```
--->
 
 ```agda
 -- 请将代码写在此处。
@@ -801,7 +785,7 @@ a suitable inductive type:
 <!--
 FIXME: the code block is removed to make Agda not recognise this as code.
 data ⊥ : Set where
-  -- no clauses!
+  no clauses!
 -->
 
 ```agda
@@ -916,11 +900,7 @@ Show empty is the left identity of sums up to isomorphism.
 
 证明空在同构意义下是和的左幺元。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -936,11 +916,7 @@ Show empty is the right identity of sums up to isomorphism.
 
 证明空在同构意义下是和的右幺元。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1335,11 +1311,7 @@ distributive law, and explain how it relates to the weak version.
 
 这被称为**弱分配律（Weak Distributive Law）**。给出相对应的分配律，并解释分配律与弱分配律的关系。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1369,11 +1341,7 @@ Does the converse hold? If so, prove; if not, give a counterexample.
 
 反命题成立吗？如果成立，给出证明；如果不成立，给出反例。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

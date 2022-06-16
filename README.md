@@ -175,7 +175,7 @@ git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com
 
 
 <!--
-PLFA ships with the required version of the Agda standard library, so if you cloned with the `--recurse-submodules` flag, you’ve already got it, in the `standard-library` directory!
+PLFA ships with the required version of the Agda standard library, so if you cloned with the `recurse-submodules` flag, you’ve already got it, in the `standard-library` directory!
 -->
 
 PLFA 包括了所需要的 Agda 标准库版本，如果你在克隆时使用了 `--recurse-submodule` 选项，你在 `standard-library` 文件夹中已经有了 Agda 标准库！
@@ -512,7 +512,7 @@ We can continue with the codes for the other characters. Sometimes the character
 
 <!--
 …because the code `\-` corresponds to a hyphen of a certain width. When we add the `>`, the `­` becomes `→`! The code for `≤` is `\<=`, and the code for `≡` is `\==`.
---->
+-->
 
 ……因为输入序列 `\-` 对应了一定长度的短横。当我们输入 `>` 时，`­` 变成了 `→`！
 `≤` 的输入序列是 `\<=`，`≡` 的是 `\==`。

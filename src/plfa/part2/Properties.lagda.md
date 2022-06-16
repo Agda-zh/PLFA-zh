@@ -279,11 +279,6 @@ that is, the canonical forms are exactly the well-typed values.
 证明 `Canonical V ⦂ A` 与 `(∅ ⊢ V ⦂ A) × (Value V)` 同构，
 也就是标准式即良类型的值。
 
-<!--
-```
--- Your code goes here
-```
--->
 
 ```
 -- 请将代码写在此处。
@@ -524,11 +519,7 @@ Show that `Progress M` is isomorphic to `Value M ⊎ ∃[ N ](M —→ N)`.
 
 证明 `Progress M` 与 `Value M ⊎ ∃[ N ](M —→ N)` 是同构的。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -547,11 +538,7 @@ proof of `progress` above.
 
 补全 `progress′` 的证明，并与之前 `progress` 的证明相对比。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1302,11 +1289,7 @@ preserves types.
 证明一同互递归定义。
 
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1360,59 +1343,16 @@ Let's unpack the cases for two of the reduction rules:
 
 <!--
 * Rule `ξ-·₁`.  We have
-
-      L —→ L′
-      ----------------
-      L · M —→ L′ · M
-
-  where the left-hand side is typed by
-
-      Γ ⊢ L ⦂ A ⇒ B
-      Γ ⊢ M ⦂ A
-      -------------
-      Γ ⊢ L · M ⦂ B
-
-  By induction, we have
-
-      Γ ⊢ L ⦂ A ⇒ B
-      L —→ L′
-      --------------
-      Γ ⊢ L′ ⦂ A ⇒ B
-
-  from which the typing of the right-hand side follows immediately.
-
-* Rule `β-ƛ`.  We have
-
-      Value V
-      -----------------------------
-      (ƛ x ⇒ N) · V —→ N [ x := V ]
-
-  where the left-hand side is typed by
-
-      Γ , x ⦂ A ⊢ N ⦂ B
-      -------------------
-      Γ ⊢ ƛ x ⇒ N ⦂ A ⇒ B    Γ ⊢ V ⦂ A
-      --------------------------------
-      Γ ⊢ (ƛ x ⇒ N) · V ⦂ B
-
-  By the substitution lemma, we have
-
-      Γ ⊢ V ⦂ A
-      Γ , x ⦂ A ⊢ N ⦂ B
-      --------------------
-      Γ ⊢ N [ x := V ] ⦂ B
-
-  from which the typing of the right-hand side follows immediately.
-
-The remaining cases are similar.  Each `ξ` rule follows by induction,
-and each `β` rule follows by the substitution lemma.
 -->
-
 * 规则 `ξ-·₁`。我们有
 
       L —→ L′
       ----------------
       L · M —→ L′ · M
+
+  <!--
+  where the left-hand side is typed by
+  -->
 
   其中左手侧由
 
@@ -1422,6 +1362,10 @@ and each `β` rule follows by the substitution lemma.
       Γ ⊢ L · M ⦂ B
 
   赋型。
+
+  <!--
+  By induction, we have
+  -->
 
   根据归纳，我们有
 
@@ -1430,13 +1374,26 @@ and each `β` rule follows by the substitution lemma.
       --------------
       Γ ⊢ L′ ⦂ A ⇒ B
 
+  <!--
+  from which the typing of the right-hand side follows immediately.
+  -->
+
   其中右手侧的赋型可以直接得出。
 
+<!--
+* Rule `β-ƛ`.  We have
+-->
+
 * 规则 `β-ƛ`。我们有
+
 
       Value V
       -----------------------------
       (ƛ x ⇒ N) · V —→ N [ x := V ]
+
+  <!--
+  where the left-hand side is typed by
+  -->
 
   其中左手侧由
 
@@ -1448,6 +1405,10 @@ and each `β` rule follows by the substitution lemma.
 
   赋型。
 
+  <!--
+  By the substitution lemma, we have
+  -->
+
   根据替换引理，我们有
 
       Γ ⊢ V ⦂ A
@@ -1455,7 +1416,16 @@ and each `β` rule follows by the substitution lemma.
       --------------------
       Γ ⊢ N [ x := V ] ⦂ B
 
+  <!--
+  from which the typing of the right-hand side follows immediately.
+  -->
+
   其中右手侧的赋型可以直接得出。
+
+<!--
+The remaining cases are similar.  Each `ξ` rule follows by induction,
+and each `β` rule follows by the substitution lemma.
+-->
 
 剩余情况与此类似，对每个 `ξ` 规则使用归纳，
 对每个 `β` 规则使用替换引理。
@@ -2018,11 +1988,7 @@ Using the evaluator, confirm that two times two is four.
 
 用这个求值器来验证二乘二的积是四。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -2043,11 +2009,7 @@ and preservation theorems for the simply typed lambda-calculus.
 不阅读上面的陈述，
 写下简单类型 λ-演算进行性和保型性的定理。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -2077,11 +2039,7 @@ with case expressions and one not involving case expressions.
 如果 `M —→ N` 和 `∅ ⊢ N ⦂ A` 蕴含 `∅ ⊢ M ⦂ A`。
 找到两个子扩展的反例，一个涉及 `case` 表达式而另一个不涉及。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -2189,11 +2147,7 @@ Give an example of an ill-typed term that does get stuck.
 
 给出一个会被卡住的不良类型的项的例子。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -2211,11 +2165,7 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 
 提供上文中 `unstuck`、`preserves` 和 `wttdgs` 三个假设的证明。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -2294,34 +2244,6 @@ three typical cases:
 
 <!--
 * Two instances of `ξ-·₁`:
-
-      L —→ L′                 L —→ L″
-      --------------- ξ-·₁    --------------- ξ-·₁
-      L · M —→ L′ · M         L · M —→ L″ · M
-
-  By induction we have `L′ ≡ L″`, and hence by congruence
-  `L′ · M ≡ L″ · M`.
-
-* An instance of `ξ-·₁` and an instance of `ξ-·₂`:
-
-                              Value L
-      L —→ L′                 M —→ M″
-      --------------- ξ-·₁    --------------- ξ-·₂
-      L · M —→ L′ · M         L · M —→ L · M″
-
-  The rule on the left requires `L` to reduce, but the rule on the right
-  requires `L` to be a value.  This is a contradiction since values do
-  not reduce.  If the value constraint was removed from `ξ-·₂`, or from
-  one of the other reduction rules, then determinism would no longer hold.
-
-* Two instances of `β-ƛ`:
-
-      Value V                              Value V
-      ----------------------------- β-ƛ    ----------------------------- β-ƛ
-      (ƛ x ⇒ N) · V —→ N [ x := V ]        (ƛ x ⇒ N) · V —→ N [ x := V ]
-
-  Since the left-hand sides are identical, the right-hand sides are
-  also identical. The formal proof simply invokes `refl`.
 -->
 
 * 两个关于 `ξ-·₁` 的实例：
@@ -2330,7 +2252,16 @@ three typical cases:
       --------------- ξ-·₁    --------------- ξ-·₁
       L · M —→ L′ · M         L · M —→ L″ · M
 
+  <!--
+  By induction we have `L′ ≡ L″`, and hence by congruence
+  `L′ · M ≡ L″ · M`.
+  -->
+
   根据归纳我们有 `L′ ≡ L″`，因此根据合同性有 `L′ · M ≡ L″ · M`。
+
+<!--
+* An instance of `ξ-·₁` and an instance of `ξ-·₂`:
+-->
 
 * 一个关于 `ξ-·₁` 的实例和一个关于 `ξ-·₂` 的实例：
 
@@ -2339,15 +2270,31 @@ three typical cases:
       --------------- ξ-·₁    --------------- ξ-·₂
       L · M —→ L′ · M         L · M —→ L · M″
 
+  <!--
+  The rule on the left requires `L` to reduce, but the rule on the right
+  requires `L` to be a value.  This is a contradiction since values do
+  not reduce.  If the value constraint was removed from `ξ-·₂`, or from
+  one of the other reduction rules, then determinism would no longer hold.
+  -->
+
   左侧的规则要求 `L` 被规约，但右侧的规则要求 `L` 是一个值。
   这是一个矛盾，因为值无法被规约。如果值的约束从 `ξ-·₂` 或任何其他规约规则中被移除，
   那么确定性将不再适用。
+
+<!--
+* Two instances of `β-ƛ`:
+-->
 
 * 两个关于 `β-ƛ` 的实例：
 
       Value V                              Value V
       ----------------------------- β-ƛ    ----------------------------- β-ƛ
       (ƛ x ⇒ N) · V —→ N [ x := V ]        (ƛ x ⇒ N) · V —→ N [ x := V ]
+
+  <!--
+  Since the left-hand sides are identical, the right-hand sides are
+  also identical. The formal proof simply invokes `refl`.
+  -->
 
   因为左侧是相同的，所以右侧也是相同的。
   形式证明只是对 `refl` 的调用。

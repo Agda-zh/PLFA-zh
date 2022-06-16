@@ -1656,11 +1656,7 @@ values.
 
 使用上文的表示方法，证明值不再规约；以及它的推论：可规约的项不是值。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -2112,11 +2108,7 @@ Using the evaluator, confirm that two times two is four.
 
 使用求值器，确认二乘二等于四。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

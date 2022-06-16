@@ -719,11 +719,7 @@ restated in this way.
 如果我们用 `2 * m` 代替 `m * 2`，`2 * m + 1` 代替 `1 + m * 2`，上述证明会变得复杂多少呢？
 用这种方法来重写 `∃-even` 和 `∃-odd`。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -742,11 +738,7 @@ Show that `y ≤ z` holds if and only if there exists a `x` such that
 
 证明当且仅当存在一个 `x` 使得 `x + y ≡ z` 成立时 `y ≤ z` 成立。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -904,11 +896,7 @@ which is a corollary of `≡Can`.
 
     proj₁≡→Can≡ : {cb cb′ : ∃[ b ] Can b} → proj₁ cb ≡ proj₁ cb′ → cb ≡ cb′
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

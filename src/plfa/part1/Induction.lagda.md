@@ -12,7 +12,7 @@ module plfa.part1.Induction where
 <!--
 > Induction makes you feel guilty for getting something out of nothing
 > ... but it is one of the greatest ideas of civilization.
-> -- Herbert Wilf
+> Herbert Wilf
 -->
 
 > 归纳会让你对无中生有感到内疚
@@ -84,6 +84,7 @@ on names for some of the most common properties.
   the left if `m * (p + q) ≡ (m * p) + (m * q)`, for all `m`, `p`, and
   `q`, and from the right if `(m + n) * p ≡ (m * p) + (n * p)`, for all
   `m`, `n`, and `p`.
+-->
 
 * **幺元（Identity）**：对于所有的 `n`，若 `0 + n ≡ n`，则 `+` 有左幺元 `0`；
   若 `n + 0 ≡ n`，则 `+` 有右幺元 `0`。同时为左幺元和右幺元的值称简称幺元。
@@ -108,10 +109,12 @@ and multiplication distributes over addition.
 加法的幺元为 `0`，乘法的幺元为 `1`。加法和乘法都满足结合律和交换律，
 乘法对加法满足分配律。
 
+<!--
 If you ever bump into an operator at a party, you now know how
 to make small talk, by asking whether it has a unit and is
 associative or commutative.  If you bump into two operators, you
 might ask them if one distributes over the other.
+-->
 
 如果你在一个舞会上碰见了一位操作员，那么你可以跟他闲聊，问问他是否有单位元，
 能不能结合或者交换。如果你碰见了两位操作员，那么可以问他们某一位是否在另一位上面分布。
@@ -123,7 +126,7 @@ Less frivolously, if you ever bump into an operator while reading a
 technical paper, this gives you a way to orient yourself, by checking
 whether or not it has an identity, is associative or commutative, or
 distributes over another operator.  A careful author will often call
-out these properties---or their lack---for instance by pointing out
+out these properties-or their lack-for instance by pointing out
 that a newly introduced operator is associative but not commutative.
 -->
 
@@ -146,13 +149,7 @@ and are associative, commutative, and distribute over one another.
 请给出另一对运算符，它们拥有一个幺元，满足结合律、交换律，且其中一个对另一个满足分配律。
 （你不必证明这些性质）
 
-<!--
-```
--- Your code goes here
-```
--->
-
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -164,13 +161,7 @@ associative but is not commutative.
 请给出一个运算符的例子，它拥有幺元、满足结合律但不满足交换律。
 （你不必证明这些性质）
 
-<!--
-```
--- Your code goes here
-```
--->
-
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -233,8 +224,8 @@ then from the bottom up until one reaches the same term.
 The test reveals that associativity is perhaps not as obvious as first
 it appears.  Why should `7 + 5` be the same as `3 + 9`?  We might want
 to gather more evidence, testing the proposition by choosing other
-numbers.  But---since there are an infinite number of
-naturals---testing can never be complete.  Is there any way we can be
+numbers.  But-since there are an infinite number of
+naturals-testing can never be complete.  Is there any way we can be
 sure that associativity holds for _all_ the natural numbers?
 -->
 
@@ -298,7 +289,7 @@ demonstrate are the following two inference rules:
 Let's unpack these rules.  The first rule is the base case, and
 requires we show that property `P` holds for `zero`.  The second rule
 is the inductive case, and requires we show that if we assume the
-inductive hypothesis---namely that `P` holds for `m`---then it follows that
+inductive hypothesis-namely that `P` holds for `m`-then it follows that
 `P` also holds for `suc m`.
 -->
 
@@ -314,7 +305,7 @@ To start with, we know no properties:
 为什么可以这样做呢？它也可以用创世故事来讲解。起初，我们对性质一无所知：
 
 <!--
-    -- In the beginning, no properties are known.
+    In the beginning, no properties are known.
 -->
 
     -- 起初，世上没有已知的性质。
@@ -334,7 +325,7 @@ apply:
 因此归纳步骤在这里不适用：
 
 <!--
-    -- On the first day, one property is known.
+    On the first day, one property is known.
     P zero
 -->
 
@@ -355,7 +346,7 @@ held yesterday, then `P (suc zero)` holds today:
 在昨天成立，那么 `P (suc zero)` 今天也成立。
 
 <!--
-    -- On the second day, two properties are known.
+    On the second day, two properties are known.
     P zero
     P (suc zero)
 -->
@@ -376,7 +367,7 @@ the first of these, but the second is new:
 但第二个是新引入的：
 
 <!--
-    -- On the third day, three properties are known.
+    On the third day, three properties are known.
     P zero
     P (suc zero)
     P (suc (suc zero))
@@ -394,7 +385,7 @@ You've got the hang of it by now:
 此时规律已经很明显了：
 
 <!--
-    -- On the fourth day, four properties are known.
+    On the fourth day, four properties are known.
     P zero
     P (suc zero)
     P (suc (suc zero))
@@ -1231,7 +1222,7 @@ time we are concerned with judgments asserting associativity:
 这次我们专注于判断结合律的断言：
 
 <!--
-     -- In the beginning, we know nothing about associativity.
+     In the beginning, we know nothing about associativity.
 -->
 
      -- 起初，我们对结合律一无所知。
@@ -1253,7 +1244,7 @@ rule doesn't give us any new judgments:
 因此此规则并未给出任何新的判断：
 
 <!--
-    -- On the first day, we know about associativity of 0.
+    On the first day, we know about associativity of 0.
     (0 + 0) + 0 ≡ 0 + (0 + 0)   ...   (0 + 4) + 5 ≡ 0 + (4 + 5)   ...
 -->
 
@@ -1272,7 +1263,7 @@ more judgments:
 而如今归归纳步骤添加了更多的判断：
 
 <!--
-    -- On the second day, we know about associativity of 0 and 1.
+    On the second day, we know about associativity of 0 and 1.
     (0 + 0) + 0 ≡ 0 + (0 + 0)   ...   (0 + 4) + 5 ≡ 0 + (4 + 5)   ...
     (1 + 0) + 0 ≡ 1 + (0 + 0)   ...   (1 + 4) + 5 ≡ 1 + (4 + 5)   ...
 -->
@@ -1288,7 +1279,7 @@ And we repeat the process again:
 我们再次重复此过程：
 
 <!--
-    -- On the third day, we know about associativity of 0, 1, and 2.
+    On the third day, we know about associativity of 0, 1, and 2.
     (0 + 0) + 0 ≡ 0 + (0 + 0)   ...   (0 + 4) + 5 ≡ 0 + (4 + 5)   ...
     (1 + 0) + 0 ≡ 1 + (0 + 0)   ...   (1 + 4) + 5 ≡ 1 + (4 + 5)   ...
     (2 + 0) + 0 ≡ 2 + (0 + 0)   ...   (2 + 4) + 5 ≡ 2 + (4 + 5)   ...
@@ -1306,7 +1297,7 @@ You've got the hang of it by now:
 此时规律已经很明显了：
 
 <!--
-    -- On the fourth day, we know about associativity of 0, 1, 2, and 3.
+    On the fourth day, we know about associativity of 0, 1, 2, and 3.
     (0 + 0) + 0 ≡ 0 + (0 + 0)   ...   (0 + 4) + 5 ≡ 0 + (4 + 5)   ...
     (1 + 0) + 0 ≡ 1 + (0 + 0)   ...   (1 + 4) + 5 ≡ 1 + (4 + 5)   ...
     (2 + 0) + 0 ≡ 2 + (0 + 0)   ...   (2 + 4) + 5 ≡ 2 + (4 + 5)   ...
@@ -1347,11 +1338,7 @@ first four days using a finite story of creation, as
 
 请参考[前文](/Naturals/#finite-creation)写出前四天已知的加法结合律的创世故事。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1424,7 +1411,7 @@ rewriting by the inductive hypothesis our goal becomes
 
     suc (m + (n + p)) ≡ suc (m + (n + p))
 
-<--
+<!--
 and the proof is again given by `refl`.  Rewriting avoids
 not only chains of equations but also the need to invoke `cong`.
 -->
@@ -1649,11 +1636,7 @@ is associative and commutative.
 
 成立。无需归纳证明，只需应用前面满足结合律和交换律的结果即可。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1679,11 +1662,7 @@ for all naturals `m`, `n`, and `p`.
 
 成立。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1709,11 +1688,7 @@ for all naturals `m`, `n`, and `p`.
 
 成立。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1740,11 +1715,7 @@ you will need to formulate and prove suitable lemmas.
 
 成立。和加法交换律一样，你需要陈述并证明配套的引理。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1771,11 +1742,7 @@ for all naturals `n`. Did your proof require induction?
 
 成立。你的证明需要归纳法吗？
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1802,11 +1769,7 @@ for all naturals `m`, `n`, and `p`.
 
 成立。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1835,13 +1798,7 @@ for all `m`, `n`, and `p`.
 
 对于所有 `m`、`n` 和 `p` 成立。
 
-<!--
-```
--- Your code goes here
-```
--->
-
-```
+```agda
 -- 请将代码写在此处。
 ```
 
@@ -1883,11 +1840,7 @@ For each law: if it holds, prove; if not, give a counterexample.
 
 对于每一条定律：若它成立，请证明；若不成立，请给出一个反例。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1943,6 +1896,5 @@ Similar to `\r`, the command `\^r` gives access to a variety of
 superscript rightward arrows, and also a superscript letter `r`.
 The command `\'` gives access to a range of primes (`′ ″ ‴ ⁗`).
 -->
-
 与 `\r` 类似，命令 `\^r` 列出了多种上标右箭头的变体，以及上标的字母 `r`。
 命令 `\'` 列出了一些撇号（`′ ″ ‴ ⁗`）。

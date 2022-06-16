@@ -143,11 +143,7 @@ Write out `7` in longhand.
 
 请写出 `7` 的完整定义。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -284,7 +280,7 @@ no natural numbers at all:
 我们可以将这个过程比作一个创世故事。起初，我们对自然数一无所知：
 
 <!--
-    -- In the beginning, there are no natural numbers.
+    In the beginning, there are no natural numbers.
 -->
 
     -- 起初，世上没有自然数。
@@ -304,7 +300,7 @@ before today, so the inductive case doesn't apply:
 今天之前并不知道任何自然数，所以归纳步骤在此处不适用。
 
 <!--
-    -- On the first day, there is one natural number.
+    On the first day, there is one natural number.
     zero : ℕ
 -->
 
@@ -325,7 +321,7 @@ number yesterday, then `suc zero` is a natural number today:
 那么 `suc zero` 在今天也是自然数：
 
 <!--
-    -- On the second day, there are two natural numbers.
+    On the second day, there are two natural numbers.
     zero : ℕ
     suc zero : ℕ
 -->
@@ -346,7 +342,7 @@ the first of these, but the second is new:
 是自然数了，而后者 `suc (suc zero)` 是新加入的。
 
 <!--
-    -- On the third day, there are three natural numbers.
+    On the third day, there are three natural numbers.
     zero : ℕ
     suc zero : ℕ
     suc (suc zero) : ℕ
@@ -364,7 +360,7 @@ You've got the hang of it by now:
 此时规律已经很明显了。
 
 <!--
-    -- On the fourth day, there are four natural numbers.
+    On the fourth day, there are four natural numbers.
     zero : ℕ
     suc zero : ℕ
     suc (suc zero) : ℕ
@@ -459,7 +455,7 @@ A pragma
 ## 编译指令
 
 <!--
-In Agda, any text following `--` or enclosed between `{-`
+In Agda, any text following or enclosed between `{-`
 and `-}` is considered a _comment_.  Comments have no effect on the
 code, with the exception of one special kind of comment, called a
 _pragma_, which is enclosed between `{-#` and `#-}`.
@@ -802,8 +798,8 @@ the equations in an order that makes sense to the reader.
 Here `2 + 3 ≡ 5` is a type, and the chains of equations (and also
 `refl`) are terms of the given type; alternatively, one can think of
 each term as _evidence_ for the assertion `2 + 3 ≡ 5`.  This duality
-of interpretation---of a type as a proposition, and of a term as
-evidence---is central to how we formalise concepts in Agda, and will
+of interpretation-of a type as a proposition, and of a term as
+evidence-is central to how we formalise concepts in Agda, and will
 be a running theme throughout this book.
 -->
 
@@ -835,11 +831,7 @@ Compute `3 + 4`, writing out your reasoning as a chain of equations, using the e
 
 计算 `3 + 4`，将你的推导过程写成等式链，为 `+` 使用等式。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- Your code goes here
@@ -955,11 +947,7 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations, using the e
 计算 `3 * 4`，将你的推导过程写成等式链，为 `*` 使用等式。
 （不必写出 `+` 求值的每一步。）
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -986,11 +974,7 @@ Check that `3 ^ 4` is `81`.
 
 检查 `3 ^ 4` 是否等于 `81`。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1105,11 +1089,7 @@ Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equati
 
 计算 `5 ∸ 3` 和 `3 ∸ 5`，将你的推导过程写成等式链。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -1284,7 +1264,7 @@ concerned with judgments about addition:
 我们同样借创世故事来帮助理解，不过这次关注的是关于加法的判断。
 
 <!--
-    -- In the beginning, we know nothing about addition.
+    In the beginning, we know nothing about addition.
 -->
 
     -- 起初，我们对加法一无所知。
@@ -1305,7 +1285,7 @@ so that rule doesn't give us any new equations:
 因此这条规则不会给我们任何新的等式。
 
 <!--
-    -- On the first day, we know about addition of 0.
+    On the first day, we know about addition of 0.
     0 + 0 = 0     0 + 1 = 1    0 + 2 = 2     ...
 -->
 
@@ -1323,7 +1303,7 @@ more equations:
 规则添加的等式。起始步骤没有告诉我们任何新东西，但是归纳步骤添加了更多的等式。
 
 <!--
-    -- On the second day, we know about addition of 0 and 1.
+    On the second day, we know about addition of 0 and 1.
     0 + 0 = 0     0 + 1 = 1     0 + 2 = 2     0 + 3 = 3     ...
     1 + 0 = 1     1 + 1 = 2     1 + 2 = 3     1 + 3 = 4     ...
 -->
@@ -1339,7 +1319,7 @@ And we repeat the process again:
 我们再次重复这个过程：
 
 <!--
-    -- On the third day, we know about addition of 0, 1, and 2.
+    On the third day, we know about addition of 0, 1, and 2.
     0 + 0 = 0     0 + 1 = 1     0 + 2 = 2     0 + 3 = 3     ...
     1 + 0 = 1     1 + 1 = 2     1 + 2 = 3     1 + 3 = 4     ...
     2 + 0 = 2     2 + 1 = 3     2 + 2 = 4     2 + 3 = 5     ...
@@ -1357,7 +1337,7 @@ You've got the hang of it by now:
 此时规律已经很明显了：
 
 <!--
-    -- On the fourth day, we know about addition of 0, 1, 2, and 3.
+    On the fourth day, we know about addition of 0, 1, 2, and 3.
     0 + 0 = 0     0 + 1 = 1     0 + 2 = 2     0 + 3 = 3     ...
     1 + 0 = 1     1 + 1 = 2     1 + 2 = 3     1 + 3 = 4     ...
     2 + 0 = 2     2 + 1 = 3     2 + 2 = 4     2 + 3 = 5     ...
@@ -1412,7 +1392,7 @@ a finite set of instances:
 一个有限的实例集合。
 
 <!--
-    -- In the beginning, we know nothing.
+    In the beginning, we know nothing.
 -->
 
     -- 起初，我们一无所知。
@@ -1425,7 +1405,7 @@ base case for naturals applies:
 现在，对我们已知的所有判断应用之前的规则。只有自然数的起始步骤适用：
 
 <!--
-    -- On the first day, we know zero.
+    On the first day, we know zero.
     0 : ℕ
 -->
 
@@ -1440,7 +1420,7 @@ and our first equation about addition.
 我们再次应用所有的规则。这次我们有了一个新自然数，和加法的第一个等式。
 
 <!--
-    -- On the second day, we know one and all sums that yield zero.
+    On the second day, we know one and all sums that yield zero.
     0 : ℕ
     1 : ℕ    0 + 0 = 0
 -->
@@ -1459,7 +1439,7 @@ applied to equation of the previous day:
 的等式上应用加法的归纳步骤得到了一个等式：
 
 <!--
-    -- On the third day, we know two and all sums that yield one.
+    On the third day, we know two and all sums that yield one.
     0 : ℕ
     1 : ℕ    0 + 0 = 0
     2 : ℕ    0 + 1 = 1   1 + 0 = 1
@@ -1477,7 +1457,7 @@ You've got the hang of it by now:
 此时规律已经很明显了：
 
 <!--
-    -- On the fourth day, we know three and all sums that yield two.
+    On the fourth day, we know three and all sums that yield two.
     0 : ℕ
     1 : ℕ    0 + 0 = 0
     2 : ℕ    0 + 1 = 1   1 + 0 = 1
@@ -1812,11 +1792,7 @@ Confirm that these both give the correct answer for zero through four.
 对于前者，用没有前导零的比特串来表示正数，并用 `⟨⟩ O` 表示零。
 验证这两个函数都能对零到四给出正确结果。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

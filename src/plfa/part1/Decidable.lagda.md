@@ -521,11 +521,7 @@ postulate
   _<?_ : ∀ (m n : ℕ) → Dec (m < n)
 ```
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -548,11 +544,7 @@ postulate
   _≡ℕ?_ : ∀ (m n : ℕ) → Dec (m ≡ n)
 ```
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。
@@ -991,11 +983,7 @@ postulate
   iff-⇔ : ∀ {A B : Set} (x : Dec A) (y : Dec B) → ⌊ x ⌋ iff ⌊ y ⌋ ≡ ⌊ x ⇔-dec y ⌋
 ```
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

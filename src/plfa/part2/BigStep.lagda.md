@@ -196,11 +196,7 @@ terminates under big-step call-by-name evaluation.
 
 证明 `(ƛ ƛ # 1) · ((ƛ # 0 · # 0) · (ƛ # 0 · # 0))` 能在大步传名调用求值下终止。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```
 -- 请将代码写在此处。
@@ -620,11 +616,7 @@ with `M`. Prove that `M ↓ N` implies `M —↠ N`.
 即应用规则 `⇓-app` 应像在 `N [ M ]` 中一样执行替换而不是用 `M` 扩展环境。
 证明 `M ↓ N` 蕴含 `M —↠ N`。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处。

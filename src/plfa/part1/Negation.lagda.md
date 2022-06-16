@@ -361,11 +361,7 @@ is irreflexive, that is, `n < n` holds for no `n`.
 利用否定证明[严格不等性](/Relations/#strict-inequality)满足非自反性，
 即 `n < n` 对于任何 `n` 都不成立。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处
@@ -398,11 +394,7 @@ but that when one holds the negation of the other two must also hold.
 「刚好只有一条」的意思是，三者中不仅有一条成立，而且当其中一条成立时，
 其它二者的否定也必定成立。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处
@@ -429,11 +421,7 @@ This result is an easy consequence of something we've proved previously.
 
 此结果是我们之前证明的定理的简单推论。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处
@@ -756,11 +744,7 @@ Show that each of these implies all the others.
 
 请证明其中任意一条定律都蕴涵其它所有定律。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处
@@ -791,11 +775,7 @@ of two stable formulas is stable.
 
 请证明任何否定式都是稳定的，并且两个稳定式的合取也是稳定的。
 
-<!--
-```agda
--- Your code goes here
-```
--->
+
 
 ```agda
 -- 请将代码写在此处
