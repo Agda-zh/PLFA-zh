@@ -279,9 +279,9 @@ main = do
         agdaLinkFixer <- getAgdaLinkFixer src
         readFileWithMetadata prev
           <&> snd
-          <&> TagSoup.parseTagsOptions TagSoup.parseOptions {TagSoup.optTagPosition = True}
+          <&> TagSoup.parseTagsOptions (TagSoup.parseOptionsEntities (const Nothing)) {TagSoup.optTagPosition = True}
           <&> Agda.runAgdaSoup . traverse (Agda.qualifyIdSoup agdaFileInfo . TagSoup.mapUrls agdaLinkFixer)
-          <&> TagSoup.renderTags
+          <&> TagSoup.renderTagsOptions TagSoup.renderOptions {TagSoup.optEscape = id}
           >>= writeFile' next
 
       -- Stage 3: Compile Markdown to HTML

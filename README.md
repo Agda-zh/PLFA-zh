@@ -55,7 +55,7 @@ PLFA 只针对特定的 Agda 和 标准库版本进行了测试，相应版本�
 Agda 和标准库变化得十分迅速，而这些改变经常搞坏 PLFA，因此使用旧版或新版通常会出现问题。
 
 <!--
-There are several versions of Agda and its standard library online. If you are using a package manager, like Homebrew or Debian apt, the version of Agda available there may be out-of date. Furthermore, Agda is under active development, so if you install the development version from the GitHub, you might find the developers have introduced changes which break the code here. Therefore, it’s important to have the specific versions of Agda and the standard library shown above.
+There are several versions of Agda and its standard library online. If you are using a package manager, like Homebrew or Debian apt, the version of Agda available there may be out of date. Furthermore, Agda is under active development, so if you install the development version from the GitHub, you might find the developers have introduced changes which break the code here. Therefore, it’s important to have the specific versions of Agda and the standard library shown above.
 -->
 
 Agda 和 Agda 标准库有多个版本。如果你使用了包管理器（如 Homebrew 或者 Debian
@@ -113,7 +113,7 @@ If you do not have Git, see [the Git downloads page][git].
 ### 安装 GHC 和 Cabal {#install-ghc-and-cabal}
 
 <!--
-Agda is written in Haskell, so to install it we’ll need the *Glorious Haskell Compiler* version 8.10.7 and it's package managed *Cabal*. We recommend installing both of these using [ghcup][ghcup].
+Agda is written in Haskell, so to install it we’ll need the *Glorious Haskell Compiler* version 8.10.7 and its package manager *Cabal*. We recommend installing both of these using [ghcup][ghcup].
 -->
 
 Agda 是用 Haskell 写成的，所以为了安装它我们需要 *Glorious Haskell Compiler*
@@ -189,7 +189,7 @@ Finally, we need to let Agda know where to find the Agda standard library and PL
 
 
 <!--
-On macOS and Unix, if PLFA is installed in your home directory and you have no existing library configuration files you wish to preserve,run the following commands:
+On macOS and Unix, if PLFA is installed in your home directory and you have no existing library configuration files you wish to preserve, run the following commands:
 -->
 
 在 macOS 和 Unix 上，如果 PLFA
