@@ -147,10 +147,10 @@ g ∘′ f  =  λ x → g (f x)
 
 
 <!--
-## Extensionality {name=extensionality}
+## Extensionality {#extensionality}
 -->
 
-## 外延性（Extensionality） {name=extensionality}
+## 外延性（Extensionality） {#extensionality}
 
 <!--
 Extensionality asserts that the only way to distinguish functions is
@@ -697,10 +697,10 @@ postulate
 ```
 
 <!--
-#### Exercise `_⇔_` (practice) {name=iff}
+#### Exercise `_⇔_` (practice) {#iff}
 -->
 
-#### 练习 `_⇔_`（实践） {name=iff}
+#### 练习 `_⇔_`（实践） {#iff}
 
 <!--
 Define equivalence of propositions (also known as "if and only if") as follows:
@@ -732,10 +732,10 @@ Show that equivalence is reflexive, symmetric, and transitive.
 ```
 
 <!--
-#### Exercise `Bin-embedding` (stretch) {name=Bin-embedding}
+#### Exercise `Bin-embedding` (stretch) {#Bin-embedding}
 -->
 
-#### 练习 `Bin-embedding` （延伸） {name=Bin-embedding}
+#### 练习 `Bin-embedding` （延伸） {#Bin-embedding}
 
 <!--
 Recall that Exercises

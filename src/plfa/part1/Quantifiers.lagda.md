@@ -840,10 +840,10 @@ Does the converse hold? If so, prove; if not, explain why.
 逆命题成立吗？如果成立，给出证明。如果不成立，解释为什么。
 
 <!--
-#### Exercise `Bin-isomorphism` (stretch) {name=Bin-isomorphism}
+#### Exercise `Bin-isomorphism` (stretch) {#Bin-isomorphism}
 -->
 
-#### 练习 `Bin-isomorphism` （延伸） {name=Bin-isomorphism}
+#### 练习 `Bin-isomorphism` （延伸） {#Bin-isomorphism}
 
 <!--
 Recall that Exercises

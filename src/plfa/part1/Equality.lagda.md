@@ -232,10 +232,10 @@ instantiated.
 同样，交互式地证明这个特性是一个很好的练习，尤其是观察 Agda 的已知内容根据参数的实例而变化的过程。
 
 <!--
-## Congruence and substitution {name=cong}
+## Congruence and substitution {#cong}
 -->
 
-## 合同性和替换性 {name=cong}
+## 合同性和替换性 {#cong}
 
 <!--
 Equality satisfies _congruence_.  If two terms are equal,
@@ -1051,10 +1051,10 @@ Isomorphic to Martin-Löf Identity, Parametrically*
 
 
 <!--
-## Universe polymorphism {name=unipoly}
+## Universe polymorphism {#unipoly}
 -->
 
-## 全体多态 {name=unipoly}
+## 全体多态 {#unipoly}
 
 <!--
 As we have seen, not every type belongs to `Set`, but instead every

@@ -947,10 +947,10 @@ Show empty is the right identity of sums up to isomorphism.
 ```
 
 <!--
-## Implication is function {name=implication}
+## Implication is function {#implication}
 -->
 
-## 蕴涵即是函数 {name=implication}
+## 蕴涵即是函数 {#implication}
 
 <!--
 Given two propositions `A` and `B`, the implication `A → B` holds if

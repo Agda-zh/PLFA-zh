@@ -132,10 +132,10 @@ successor of two; and so on.
 即一的后继数，简写为 `2`；将二的后继数简写为 `3`；以此类推。
 
 <!--
-#### Exercise `seven` (practice) {name=seven}
+#### Exercise `seven` (practice) {#seven}
 -->
 
-#### 练习 `seven`（实践） {name=seven}
+#### 练习 `seven`（实践） {#seven}
 
 <!--
 Write out `7` in longhand.
@@ -570,10 +570,10 @@ appear in names, so we do not need extra spaces in the `using` list.
 列表中不需要额外的空格来消除歧义。
 
 <!--
-## Operations on naturals are recursive functions {name=plus}
+## Operations on naturals are recursive functions {#plus}
 -->
 
-## 自然数的运算是递归函数 {name=plus}
+## 自然数的运算是递归函数 {#plus}
 
 <!--
 Now that we have the natural numbers, what can we do with them?
@@ -824,10 +824,10 @@ other word for evidence, which we will use interchangeably, is _proof_.
 我们也会使用**证明**一词表达相同的意思，在本书中这两个词可以互换使用。
 
 <!--
-#### Exercise `+-example` (practice) {name=plus-example}
+#### Exercise `+-example` (practice) {#plus-example}
 -->
 
-#### 练习 `+-example`（实践） {name=plus-example}
+#### 练习 `+-example`（实践） {#plus-example}
 
 <!--
 Compute `3 + 4`, writing out your reasoning as a chain of equations, using the equations for `+`.
@@ -942,10 +942,10 @@ it can easily be inferred from the corresponding term.
 `_ : 2 * 3 ≡ 6` 的签名，因为它很容易从对应的项推导出来。
 
 <!--
-#### Exercise `*-example` (practice) {name=times-example}
+#### Exercise `*-example` (practice) {#times-example}
 -->
 
-#### 练习 `*-example`（实践） {name=times-example}
+#### 练习 `*-example`（实践） {#times-example}
 
 <!--
 Compute `3 * 4`, writing out your reasoning as a chain of equations, using the equations for `*`.
@@ -966,10 +966,10 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations, using the e
 ```
 
 <!--
-#### Exercise `_^_` (recommended) {name=power}
+#### Exercise `_^_` (recommended) {#power}
 -->
 
-#### 练习 `_^_`（推荐） {name=power}
+#### 练习 `_^_`（推荐） {#power}
 
 <!--
 Define exponentiation, which is given by the following equations:
@@ -1094,10 +1094,10 @@ _ =
 ```
 
 <!--
-#### Exercise `∸-example₁` and `∸-example₂` (recommended) {name=monus-examples}
+#### Exercise `∸-example₁` and `∸-example₂` (recommended) {#monus-examples}
 -->
 
-练习 `∸-example₁` 和 `∸-example₂`（推荐） {name=monus-examples}
+练习 `∸-example₁` 和 `∸-example₂`（推荐） {#monus-examples}
 
 <!--
 Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equations.
@@ -1386,10 +1386,10 @@ the same coin.
 如上所示，归纳定义和递归定义的的推导过程十分相似。它们就像一枚硬币的两面。
 
 <!--
-## The story of creation, finitely {name=finite-creation}
+## The story of creation, finitely {#finite-creation}
 -->
 
-## 有限的创世故事 {name=finite-creation}
+## 有限的创世故事 {#finite-creation}
 
 <!--
 The above story was told in a stratified way.  First, we create
@@ -1724,10 +1724,10 @@ _m_ and _n_.
 时间，而用 Haskell 整数表示的情况下只需要正比于 `m` 和 `n` 的对数之和的时间。
 
 <!--
-#### Exercise `Bin` (stretch) {name=Bin}
+#### Exercise `Bin` (stretch) {#Bin}
 -->
 
-#### 练习 `Bin`（拓展） {name=Bin}
+#### 练习 `Bin`（拓展） {#Bin}
 
 <!--
 A more efficient representation of natural numbers uses a binary

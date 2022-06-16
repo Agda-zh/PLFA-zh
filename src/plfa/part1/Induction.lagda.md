@@ -133,10 +133,10 @@ that a newly introduced operator is associative but not commutative.
 但不满足交换律。
 
 <!--
-#### Exercise `operators` (practice) {name=operators}
+#### Exercise `operators` (practice) {#operators}
 -->
 
-#### 练习 `operators`（实践） {name=operators}
+#### 练习 `operators`（实践） {#operators}
 
 <!--
 Give another example of a pair of operators that have an identity
@@ -1127,10 +1127,10 @@ Agda 要求标识符必须在使用前定义，因此我们必须在主命题之
 
 
 <!--
-## Our first corollary: rearranging {name=sections}
+## Our first corollary: rearranging {#sections}
 -->
 
-## 第一个推论：重排定理 {name=sections}
+## 第一个推论：重排定理 {#sections}
 
 <!--
 We can apply associativity to rearrange parentheses however we like.
@@ -1334,10 +1334,10 @@ which is left as an exercise for the reader.
 还有一种完全有限的方法来生成同样的等式，它的证明留作读者的练习。
 
 <!--
-#### Exercise `finite-+-assoc` (stretch) {name=finite-plus-assoc}
+#### Exercise `finite-+-assoc` (stretch) {#finite-plus-assoc}
 -->
 
-#### 练习 `finite-+-assoc`（延伸） {name=finite-plus-assoc}
+#### 练习 `finite-+-assoc`（延伸） {#finite-plus-assoc}
 
 <!--
 Write out what is known about associativity of addition on each of the
@@ -1628,10 +1628,10 @@ typing `C-c C-r` will fill it in, completing the proof:
 
 
 <!--
-#### Exercise `+-swap` (recommended) {name=plus-swap}
+#### Exercise `+-swap` (recommended) {#plus-swap}
 -->
 
-#### 练习：`+-swap`（推荐） {name=plus-swap}
+#### 练习：`+-swap`（推荐） {#plus-swap}
 
 <!--
 Show
@@ -1660,10 +1660,10 @@ is associative and commutative.
 ```
 
 <!--
-#### Exercise `*-distrib-+` (recommended) {name=times-distrib-plus}
+#### Exercise `*-distrib-+` (recommended) {#times-distrib-plus}
 -->
 
-#### 练习 `*-distrib-+`（推荐） {name=times-distrib-plus}
+#### 练习 `*-distrib-+`（推荐） {#times-distrib-plus}
 
 <!--
 Show multiplication distributes over addition, that is,
@@ -1690,10 +1690,10 @@ for all naturals `m`, `n`, and `p`.
 ```
 
 <!--
-#### Exercise `*-assoc` (recommended) {name=times-assoc}
+#### Exercise `*-assoc` (recommended) {#times-assoc}
 -->
 
-#### 练习 `*-assoc`（推荐） {name=times-assoc}
+#### 练习 `*-assoc`（推荐） {#times-assoc}
 
 <!--
 Show multiplication is associative, that is,
@@ -1720,10 +1720,10 @@ for all naturals `m`, `n`, and `p`.
 ```
 
 <!--
-#### Exercise `*-comm` (practice) {name=times-comm}
+#### Exercise `*-comm` (practice) {#times-comm}
 -->
 
-#### 练习 `*-comm`（实践） {name=times-comm}
+#### 练习 `*-comm`（实践） {#times-comm}
 
 <!--
 Show multiplication is commutative, that is,
@@ -1752,10 +1752,10 @@ you will need to formulate and prove suitable lemmas.
 
 
 <!--
-#### Exercise `0∸n≡0` (practice) {name=zero-monus}
+#### Exercise `0∸n≡0` (practice) {#zero-monus}
 -->
 
-#### 练习 `0∸n≡0`（实践） {name=zero-monus}
+#### 练习 `0∸n≡0`（实践） {#zero-monus}
 
 <!--
 Show
@@ -1783,10 +1783,10 @@ for all naturals `n`. Did your proof require induction?
 
 
 <!--
-#### Exercise `∸-+-assoc` (practice) {name=monus-plus-assoc}
+#### Exercise `∸-+-assoc` (practice) {#monus-plus-assoc}
 -->
 
-#### 练习 `∸-+-assoc`（实践） {name=monus-plus-assoc}
+#### 练习 `∸-+-assoc`（实践） {#monus-plus-assoc}
 
 <!--
 Show that monus associates with addition, that is,
@@ -1846,10 +1846,10 @@ for all `m`, `n`, and `p`.
 ```
 
 <!--
-#### Exercise `Bin-laws` (stretch) {name=Bin-laws}
+#### Exercise `Bin-laws` (stretch) {#Bin-laws}
 -->
 
-#### 练习 `Bin-laws`（延伸） {name=Bin-laws}
+#### 练习 `Bin-laws`（延伸） {#Bin-laws}
 
 <!--
 Recall that

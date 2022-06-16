@@ -448,10 +448,10 @@ partial order but not a total order.
 上述性质，比如说指出新定义的关系是一个偏序而不是全序。
 
 <!--
-#### Exercise `orderings` (practice) {name=orderings}
+#### Exercise `orderings` (practice) {#orderings}
 -->
 
-#### 练习 `orderings`（实践） {name=orderings}
+#### 练习 `orderings`（实践） {#orderings}
 
 <!--
 Give an example of a preorder that is not a partial order.
@@ -690,10 +690,10 @@ follows by congruence.
 
 
 <!--
-#### Exercise `≤-antisym-cases` (practice) {name=leq-antisym-cases}
+#### Exercise `≤-antisym-cases` (practice) {#leq-antisym-cases}
 -->
 
-#### 练习 `≤-antisym-cases`（实践） {name=leq-antisym-cases}
+#### 练习 `≤-antisym-cases`（实践） {#leq-antisym-cases}
 
 <!--
 The above proof omits cases where one argument is `z≤n` and one
@@ -1058,10 +1058,10 @@ Show that multiplication is monotonic with regard to inequality.
 
 
 <!--
-## Strict inequality {name=strict-inequality}
+## Strict inequality {#strict-inequality}
 -->
 
-## 严格不等关系 {name=strict-inequality}
+## 严格不等关系 {#strict-inequality}
 
 <!--
 We can define strict inequality similarly to inequality:
@@ -1128,10 +1128,10 @@ exploiting the corresponding properties of inequality.
 因此我们亦可从不等关系的性质中，使用此性质来证明严格不等关系的性质。
 
 <!--
-#### Exercise `<-trans` (recommended) {name=less-trans}
+#### Exercise `<-trans` (recommended) {#less-trans}
 -->
 
-#### 练习 `<-trans` （推荐） {name=less-trans}
+#### 练习 `<-trans` （推荐） {#less-trans}
 
 <!--
 Show that strict inequality is transitive. Use a direct proof. (A later
@@ -1151,10 +1151,10 @@ exercise exploits the relation between < and ≤.)
 ```
 
 <!--
-#### Exercise `trichotomy` (practice) {name=trichotomy}
+#### Exercise `trichotomy` (practice) {#trichotomy}
 -->
 
-#### 练习 `trichotomy`（实践） {name=trichotomy}
+#### 练习 `trichotomy`（实践） {#trichotomy}
 
 <!--
 Show that strict inequality satisfies a weak version of trichotomy, in
@@ -1192,10 +1192,10 @@ similar to that used for totality.
 ```
 
 <!--
-#### Exercise `+-mono-<` (practice) {name=plus-mono-less}
+#### Exercise `+-mono-<` (practice) {#plus-mono-less}
 -->
 
-#### 练习 `+-mono-<`（实践） {name=plus-mono-less}
+#### 练习 `+-mono-<`（实践） {#plus-mono-less}
 
 <!--
 Show that addition is monotonic with respect to strict inequality.
@@ -1216,10 +1216,10 @@ As with inequality, some additional definitions may be required.
 
 
 <!--
-#### Exercise `≤-iff-<` (recommended) {name=leq-iff-less}
+#### Exercise `≤-iff-<` (recommended) {#leq-iff-less}
 -->
 
-#### 练习 `≤-iff-<` (推荐) {name=leq-iff-less}
+#### 练习 `≤-iff-<` (推荐) {#leq-iff-less}
 
 <!--
 Show that `suc m ≤ n` implies `m < n`, and conversely.
@@ -1238,10 +1238,10 @@ Show that `suc m ≤ n` implies `m < n`, and conversely.
 ```
 
 <!--
-#### Exercise `<-trans-revisited` (practice) {name=less-trans-revisited}
+#### Exercise `<-trans-revisited` (practice) {#less-trans-revisited}
 -->
 
-#### 练习 `<-trans-revisited`（实践） {name=less-trans-revisited}
+#### 练习 `<-trans-revisited`（实践） {#less-trans-revisited}
 
 <!--
 Give an alternative proof that strict inequality is transitive,
@@ -1423,10 +1423,10 @@ successor of the sum of two even numbers, which is even.
 
 
 <!--
-#### Exercise `o+o≡e` (stretch) {name=odd-plus-odd}
+#### Exercise `o+o≡e` (stretch) {#odd-plus-odd}
 -->
 
-#### 练习 `o+o≡e` (延伸) {name=odd-plus-odd}
+#### 练习 `o+o≡e` (延伸) {#odd-plus-odd}
 
 <!--
 Show that the sum of two odd numbers is even.
@@ -1446,10 +1446,10 @@ Show that the sum of two odd numbers is even.
 
 
 <!--
-#### Exercise `Bin-predicates` (stretch) {name=Bin-predicates}
+#### Exercise `Bin-predicates` (stretch) {#Bin-predicates}
 -->
 
-#### 练习 `Bin-predicates` (延伸) {name=Bin-predicates}
+#### 练习 `Bin-predicates` (延伸) {#Bin-predicates}
 
 <!--
 Recall that

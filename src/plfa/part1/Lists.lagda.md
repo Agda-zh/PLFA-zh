@@ -741,10 +741,10 @@ Now the time to reverse a list is linear in the length of the list.
 现在反转一个列表需要的时间与列表的长度线性相关。
 
 <!--
-## Map {name=Map}
+## Map {#Map}
 -->
 
-## 映射 {name=Map}
+## 映射 {#Map}
 
 <!--
 Map applies a function to every element of a list to generate a corresponding list.
@@ -912,10 +912,10 @@ Define a suitable map operator over trees:
 ```
 
 <!--
-## Fold {name=Fold}
+## Fold {#Fold}
 -->
 
-## 折叠 {name=Fold}
+## 折叠 {#Fold}
 
 <!--
 Fold takes an operator and a value, and uses the operator to combine
@@ -1401,10 +1401,10 @@ Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 
 
 <!--
-## All {name=All}
+## All {#All}
 -->
 
-## 所有 {name=All}
+## 所有 {#All}
 
 <!--
 We can also define predicates over lists. Two of the most important

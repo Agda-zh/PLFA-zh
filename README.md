@@ -68,7 +68,7 @@ apt），Agda 的版本可能不是最新的。除此之外，Agda
 ### On macOS: Install the XCode Command Line Tools
 -->
 
-### macOS 平台：安装 XCode 命令行工具{name=on-macos-install-the-xcode-command-line-tools}
+### macOS 平台：安装 XCode 命令行工具{#on-macos-install-the-xcode-command-line-tools}
 
 <!--
 On macOS, you’ll need to install [The XCode Command Line Tools][xcode]. For most versions of macOS, you can install these by running the following command:
@@ -86,7 +86,7 @@ xcode-select --install
 ### Install Git
 -->
 
-### 安装 Git {name=install-git}
+### 安装 Git {#install-git}
 
 <!--
 You can check whether you have Git by running the following command:
@@ -110,7 +110,7 @@ If you do not have Git, see [the Git downloads page][git].
 ### Install GHC and Cabal
 -->
 
-### 安装 GHC 和 Cabal {name=install-ghc-and-cabal}
+### 安装 GHC 和 Cabal {#install-ghc-and-cabal}
 
 <!--
 Agda is written in Haskell, so to install it we’ll need the *Glorious Haskell Compiler* version 8.10.7 and it's package managed *Cabal*. We recommend installing both of these using [ghcup][ghcup].
@@ -124,7 +124,7 @@ Agda 是用 Haskell 写成的，所以为了安装它我们需要 *Glorious Hask
 ### Install Agda
 -->
 
-### 安装 Agda {name=install-agda}
+### 安装 Agda {#install-agda}
 
 <!--
 The easiest way to install Agda is using Cabal. PLFA uses Agda version 2.6.2.2. Run the following command:
@@ -161,7 +161,7 @@ If you'd like, you can [test to see if you've installed Agda correctly][agda-hel
 ### Install PLFA and the Agda standard library
 -->
 
-### 安装 PLFA 和 Agda 标准库 {name=install-plfa-and-the-agda-standard-library}
+### 安装 PLFA 和 Agda 标准库 {#install-plfa-and-the-agda-standard-library}
 
 <!--
 We recommend installing PLFA from Github into your home directory, by running the following command:
