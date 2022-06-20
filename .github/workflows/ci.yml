@@ -11,34 +11,83 @@ on:
 
 env:
   CABAL_ARGS: "--project-file=cabal.project.ci"
-  HTML_PROOFER: "bundle exec htmlproofer"
+  NOKOGIRI_USE_SYSTEM_LIBRARIES: true
 
 jobs:
   build:
-    name: ${{ matrix.os }} / GHC ${{ matrix.ghc }}
-    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: true
       matrix:
-        os: [macOS-latest, ubuntu-latest]
-        ghc: ["8.10.7"]
-        node: ["latest"]
-        cabal: ["latest"]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        ghc-version: ["8.10.7"] # "9.2.2"
+        cabal-version: ["3.6"]
+        node-version: ["16"]
+        include:
+          - experimental: false
+          - os: windows-latest
+            experimental: true
+          - os: ubuntu-latest
+            os-pretty: Linux
+          - os: macOS-latest
+            os-pretty: macOS
+          - os: windows-latest
+            os-pretty: Windows
 
+    name: Build on ${{ matrix.os-pretty }} with GHC ${{ matrix.ghc-version }}
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: 'true'
+
+      - name: Setup Haskell
+        uses: haskell/actions/setup@v2
+        id: setup-haskell
+        with:
+          ghc-version: ${{ matrix.ghc-version }}
+          cabal-version: ${{ matrix.cabal-version }}
+
+      - name: Cabal freeze
+        run: |
+          cabal v2-update
+          cabal v2-freeze $CABAL_ARGS
+
+      - name: Cache Haskell
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ steps.setup-haskell.outputs.cabal-store }}
+            dist-newstyle
+          key: haskell-${{ runner.os }}-${{ matrix.ghc-version }}-${{ hashFiles('cabal.project.ci.freeze') }}
+          restore-keys: haskell-${{ runner.os }}-${{ matrix.ghc-version }}-
+
+      - name: Cache Shake build
+        uses: actions/cache@v3
+        with:
+          path: |
+            _cache
+          key: build-${{ runner.os }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build artifact
+        run: make build
+
+      - name: Test with HTML-validate
+        run: make test-html-validate
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Test with HTMLProofer
+        run: make test-html-proofer
 
       - name: Setup EPUBCheck (Linux)
         if: runner.os == 'Linux'
@@ -48,55 +97,61 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install epubcheck
 
-      - name: Setup Haskell
-        uses: haskell/actions/setup@v2
-        id: setup-haskell
-        with:
-          ghc-version: ${{ matrix.ghc }}
-          cabal-version: ${{ matrix.cabal }}
-
-      - name: Cabal freeze
-        run: |
-          cabal v2-update
-          cabal v2-freeze $CABAL_ARGS --enable-tests --enable-benchmarks
-
-      - name: Add Cabal installdir to path (Unix)
-        if: runner.os == 'Linux' || runner.os == 'macOS'
-        run:  echo "${HOME}/.cabal/bin" >> $GITHUB_PATH
-        shell: bash
-
-      - name: Add Cabal installdir to path (Windows)
+      - name: Setup EPUBCheck (Windows)
         if: runner.os == 'Windows'
-        run: echo "$env:APPDATA\cabal\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-        shell: powershell
-
-      - name: Cache ~/.cabal/store and dist-newstyle
-        uses: actions/cache@v2
-        with:
-          path: |
-            ${{ steps.setup-haskell.outputs.cabal-store }}
-            dist-newstyle
-          key: ${{ matrix.os }}-GHC-${{ matrix.ghc }}-${{ hashFiles('cabal.project.ci.freeze') }}
-          restore-keys: ${{ matrix.os }}-GHC-${{ matrix.ghc }}-
-
-      - name: Build website
-        run: make build
-
-      - name: Test with html-validate
-        run: make test-html-validate
-
-      - name: Test with HTMLProofer
-        run: make test-html-proofer
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/w3c/epubcheck/releases/download/v4.2.4/epubcheck-4.2.4.zip" -OutFile "${{ runner.temp }}\epubcheck-4.2.4.zip"
+          Expand-Archive "{{ runner.temp }}\epubcheck-4.2.4.zip" -DestinationPath "${{ github.workspace }}\epubcheck\"
+          Echo "EPUBCHECK=java -jar ${{ github.workspace }}\epubcheck\epubcheck-4.2.4\epubcheck.jar" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Test with EPUBCheck
-        if: runner.os == 'Linux' || runner.os == 'macOS'
         run: make test-epubcheck
-                
-      - name: Deploy website
-        if: runner.os == 'macOS'
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+
+      - name: Upload artifact
+        if: runner.os == 'Linux' && github.event_name == 'push'
+        uses: actions/upload-artifact@v3
+        with:
+          name: latest
+          path: _site
+          if-no-files-found: error
+
+      - name: Upload artifact for pull request
+        if: runner.os == 'Linux' && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: pull-request-${{ github.event.pull_request.number }}
+          path: _site
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy
+    concurrency: ci-${{ github.ref }}
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        if: github.event_name == 'push'
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: Download artifact
+        if: github.event_name == 'push'
+        uses: actions/download-artifact@v3
+        with:
+          name: latest
+          path: latest
+
+      - name: Unpack legacy versions
+        if: github.event_name == 'push'
+        run: |
+          unzip -q -n -d latest data/legacy/19.08.zip
+          unzip -q -n -d latest data/legacy/20.07.zip
+
+      - name: Deploy artifact
+        if: github.event_name == 'push'
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: web
-          folder: _site
+          folder: latest
 
-        

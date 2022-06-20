@@ -77,6 +77,7 @@ On macOS, you’ll need to install [The XCode Command Line Tools][xcode]. For mo
 在 macOS 平台，你需要安装 [XCode 命令行工具][xcode]。
 在大多数 macOS 系统版本上，你可以用下面的命令安装它们：
 
+
 ```bash
 xcode-select --install
 ```
@@ -105,7 +106,6 @@ If you do not have Git, see [the Git downloads page][git].
 
 如果你没有 Git，请参阅 [Git 下载页面][git]。
 
-
 <!--
 ### Install GHC and Cabal
 -->
@@ -113,11 +113,11 @@ If you do not have Git, see [the Git downloads page][git].
 ### 安装 GHC 和 Cabal {#install-ghc-and-cabal}
 
 <!--
-Agda is written in Haskell, so to install it we’ll need the *Glorious Haskell Compiler* version 8.10.7 and its package manager *Cabal*. We recommend installing both of these using [ghcup][ghcup].
+Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ version 8.10.7 and its package manager _Cabal_. We recommend installing both of these using [ghcup][ghcup].
 -->
 
-Agda 是用 Haskell 写成的，所以为了安装它我们需要 *Glorious Haskell Compiler*
-版本 8.10.7 和它的包管理器 *Cabal*。我们建议使用 [ghcup][ghcup] 来安装两者。
+Agda 是用 Haskell 写成的，所以为了安装它我们需要 _Glorious Haskell Compiler_
+版本 8.10.7 和它的包管理器 _Cabal_。我们建议使用 [ghcup][ghcup] 来安装两者。
 
 
 <!--
@@ -139,10 +139,10 @@ cabal install Agda-2.6.2.2
 ```
 
 <!--
-*This step will take a long time and a lot of memory to complete.*
+_This step will take a long time and a lot of memory to complete._
 -->
 
-**这一步会消耗很长时间和很多内存来完成。**
+__这一步会消耗很长时间和很多内存来完成。__
 
 <!--
 For further information, see the [Agda installation instructions][agda-installation].
@@ -218,16 +218,15 @@ Otherwise, you will need to edit the appropriate files. Both configuration files
 <!--
 - If the `AGDA_DIR` directory does not already exist, create it.
 - In `AGDA_DIR`, create a plain-text file called `libraries` containing `AGDA_STDLIB/standard-library.agda-lib`, where `AGDA_STDLIB` is the path to where the Agda standard library is located (e.g., `~/plfa/standard-library/`). This lets Agda know that an Agda library called `standard-library` is available.
-- In `AGDA_DIR`, create a plain-text file called `defaults` containing *just* the line `standard-library`.
-- If you want to complete the exercises or to import modules from the book, you will also need to provide access to PLFA as an Agda library.  To do so, let `PLFA` b the path to the root directory for PLFA.
- Add `PLFA/src/plfa.agda-lib` to `AGDA_DIR/libraries` and add `plfa` to `AGDA_DIR/defaults`, each on a line of their own.
--->
+- In `AGDA_DIR`, create a plain-text file called `defaults` containing _just_ the line `standard-library`.
+- If you want to complete the exercises or to import modules from the book, you will also need to provide access to PLFA as an Agda library. To do so, let `PLFA` b the path to the root directory for PLFA.
+  Add `PLFA/src/plfa.agda-lib` to `AGDA_DIR/libraries` and add `plfa` to `AGDA_DIR/defaults`, each on a line of their own.
 
 - 如果 `AGDA_DIR` 文件夹不存在，创建它。
 - 在 `AGDA_DIR` 中，创建一个纯文本文件 `libraries`，内容为
     `/path/to/standard-library.agda-lib` （即上文中记录的路径）。
   这个文件让 Agda 知道有一个名为 `standard-library` 的库可用。
-- 在 `AGDA_DIR` 中，创建一个纯文本文件 `defaults`，内容**仅**为 `standard-library` 这一行。
+- 在 `AGDA_DIR` 中，创建一个纯文本文件 `defaults`，内容__仅__为 `standard-library` 这一行。
 - 如果你想完成 的习题，或者想导入书中的模块，
   那么需要将 PLFA 设置为 Agda 库。如果 `PLFA` 是 PLFA
   的根目录，完成此设置需要将 `PLFA/src/plfa.agda-lib` 作为单独的一行添加到
@@ -253,20 +252,23 @@ The recommended editor for Agda is Emacs. To install Emacs:
 推荐的 Agda 编辑器是 Emacs。安装 Emacs 可以用下面的方法：
 
 <!--
- - *On UNIX*, the version of Emacs in your repository is probably fine as long as it is fairly recent. There are also links to the most recent release on the [GNU Emacs downloads page][emacs].
- - *On MacOS*, [Aquamacs][aquamacs] is probably the preferred version of Emacs, but GNU Emacs can also be installed via Homebrew or MacPorts. See the [GNU Emacs downloads page][emacs] for instructions.
- - *On Windows*. See the [GNU Emacs downloads page][emacs] for instructions.
+- _On UNIX_, the version of Emacs in your repository is probably fine as long as it is fairly recent. There are also links to the most recent release on the [GNU Emacs downloads page][emacs].
+
+- _On MacOS_, [Aquamacs][aquamacs] is probably the preferred version of Emacs, but GNU Emacs can also be installed via Homebrew or MacPorts. See the [GNU Emacs downloads page][emacs] for instructions.
+
+- _On Windows_. See the [GNU Emacs downloads page][emacs] for instructions.
+
 -->
 
- - **UNIX 平台**：包管理器中的 Emacs 应该可以使用（只要它的版本比较新），[GNU
-     Emacs 下载页面][emacs]也有最近发布版本的链接。
- - **macOS 平台**：推荐的 Emacs 是 [Aquamacs][aquamacs]，但是 GNU Emacs
-     也可以通过 Homebrew 或者 MacPorts 安装。参阅 [GNU Emacs
-     下载页面][emacs]中的指示。
- - **Windows 平台**：参阅 [GNU Emacs 下载页面][emacs]中的指示。
+- __UNIX 平台__：包管理器中的 Emacs 应该可以使用（只要它的版本比较新），[GNU
+   Emacs 下载页面][emacs]也有最近发布版本的链接。
+- __MacOS 平台__：推荐的 Emacs 是 [Aquamacs][aquamacs]，但是 GNU Emacs
+   也可以通过 Homebrew 或者 MacPorts 安装。参阅 [GNU Emacs
+   下载页面][emacs]中的指示。
+- __Windows 平台__：参阅 [GNU Emacs 下载页面][emacs]中的指示。
 
 <!--
-Make sure that you are able to open, edit, and save text files with your installation.  The [tour of Emacs][emacs-tour] page on the GNU Emacs site describes how to access the tutorial within your Emacs installation.
+Make sure that you are able to open, edit, and save text files with your installation. The [tour of Emacs][emacs-tour] page on the GNU Emacs site describes how to access the tutorial within your Emacs installation.
 -->
 
 确保你可以用你安装的版本打开、编辑、保存文件。GNU Emacs 网站上的 [Emacs
@@ -310,20 +312,21 @@ Open the `nats.agda` file you created earlier, and load and type-check the file 
 来载入和类型检查这个文件。
 
 <!--
-### Auto-loading `agda-mode` in Emacs
+#### Auto-loading `agda-mode` in Emacs
 -->
 
-### 在 Emacs 中自动加载 `agda-mode`
+#### 在 Emacs 中自动加载 `agda-mode`
 
 <!--
-Since version 2.6.0, Agda has support for literate editing with Markdown, using the `.lagda.md` extension. One side-effect of this extension is that most editors default to Markdown editing mode, whereas
-In order to have `agda-mode` automatically loaded whenever you open a file ending with `.agda` or `.lagda.md`, put the following on your Emacs configuration file:
+Since version 2.6.0, Agda has had support for literate editing with Markdown, using the `.lagda.md` extension. One issue is that Emacs will default to Markdown editing mode for files with a `.md` suffix. In order to have `agda-mode` automatically loaded whenever you open a file ending with `.agda` or `.lagda.md`, add the following line to your Emacs configuration file:
 -->
 
 从版本 2.6.0 开始，Agda 支持 Markdown 风格的文学编程，文件使用 `.lagda.md` 扩展名。
-该扩展名的一个副作用就是大部分编辑器默认会进入 Markdown 编辑模式。
+该扩展名的一个问题就是 Emacs 默认会进入 Markdown 编辑模式。
 而为了让 `agda-mode` 在你打开 `.agda` 或 `.lagda.md` 文件时自动加载，
 请将以下内容放到你的 Emacs 配置文件中：
+
+
 
 ```elisp
 ;; auto-load agda-mode for .agda and .lagda.md
@@ -335,11 +338,11 @@ In order to have `agda-mode` automatically loaded whenever you open a file endin
 ```
 
 <!--
-If you already have settings which change your `auto-mode-alist` in your configuration, put these *after* the ones you already have or combine them if you are comfortable with Emacs Lisp. The configuration file for Emacs is normally located in `HOME/.emacs` or `HOME/.emacs.d/init.el`, but Aquamacs users might need to move their startup settings to the “Preferences.el” file in `HOME/Library/Preferences/Aquamacs Emacs/Preferences`. For Windows, see [the GNU Emacs documentation][emacs-home] for a description of where the Emacs configuration is located.
+If you already have settings which change your `auto-mode-alist` in your configuration, put these _after_ the ones you already have or combine them if you are comfortable with Emacs Lisp. The configuration file for Emacs is normally located in `HOME/.emacs` or `HOME/.emacs.d/init.el`, but Aquamacs users might need to move their startup settings to the “Preferences.el” file in `HOME/Library/Preferences/Aquamacs Emacs/Preferences`. For Windows, see [the GNU Emacs documentation][emacs-home] for a description of where the Emacs configuration is located.
 -->
 
 如果你配置中已有了改变 `auto-mode-alist`
-的设置，将上述内容放置在已有的设置**之后**，或者将其与已有设置合并（如果你对
+的设置，将上述内容放置在已有的设置__之后__，或者将其与已有设置合并（如果你对
 Emacs Lisp 足够了解）。
 Emacs 的配置文件通常位于 `~/.emacs` 或 `~/.emacs.d/init.el`，然而
 Aquamacs 用户需要将启动设置放到位于 `~/Library/Preferences/Aquamacs Emacs/Preferences`
@@ -373,7 +376,7 @@ Mononoki。对于大多数系统来说，安装字体只是简单的下载 `.otf
 `font-mononiki` 包；Debian 的 APT 提供了 [`fonts-mononoki` 包][font-mononoki-debian]。
 将下面的内容加入 Emacs 配置文件，可以把 Mononoki 设置为 Emacs 的默认字体：
 
-``` elisp
+```elisp
 ;; default to mononoki
 (set-face-attribute 'default nil
                     :family "mononoki"
@@ -403,20 +406,20 @@ Agda 的编辑是通过使用「[洞][agda-docs-holes]」来交互的，它表�
 当光标在洞中时，你可以做以下这些事情：
 
 <!--
-  - `C-c C-c`: **c**ase split (asks for variable name)
-  - `C-c C-space`: fill in hole
-  - `C-c C-r`: **r**efine with constructor
-  - `C-c C-a`: **a**utomatically fill in hole
-  - `C-c C-,`: goal type and context
-  - `C-c C-.`: goal type, context, and inferred type
+- `C-c C-c`: **c**ase split (asks for variable name)
+- `C-c C-space`: fill in hole
+- `C-c C-r`: **r**efine with constructor
+- `C-c C-a`: **a**utomatically fill in hole
+- `C-c C-,`: goal type and context
+- `C-c C-.`: goal type, context, and inferred type
 -->
 
-  - `C-c C-c`: 分项（询问变量名，**c**ase）
-  - `C-c C-空格`：填洞
-  - `C-c C-r`：用构造子精化（**r**efine）
-  - `C-c C-a`：自动填洞（**a**utomatic）
-  - `C-c C-,`：目标类型和上下文
-  - `C-c C-.`：目标类型，上下文，以及推断的类型
+- `C-c C-c`: 分项（询问变量名，**c**ase）
+- `C-c C-空格`：填洞
+- `C-c C-r`：用构造子精化（**r**efine）
+- `C-c C-a`：自动填洞（**a**utomatic）
+- `C-c C-,`：目标类型和上下文
+- `C-c C-.`：目标类型，上下文，以及推断的类型
 
 <!--
 See [the emacs-mode docs][agda-docs-emacs-mode] for more details.
@@ -431,18 +434,18 @@ If you want to see messages beside rather than below your Agda code, you can do 
 如果你想在 Agda 代码的侧边而非底栏查看信息，那么可以这样做：
 
 <!--
-  - Open your Agda file, and load it using `C-c C-l`;
-  - type `C-x 1` to get only your Agda file showing;
-  - type `C-x 3` to split the window horizontally;
-  - move your cursor to the right-hand half of your frame;
-  - type `C-x b` and switch to the buffer called “Agda information”.
+- Open your Agda file, and load it using `C-c C-l`;
+- type `C-x 1` to get only your Agda file showing;
+- type `C-x 3` to split the window horizontally;
+- move your cursor to the right-hand half of your frame;
+- type `C-x b` and switch to the buffer called “Agda information”.
 -->
 
-  - 打开 Agda 文件并按 `C-c C-l`；
-  - 按 `C-x 1` 来仅显示当前 Agda 文件；
-  - 按 `C-x 3` 来垂直分割窗口；
-  - 将光标移动到右侧窗口；
-  - 按 `C-x b` 并输入「Agda information」切换到该缓冲区。
+- 打开 Agda 文件并按 `C-c C-l`；
+- 按 `C-x 1` 来仅显示当前 Agda 文件；
+- 按 `C-x 3` 来垂直分割窗口；
+- 将光标移动到右侧窗口；
+- 按 `C-x b` 并输入「Agda information」切换到该缓冲区。
 
 <!--
 Now, error messages from Agda will appear next to your file, rather than squished beneath it.
@@ -499,7 +502,7 @@ But after that last space, we do not find ∀ on the keyboard. The code for this
 ```
 
 <!--
-We can continue with the codes for the other characters. Sometimes the characters will change as we type them, because a prefix of our character's code is the code of another character. This happens with the arrow, whose code is `\->`.  After typing `\-` we see…
+We can continue with the codes for the other characters. Sometimes the characters will change as we type them, because a prefix of our character's code is the code of another character. This happens with the arrow, whose code is `\->`. After typing `\-` we see…
 -->
 
 我们继续输入其他字符。有时字符会在输入时发生变化，因为一个字符的输入序列是另一个字符输入序列的前缀。
@@ -531,6 +534,7 @@ Finally the last few characters are ordinary again…
 ```
 {- I am excited to type ∀ and → and ≤ and ≡ !! -}
 ```
+
 
 <!--
 If you're having trouble typing the Unicode characters into Emacs, the end of each chapter should provide a list of the Unicode characters introduced in that chapter.
@@ -611,7 +615,7 @@ Atom 包管理器中有 [Agda 插件][atom-agda]。
 [FiraCode]: https://github.com/tonsky/FiraCode
 
 [epub]: https://plfa.github.io/plfa.epub
-[plfa]: http://plfa.inf.ed.ac.uk
+[plfa]: https://plfa.inf.ed.ac.uk
 [plfa-calver]: https://img.shields.io/badge/calver-20.07-22bfda
 [plfa-latest]: https://github.com/plfa/plfa.github.io/releases/latest
 [plfa-master]: https://github.com/plfa/plfa.github.io/archive/master.zip
@@ -630,7 +634,7 @@ Atom 包管理器中有 [Agda 插件][atom-agda]。
 [emacs]: https://www.gnu.org/software/emacs/download.html
 [emacs-tour]: https://www.gnu.org/software/emacs/tour/
 [emacs-home]: https://www.gnu.org/software/emacs/manual/html_node/efaq-w32/Location-of-init-file.html
-[aquamacs]: http://aquamacs.org/
+[aquamacs]: https://aquamacs.org/
 [spacemacs]: https://www.spacemacs.org/
 [spacemacs-agda]: https://develop.spacemacs.org/layers/+lang/agda/README.html
 [vscode]: https://code.visualstudio.com/

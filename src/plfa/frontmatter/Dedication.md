@@ -6,35 +6,19 @@ progress  : 100
 ---
 
 <!--
-<p style="text-align:center;">
-  <span style="font-size:1.5em">de Philip, para Wanda</span>
-</p>
+[de Philip, para Wanda]{.xx-large}
 
-<p style="text-align:center;">
-  <span style="font-size:1.17em">amor da minha vida</span>
-</p>
+[amor da minha vida]{.x-large}
 
-<p style="text-align:center;">
-  <span style="font-size:1em">knock knock knock</span>
-</p>
-
-<p style="text-align:center;">
-  <span style="font-size:1em">...</span>
-</p>
+[knock knock knock]{.large}
 -->
 
-<p style="text-align:center;">
-  <span style="font-size:1.5em">Philip 致 Wanda</span>
-</p>
+::: {.dedication}
+[Philip 致 Wanda]{.xx-large}
 
-<p style="text-align:center;">
-  <span style="font-size:1.17em">我生命中的至爱</span>
-</p>
+[我生命中的至爱]{.x-large}
 
-<p style="text-align:center;">
-  <span style="font-size:1em">咚 咚 咚</span>
-</p>
+[咚 咚 咚]{.large}
 
-<p style="text-align:center;">
-  <span style="font-size:1em">...</span>
-</p>
+[...]{.large}
+:::
