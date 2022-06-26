@@ -124,9 +124,8 @@ Please tell us of others!
 [UT-2020]: https://www.cs.utexas.edu/~wcook/Courses/386L/Sp2020-GradPL.pdf
 [BHAM-2019]: https://www.cs.bham.ac.uk/internal/modules/2019/06-26943/
 [UWL-2020]: https://github.com/jphmrst/PLC/tree/fall2020
-[Torino-2020]: https://laurea.educ.di.unito.it/index.php/offerta-formativa/insegnamenti/elenco-completo/elenco-completo/scheda-insegnamento?cod=MFN0633&codA=&year=2020&orienta=NSE
 [Padova-2020]: https://www.math.unipd.it/~maietti/typ21.html
-[UL-2022]: https://www.andrej.com/zapiski/ISRM-LOGRAC-2022/00-introduction.html
+[UL-2022]: https://web.archive.org/web/20220222095923/https://www.andrej.com/zapiski/ISRM-LOGRAC-2022/00-introduction.html
 [PLFA]: https://plfa.github.io/
 [PLFA-zh]: https://agda-zh.github.io/PLFA-zh/
 [Issue]: https://github.com/Agda-zh/plfa-zh/issues

@@ -11,6 +11,12 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 [![agda-stdlib][agda-stdlib-version]][agda-stdlib]
 [![Build Status][plfa-status]][plfa-ci]
 
+<!--
+## Getting Started for Readers
+-->
+
+## 读者指南
+
 《编程语言基础：Agda 语言描述》的使用方法与《Programming Language Foundations in Agda》一致。
 
 **本书可访问 [PLFA-zh][plfa-zh] 在线阅读。**
@@ -18,11 +24,6 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 **要参与翻译，请先阅读[翻译规范][trans-spec]。**
 
 
-<!--
-## Installing Agda and PLFA
--->
-
-## 安装 Agda 和 PLFA
 
 <!--
 You can read PLFA [online][plfa] without installing anything. However, if you wish to interact with the code or complete the exercises, you need several things:
@@ -627,7 +628,7 @@ Atom 包管理器中有 [Agda 插件][atom-agda]。
 [agda-installation]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/installation.html
 [agda-hello-world]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/hello-world.html
 [agda-version]: https://img.shields.io/badge/agda-v2.6.2.2-blue.svg
-[agda-docs-holes]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/quick-guide.html
+[agda-docs-holes]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/a-taste-of-agda.html#preliminaries
 [agda-docs-emacs-mode]: https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html
 [agda-docs-emacs-notation]: https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html#notation-for-key-combinations
 [agda-docs-package-system]: https://agda.readthedocs.io/en/v2.6.2.2/tools/package-system.html#example-using-the-standard-library

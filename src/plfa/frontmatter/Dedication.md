@@ -3,6 +3,7 @@ title     : "Dedication: 题献"
 permalink : /Dedication/
 translators : [Oling Cat]
 progress  : 100
+prev      : /
 ---
 
 <!--
