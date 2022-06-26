@@ -222,6 +222,7 @@ Otherwise, you will need to edit the appropriate files. Both configuration files
 - In `AGDA_DIR`, create a plain-text file called `defaults` containing _just_ the line `standard-library`.
 - If you want to complete the exercises or to import modules from the book, you will also need to provide access to PLFA as an Agda library. To do so, let `PLFA` b the path to the root directory for PLFA.
   Add `PLFA/src/plfa.agda-lib` to `AGDA_DIR/libraries` and add `plfa` to `AGDA_DIR/defaults`, each on a line of their own.
+-->
 
 - 如果 `AGDA_DIR` 文件夹不存在，创建它。
 - 在 `AGDA_DIR` 中，创建一个纯文本文件 `libraries`，内容为
