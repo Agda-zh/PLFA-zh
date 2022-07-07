@@ -114,11 +114,11 @@ If you do not have Git, see [the Git downloads page][git].
 ### 安装 GHC 和 Cabal {#install-ghc-and-cabal}
 
 <!--
-Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ version 8.10.7 and its package manager _Cabal_. We recommend installing both of these using [ghcup][ghcup].
+Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ version 8.10.7 (or 9.2.3) and its package manager _Cabal_. We recommend installing these using [ghcup][ghcup].
 -->
 
 Agda 是用 Haskell 写成的，所以为了安装它我们需要 _Glorious Haskell Compiler_
-版本 8.10.7 和它的包管理器 _Cabal_。我们建议使用 [ghcup][ghcup] 来安装两者。
+版本 8.10.7（或者 9.2.3）和它的包管理器 _Cabal_。我们建议使用 [ghcup][ghcup] 来安装两者。
 
 
 <!--
@@ -140,16 +140,16 @@ cabal install Agda-2.6.2.2
 ```
 
 <!--
-_This step will take a long time and a lot of memory to complete._
+This step will take a long time and a lot of memory to complete.
 -->
 
-__这一步会消耗很长时间和很多内存来完成。__
+这一步会消耗很长时间和很多内存来完成。
 
 <!--
-For further information, see the [Agda installation instructions][agda-installation].
+If you have problems or for alternatives see the [Agda installation instructions][agda-installation].
 -->
 
-更多参考信息可参阅 [Agda 安装指引][agda-installation]。
+如果你遇到了问题，或者想参考替代的方法，可参阅 [Agda 安装指引][agda-installation]。
 
 <!--
 If you'd like, you can [test to see if you've installed Agda correctly][agda-hello-world].
@@ -220,7 +220,7 @@ Otherwise, you will need to edit the appropriate files. Both configuration files
 - If the `AGDA_DIR` directory does not already exist, create it.
 - In `AGDA_DIR`, create a plain-text file called `libraries` containing `AGDA_STDLIB/standard-library.agda-lib`, where `AGDA_STDLIB` is the path to where the Agda standard library is located (e.g., `~/plfa/standard-library/`). This lets Agda know that an Agda library called `standard-library` is available.
 - In `AGDA_DIR`, create a plain-text file called `defaults` containing _just_ the line `standard-library`.
-- If you want to complete the exercises or to import modules from the book, you will also need to provide access to PLFA as an Agda library. To do so, let `PLFA` b the path to the root directory for PLFA.
+- If you want to complete the exercises or to import modules from the book, you will also need to provide access to PLFA as an Agda library. To do so, let `PLFA` be the path to the root directory for PLFA.
   Add `PLFA/src/plfa.agda-lib` to `AGDA_DIR/libraries` and add `plfa` to `AGDA_DIR/defaults`, each on a line of their own.
 -->
 
@@ -512,7 +512,7 @@ We can continue with the codes for the other characters. Sometimes the character
 之后我们会看到……
 
 ```
-{- I am excited to type ∀ and
+{- I am excited to type ∀ and -
 ```
 
 <!--
