@@ -2,7 +2,7 @@
 title     : "Equality: 相等性与等式推理"
 permalink : /Equality/
 translators : ["Fangyi Zhou"]
-progress  : 100
+progress  : 99
 ---
 
 ```agda
@@ -242,7 +242,7 @@ Equality satisfies _congruence_.  If two terms are equal,
 they remain so after the same function is applied to both:
 -->
 
-相等性满足 **合同性（Congruence）**。如果两个项相等，那么对它们使用相同的函数，
+相等性满足**合同性（Congruence）**。如果两个项相等，那么对它们使用相同的函数，
 其结果仍然相等：
 
 ```agda

@@ -1291,7 +1291,7 @@ that is, using the same name for constructors of different types.
 Here `suc` means one of three constructors:
 -->
 
-这也是我们第一次使用 **重载（Overloaded）**的构造子。这意味着不同类型的构造子
+这也是我们第一次使用**重载（Overloaded）**的构造子。这意味着不同类型的构造子
 拥有相同的名字。在这里 `suc` 表示下面三种构造子其中之一：
 
     suc : ℕ → ℕ

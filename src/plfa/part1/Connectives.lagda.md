@@ -2,7 +2,7 @@
 title     : "Connectives: 合取、析取与蕴涵"
 permalink : /Connectives/
 translators : ["Fangyi Zhou"]
-progress  : 100
+progress  : 95
 ---
 
 ```agda

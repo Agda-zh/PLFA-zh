@@ -2,7 +2,7 @@
 title     : "Quantifiers: 全称量词与存在量词"
 permalink : /Quantifiers/
 translators: ["Fangyi Zhou"]
-progress  : 100
+progress  : 98
 ---
 
 ```agda
