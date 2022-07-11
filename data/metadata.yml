@@ -1,13 +1,13 @@
-pagetitle: Programming Language Foundations in Agda
-baseurl: https://plfa.github.io/
+pagetitle: 编程语言基础：Agda 描述
+baseurl: https://agda-zh.github.io/PLFA-zh/
 description: |
-  An introduction to programming language theory using the proof assistant Agda.
-language: en
+  本书是对编程语言理论的介绍。书中的程序使用证明助理 Agda 编写。
+language: zh-CN
 license:
   name: Creative Commons Attribution 4.0 International License
   url: https://creativecommons.org/licenses/by/4.0/
 repository:
-  owner: plfa
-  name: plfa.github.io
+  owner: Agda-zh
+  name: PLFA-zh
   branch: dev
 
