@@ -60,8 +60,8 @@ its definition in just a few lines.  Here is the definition
 as a pair of inference rules:
 -->
 
-自然数集是无限的，然而其定义只需寥寥几行即可写出。下面是用两条
-**推导规则（Inference Rules）**定义的自然数：
+自然数集是无限的，然而其定义只需寥寥几行即可写出。下面是用两条**推导规则（Inference
+Rules）**定义的自然数：
 
     --------
     zero : ℕ
@@ -149,8 +149,13 @@ Write out `7` in longhand.
 -- 请将代码写在此处。
 ```
 
+<!--
 You will need to give both a type signature and definition for the
 variable `seven`. Type `C-c C-l` in Emacs to instruct Agda to re-load.
+-->
+
+你需要为 `seven` 给出类型签名以及定义。在 Emacs 中使用 `C-c C-l` 来让 Agda
+重新加载。
 
 
 <!--
@@ -834,7 +839,6 @@ Compute `3 + 4`, writing out your reasoning as a chain of equations, using the e
 
 
 ```agda
--- Your code goes here
 -- 请将代码写在此处。
 ```
 
@@ -1081,7 +1085,7 @@ _ =
 #### Exercise `∸-example₁` and `∸-example₂` (recommended) {#monus-examples}
 -->
 
-练习 `∸-example₁` 和 `∸-example₂`（推荐） {#monus-examples}
+#### 练习 `∸-example₁` 和 `∸-example₂`（推荐） {#monus-examples}
 
 <!--
 Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equations.
