@@ -1,6 +1,8 @@
 ---
-title     : "DeBruijn: 内在类型的 de Bruijn 表示法"
-permalink : /DeBruijn/
+title      : "DeBruijn: 内在类型的 de Bruijn 表示法"
+permalink  : /DeBruijn/
+progress   : 100
+translators: ["Fangyi Zhou"]
 ---
 
 ```agda

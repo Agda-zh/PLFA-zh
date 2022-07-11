@@ -1,6 +1,8 @@
 ---
-title     : "More: 简单类型 λ-演算的更多构造"
-permalink : /More/
+title      : "More: 简单类型 λ-演算的更多构造"
+permalink  : /More/
+progress   : 100
+translators: ["Fangyi Zhou"]
 ---
 
 ```agda
