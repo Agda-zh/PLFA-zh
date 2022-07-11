@@ -217,6 +217,7 @@ jobs:
         with:
           branch: web
           folder: site
+          single-commit: true
 
   ################################################################################
   # Release: On tag, publish the HEAD version of the website as a GitHub Release
