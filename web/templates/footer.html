@@ -46,6 +46,13 @@
             </div>
         </div>
         $endfor$
+        $if(progress)$
+            <h3 class="footer-heading">本章翻译进度：$progress$&#37;
+            $if(translators)$
+            ，译者：$for(translators)$$translators$$sep$、$endfor$
+            $endif$
+            </h3>
+        $endif$
         This work is licensed under a <a rel="license" href="$license.url$">$license.name$</a>
     </div>
 </footer>
