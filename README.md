@@ -114,11 +114,11 @@ If you do not have Git, see [the Git downloads page][git].
 ### 安装 GHC 和 Cabal {#install-ghc-and-cabal}
 
 <!--
-Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ version 8.10.7 (or 9.2.3) and its package manager _Cabal_. We recommend installing these using [ghcup][ghcup].
+Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ (version 8.10.7 or 9.2.3) and its package manager _Cabal_. We recommend installing these using [ghcup][ghcup].
 -->
 
 Agda 是用 Haskell 写成的，所以为了安装它我们需要 _Glorious Haskell Compiler_
-版本 8.10.7（或者 9.2.3）和它的包管理器 _Cabal_。我们建议使用 [ghcup][ghcup] 来安装两者。
+（版本 8.10.7 或者 9.2.3）和它的包管理器 _Cabal_。我们建议使用 [ghcup][ghcup] 来安装两者。
 
 
 <!--
@@ -643,8 +643,8 @@ Atom 包管理器中有 [Agda 插件][atom-agda]。
 [vscode-agda]: https://marketplace.visualstudio.com/items?itemName=banacorn.agda-mode
 [atom]: https://atom.io/
 [atom-agda]: https://atom.io/packages/agda-mode
-[agda-stdlib-version]: https://img.shields.io/badge/agda--stdlib-v1.3-blue.svg
-[agda-stdlib]: https://github.com/agda/agda-stdlib/releases/tag/v1.3
+[agda-stdlib-version]: https://img.shields.io/badge/agda--stdlib-v1.7.1-blue.svg
+[agda-stdlib]: https://github.com/agda/agda-stdlib/releases/tag/v1.7.1
 [fix-whitespace]: https://github.com/agda/fix-whitespace
 [ruby]: https://www.ruby-lang.org/en/documentation/installation/
 [ruby-bundler]: https://bundler.io/#getting-started
