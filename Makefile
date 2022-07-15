@@ -110,24 +110,15 @@ test-html-validate:
 
 HTML_PROOFER ?= bundle exec htmlproofer
 
-HTML_PROOFER_ARGS += --check-html
-HTML_PROOFER_ARGS += --check-img-http
-HTML_PROOFER_ARGS += --check-opengraph
 HTML_PROOFER_ARGS += --check-sri
+HTML_PROOFER_ARGS += --checks Images,Links,OpenGraph,Scripts
 ifeq ($(EXTERNAL_LINKS),)
 HTML_PROOFER_ARGS += --disable-external
 endif
 HTML_PROOFER_ARGS += --enforce-https
-HTML_PROOFER_ARGS += --file-ignore="/\.\/plfa.html/,/\.\/assets\/.*\.html/"
-HTML_PROOFER_ARGS += --report-eof-tags
-HTML_PROOFER_ARGS += --report-invalid-tags
-HTML_PROOFER_ARGS += --report-missing-names
-HTML_PROOFER_ARGS += --report-missing-doctype
-HTML_PROOFER_ARGS += --report-mismatched-tags
-HTML_PROOFER_ARGS += --report-script-embeds
-HTML_PROOFER_ARGS += --storage-dir=$(TMP_DIR)/htmlproofer
-HTML_PROOFER_ARGS += --timeframe=30d
-HTML_PROOFER_ARGS += --url-ignore="/github.com/"
+HTML_PROOFER_ARGS += --ignore-files="/\.\/plfa.html/,/\.\/assets\/.*\.html/"
+HTML_PROOFER_ARGS += --cache="{ \"timeframe\": { \"external\": \"30d\" } , \"storage_dir\": \"../$(TMP_DIR)/htmlproofer\" }"
+HTML_PROOFER_ARGS += --ignore-urls="/github.com/"
 HTML_PROOFER_ARGS += .
 
 .PHONY: test-html-proofer
