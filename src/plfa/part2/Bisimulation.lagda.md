@@ -1,8 +1,8 @@
 ---
-title      : "Bisimulation：联系不同的规约系统"
+title      : "Bisimulation: 联系不同的规约系统"
 permalink  : /Bisimulation/
 translators: ["Fangyi Zhou"]
-progress   : 30
+progress   : 60
 ---
 
 ```agda
@@ -204,19 +204,37 @@ are in bisimulation.
 我们将反向的证明留作习题。
 另一个习题是证明 [More](/More/) 章节中积的替代表示方法形成了一个双模拟。
 
+<!--
 ## Imports
+-->
 
+## 导入
+
+<!--
 We import our source language from
 Chapter [More](/More/):
+-->
+
+我们从 [More](/More/) 章节中导入源语言：
+
 ```agda
 open import plfa.part2.More
 ```
 
 
+<!--
 ## Simulation
+-->
 
+## 模拟
+
+<!--
 The simulation is a straightforward formalisation of the rules
 in the introduction:
+-->
+
+我们直接地形式化导言中的模拟：
+
 ```agda
 infix  4 _~_
 infix  5 ~ƛ_
@@ -245,31 +263,62 @@ data _~_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
       ----------------------
     → `let M N ~ (ƛ N†) · M†
 ```
+<!--
 The language in Chapter [More](/More/) has more constructs, which we could easily add.
 However, leaving the simulation small lets us focus on the essence.
 It's a handy technical trick that we can have a large source language,
 but only bother to include in the simulation the terms of interest.
+-->
 
+[More](/More/) 章节中的语言有更多的构造，我们可以简单地扩充上述定义。
+但是，使上述的定义小而精简让我们注重本章的重点。
+虽然我们有一个较大的源语言，但我们只在模拟中考虑我们感兴趣的项，这是一个方便的小窍门。
+
+
+<!--
 #### Exercise `_†` (practice)
+-->
 
+#### Exercise `_†` （实践）
+
+<!--
 Formalise the translation from source to target given in the introduction.
 Show that `M † ≡ N` implies `M ~ N`, and conversely.
+-->
 
+形式化导言中给定的源语言至目标语言的翻译。
+证明 `M † ≡ N` 蕴含了 `M ~ N`，以及其逆命题。
+
+<!--
 **Hint:** For simplicity, we focus on only a few constructs of the language,
 so `_†` should be defined only on relevant terms. One way to do this is
 to use a decidable predicate to pick out terms in the domain of `_†`, using
 [proof by reflection](/Decidable/#proof-by-reflection).
+-->
+**提示：**为了简洁，我们只注重语言中的一小部分构造，所以 `_†` 的定义只需要注重相关的部分。
+达成此目的的一种方法是用[互映证明](/Decidable/#proof-by-reflection)定义一个谓词来选出
+ `_†` 定义域中的项。
 
 ```agda
--- Your code goes here
+-- 在这里写出你的代码。
 ```
 
 
+<!--
 ## Simulation commutes with values
+-->
 
+## 模拟与值相互交换
+
+<!--
 We need a number of technical results. The first is that simulation
 commutes with values.  That is, if `M ~ M†` and `M` is a value then
 `M†` is also a value:
+-->
+
+我们需要一系列技术上的结果。首先是模拟与值相互交换（Commute）。
+即：若 `M ~ M†` 且 `M` 是一个值，那么 `M†` 也是一个值。
+
 ```agda
 ~val : ∀ {Γ A} {M M† : Γ ⊢ A}
   → M ~ M†
@@ -281,24 +330,46 @@ commutes with values.  That is, if `M ~ M†` and `M` is a value then
 ~val (~L ~· ~M)   ()
 ~val (~let ~M ~N) ()
 ```
+<!--
 It is a straightforward case analysis, where here the only value
 of interest is a lambda abstraction.
+-->
 
+这是一个直接的分情况讨论，唯一有意思的情况是 λ 抽象。
+
+<!--
 #### Exercise `~val⁻¹` (practice)
+-->
 
+#### Exercise `~val⁻¹` （实践）
+
+<!--
 Show that this also holds in the reverse direction: if `M ~ M†`
 and `Value M†` then `Value M`.
+-->
+
+证明此命题在反方向亦成立：
+若 `M ~ M†` 且 `Value M†`，那么 `Value M` 成立。
 
 ```agda
--- Your code goes here
+-- 在这里写出你的代码。
 ```
 
-
+<!--
 ## Simulation commutes with renaming
+-->
 
+## 模拟与重命名相互交换
+
+<!--
 The next technical result is that simulation commutes with renaming.
 That is, if `ρ` maps any judgment `Γ ∋ A` to a judgment `Δ ∋ A`,
 and if `M ~ M†` then `rename ρ M ~ rename ρ M†`:
+-->
+
+下一个技术结果是模拟和重命名相互交换。
+即：若 `ρ` 将任意的判断 `Γ ∋ A` 映射至另一个判断 `Δ ∋ A`，且
+`M ~ M†`，那么 `rename ρ M ~ rename ρ M†`：
 
 ```agda
 ~rename : ∀ {Γ Δ}
@@ -310,21 +381,44 @@ and if `M ~ M†` then `rename ρ M ~ rename ρ M†`:
 ~rename ρ (~L ~· ~M)    =  (~rename ρ ~L) ~· (~rename ρ ~M)
 ~rename ρ (~let ~M ~N)  =  ~let (~rename ρ ~M) (~rename (ext ρ) ~N)
 ```
+<!--
 The structure of the proof is similar to the structure of renaming itself:
 reconstruct each term with recursive invocation, extending the environment
 where appropriate (in this case, only for the body of an abstraction).
+-->
+
+此证明的结构与重命名的结构相似：
+使用递归来重新构造每一个项，并在需要时扩充上下文（在这里，我们只需要在 λ 抽象的抽象体中使用）。
 
 
+<!--
 ## Simulation commutes with substitution
+-->
 
+## 模拟与替换相互交换
+
+<!--
 The third technical result is that simulation commutes with substitution.
 It is more complex than renaming, because where we had one renaming map
 `ρ` here we need two substitution maps, `σ` and `σ†`.
+-->
 
+第三个技术结果是模拟与替换相互交换。
+这个结果比重命名更复杂，因为我们之前只有一个重命名映射 `ρ`，
+而现在我们需要两个替换映射 `σ` 和 `σ†`。
+
+<!--
 The proof first requires we establish an analogue of extension.
 If `σ` and `σ†` both map any judgment `Γ ∋ A` to a judgment `Δ ⊢ A`,
 such that for every `x` in `Γ ∋ A` we have `σ x ~ σ† x`,
 then for any `x` in `Γ , B ∋ A` we have `exts σ x ~ exts σ† x`:
+-->
+
+这个证明首先需要我们构造一个类似于扩充的概念。
+如果 `σ` 和 `σ†` 都将任何判断 `Γ ∋ A` 映射至一个判断 `Δ ⊢ A`，
+且对于 `Γ ∋ A` 中的任意 `x`，我们有 `σ x ~ σ† x`，
+那么对于任何 `Γ , B ∋ A` 中的 `x`，我们有 `exts σ x ~ exts σ† x`：
+
 ```agda
 ~exts : ∀ {Γ Δ}
   → {σ  : ∀ {A} → Γ ∋ A → Δ ⊢ A}
@@ -335,14 +429,27 @@ then for any `x` in `Γ , B ∋ A` we have `exts σ x ~ exts σ† x`:
 ~exts ~σ Z      =  ~`
 ~exts ~σ (S x)  =  ~rename S_ (~σ x)
 ```
+<!--
 The structure of the proof is similar to the structure of extension itself.
 The newly introduced variable trivially relates to itself, and otherwise
 we apply renaming to the hypothesis.
+-->
 
+这个证明的结构于扩充的结构相似。
+新加入的变量平凡地与它自身相关，否则我们可以对假设使用重命名。
+
+<!--
 With extension under our belts, it is straightforward to show
 substitution commutes.  If `σ` and `σ†` both map any judgment `Γ ∋ A`
 to a judgment `Δ ⊢ A`, such that for every `x` in `Γ ∋ A` we have `σ
 x ~ σ† x`, and if `M ~ M†`, then `subst σ M ~ subst σ† M†`:
+-->
+
+如上定义完扩充之后，证明替换与模拟交换就很直接了。
+如果 `σ` 和 `σ†` 都将任何判断 `Γ ∋ A` 映射至一个判断 `Δ ⊢ A`，
+且对于 `Γ ∋ A` 中的任意 `x`，我们有 `σ x ~ σ† x`，
+如果 `M ~ M†`，那么 `subst σ M ~ subst σ† M†`：
+
 ```agda
 ~subst : ∀ {Γ Δ}
   → {σ  : ∀ {A} → Γ ∋ A → Δ ⊢ A}
@@ -355,14 +462,25 @@ x ~ σ† x`, and if `M ~ M†`, then `subst σ M ~ subst σ† M†`:
 ~subst ~σ (~L ~· ~M)    =  (~subst ~σ ~L) ~· (~subst ~σ ~M)
 ~subst ~σ (~let ~M ~N)  =  ~let (~subst ~σ ~M) (~subst (~exts ~σ) ~N)
 ```
+<!--
 Again, the structure of the proof is similar to the structure of
 substitution itself: reconstruct each term with recursive invocation,
 extending the environment where appropriate (in this case, only for
 the body of an abstraction).
+-->
 
+与之前一样，这个证明的结构于替换的结构类似：使用递归重新构造每一个项，
+并在需要时扩充上下文（在这里，我们只需要在 λ 抽象的抽象体中使用）。
+
+<!--
 From the general case of substitution, it is also easy to derive
 the required special case.  If `N ~ N†` and `M ~ M†`, then
 `N [ M ] ~ N† [ M† ]`:
+-->
+
+从上面的替换的广义定义，我们可以简单地推导出我们所需的特殊形式：
+如果 `N ~ N†` 和 `M ∼ M†`，那么 `N [ M ] ~ N† [ M† ]`：
+
 ```agda
 ~sub : ∀ {Γ A B} {N N† : Γ , B ⊢ A} {M M† : Γ ⊢ B}
   → N ~ N†
@@ -375,7 +493,12 @@ the required special case.  If `N ~ N†` and `M ~ M†`, then
   ~σ Z      =  ~M
   ~σ (S x)  =  ~`
 ```
+
+<!--
 Once more, the structure of the proof resembles the original.
+-->
+
+再一次，这个证明与原定义的结构类似。
 
 
 ## The relation is a simulation
