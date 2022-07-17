@@ -1,38 +1,69 @@
 ---
-title     : "Bisimulation: Relating reduction systems"
-permalink : /Bisimulation/
+title      : "Bisimulation：联系不同的规约系统"
+permalink  : /Bisimulation/
+translators: ["Fangyi Zhou"]
+progress   : 30
 ---
 
 ```agda
 module plfa.part2.Bisimulation where
 ```
 
+<!--
 Some constructs can be defined in terms of other constructs.  In the
 previous chapter, we saw how _let_ terms can be rewritten as an
 application of an abstraction, and how two alternative formulations of
 products — one with projections and one with case — can be formulated
 in terms of each other.  In this chapter, we look at how to formalise
 such claims.
+-->
 
+有一些构造可以用其他的构造来定义。
+在上一章中，我们展示了 _let_ 项可以被重写为抽象的应用，以及积的两种不同表示方法 ——
+一种使用投影，一种使用匹配表达式。
+本章中，我们来看看如何形式化这些断言。
+
+<!--
 Given two different systems, with different terms and reduction rules,
 we define what it means to claim that one _simulates_ the other.
 Let's call our two systems _source_ and _target_.  Let `M`, `N` range
 over terms of the source, and `M†`, `N†` range over terms of the
 target.  We define a relation
+-->
+
+给定两个不同的系统，它们有不同的项和不同的规约规则，我们定义诸如
+『一个系统**模拟（Simulate）**了另一个系统』此类断言的意义。
+假设两个系统分别叫做**源**（Source）和**目标**（Target），我们用
+`M` 和 `N` 表示源系统的项，`M†` 和 `N†` 表示目标系统的项。
+我们定义一个关系
 
     M ~ M†
 
+<!--
 between corresponding terms of the two systems. We have a
 _simulation_ of the source by the target if every reduction
 in the source has a corresponding reduction sequence
 in the target:
+-->
 
+于两个系统对应的项之上。
+如果每个源系统的每一个规约都有一个对应的规约序列，那我们就有了一个**模拟**。
+
+<!--
 _Simulation_: For every `M`, `M†`, and `N`:
 If `M ~ M†` and `M —→ N`
 then `M† —↠ N†` and `N ~ N†`
 for some `N†`.
+-->
 
+**模拟**：对于任意的 `M`、`M†` 和 `N`，
+如果 `M ~ M†` 和 `M —→ N` 成立，那么 `M† —↠ N†` 和 `N ~ N†` 对于一些 `N†` 成立。
+
+<!--
 Or, in a diagram:
+-->
+
+或者，用图表来表示：
 
     M  --- —→ --- N
     |             |
@@ -42,9 +73,13 @@ Or, in a diagram:
     |             |
     M† --- —↠ --- N†
 
+<!--
 Sometimes we will have a stronger condition, where each reduction in the source
 corresponds to a reduction (rather than a reduction sequence)
 in the target:
+-->
+
+有时我们会使用一个更强的条件，使得每个源系统的规约对应目标系统的规约（而不是规约序列）：
 
     M  --- —→ --- N
     |             |
@@ -54,30 +89,56 @@ in the target:
     |             |
     M† --- —→ --- N†
 
+<!--
 This stronger condition is known as _lock-step_ or _on the nose_ simulation.
+-->
 
+这个更强的条件被称为**锁步**（Lock-step）或者**准确无误**（On the nose）的模拟。
+
+『译注：[On the nose][on-the-nose] 本义为在鼻子之上，用于表述准确无误。』
+
+<!--
 We are particularly interested in the situation where there is also
 a simulation from the target to the source: every reduction in the
 target has a corresponding reduction sequence in the source.  This
 situation is called a _bisimulation_.
+-->
 
+如果从目标系统到源系统也有一个模拟：即每个目标系统的规约在源目标系统中有对应的规约序列，
+我们对这样的情况尤其感兴趣。
+这样的情况被称为**双模拟**（Bisimulation）。
+
+<!--
 Simulation is established by case analysis over all possible
 reductions and all possible terms to which they are related.  For each
 reduction step in the source we must show a corresponding reduction
 sequence in the target.
+-->
 
+要建立模拟，我们需要分情况讨论所有的可能规约，以及所有它们可能联系的项。
+对于每个源系统中规约的步骤，我们必须给出目标系统中对应的规约系列。
+
+<!--
 For instance, the source might be lambda calculus with _let_
 added, and the target the same system with `let` translated out.
 The key rule defining our relation will be:
+-->
+
+譬如说，源系统可以是带 _let_ 项的 λ 演算，而目标系统中的 `let` 被翻译了。
+定义这个关系的关键规则是：
 
     M ~ M†
     N ~ N†
     --------------------------------
     let x = M in N ~ (ƛ x ⇒ N†) · M†
 
+<!--
 All the other rules are congruences: variables relate to
 themselves, and abstractions and applications relate if their
 components relate:
+-->
+
+其他的规则都是合同性的规则：变量于它们自身相关，抽象与应用在它们的组成部分分别相关时相关：
 
     -----
     x ~ x
@@ -91,26 +152,45 @@ components relate:
     ---------------
     L · M ~ L† · M†
 
+<!--
 Covering the other constructs of our language — naturals,
 fixpoints, products, and so on — would add little save length.
+-->
 
+讨论语言中的其他构造——自然数、不动点和积等——对我们本章的重点意义不大，
+我们节约长度而不讨论。
+
+<!--
 In this case, our relation can be specified by a function
 from source to target:
+-->
+
+在此情况下，关系的定义可以用一个从源至目标的函数来制定：
 
     (x) †               =  x
     (ƛ x ⇒ N) †         =  ƛ x ⇒ (N †)
     (L · M) †           =  (L †) · (M †)
     (let x = M in N) †  =  (ƛ x ⇒ (N †)) · (M †)
 
+<!--
 And we have
+-->
+
+我们有：
 
     M † ≡ N
     -------
     M ~ N
 
+<!--
 and conversely. But in general we may have a relation without any
 corresponding function.
+-->
 
+以及其逆命题。
+但一般情况下，我们可能有一个关系而不一定有对应的函数。
+
+<!--
 This chapter formalises establishing that `~` as defined
 above is a simulation from source to target.  We leave
 establishing it in the reverse direction as an exercise.
@@ -118,7 +198,11 @@ Another exercise is to show the alternative formulations
 of products in
 Chapter [More](/More/)
 are in bisimulation.
+-->
 
+本章形式化上文中定义的 `~` 关系是一个从源系统至目标系统的模拟。
+我们将反向的证明留作习题。
+另一个习题是证明 [More](/More/) 章节中积的替代表示方法形成了一个双模拟。
 
 ## Imports
 
@@ -486,3 +570,5 @@ This chapter uses the following unicode:
     †  U+2020  DAGGER (\dag)
     ⁻  U+207B  SUPERSCRIPT MINUS (\^-)
     ¹  U+00B9  SUPERSCRIPT ONE (\^1)
+
+[on-the-nose]: https://dictionary.cambridge.org/dictionary/english-chinese-simplified/on-the-nose
