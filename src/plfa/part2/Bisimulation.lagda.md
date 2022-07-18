@@ -308,7 +308,7 @@ to use a decidable predicate to pick out terms in the domain of `_†`, using
 ## Simulation commutes with values
 -->
 
-## 模拟与值相互交换
+## 模拟与值可交换
 
 <!--
 We need a number of technical results. The first is that simulation
@@ -316,7 +316,7 @@ commutes with values.  That is, if `M ~ M†` and `M` is a value then
 `M†` is also a value:
 -->
 
-我们需要一系列技术上的结果。首先是模拟与值相互交换（Commute）。
+我们需要一系列技术结果。首先是模拟与值可交换（Commute）。
 即：若 `M ~ M†` 且 `M` 是一个值，那么 `M†` 也是一个值。
 
 ```agda
@@ -359,7 +359,7 @@ and `Value M†` then `Value M`.
 ## Simulation commutes with renaming
 -->
 
-## 模拟与重命名相互交换
+## 模拟与重命名可交换
 
 <!--
 The next technical result is that simulation commutes with renaming.
@@ -367,7 +367,7 @@ That is, if `ρ` maps any judgment `Γ ∋ A` to a judgment `Δ ∋ A`,
 and if `M ~ M†` then `rename ρ M ~ rename ρ M†`:
 -->
 
-下一个技术结果是模拟和重命名相互交换。
+下一个技术结果是模拟和重命名可交换。
 即：若 `ρ` 将任意的判断 `Γ ∋ A` 映射至另一个判断 `Δ ∋ A`，且
 `M ~ M†`，那么 `rename ρ M ~ rename ρ M†`：
 
@@ -395,7 +395,7 @@ where appropriate (in this case, only for the body of an abstraction).
 ## Simulation commutes with substitution
 -->
 
-## 模拟与替换相互交换
+## 模拟与替换可交换
 
 <!--
 The third technical result is that simulation commutes with substitution.
@@ -403,7 +403,7 @@ It is more complex than renaming, because where we had one renaming map
 `ρ` here we need two substitution maps, `σ` and `σ†`.
 -->
 
-第三个技术结果是模拟与替换相互交换。
+第三个技术结果是模拟与替换可交换。
 这个结果比重命名更复杂，因为我们之前只有一个重命名映射 `ρ`，
 而现在我们需要两个替换映射 `σ` 和 `σ†`。
 
