@@ -2,7 +2,7 @@
 title      : "Bisimulation: 联系不同的规约系统"
 permalink  : /Bisimulation/
 translators: ["Fangyi Zhou"]
-progress   : 60
+progress   : 100
 ---
 
 ```agda
@@ -279,7 +279,7 @@ but only bother to include in the simulation the terms of interest.
 #### Exercise `_†` (practice)
 -->
 
-#### Exercise `_†` （实践）
+#### 练习 `_†` （实践）
 
 <!--
 Formalise the translation from source to target given in the introduction.
@@ -501,18 +501,37 @@ Once more, the structure of the proof resembles the original.
 再一次，这个证明与原定义的结构类似。
 
 
+<!--
 ## The relation is a simulation
+-->
 
+## 给出的关系是模拟
+
+<!--
 Finally, we can show that the relation actually is a simulation.
 In fact, we will show the stronger condition of a lock-step simulation.
 What we wish to show is:
+-->
 
+最后，我们可以证明给出的关系的确是一个模拟。
+实际上，我们将展示它满足更强的锁步模拟的条件。
+我们期望展示的有：
+
+<!--
 _Lock-step simulation_: For every `M`, `M†`, and `N`:
 If `M ~ M†` and `M —→ N`
 then `M† —→ N†` and `N ~ N†`
 for some `N†`.
+-->
 
+**锁步模拟**：对于任意的 `M`、`M†` 和 `N`，
+如果 `M ~ M†` 和 `M —→ N` 成立，那么 `M† —→ N†` 和 `N ~ N†` 对于一些 `N†` 成立。
+
+<!--
 Or, in a diagram:
+-->
+
+或者，用图表来表示：
 
     M  --- —→ --- N
     |             |
@@ -522,8 +541,13 @@ Or, in a diagram:
     |             |
     M† --- —→ --- N†
 
+<!--
 We first formulate a concept corresponding to the lower leg
 of the diagram, that is, its right and bottom edges:
+-->
+
+我们首先形式化对应图表下方的一段的一个概念，即右面和下面的边：
+
 ```agda
 data Leg {Γ A} (M† N : Γ ⊢ A) : Set where
 
@@ -533,12 +557,23 @@ data Leg {Γ A} (M† N : Γ ⊢ A) : Set where
       --------
     → Leg M† N
 ```
+
+<!--
 For our formalisation, in this case, we can use a stronger
 relation than `—↠`, replacing it by `—→`.
+-->
 
+在我们的形式化中，在这里，我们可以使用比 `—↠` 更强的关系，用 `—→` 来取而代之。
+
+<!--
 We can now state and prove that the relation is a simulation.
 Again, in this case, we can use a stronger relation than
 `—↠`, replacing it by `—→`:
+-->
+
+我们现在可以陈述并证明这个关系是一个模拟。
+同样，在这里，我们可以使用比 `—↠` 更强的关系，用 `—→` 来取而代之。
+
 ```agda
 sim : ∀ {Γ A} {M M† N : Γ ⊢ A}
   → M ~ M†
@@ -559,16 +594,30 @@ sim (~let ~M ~N)    (ξ-let M—→)
 ...  | leg ~M′ M†—→                 =  leg (~let ~M′ ~N) (ξ-·₂ V-ƛ M†—→)
 sim (~let ~V ~N)    (β-let VV)      =  leg (~sub ~N ~V)  (β-ƛ (~val ~V VV))
 ```
+
+<!--
 The proof is by case analysis, examining each possible instance of `M ~ M†`
 and each possible instance of `M —→ M†`, using recursive invocation whenever
 the reduction is by a `ξ` rule, and hence contains another reduction.
 In its structure, it looks a little bit like a proof of progress:
+-->
 
+这个证明由分情况讨论来完成，检查每一个 `M ~ M†` 的例子，和每一个 `M —→ M†` 的例子，
+并在规约是 `ξ` 规则时使用递归，也因此包括了另一个规约。
+证明的结构和进行性的证明也有些类似：
+
+<!--
 * If the related terms are variables, no reduction applies.
 * If the related terms are abstractions, no reduction applies.
 * If the related terms are applications, there are three subcases:
   - The source term reduces via `ξ-·₁`, in which case the target term does as well.
     Recursive invocation gives us
+-->
+
+* 如果相关的项是变量，那么无可应用的规约。
+* 如果相关的项是 λ 抽象，那么无可应用的规约。
+* 如果相关的项是应用，那么有三种子情况：
+  - 源项由 `ξ-·₁` 规约，在此情况下目标项也一样。递归应用可以让我们得到：
 
         L  --- —→ ---  L′
         |              |
@@ -578,7 +627,11 @@ In its structure, it looks a little bit like a proof of progress:
         |              |
         L† --- —→ --- L′†
 
+    <!--
     from which follows:
+    -->
+
+    从而得到：
 
          L · M  --- —→ ---  L′ · M
            |                   |
@@ -588,8 +641,12 @@ In its structure, it looks a little bit like a proof of progress:
            |                   |
         L† · M† --- —→ --- L′† · M†
 
+  <!--
   - The source term reduces via `ξ-·₂`, in which case the target term does as well.
     Recursive invocation gives us
+  -->
+
+  - 源项由 `ξ-·₂` 规约，在此情况下目标项也一样。递归应用可以让我们得到：
 
         M  --- —→ ---  M′
         |              |
@@ -599,7 +656,11 @@ In its structure, it looks a little bit like a proof of progress:
         |              |
         M† --- —→ --- M′†
 
+    <!--
     from which follows:
+    -->
+
+    从而得到：
 
          V · M  --- —→ ---  V · M′
            |                  |
@@ -609,9 +670,17 @@ In its structure, it looks a little bit like a proof of progress:
            |                  |
         V† · M† --- —→ --- V† · M′†
 
+    <!--
     Since simulation commutes with values and `V` is a value, `V†` is also a value.
+    -->
+    
+    因为模拟和值可交换，且 `V` 是一个值，所以 `V†` 也是一个值。
 
+  <!--
   - The source term reduces via `β-ƛ`, in which case the target term does as well:
+  -->
+
+  - 源项由 `β-ƛ` 规约，在此情况下目标项也一样：
 
          (ƛ x ⇒ N) · V  --- —→ ---  N [ x := V ]
               |                           |
@@ -621,15 +690,28 @@ In its structure, it looks a little bit like a proof of progress:
               |                           |
         (ƛ x ⇒ N†) · V† --- —→ --- N† [ x :=  V† ]
 
+    <!--
     Since simulation commutes with values and `V` is a value, `V†` is also a value.
     Since simulation commutes with substitution and `N ~ N†` and `V ~ V†`,
     we have `N [ x := V ] ~ N† [ x := V† ]`.
+    -->
 
+    因为模拟和值可交换，且 `V` 是一个值，所以 `V†` 也是一个值。
+    因为模拟和替换可交换，且 `N ~ N†` 和 `V ~ V†` 成立，所以我们得到 `N [ x := V ] ~ N† [ x := V† ]`。
+
+<!--
 * If the related terms are a let and an application of an abstraction,
   there are two subcases:
+-->
 
+* 如果相关的项是 `let` 和抽象应用，那么有两种子情况：
+
+  <!--
   - The source term reduces via `ξ-let`, in which case the target term
     reduces via `ξ-·₂`.  Recursive invocation gives us
+  -->
+
+  - 源项由 `ξ-let` 规约，在此情况下目标项由 `ξ-·₂` 规约。递归应用可以让我们得到：
 
         M  --- —→ ---  M′
         |              |
@@ -639,7 +721,11 @@ In its structure, it looks a little bit like a proof of progress:
         |              |
         M† --- —→ --- M′†
 
+    <!--
     from which follows:
+    -->
+
+    从而得到：
 
         let x = M in N --- —→ --- let x = M′ in N
               |                         |
@@ -649,8 +735,12 @@ In its structure, it looks a little bit like a proof of progress:
               |                         |
         (ƛ x ⇒ N) · M  --- —→ --- (ƛ x ⇒ N) · M′
 
+  <!--
   - The source term reduces via `β-let`, in which case the target
     term reduces via `β-ƛ`:
+  -->
+
+  - 源项由 `β-let` 规约，在此情况下目标项由 `β-ƛ` 规约：
 
         let x = V in N  --- —→ ---  N [ x := V ]
               |                         |
@@ -660,35 +750,62 @@ In its structure, it looks a little bit like a proof of progress:
               |                         |
         (ƛ x ⇒ N†) · V† --- —→ --- N† [ x := V† ]
 
+    <!--
     Since simulation commutes with values and `V` is a value, `V†` is also a value.
     Since simulation commutes with substitution and `N ~ N†` and `V ~ V†`,
     we have `N [ x := V ] ~ N† [ x := V† ]`.
+    -->
+
+    因为模拟和值可交换，且 `V` 是一个值，所以 `V†` 也是一个值。
+    因为模拟和替换可交换，且 `N ~ N†` 和 `V ~ V†` 成立，所以我们得到 `N [ x := V ] ~ N† [ x := V† ]`。
 
 
+<!--
 #### Exercise `sim⁻¹` (practice)
+-->
 
+#### 练习 `sim⁻¹` （实践）
+
+<!--
 Show that we also have a simulation in the other direction, and hence that we have
 a bisimulation.
+-->
+
+证明我们也有反方向的模拟，因此我们有一个双模拟。
 
 ```agda
--- Your code goes here
+-- 在这里写出你的代码。
 ```
 
+<!--
 #### Exercise `products` (practice)
+-->
 
+#### 练习 `products` （实践）
+
+<!--
 Show that the two formulations of products in
 Chapter [More](/More/)
 are in bisimulation.  The only constructs you need to include are
 variables, and those connected to functions and products.
 In this case, the simulation is _not_ lock-step.
+-->
+
+证明 [More](/More/) 章节中两种积的表达方式满足双模拟。
+你需要包含的构造有：变量，以及与函数和积相关的构造。
+在此情况下，模拟并**不是**锁步的。
 
 ```agda
--- Your code goes here
+-- 在这里写出你的代码。
 ```
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章节使用了下列 Unicode：
 
     †  U+2020  DAGGER (\dag)
     ⁻  U+207B  SUPERSCRIPT MINUS (\^-)
