@@ -1,12 +1,15 @@
 ---
-title     : "Inference: Bidirectional type inference"
-permalink : /Inference/
+title      : "Inference: 双向类型推理"
+permalink  : /Inference/
+translator : ["Fangyi Zhou"]
+progress   : 10
 ---
 
 ```agda
 module plfa.part2.Inference where
 ```
 
+<!--
 So far in our development, type derivations for the corresponding
 term have been provided by fiat.
 In Chapter [Lambda](/Lambda/)
@@ -14,7 +17,14 @@ type derivations are extrinsic to the term, while
 in Chapter [DeBruijn](/DeBruijn/)
 type derivations are intrinsic to the term,
 but in both we have written out the type derivations in full.
+-->
 
+在本书至此的进展中，项的类型推导是如法令一般直接给出的。
+在 [Lambda](/Lambda/) 章节，类型推导以外在于项的形式给出，
+而在 [DeBruijn](/DeBruijn/) 章节，类型推导以内在于项的形式给出，
+但在两者均要求我们将类型推导完全写出。
+
+<!--
 In practice, one often writes down a term with a few decorations and
 applies an algorithm to _infer_ the corresponding type derivation.
 Indeed, this is exactly what happens in Agda: we specify the types for
@@ -22,40 +32,87 @@ top-level function declarations, and type information for everything
 else is inferred from what has been given.  The style of inference
 Agda uses is based on a technique called _bidirectional_ type
 inference, which will be presented in this chapter.
+-->
 
+在实践中，我们一般可以给项加上一些装饰，然后运用算法来**推理**（Infer）出类型推导。
+的确，Agda 中也是这样：我们给顶层的函数声明指定类型，而其余可由给出的信息推理而来。
+Agda 使用的这种推理被称为**双向**（Bidirectional）类型推理，我们将在本章中进行展示。 
+
+<!--
 This chapter ties our previous developments together. We begin with
 a term with some type annotations, close to the raw terms of
 Chapter [Lambda](/Lambda/),
 and from it we compute an intrinsically-typed term, in the style of
 Chapter [DeBruijn](/DeBruijn/).
+-->
 
+本章中，我们讲之前的进展结合在一起。
+我们首先由带有类型注释的项开始，其与 [Lambda](/Lambda/) 章节中的源项相似，
+从此我们计算出内在类型的项，如同 [DeBruijn](/DeBruijn) 章节中那样。
+
+<!--
 ## Introduction: Inference rules as algorithms {#algorithms}
+-->
 
+## 绪论：推理规则作为算法 {#algorithms}
+
+<!--
 In the calculus we have considered so far, a term may have more than
 one type.  For example,
+-->
+
+在我们至此使用的演算中，一个项可以有多于一个类型。例如，
 
     (ƛ x ⇒ x) ⦂ (A ⇒ A)
 
+<!--
 holds for _every_ type `A`.  We start by considering a small language for
 lambda terms where every term has a unique type.  All we need do
 is decorate each abstraction term with the type of its argument.
 This gives us the grammar:
+-->
 
+对于**任意**类型 `A` 成立。
+我们首先考虑一个带有 λ 项的小的演算，其每一项有其唯一的类型。
+我们只需要给抽象加上参数的类型。
+这样我们可以得到如下的语法：
+
+<!--
     L, M, N ::=                         decorated terms
       x                                   variable
       ƛ x ⦂ A ⇒ N                         abstraction (decorated)
       L · M                               application
+-->
 
+    L, M, N ::=                         带装饰的项
+      x                                   变量
+      ƛ x ⦂ A ⇒ N                         抽象（装饰后）
+      L · M                               应用
+
+<!--
 Each of the associated type rules can be read as an algorithm for
 type checking.  For each typing judgment, we label each position
 as either an _input_ or an _output_.
+-->
 
+每一条相关的赋型规则可以被读作类型检查的算法。
+对于每一条赋型规则，我们将每个位置标记如**输入**（Input）或者**输出**（Output）。
+
+<!--
 For the judgment
+-->
+
+对于下面的判断
 
     Γ ∋ x ⦂ A
 
+<!--
 we take the context `Γ` and the variable `x` as inputs, and the
 type `A` as output.  Consider the rules:
+-->
+
+我们将上下文 `Γ` 和变量 `x` 作为输入，类型 `A` 作为输出。
+考虑下面的规则：
 
     ----------------- Z
     Γ , x ⦂ A ∋ x ⦂ A
@@ -64,6 +121,7 @@ type `A` as output.  Consider the rules:
     ----------------- S
     Γ , y ⦂ B ∋ x ⦂ A
 
+<!--
 From the inputs we can determine which rule applies: if the last
 variable in the context matches the given variable then the first
 rule applies, else the second.  (For de Bruijn indices, it is even
@@ -72,6 +130,13 @@ For the first rule, the output type can be read off as the last
 type in the input context. For the second rule, the inputs of the
 conclusion determine the inputs of the hypothesis, and the output
 of the hypothesis determines the output of the conclusion.
+-->
+
+从输入中，我们可以决定应用哪一条规则：
+如果上下文中最后一个变量与给定的变量一致，那么应用第一条规则，否则应用第二条。
+（对于 de Bruijn 因子来说，这更加简单：零对应第一条，后继对应第二条。）
+对于第一条，输出类型可以直接从上下文中得到。
+对于第二条，结论中的输入可以作为假设的输入，而假设的输出决定了结论的输出。
 
 For the judgment
 
