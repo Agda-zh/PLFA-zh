@@ -1161,7 +1161,7 @@ Second, we use `sym` to interchange the sides of an equation.
 Proposition `+-assoc (m + n) p q` shifts parentheses from left to right:
 -->
 
-第二，我们用 `sym` 来交换等式的两边。命题 `+-assoc (m + n) p q` 会将括号从右边移到左边：
+第二，我们用 `sym` 来交换等式的两边。命题 `+-assoc (m + n) p q` 会将括号从左边移到右边：
 
     ((m + n) + p) + q ≡ (m + n) + (p + q)
 
