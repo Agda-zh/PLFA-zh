@@ -1185,6 +1185,9 @@ Third, Agda supports a variant of the _section_ notation introduced by
 Richard Bird.  We write `(_+ y)` for the function that applied to `x`
 returns `x + y`.  Thus, applying the congruence `cong (_+ q)` to
 `assoc m n p` takes the equation:
+
+    (m + n) + p  ≡  m + (n + p)
+
 into the equation:
 
     ((m + n) + p) + q  ≡  (m + (n + p)) + q
@@ -1193,10 +1196,14 @@ into the equation:
 
 第三，Agda 支持 Richard Bird 引入的**片段（Section）**记法。我们将应用到
 `x` 并返回 `x + y` 的函数写作 `(_+ y)`。因此，对于 `assoc m n p` 应用合同性
-`cong (_+ q)` 会将上面的等式转换成：
+`cong (_+ q)` 会将等式：
 
     (m + n) + p  ≡  m + (n + p)
 
+转换成:
+
+    ((m + n) + p) + q  ≡  (m + (n + p)) + q
+    
 <!--
 Similarly, we write `(x +_)` for the function that applied to `y`
 returns `x + y`; the same works for any infix operator.
