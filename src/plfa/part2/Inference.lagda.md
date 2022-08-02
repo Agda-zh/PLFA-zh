@@ -2,7 +2,7 @@
 title      : "Inference: 双向类型推理"
 permalink  : /Inference/
 translator : ["Fangyi Zhou"]
-progress   : 10
+progress   : 20
 ---
 
 ```agda
@@ -73,7 +73,7 @@ This gives us the grammar:
 -->
 
 对于**任意**类型 `A` 成立。
-我们首先考虑一个带有 λ 项的小的演算，其每一项有其唯一的类型。
+我们首先考虑一个带有 λ 项的小语言，其每一项有其唯一的类型。
 我们只需要给抽象加上参数的类型。
 这样我们可以得到如下的语法：
 
@@ -138,12 +138,21 @@ of the hypothesis determines the output of the conclusion.
 对于第一条，输出类型可以直接从上下文中得到。
 对于第二条，结论中的输入可以作为假设的输入，而假设的输出决定了结论的输出。
 
+<!--
 For the judgment
+-->
+
+对于下面的判断：
 
     Γ ⊢ M ⦂ A
 
+<!--
 we take the context `Γ` and term `M` as inputs, and the type `A`
 as output. Consider the rules:
+-->
+
+我们将上下文 `Γ` 和项 `M` 作为输入，类型 `A` 作为输出。
+考虑下面的规则：
 
     Γ ∋ x ⦂ A
     -----------
@@ -159,6 +168,7 @@ as output. Consider the rules:
     -------------
     Γ ⊢ L · M ⦂ B
 
+<!--
 The input term determines which rule applies: variables use the first
 rule, abstractions the second, and applications the third.  We say
 such rules are _syntax directed_.  For the variable rule, the inputs
@@ -174,35 +184,74 @@ inputs. The inputs of the conclusion determine the inputs of the first
 two hypotheses, the outputs of the first two hypotheses determine the
 inputs of the third hypothesis, and the output of the first hypothesis
 determines the output of the conclusion.
+-->
 
+输入项决定了应用哪一条规则：
+变量使用第一条，抽象使用第二条，应用使用第三条。
+我们把这样的规则叫做**语法导向的**（Syntax directed）规则。
+对于变量的规则，结论的输入决定了结论的输出。
+抽象的规则也是一样——约束变量和参数从结论的输入流向假设中的上下文；
+这得以实现，因为我们在抽象中加入了参数的类型。
+对于应用的规则，我们加入第三条假设来检查函数类型中的作用域是否与参数的类型一致；
+这条判断是在两个类型已知时是可决定的。
+结论的输入决定了前两个假设的输入，而前两个假设的输出决定了第三个假设的输入，而第一个假设的输出决定了结论的输出。
+
+<!--
 Converting the above to an algorithm is straightforward, as is adding
 naturals and fixpoint.  We omit the details.  Instead, we consider a
 detailed description of an approach that requires less obtrusive
 decoration.  The idea is to break the normal typing judgment into two
 judgments, one that produces the type as an output (as above), and
 another that takes it as an input.
+-->
+
+我们可以直接地把上述内容转换成一个算法，加入自然数和不动点也很直接。我们省略其明细。
+取而代之的是，我们考虑一种需要更少装饰的表示方法。
+其核心思想是将普通的赋型判断拆分成两个判断，一个生成类型作为输出，另一个取类型作为输入。
 
 
+<!--
 ## Synthesising and inheriting types
+-->
 
+## 生成和继承类型
+
+<!--
 In addition to the lookup judgment for variables, which will remain
 as before, we now have two judgments for the type of the term:
+-->
+
+我们保留之前的变量的查询判断。除此之外，我们有两种联系类型和项的判断：
 
     Γ ⊢ M ↑ A
     Γ ⊢ M ↓ A
 
+<!--
 The first of these _synthesises_ the type of a term, as before,
 while the second _inherits_ the type.  In the first, the context
 and term are inputs and the type is an output; while in the
 second, all three of the context, term, and type are inputs.
+-->
 
+第一类判断**生成**（Synthesise）项的类型，如上，而第二类**继承**（Inherit）类型。
+在第一类中，上下文和项作为输入，类型作为输出；
+而在第二类中，上下文、项和类型三者都作为输入。
+
+<!--
 Which terms use synthesis and which inheritance?  Our approach will be
 that the main term in a _deconstructor_ is typed via synthesis while
 _constructors_ are typed via inheritance.  For instance, the function in
 an application is typed via synthesis, but an abstraction is typed via
 inheritance.  The inherited type in an abstraction term serves the
 same purpose as the argument type decoration of the previous section.
+-->
 
+什么项生成类型，什么项继承类型的？
+我们的宗旨是**析构器**中的主项使用生成来赋型，而**构造子**使用继承。
+比如，函数应用中的函数由生成来赋型，而抽象是由继承来赋型。
+抽象中继承的类型和之前我们为参数额外增加的注解起到一样的作用。
+
+<!--
 Terms that deconstruct a value of a type always have a main term
 (supplying an argument of the required type) and often have
 side-terms.  For application, the main term supplies the function and
@@ -215,20 +264,44 @@ while a case term as a whole will be typed by inheritance.
 Variables are naturally typed by synthesis, since we can look up
 the type in the input context.  Fixed points will be naturally
 typed by inheritance.
+-->
 
+析构某一类型的值的项总有一个主项（提供一个所需类型的参数），且经常有副项。
+对于函数应用来说，主项提供了函数，副项提供了参数。
+对于分情况讨论来说，主项提供了自然数，副项则是两种情况不同的情况。
+在析构器中，主项使用生成进行赋型，而副项使用继承进行赋型。
+我们将看到，这自然地导致函数应用作为整体由生成进行赋型，而分情况讨论作为整体则使用继承进行赋型。
+变量一般使用生成进行赋型，因为我们可以直接从上下文中查询其类型。
+不动点自然是用继承来赋型。
+
+<!--
 In order to get a syntax-directed type system we break terms into two
 kinds, `Term⁺` and `Term⁻`, which are typed by synthesis and
 inheritance, respectively.  A subterm that is typed
 by synthesis may appear in a context where it is typed by inheritance,
 or vice-versa, and this gives rise to two new term forms.
+-->
 
+为了达成赋型系统的语法导向性，我们将项分为两类：
+`Term⁺` 和 `Term⁻`，分别用生成和继承来赋型。
+由生成赋型的子项可能出现在由继承赋型的子项中，反之亦然，这给我们带来两种新形式。
+
+<!--
 For instance, we said above that the argument of an application is
 typed by inheritance and that variables are typed by synthesis, giving
 a mismatch if the argument of an application is a variable.  Hence, we
 need a way to treat a synthesized term as if it is inherited.  We
 introduce a new term form, `M ↑` for this purpose.  The typing judgment
 checks that the inherited and synthesised types match.
+-->
 
+例如，我们之前提到函数应用的参数由继承赋型，而变量由生成赋型。
+在参数是变量时会出现不匹配的情况。
+因此，我们需要一种把生成的项当作继承的项的方法。
+我们引入 `M ↑` 这种新的形式来达成此目的。
+它的赋型判断即为检查其生成和继承的类型是否一致。
+
+<!--
 Similarly, we said above that the function of an application is typed
 by synthesis and that abstractions are typed by inheritance, giving a
 mismatch if the function of an application is an abstraction.  Hence, we
@@ -236,7 +309,15 @@ need a way to treat an inherited term as if it is synthesised.  We
 introduce a new term form `M ↓ A` for this purpose.  The typing
 judgment returns `A` as the synthesized type of the term as a whole,
 as well as using it as the inherited type for `M`.
+-->
 
+同样，函数应用的函数部分由生成来赋型，而抽象是由继承来赋型。
+在函数是抽象时会出现不匹配的情况。
+因此，我们需要一种把继承的项当作生成的项的方法。
+我们引入 `M ↓ A` 这种新的形式来达成此目的。
+它的赋型判断返回 `A` 作为生成的类型，并把它作为 `M` 继承的类型。
+
+<!--
 The term form `M ↓ A` represents the only place terms need to be
 decorated with types.  It only appears when switching from synthesis
 to inheritance, that is, when a term that _deconstructs_ a value of a
@@ -244,9 +325,21 @@ type contains as its main term a term that _constructs_ a value of a
 type, in other words, a place where a `β`-reduction will occur.
 Typically, we will find that decorations are only required on top
 level declarations.
+-->
 
+`M ↓ A` 这种形式表示了我们唯一需要用类型来装饰的项。
+它只在从生成切换成继承时出现，
+即当一个**析构**某一类型的值的项的主项中包含了一个**构造**某一类型的值的时候，
+也就是说，这是在 `β` 规约发生的地方出现。
+一般来说，我们只需要在顶层声明中需要这样的装饰。
+
+<!--
 We can extract the grammar for terms from the above:
+-->
 
+我们可以从上文中提取出项的语法：
+
+<!--
     L⁺, M⁺, N⁺ ::=                      terms with synthesized type
       x                                   variable
       L⁺ · M⁻                             application
@@ -259,8 +352,26 @@ We can extract the grammar for terms from the above:
       case L⁺ [zero⇒ M⁻ |suc x ⇒ N⁻ ]     case
       μ x ⇒ N⁻                            fixpoint
       M⁺ ↑                                switch to synthesized
+-->
 
+    L⁺, M⁺, N⁺ ::=                      带有生成类型的项
+      x                                   变量
+      L⁺ · M⁻                             应用
+      M⁻ ↓ A                              切换至继承
+
+    L⁻, M⁻, N⁻ ::=                      带有继承类型的项
+      ƛ x ⇒ N⁻                            抽象
+      `zero                               零
+      `suc M⁻                             后继
+      case L⁺ [zero⇒ M⁻ |suc x ⇒ N⁻ ]     分情况讨论
+      μ x ⇒ N⁻                            不动点
+      M⁺ ↑                                切换至生成
+
+<!--
 We will formalise the above shortly.
+-->
+
+我们将在下文中形式化上述定义。
 
 
 ## Soundness and completeness
