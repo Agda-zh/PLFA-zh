@@ -2,7 +2,7 @@
 title      : "Inference: 双向类型推理"
 permalink  : /Inference/
 translator : ["Fangyi Zhou"]
-progress   : 20
+progress   : 40
 ---
 
 ```agda
@@ -374,10 +374,18 @@ We will formalise the above shortly.
 我们将在下文中形式化上述定义。
 
 
+<!--
 ## Soundness and completeness
+-->
 
+## 可靠性和完备性
+
+<!--
 What we intend to show is that the typing judgments are
 _decidable_:
+-->
+
+我们试图证明赋性判断是**可决定**的：
 
     synthesize : ∀ (Γ : Context) (M : Term⁺)
         ------------------------------------
@@ -387,23 +395,38 @@ _decidable_:
               --------------------------------------
             → Dec (Γ ⊢ M ↓ A)
 
+<!--
 Given context `Γ` and synthesised term `M`, we must decide whether
 there exists a type `A` such that `Γ ⊢ M ↑ A` holds, or its negation.
 Similarly, given context `Γ`, inherited term `M`, and type `A`, we
 must decide whether `Γ ⊢ M ↓ A` holds, or its negation.
+-->
 
+给定上下文 `Γ` 和生成项 `M`，我们必须判定是否存在一个类型 `A` 使得 `Γ ⊢ M ↑ A` 成立，
+或者其反命题。
+同样，给定上下文 `Γ` 、继承项 `M` 和类型 `A`，我们必须判定 `Γ ⊢ M ↓ A` 成立，或者其反命题。
+
+<!--
 Our proof is constructive. In the synthesised case, it will either
 deliver a pair of a type `A` and evidence that `Γ ⊢ M ↓ A`, or a function
 that given such a pair produces evidence of a contradiction. In the inherited
 case, it will either deliver evidence that `Γ ⊢ M ↑ A`, or a function
 that given such evidence produces evidence of a contradiction.
-The positive case is referred to as _soundness_ --- synthesis and inheritance
+The positive case is referred to as _soundness_ - synthesis and inheritance
 succeed only if the corresponding relation holds.  The negative case is
-referred to as _completeness_ --- synthesis and inheritance fail only when
+referred to as _completeness_ - synthesis and inheritance fail only when
 they cannot possibly succeed.
+-->
 
+我们的证明是构造性的。
+在生成的情况中，它要么给出一个包括类型 `A` 和 `Γ ⊢ M ↓ A` 成立的证明的有序对，或是一个将上述有序对转换成矛盾的函数。
+在继承的情况中，它要么给出 `Γ ⊢ M ↑ A` 成立的证明，或是一个将上述证明转换成矛盾的函数。
+成立的情况被称为**可靠性**（Soundness）——生成和继承只在对应关系成立时成功。
+不成立的情况被称为**完备性**（Completeness）——生成和继承只在对应关系无法成立时失败。
+
+<!--
 Another approach might be to return a derivation if synthesis or
-inheritance succeeds, and an error message otherwise --- for instance,
+inheritance succeeds, and an error message otherwise - for instance,
 see the section of the Agda user manual discussing
 [syntactic sugar](https://agda.readthedocs.io/en/latest/language/syntactic-sugar.html#example).
 Such an approach demonstrates soundness, but not completeness.  If it
@@ -414,11 +437,29 @@ soundness and completeness is significantly stronger than
 demonstrating soundness alone.  The negative proof can be thought of
 as a semantically verified error message, although in practice it
 may be less readable than a well-crafted error message.
+-->
 
+另一种实现方法可能在生成或继承成功时返回其推导，并在失败时返回一条错误信息——例如，
+参见 Agda 用户手册中讨论
+[语法糖](https://agda.readthedocs.io/en/latest/language/syntactic-sugar.html#example).
+的章节。
+这样的方法可以实现可靠性，而不是完备性。
+如果其返回一个推导，那么我们知道它是正确的；
+但没有人阻挡我们来给出一个**总是**返回错误的函数，即使正确的推导存在。
+证明可靠性和完备性两者比起单独证明可靠性一者更加有力。
+其反向的证明可以被看作是一个语义上验证过的错误信息，即便它本身比仔细撰写的错误信息更让人难懂。
+
+<!--
 We are now ready to begin the formal development.
+-->
 
+我们现在可以开始正式的形式化了：
 
+<!--
 ## Imports
+-->
+
+## 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -431,25 +472,44 @@ open import Relation.Nullary using (¬_; Dec; yes; no)
 open import Relation.Nullary.Decidable using (False; toWitnessFalse)
 ```
 
+<!--
 Once we have a type derivation, it will be easy to construct
 from it the intrinsically-typed representation.  In order that we
 can compare with our previous development, we import
 module `plfa.part2.More`:
+-->
+
+当我们有一个赋型推导时，从它构造出内在类型的表示方法更加方便。
+为了与我们之前的结果进行比较，我们导入模块 `plfa.part2.More`：
 
 ```agda
 import plfa.part2.More as DB
 ```
 
+<!--
 The phrase `as DB` allows us to refer to definitions
 from that module as, for instance, `DB._⊢_`, which is
 invoked as `Γ DB.⊢ A`, where `Γ` has type
 `DB.Context` and `A` has type `DB.Type`.
+-->
 
+`as DB` 这个词组让我们可以用例如 `DB._⊢_` 的方法来指代其中的定义，
+我们用 `Γ DB.⊢ A` 来使用它，其中 `Γ` 的类型是 `DB.Context`，
+`A` 的类型是 `DB.Type`。
 
+<!--
 ## Syntax
+-->
 
+## 语法
+
+<!--
 First, we get all our infix declarations out of the way.
 We list separately operators for judgments and terms:
+-->
+
+首先，我们来定义中缀声明。
+我们将判断和项的运算符分别列出：
 
 ```agda
 infix   4  _∋_⦂_
@@ -468,7 +528,12 @@ infix   8  `suc_
 infix   9  `_
 ```
 
+<!--
 Identifiers, types, and contexts are as before:
+-->
+
+标识符、类型和上下文与之前一样：
+
 ```agda
 Id : Set
 Id = String
@@ -482,11 +547,19 @@ data Context : Set where
   _,_⦂_ : Context → Id → Type → Context
 ```
 
+<!--
 The syntax of terms is defined by mutual recursion.
 We use `Term⁺` and `Term⁻`
 for terms with synthesized and inherited types, respectively.
 Note the inclusion of the switching forms,
 `M ↓ A` and `M ↑`:
+-->
+
+项的语法由共同递归来定义。
+我们用 `Term⁺` 和 `Term⁻` 来分别表示生成和继承的项。
+注意我们包括了变向的形式
+`M ↓ A` 和 `M ↑`：
+
 ```agda
 data Term⁺ : Set
 data Term⁻ : Set
@@ -504,16 +577,32 @@ data Term⁻ where
   μ_⇒_                     : Id → Term⁻ → Term⁻
   _↑                       : Term⁺ → Term⁻
 ```
+
+<!--
 The choice as to whether each term is synthesized or
 inherited follows the discussion above, and can be read
 off from the informal grammar presented earlier.  Main terms in
 deconstructors synthesise, constructors and side terms
 in deconstructors inherit.
+-->
 
+至于每个项是由继承或者生成来赋型，我们在上文中已经讨论过，并且可以直接上文的非形式化语法中直接得来。
+析构器中的主项由生成赋型，析构器中的构造子和副项由继承赋型。
+
+<!--
 ## Example terms
+-->
 
+## 项的例子
+
+<!--
 We can recreate the examples from preceding chapters.
 First, computing two plus two on naturals:
+-->
+
+我们重新给出前几章中的例子。
+首先，计算自然数二加二：
+
 ```agda
 two : Term⁻
 two = `suc (`suc `zero)
@@ -527,10 +616,20 @@ plus = (μ "p" ⇒ ƛ "m" ⇒ ƛ "n" ⇒
 2+2 : Term⁺
 2+2 = plus · two · two
 ```
+
+<!--
 The only change is to decorate with down and up arrows as required.
 The only type decoration required is for `plus`.
+-->
 
+唯一的变化是我们需要在需要时加入上下箭头。唯一的类型注释出现在 `plus`。
+
+<!--
 Next, computing two plus two with Church numerals:
+-->
+
+接下来，计算 Church 数的二加二：
+
 ```agda
 Ch : Type
 Ch = (`ℕ ⇒ `ℕ) ⇒ `ℕ ⇒ `ℕ
@@ -549,8 +648,14 @@ sucᶜ = ƛ "x" ⇒ `suc (` "x" ↑)
 2+2ᶜ : Term⁺
 2+2ᶜ = plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero
 ```
+
+<!--
 The only type decoration required is for `plusᶜ`.  One is not even
 required for `sucᶜ`, which inherits its type as an argument of `plusᶜ`.
+-->
+
+唯一的类型注释出现在 `plusᶜ`。
+`sucᶜ` 甚至不需要类型注释，因为它从 `plusᶜ` 的参数中继承了类型。
 
 ## Bidirectional type checking
 
