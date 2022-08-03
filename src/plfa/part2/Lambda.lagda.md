@@ -940,7 +940,7 @@ _ = refl
 What is the result of the following substitution?
 -->
 
-下面替换的结束是？
+下面替换的结果是？
 
     (ƛ "y" ⇒ ` "x" · (ƛ "x" ⇒ ` "x")) [ "x" := `zero ]
 
