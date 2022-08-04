@@ -657,10 +657,19 @@ required for `sucᶜ`, which inherits its type as an argument of `plusᶜ`.
 唯一的类型注释出现在 `plusᶜ`。
 `sucᶜ` 甚至不需要类型注释，因为它从 `plusᶜ` 的参数中继承了类型。
 
+<!--
 ## Bidirectional type checking
+-->
 
+## 双向类型检查
+
+<!--
 The typing rules for variables are as in
 [Lambda](/Lambda/):
+-->
+
+变量的赋型规则与 [Lambda](/Lambda/) 章节中一致：
+
 ```agda
 data _∋_⦂_ : Context → Id → Type → Set where
 
@@ -675,8 +684,13 @@ data _∋_⦂_ : Context → Id → Type → Set where
     → Γ , y ⦂ B ∋ x ⦂ A
 ```
 
+<!--
 As with syntax, the judgments for synthesizing
 and inheriting types are mutually recursive:
+-->
+
+与语法一样，生成和继承的赋型判断也是共同递归的：
+
 ```agda
 data _⊢_↑_ : Context → Term⁺ → Type → Set
 data _⊢_↓_ : Context → Term⁻ → Type → Set
@@ -733,56 +747,104 @@ data _⊢_↓_ where
       -------------
     → Γ ⊢ (M ↑) ↓ B
 ```
+
+<!--
 We follow the same convention as
 Chapter [Lambda](/Lambda/),
 prefacing the constructor with `⊢` to derive the name of the
 corresponding type rule.
+-->
 
+我们用和 [Lambda](/Lambda/) 中一样的命名规则，
+把 `⊢` 加在构造子之前，来当作对应赋型规则的名称。
+
+<!--
 The rules are similar to those in
 Chapter [Lambda](/Lambda/),
 modified to support synthesised and inherited types.
 The two new rules are those for `⊢↓` and `⊢↑`.
 The former both passes the type decoration as the inherited type and returns
 it as the synthesised type.  The latter takes the synthesised type and the
-inherited type and confirms they are identical --- it should remind you of
+inherited type and confirms they are identical - it should remind you of
 the equality test in the application rule in the first
 [section](/Inference/#algorithms).
+-->
+
+这些规则和 [Lambda](/Lambda/) 章节中相似，修改成支持生成和继承类型的样式。
+其中有两条新规则 `⊢↓` 和 `⊢↑`。
+前者把类型装饰当作继承的类型，并将其返回作为生成的类型。
+后者取其生成的类型，并检查是否与继承的类型一致——这应该让你回忆起第一[部分](/Inference/#algorithms)中函数应用规则的相等性测试。
 
 
+<!--
 #### Exercise `bidirectional-mul` (recommended) {#bidirectional-mul}
+-->
 
+#### 练习 `bidirectional-mul` （推荐） {#bidirectional-mul}
+
+<!--
 Rewrite your definition of multiplication from
 Chapter [Lambda](/Lambda/), decorated to support inference.
+-->
+
+将你在 [Lambda](/Lambda/) 章节中乘法的定义重写，将其装饰至支持类型推理的形式。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 
+<!--
 #### Exercise `bidirectional-products` (recommended) {#bidirectional-products}
+-->
 
+#### 练习 `bidirectional-products` （推荐） {#bidirectional-products}
+
+<!--
 Extend the bidirectional type rules to include products from
 Chapter [More](/More/).
+-->
+
+扩充你的双向赋型规则，来包括 [More](/More/) 章节中的积。
+
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 
+<!--
 #### Exercise `bidirectional-rest` (stretch)
+-->
 
+#### 练习 `bidirectional-rest` （延伸）
+
+<!--
 Extend the bidirectional type rules to include the rest of the constructs from
 Chapter [More](/More/).
+-->
+
+扩充你的双向赋型规则，来包括 [More](/More/) 章节中的其余构造。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 
+<!--
 ## Prerequisites
+-->
 
+## 前置需求
+
+<!--
 The rule for `M ↑` requires the ability to decide whether two types
 are equal.  It is straightforward to code:
+-->
+
+`M ↑` 规则需要我们有能力来判定两个类型是否相等。
+我们可以直接的给出代码：
+
 ```agda
 _≟Tp_ : (A B : Type) → Dec (A ≡ B)
 `ℕ      ≟Tp `ℕ              =  yes refl
@@ -795,8 +857,14 @@ _≟Tp_ : (A B : Type) → Dec (A ≡ B)
 ...  | yes refl | yes refl  =  yes refl
 ```
 
+<!--
 We will also need a couple of obvious lemmas; the domain
 and range of equal function types are equal:
+-->
+
+我们也会需要一些显然的引理；
+作用域和值域相等的函数类型相等：
+
 ```agda
 dom≡ : ∀ {A A′ B B′} → A ⇒ B ≡ A′ ⇒ B′ → A ≡ A′
 dom≡ refl = refl
@@ -805,19 +873,35 @@ rng≡ : ∀ {A A′ B B′} → A ⇒ B ≡ A′ ⇒ B′ → B ≡ B′
 rng≡ refl = refl
 ```
 
+<!--
 We will also need to know that the types `` `ℕ ``
 and `A ⇒ B` are not equal:
+-->
+
+我们也需要知道 `` `ℕ `` 和 `A ⇒ B` 这两个类型不相等：
+
 ```agda
 ℕ≢⇒ : ∀ {A B} → `ℕ ≢ A ⇒ B
 ℕ≢⇒ ()
 ```
 
 
+<!--
 ## Unique types
+-->
 
+## 唯一的类型
+
+<!--
 Looking up a type in the context is unique.  Given two derivations,
 one showing `Γ ∋ x ⦂ A` and one showing `Γ ∋ x ⦂ B`, it follows that
 `A` and `B` must be identical:
+-->
+
+从上下文查询一个类型是唯一的。
+给定两个推导，其一证明 `Γ ∋ x ⦂ A`，另一个证明 `Γ ∋ x ⦂ B`，那么
+`A` 和 `B` 一定是一样的：
+
 ```agda
 uniq-∋ : ∀ {Γ x A B} → Γ ∋ x ⦂ A → Γ ∋ x ⦂ B → A ≡ B
 uniq-∋ Z Z                 =  refl
@@ -825,6 +909,8 @@ uniq-∋ Z (S x≢y _)         =  ⊥-elim (x≢y refl)
 uniq-∋ (S x≢y _) Z         =  ⊥-elim (x≢y refl)
 uniq-∋ (S _ ∋x) (S _ ∋x′)  =  uniq-∋ ∋x ∋x′
 ```
+
+<!--
 If both derivations are by rule `Z` then uniqueness
 follows immediately, while if both derivations are
 by rule `S` then uniqueness follows by induction.
@@ -833,23 +919,43 @@ rule `Z` and one by rule `S`, since rule `Z`
 requires the variable we are looking for is the
 final one in the context, while rule `S` requires
 it is not.
+-->
 
+如果两个推导都使用 `Z` 规则，那么唯一性即可直接得出；
+如果两个推导都使用 `S` 规则，那么唯一性可以由归纳得出。
+如果一个使用了 `Z` 规则，另一个使用了 `S` 规则，这则是一个矛盾，
+因为 `Z` 要求我们查询的变量是上下文中的最后一个，而 `S` 要求不是这样。
+
+<!--
 Synthesizing a type is also unique.  Given two derivations,
 one showing `Γ ⊢ M ↑ A` and one showing `Γ ⊢ M ↑ B`, it follows
 that `A` and `B` must be identical:
+-->
+
+生成的类型也是唯一的。
+给定两个推导，其一证明 `Γ ⊢ M ↑ A`，另一个证明 `Γ ⊢ M ↑ B`，那么
+`A` 和 `B` 一定是一样的：
+
 ```agda
 uniq-↑ : ∀ {Γ M A B} → Γ ⊢ M ↑ A → Γ ⊢ M ↑ B → A ≡ B
 uniq-↑ (⊢` ∋x) (⊢` ∋x′)       =  uniq-∋ ∋x ∋x′
 uniq-↑ (⊢L · ⊢M) (⊢L′ · ⊢M′)  =  rng≡ (uniq-↑ ⊢L ⊢L′)
 uniq-↑ (⊢↓ ⊢M) (⊢↓ ⊢M′)       =  refl
 ```
+
+<!--
 There are three possibilities for the term. If it is a variable,
 uniqueness of synthesis follows from uniqueness of lookup.
 If it is an application, uniqueness follows by induction on
 the function in the application, since the range of equal
 types are equal.  If it is a switch expression, uniqueness
 follows since both terms are decorated with the same type.
+-->
 
+有三种项的形式。
+如果项是变量，那么生成的唯一性从查询的唯一性中直接得出。
+如果项是函数应用，那么唯一性由应用中的函数之上的归纳得出，因为值域相等的类型相等。
+如果项是变向，两者装饰的类型相等，从此可得唯一性。
 
 ## Lookup type of a variable in the context
 
