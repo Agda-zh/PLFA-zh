@@ -369,15 +369,14 @@ preserve types.  Hence, the order of presentation must change.
 因此，我们必须改变展示的顺序。
 
 <!--
-The syntax of terms now incorporates their typing rules, and the
-definition of values now incorporates the Canonical Forms lemma.  The
+The syntax of terms now incorporates their typing rules.  The
 definition of substitution is somewhat more involved, but incorporates
 the trickiest part of the previous proof, the lemma establishing that
 substitution preserves types.  The definition of reduction
 incorporates preservation, which no longer requires a separate proof.
 -->
 
-项的语法现在包含了它们的赋型规则，值的语法现在包含了它们的标准式引理。
+项的语法现在包含了它们的赋型规则。
 替换的定义现在更加深入，但包括了之前证明中最棘手的部分，即替换保留了类型。
 规约的定义现在包括了保型性，不需要额外的证明。
 
@@ -1359,12 +1358,10 @@ to sneak in.
 ## 值
 
 <!--
-The definition of value is much as before, save that the
-added types incorporate the same information found in the
-Canonical Forms lemma:
+The definition of value is much as before:
 -->
 
-值的定义与之前差不多，除去附加的类型中包括了标准式引理中包含的信息：
+值的定义与之前差不多：
 
 ```agda
 data Value : ∀ {Γ A} → Γ ⊢ A → Set where
@@ -1635,13 +1632,13 @@ _ =
 <!--
 We have now completed all the definitions, which of
 necessity subsumed some of the propositions from the
-earlier development: Canonical Forms,
-Substitution preserves types, and Preservation.
+earlier development, namely that
+substitution and reduction preserves types.
 We now turn to proving the remaining results from the
 previous development.
 -->
 
-我们现在完成了所有的定义，包含了之前证明的一些推论：标准式、替换保存类型和保型性。
+我们现在完成了所有的定义，包含了之前证明的一些推论：替换保存类型和保型性。
 我们接下来证明剩下的结论。
 
 <!--
@@ -1695,13 +1692,10 @@ data Progress {A} (M : ∅ ⊢ A) : Set where
 
 <!--
 The statement and proof of progress is much as before,
-appropriately annotated.  We no longer need
-to explicitly refer to the Canonical Forms lemma, since it
-is built-in to the definition of value:
+appropriately annotated:
 -->
 
-进行性的声明和证明与之前大抵相同，加上了适当的附注。
-我们不再需要显式地参考标准式引理，因为它内置于值的定义中：
+进行性的声明和证明与之前大抵相同，加上了适当的附注：
 
 ```agda
 progress : ∀ {A} → (M : ∅ ⊢ A) → Progress M
