@@ -2,7 +2,7 @@
 title      : "Inference: 双向类型推理"
 permalink  : /Inference/
 translator : ["Fangyi Zhou"]
-progress   : 40
+progress   : 60
 ---
 
 ```agda
@@ -957,11 +957,22 @@ follows since both terms are decorated with the same type.
 如果项是函数应用，那么唯一性由应用中的函数之上的归纳得出，因为值域相等的类型相等。
 如果项是变向，两者装饰的类型相等，从此可得唯一性。
 
+<!--
 ## Lookup type of a variable in the context
+-->
 
+## 查询上下文中变量的类型
+
+<!--
 Given `Γ` and two distinct variables `x` and `y`, if there is no type `A`
 such that `Γ ∋ x ⦂ A` holds, then there is also no type `A` such that
 `Γ , y ⦂ B ∋ x ⦂ A` holds:
+-->
+
+给定 `Γ` 和两个不同的变量 `x` 和 `y`，
+如果不存在类型 `A` 使得 `Γ ∋ x ⦂ A` 成立，
+那么也不存在类型 `A` 使得 `Γ , y ⦂ B ∋ x ⦂ A` 成立：
+
 ```agda
 ext∋ : ∀ {Γ B x y}
   → x ≢ y
@@ -971,15 +982,28 @@ ext∋ : ∀ {Γ B x y}
 ext∋ x≢y _  ⟨ A , Z ⟩       =  x≢y refl
 ext∋ _   ¬∃ ⟨ A , S _ ∋x ⟩  =  ¬∃ ⟨ A , ∋x ⟩
 ```
+
+<!--
 Given a type `A` and evidence that `Γ , y ⦂ B ∋ x ⦂ A` holds, we must
 demonstrate a contradiction.  If the judgment holds by `Z`, then we
 must have that `x` and `y` are the same, which contradicts the first
 assumption. If the judgment holds by `S _ ∋x` then `∋x` provides
 evidence that `Γ ∋ x ⦂ A`, which contradicts the second assumption.
+-->
 
+给定类型 `A` 和 `Γ , y ⦂ B ∋ x ⦂ A` 成立的证明，我们必须构造一个矛盾。
+如果判断由 `Z` 成立，那么 `x` 和 `y` 一定是一样的，与第一个假设矛盾。
+如果判断由 `S _ ∋x` 成立，那么 `∋x` 提供了 `Γ ∋ x ⦂ A` 成立的证明，与第二个假设矛盾。
+
+<!--
 Given a context `Γ` and a variable `x`, we decide whether
 there exists a type `A` such that `Γ ∋ x ⦂ A` holds, or its
 negation:
+-->
+
+给定上下文 `Γ` 和变量 `x`，我们可判断是否存在一个类型 `A` 使得
+`Γ ∋ x ⦂ A` 成立，或者其反命题： 
+
 ```agda
 lookup : ∀ (Γ : Context) (x : Id)
          ------------------------
@@ -991,34 +1015,79 @@ lookup (Γ , y ⦂ B) x with x ≟ y
 ...             | no  ¬∃          =  no  (ext∋ x≢y ¬∃)
 ...             | yes ⟨ A , ∋x ⟩  =  yes ⟨ A , S x≢y ∋x ⟩
 ```
+
+<!--
 Consider the context:
+-->
 
+考虑上下文的情况：
+
+<!--
 * If it is empty, then trivially there is no possible derivation.
+-->
 
+* 如果上下文为空，那么平凡地，我们没有任何可能的推导。
+
+<!--
 * If it is non-empty, compare the given variable to the most
   recent binding:
+-->
 
+* 如果上下文非空，比较给定的变量和最新的绑定：
+
+<!--
   + If they are identical, we have succeeded, with `Z` as
     the appropriate derivation.
+-->
 
+  + 如果它们一致，我们完成了判定，使用 `Z` 作为对应的推导。
+
+<!--
   + If they differ, we recurse:
+-->
 
+  + 如果它们不一致，我们递归：
+
+<!--
     - If lookup fails, we apply `ext∋` to convert the proof
       there is no derivation from the contained context
       to the extended context.
+-->
 
+    - 如果查询失败了，我们使用 `ext∋` 将变量不存在于内部的上下文中的证明扩充至扩充后的上下文。
+
+<!--
     - If lookup succeeds, we extend the derivation with `S`.
+-->
+
+    - 如果查询成功了，我们对返回的推导使用 `S`。
 
 
+<!--
 ## Promoting negations
+-->
 
+## 提升否定
+
+<!--
 For each possible term form, we need to show that if one of its
 components fails to type, then the whole fails to type.  Most of
 these results are easy to demonstrate inline, but we provide
 auxiliary functions for a couple of the trickier cases.
+-->
 
+对于每一个可能的项的形式，我们需要证明：如果其内部的子项无法被赋型，那么整个项无法被赋型。
+大多数情况下，我们可以直接在行中直接完成所需的证明，但有一些困难的情况，
+我们提供一些帮助函数。
+
+<!--
 If `Γ ⊢ L ↑ A ⇒ B` holds but `Γ ⊢ M ↓ A` does not hold, then
 there is no type `B′` such that `Γ ⊢ L · M ↑ B′` holds:
+-->
+
+如果 `Γ ⊢ L ↑ A ⇒ B` 成立而  `Γ ⊢ M ↓ A` 不成立，那么不存在使得
+`Γ ⊢ L · M ↑ B′` 成立的类型 `B′`：
+
 ```agda
 ¬arg : ∀ {Γ A B L M}
   → Γ ⊢ L ↑ A ⇒ B
@@ -1027,6 +1096,8 @@ there is no type `B′` such that `Γ ⊢ L · M ↑ B′` holds:
   → ¬ (∃[ B′ ] Γ ⊢ L · M ↑ B′)
 ¬arg ⊢L ¬⊢M ⟨ B′ , ⊢L′ · ⊢M′ ⟩ rewrite dom≡ (uniq-↑ ⊢L ⊢L′) = ¬⊢M ⊢M′
 ```
+
+<!--
 Let `⊢L` be evidence that `Γ ⊢ L ↑ A ⇒ B` holds and `¬⊢M` be evidence
 that `Γ ⊢ M ↓ A` does not hold.  Given a type `B′` and evidence that
 `Γ ⊢ L · M ↑ B′` holds, we must demonstrate a contradiction.  The
@@ -1037,9 +1108,23 @@ and hence that `A ≡ A′`, which means that `¬⊢M` and `⊢M′` yield a
 contradiction.  Without the `rewrite` clause, Agda would not allow us
 to derive a contradiction between `¬⊢M` and `⊢M′`, since one concerns
 type `A` and the other type `A′`.
+-->
 
+让 `⊢L` 作为 `Γ ⊢ L ↑ A ⇒ B` 成立的证明、 `¬⊢M` 作为 `Γ ⊢ M ↓ A` 不成立的证明。  
+给定类型 `B′` 和 `Γ ⊢ L · M ↑ B′` 成立的证明，我们必须构造一个矛盾。
+这样的证明一定是 `⊢L′ · ⊢M′` 的形式，其中 `⊢L′` 
+是 `Γ ⊢ L ↑ A′ ⇒ B′` 成立的证明、`⊢M′` 是 `Γ ⊢ M ↓ A′` 成立的证明。
+将 `uniq-↑` 应用于 `⊢L` 和 `⊢L′`，我们知道 `A ⇒ B ≡ A′ ⇒ B′`，
+所以可得 `A ≡ A′`，这意味着 `¬⊢M` 和 `⊢M′` 可以构造出一个矛盾。
+不使用 `rewrite` 语句的话，Agda 不会让我们从 `¬⊢M` 和 `⊢M′` 中构造出一个矛盾， 
+因为其中的类型分别是 `A` 和 `A′`。
 
+<!--
 If `Γ ⊢ M ↑ A` holds and `A ≢ B`, then `Γ ⊢ (M ↑) ↓ B` does not hold:
+-->
+
+如果 `Γ ⊢ M ↑ A` 成立且 `A ≢ B`，那么 `Γ ⊢ (M ↑) ↓ B` 不成立：
+
 ```agda
 ¬switch : ∀ {Γ M A B}
   → Γ ⊢ M ↑ A
@@ -1048,6 +1133,8 @@ If `Γ ⊢ M ↑ A` holds and `A ≢ B`, then `Γ ⊢ (M ↑) ↓ B` does not ho
   → ¬ Γ ⊢ (M ↑) ↓ B
 ¬switch ⊢M A≢B (⊢↑ ⊢M′ A′≡B) rewrite uniq-↑ ⊢M ⊢M′ = A≢B A′≡B
 ```
+
+<!--
 Let `⊢M` be evidence that `Γ ⊢ M ↑ A` holds, and `A≢B` be evidence
 that `A ≢ B`.  Given evidence that `Γ ⊢ (M ↑) ↓ B` holds, we must
 demonstrate a contradiction.  The evidence must take the form `⊢↑ ⊢M′
@@ -1057,7 +1144,16 @@ that `A ≡ A′`, which means that `A≢B` and `A′≡B` yield a
 contradiction.  Without the `rewrite` clause, Agda would not allow us
 to derive a contradiction between `A≢B` and `A′≡B`, since one concerns
 type `A` and the other type `A′`.
+-->
 
+让 `⊢M` 作为 `Γ ⊢ M ↑ A` 成立的证明、`A≢B` 作为 `A ≢ B` 成立的证明。  
+给定 `Γ ⊢ (M ↑) ↓ B` 成立的证明，我们必须构造一个矛盾。
+这样的证明一定是 `⊢↑ ⊢M′ A′≡B` 的形式，其中
+`⊢M′` 是 `Γ ⊢ M ↑ A′` 成立的证明、`A′≡B` 是 `A′ ≡ B` 成立的证明。 
+将 `uniq-↑` 应用于 `⊢M` 和 `⊢M′`，我们知道 `A ≡ A′`，这意味着 `A≢B` 和 `A′≡B` 
+可以构造出一个矛盾。
+不使用 `rewrite` 语句的话，Agda 不会让我们从 `A≢B` 和 `A′≡B` 中构造出一个矛盾， 
+因为其中的类型分别是 `A` 和 `A′`。
 
 ## Synthesize and inherit types
 
