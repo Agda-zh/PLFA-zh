@@ -385,7 +385,7 @@ What we intend to show is that the typing judgments are
 _decidable_:
 -->
 
-我们试图证明赋性判断是**可决定**的：
+我们试图证明赋型判断是**可决定**的：
 
     synthesize : ∀ (Γ : Context) (M : Term⁺)
         ------------------------------------
@@ -1734,42 +1734,88 @@ _ = refl
 ```
 
 
+<!--
 ## Erasure
+-->
 
+## 擦除
+
+<!--
 From the evidence that a decorated term has the correct type it is
 easy to extract the corresponding intrinsically-typed term.  We use the
 name `DB` to refer to the code in
 Chapter [DeBruijn](/DeBruijn/).
 It is easy to define an _erasure_ function that takes an extrinsic
 type judgment into the corresponding intrinsically-typed term.
+-->
 
+从装饰过的项拥有正确的类型的证明中，我们可以简单地提取出对应的内在类型的项。
+我们使用 `DB` 来指代 [DeBruijn](/DeBruijn/) 章节中的代码。
+我们可以简单地定义一个**擦除**（Erasure）从外在的赋型判断，至对应的内在类型的项的函数。
+
+<!--
 First, we give code to erase a type:
+-->
+
+首先，我们给出擦除类型的代码：
+
 ```agda
 ∥_∥Tp : Type → DB.Type
 ∥ `ℕ ∥Tp             =  DB.`ℕ
 ∥ A ⇒ B ∥Tp          =  ∥ A ∥Tp DB.⇒ ∥ B ∥Tp
 ```
-It simply renames to the corresponding constructors in module `DB`.
 
+<!--
+It simply renames to the corresponding constructors in module `DB`.
+-->
+
+它简单地把对应的构造子重命名至 `DB` 模块中。
+
+<!--
 Next, we give the code to erase a context:
+-->
+
+接下来，我们给出擦除上下文的代码：
+
 ```agda
 ∥_∥Cx : Context → DB.Context
 ∥ ∅ ∥Cx              =  DB.∅
 ∥ Γ , x ⦂ A ∥Cx      =  ∥ Γ ∥Cx DB., ∥ A ∥Tp
 ```
-It simply drops the variable names.
 
+<!--
+It simply drops the variable names.
+-->
+
+它简单地丢弃了变量名。
+
+<!--
 Next, we give the code to erase a lookup judgment:
+-->
+
+接下来，我们给出擦除查询判断的代码：
+
 ```agda
 ∥_∥∋ : ∀ {Γ x A} → Γ ∋ x ⦂ A → ∥ Γ ∥Cx DB.∋ ∥ A ∥Tp
 ∥ Z ∥∋               =  DB.Z
 ∥ S x≢ ∋x ∥∋         =  DB.S ∥ ∋x ∥∋
 ```
-It simply drops the evidence that variable names are distinct.
 
+<!--
+It simply drops the evidence that variable names are distinct.
+-->
+
+它简单地丢弃了变量名不同的证明。
+
+<!--
 Finally, we give the code to erase a typing judgment.
 Just as there are two mutually recursive typing judgments,
 there are two mutually recursive erasure functions:
+-->
+
+最后，我们给出擦除赋型判断的代码。
+正如由两个共同递归的赋型判断，我们有两个共同递归的擦除函数：
+
 ```agda
 ∥_∥⁺ : ∀ {Γ M A} → Γ ⊢ M ↑ A → ∥ Γ ∥Cx DB.⊢ ∥ A ∥Tp
 ∥_∥⁻ : ∀ {Γ M A} → Γ ⊢ M ↓ A → ∥ Γ ∥Cx DB.⊢ ∥ A ∥Tp
@@ -1785,14 +1831,25 @@ there are two mutually recursive erasure functions:
 ∥ ⊢μ ⊢M ∥⁻           =  DB.μ ∥ ⊢M ∥⁻
 ∥ ⊢↑ ⊢M refl ∥⁻      =  ∥ ⊢M ∥⁺
 ```
+
+<!--
 Erasure replaces constructors for each typing judgment
 by the corresponding term constructor from `DB`.  The
 constructors that correspond to switching from synthesized
 to inherited or vice versa are dropped.
+-->
 
+擦除将每个赋型判断中的构造子替换成 `DB` 中对应的项构造子。
+对应变向的构造子被丢弃。
+
+<!--
 We confirm that the erasure of the type derivations in
 this chapter yield the corresponding intrinsically-typed terms
 from the earlier chapter:
+-->
+
+我们证实本章中的赋型判断擦除后，与之前使用内在类型项章节中的那些一致：
+
 ```agda
 _ : ∥ ⊢2+2 ∥⁺ ≡ DB.2+2
 _ = refl
@@ -1800,59 +1857,106 @@ _ = refl
 _ : ∥ ⊢2+2ᶜ ∥⁺ ≡ DB.2+2ᶜ
 _ = refl
 ```
+
+<!--
 Thus, we have confirmed that bidirectional type inference
 converts decorated versions of the lambda terms from
 Chapter [Lambda](/Lambda/)
 to the intrinsically-typed terms of
 Chapter [DeBruijn](/DeBruijn/).
+-->
 
+因此，我们证实了双向类型推理把装饰后的 [Lambda](/Lambda/) 章节的
+λ 项转换至 [DeBruijn](/DeBruijn) 章节中内在类型的项。
 
+<!--
 #### Exercise `inference-multiplication` (recommended)
+-->
 
+#### 练习 `inference-multiplication` （推荐）
+
+<!--
 Apply inference to your decorated definition of multiplication from
 exercise [`bidirectional-mul`](/Inference/#bidirectional-mul), and show that
 erasure of the inferred typing yields your definition of
 multiplication from Chapter [DeBruijn](/DeBruijn/).
+-->
+
+对你在 [`bidirectional-mul`](/Inference/#bidirectional-mul) 练习中的乘法项应用双向推理，
+并证明推理得到的赋型可以擦除至 [DeBruijn](/DeBruijn/) 章节中你的定义。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
+<!--
 #### Exercise `inference-products` (recommended)
+-->
 
+#### 练习 `inference-products` （推荐）
+
+<!--
 Using your rules from exercise
 [`bidirectional-products`](/Inference/#bidirectional-products), extend
 bidirectional inference to include products.
+-->
+
+使用你在 [`bidirectional-mul`](/Inference/#bidirectional-mul) 练习中的赋型规则，
+将双向推理扩充至包括积。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
+<!--
 #### Exercise `inference-rest` (stretch)
+-->
 
+#### 练习 `inference-rest` （延伸）
+
+<!--
 Extend the bidirectional type rules to include the rest of the constructs from
 Chapter [More](/More/).
+-->
+
+扩充双向赋型规则，来包括 [More](/More/) 章节的剩余构造。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 
+<!--
 ## Bidirectional inference in Agda
+-->
 
+## Agda 中的双向推理
+
+<!--
 Agda itself uses bidirectional inference.  This explains why
-constructors can be overloaded while other defined names cannot ---
+constructors can be overloaded while other defined names cannot -
 here by _overloaded_ we mean that the same name can be used for
 constructors of different types.  Constructors are typed by
 inheritance, and so the name is available when resolving the
 constructor, whereas variables are typed by synthesis, and so each
 variable must have a unique type.
+-->
 
+Agda 本身也使用双向推理。
+这解释了为什么构造子可以被重载，而其他定义的名称不可以——此处的**重载**指的是我们可以给不同类型的构造子使用相同的名称。
+构造子是由继承来赋型，而变量由生成来赋型，因此每个变量必须有唯一的类型。
+
+<!--
 Most top-level definitions in Agda are of functions, which are typed
 by inheritance, which is why Agda requires a type declaration for
 those definitions.  A definition with a right-hand side that is a term
 typed by synthesis, such as an application, does not require a type
 declaration.
+-->
+
+Agda 中多数的顶层声明时函数，其由继承来赋型，也就是为什么 Agda 会对这些定义要求类型声明。
+一个由生成赋型的右手边的定义，比如说函数应用，则不需要类型声明。
+
 ```agda
 answer = 6 * 7
 ```
@@ -1860,7 +1964,11 @@ answer = 6 * 7
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章中使用了以下 Unicode：
 
     ↓  U+2193:  DOWNWARDS ARROW (\d)
     ↑  U+2191:  UPWARDS ARROW (\u)
