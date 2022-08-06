@@ -2,7 +2,7 @@
 title      : "Inference: 双向类型推理"
 permalink  : /Inference/
 translator : ["Fangyi Zhou"]
-progress   : 60
+progress   : 100
 ---
 
 ```agda
