@@ -36,7 +36,7 @@ inference, which will be presented in this chapter.
 
 在实践中，我们一般可以给项加上一些装饰，然后运用算法来**推理**（Infer）出类型推导。
 的确，Agda 中也是这样：我们给顶层的函数声明指定类型，而其余可由给出的信息推理而来。
-Agda 使用的这种推理被称为**双向**（Bidirectional）类型推理，我们将在本章中进行展示。 
+Agda 使用的这种推理被称为**双向**（Bidirectional）类型推理，我们将在本章中进行展示。
 
 <!--
 This chapter ties our previous developments together. We begin with
@@ -1002,7 +1002,7 @@ negation:
 -->
 
 给定上下文 `Γ` 和变量 `x`，我们可判断是否存在一个类型 `A` 使得
-`Γ ∋ x ⦂ A` 成立，或者其反命题： 
+`Γ ∋ x ⦂ A` 成立，或者其反命题：
 
 ```agda
 lookup : ∀ (Γ : Context) (x : Id)
@@ -1110,13 +1110,13 @@ to derive a contradiction between `¬⊢M` and `⊢M′`, since one concerns
 type `A` and the other type `A′`.
 -->
 
-让 `⊢L` 作为 `Γ ⊢ L ↑ A ⇒ B` 成立的证明、 `¬⊢M` 作为 `Γ ⊢ M ↓ A` 不成立的证明。  
+让 `⊢L` 作为 `Γ ⊢ L ↑ A ⇒ B` 成立的证明、 `¬⊢M` 作为 `Γ ⊢ M ↓ A` 不成立的证明。
 给定类型 `B′` 和 `Γ ⊢ L · M ↑ B′` 成立的证明，我们必须构造一个矛盾。
-这样的证明一定是 `⊢L′ · ⊢M′` 的形式，其中 `⊢L′` 
+这样的证明一定是 `⊢L′ · ⊢M′` 的形式，其中 `⊢L′`
 是 `Γ ⊢ L ↑ A′ ⇒ B′` 成立的证明、`⊢M′` 是 `Γ ⊢ M ↓ A′` 成立的证明。
 将 `uniq-↑` 应用于 `⊢L` 和 `⊢L′`，我们知道 `A ⇒ B ≡ A′ ⇒ B′`，
 所以可得 `A ≡ A′`，这意味着 `¬⊢M` 和 `⊢M′` 可以构造出一个矛盾。
-不使用 `rewrite` 语句的话，Agda 不会让我们从 `¬⊢M` 和 `⊢M′` 中构造出一个矛盾， 
+不使用 `rewrite` 语句的话，Agda 不会让我们从 `¬⊢M` 和 `⊢M′` 中构造出一个矛盾，
 因为其中的类型分别是 `A` 和 `A′`。
 
 <!--
@@ -1146,13 +1146,13 @@ to derive a contradiction between `A≢B` and `A′≡B`, since one concerns
 type `A` and the other type `A′`.
 -->
 
-让 `⊢M` 作为 `Γ ⊢ M ↑ A` 成立的证明、`A≢B` 作为 `A ≢ B` 成立的证明。  
+让 `⊢M` 作为 `Γ ⊢ M ↑ A` 成立的证明、`A≢B` 作为 `A ≢ B` 成立的证明。
 给定 `Γ ⊢ (M ↑) ↓ B` 成立的证明，我们必须构造一个矛盾。
 这样的证明一定是 `⊢↑ ⊢M′ A′≡B` 的形式，其中
-`⊢M′` 是 `Γ ⊢ M ↑ A′` 成立的证明、`A′≡B` 是 `A′ ≡ B` 成立的证明。 
-将 `uniq-↑` 应用于 `⊢M` 和 `⊢M′`，我们知道 `A ≡ A′`，这意味着 `A≢B` 和 `A′≡B` 
+`⊢M′` 是 `Γ ⊢ M ↑ A′` 成立的证明、`A′≡B` 是 `A′ ≡ B` 成立的证明。
+将 `uniq-↑` 应用于 `⊢M` 和 `⊢M′`，我们知道 `A ≡ A′`，这意味着 `A≢B` 和 `A′≡B`
 可以构造出一个矛盾。
-不使用 `rewrite` 语句的话，Agda 不会让我们从 `A≢B` 和 `A′≡B` 中构造出一个矛盾， 
+不使用 `rewrite` 语句的话，Agda 不会让我们从 `A≢B` 和 `A′≡B` 中构造出一个矛盾，
 因为其中的类型分别是 `A` 和 `A′`。
 
 <!--
@@ -1228,7 +1228,7 @@ There are three cases:
 -->
 
   + 如果失败了，那么 `¬∃` 是不存在使得 `Γ ∋ x ⦂ A` 成立的类型 `A` 的证明。
-    `` Γ ⊢ ` x ↑ A `` 成立的证明一定是 `` ⊢` ∋x `` 的形式，其中 `∋x` 
+    `` Γ ⊢ ` x ↑ A `` 成立的证明一定是 `` ⊢` ∋x `` 的形式，其中 `∋x`
     是 `Γ ∋ x ⦂ A` 成立的证明，这构成了一个矛盾。
 
 <!--
@@ -1236,7 +1236,7 @@ There are three cases:
     hence `` ⊢` ∋x `` is evidence that `` Γ ⊢ ` x ↑ A ``.
 -->
 
-  + 如果成功了，那么 `∋x` 是 `Γ ∋ x ⦂ A` 成立的证明，所以 `` ⊢` ∋x `` 是 
+  + 如果成功了，那么 `∋x` 是 `Γ ∋ x ⦂ A` 成立的证明，所以 `` ⊢` ∋x `` 是
     `` Γ ⊢ ` x ↑ A `` 成立的证明。
 
 <!--
@@ -1253,7 +1253,7 @@ There are three cases:
 -->
 
   + 如果失败了，那么 `¬∃` 是不存在任何类型 `Γ ⊢ L ↑ _` 成立的证明。
-    `Γ ⊢ L · M ↑ _` 成立的证明一定是 `⊢L · _` 的形式，其中 `⊢L` 
+    `Γ ⊢ L · M ↑ _` 成立的证明一定是 `⊢L · _` 的形式，其中 `⊢L`
     是 `Γ ⊢ L ↑ _` 成立的证明，这构成了一个矛盾。
 
 <!--
@@ -1305,7 +1305,7 @@ There are three cases:
   we recurse on the subterm `M`, supplying type `A` by inheritance:
 -->
 
-* 如果项是从生成到继承的变向项 `M ↓ A`，我们在子项 `M` 上递归，并向继承提供类型 `A`： 
+* 如果项是从生成到继承的变向项 `M ↓ A`，我们在子项 `M` 上递归，并向继承提供类型 `A`：
 
 <!--
   + If it fails, then `¬⊢M` is evidence that `Γ ⊢ M ↓ A` does not
@@ -1315,7 +1315,7 @@ There are three cases:
 -->
 
   + 如果失败了，那么 `¬⊢M` 是 `Γ ⊢ M ↓ A` 不成立的证明。
-    `Γ ⊢ (M ↓ A) ↑ A` 成立的证明一定是 `⊢↓ ⊢M` 的形式，其中 `⊢M` 
+    `Γ ⊢ (M ↓ A) ↑ A` 成立的证明一定是 `⊢↓ ⊢M` 的形式，其中 `⊢M`
     是 `Γ ⊢ M ↓ A` 成立的证明，这构成了一个矛盾。
 
 <!--
@@ -1401,7 +1401,7 @@ and for switching from inherited to synthesized:
     holds, and `⊢ƛ ⊢N` provides evidence that `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B`.
 -->
 
-  + 如果成功了，那么 `⊢N` 是 `Γ , x ⦂ A ⊢ N ↓ B` 成立的证明，且 `⊢ƛ ⊢N` 
+  + 如果成功了，那么 `⊢N` 是 `Γ , x ⦂ A ⊢ N ↓ B` 成立的证明，且 `⊢ƛ ⊢N`
     提供了 `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B` 成立的证明。
 
 <!--
@@ -1409,7 +1409,7 @@ and for switching from inherited to synthesized:
   we recurse on the subterm `M`:
 -->
 
-* 如果项是从继承到生成的变向项 `M ↑`，我们在子项 `M` 上递归： 
+* 如果项是从继承到生成的变向项 `M ↑`，我们在子项 `M` 上递归：
 
 <!--
   + If it fails, then `¬∃` is evidence there is no `A` such
@@ -1419,7 +1419,7 @@ and for switching from inherited to synthesized:
 -->
 
   + 如果失败了，那么 `¬∃` 是不存在使得 `Γ ⊢ M ↑ A` 成立的类型 `A` 的证明。
-    `Γ ⊢ (M ↑) ↓ B` 成立的证明一定是 `⊢↑ ⊢M _` 的形式，其中 `⊢M` 
+    `Γ ⊢ (M ↑) ↓ B` 成立的证明一定是 `⊢↑ ⊢M _` 的形式，其中 `⊢M`
     是 `Γ ⊢ M ↑ _` 成立的证明，这构成了一个矛盾。
 
 <!--
