@@ -403,8 +403,8 @@ must decide whether `Γ ⊢ M ↓ A` holds, or its negation.
 -->
 
 给定上下文 `Γ` 和生成项 `M`，我们必须判定是否存在一个类型 `A` 使得 `Γ ⊢ M ↑ A` 成立，
-或者其反命题。
-同样，给定上下文 `Γ` 、继承项 `M` 和类型 `A`，我们必须判定 `Γ ⊢ M ↓ A` 成立，或者其反命题。
+或者其否定。
+同样，给定上下文 `Γ` 、继承项 `M` 和类型 `A`，我们必须判定 `Γ ⊢ M ↓ A` 成立，或者其否定。
 
 <!--
 Our proof is constructive. In the synthesised case, it will either
@@ -1155,8 +1155,13 @@ type `A` and the other type `A′`.
 不使用 `rewrite` 语句的话，Agda 不会让我们从 `A≢B` 和 `A′≡B` 中构造出一个矛盾， 
 因为其中的类型分别是 `A` 和 `A′`。
 
+<!--
 ## Synthesize and inherit types
+-->
 
+## 生成和继承类型
+
+<!--
 The table has been set and we are ready for the main course.
 We define two mutually recursive functions,
 one for synthesis and one for inheritance.  Synthesis is given
@@ -1165,6 +1170,13 @@ returns a type `A` and evidence that `Γ ⊢ M ↑ A`, or its negation.
 Inheritance is given a context `Γ`, an inheritance term `M`,
 and a type `A` and either returns evidence that `Γ ⊢ M ↓ A`,
 or its negation:
+-->
+
+餐桌已经布置好了，我们已经准备好享用今天的主菜了。
+我们定义两个共同递归的函数，一个用于生成，一个用于继承。
+生成在给定上下文 `Γ` 和生成项 `M` 时，要么返回一个类型 `A` 和 `Γ ⊢ M ↑ A` 成立的证明，或者其/否定。
+继承在给定上下文 `Γ` 、继承项 `M` 和类型 `A` 时要么返回 `Γ ⊢ M ↓ A` 成立的证明，或者其否定：
+
 ```agda
 synthesize : ∀ (Γ : Context) (M : Term⁺)
              ---------------------------
@@ -1175,7 +1187,12 @@ inherit : ∀ (Γ : Context) (M : Term⁻) (A : Type)
   → Dec (Γ ⊢ M ↓ A)
 ```
 
+<!--
 We first consider the code for synthesis:
+-->
+
+我们首先考虑生成的代码：
+
 ```agda
 synthesize Γ (` x) with lookup Γ x
 ... | no  ¬∃              =  no  (λ{ ⟨ A , ⊢` ∋x ⟩ → ¬∃ ⟨ A , ∋x ⟩ })
@@ -1190,55 +1207,131 @@ synthesize Γ (M ↓ A) with inherit Γ M A
 ... | no  ¬⊢M             =  no  (λ{ ⟨ _ , ⊢↓ ⊢M ⟩  →  ¬⊢M ⊢M })
 ... | yes ⊢M              =  yes ⟨ A , ⊢↓ ⊢M ⟩
 ```
+
+<!--
 There are three cases:
+-->
 
+有三种情况来考虑：
+
+<!--
 * If the term is a variable `` ` x ``, we use lookup as defined above:
+-->
 
+* 如果项是变量 `` ` x ``，我们使用之前定义的查询：
+
+<!--
   + If it fails, then `¬∃` is evidence that there is no `A` such
     that `Γ ∋ x ⦂ A` holds.  Evidence that `` Γ ⊢ ` x ↑ A `` holds must
     have the form `` ⊢` ∋x ``, where `∋x` is evidence that `Γ ∋ x ⦂ A`,
     which yields a contradiction.
+-->
 
+  + 如果失败了，那么 `¬∃` 是不存在使得 `Γ ∋ x ⦂ A` 成立的类型 `A` 的证明。
+    `` Γ ⊢ ` x ↑ A `` 成立的证明一定是 `` ⊢` ∋x `` 的形式，其中 `∋x` 
+    是 `Γ ∋ x ⦂ A` 成立的证明，这构成了一个矛盾。
+
+<!--
   + If it succeeds, then `∋x` is evidence that `Γ ∋ x ⦂ A`, and
     hence `` ⊢` ∋x `` is evidence that `` Γ ⊢ ` x ↑ A ``.
+-->
 
+  + 如果成功了，那么 `∋x` 是 `Γ ∋ x ⦂ A` 成立的证明，所以 `` ⊢` ∋x `` 是 
+    `` Γ ⊢ ` x ↑ A `` 成立的证明。
+
+<!--
 * If the term is an application `L · M`, we recurse on the function `L`:
+-->
 
+* 如果项是函数应用 `L · M`，我们递归于函数项 `L`：
+
+<!--
   + If it fails, then `¬∃` is evidence that there is no type such
     that `Γ ⊢ L ↑ _` holds.  Evidence that `Γ ⊢ L · M ↑ _` holds
     must have the form `⊢L · _`, where `⊢L` is evidence that
     `Γ ⊢ L ↑ _`, which yields a contradiction.
+-->
 
+  + 如果失败了，那么 `¬∃` 是不存在任何类型 `Γ ⊢ L ↑ _` 成立的证明。
+    `Γ ⊢ L · M ↑ _` 成立的证明一定是 `⊢L · _` 的形式，其中 `⊢L` 
+    是 `Γ ⊢ L ↑ _` 成立的证明，这构成了一个矛盾。
+
+<!--
   + If it succeeds, there are two possibilities:
+-->
 
+  + 如果成功了，那么有两种情况：
+
+<!--
     - One is that `⊢L` is evidence that `` Γ ⊢ L ⦂ `ℕ ``.  Evidence
       that `Γ ⊢ L · M ↑ _` holds must have the form `⊢L′ · _` where
       `⊢L′` is evidence that `Γ ⊢ L ↑ A ⇒ B` for some types `A` and
       `B`.  Applying `uniq-↑` to `⊢L` and `⊢L′` yields a
       contradiction, since `` `ℕ `` cannot equal `A ⇒ B`.
+-->
+    - 其一是 `⊢L` 是 `` Γ ⊢ L ⦂ `ℕ `` 成立的证明。
+      `Γ ⊢ L · M ↑ _` 成立的证明一定是 `⊢L′ · _` 的形式，其中
+      `⊢L′` 是 `Γ ⊢ L ↑ A ⇒ B` 对于一些类型 `A` 和 `B` 成立的证明。
+      将 `uniq-↑` 应用于 `⊢L` 和 `⊢L′` 构成了一个矛盾，
+      因为 `` `ℕ `` 无法与 `A ⇒ B` 相等。
 
+<!--
     - The other is that `⊢L` is evidence that `Γ ⊢ L ↑ A ⇒ B`, in
       which case we recurse on the argument `M`:
+-->
 
+    - 另一是 `⊢L` 是 `Γ ⊢ L ↑ A ⇒ B` 成立的证明，那么我们在参数项 `M` 上递归：
+
+<!--
       * If it fails, then `¬⊢M` is evidence that `Γ ⊢ M ↓ A` does
         not hold.  By `¬arg` applied to `⊢L` and `¬⊢M`, it follows
         that `Γ ⊢ L · M ↑ B` cannot hold.
+-->
 
+      * 如果失败了，那么 `¬⊢M` 是 `Γ ⊢ M ↓ A` 不成立的证明。
+        将 `¬arg` 应用于 `⊢L` 和 `¬⊢M`，我们可得
+        `Γ ⊢ L · M ↑ B` 不成立。
+
+<!--
       * If it succeeds, then `⊢M` is evidence that `Γ ⊢ M ↓ A`,
         and `⊢L · ⊢M` provides evidence that `Γ ⊢ L · M ↑ B`.
+-->
 
+      * 如果成功了，那么 `⊢M` 是 `Γ ⊢ M ↓ A` 成立的证明，
+        且 `⊢L · ⊢M` 提供了 `Γ ⊢ L · M ↑ B` 成立的证明。
+
+<!--
 * If the term is a switch `M ↓ A` from synthesised to inherited,
   we recurse on the subterm `M`, supplying type `A` by inheritance:
+-->
 
+* 如果项是从生成到继承的变向项 `M ↓ A`，我们在子项 `M` 上递归，并向继承提供类型 `A`： 
+
+<!--
   + If it fails, then `¬⊢M` is evidence that `Γ ⊢ M ↓ A` does not
     hold.  Evidence that `Γ ⊢ (M ↓ A) ↑ A` holds must have the
     form `⊢↓ ⊢M` where `⊢M` is evidence that `Γ ⊢ M ↓ A` holds,
     which yields a contradiction.
+-->
 
+  + 如果失败了，那么 `¬⊢M` 是 `Γ ⊢ M ↓ A` 不成立的证明。
+    `Γ ⊢ (M ↓ A) ↑ A` 成立的证明一定是 `⊢↓ ⊢M` 的形式，其中 `⊢M` 
+    是 `Γ ⊢ M ↓ A` 成立的证明，这构成了一个矛盾。
+
+<!--
   + If it succeeds, then `⊢M` is evidence that `Γ ⊢ M ↓ A`,
     and `⊢↓ ⊢M` provides evidence that `Γ ⊢ (M ↓ A) ↑ A`.
+-->
 
+  + 如果成功了，那么 `⊢M` 是 `Γ ⊢ M ↓ A` 成立的证明，且
+    `⊢↓ ⊢M` 提供了 `Γ ⊢ (M ↓ A) ↑ A` 成立的证明。
+
+<!--
 We next consider the code for inheritance:
+-->
+
+我们接下来考虑继承的代码：
+
 ```agda
 inherit Γ (ƛ x ⇒ N) `ℕ      =  no  (λ())
 inherit Γ (ƛ x ⇒ N) (A ⇒ B) with inherit (Γ , x ⦂ A) N B
@@ -1267,50 +1360,114 @@ inherit Γ (M ↑) B with synthesize Γ M
 ...   | no  A≢B             =  no  (¬switch ⊢M A≢B)
 ...   | yes A≡B             =  yes (⊢↑ ⊢M A≡B)
 ```
+
+<!--
 We consider only the cases for abstraction and
 and for switching from inherited to synthesized:
+-->
 
+我们在此只考虑抽象和从继承变向至生成的情况：
+
+<!--
 * If the term is an abstraction `ƛ x ⇒ N` and the inherited type
   is `` `ℕ ``, then it is trivial that `` Γ ⊢ (ƛ x ⇒ N) ↓ `ℕ ``
   cannot hold.
+-->
 
+* 如果项是 `ƛ x ⇒ N`，而继承的类型是 `` `ℕ ``，那么平凡地， `` Γ ⊢ (ƛ x ⇒ N) ↓ `ℕ `` 无法成立。
+
+<!--
 * If the term is an abstraction `ƛ x ⇒ N` and the inherited type
   is `A ⇒ B`, then we recurse with context `Γ , x ⦂ A` on subterm
   `N` inheriting type `B`:
+-->
 
+* 如果项是 `ƛ x ⇒ N`，而继承的类型是 `A ⇒ B`，我们用上下文 `Γ , x ⦂ A` 递归至
+  子项 `N` 继承类型 `B`：
+
+<!--
   + If it fails, then `¬⊢N` is evidence that `Γ , x ⦂ A ⊢ N ↓ B`
     does not hold.  Evidence that `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B` holds
     must have the form `⊢ƛ ⊢N` where `⊢N` is evidence that
     `Γ , x ⦂ A ⊢ N ↓ B`, which yields a contradiction.
+-->
 
+  + 如果失败了，那么 `¬⊢N` 是 `Γ , x ⦂ A ⊢ N ↓ B` 不成立的证明。
+    `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B` 成立的证明一定是 `⊢ƛ ⊢N` 的形式，其中
+    `⊢N` 是 `Γ , x ⦂ A ⊢ N ↓ B` 成立的证明，这构成了一个矛盾。
+
+<!--
   + If it succeeds, then `⊢N` is evidence that `Γ , x ⦂ A ⊢ N ↓ B`
     holds, and `⊢ƛ ⊢N` provides evidence that `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B`.
+-->
 
+  + 如果成功了，那么 `⊢N` 是 `Γ , x ⦂ A ⊢ N ↓ B` 成立的证明，且 `⊢ƛ ⊢N` 
+    提供了 `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B` 成立的证明。
+
+<!--
 * If the term is a switch `M ↑` from inherited to synthesised,
   we recurse on the subterm `M`:
+-->
 
+* 如果项是从继承到生成的变向项 `M ↑`，我们在子项 `M` 上递归： 
+
+<!--
   + If it fails, then `¬∃` is evidence there is no `A` such
     that `Γ ⊢ M ↑ A` holds.  Evidence that `Γ ⊢ (M ↑) ↓ B` holds
     must have the form `⊢↑ ⊢M _` where `⊢M` is evidence that
     `Γ ⊢ M ↑ _`, which yields a contradiction.
+-->
 
+  + 如果失败了，那么 `¬∃` 是不存在使得 `Γ ⊢ M ↑ A` 成立的类型 `A` 的证明。
+    `Γ ⊢ (M ↑) ↓ B` 成立的证明一定是 `⊢↑ ⊢M _` 的形式，其中 `⊢M` 
+    是 `Γ ⊢ M ↑ _` 成立的证明，这构成了一个矛盾。
+
+<!--
   + If it succeeds, then `⊢M` is evidence that `Γ ⊢ M ↑ A` holds.
     We apply `_≟Tp_` do decide whether `A` and `B` are equal:
+-->
 
+  + 如果成功了，那么 `⊢M` 是 `Γ ⊢ M ↑ A` 成立的证明。
+    我们应用 `_≟Tp_` 来判定 `A` 和 `B` 是否相等：
+
+<!--
     - If it fails, then `A≢B` is evidence that `A ≢ B`.
       By `¬switch` applied to `⊢M` and `A≢B` it follow that
       `Γ ⊢ (M ↑) ↓ B` cannot hold.
+-->
 
+    - 如果失败了，那么 `A≢B` 是 `A ≢ B` 的证明。
+      将 `¬switch` 应用于 `⊢M` 和 `A≢B`，我们可得
+      `Γ ⊢ (M ↑) ↓ B` 无法成立。
+
+<!--
     - If it succeeds, then `A≡B` is evidence that `A ≡ B`,
       and `⊢↑ ⊢M A≡B` provides evidence that `Γ ⊢ (M ↑) ↓ B`.
+-->
 
+    - 如果成功了，那么 `A≡B` 是 `A ≡ B` 的证明，
+      且 `⊢↑ ⊢M A≡B` 提供了 `Γ ⊢ (M ↑) ↓ B` 成立的证明。
+
+<!--
 The remaining cases are similar, and their code can pretty much be
 read directly from the corresponding typing rules.
+-->
 
+剩余的情况类似，它们的代码可以由对应的赋型规则直接对应得来。
+
+<!--
 ## Testing the example terms
+-->
 
+## 测试项的例子
+
+<!--
 First, we copy the smart constructor `S′` introduced earlier that makes it easy to
 access a variable in a context:
+-->
+
+首先，我们复制之前介绍过的智能构造子 `S′`，使得访问上下文中的变量更加便利：
+
 ```
 S′ : ∀ {Γ x y A B}
    → {x≢y : False (x ≟ y)}
@@ -1321,7 +1478,12 @@ S′ : ∀ {Γ x y A B}
 S′ {x≢y = x≢y} x = S (toWitnessFalse x≢y) x
 ```
 
+<!--
 Here is the result of typing two plus two on naturals:
+-->
+
+下面是给自然数二加二赋型的结果：
+
 ```agda
 ⊢2+2 : ∅ ⊢ 2+2 ↑ `ℕ
 ⊢2+2 =
@@ -1342,18 +1504,35 @@ Here is the result of typing two plus two on naturals:
    · ⊢suc (⊢suc ⊢zero)
    · ⊢suc (⊢suc ⊢zero))
 ```
+
+<!--
 We confirm that synthesis on the relevant term returns
 natural as the type and the above derivation:
+-->
+
+我们可以确认，对相应的项生成类型返回了自然数类型，和上述的推导：
+
 ```agda
 _ : synthesize ∅ 2+2 ≡ yes ⟨ `ℕ , ⊢2+2 ⟩
 _ = refl
 ```
+
+<!--
 Indeed, the above derivation was computed by evaluating the term on
 the left, with minor editing of the result.  The only editing required
 was to use the smart constructor `S′` to obtain the evidence that
 two variable names (as strings) are unequal (which it cannot print nor read).
+-->
 
+的确，上述的推导是用左边的项求值所得的，再加上一些微小的修改。
+所需的修改只是使用智能构造子 `S′` 来获取两个变量名（使用字符串）不同的证明（其无法打印或阅读）。
+
+<!--
 Here is the result of typing two plus two with Church numerals:
+-->
+
+下面是给 Church 数二加二赋型的结果：
+
 ```agda
 ⊢2+2ᶜ : ∅ ⊢ 2+2ᶜ ↑ `ℕ
 ⊢2+2ᶜ =
@@ -1396,84 +1575,159 @@ Here is the result of typing two plus two with Church numerals:
   · ⊢ƛ (⊢suc (⊢↑ (⊢` Z) refl))
   · ⊢zero
 ```
+
+<!--
 We confirm that synthesis on the relevant term returns
 natural as the type and the above derivation:
+-->
+
+我们可以确认，对相应的项生成类型返回了自然数类型，和上述的推导：
+
 ```agda
 _ : synthesize ∅ 2+2ᶜ ≡ yes ⟨ `ℕ , ⊢2+2ᶜ ⟩
 _ = refl
 ```
+
+<!--
 Again, the above derivation was computed by evaluating the
 term on the left and editing.
+-->
 
+同样，上面的推导使用对左手边的项求值所得，加上一些修改。
+
+<!--
 ## Testing the error cases
+-->
 
+## 测试错误的例子
+
+<!--
 It is important not just to check that code works as intended,
 but also that it fails as intended.  Here are checks for
 several possible errors:
+-->
 
+很重要的是，不仅要检查代码是否按照意图工作，以及代码是否按照意图不工作。
+下面是检查不同种类错误的例子：
+
+<!--
 Unbound variable:
+-->
+
+未约束的变量：
+
 ```agda
 _ : synthesize ∅ ((ƛ "x" ⇒ ` "y" ↑) ↓ (`ℕ ⇒ `ℕ)) ≡ no _
 _ = refl
 ```
 
+<!--
 Argument in application is ill typed:
+-->
+
+函数应用的参数不是良类型的：
+
 ```agda
 _ : synthesize ∅ (plus · sucᶜ) ≡ no _
 _ = refl
 ```
 
+<!--
 Function in application is ill typed:
+-->
+
+函数应用的函数不是良类型的：
+
 ```agda
 _ : synthesize ∅ (plus · sucᶜ · two) ≡ no _
 _ = refl
 ```
 
+<!--
 Function in application has type natural:
+-->
+
+函数应用的函数是自然数类型：
+
 ```agda
 _ : synthesize ∅ ((two ↓ `ℕ) · two) ≡ no _
 _ = refl
 ```
 
+<!--
 Abstraction inherits type natural:
+-->
+
+抽象继承了自然数类型：
+
 ```agda
 _ : synthesize ∅ (twoᶜ ↓ `ℕ) ≡ no _
 _ = refl
 ```
 
+<!--
 Zero inherits a function type:
+-->
+
+零继承了函数类型：
+
 ```agda
 _ : synthesize ∅ (`zero ↓ `ℕ ⇒ `ℕ) ≡ no _
 _ = refl
 ```
 
+<!--
 Successor inherits a function type:
+-->
+
+后继继承了函数类型：
+
 ```agda
 _ : synthesize ∅ (two ↓ `ℕ ⇒ `ℕ) ≡ no _
 _ = refl
 ```
 
+<!--
 Successor of an ill-typed term:
+-->
+
+非良类型项的后继：
+
 ```agda
 _ : synthesize ∅ (`suc twoᶜ ↓ `ℕ) ≡ no _
 _ = refl
 ```
 
+<!--
 Case of a term with a function type:
+-->
+
+对函数类型的项分情况讨论：
+
 ```agda
 _ : synthesize ∅
       ((`case (twoᶜ ↓ Ch) [zero⇒ `zero |suc "x" ⇒ ` "x" ↑ ] ↓ `ℕ) ) ≡ no _
 _ = refl
 ```
 
+<!--
 Case of an ill-typed term:
+-->
+
+对不良类型的项分情况讨论：
+
 ```agda
 _ : synthesize ∅
       ((`case (twoᶜ ↓ `ℕ) [zero⇒ `zero |suc "x" ⇒ ` "x" ↑ ] ↓ `ℕ) ) ≡ no _
 _ = refl
 ```
 
+<!--
 Inherited and synthesised types disagree in a switch:
+-->
+
+变向时继承与生成的项不一致：
+
 ```agda
 _ : synthesize ∅ (((ƛ "x" ⇒ ` "x" ↑) ↓ `ℕ ⇒ (`ℕ ⇒ `ℕ))) ≡ no _
 _ = refl
