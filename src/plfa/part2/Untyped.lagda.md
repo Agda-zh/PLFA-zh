@@ -1,49 +1,93 @@
 ---
-title     : "Untyped: Untyped lambda calculus with full normalisation"
-permalink : /Untyped/
+title      : "Untyped: 完全正规化的无类型 λ 演算"
+permalink  : /Untyped/
+translators: ["Fangyi Zhou"]
+progress   : 40
 ---
 
 ```agda
 module plfa.part2.Untyped where
 ```
 
+<!--
 In this chapter we play with variations on a theme:
+-->
 
+本章中，我们对于之前的主题加入不同的变化：
+
+<!--
 * Previous chapters consider intrinsically-typed calculi;
   here we consider one that is untyped but intrinsically scoped.
+-->
 
+* 之前的章节中讨论了内在类型的演算；我们这次讨论无类型，但是内在作用域的演算。
+
+<!--
 * Previous chapters consider call-by-value calculi;
   here we consider call-by-name.
+-->
 
+* 之前的章节中讨论了传值调用（Call-by-value）的演算；我们这次讨论传名调用（Call-by-name）。
+
+<!--
 * Previous chapters consider _weak head normal form_,
   where reduction stops at a lambda abstraction;
   here we consider _full normalisation_,
   where reduction continues underneath a lambda.
+-->
 
+* 之前的章节中讨论了**弱头部范式**（Weak Head Normal Form），其规约止步于 
+  λ 抽象；我们这次讨论**完全正规化**（Full Normalisation），其在 λ 抽象之下仍然继续规约。
+
+<!--
 * Previous chapters consider _deterministic_ reduction,
   where there is at most one redex in a given term;
   here we consider _non-deterministic_ reduction
   where a term may contain many redexes and any one of them may reduce.
+-->
 
+* 之前的章节中讨论了**确定性**（Deterministic）的规约，每个项中至多有一个可规约项；
+  我们这次讨论**非确定性**（Non-deterministic）的规约，每个项中可能有多个可规约项，而每一个都可规约。
+
+<!--
 * Previous chapters consider reduction of _closed_ terms,
   those with no free variables;
   here we consider _open_ terms,
   those which may have free variables.
+-->
 
+* 之前的章节中讨论了**封闭**（Closed）的项，其不包含自由变量；
+  我们这次讨论**开放**（Open）的项，其可能包含自由变量。
+
+<!--
 * Previous chapters consider lambda calculus extended
   with natural numbers and fixpoints;
   here we consider a tiny calculus with just variables,
   abstraction, and application, in which the other
   constructs may be encoded.
+-->
 
+* 之前的章节中讨论了加入自然数和不动点的 λ 演算；
+  我们这次讨论只包括变量、抽象和应用的小巧的演算，其他构造均可编码至其中。
+
+<!--
 In general, one may mix and match these features,
 save that full normalisation requires open terms and
 encoding naturals and fixpoints requires being untyped.
 The aim of this chapter is to give some appreciation for
 the range of different lambda calculi one may encounter.
+-->
+
+一般来说，我们可以将这些特性选择性的混合匹配，而完全正规化要求开放项，
+且编码自然数和不动点需要无类型的演算。
+本章的目的是展示 λ 演算可能出现的不同形式。
 
 
+<!--
 ## Imports
+-->
+
+## 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -61,8 +105,13 @@ open import Relation.Nullary.Product using (_×-dec_)
 ```
 
 
+<!--
 ## Untyped is Uni-typed
+-->
 
+## 无类型即是单一类型
+
+<!--
 Our development will be close to that in
 Chapter [DeBruijn](/DeBruijn/),
 save that every term will have exactly the same type, written `★`
@@ -72,11 +121,24 @@ and echoed by Robert Harper: "Untyped is Uni-typed".
 One consequence of this approach is that constructs which previously
 had to be given separately (such as natural numbers and fixpoints)
 can now be defined in the language itself.
+-->
+
+我们的内容将会和 [DeBruijn] 章节中相似，只是每个项会有相同的类型，写作 `★`，读作『任意』。
+这呼应了一条 Dana Scott 提出，Robert Harper 重复的口号：『无类型即是单一类型』。
+这样的结果之一就是之前我们需要额外给出的构造（例如自然数和不动点），现在可以在直接在语言本身中定义。
 
 
+<!--
 ## Syntax
+-->
 
+## 语法
+
+<!--
 First, we get all our infix declarations out of the way:
+-->
+
+我们首先定义中缀声明：
 
 ```agda
 infix  4  _⊢_
@@ -88,45 +150,93 @@ infix  6  ′_
 infixl 7  _·_
 ```
 
+<!--
 ## Types
+-->
 
+## 类型
+
+<!--
 We have just one type:
+-->
+
+我们只有一种类型：
+
 ```agda
 data Type : Set where
   ★ : Type
 ```
 
+<!--
 #### Exercise (`Type≃⊤`) (practice)
+-->
 
+#### 练习 (`Type≃⊤`) （习题）
+
+<!--
 Show that `Type` is isomorphic to `⊤`, the unit type.
+-->
+
+证明 `Type` 与单元类型 `⊤` 同构。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
+<!--
 ## Contexts
+-->
 
+## 上下文
+
+<!--
 As before, a context is a list of types, with the type of the
 most recently bound variable on the right:
+-->
+
+和之前一样，上下文是类型的列表，最新出现的约束变量的类型出现在最右边：
+
 ```agda
 data Context : Set where
   ∅   : Context
   _,_ : Context → Type → Context
 ```
+
+<!--
 We let `Γ` and `Δ` range over contexts.
+-->
 
+我们使用 `Γ` 和 `Δ` 来指代上下文。
+
+<!--
 #### Exercise (`Context≃ℕ`) (practice)
+-->
 
+#### 练习 (`Context≃ℕ`) （习题）
+
+<!--
 Show that `Context` is isomorphic to `ℕ`.
+-->
+
+证明 `Context` 和 `ℕ` 同构。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
+<!--
 ## Variables and the lookup judgment
+-->
 
+## 变量和查询判断
+
+<!--
 Intrinsically-scoped variables correspond to the lookup judgment.  The
 rules are as before:
+-->
+
+内在作用域的变量对应了查询判断。规则与之前一样：
+
 ```agda
 data _∋_ : Context → Type → Set where
 
@@ -139,21 +249,41 @@ data _∋_ : Context → Type → Set where
       ---------
     → Γ , B ∋ A
 ```
+
+<!--
 We could write the rules with all instances of `A` and `B`
 replaced by `★`, but arguably it is clearer not to do so.
+-->
 
+我们可以在规则中将所有的 `A` 和 `B` 都替换成 `★`，但不这样做更加清晰。
+
+<!--
 Because `★` is the only type, the judgment doesn't guarantee anything
 useful about types.  But it does ensure that all variables are in
 scope.  For instance, we cannot use `S S Z` in a context that only
 binds two variables.
+-->
+
+因为 `★` 是唯一的类型，这样的判断并不会给出很多与类型相关的保证。
+但它确实确保了所有的变量在作用域内。例如，我们不能在只有两个约束变量的上下文中使用 `S S Z`。
 
 
+<!--
 ## Terms and the scoping judgment
+-->
 
+## 项与作用域判断
+
+<!--
 Intrinsically-scoped terms correspond to the typing judgment, but with
 `★` as the only type.  The result is that we check that terms are
 well scoped — that is, that all variables they mention are in scope —
 but not that they are well typed:
+-->
+
+内类作用域的项对应了赋型判断，但类型只有唯一的 `★` 类型。
+得到的结果则是我们检查了每个项都是良作用域的——即所有使用的变量都在作用域内——而不是它们是良类型的：
+
 ```agda
 data _⊢_ : Context → Type → Set where
 
@@ -173,15 +303,31 @@ data _⊢_ : Context → Type → Set where
       ------
     → Γ ⊢ ★
 ```
+
+<!--
 Now we have a tiny calculus, with only variables, abstraction, and
 application.  Below we will see how to encode naturals and
 fixpoints into this calculus.
+-->
 
+现在我们有了一个迷你的演算，至包含变量、抽象和应用。
+接下来我们展示如果将自然数和不动点编码进这个演算中。
+
+<!--
 ## Writing variables as numerals
+-->
 
+## 用数表示变量
+
+<!--
 As before, we can convert a natural to the corresponding de Bruijn
 index.  We no longer need to lookup the type in the context, since
 every variable has the same type:
+-->
+
+如之前一样，我们可以将自然数转换为对应的 de Bruijn 因子。
+我们不再需要从上下文中查询变量的类型，因为每个变量都有一样的类型：
+
 ```agda
 count : ∀ {Γ} → ℕ → Γ ∋ ★
 count {Γ , ★} zero     =  Z
@@ -190,15 +336,29 @@ count {∅}     _        =  ⊥-elim impossible
   where postulate impossible : ⊥
 ```
 
+<!--
 We can then introduce a convenient abbreviation for variables:
+-->
+
+我们可以接下来引入一种变量的缩略用法：
+
 ```agda
 #_ : ∀ {Γ} → ℕ → Γ ⊢ ★
 # n  =  ` count n
 ```
 
+<!--
 ## Test examples
+-->
 
+## 测试例子
+
+<!--
 Our only example is computing two plus two on Church numerals:
+-->
+
+我们唯一的例子是用 Church 数计算二加二：
+
 ```agda
 twoᶜ : ∀ {Γ} → Γ ⊢ ★
 twoᶜ = ƛ ƛ (# 1 · (# 1 · # 0))
@@ -212,16 +372,34 @@ plusᶜ = ƛ ƛ ƛ ƛ (# 3 · # 1 · (# 2 · # 1 · # 0))
 2+2ᶜ : ∅ ⊢ ★
 2+2ᶜ = plusᶜ · twoᶜ · twoᶜ
 ```
+
+<!--
 Before, reduction stopped when we reached a lambda term, so we had to
 compute `` plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero `` to ensure we reduced
 to a representation of the natural four.  Now, reduction continues
 under lambda, so we don't need the extra arguments.  It is convenient
 to define a term to represent four as a Church numeral, as well as
 two.
+-->
 
+在之前，我们在遇到 λ 抽象时停止规约，因此我们需要计算
+`` plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero ``
+来确保我们规约至自然数四。
+现在，规约在 λ 之下继续进行，所以我们不需要额外的参数。
+为了便利，我们定义用 Church 数来表示二和四的项。
+
+<!--
 ## Renaming
+-->
 
+## 重命名
+
+<!--
 Our definition of renaming is as before.  First, we need an extension lemma:
+-->
+
+我们重命名的定义与以前一样。首先我们需要一条扩充引理：
+
 ```agda
 ext : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ∋ A)
     -----------------------------------
@@ -229,10 +407,19 @@ ext : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ∋ A)
 ext ρ Z      =  Z
 ext ρ (S x)  =  S (ρ x)
 ```
+<!--
 We could replace all instances of `A` and `B` by `★`, but arguably it is
 clearer not to do so.
+-->
 
+我们可以在规则中将所有的 `A` 和 `B` 都替换成 `★`，但不这样做更加清晰。
+
+<!--
 Now it is straightforward to define renaming:
+-->
+
+现在定义重命名就很直接了：
+
 ```agda
 rename : ∀ {Γ Δ}
   → (∀ {A} → Γ ∋ A → Δ ∋ A)
@@ -242,12 +429,25 @@ rename ρ (` x)          =  ` (ρ x)
 rename ρ (ƛ N)          =  ƛ (rename (ext ρ) N)
 rename ρ (L · M)        =  (rename ρ L) · (rename ρ M)
 ```
+<!--
 This is exactly as before, save that there are fewer term forms.
+-->
 
+这和之前一样，只是我们项的形式更少了。
+
+<!--
 ## Simultaneous substitution
+-->
 
+## 同时替换
+
+<!--
 Our definition of substitution is also exactly as before.
 First we need an extension lemma:
+-->
+
+我们重命名的定义与以前一样。首先我们需要一条扩充引理：
+
 ```agda
 exts : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ⊢ A)
     ----------------------------------
@@ -255,9 +455,18 @@ exts : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ⊢ A)
 exts σ Z      =  ` Z
 exts σ (S x)  =  rename S_ (σ x)
 ```
+<!--
 Again, we could replace all instances of `A` and `B` by `★`.
+-->
 
+一样，我们可以把所有的 `A` 和 `B` 替换成 `★`。
+
+<!--
 Now it is straightforward to define substitution:
+-->
+
+现在定义替换就很直接了：
+
 ```agda
 subst : ∀ {Γ Δ}
   → (∀ {A} → Γ ∋ A → Δ ⊢ A)
@@ -267,11 +476,24 @@ subst σ (` k)          =  σ k
 subst σ (ƛ N)          =  ƛ (subst (exts σ) N)
 subst σ (L · M)        =  (subst σ L) · (subst σ M)
 ```
+<!--
 Again, this is exactly as before, save that there are fewer term forms.
+-->
 
+同样，这和之前一样，只是我们项的形式更少了。
+
+<!--
 ## Single substitution
+-->
 
+## 单个替换
+
+<!--
 It is easy to define the special case of substitution for one free variable:
+-->
+
+定义替换一个自由变量的特例很简单：
+
 ```agda
 subst-zero : ∀ {Γ B} → (Γ ⊢ B) → ∀ {A} → (Γ , B ∋ A) → (Γ ⊢ A)
 subst-zero M Z      =  M
@@ -397,7 +619,7 @@ normalise completely?  Assume that `β` should not permit reduction
 unless both terms are in normal form.
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 #### Exercise (`variant-2`) (practice)
@@ -408,7 +630,7 @@ permits reduction when both terms are values (that is, lambda
 abstractions).  What would `2+2ᶜ` reduce to in this case?
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 
@@ -749,7 +971,7 @@ Use the evaluator to confirm that `plus · two · two` and `four`
 normalise to the same term.
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 #### Exercise `multiplication-untyped` (recommended)
@@ -760,7 +982,7 @@ representation and the encoding of the fixpoint operator.
 Confirm that two times two is four.
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 #### Exercise `encode-more` (stretch)
@@ -770,7 +992,7 @@ Chapter [More](/More/),
 save for primitive numbers, in the untyped lambda calculus.
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处。
 ```
 
 
