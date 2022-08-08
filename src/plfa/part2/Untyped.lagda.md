@@ -507,18 +507,36 @@ _[_] : ∀ {Γ A B}
 _[_] {Γ} {A} {B} N M =  subst {Γ , B} {Γ} (subst-zero M) {A} N
 ```
 
+<!--
 ## Neutral and normal terms
+-->
 
+## 中性项和范式
+
+<!--
 Reduction continues until a term is fully normalised.  Hence, instead
 of values, we are now interested in _normal forms_.  Terms in normal
 form are defined by mutual recursion with _neutral_ terms:
+-->
+
+直到项完全范式化之前，规则可以继续进行。
+因此，我们现在在意的是**范式**（Normal Form），而不是值。
+范式的项由与**中性项**（Neutral Terms）共同递归定义：
+
 ```agda
 data Neutral : ∀ {Γ A} → Γ ⊢ A → Set
 data Normal  : ∀ {Γ A} → Γ ⊢ A → Set
 ```
+
+<!--
 Neutral terms arise because we now consider reduction of open terms,
 which may contain free variables.  A term is neutral if it is a
 variable or a neutral term applied to a normal term:
+-->
+
+中性项由于我们需要考虑带有自由变量的开放项而产生。
+一个项在其为变量时，或者是将中性项应用于范式项时，是一个中性项：
+
 ```agda
 data Neutral where
 
@@ -532,9 +550,17 @@ data Neutral where
       ---------------
     → Neutral (L · M)
 ```
+
+<!--
 A term is a normal form if it is neutral or an abstraction where the
 body is a normal form. We use `′_` to label neutral terms.
 Like `` `_ ``, it is unobtrusive:
+-->
+
+一个项在其为中型项时，或者其为抽象且抽象体是范式时，是一个范式。
+我们用 `′_` 来标记中型项。
+如果 `` `_ `` 一样，它不显眼：
+
 ```agda
 data Normal where
 
@@ -549,44 +575,91 @@ data Normal where
     → Normal (ƛ N)
 ```
 
+<!--
 We introduce a convenient abbreviation for evidence that a variable is neutral:
+-->
+
+我们引入一种缩略用法，来提供变量是中型项的证明：
+
 ```agda
 #′_ : ∀ {Γ} (n : ℕ) → Neutral {Γ} (# n)
 #′ n  =  ` count n
 ```
 
+<!--
 For example, here is the evidence that the Church numeral two is in
 normal form:
+-->
+
+比如说，下面是 Church 数二为范式的证明：
+
 ```agda
 _ : Normal (twoᶜ {∅})
 _ = ƛ ƛ (′ #′ 1 · (′ #′ 1 · (′ #′ 0)))
 ```
+
+<!--
 The evidence that a term is in normal form is almost identical to
 the term itself, decorated with some additional primes to indicate
 neutral terms, and using `#′` in place of `#`
+-->
+
+某一项为范式的证明与其本身基本一致，其中包括的额外的撇来标记中型项，并且其中使用了 `#′` 而不是 `#`。
 
 
+<!--
 ## Reduction step
+-->
 
+## 规约步骤
+
+<!--
 The reduction rules are altered to switch from call-by-value to
 call-by-name and to enable full normalisation:
+-->
 
+规约规则从传值调用改为传名调用，以实现完全范式化：
+
+<!--
 * The rule `ξ₁` remains the same as it was for the simply-typed
   lambda calculus.
+-->
 
+* 规则 `ξ₁` 与简单类型的 λ 演算一样，保持不变。
+
+<!--
 * In rule `ξ₂`, the requirement that the term `L` is a value
   is dropped. So this rule can overlap with `ξ₁` and
   reduction is _non-deterministic_. One can choose to reduce
   a term inside either `L` or `M`.
+-->
 
+* 规则 `ξ₂` 之中，项 `L` 是值的要求现在被丢弃了。
+  所以这条规则现在与 `ξ₁` 重合，且规约是**非确定的**。
+  现在可选择规约 `L` 或者 `M` 中的项。
+
+<!--
 * In rule `β`, the requirement that the argument is a value
   is dropped, corresponding to call-by-name evaluation.
   This introduces further non-determinism, as `β` overlaps
   with `ξ₂` when there are redexes in the argument.
+-->
 
+* 规则 `β` 之中，参数是值的要求现在被丢弃了，对应了传名调用的求值。
+  这引入了更多的非确定性，由于 `β` 与 `ξ₂` 在参数中有可规约项时重合。
+
+<!--
 * A new rule `ζ` is added, to enable reduction underneath a lambda.
+-->
 
+* 额外了新规则 `ζ`，使得 λ 抽象下可以继续规约。
+
+<!--
 Here are the formalised rules:
+-->
+
+这里是形式化的规则：
+
 ```agda
 infix 2 _—→_
 
@@ -612,31 +685,60 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
     → ƛ N —→ ƛ N′
 ```
 
+<!--
 #### Exercise (`variant-1`) (practice)
+-->
 
+#### 练习 (`variant-1`) （习题）
+
+<!--
 How would the rules change if we want call-by-value where terms
 normalise completely?  Assume that `β` should not permit reduction
 unless both terms are in normal form.
+-->
+
+如果我们想要传值调用，但需要项范式化其中的项的话，要怎么样修改规则？
+假设 `β` 在除了两个项都是范式时，不允许规约。
 
 ```agda
 -- 请将代码写在此处。
 ```
 
+<!--
 #### Exercise (`variant-2`) (practice)
+-->
 
+#### 练习 (`variant-2`) （习题）
+
+<!--
 How would the rules change if we want call-by-value where terms
 do not reduce underneath lambda?  Assume that `β`
 permits reduction when both terms are values (that is, lambda
 abstractions).  What would `2+2ᶜ` reduce to in this case?
+-->
+
+如果我们想要传值调用，但项不在 λ 之下规约的话，要怎么样修改规则？
+假设 `β` 在双项均为值（即 λ 抽象）时允许规约。
+`2+2ᶜ` 在这种情况下会规约成什么？
+
 
 ```agda
 -- 请将代码写在此处。
 ```
 
 
+<!--
 ## Reflexive and transitive closure
+-->
 
+## 自反传递闭包
+
+<!--
 We cut-and-paste the previous definition:
+-->
+
+我们复制粘贴之前的定义：
+
 ```agda
 infix  2 _—↠_
 infix  1 begin_
@@ -663,9 +765,18 @@ begin M—↠N = M—↠N
 ```
 
 
+<!--
 ## Example reduction sequence
+-->
 
+## 规约序列的例子
+
+<!--
 Here is the demonstration that two plus two is four:
+-->
+
+这里是二加二得四的展示：
+
 ```agda
 _ : 2+2ᶜ —↠ fourᶜ
 _ =
@@ -685,8 +796,12 @@ _ =
    ƛ (ƛ # 1 · (# 1 · (# 1 · (# 1 · # 0))))
   ∎
 ```
+<!--
 After just two steps the top-level term is an abstraction,
 and `ζ` rules drive the rest of the normalisation.
+-->
+
+在两步之后，顶层项是一个抽象，而 `ζ` 规则支持了剩余的范式化。
 
 
 ## Progress
