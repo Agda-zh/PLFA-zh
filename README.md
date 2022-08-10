@@ -15,7 +15,7 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 ## Getting Started for Readers
 -->
 
-## 读者指南
+## 读者指南 {#getting-started-for-readers}
 
 《编程语言基础：Agda 语言描述》的使用方法与《Programming Language Foundations in Agda》一致。
 

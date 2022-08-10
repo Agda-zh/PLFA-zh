@@ -692,6 +692,8 @@ corresponding decidables.
 ## Logical connectives
 -->
 
+## 逻辑连接符{#logical-connectives}
+
 <!--
 Most readers will be familiar with the logical connectives for booleans.
 Each of these extends to decidables.
