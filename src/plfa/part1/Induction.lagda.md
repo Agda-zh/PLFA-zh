@@ -1203,7 +1203,7 @@ into the equation:
 转换成:
 
     ((m + n) + p) + q  ≡  (m + (n + p)) + q
-    
+
 <!--
 Similarly, we write `(x +_)` for the function that applied to `y`
 returns `x + y`; the same works for any infix operator.

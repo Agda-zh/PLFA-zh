@@ -36,7 +36,7 @@ In this chapter we play with variations on a theme:
   where reduction continues underneath a lambda.
 -->
 
-* 之前的章节中讨论了**弱头部范式**（Weak Head Normal Form），其规约止步于 
+* 之前的章节中讨论了**弱头部范式**（Weak Head Normal Form），其规约止步于
   λ 抽象；我们这次讨论**完全正规化**（Full Normalisation），其在 λ 抽象之下仍然继续规约。
 
 <!--

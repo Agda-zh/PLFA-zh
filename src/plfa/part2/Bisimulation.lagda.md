@@ -673,7 +673,7 @@ In its structure, it looks a little bit like a proof of progress:
     <!--
     Since simulation commutes with values and `V` is a value, `V†` is also a value.
     -->
-    
+
     因为模拟和值可交换，且 `V` 是一个值，所以 `V†` 也是一个值。
 
   <!--
