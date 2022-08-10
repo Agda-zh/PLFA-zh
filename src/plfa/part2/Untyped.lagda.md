@@ -804,19 +804,39 @@ and `ζ` rules drive the rest of the normalisation.
 在两步之后，顶层项是一个抽象，而 `ζ` 规则支持了剩余的范式化。
 
 
+<!--
 ## Progress
+-->
 
+## 进行性
+
+<!--
 Progress adapts.  Instead of claiming that every term either is a value
 or takes a reduction step, we claim that every term is either in normal
 form or takes a reduction step.
+-->
 
+进行性相应地也变更了。之前我们说每个项要么是值，要么可以规约一步；我们现在说每个项要么是范式，要么可以规约一步。
+
+<!--
 Previously, progress only applied to closed, well-typed terms.  We had
 to rule out terms where we apply something other than a function (such
 as `` `zero ``) or terms with a free variable.  Now we can demonstrate
 it for open, well-scoped terms.  The definition of normal form permits
 free variables, and we have no terms that are not functions.
+-->
 
+之前，进行性只应用于封闭的、良类型的项。
+我们没有考虑诸如应用一个不是函数的项（如 `` `zero` ``）或者是带有自由变量的项。
+现在我们展示的包含了开放的、良作用域的项。
+范式的定义容许了自由变量，且我们也有不是函数的项。
+
+<!--
 A term makes progress if it can take a step or is in normal form:
+-->
+
+如果一个项可以规约一步，或其为范式，那么它具有进行性：
+
 ```agda
 data Progress {Γ A} (M : Γ ⊢ A) : Set where
 
@@ -831,7 +851,12 @@ data Progress {Γ A} (M : Γ ⊢ A) : Set where
     → Progress M
 ```
 
+<!--
 If a term is well scoped then it satisfies progress:
+-->
+
+如果一个项是良作用域的，那么它满足进行性：
+
 ```agda
 progress : ∀ {Γ A} → (M : Γ ⊢ A) → Progress M
 progress (` x)                                 =  done (′ ` x)
@@ -848,8 +873,14 @@ progress (L@(_ · _) · M) with progress L
 ...    | step M—→M′                            =  step (ξ₂ M—→M′)
 ...    | done NrmM                             =  done (′ NeuL · NrmM)
 ```
-We induct on the evidence that the term is well scoped:
 
+<!--
+We induct on the evidence that the term is well scoped:
+-->
+
+我们对项为良作用域的证明上进行归纳：
+
+<!--
 * If the term is a variable, then it is in normal form.
   (This contrasts with previous proofs, where the variable case was
   ruled out by the restriction to closed terms.)
@@ -868,26 +899,69 @@ We induct on the evidence that the term is well scoped:
     - If it is normal, recursively apply progress to the argument subterm:
       * If it steps, then the whole term steps via `ξ₂`.
       * If it is normal, then so is the whole term.
+-->
 
+* 如果项是变量，那么它是范式。
+  （这与之前的证明不同，以往项为变量的情况被闭项的条件所排除了。）
+* 如果项是抽象，那么我们对其抽象体应用进行性。
+  （这与之前的证明不同，以往抽象本身即是值。）：
+  + 如果它步进，那么整个项由 `ζ` 步进。
+  + 如果它是范式，那么整个项也是范式。
+* 如果项是应用，那么我们考虑其函数子项：
+  + 如果它是变量，我们对参数子项递归应用进行性：
+    - 如果它步进，那么整个项由 `ξ₂` 步进；
+    - 如果它是范式，那么整个项也是范式。
+  + 如果它是抽象，那么整个项由 `β` 步进。
+  + 如果它是应用，我们对其函数子项递归应用进行性：
+    - 如果它步进，那么整个项由 `ξ₁` 步进。
+    - 如果它是范式，我们对参数子项递归应用进行性：
+      * 如果它步进，那么整个项由 `ξ₂` 步进；
+      * 如果它是范式，那么整个项也是范式。
+
+<!--
 The final equation for progress uses an _at pattern_ of the form `P@Q`,
 which matches only if both pattern `P` and pattern `Q` match.  Character
 `@` is one of the few that Agda doesn't allow in names, so spaces are not
 required around it.  In this case, the pattern ensures that `L` is an
 application.
+-->
 
+进行性最后一条等式中使用了 `P@Q` 形式的 **at 模式**，其只在模式 `P` 和 `Q` 都匹配时匹配。
+`@` 是 Agda 不允许出现在变量名中的字符之一，因此不需要在它周围加空格。
+在此处，这个模式确保了 `L` 是一个应用。
+
+<!--
 ## Evaluation
+-->
 
+## 求值
+
+<!--
 As previously, progress immediately yields an evaluator.
+-->
 
+与之前一样，进行性直接提供了一个求值器。
+
+<!--
 Gas is specified by a natural number:
+-->
+
+汽油由自然数给出：
+
 ```agda
 record Gas : Set where
   constructor gas
   field
     amount : ℕ
 ```
+
+<!--
 When our evaluator returns a term `N`, it will either give evidence that
 `N` is normal or indicate that it ran out of gas:
+-->
+
+当我们的求值器返回项 `N`，它要么会给出 `N` 是范式的证明，或者提示汽油耗尽：
+
 ```agda
 data Finished {Γ A} (N : Γ ⊢ A) : Set where
 
@@ -900,9 +974,15 @@ data Finished {Γ A} (N : Γ ⊢ A) : Set where
        ----------
        Finished N
 ```
+
+<!--
 Given a term `L` of type `A`, the evaluator will, for some `N`, return
 a reduction sequence from `L` to `N` and an indication of whether
 reduction finished:
+-->
+
+给定类型 `A` 的项 `L`，求值器会对于某 `N` 返回自 `L` 至 `N` 的规约序列，并提示规约是否完成：
+
 ```agda
 data Steps : ∀ {Γ A} → Γ ⊢ A → Set where
 
@@ -912,7 +992,13 @@ data Steps : ∀ {Γ A} → Γ ⊢ A → Set where
       ----------
     → Steps L
 ```
+
+<!--
 The evaluator takes gas and a term and returns the corresponding steps:
+-->
+
+求值器取汽油和项，返回对应的步骤：
+
 ```agda
 eval : ∀ {Γ A}
   → Gas
@@ -925,12 +1011,26 @@ eval (gas (suc m)) L with progress L
 ... | step {M} L—→M with eval (gas m) M
 ...    | steps M—↠N fin                  =  steps (L —→⟨ L—→M ⟩ M—↠N) fin
 ```
+
+<!--
 The definition is as before, save that the empty context `∅`
 generalises to an arbitrary context `Γ`.
+-->
 
+定义与之前一样，除了我们将空上下文 `∅` 推广至任意上下文 `Γ`。
+
+<!--
 ## Example
+-->
 
+## 例子
+
+<!--
 We reiterate our previous example. Two plus two is four, with Church numerals:
+-->
+
+我们重复之前的例子。二加二得四，以 Church 数来表示：
+
 ```agda
 _ : eval (gas 100) 2+2ᶜ ≡
   steps
@@ -983,35 +1083,64 @@ _ : eval (gas 100) 2+2ᶜ ≡
 _ = refl
 ```
 
+<!--
 ## Naturals and fixpoint
+-->
 
+## 自然数和不动点
+
+<!--
 We could simulate naturals using Church numerals, but computing
 predecessor is tricky and expensive.  Instead, we use a different
 representation, called Scott numerals, where a number is essentially
 defined by the expression that corresponds to its own case statement.
+-->
 
+我们可以使用 Church 数来表示自然数，但是计算某数的前继很复杂且昂贵。
+取而代之的，我们使用另一种表示方法，叫做 Scott 数，其核心思想是一个数对应了对其自身的分情况讨论。
+
+<!--
 Recall that Church numerals apply a given function for the
 corresponding number of times.  Using named terms, we represent the
 first three Church numerals as follows:
+-->
+
+回忆 Church 数将某给定函数应用对应的次数。
+使用命名的项，我们如下表示前三个 Church 数：
 
     zero  =  ƛ s ⇒ ƛ z ⇒ z
     one   =  ƛ s ⇒ ƛ z ⇒ s · z
     two   =  ƛ s ⇒ ƛ z ⇒ s · (s · z)
 
+<!--
 In contrast, for Scott numerals, we represent the first three naturals
 as follows:
+-->
+
+作为对比，我们如下表示前三个 Scott 数：
 
     zero = ƛ s ⇒ ƛ z ⇒ z
     one  = ƛ s ⇒ ƛ z ⇒ s · zero
     two  = ƛ s ⇒ ƛ z ⇒ s · one
 
+<!--
 Each representation expects two arguments, one corresponding to
 the successor branch of the case (it expects an additional argument,
 the predecessor of the current argument) and one corresponding to the
 zero branch of the case.  (The cases could be in either order.
 We put the successor case first to ease comparison with Church numerals.)
+-->
 
+每个数取两个参数，一个对应了后继分支的情况（它要求额外的参数，即当前参数的前继），
+一个对应了零分支的情况。
+（两种情况可以以任意顺序出现。我们在此将后继分支放在前面，以方便与 Church 数对比。）
+
+<!--
 Here is the Scott representation of naturals encoded with de Bruijn indexes:
+-->
+
+下面是以 de Bruijn 因子编码的自然数的 Scott 表示法：
+
 ```agda
 `zero : ∀ {Γ} → (Γ ⊢ ★)
 `zero = ƛ ƛ (# 0)
@@ -1022,13 +1151,23 @@ Here is the Scott representation of naturals encoded with de Bruijn indexes:
 case : ∀ {Γ} → (Γ ⊢ ★) → (Γ ⊢ ★) → (Γ , ★ ⊢ ★)  → (Γ ⊢ ★)
 case L M N = L · (ƛ N) · M
 ```
+
+<!--
 Here we have been careful to retain the exact form of our previous
 definitions.  The successor branch expects an additional variable to
 be in scope (as indicated by its type), so it is converted to an
 ordinary term using lambda abstraction.
+-->
 
+我们小心地保留之前定义相同的形式。
+后继分支期望作用域内有一个额外的变量（由它的类型可以看出），所以它被一个抽象转换成了一个普通的项。
+
+<!--
 Applying successor to the zero indeed reduces to the Scott numeral
 for one.
+-->
+
+对零使用后继的确规约至 Scott 数表示的一：
 
 ```agda
 _ : eval (gas 100) (`suc_ {∅} `zero) ≡
@@ -1041,11 +1180,19 @@ _ : eval (gas 100) (`suc_ {∅} `zero) ≡
 _ = refl
 ```
 
+<!--
 We can also define fixpoint.  Using named terms, we define:
+-->
+
+我们同样可以定义不动点。使用命名的项，我们定义：
 
     μ f = (ƛ x ⇒ f · (x · x)) · (ƛ x ⇒ f · (x · x))
 
+<!--
 This works because:
+-->
+
+它能实现不动点的原因是：
 
       μ f
     ≡
@@ -1055,14 +1202,29 @@ This works because:
     ≡
       f · (μ f)
 
+<!--
 With de Bruijn indices, we have the following:
+-->
+
+使用 de Bruijn 因子，我们有如下：
+
 ```agda
 μ_ : ∀ {Γ} → (Γ , ★ ⊢ ★) → (Γ ⊢ ★)
 μ N  =  (ƛ ((ƛ (# 1 · (# 0 · # 0))) · (ƛ (# 1 · (# 0 · # 0))))) · (ƛ N)
 ```
-The argument to fixpoint is treated similarly to the successor branch of case.
 
+<!--
+The argument to fixpoint is treated similarly to the successor branch of case.
+-->
+
+不动点的参数与之前自然数的后继分支的处理方法相似。
+
+<!--
 We can now define two plus two exactly as before:
+-->
+
+我们可以如之前一样定义二加二：
+
 ```agda
 infix 5 μ_
 
@@ -1075,36 +1237,68 @@ four = `suc `suc `suc `suc `zero
 plus : ∀ {Γ} → Γ ⊢ ★
 plus = μ ƛ ƛ (case (# 1) (# 0) (`suc (# 3 · # 0 · # 1)))
 ```
+
+<!--
 Because `` `suc `` is now a defined term rather than primitive,
 it is no longer the case that `plus · two · two` reduces to `four`,
 but they do both reduce to the same normal term.
+-->
+
+由于 `` `suc `` 是定义的项，而不是原语项，
+`plus · two · two` 不再规约至 `four`，
+但是它们都规约至相同的范式。
 
 
+<!--
 #### Exercise `plus-eval` (practice)
+-->
 
+#### 练习 `plus-eval` （实践）
+
+<!--
 Use the evaluator to confirm that `plus · two · two` and `four`
 normalise to the same term.
+-->
+
+使用求值器，证实 `plus · two · two` 和 `four` 正规化至相同的项。
 
 ```agda
 -- 请将代码写在此处。
 ```
 
+<!--
 #### Exercise `multiplication-untyped` (recommended)
+-->
 
+#### 练习 `multiplication-untyped` （推荐）
+
+<!--
 Use the encodings above to translate your definition of
 multiplication from previous chapters with the Scott
 representation and the encoding of the fixpoint operator.
 Confirm that two times two is four.
+-->
+
+使用上文中的编码，翻译你之前章节乘法的定义，使得其使用 Scott 表示法和编码后的不动点运算符。
+证实二乘二得四。
 
 ```agda
 -- 请将代码写在此处。
 ```
 
+<!--
 #### Exercise `encode-more` (stretch)
+-->
 
+#### 练习 `encode-more` （延伸）
+
+<!--
 Along the lines above, encode all of the constructs of
 Chapter [More](/More/),
 save for primitive numbers, in the untyped lambda calculus.
+-->
+
+用上文中类似的方法，编码 [More](/More/) 章节除了原语数字以外的剩余构造，用无类型的 λ 演算。
 
 ```agda
 -- 请将代码写在此处。
