@@ -114,11 +114,11 @@ If you do not have Git, see [the Git downloads page][git].
 ### 安装 GHC 和 Cabal {#install-ghc-and-cabal}
 
 <!--
-Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ (version 8.10.7 or 9.2.3) and its package manager _Cabal_. We recommend installing these using [ghcup][ghcup].
+Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ and its package manager _Cabal_. PLFA should work with any version of GHC >=8.10, but is tested with versions 8.10.7 and 9.2.3. We recommend installing GHC and Cabal using [ghcup][ghcup].
 -->
 
 Agda 是用 Haskell 写成的，所以为了安装它我们需要 _Glorious Haskell Compiler_
-（版本 8.10.7 或者 9.2.3）和它的包管理器 _Cabal_。我们建议使用 [ghcup][ghcup] 来安装两者。
+和它的包管理器 _Cabal_。PLFA 应该在任何 >=8.10 的 GHC 版本下运行，在 8.10.7 和 9.2.3 版本下完成测试。我们建议使用 [ghcup][ghcup] 来安装两者。
 
 
 <!--
@@ -578,12 +578,12 @@ You'll see the key sequence of the character in mini buffer.
 ### Spacemacs
 
 <!--
-[Spacemacs][spacemacs] is a “community-driven Emacs distribution” with native support for both Emacs and Vim editing styles. It comes with [integration for `agda-mode`][spacemacs-agda] out of the box. All that is required is that you turn it on.
+[Spacemacs][spacemacs] is a “community-driven Emacs distribution” with native support for both Emacs and Vim editing styles. It comes with [integration for `agda-mode`][spacemacs-agda] out of the box. All that is required is that you enable the Agda layer in your `.spacemacs` file.
 -->
 
 [Spacemacs][spacemacs] 是一个「社区引领的 Emacs 版本」，对 Emacs 和 Vim
 的编辑方式都有很好的支持。它自带[集成了
-`agda-mode`][spacemacs-agda]，所需的只是将它打开。
+`agda-mode`][spacemacs-agda]，所需的只是将 `.spacemacs` 中启用 Agda 支持。
 
 ### Visual Studio Code
 
