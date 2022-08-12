@@ -2,7 +2,7 @@
 title      : "Untyped: 完全正规化的无类型 λ 演算"
 permalink  : /Untyped/
 translators: ["Fangyi Zhou"]
-progress   : 40
+progress   : 100
 ---
 
 ```agda
@@ -1305,8 +1305,13 @@ save for primitive numbers, in the untyped lambda calculus.
 ```
 
 
+<!--
 ## Multi-step reduction is transitive
+-->
 
+## 多步规约是传递的
+
+<!--
 In our formulation of the reflexive transitive closure of reduction,
 i.e., the `—↠` relation, there is not an explicit rule for
 transitivity. Instead the relation mimics the structure of lists by
@@ -1314,6 +1319,11 @@ providing a case for an empty reduction sequence and a case for adding
 one reduction to the front of a reduction sequence.  The following is
 the proof of transitivity, which has the same structure as the append
 function `_++_` on lists.
+-->
+
+在我们对自反传递闭包的形式化，即 `—↠` 关系中，没有出现直接的传递性规则。
+取而代之的是，这个关系模仿了列表形式，有一种空规约序列的情况，也有一种将一步规约加在规约序列之前的情况。
+下面是传递性的证明，其与列表的附加 `_++_` 函数的结构相似。
 
 ```agda
 —↠-trans : ∀{Γ}{A}{L M N : Γ ⊢ A}
@@ -1324,8 +1334,12 @@ function `_++_` on lists.
 —↠-trans (L —→⟨ r ⟩ lm) mn = L —→⟨ r ⟩ (—↠-trans lm mn)
 ```
 
+<!--
 The following notation makes it convenient to employ
 transitivity of `—↠`.
+-->
+
+下面的记法使得应用 `—↠` 的传递性更加方便。
 
 ```agda
 infixr 2 _—↠⟨_⟩_
@@ -1338,8 +1352,13 @@ _—↠⟨_⟩_ : ∀ {Γ A} (L : Γ ⊢ A) {M N : Γ ⊢ A}
 L —↠⟨ L—↠M ⟩ M—↠N = —↠-trans L—↠M M—↠N
 ```
 
+<!--
 ## Multi-step reduction is a congruence
+-->
 
+## 多步规约是合同性的
+
+<!--
 Recall from Chapter [Induction](/Induction/) that a
 relation `R` is a _congruence_ for a given function `f` if it is
 preserved by that function, i.e., if `R x y` then `R (f x) (f y)`.
@@ -1348,11 +1367,22 @@ the notion of congruence applies to them as well. Furthermore, when a
 relation is a congruence for all of the term constructors, we
 say that the relation is a congruence for the language in question, in
 this case the untyped lambda calculus.
+-->
 
+回忆 [Induction](/Induction/) 章节中，一个关系 `R` 对于一个给定的函数 `f` 在函数应用后仍然保持关系时，满足**合同关系**，
+即『若 `R x y`，则 `R (f x) (f y)`』。
+项构造子 `ƛ_` and `_·_` 是函数，因此合同性的概念也可作用于它们之上。
+另外，当一个关系对于所有项的构造子满足合同时，我们说它对于整个语言满足合同性，在此即无类型的 λ 演算。
+
+<!--
 The rules `ξ₁`, `ξ₂`, and `ζ` ensure that the reduction relation is a
 congruence for the untyped lambda calculus. The multi-step reduction
 relation `—↠` is also a congruence, which we prove in the following
 three lemmas.
+-->
+
+规则 `ξ₁` 、`ξ₂` 和 `ζ` 保证了规约关系对于无类型的 λ 演算满足合同性。
+多步规约也是一个合同关系，我们在下面三条引理中证明。
 
 ```agda
 appL-cong : ∀ {Γ} {L L' M : Γ ⊢ ★}
@@ -1363,6 +1393,7 @@ appL-cong {Γ}{L}{L'}{M} (L ∎) = L · M ∎
 appL-cong {Γ}{L}{L'}{M} (L —→⟨ r ⟩ rs) = L · M —→⟨ ξ₁ r ⟩ appL-cong rs
 ```
 
+<!--
 The proof of `appL-cong` is by induction on the reduction sequence `L —↠ L'`.
 * Suppose `L —↠ L` by `L ∎`. Then we have
   `L · M —↠ L · M` by `L · M ∎`.
@@ -1372,9 +1403,22 @@ The proof of `appL-cong` is by induction on the reduction sequence `L —↠ L'`
   `L' · M —↠ L'' · M` by the induction hypothesis applied to `rs`.
   We conclude that ``L · M —↠ L'' · M`` by putting these two
   facts together using `_—→⟨_⟩_`.
+-->
 
+`appL-cong` 的证明对于规约序列 `L —↠ L'` 进行归纳。
+* 若 `L —↠ L` 由 `L ∎` 成立。那我们可从 `L · M ∎` 得 `L · M —↠ L · M` 。
+* 若 `L —↠ L''` 由 `L —→⟨ r ⟩ rs` 成立，那么
+  `L —→ L'` 由 `r` 成立，且 `L' —↠ L''` 由 `rs` 成立。
+  我们可从 `ξ₁ r` 得 `L · M —→ L' · M`，且对 `rs` 应用归纳假设得到
+  `L' · M —↠ L'' · M`。
+  我们可以将两者用 `_—→⟨_⟩_` 组合来获得 ``L · M —↠ L'' · M``。
+
+<!--
 The proofs of `appR-cong` and `abs-cong` follow the same pattern as
 the proof for `appL-cong`.
+-->
+
+`appR-cong` 和 `abs-cong` 的证明与 `appL-cong` 的证明使用一样的方法。
 
 ```agda
 appR-cong : ∀ {Γ} {L M M' : Γ ⊢ ★}
@@ -1396,9 +1440,17 @@ abs-cong (L —→⟨ r ⟩ rs) = ƛ L —→⟨ ζ r ⟩ abs-cong rs
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章使用了下列 Unicode：
 
     ★  U+2605  BLACK STAR (\st)
 
+<!--
 The `\st` command permits navigation among many different stars;
 the one we use is number 7.
+-->
+
+`\st` 命令允许选取不同种类的星，我们使用的是第七种。
