@@ -1,0 +1,119 @@
+name: Build & Test
+
+on:
+  push:
+    branches:
+      - dev
+    tags:
+      - '*'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+env:
+  CABAL_ARGS: "--project-file=cabal.project.ci"
+  NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build:
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        ghc-version: ["8.10", "9.0", "9.2"]
+        exclude:
+          - os: macOS-latest
+            ghc-version: "8.10"
+          - os: macOS-latest
+            ghc-version: "9.0"
+          - os: windows-latest
+            ghc-version: "8.10"
+          - os: windows-latest
+            ghc-version: "9.0"
+        include:
+          - experimental: false
+
+    name: Build on ${{ matrix.os }} with GHC-${{ matrix.ghc-version }}
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: Setup Haskell
+        uses: ./.github/actions/setup-haskell
+        with:
+          ghc-version: ${{ matrix.ghc-version }}
+          cabal-project-freeze-file: cabal.project.ci.freeze
+
+      - name: Setup Node
+        uses: ./.github/actions/setup-node
+
+      - name: Setup BumpVer
+        uses: ./.github/actions/setup-bumpver
+        # depends on requirements-dev.txt
+
+      - name: Setup HTMLProofer
+        if: runner.os != 'Windows'
+        uses: ./.github/actions/setup-htmlproofer
+        # depends on Gemfile
+
+      - name: Setup EPUBCheck
+        uses: ./.github/actions/setup-epubcheck
+        id: setup-epubcheck
+        with:
+          epubcheck-version: "4.2.6"
+
+      - name: Cache build
+        uses: actions/cache@v3
+        with:
+          path: _cache
+          key: build-${{ runner.os }}
+
+      - name: Build
+        run: make build
+
+      - name: Test with BumpVer
+        run: bumpver update --dry --no-fetch
+
+      - name: Test with HTML-validate
+        run: make test-html-validate
+
+      - name: Test with HTMLProofer
+        if: runner.os != 'Windows'
+        run: make test-htmlproofer
+
+      - name: Test with EPUBCheck
+        run: make test-epubcheck
+        env:
+          EPUBCHECK: "java -jar ${{ steps.setup-epubcheck.outputs.epubcheck-jar-path }}"
+
+      - name: Upload latest artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Website HEAD ${{ runner.os }} GHC-${{ matrix.ghc-version }}
+          path: _site
+          if-no-files-found: error
+
+  publish:
+    name: Publish to GitHub Pages
+    needs: [build]
+    if: github.event_name == 'push'
+    uses: ./.github/workflows/publish.yml
+    with:
+      artifact-name: Website HEAD Linux GHC-9.2
+
+  release:
+    name: Publish to GitHub Releases
+    needs: [build]
+    if: startsWith(github.ref, 'refs/tags/v')
+    uses: ./.github/workflows/release.yml
+    with:
+      artifact-name: Website HEAD Linux GHC-9.2

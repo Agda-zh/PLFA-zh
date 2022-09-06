@@ -5,7 +5,7 @@ permalink: /Contributing/
 
 ## Getting Started for Contributors
 
-If you plan to contribute to the book, and wish to build the book locally, you will need to install some additional dependencies:
+If you plan to contribute to the book, and wish to build the book locally, you will need to install some additional dependencies.
 Please start by following the instructions for readers in [Getting Started](/GettingStarted/#getting-started-for-readers).
 This should leave you with a working installation of basic development tools, Haskell, Agda, the standard library, and PLFA.
 
@@ -36,7 +36,7 @@ We recommend installing Ruby via [rbenv][rbenv].
 Once you have installed [Ruby][ruby] and [bundler][bundler], you can test for broken links using the following command:
 
 ```sh
-make test-html-proofer  # Tests the generated HTML using HTMLProofer
+make test-htmlproofer  # Tests the generated HTML using HTMLProofer
 ```
 
 You can optionally pass `EXTERNAL_LINKS=true` to test external links as well.
@@ -53,34 +53,22 @@ Once you have installed [EPUBCheck][epubcheck], you can test the generated EPUB 
 make test-epubcheck     # Tests the generated EPUB using EPUBCheck
 ```
 
-### Checking for whitespace violations using fix-whitespace
-
-To keep the code clean of trailing whitespace and missing terminal newlines we use [fix-whitespace][fix-whitespace].
-
-You can install [fix-whitespace][fix-whitespace] by running the following command:
-
-```sh
-cabal v2-install fix-whitespace
-```
-
-Once you have installed [fix-whitespace][fix-whitespace], you can set up a git hook which automatically checks the whitespace on commit (see `.githooks/pre-commit`) by running the following command:
-
-```sh
-git config core.hooksPath .githooks
-```
-
 ## How to make changes to PLFA
 
 The `dev` branch of the repository is write-protected, meaning that changes can only be made via pull requests, once all tests have passed. To make changes, create a new branch by running the following command from your local copy of the repository:
+
 ```sh
 git checkout -b [new_branch_name] [old_branch_name]
 ```
+
 We suggest basing your branches on `dev`, and naming branches after issues, e.g., `issue-650` or using a description of the new features they implement, e,g., `feature-subtyping`.
 
 Publish the branch by running the following command from your local copy of the repository:
+
 ```sh
 git push origin [new_branch_name]
 ```
+
 Then open a pull request on GitHub, from the [Pull Requests][github-pulls] tab.
 
 ## How to publish the current version of PLFA
@@ -91,11 +79,11 @@ The copy of PLFA hosted at <https://plfa.inf.ed.ac.uk> updates daily.
 
 ## How to publish an announcement
 
-PLFA announcements are files with names of the form `YYYY-0M-0D-SLUG.md`, where `YYYY` is the long year, `0M` is the zero-padded month, `0D` is the zero-padded day, and `SLUG` is the URL slug for the post, usually an URL-safe version of the title.
+PLFA announcements are files with names of the form `0Y0Y-0M-0D-SLUG.md`, where `0Y0Y` is the long year, `0M` is the zero-padded month, `0D` is the zero-padded day, and `SLUG` is the URL slug for the post, usually an URL-safe version of the title.
 
 There are several steps to writing an announcement for PLFA:
 
-- Create a new file in `web/posts` with the name `YYYY-0M-0D-SLUG.md`.
+- Create a new file in `web/posts` with the name `0Y0Y-0M-0D-SLUG.md`.
 - Add the metadata block, setting at least the `title` field.
 - Write the announcement in the remainder of the file.
 
@@ -103,20 +91,29 @@ If the announcement is short, it will be displayed in full in on the announcemen
 
 ## How to publish a new release
 
-For a project such as PLFA, [Semantic Versioning][semver] doesn’t make a huge amount of sense. Instead, we’ve adopted [Calendar Versioning][calver], following, e.g., [Ubuntu][ubuntu]. PLFA versions are of the form `YY.0M`, where `YY` is the short year, and `0M` is the zero-padded month.
+For a project such as PLFA, [Semantic Versioning][semver] doesn’t make a huge amount of sense. Instead, we’ve adopted [Calendar Versioning][calver], following, e.g., [Ubuntu][ubuntu]. PLFA versions are of the form `0Y.0M`, where `0Y` is the short year, and `0M` is the zero-padded month.
 
 To create a new release for PLFA, follow these steps:
 
-- Write [an announcement](#how-to-publish-an-announcement) for the release,
-  which describes any major changes.
-- Update the version in `plfa.cabal` to `YY.M`.
-  Don't use zero padding for the month, as Cabal does not allow leading zeros.
-- Run `make test` and handle any warnings or errors.
-- Push your changes to the `dev` branch.
-- Wait for your changes to be propagated to the live version.
-- Create a new tag named `vYY.0M`.
-
-Then, to make sure that the release is published to live versions of PLFA, update the `deploy` job in the GitHub workflow to download and include the web build for the new version.
+- Write [an announcement](#how-to-publish-an-announcement) for the release, which describes any major changes. Use the previous release notes announcements as a template.
+- Add an entry for the new version to [`Citing.md`][citing].
+- Run `bumpver update`, or:
+  + Update the version in `plfa.cabal` to `YY.MM`. Don't use zero padding, as Cabal does not allow leading zeros.
+  + Update the version in the badge in the README file, which is in the footnotes as `[plfa-badge-version-svg]`.
+  + Commit and push your changes.
+  + Run `make test` and handle any warnings or errors.
+  + Create a new tag named `v0Y.0M` and push it to GitHub.
+- Wait for the CI to finish, and a new version to be published to [GitHub Releases][github-releases].
+- Update `publish.yml` to download and publish the new version, by adding the following snippet:
+  ```yaml
+  - uses: ./.github/actions/download-release
+    with:
+      plfa-version: v0Y.0M
+      path: site
+  ```
+- Commit and push your changes.
+- Wait for the CI to finish, and for the website to be updated.
+- Check if the new version is available at <https://plfa.github.io/0Y.0M/>.
 
 ## How to add a citation
 
@@ -185,3 +182,4 @@ plfa
 [fix-whitespace]: https://github.com/agda/fix-whitespace
 [github-branches]: https://github.com/plfa/plfa.github.io/branches
 [github-pulls]: https://github.com/plfa/plfa.github.io/pulls
+[citing]: https://github.com/plfa/plfa.github.io/blob/dev/web/Citing.md

@@ -11,12 +11,12 @@
 *.fdb_latexmk
 *.fls
 *.local
-*.lock
 *.log
 *.pdf
 *.spl
 *.synctex.gz
 *.zip
+/Gemfile.lock
 /_build/
 /_cache/
 /_site/

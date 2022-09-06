@@ -9,7 +9,7 @@ updates:
     assignees:
       - "fangyi-zhou"
 
-  # Maintain dependencies for npm
+  # Maintain dependencies for Node
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -17,8 +17,16 @@ updates:
     assignees:
       - "fangyi-zhou"
 
-  # Maintain dependencies for RubyGems
+  # Maintain dependencies for Ruby
   - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "fangyi-zhou"
+
+  # Maintain dependencies for Python
+  - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "daily"

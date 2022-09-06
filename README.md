@@ -6,12 +6,13 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 
 <!-- Status & Version Badges -->
 
-[![Calendar Version][plfa-calver]][plfa-latest]
-[![Agda][agda-version]][agda]
-[![agda-stdlib][agda-stdlib-version]][agda-stdlib]
-[![Build Status][plfa-status]][plfa-ci]
+[![Build Status][plfa-badge-status-svg]][plfa-badge-status-url]
+[![Release Version][plfa-badge-version-svg]][plfa-badge-version-url]
+[![agda][agda-badge-version-svg]][agda-badge-version-url]
+[![standard-library][agda-stdlib-version-svg]][agda-stdlib-version-url]
 
 <!--
+
 ## Getting Started for Readers
 -->
 
@@ -114,11 +115,24 @@ If you do not have Git, see [the Git downloads page][git].
 ### 安装 GHC 和 Cabal {#install-ghc-and-cabal}
 
 <!--
-Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ and its package manager _Cabal_. PLFA should work with any version of GHC >=8.10, but is tested with versions 8.10.7 and 9.2.3. We recommend installing GHC and Cabal using [ghcup][ghcup].
+Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ and its package manager _Cabal_. PLFA should work with any version of GHC >=8.10, but is tested with versions 8.10 and 9.2. We recommend installing GHC and Cabal using [ghcup][ghcup].  For instance, once `ghcup` is installed, by typing
 -->
 
+
 Agda 是用 Haskell 写成的，所以为了安装它我们需要 _Glorious Haskell Compiler_
-和它的包管理器 _Cabal_。PLFA 应该在任何 >=8.10 的 GHC 版本下运行，在 8.10.7 和 9.2.3 版本下完成测试。我们建议使用 [ghcup][ghcup] 来安装两者。
+和它的包管理器 _Cabal_。PLFA 应该在任何 >=8.10 的 GHC 版本下运行，在 8.10 和 9.2 版本下完成测试。我们建议使用 [ghcup][ghcup] 来安装两者。
+在 `ghcup` 安装好之后，输入下列命令：
+
+```bash
+ghcup set ghc 9.2
+ghcup set cabal recommended
+```
+
+<!--
+or using `ghcup tui` and choosing to `set` the appropriate tools.
+-->
+
+或使用 `ghcup tui` 来『设置』合适的工具。
 
 
 <!--
@@ -146,16 +160,17 @@ This step will take a long time and a lot of memory to complete.
 这一步会消耗很长时间和很多内存来完成。
 
 <!--
-If you have problems or for alternatives see the [Agda installation instructions][agda-installation].
+If you have problems or for alternatives see the [Agda installation instructions][agda-readthedocs-installation].
 -->
 
-如果你遇到了问题，或者想参考替代的方法，可参阅 [Agda 安装指引][agda-installation]。
+如果你遇到了问题，或者想参考替代的方法，可参阅 [Agda 安装指引][agda-readthedocs-installation]。
 
 <!--
-If you'd like, you can [test to see if you've installed Agda correctly][agda-hello-world].
+If you'd like, you can [test to see if you've installed Agda correctly][agda-readthedocs-hello-world].
 -->
 
-如果你愿意，你可以[测试 Agda 是否已正确安装][agda-hello-world]。
+
+如果你愿意，你可以[测试 Agda 是否已正确安装][agda-readthedocs-hello-world]。
 
 
 <!--
@@ -235,10 +250,10 @@ Otherwise, you will need to edit the appropriate files. Both configuration files
   `AGDA_DIR/libraries`，并将 `plfa` 作为单独的一行添加到 `AGDA_DIR/defaults`。
 
 <!--
-More information about placing the standard libraries is available from [the Library Management page][agda-docs-package-system] of the Agda documentation.
+More information about placing the standard libraries is available from [the Library Management page][agda-readthedocs-package-system] of the Agda documentation.
 -->
 
-关于放置标准库的更多信息可以参阅 Agda 文档中的[库管理][agda-docs-package-system]。
+关于放置标准库的更多信息可以参阅 Agda 文档中的[库管理][agda-readthedocs-package-system]。
 
 <!--
 ## Setting up an editor for Agda
@@ -307,10 +322,10 @@ The recommended editor for Agda is Emacs with `agda-mode`. Agda ships with `agda
 #### 检查 `agda-mode` 是否正确安装
 
 <!--
-Open the `nats.agda` file you created earlier, and load and type-check the file by typing [`C-c C-l`][agda-docs-emacs-notation].
+Open the `nats.agda` file you created earlier, and load and type-check the file by typing [`C-c C-l`][agda-readthedocs-emacs-notation].
 -->
 
-打开之前创建的 `nats.agda` 文件，使用 [`C-c C-l`][agda-docs-emacs-notation]
+打开之前创建的 `nats.agda` 文件，使用 [`C-c C-l`][agda-readthedocs-emacs-notation]
 来载入和类型检查这个文件。
 
 <!--
@@ -368,14 +383,14 @@ Agda 中的很多重要符号是用 Unicode 来表示的，因此用来显示和
 [DejaVu Sans Mono][font-dejavusansmono] 和 [FreeMono][font-freemono]。
 
 <!--
-You can download and install mononoki directly from [GitHub][mononoki]. For most systems, installing a font is merely a matter of clicking the downloaded `.otf` or `.ttf` file. If your package manager offers a package for mononoki, that might be easier. For instance, Homebrew on macOS offers the `font-mononoki` package in the [`cask-fonts` cask][cask-fonts], and APT on Debian offers the [`fonts-mononoki` package][font-mononoki-debian]. To configure Emacs to use mononoki as its default font, add the following to the end of your Emacs configuration file:
+You can download and install mononoki directly from [the website][font-mononoki]. For most systems, installing a font is merely a matter of clicking the downloaded `.otf` or `.ttf` file. If your package manager offers a package for mononoki, that might be easier. For instance, Homebrew on macOS offers the `font-mononoki` package, and APT on Debian offers the `fonts-mononoki` package. To configure Emacs to use mononoki as its default font, add the following to the end of your Emacs configuration file:
 -->
 
-你可以直接从 [GitHub][mononoki] 下载并安装
+你可以直接从[此网站][font-mononoki] 下载并安装
 Mononoki。对于大多数系统来说，安装字体只是简单的下载 `.otf` 或者 `.ttf` 文件。
 如果你的包管理器提供了 Mononoki 的包，那样可能更加简单。
-例如，macOS 的 Homebrew 在 [`cask-fonts` cask][cask-fonts] 中提供了
-`font-mononiki` 包；Debian 的 APT 提供了 [`fonts-mononoki` 包][font-mononoki-debian]。
+例如，macOS 的 Homebrew 提供了
+`font-mononiki` 包；Debian 的 APT 提供了 `fonts-mononoki` 包。
 将下面的内容加入 Emacs 配置文件，可以把 Mononoki 设置为 Emacs 的默认字体：
 
 ```elisp
@@ -394,16 +409,16 @@ Mononoki。对于大多数系统来说，安装字体只是简单的下载 `.otf
 #### 在 Emacs 中使用 `agda-mode`
 
 <!--
-To load and type-check the file, use [`C-c C-l`][agda-docs-emacs-notation].
+To load and type-check the file, use [`C-c C-l`][agda-readthedocs-emacs-notation].
 -->
 
-要加载文件并对其执行类型检查，请使用 [`C-c C-l`][agda-docs-emacs-notation]。
+要加载文件并对其执行类型检查，请使用 [`C-c C-l`][agda-readthedocs-emacs-notation]。
 
 <!--
-Agda is edited interactively, using [“holes”][agda-docs-holes], which are bits of the program that are not yet filled in. If you use a question mark as an expression, and load the buffer using `C-c C-l`, Agda replaces the question mark with a hole. There are several things you can to while the cursor is in a hole:
+Agda is edited interactively, using [“holes”][agda-readthedocs-holes], which are bits of the program that are not yet filled in. If you use a question mark as an expression, and load the buffer using `C-c C-l`, Agda replaces the question mark with a hole. There are several things you can to while the cursor is in a hole:
 -->
 
-Agda 的编辑是通过使用「[洞][agda-docs-holes]」来交互的，它表示程序中尚未填充的片段。
+Agda 的编辑是通过使用「[洞][agda-readthedocs-holes]」来交互的，它表示程序中尚未填充的片段。
 如果用问号作为表达式，并用 `C-c C-l` 加载缓冲区，Agda 会将问号替换为一个「洞」。
 当光标在洞中时，你可以做以下这些事情：
 
@@ -424,10 +439,10 @@ Agda 的编辑是通过使用「[洞][agda-docs-holes]」来交互的，它表�
 - `C-c C-.`：目标类型，上下文，以及推断的类型
 
 <!--
-See [the emacs-mode docs][agda-docs-emacs-mode] for more details.
+See [the emacs-mode docs][agda-readthedocs-emacs-mode] for more details.
 -->
 
-更多细节请见 [emacs-mode 文档][agda-docs-emacs-mode]。
+更多细节请见 [emacs-mode 文档][agda-readthedocs-emacs-mode]。
 
 <!--
 If you want to see messages beside rather than below your Agda code, you can do the following:
@@ -477,7 +492,7 @@ Let's say we want to add a comment line that reads:
 例如，我们可以在之前的 `.agda` 测试文件中加入一条注释。
 比如说，我们想要加入下面的注释：
 
-```
+```agda
 {- I am excited to type ∀ and → and ≤ and ≡ !! -}
 ```
 
@@ -487,7 +502,7 @@ The first few characters are ordinary, so we would just type them as usual…
 
 前几个字符都是普通字符，我们可以如往常的方式输入它们……
 
-```
+```agda
 {- I am excited to type
 ```
 
@@ -499,7 +514,7 @@ But after that last space, we do not find ∀ on the keyboard. The code for this
 在最后一个空格之后，我们无法在键盘上找到 ∀ 这个键。这个字符的输入序列是四个字符
 `\all`，所以我们输入这四个字符，当我们完成时，Emacs 会把它们替换成我们想要的……
 
-```
+```agda
 {- I am excited to type ∀
 ```
 
@@ -511,7 +526,7 @@ We can continue with the codes for the other characters. Sometimes the character
 在我们输入箭头时会出现这样的情况，它的输入序列是 `\->`。在输入 `\-`
 之后我们会看到……
 
-```
+```agda
 {- I am excited to type ∀ and -
 ```
 
@@ -523,7 +538,7 @@ We can continue with the codes for the other characters. Sometimes the character
 `≤` 的输入序列是 `\<=`，`≡` 的是 `\==`。
 
 
-```
+```agda
 {- I am excited to type ∀ and → and ≤ and ≡
 ```
 
@@ -533,7 +548,7 @@ Finally the last few characters are ordinary again…
 
 最后几个字符又回归了普通字符……
 
-```
+```agda
 {- I am excited to type ∀ and → and ≤ and ≡ !! -}
 ```
 
@@ -604,6 +619,10 @@ Visual Studio 市场中有 [Agda 插件][vscode-agda]。
 Atom 包管理器中有 [Agda 插件][atom-agda]。
 
 
+## Getting Started for Contributors
+
+If you plan to build PLFA locally, please refer to [Contributing][plfa-contributing] for additional instructions.
+
 <!-- Links -->
 [epub-zh]: https://agda-zh.github.io/PLFA-zh/out/epub/plfa.epub
 [plfa-zh]: https://agda-zh.github.io/PLFA-zh/
@@ -616,23 +635,26 @@ Atom 包管理器中有 [Agda 插件][atom-agda]。
 [agda-zh]: https://agda-zh.rtfd.io/zh_CN/latest/getting-started/installation.html
 [FiraCode]: https://github.com/tonsky/FiraCode
 
-[epub]: https://plfa.github.io/plfa.epub
+[plfa-badge-version-svg]: https://img.shields.io/github/v/tag/plfa/plfa.github.io?label=release
+[plfa-badge-version-url]: https://github.com/plfa/plfa.github.io/releases/latest
+[plfa-badge-status-svg]: https://github.com/plfa/plfa.github.io/actions/workflows/build.yml/badge.svg
+[plfa-badge-status-url]: https://github.com/plfa/plfa.github.io/actions/workflows/build.yml
+[agda-badge-version-svg]: https://img.shields.io/badge/agda-v2.6.2.2-blue.svg
+[agda-badge-version-url]: https://github.com/agda/agda/releases/tag/v2.6.2.2
+[agda-stdlib-version-svg]: https://img.shields.io/badge/agda--stdlib-v1.7.1-blue.svg
+[agda-stdlib-version-url]: https://github.com/agda/agda-stdlib/releases/tag/v1.7.1
 [plfa]: https://plfa.inf.ed.ac.uk
-[plfa-calver]: https://img.shields.io/badge/calver-20.07-22bfda
-[plfa-latest]: https://github.com/plfa/plfa.github.io/releases/latest
-[plfa-master]: https://github.com/plfa/plfa.github.io/archive/master.zip
-[plfa-status]: https://github.com/plfa/plfa.github.io/actions/workflows/ci.yml/badge.svg
-[plfa-ci]: https://github.com/plfa/plfa.github.io/actions/workflows/ci.yml
+[plfa-epub]: https://plfa.github.io/plfa.epub
+[plfa-contributing]: https://plfa.github.io/Contributing/
 [ghcup]: https://www.haskell.org/ghcup/
 [git]: https://git-scm.com/downloads
-[agda]: https://github.com/agda/agda/releases/tag/v2.6.2.2
-[agda-installation]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/installation.html
-[agda-hello-world]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/hello-world.html
-[agda-version]: https://img.shields.io/badge/agda-v2.6.2.2-blue.svg
-[agda-docs-holes]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/a-taste-of-agda.html#preliminaries
-[agda-docs-emacs-mode]: https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html
-[agda-docs-emacs-notation]: https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html#notation-for-key-combinations
-[agda-docs-package-system]: https://agda.readthedocs.io/en/v2.6.2.2/tools/package-system.html#example-using-the-standard-library
+[xcode]: https://developer.apple.com/xcode/
+[agda-readthedocs-installation]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/installation.html
+[agda-readthedocs-hello-world]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/hello-world.html
+[agda-readthedocs-holes]: https://agda.readthedocs.io/en/v2.6.2.2/getting-started/a-taste-of-agda.html#preliminaries
+[agda-readthedocs-emacs-mode]: https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html
+[agda-readthedocs-emacs-notation]: https://agda.readthedocs.io/en/v2.6.2.2/tools/emacs-mode.html#notation-for-key-combinations
+[agda-readthedocs-package-system]: https://agda.readthedocs.io/en/v2.6.2.2/tools/package-system.html#example-using-the-standard-library
 [emacs]: https://www.gnu.org/software/emacs/download.html
 [emacs-tour]: https://www.gnu.org/software/emacs/tour/
 [emacs-home]: https://www.gnu.org/software/emacs/manual/html_node/efaq-w32/Location-of-init-file.html
@@ -643,22 +665,8 @@ Atom 包管理器中有 [Agda 插件][atom-agda]。
 [vscode-agda]: https://marketplace.visualstudio.com/items?itemName=banacorn.agda-mode
 [atom]: https://atom.io/
 [atom-agda]: https://atom.io/packages/agda-mode
-[agda-stdlib-version]: https://img.shields.io/badge/agda--stdlib-v1.7.1-blue.svg
-[agda-stdlib]: https://github.com/agda/agda-stdlib/releases/tag/v1.7.1
-[fix-whitespace]: https://github.com/agda/fix-whitespace
-[ruby]: https://www.ruby-lang.org/en/documentation/installation/
-[ruby-bundler]: https://bundler.io/#getting-started
-[ruby-jekyll]: https://jekyllrb.com/
-[ruby-html-proofer]: https://github.com/gjtorikian/html-proofer
-[pandoc]: https://pandoc.org/installing.html
-[pandoc-markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
-[commonmark]: https://commonmark.org/
-[epubcheck]: https://github.com/w3c/epubcheck
-[xcode]: https://developer.apple.com/xcode/
 [font-sourcecodepro]: https://github.com/adobe-fonts/source-code-pro
 [font-dejavusansmono]: https://dejavu-fonts.github.io/
-[mononoki]: https://github.com/madmalik/mononoki
 [font-freemono]: https://www.gnu.org/software/freefont/
 [font-mononoki]: https://madmalik.github.io/mononoki/
 [font-mononoki-debian]: https://packages.debian.org/sid/fonts/fonts-mononoki
-[cask-fonts]: https://github.com/Homebrew/homebrew-cask-fonts
