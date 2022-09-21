@@ -7,17 +7,18 @@ permalink : /TSPL/2022/
 
 * **Instructor**
     [Philip Wadler](https://homepages.inf.ed.ac.uk/wadler)
-* **Teaching assistants**
-  - [Tudor Ferariu](https://www.inf.ed.ac.uk/people/students/Tudor_Ferariu.html)
+* **Teaching assistant**
+    [Tudor Ferariu](https://www.inf.ed.ac.uk/people/students/Tudor_Ferariu.html)
 
 ## Lectures and tutorials
 
 Lectures take place Monday and Thursday.
 Monday's lecture is immediately followed by a tutorial.
-* **10.00--10.50am** Monday AT 2.11 Lecture
-* **11.10--12.00noon** Monday AT 2.11 Tutorial
-* **10.00--10.50am** Thursday AT 2.11 Lecture
-All lectures and tutorials are in Appleton Tower 2.11.
+
+* **10.00--12.00** _Monday Lecture and Tutorial_
+  George Square 50, room G.02 (50GS G.02).
+* **10.00--10.50** _Thursday Lecture_
+  Appleton Tower, room 2.11 (AT 2.11). 
 
 <table>
 <thead>
@@ -30,35 +31,35 @@ All lectures and tutorials are in Appleton Tower 2.11.
 <tbody>
  <tr>
   <td>1</td>
-  <td><b>19 Sep</b> <a href="/Naturals/">Naturals</a></td>
-  <td><b>22 Sep</b> <a href="/Induction/">Induction</a></td>
+  <td><b>19 Sep</b> (Bank Holiday)
+  <td><b>22 Sep</b> <a href="/Naturals/">Naturals</a></td>
  </tr>
  <tr>
   <td>2</td>
-  <td><b>26 Sep</b> <a href="/Relations/">Relations</a></td>
-  <td><b>29 Sep</b> <a href="/Equality/">Equality</a> &amp;
-                    <a href="/Isomorphism/">Isomorphism</a></td></td>
+  <td><b>26 Sep</b> <a href="/Induction/">Induction</a></td>
+  <td><b>29 Sep</b> <a href="/Relations/">Relations</a></td>
  </tr>
  <tr>
   <td>3</td>
-  <td><b> 3 Oct</b> <a href="/Connectives/">Connectives</a></td>
-  <td><b> 6 Oct</b> <a href="/Negation/">Negation</a></td>
+  <td><b> 3 Oct</b> <a href="/Equality/">Equality</a> &amp;
+                    <a href="/Isomorphism/">Isomorphism</a></td></td>
+  <td><b> 6 Oct</b> <a href="/Connectives/">Connectives</a></td>
  </tr>
  <tr>
   <td>4</td>
-  <td><b>10 Oct</b> <a href="/Quantifiers/">Quantifiers</a></td>
-  <td><b>13 Oct</b> <a href="/Decidable/">Decidable</a> &amp;
-                    <a href="/Lists/">Lists</a></td>
+  <td><b>10 Oct</b> <a href="/Negation/">Negation</a></td>
+  <td><b>13 Oct</b> <a href="/Quantifiers/">Quantifiers</a></td>
  </tr>
  <tr>
   <td>5</td>
-  <td><b>17 Oct</b> <a href="/Lambda/">Lambda</a></td>
+  <td><b>17 Oct</b> <a href="/Decidable/">Decidable</a> &amp;
+                    <a href="/Lists/">Lists</a></td>
   <td><b>20 Oct</b> <a href="/Lambda/">Lambda</a></td>
  </tr>
  <tr>
   <td>6</td>
-  <td><b>24 Oct</b> <a href="/Properties/">Properties</a></td>
-  <td><b>27 Oct</b> 
+  <td><b>24 Oct</b> <a href="/Lambda/">Lambda</a></td>
+  <td><b>27 Oct</b> <a href="/Properties/">Properties</a></td> 
  </tr>
  <tr>
   <td>7</td>
@@ -112,11 +113,11 @@ courses where there are easier marks to be had.
 
 For instructions on how to set up Agda for PLFA see [Getting Started](/GettingStarted/).
 
-* [Assignment 1](/TSPL/2022/Assignment1/) cw1 due 4pm Thursday  October (Week 3)
-* Assignment 2 cw2 due 4pm Thursday 17 October (Week 5)
-* Assignment 3 cw3 due 4pm Thursday 31 October (Week 7)
-* Assignment 4 cw4 due 4pm Thursday 14 November (Week 9)
-* Assignment 5 cw5 due 4pm Thursday 21 November (Week 10)
+* [Assignment 1](/TSPL/2022/Assignment1/) cw1 due 4pm Thursday 6 October (Week 3)
+* Assignment 2 cw2 due 4pm Thursday 20 October (Week 5)
+* Assignment 3 cw3 due 4pm Thursday 3 November(Week 7)
+* Assignment 4 cw4 due 4pm Thursday 17 November (Week 9)
+* Assignment 5 cw5 due 4pm Thursday 24 November (Week 10)
   <!-- Use file [Exam](/TSPL/2022/Exam/). Despite the rubric, do **all three questions**. -->
 
 
