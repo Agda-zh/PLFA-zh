@@ -6,8 +6,6 @@ progress  : 95
 ---
 
 ```agda
-{-# OPTIONS --exact-split #-}
-
 module plfa.part1.Naturals where
 ```
 
@@ -1037,20 +1035,6 @@ We can do a simple analysis to show that all the cases are covered.
       - 如果它是 `suc m`，应用第三个等式。
 
 Agda will raise an error if all the cases are not covered.
-
-Enumerating the cases as above ensures that exactly one equation
-will apply.  Say the second line was instead written
-
-    zero  ∸ n  =  zero
-
-Then it would not be clear whether Agda should use the first
-or second line to simplify `zero ∸ zero`.  In this case, both
-lines lead to the same answer, `zero`, but that may not be
-the case in general.  The `--exact-split` flag, set at the beginning of this chapter,
-causes Agda to raise an error if cases overlap.  We will normally set the flag,
-but it will be omitted in Chapter [Decidable](/Decidable/) to permit
-an interesting example in Section [Logical Connectives](/Decidable/#logical-connectives).
-
 As with addition and multiplication, the recursive definition is well
 founded because monus on bigger numbers is defined in terms of monus
 on smaller numbers.
@@ -1094,6 +1078,23 @@ _ =
     0
   ∎
 ```
+
+We defined monus to ensure that exactly one equation
+will apply.  Say the second line was instead written
+
+    zero  ∸ n  =  zero
+
+Then it would not be clear whether Agda should use the first
+or second line to simplify `zero ∸ zero`.  In this case, both
+lines lead to the same answer, `zero`, but that may not be
+the case in general.  Putting the line
+
+    {- OPTIONS --exact-split -}
+
+at the beginning of a file causes Agda to raise an error if cases
+overlap, which is sometimes helpful. We will give an example where
+overlap may be desirable in
+Section [Logical Connectives](/Decidable/#logical-connectives).
 
 <!--
 #### Exercise `∸-example₁` and `∸-example₂` (recommended) {#monus-examples}
