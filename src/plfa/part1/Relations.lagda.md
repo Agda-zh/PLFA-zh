@@ -431,7 +431,8 @@ anti-symmetric, and total. Or instead you might ask whether it is a
 preorder, partial order, or total order.
 -->
 
-如果你进入了关于关系的聚会，你现在知道怎么样和人讨论了，可以讨论关于自反、传递、反对称和完全，
+如果你在派对上偶遇一个『关系』，你现在知道怎么样和人讨论了，
+可以讨论关于自反、传递、反对称和完全，
 或者问一问这是不是预序、偏序或者全序。
 
 <!--
