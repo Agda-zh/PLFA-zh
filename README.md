@@ -124,7 +124,10 @@ Agda 是用 Haskell 写成的，所以为了安装它我们需要 _Glorious Hask
 在 `ghcup` 安装好之后，输入下列命令：
 
 ```bash
-ghcup set ghc 9.2
+ghcup install ghc 9.2.4
+ghcup install cabal recommended
+
+ghcup set ghc 9.2.4
 ghcup set cabal recommended
 ```
 
