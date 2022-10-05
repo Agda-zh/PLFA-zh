@@ -1107,7 +1107,7 @@ True : ∀ {Q} → Dec Q → Set
 True Q = T ⌊ Q ⌋
 ```
 <!--
-#### Exercise `False`
+#### Exercise `False` (practice)
 -->
 
 #### 练习 `False`
