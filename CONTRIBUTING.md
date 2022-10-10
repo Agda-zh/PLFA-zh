@@ -153,9 +153,6 @@ plfa
 │   ├── epub                   # Files only used for EPUB version.
 │   └── pdf                    # Files only used for PDF version.
 │
-├── courses                    # Pages for courses using PLFA by the authors:
-│   └── TSPL/2019              #   - TSPL, University of Edinburgh, 2019
-│
 ├── papers                     # Source files for papers written about PLFA.
 │
 └── extra                      # Incomplete, unincorporated formalisations.
