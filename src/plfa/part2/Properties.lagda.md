@@ -1118,47 +1118,85 @@ Now that naming is resolved, let's unpack the first three cases:
 
       Γ , y ⦂ B ∋ x ⦂ A
 
-<!--
+  <!--
   There are two subcases, depending on the evidence for this judgment:
--->
+  -->
 
   此处有两种子情况，取决于该命题的论据：
 
+  <!--
   + The lookup judgment is evidenced by rule `Z`:
+  -->
+
+  + 查询判断由规则 `Z` 给出：
 
         ----------------
         Γ , x ⦂ A ∋ x ⦂ A
 
+    <!--
     In this case, `x` and `y` are necessarily identical, as are `A`
     and `B`.  Nonetheless, we must evaluate `x ≟ y` in order to allow
     the definition of substitution to simplify:
+    -->
 
+    在此情况下，`x` 和 `y` 必须是一样的，同样 `A` 和 `B` 也是。
+    尽管如此，我们必须要求值 `x ≟ y` 来化简替换的定义：
+
+    <!--
     - If the variables are equal, then after simplification we
       must show:
+    -->
+
+    - 如果变量相等，那么化简后我们必须证明：
 
           ∅ ⊢ V ⦂ A
           ---------
           Γ ⊢ V ⦂ A
 
+      <!--
       which follows by weakening.
+      -->
 
+      由弱化可得。
+
+    <!--
     - If the variables are unequal we have a contradiction.
+    -->
 
+    - 如果变量不相等，我们则得到了一个矛盾。
+
+  <!--
   + The lookup judgment is evidenced by rule `S`:
+  -->
+
+  + 查询判断由规则 `S` 给出：
 
         x ≢ y
         Γ ∋ x ⦂ A
         -----------------
         Γ , y ⦂ B ∋ x ⦂ A
 
+    <!--
     In this case, `x` and `y` are necessarily distinct.
     Nonetheless, we must again evaluate `x ≟ y` in order to allow
     the definition of substitution to simplify:
+    -->
 
+    在此情况下，`x` 和 `y` 必须是不同的。
+    尽管如此，我们必须要求值 `x ≟ y` 来化简替换的定义：
+
+    <!--
     - If the variables are equal we have a contradiction.
+    -->
 
+    - 如果变量相等，我们则得到了一个矛盾。
+
+    <!--
     - If the variables are unequal, then after simplification we
       must show:
+    -->
+
+    - 如果变量不相等，那么化简后我们必须证明：
 
           ∅ ⊢ V ⦂ B
           x ≢ y
@@ -1166,37 +1204,69 @@ Now that naming is resolved, let's unpack the first three cases:
           -------------
           Γ ⊢ ` x ⦂ A
 
+      <!--
       which follows by the typing rule for variables.
+      -->
 
+      由变量的赋型规则可得。
+
+<!--
 * In the abstraction case, we must show:
+-->
+
+* 当处于抽象的情况时，我们必须证明：
 
       ∅ ⊢ V ⦂ B
       Γ , y ⦂ B ⊢ (ƛ x ⇒ N) ⦂ A ⇒ C
       --------------------------------
       Γ ⊢ (ƛ x ⇒ N) [ y := V ] ⦂ A ⇒ C
 
+  <!--
   where the second hypothesis follows from:
+  -->
+
+  其中第二条假设可由下得出：
 
       Γ , y ⦂ B , x ⦂ A ⊢ N ⦂ C
 
+  <!--
   We evaluate `x ≟ y` in order to allow the definition of substitution to simplify:
+  -->
 
+  我们求值 `x ≟ y` 来化简替换的定义：
+
+  <!--
   + If the variables are equal then after simplification we must show:
+  -->
+
+  + 如果变量相等，那么化简后我们必须证明：
 
         ∅ ⊢ V ⦂ B
         Γ , x ⦂ B , x ⦂ A ⊢ N ⦂ C
         -------------------------
         Γ ⊢ ƛ x ⇒ N ⦂ A ⇒ C
 
+    <!--
     From the drop lemma we know:
+    -->
+
+    由去除引理可得：
 
         Γ , x ⦂ B , x ⦂ A ⊢ N ⦂ C
         -------------------------
         Γ , x ⦂ A ⊢ N ⦂ C
 
+    <!--
     The typing rule for abstractions then yields the required conclusion.
+    -->
 
+    抽象的赋型规则给出了所需的结论。
+
+  <!--
   + If the variables are distinct then after simplification we must show:
+  -->
+
+  + 如果变量不相等，那么化简后我们必须证明：
 
         ∅ ⊢ V ⦂ B
         x ≢ y
@@ -1204,35 +1274,59 @@ Now that naming is resolved, let's unpack the first three cases:
         --------------------------------
         Γ ⊢ ƛ x ⇒ (N [ y := V ]) ⦂ A ⇒ C
 
+    <!--
     From the swap lemma we know:
+    -->
+
+    由交换引理可得：
 
         x ≢ y
         Γ , y ⦂ B , x ⦂ A ⊢ N ⦂ C
         -------------------------
         Γ , x ⦂ A , y ⦂ B ⊢ N ⦂ C
 
+    <!--
     The inductive hypothesis gives us:
+    -->
+
+    归纳假设给出了：
 
         ∅ ⊢ V ⦂ B
         Γ , x ⦂ A , y ⦂ B ⊢ N ⦂ C
         ----------------------------
         Γ , x ⦂ A ⊢ N [ y := V ] ⦂ C
 
+    <!--
     The typing rule for abstractions then yields the required conclusion.
+    -->
 
+    抽象的赋型规则给出了所需的结论。
+
+<!--
 * In the application case, we must show:
+-->
+
+* 当处于应用的情况时，我们必须证明：
 
       ∅ ⊢ V ⦂ C
       Γ , y ⦂ C ⊢ L · M ⦂ B
       --------------------------
       Γ ⊢ (L · M) [ y := V ] ⦂ B
 
+  <!--
   where the second hypothesis follows from the two judgments:
+  -->
+
+  其中第二条假设可由下两条判断中得出：
 
       Γ , y ⦂ C ⊢ L ⦂ A ⇒ B
       Γ , y ⦂ C ⊢ M ⦂ A
 
+  <!--
   By the definition of substitution, we must show:
+  -->
+
+  根据替换的定义，我们必须证明：
 
       ∅ ⊢ V ⦂ C
       Γ , y ⦂ C ⊢ L ⦂ A ⇒ B
@@ -1240,8 +1334,12 @@ Now that naming is resolved, let's unpack the first three cases:
       ---------------------------------------
       Γ ⊢ (L [ y := V ]) · (M [ y := V ]) ⦂ B
 
+  <!--
   Applying the induction hypothesis for `L` and `M` and the typing
   rule for applications yields the required conclusion.
+  -->
+
+  对于 `L` 和 `M` 应用归纳引理，加上应用的赋型规则给出了所需的结论。
 
 <!--
 The remaining cases are similar, using induction for each subterm.
