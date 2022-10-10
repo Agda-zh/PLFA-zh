@@ -1,7 +1,7 @@
 ---
 title      : "Inference: 双向类型推理"
 permalink  : /Inference/
-translator : ["Fangyi Zhou"]
+translators: ["Fangyi Zhou"]
 progress   : 100
 ---
 

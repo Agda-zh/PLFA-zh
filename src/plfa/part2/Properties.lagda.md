@@ -2,7 +2,7 @@
 title     : "Properties: 进行性与保型性"
 permalink : /Properties/
 translators : ["starxingchenc","alissa-tung"]
-progress  : 80
+progress  : 100
 ---
 
 ```agda
