@@ -1169,7 +1169,7 @@ Proposition `+-assoc (m + n) p q` shifts parentheses from left to right:
 To shift them the other way, we use `sym (+-assoc (m + n) p q)`:
 -->
 
-要往另一个方向移动括号，我们要用 `sym (+-assoc m n p)`：
+要往另一个方向移动括号，我们要用 `sym (+-assoc (m + n) p q)`：
 
     (m + n) + (p + q) ≡ ((m + n) + p) + q
 

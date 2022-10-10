@@ -1079,22 +1079,39 @@ _ =
   ∎
 ```
 
+<!--
 We defined monus to ensure that exactly one equation
 will apply.  Say the second line was instead written
+-->
+
+我们对饱和减法的定义确保了只有一条等式可以应用。
+假设我们将第二条以下文取而代之
 
     zero  ∸ n  =  zero
 
+<!--
 Then it would not be clear whether Agda should use the first
 or second line to simplify `zero ∸ zero`.  In this case, both
 lines lead to the same answer, `zero`, but that may not be
 the case in general.  Putting the line
+-->
+
+那样就不清楚 Agda 应该使用第一条或者第二条来简化 `zero ∸ zero`。
+在这样的情况下，两者都可以相同的答案 `zero`，但这不一定是普遍的情况。
+将
 
     {- OPTIONS --exact-split -}
 
+<!--
 at the beginning of a file causes Agda to raise an error if cases
 overlap, which is sometimes helpful. We will give an example where
 overlap may be desirable in
 Section [Logical Connectives](/Decidable/#logical-connectives).
+-->
+
+写在文件的开始可以让 Agda 在不同情况相互重叠时产生一个错误，
+有些时候这会有帮助。我们会在[逻辑连接符](/Decidable/#logical-connectives)部分
+展示一个这样的例子。
 
 <!--
 #### Exercise `∸-example₁` and `∸-example₂` (recommended) {#monus-examples}

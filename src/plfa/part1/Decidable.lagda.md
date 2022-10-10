@@ -1110,7 +1110,7 @@ True Q = T ⌊ Q ⌋
 #### Exercise `False` (practice)
 -->
 
-#### 练习 `False`
+#### 练习 `False` （实践）
 
 <!--
 Give analogues of `True`, `toWitness`, and `fromWitness` which work with *negated* properties. Call these `False`, `toWitnessFalse`, and `fromWitnessFalse`.
