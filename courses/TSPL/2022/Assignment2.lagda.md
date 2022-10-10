@@ -522,4 +522,3 @@ which is a corollary of `≡Can`.
 ```agda
   -- Your code goes here
 ```
-
