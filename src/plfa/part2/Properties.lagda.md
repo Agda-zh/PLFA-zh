@@ -1708,16 +1708,16 @@ remaining.  There are two possibilities:
 * 如果非零，则在下一个步骤中我们还剩下 `m` 燃料。将进度应用于项 `L` 是良类型的论据。
   此处有两种可能：
 
-<!--
+  <!--
   + Term `L` is a value, so we are done. We return the
     trivial reduction sequence `L —↠ L`
     and the evidence that `L` is a value.
--->
+  -->
 
   + 项 `L` 是一个值，则我们已经完成了。
     我们将返回简单的规约序列 `L —↠ L`，以及 `L` 是值的论据。
 
-<!--
+  <!--
   + Term `L` steps to another term `M`.  Preservation provides
     evidence that `M` is also well typed, and we recursively invoke
     `eval` on the remaining gas.  The result is evidence that
@@ -1725,7 +1725,7 @@ remaining.  There are two possibilities:
     indication of whether reduction finished.  We combine the evidence
     that `L —→ M` and `M —↠ N` to return evidence that `L —↠ N`
     and the indication of whether reduction finished.
--->
+  -->
 
   + 项 `L` 步进至另一个项 `M`。保型性提供了 `M` 也是良类型的论据，
     我们对剩余的燃料递归调用 `eval`。

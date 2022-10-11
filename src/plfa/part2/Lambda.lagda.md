@@ -1651,9 +1651,9 @@ Thus:
   5. `` `ℕ ⇒ `ℕ ``
   6. `` `ℕ ``
 
-<!--
+  <!--
   Give more than one answer if appropriate.
--->
+  -->
 
   在适当的情况下，可以给出多于一个答案。
 
@@ -1672,9 +1672,9 @@ Thus:
   5. `` `ℕ ⇒ `ℕ ``
   6. `` `ℕ ``
 
-<!--
+  <!--
   Give more than one answer if appropriate.
--->
+  -->
 
   在适当的情况下，可以给出多于一个答案。
 

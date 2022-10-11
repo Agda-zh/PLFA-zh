@@ -440,9 +440,8 @@ may be less readable than a well-crafted error message.
 -->
 
 另一种实现方法可能在生成或继承成功时返回其推导，并在失败时返回一条错误信息——例如，
-参见 Agda 用户手册中讨论
-[语法糖](https://agda.readthedocs.io/en/latest/language/syntactic-sugar.html#example).
-的章节。
+参见 Agda
+用户手册中讨论[语法糖](https://agda.readthedocs.io/en/latest/language/syntactic-sugar.html#example)的章节。
 这样的方法可以实现可靠性，而不是完备性。
 如果其返回一个推导，那么我们知道它是正确的；
 但没有人阻挡我们来给出一个**总是**返回错误的函数，即使正确的推导存在。
@@ -843,7 +842,7 @@ are equal.  It is straightforward to code:
 -->
 
 `M ↑` 规则需要我们有能力来判定两个类型是否相等。
-我们可以直接的给出代码：
+我们可以直接地给出代码：
 
 ```agda
 _≟Tp_ : (A B : Type) → Dec (A ≡ B)
@@ -1035,30 +1034,30 @@ Consider the context:
 
 * 如果上下文非空，比较给定的变量和最新的绑定：
 
-<!--
+  <!--
   + If they are identical, we have succeeded, with `Z` as
     the appropriate derivation.
--->
+  -->
 
   + 如果它们一致，我们完成了判定，使用 `Z` 作为对应的推导。
 
-<!--
+  <!--
   + If they differ, we recurse:
--->
+  -->
 
   + 如果它们不一致，我们递归：
 
-<!--
+    <!--
     - If lookup fails, we apply `ext∋` to convert the proof
       there is no derivation from the contained context
       to the extended context.
--->
+    -->
 
     - 如果查询失败了，我们使用 `ext∋` 将变量不存在于内部的上下文中的证明扩充至扩充后的上下文。
 
-<!--
+    <!--
     - If lookup succeeds, we extend the derivation with `S`.
--->
+    -->
 
     - 如果查询成功了，我们对返回的推导使用 `S`。
 
@@ -1220,21 +1219,21 @@ There are three cases:
 
 * 如果项是变量 `` ` x ``，我们使用之前定义的查询：
 
-<!--
+  <!--
   + If it fails, then `¬∃` is evidence that there is no `A` such
     that `Γ ∋ x ⦂ A` holds.  Evidence that `` Γ ⊢ ` x ↑ A `` holds must
     have the form `` ⊢` ∋x ``, where `∋x` is evidence that `Γ ∋ x ⦂ A`,
     which yields a contradiction.
--->
+  -->
 
   + 如果失败了，那么 `¬∃` 是不存在使得 `Γ ∋ x ⦂ A` 成立的类型 `A` 的证明。
     `` Γ ⊢ ` x ↑ A `` 成立的证明一定是 `` ⊢` ∋x `` 的形式，其中 `∋x`
     是 `Γ ∋ x ⦂ A` 成立的证明，这构成了一个矛盾。
 
-<!--
+  <!--
   + If it succeeds, then `∋x` is evidence that `Γ ∋ x ⦂ A`, and
     hence `` ⊢` ∋x `` is evidence that `` Γ ⊢ ` x ↑ A ``.
--->
+  -->
 
   + 如果成功了，那么 `∋x` 是 `Γ ∋ x ⦂ A` 成立的证明，所以 `` ⊢` ∋x `` 是
     `` Γ ⊢ ` x ↑ A `` 成立的证明。
@@ -1245,57 +1244,58 @@ There are three cases:
 
 * 如果项是函数应用 `L · M`，我们递归于函数项 `L`：
 
-<!--
+  <!--
   + If it fails, then `¬∃` is evidence that there is no type such
     that `Γ ⊢ L ↑ _` holds.  Evidence that `Γ ⊢ L · M ↑ _` holds
     must have the form `⊢L · _`, where `⊢L` is evidence that
     `Γ ⊢ L ↑ _`, which yields a contradiction.
--->
+  -->
 
   + 如果失败了，那么 `¬∃` 是不存在任何类型 `Γ ⊢ L ↑ _` 成立的证明。
     `Γ ⊢ L · M ↑ _` 成立的证明一定是 `⊢L · _` 的形式，其中 `⊢L`
     是 `Γ ⊢ L ↑ _` 成立的证明，这构成了一个矛盾。
 
-<!--
+  <!--
   + If it succeeds, there are two possibilities:
--->
+  -->
 
   + 如果成功了，那么有两种情况：
 
-<!--
+    <!--
     - One is that `⊢L` is evidence that `` Γ ⊢ L ⦂ `ℕ ``.  Evidence
       that `Γ ⊢ L · M ↑ _` holds must have the form `⊢L′ · _` where
       `⊢L′` is evidence that `Γ ⊢ L ↑ A ⇒ B` for some types `A` and
       `B`.  Applying `uniq-↑` to `⊢L` and `⊢L′` yields a
       contradiction, since `` `ℕ `` cannot equal `A ⇒ B`.
--->
+    -->
+
     - 其一是 `⊢L` 是 `` Γ ⊢ L ⦂ `ℕ `` 成立的证明。
       `Γ ⊢ L · M ↑ _` 成立的证明一定是 `⊢L′ · _` 的形式，其中
       `⊢L′` 是 `Γ ⊢ L ↑ A ⇒ B` 对于一些类型 `A` 和 `B` 成立的证明。
       将 `uniq-↑` 应用于 `⊢L` 和 `⊢L′` 构成了一个矛盾，
       因为 `` `ℕ `` 无法与 `A ⇒ B` 相等。
 
-<!--
+    <!--
     - The other is that `⊢L` is evidence that `Γ ⊢ L ↑ A ⇒ B`, in
       which case we recurse on the argument `M`:
--->
+    -->
 
     - 另一是 `⊢L` 是 `Γ ⊢ L ↑ A ⇒ B` 成立的证明，那么我们在参数项 `M` 上递归：
 
-<!--
+      <!--
       * If it fails, then `¬⊢M` is evidence that `Γ ⊢ M ↓ A` does
         not hold.  By `¬arg` applied to `⊢L` and `¬⊢M`, it follows
         that `Γ ⊢ L · M ↑ B` cannot hold.
--->
+      -->
 
       * 如果失败了，那么 `¬⊢M` 是 `Γ ⊢ M ↓ A` 不成立的证明。
         将 `¬arg` 应用于 `⊢L` 和 `¬⊢M`，我们可得
         `Γ ⊢ L · M ↑ B` 不成立。
 
-<!--
+      <!--
       * If it succeeds, then `⊢M` is evidence that `Γ ⊢ M ↓ A`,
         and `⊢L · ⊢M` provides evidence that `Γ ⊢ L · M ↑ B`.
--->
+      -->
 
       * 如果成功了，那么 `⊢M` 是 `Γ ⊢ M ↓ A` 成立的证明，
         且 `⊢L · ⊢M` 提供了 `Γ ⊢ L · M ↑ B` 成立的证明。
@@ -1307,21 +1307,21 @@ There are three cases:
 
 * 如果项是从生成到继承的变向项 `M ↓ A`，我们在子项 `M` 上递归，并向继承提供类型 `A`：
 
-<!--
+  <!--
   + If it fails, then `¬⊢M` is evidence that `Γ ⊢ M ↓ A` does not
     hold.  Evidence that `Γ ⊢ (M ↓ A) ↑ A` holds must have the
     form `⊢↓ ⊢M` where `⊢M` is evidence that `Γ ⊢ M ↓ A` holds,
     which yields a contradiction.
--->
+  -->
 
   + 如果失败了，那么 `¬⊢M` 是 `Γ ⊢ M ↓ A` 不成立的证明。
     `Γ ⊢ (M ↓ A) ↑ A` 成立的证明一定是 `⊢↓ ⊢M` 的形式，其中 `⊢M`
     是 `Γ ⊢ M ↓ A` 成立的证明，这构成了一个矛盾。
 
-<!--
+  <!--
   + If it succeeds, then `⊢M` is evidence that `Γ ⊢ M ↓ A`,
     and `⊢↓ ⊢M` provides evidence that `Γ ⊢ (M ↓ A) ↑ A`.
--->
+  -->
 
   + 如果成功了，那么 `⊢M` 是 `Γ ⊢ M ↓ A` 成立的证明，且
     `⊢↓ ⊢M` 提供了 `Γ ⊢ (M ↓ A) ↑ A` 成立的证明。
@@ -1385,21 +1385,21 @@ and for switching from inherited to synthesized:
 * 如果项是 `ƛ x ⇒ N`，而继承的类型是 `A ⇒ B`，我们用上下文 `Γ , x ⦂ A` 递归至
   子项 `N` 继承类型 `B`：
 
-<!--
+  <!--
   + If it fails, then `¬⊢N` is evidence that `Γ , x ⦂ A ⊢ N ↓ B`
     does not hold.  Evidence that `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B` holds
     must have the form `⊢ƛ ⊢N` where `⊢N` is evidence that
     `Γ , x ⦂ A ⊢ N ↓ B`, which yields a contradiction.
--->
+  -->
 
   + 如果失败了，那么 `¬⊢N` 是 `Γ , x ⦂ A ⊢ N ↓ B` 不成立的证明。
     `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B` 成立的证明一定是 `⊢ƛ ⊢N` 的形式，其中
     `⊢N` 是 `Γ , x ⦂ A ⊢ N ↓ B` 成立的证明，这构成了一个矛盾。
 
-<!--
+  <!--
   + If it succeeds, then `⊢N` is evidence that `Γ , x ⦂ A ⊢ N ↓ B`
     holds, and `⊢ƛ ⊢N` provides evidence that `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B`.
--->
+  -->
 
   + 如果成功了，那么 `⊢N` 是 `Γ , x ⦂ A ⊢ N ↓ B` 成立的证明，且 `⊢ƛ ⊢N`
     提供了 `Γ ⊢ (ƛ x ⇒ N) ↓ A ⇒ B` 成立的证明。
@@ -1411,39 +1411,39 @@ and for switching from inherited to synthesized:
 
 * 如果项是从继承到生成的变向项 `M ↑`，我们在子项 `M` 上递归：
 
-<!--
+  <!--
   + If it fails, then `¬∃` is evidence there is no `A` such
     that `Γ ⊢ M ↑ A` holds.  Evidence that `Γ ⊢ (M ↑) ↓ B` holds
     must have the form `⊢↑ ⊢M _` where `⊢M` is evidence that
     `Γ ⊢ M ↑ _`, which yields a contradiction.
--->
+  -->
 
   + 如果失败了，那么 `¬∃` 是不存在使得 `Γ ⊢ M ↑ A` 成立的类型 `A` 的证明。
     `Γ ⊢ (M ↑) ↓ B` 成立的证明一定是 `⊢↑ ⊢M _` 的形式，其中 `⊢M`
     是 `Γ ⊢ M ↑ _` 成立的证明，这构成了一个矛盾。
 
-<!--
+  <!--
   + If it succeeds, then `⊢M` is evidence that `Γ ⊢ M ↑ A` holds.
     We apply `_≟Tp_` do decide whether `A` and `B` are equal:
--->
+  -->
 
   + 如果成功了，那么 `⊢M` 是 `Γ ⊢ M ↑ A` 成立的证明。
     我们应用 `_≟Tp_` 来判定 `A` 和 `B` 是否相等：
 
-<!--
+    <!--
     - If it fails, then `A≢B` is evidence that `A ≢ B`.
       By `¬switch` applied to `⊢M` and `A≢B` it follow that
       `Γ ⊢ (M ↑) ↓ B` cannot hold.
--->
+    -->
 
     - 如果失败了，那么 `A≢B` 是 `A ≢ B` 的证明。
       将 `¬switch` 应用于 `⊢M` 和 `A≢B`，我们可得
       `Γ ⊢ (M ↑) ↓ B` 无法成立。
 
-<!--
+    <!--
     - If it succeeds, then `A≡B` is evidence that `A ≡ B`,
       and `⊢↑ ⊢M A≡B` provides evidence that `Γ ⊢ (M ↑) ↓ B`.
--->
+    -->
 
     - 如果成功了，那么 `A≡B` 是 `A ≡ B` 的证明，
       且 `⊢↑ ⊢M A≡B` 提供了 `Γ ⊢ (M ↑) ↓ B` 成立的证明。
