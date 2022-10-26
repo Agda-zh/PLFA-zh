@@ -1100,7 +1100,7 @@ the case in general.  Putting the line
 在这样的情况下，两者都可以相同的答案 `zero`，但这不一定是普遍的情况。
 将
 
-    {- OPTIONS --exact-split -}
+    {-# OPTIONS --exact-split #-}
 
 <!--
 at the beginning of a file causes Agda to raise an error if cases
