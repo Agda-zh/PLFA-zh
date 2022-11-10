@@ -877,13 +877,8 @@ de Bruijn representation.
 
 用内在类型和 de Bruijn 法写出一个将两个自然数相乘的项。
 
-<!--
-```agda
--- Your code goes here
-```
--->
 
-```
+```agda
 -- 请将代码写在此处。
 ```
 
