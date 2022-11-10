@@ -10,6 +10,7 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 [![Release Version][plfa-badge-version-svg]][plfa-badge-version-url]
 [![agda][agda-badge-version-svg]][agda-badge-version-url]
 [![standard-library][agda-stdlib-version-svg]][agda-stdlib-version-url]
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/plfa/plfa.github.io/dev.svg)](https://results.pre-commit.ci/latest/github/plfa/plfa.github.io/dev)
 
 <!--
 
