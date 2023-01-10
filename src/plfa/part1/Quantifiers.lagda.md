@@ -350,7 +350,7 @@ difference is largely a matter of interpretation, since in Agda a value
 of a type and evidence of a proposition are indistinguishable.
 -->
 
-积是依赖积的一种特殊形式，其第二分量不取决于第一分量中的变量。当一个积被视为
+积是存在量词的一种特殊形式，其第二分量不取决于第一分量中的变量。当一个积被视为
 合取的证明时，它的两个分量都是证明，而当一个依赖积被视为存在量词的证明时，
 它的第一分量被视为数据类型中的一个元素，而第二分量是一个依赖于第一分量的命题的证明。因为在
 Agda 中，一个数据类型中的一个值一个命题的证明是无法区别的，这样的区别很大程度上
