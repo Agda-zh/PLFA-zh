@@ -627,6 +627,30 @@ proof of associativity.
 时的计算过程。
 
 ```agda
++-assoc-0 : ∀ (n p : ℕ) → (0 + n) + p ≡ 0 + (n + p)
++-assoc-0 n p =
+  begin
+    (0 + n) + p
+  ≡⟨⟩
+    n + p
+  ≡⟨⟩
+    0 + (n + p)
+  ∎
+
++-assoc-1 : ∀ (n p : ℕ) → (1 + n) + p ≡ 1 + (n + p)
++-assoc-1 n p =
+  begin
+    (1 + n) + p
+  ≡⟨⟩
+    suc (0 + n) + p
+  ≡⟨⟩
+    suc ((0 + n) + p)
+  ≡⟨ cong suc (+-assoc-0 n p) ⟩
+    suc (0 + (n + p))
+  ≡⟨⟩
+    1 + (n + p)
+  ∎
+
 +-assoc-2 : ∀ (n p : ℕ) → (2 + n) + p ≡ 2 + (n + p)
 +-assoc-2 n p =
   begin
@@ -640,30 +664,6 @@ proof of associativity.
   ≡⟨⟩
     2 + (n + p)
   ∎
-  where
-  +-assoc-1 : ∀ (n p : ℕ) → (1 + n) + p ≡ 1 + (n + p)
-  +-assoc-1 n p =
-    begin
-      (1 + n) + p
-    ≡⟨⟩
-      suc (0 + n) + p
-    ≡⟨⟩
-      suc ((0 + n) + p)
-    ≡⟨ cong suc (+-assoc-0 n p) ⟩
-      suc (0 + (n + p))
-    ≡⟨⟩
-      1 + (n + p)
-    ∎
-    where
-    +-assoc-0 : ∀ (n p : ℕ) → (0 + n) + p ≡ 0 + (n + p)
-    +-assoc-0 n p =
-      begin
-        (0 + n) + p
-      ≡⟨⟩
-        n + p
-      ≡⟨⟩
-        0 + (n + p)
-      ∎
 ```
 
 

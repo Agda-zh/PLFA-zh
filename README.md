@@ -613,16 +613,6 @@ You'll see the key sequence of the character in mini buffer.
 [Visual Studio Code][vscode] 是一个微软开发的开源代码编辑器。
 Visual Studio 市场中有 [Agda 插件][vscode-agda]。
 
-### Atom
-
-<!--
-[Atom][atom] is a free source code editor developed by GitHub. There is [a plugin for Agda support][atom-agda] available on the Atom package manager.
--->
-
-[Atom][atom] 是一个 GitHub 开发的开源代码编辑器。
-Atom 包管理器中有 [Agda 插件][atom-agda]。
-
-
 ## Getting Started for Contributors
 
 If you plan to build PLFA locally, please refer to [Contributing][plfa-contributing] for additional instructions.
@@ -667,8 +657,6 @@ If you plan to build PLFA locally, please refer to [Contributing][plfa-contribut
 [spacemacs-agda]: https://develop.spacemacs.org/layers/+lang/agda/README.html
 [vscode]: https://code.visualstudio.com/
 [vscode-agda]: https://marketplace.visualstudio.com/items?itemName=banacorn.agda-mode
-[atom]: https://atom.io/
-[atom-agda]: https://atom.io/packages/agda-mode
 [font-sourcecodepro]: https://github.com/adobe-fonts/source-code-pro
 [font-dejavusansmono]: https://dejavu-fonts.github.io/
 [font-freemono]: https://www.gnu.org/software/freefont/
