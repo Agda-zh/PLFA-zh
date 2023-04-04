@@ -1232,7 +1232,7 @@ the fact that inequality is transitive.
 ## Even and odd
 -->
 
-## 奇和偶
+## 奇和偶 {#even-and-odd}
 
 <!--
 As a further example, let's specify even and odd numbers.  Inequality
