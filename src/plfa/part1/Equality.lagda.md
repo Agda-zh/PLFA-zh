@@ -299,12 +299,23 @@ subst : ∀ {A : Set} {x y : A} (P : A → Set)
   → P x → P y
 subst P refl px = px
 ```
+
+<!--
 A predicate is a proposition over values of some type `A`, and since we model
 _propositions as types_, a predicate is a type parameterized in `A`.
 As an example, consider our earlier examples `even` and `odd` from
 Chapter [Relations](/Relations/#even-and-odd), which are predicates on natural numbers `ℕ`.
 (We will compare representing predicates as inductive data types `A → Set`
 versus functions to booleans `A → Bool` in Chapter [Decidable](/Decidable/).)
+-->
+
+谓词是对于某类型为 `A` 的值之上的命题；因为我们将**命题**视作**类型**，
+谓词则是对于 `A` 参数化的一个类型。
+例如，参考我们之前在 [Relations](/Relations/#even-and-odd) 章节中的例子，
+`even` 和 `odd` 是自然数 `ℕ` 之上的谓词。
+（我们将在 [Decidable](/Decidable/)
+章节中比较谓词的两种表示方式：以归纳数据类型 `A → Set` 
+或者以布尔值函数 `A → Bool`。）
 
 <!--
 ## Chains of equations
