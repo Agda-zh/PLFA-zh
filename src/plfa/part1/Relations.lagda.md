@@ -1187,7 +1187,9 @@ As with inequality, some additional definitions may be required.
 -- 请将代码写在此处。
 ```
 
+<!--
 #### Exercise `≤-iff-<` (recommended) {#leq-iff-less}
+-->
 
 #### 练习 `≤-iff-<` (推荐) {#leq-iff-less}
 
