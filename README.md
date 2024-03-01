@@ -6,14 +6,15 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 
 <!-- Status & Version Badges -->
 
-[![CI][plfa-badge-status-svg]][plfa-badge-status-url]
-[![pre-commit.ci status][pre-commit-status-svg]][pre-commit-status-url]
-[![Release Version][plfa-badge-version-svg]][plfa-badge-version-url]
+[![CI][plfa-zh-badge-status-svg]][plfa-zh-badge-status-url]
+[![pre-commit.ci status][zh-pre-commit-status-svg]][zh-pre-commit-status-url]
+[![Release Version][plfa-zh-badge-version-svg]][plfa-zh-badge-version-url]
 [![agda][agda-badge-version-svg]][agda-badge-version-url]
 [![standard-library][agda-stdlib-version-svg]][agda-stdlib-version-url]
 
-<!--
 
+
+<!--
 ## Getting Started for Readers
 -->
 
@@ -616,14 +617,21 @@ If you plan to build PLFA locally, please refer to [Contributing][plfa-contribut
 [epub-zh]: https://agda-zh.github.io/PLFA-zh/out/epub/plfa.epub
 [plfa-zh]: https://agda-zh.github.io/PLFA-zh/
 [plfa-zh-dev]: https://github.com/Agda-zh/PLFA-zh/archive/dev.zip
-[plfa-zh-status]: https://travis-ci.org/Agda-zh/PLFA-zh.svg?branch=dev
-[plfa-zh-travis]: https://travis-ci.org/Agda-zh/PLFA-zh
-[plfa-zh-master]: https://github.com/Agda-zh/PLFA-zh/archive/master.zip
 [trans-spec]: https://github.com/Agda-zh/PLFA-zh/issues/1
 
+<!-- Badges for PLFA-zh -->
+[plfa-zh-badge-status-svg]: https://github.com/Agda-zh/PLFA-zh/actions/workflows/ci.yml/badge.svg
+[plfa-zh-badge-status-url]: https://github.com/Agda-zh/PLFA-zh/actions/workflows/ci.yml
+[plfa-zh-badge-version-svg]: https://img.shields.io/github/v/tag/plfa/plfa.github.io?label=release
+[plfa-zh-badge-version-url]: https://github.com/plfa/plfa.github.io/releases/latest
+[zh-pre-commit-status-svg]: https://results.pre-commit.ci/badge/github/Agda-zh/PLFA-zh/dev.svg
+[zh-pre-commit-status-url]: https://results.pre-commit.ci/latest/github/Agda-zh/PLFA-zh/dev
+
+<!-- Resources used by PLFA-zh -->
 [agda-zh]: https://agda-zh.rtfd.io/zh_CN/latest/getting-started/installation.html
 [FiraCode]: https://github.com/tonsky/FiraCode
 
+<!-- PLFA Links -->
 [plfa-badge-status-svg]: https://github.com/plfa/plfa.github.io/actions/workflows/ci.yml/badge.svg
 [plfa-badge-status-url]: https://github.com/plfa/plfa.github.io/actions/workflows/ci.yml
 [pre-commit-status-svg]: https://results.pre-commit.ci/badge/github/plfa/plfa.github.io/dev.svg
