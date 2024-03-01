@@ -813,10 +813,10 @@ Chapter [More](/More/).
 
 
 <!--
-#### Exercise `bidirectional-rest` (stretch)
+#### Exercise `bidirectional-rest` (stretch) {#bidirectional-rest}
 -->
 
-#### 练习 `bidirectional-rest` （延伸）
+#### 练习 `bidirectional-rest` （延伸）{#bidirectional-rest}
 
 <!--
 Extend the bidirectional type rules to include the rest of the constructs from
@@ -1898,11 +1898,11 @@ multiplication from Chapter [DeBruijn](/DeBruijn/).
 <!--
 Using your rules from exercise
 [`bidirectional-products`](/Inference/#bidirectional-products), extend
-bidirectional inference to include products.
+bidirectional inference to include products. Also extend erasure.
 -->
 
 使用你在 [`bidirectional-mul`](/Inference/#bidirectional-mul) 练习中的赋型规则，
-将双向推理扩充至包括积。
+将双向推理扩充至包括积。此外扩充对应的擦除。
 
 ```agda
 -- 请将代码写在此处。
@@ -1915,11 +1915,15 @@ bidirectional inference to include products.
 #### 练习 `inference-rest` （延伸）
 
 <!--
-Extend the bidirectional type rules to include the rest of the constructs from
-Chapter [More](/More/).
+Using your rules from exercise
+[`bidirectional-rest`](/Inference/#bidirectional-rest), extend
+bidirectional inference to include the rest of the constructs from
+Chapter [More](/More/). Also extend erasure.
 -->
 
-扩充双向赋型规则，来包括 [More](/More/) 章节的剩余构造。
+使用你从练习 [`bidirectional-rest`](/Inference/#bidirectional-rest)
+中得到的规则，扩充双向推导规则，来包括 [More](/More/) 章节的剩余构造。
+此外扩充对应的擦除。
 
 ```agda
 -- 请将代码写在此处。
@@ -1937,7 +1941,7 @@ Agda itself uses bidirectional inference.  This explains why
 constructors can be overloaded while other defined names cannot -
 here by _overloaded_ we mean that the same name can be used for
 constructors of different types.  Constructors are typed by
-inheritance, and so the name is available when resolving the
+inheritance, and so the type is available when resolving the
 constructor, whereas variables are typed by synthesis, and so each
 variable must have a unique type.
 -->

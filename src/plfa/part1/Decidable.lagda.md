@@ -1113,10 +1113,47 @@ True Q = T ⌊ Q ⌋
 #### 练习 `False` （实践）
 
 <!--
-Give analogues of `True`, `toWitness`, and `fromWitness` which work with *negated* properties. Call these `False`, `toWitnessFalse`, and `fromWitnessFalse`.
+Give analogues of `True`, `toWitness`, and `fromWitness` which work
+with *negated* properties. Call these `False`, `toWitnessFalse`, and
+`fromWitnessFalse`.
 -->
 
-给出 `True`，`toWitness` 和 `fromWitness` 的**相反**定义。分别称为 `False`，`toWitnessFalse` 和 `fromWitnessFalse`。
+给出 `True`，`toWitness` 和 `fromWitness` 的**相反**定义。分别称为
+`False`，`toWitnessFalse` 和 `fromWitnessFalse`。
+
+<!--
+#### Exercise `Bin-decidable` (stretch)
+-->
+
+#### 练习 `Bin-decidable`（延伸）
+
+<!--
+Recall that Exercises
+[Bin](/Naturals/#Bin),
+[Bin-laws](/Induction/#Bin-laws), and
+[Bin-predicates](/Relations/#Bin-predicates)
+define a datatype `Bin` of bitstrings representing natural numbers,
+and asks you to define the following predicates:
+-->
+
+回想练习
+[Bin](/Naturals/#Bin)、
+[Bin-laws](/Induction/#Bin-laws) 和
+[Bin-predicates](/Relations/#Bin-predicates)，定义一个用比特串表示自然数的数据类型
+`Bin`，并定义以下谓词：
+
+    One  : Bin → Set
+    Can  : Bin → Set
+
+<!--
+Show that both of the above are decidable.
+-->
+
+证明以上二者是可判定的。
+
+    One? : ∀ (b : Bin) → Dec (One b)
+    Can? : ∀ (b : Bin) → Dec (Can b)
+
 
 <!--
 ## Standard Library

@@ -1237,11 +1237,13 @@ data _—↠_ : Term → Term → Set where
       ---------
     → M —↠ M
 
-  _—→⟨_⟩_ : ∀ L {M N}
-    → L —→ M
+  step—→ : ∀ L {M N}
     → M —↠ N
+    → L —→ M
       ---------
     → L —↠ N
+
+pattern _—→⟨_⟩_ L L—→M M—↠N = step—→ L M—↠N L—→M
 
 begin_ : ∀ {M N}
   → M —↠ N
@@ -1282,6 +1284,21 @@ appealing way, as we will see in the next section.
 在下一部分我们可以看到，这样的记法可以让我们用清晰的步骤来表示规约的例子。
 
 <!--
+Recall that in Chapter (Equality)[Equality] we defined chains of equalities
+using `step-≡` with a syntax declaration to reverse the order of the
+arguments, here we similarly introduce `step—→` with a pattern declaration
+to reverse the order of the arguments.  As before, this happens to allow
+Agda to perform type inference more efficiently.  We will need some long
+chains of reductions below, so efficiency can be important.
+-->
+
+我们曾在 (Equality)[Equality] 一章中用 `step-≡`
+和一个反转了实参顺序的语法声明定义了等式链，
+这里我们同样以反转了实参顺序的模式声明来引入 `step—→`。
+和之前一样，这能让 Agda 更高效地执行类型推断。我们后面会用到很长的规约链，
+因此效率是很重要的。
+
+<!--
 Alternatively, we might define reflexive and transitive closure directly
 as the smallest relation that includes `—→` and is reflexive
 and transitive.  We do so as follows:
@@ -1314,7 +1331,7 @@ and is reflexive and transitive.  A good exercise is to show that
 the two definitions are equivalent (indeed, one embeds in the other).
 -->
 
-这样的三个构造子分别表示了 `—↠′` 包括 `—→`、自反和传递的性质。
+这样的三个构造子分别表示 `—↠′` 包含了 `—→`、自反和传递的性质。
 证明两者是等价的是一个很好的练习。（的确，一者嵌入了另一者）
 
 <!--

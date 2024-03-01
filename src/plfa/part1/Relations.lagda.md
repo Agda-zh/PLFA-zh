@@ -1187,10 +1187,7 @@ As with inequality, some additional definitions may be required.
 -- 请将代码写在此处。
 ```
 
-
-<!--
 #### Exercise `≤-iff-<` (recommended) {#leq-iff-less}
--->
 
 #### 练习 `≤-iff-<` (推荐) {#leq-iff-less}
 
@@ -1487,15 +1484,20 @@ and back is the identity:
     to (from b) ≡ b
 
 <!--
-(Hint: For each of these, you may first need to prove related
-properties of `One`. Also, you may need to prove that
-if `One b` then `1` is less or equal to the result of `from b`.)
+Hint: For each of these, you may first need to prove related
+properties of `One`. It may also help to prove the following:
 -->
 
-（提示：对于每一条习题，先从 `One` 的性质开始。此外，你或许还需要证明若
-`One b` 成立，则 `1` 小于或等于 `from b` 的结果。）
+提示：对于每一条习题，先从 `One` 的性质开始。
+证明以下命题也会很有帮助。
 
+    One b
+    ----------
+    1 ≤ from b
 
+    1 ≤ n
+    ---------------------
+    to (2 * n) ≡ (to n) O
 
 ```agda
 -- 请将代码写在此处。

@@ -765,8 +765,22 @@ consists of a series of terms separated by `≡⟨⟩`.
 可读作「qed（证毕）」或「tombstone（墓碑符号）」，后者来自于其外观），
 并由一系列 `≡⟨⟩` 分隔的项组成。
 
+
 <!--
-In fact, both proofs are longer than need be, and Agda is satisfied
+Note the proofs above appear in colour, meaning that Agda has
+processed and accepted those lines, and hence they are guaranteed not
+to contain type errors. The same colour appears in the Emacs source
+file after it has been processed in Agda. In Emacs, right clicking on
+any symbol in colour, such as `+` or `suc` or `≡`, will take you to the
+definition of that symbol.
+-->
+
+注意，上面的证明以彩色显示，表示 Agda 已经处理并接受了这些代码，
+因此可以保证它们没有类型错误。在 Agda 中处理后，Emacs 源文件中会以同样的颜色显示。
+在 Emacs 中，右键单击任何彩色的符号，例如 `+`、`suc` 或 `≡`，就会跳转到该符号的定义。
+
+<!--
+In fact, both proofs above are longer than need be, and Agda is satisfied
 with the following:
 -->
 

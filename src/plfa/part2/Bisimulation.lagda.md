@@ -98,15 +98,24 @@ This stronger condition is known as _lock-step_ or _on the nose_ simulation.
 『译注：[On the nose][on-the-nose] 本义为在鼻子之上，用于表述准确无误。』
 
 <!--
-We are particularly interested in the situation where there is also
-a simulation from the target to the source: every reduction in the
-target has a corresponding reduction sequence in the source.  This
-situation is called a _bisimulation_.
+We are particularly interested in the situation where there is also a
+simulation from the target to the source: every reduction in the
+target has a corresponding reduction sequence in the source. In other
+words, `~` is a simulation from source to target, and the converse of
+`~` is a simulation from target to source: this situation is called a
+_bisimulation_.  (In general, if < and > are arbitrary relations such
+that `x < y` if and only if `y > x` then we say that `<` and `>` are
+_converse_ relations. Hence, if `~` is a relation from source to target,
+its converse is a relation from target to source.)
 -->
 
 如果从目标系统到源系统也有一个模拟：即每个目标系统的规约在源目标系统中有对应的规约序列，
-我们对这样的情况尤其感兴趣。
-这样的情况被称为**双模拟**（Bisimulation）。
+我们对这样的情况尤其感兴趣。换句话说，`~` 是一个从源到目标的模拟，而 `~`
+的逆是一个从目标的源的模拟。这样的情况被称为**互模拟**（Bisimulation）。
+  (In general, if < and > are arbitrary relations such
+that `x < y` if and only if `y > x` then we say that `<` and `>` are
+_converse_ relations. Hence, if `~` is a relation from source to target,
+its converse is a relation from target to source.)
 
 <!--
 Simulation is established by case analysis over all possible
@@ -202,7 +211,7 @@ are in bisimulation.
 
 本章形式化上文中定义的 `~` 关系是一个从源系统至目标系统的模拟。
 我们将反向的证明留作习题。
-另一个习题是证明 [More](/More/) 章节中积的替代表示方法形成了一个双模拟。
+另一个习题是证明 [More](/More/) 章节中积的替代表示方法形成了一个互模拟。
 
 <!--
 ## Imports
@@ -771,7 +780,7 @@ Show that we also have a simulation in the other direction, and hence that we ha
 a bisimulation.
 -->
 
-证明我们也有反方向的模拟，因此我们有一个双模拟。
+证明我们也有反方向的模拟，因此我们有一个互模拟。
 
 ```agda
 -- 在这里写出你的代码。
@@ -791,7 +800,7 @@ variables, and those connected to functions and products.
 In this case, the simulation is _not_ lock-step.
 -->
 
-证明 [More](/More/) 章节中两种积的表达方式满足双模拟。
+证明 [More](/More/) 章节中两种积的表达方式满足互模拟。
 你需要包含的构造有：变量，以及与函数和积相关的构造。
 在此情况下，模拟并**不是**锁步的。
 

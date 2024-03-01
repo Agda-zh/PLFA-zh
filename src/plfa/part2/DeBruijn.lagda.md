@@ -1167,7 +1167,7 @@ subst : ∀ {Γ Δ}
   → (∀ {A} → Γ ∋ A → Δ ⊢ A)
     -----------------------
   → (∀ {A} → Γ ⊢ A → Δ ⊢ A)
-subst σ (` k)          =  σ k
+subst σ (` x)          =  σ x
 subst σ (ƛ N)          =  ƛ (subst (exts σ) N)
 subst σ (L · M)        =  (subst σ L) · (subst σ M)
 subst σ (`zero)        =  `zero
@@ -1487,11 +1487,13 @@ data _—↠_ {Γ A} : (Γ ⊢ A) → (Γ ⊢ A) → Set where
       ------
     → M —↠ M
 
-  _—→⟨_⟩_ : (L : Γ ⊢ A) {M N : Γ ⊢ A}
-    → L —→ M
+  step—→ : (L : Γ ⊢ A) {M N : Γ ⊢ A}
     → M —↠ N
+    → L —→ M
       ------
     → L —↠ N
+
+pattern _—→⟨_⟩_ L L—→M M—↠N = step—→ L M—↠N L—→M
 
 begin_ : ∀ {Γ A} {M N : Γ ⊢ A}
   → M —↠ N

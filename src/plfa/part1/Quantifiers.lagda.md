@@ -28,7 +28,7 @@ open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
 open import Relation.Nullary using (¬_)
 open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
-open import plfa.part1.Isomorphism using (_≃_; extensionality)
+open import plfa.part1.Isomorphism using (_≃_; extensionality; ∀-extensionality)
 open import Function using (_∘_)
 ```
 
@@ -181,6 +181,12 @@ Chapter [Connectives](/Connectives/).
 章节中的 (`→-distrib-×`) 结果对比。
 
 <!--
+Hint: you will need to use [`∀-extensionality`](/Isomorphism/#extensionality).
+-->
+
+提示：你需要 [`∀-extensionality`](/Isomorphism/#extensionality)。
+
+<!--
 #### Exercise `⊎∀-implies-∀⊎` (practice)
 -->
 
@@ -226,14 +232,14 @@ data Tri : Set where
 <!--
 Let `B` be a type indexed by `Tri`, that is `B : Tri → Set`.
 Show that `∀ (x : Tri) → B x` is isomorphic to `B aa × B bb × B cc`.
-Hint: you will need to postulate a version of extensionality that
-works for dependent functions.
 -->
 
 令 `B` 作为由 `Tri` 索引的一个类型，也就是说 `B : Tri → Set`。
 证明 `∀ (x : Tri) → B x` 和 `B aa × B bb × B cc` 是同构的。
-提示：你需要引入一个可应用于依赖函数的外延性公设。
 
+Hint: you will need to use [`∀-extensionality`](/Isomorphism/#extensionality).
+
+提示：你需要 [`∀-extensionality`](/Isomorphism/#extensionality)。
 
 <!--
 ## Existentials
@@ -277,7 +283,7 @@ We define a convenient syntax for existentials as follows:
 ```agda
 Σ-syntax = Σ
 infix 2 Σ-syntax
-syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
+syntax Σ-syntax A (λ x → Bx) = Σ[ x ∈ A ] Bx
 ```
 
 <!--
@@ -889,13 +895,13 @@ for `Can b`.
 
     ≡One : ∀ {b : Bin} (o o′ : One b) → o ≡ o′
 
-    ≡Can : ∀ {b : Bin} (cb cb′ : Can b) → cb ≡ cb′
+    ≡Can : ∀ {b : Bin} (c c′ : Can b) → c ≡ c′
 
 Many of the alternatives for proving `to∘from` turn out to be tricky.
 However, the proof can be straightforward if you use the following lemma,
 which is a corollary of `≡Can`.
 
-    proj₁≡→Can≡ : {cb cb′ : ∃[ b ] Can b} → proj₁ cb ≡ proj₁ cb′ → cb ≡ cb′
+    proj₁≡→Can≡ : {c c′ : ∃[ b ] Can b} → proj₁ c ≡ proj₁ c′ → c ≡ c′
 
 
 

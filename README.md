@@ -6,7 +6,7 @@ translators : ["Rongxiao Fu", "Oling Cat"]
 
 <!-- Status & Version Badges -->
 
-[![Build Status][plfa-badge-status-svg]][plfa-badge-status-url]
+[![CI][plfa-badge-status-svg]][plfa-badge-status-url]
 [![pre-commit.ci status][pre-commit-status-svg]][pre-commit-status-url]
 [![Release Version][plfa-badge-version-svg]][plfa-badge-version-url]
 [![agda][agda-badge-version-svg]][agda-badge-version-url]
@@ -71,7 +71,7 @@ apt），Agda 的版本可能不是最新的。除此之外，Agda
 ### On macOS: Install the XCode Command Line Tools
 -->
 
-### macOS 平台：安装 XCode 命令行工具{#on-macos-install-the-xcode-command-line-tools}
+### macOS 平台：安装 XCode 命令行工具 {#on-macos-install-the-xcode-command-line-tools}
 
 <!--
 On macOS, you’ll need to install [The XCode Command Line Tools][xcode]. For most versions of macOS, you can install these by running the following command:
@@ -96,6 +96,7 @@ xcode-select --install
 You can check whether you have Git by running the following command:
 -->
 
+
 你可以使用下面的命令来检查你是否安装了 Git。
 
 ```bash
@@ -116,19 +117,18 @@ If you do not have Git, see [the Git downloads page][git].
 ### 安装 GHC 和 Cabal {#install-ghc-and-cabal}
 
 <!--
-Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ and its package manager _Cabal_. PLFA should work with any version of GHC >=8.10, but is tested with versions 8.10 and 9.2. We recommend installing GHC and Cabal using [ghcup][ghcup].  For instance, once `ghcup` is installed, by typing
+Agda is written in Haskell, so to install it we’ll need the _Glorious Haskell Compiler_ and its package manager _Cabal_. PLFA should work with any version of GHC >=8.10, but is tested with versions 8.10 – 9.8. We recommend installing GHC and Cabal using [ghcup][ghcup].  For instance, once `ghcup` is installed, by typing
 -->
 
-
 Agda 是用 Haskell 写成的，所以为了安装它我们需要 _Glorious Haskell Compiler_
-和它的包管理器 _Cabal_。PLFA 应该在任何 >=8.10 的 GHC 版本下运行，在 8.10 和 9.2 版本下完成测试。我们建议使用 [ghcup][ghcup] 来安装两者。
+和它的包管理器 _Cabal_。PLFA 应该在任何 >=8.10 的 GHC 版本下运行，在 8.10 到 9.8 版本下完成测试。我们建议使用 [ghcup][ghcup] 来安装两者。
 在 `ghcup` 安装好之后，输入下列命令：
 
 ```bash
-ghcup install ghc 9.2.4
+ghcup install ghc 9.4.8
 ghcup install cabal recommended
 
-ghcup set ghc 9.2.4
+ghcup set ghc 9.4.8
 ghcup set cabal recommended
 ```
 
@@ -239,7 +239,7 @@ Otherwise, you will need to edit the appropriate files. Both configuration files
 - If the `AGDA_DIR` directory does not already exist, create it.
 - In `AGDA_DIR`, create a plain-text file called `libraries` containing `AGDA_STDLIB/standard-library.agda-lib`, where `AGDA_STDLIB` is the path to where the Agda standard library is located (e.g., `~/plfa/standard-library/`). This lets Agda know that an Agda library called `standard-library` is available.
 - In `AGDA_DIR`, create a plain-text file called `defaults` containing _just_ the line `standard-library`.
-- If you want to complete the exercises or to import modules from the book, you will also need to provide access to PLFA as an Agda library. To do so, let `PLFA` be the path to the root directory for PLFA.
+- If you want to import modules from the book, you will also need to provide access to PLFA as an Agda library. To do so, let `PLFA` be the path to the root directory for PLFA.
   Add `PLFA/src/plfa.agda-lib` to `AGDA_DIR/libraries` and add `plfa` to `AGDA_DIR/defaults`, each on a line of their own.
 -->
 
@@ -248,8 +248,7 @@ Otherwise, you will need to edit the appropriate files. Both configuration files
     `/path/to/standard-library.agda-lib` （即上文中记录的路径）。
   这个文件让 Agda 知道有一个名为 `standard-library` 的库可用。
 - 在 `AGDA_DIR` 中，创建一个纯文本文件 `defaults`，内容__仅__为 `standard-library` 这一行。
-- 如果你想完成 的习题，或者想导入书中的模块，
-  那么需要将 PLFA 设置为 Agda 库。如果 `PLFA` 是 PLFA
+- 如果你想导入书中的模块，那么需要将 PLFA 设置为 Agda 库。假设 `PLFA` 是 PLFA
   的根目录，完成此设置需要将 `PLFA/src/plfa.agda-lib` 作为单独的一行添加到
   `AGDA_DIR/libraries`，并将 `plfa` 作为单独的一行添加到 `AGDA_DIR/defaults`。
 
@@ -270,6 +269,7 @@ More information about placing the standard libraries is available from [the Lib
 <!--
 The recommended editor for Agda is Emacs. To install Emacs:
 -->
+
 推荐的 Agda 编辑器是 Emacs。安装 Emacs 可以用下面的方法：
 
 <!--
@@ -281,12 +281,12 @@ The recommended editor for Agda is Emacs. To install Emacs:
 
 -->
 
-- __UNIX 平台__：包管理器中的 Emacs 应该可以使用（只要它的版本比较新），[GNU
+- __UNIX__：包管理器中的 Emacs 应该可以使用（只要它的版本比较新），[GNU
    Emacs 下载页面][emacs]也有最近发布版本的链接。
-- __MacOS 平台__：推荐的 Emacs 是 [Aquamacs][aquamacs]，但是 GNU Emacs
+- __MacOS__：推荐的 Emacs 是 [Aquamacs][aquamacs]，但是 GNU Emacs
    也可以通过 Homebrew 或者 MacPorts 安装。参阅 [GNU Emacs
    下载页面][emacs]中的指示。
-- __Windows 平台__：参阅 [GNU Emacs 下载页面][emacs]中的指示。
+- __Windows__：参阅 [GNU Emacs 下载页面][emacs]中的指示。
 
 <!--
 Make sure that you are able to open, edit, and save text files with your installation. The [tour of Emacs][emacs-tour] page on the GNU Emacs site describes how to access the tutorial within your Emacs installation.
@@ -310,27 +310,9 @@ agda-mode compile
 If you are already an Emacs user and have customized your setup, you may want to note the configuration which the `setup` appends to your `.emacs` file, and integrate it with your own preferred setup.
 -->
 
-如果你已经是 Emacs 用户，并有自己的设置，你会注意到 `setup` 命令向你的 `.emacs`
+如果你已经是 Emacs 用户，并有自己的设置，你会发现 `setup` 命令向你的 `.emacs`
 文件中追加了配置，来配合你已有的设置。
 
-<!--
-The recommended editor for Agda is Emacs with `agda-mode`. Agda ships with `agda-mode`, so if you’ve installed Agda, all you have to do to configure `agda-mode` is run:
--->
-
-加上 `agda-mode`。Agda 自带了 `agda-mode`，
-因此如果你已经安装了 Agda，那么之需要运行以下命令就能配置好 `agda-mode` 了：
-
-<!--
-#### Check if `agda-mode` was installed correctly
--->
-#### 检查 `agda-mode` 是否正确安装
-
-<!--
-Open the `nats.agda` file you created earlier, and load and type-check the file by typing [`C-c C-l`][agda-readthedocs-emacs-notation].
--->
-
-打开之前创建的 `nats.agda` 文件，使用 [`C-c C-l`][agda-readthedocs-emacs-notation]
-来载入和类型检查这个文件。
 
 <!--
 #### Auto-loading `agda-mode` in Emacs
@@ -362,7 +344,7 @@ Since version 2.6.0, Agda has had support for literate editing with Markdown, us
 If you already have settings which change your `auto-mode-alist` in your configuration, put these _after_ the ones you already have or combine them if you are comfortable with Emacs Lisp. The configuration file for Emacs is normally located in `HOME/.emacs` or `HOME/.emacs.d/init.el`, but Aquamacs users might need to move their startup settings to the “Preferences.el” file in `HOME/Library/Preferences/Aquamacs Emacs/Preferences`. For Windows, see [the GNU Emacs documentation][emacs-home] for a description of where the Emacs configuration is located.
 -->
 
-如果你配置中已有了改变 `auto-mode-alist`
+如果你的配置中已有了改变 `auto-mode-alist`
 的设置，将上述内容放置在已有的设置__之后__，或者将其与已有设置合并（如果你对
 Emacs Lisp 足够了解）。
 Emacs 的配置文件通常位于 `~/.emacs` 或 `~/.emacs.d/init.el`，然而
@@ -407,6 +389,19 @@ Mononoki。对于大多数系统来说，安装字体只是简单的下载 `.otf
 ```
 
 <!--
+#### Check if `agda-mode` was installed correctly
+-->
+
+#### 检查 `agda-mode` 是否正确安装
+
+<!--
+Open the first chapter of the book (`plfa/src/plfa/part1/Naturals.lagda.md`) in Emacs.  You can load and type-check the file by typing [`C-c C-l`][agda-readthedocs-emacs-notation].
+-->
+
+在 Emacs 中打开本书的第一章 (`plfa/src/plfa/part1/Naturals.lagda.md`)，输入
+[`C-c C-l`][agda-readthedocs-emacs-notation] 来载入和类型检查这个文件。
+
+<!--
 #### Using `agda-mode` in Emacs
 -->
 
@@ -419,7 +414,7 @@ To load and type-check the file, use [`C-c C-l`][agda-readthedocs-emacs-notation
 要加载文件并对其执行类型检查，请使用 [`C-c C-l`][agda-readthedocs-emacs-notation]。
 
 <!--
-Agda is edited interactively, using [“holes”][agda-readthedocs-holes], which are bits of the program that are not yet filled in. If you use a question mark as an expression, and load the buffer using `C-c C-l`, Agda replaces the question mark with a hole. There are several things you can to while the cursor is in a hole:
+Agda is edited interactively, using [“holes”][agda-readthedocs-holes], which are bits of the program that are not yet filled in. If you use a question mark as an expression, and load the buffer using `C-c C-l`, Agda replaces the question mark with a hole. There are several things you can do while the cursor is in a hole:
 -->
 
 Agda 的编辑是通过使用「[洞][agda-readthedocs-holes]」来交互的，它表示程序中尚未填充的片段。
@@ -629,8 +624,8 @@ If you plan to build PLFA locally, please refer to [Contributing][plfa-contribut
 [agda-zh]: https://agda-zh.rtfd.io/zh_CN/latest/getting-started/installation.html
 [FiraCode]: https://github.com/tonsky/FiraCode
 
-[plfa-badge-status-svg]: https://github.com/plfa/plfa.github.io/actions/workflows/build.yml/badge.svg
-[plfa-badge-status-url]: https://github.com/plfa/plfa.github.io/actions/workflows/build.yml
+[plfa-badge-status-svg]: https://github.com/plfa/plfa.github.io/actions/workflows/ci.yml/badge.svg
+[plfa-badge-status-url]: https://github.com/plfa/plfa.github.io/actions/workflows/ci.yml
 [pre-commit-status-svg]: https://results.pre-commit.ci/badge/github/plfa/plfa.github.io/dev.svg
 [pre-commit-status-url]: https://results.pre-commit.ci/latest/github/plfa/plfa.github.io/dev
 [plfa-badge-version-svg]: https://img.shields.io/github/v/tag/plfa/plfa.github.io?label=release

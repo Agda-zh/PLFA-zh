@@ -1,23 +1,25 @@
-{-# HLINT ignore "Monad law, left identity" #-}
-{-# HLINT ignore "Redundant <&>" #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Redundant <&>" #-}
+{-# HLINT ignore "Monad law, left identity" #-}
 
 module Main where
 
 import Buildfile.Author (Author (..))
 import Buildfile.Book (Book (..), Chapter (..), ChapterTable, Part (..), fromBook, nextChapter, previousChapter)
 import Buildfile.Contributor (Contributor (..))
-import Buildfile.Stylesheet qualified as Stylesheet ( alternate, fromFilePath)
-import Buildfile.Script qualified as Script ( inline, fromFilePath )
+import Buildfile.Script qualified as Script (fromFilePath, inline)
+import Buildfile.Stylesheet (Stylesheet (stylesheetEnabled, stylesheetId))
+import Buildfile.Stylesheet qualified as Stylesheet (alternate, fromFilePath)
 import Control.Exception (assert, catch)
 import Control.Monad (forM, forM_, unless, when, (>=>))
 import Control.Monad.Except (MonadError (throwError))
 import Control.Monad.IO.Class (MonadIO)
 import Control.Monad.State (evalState)
+import Data.Base64.Types qualified as Base64
 import Data.ByteString.Lazy qualified as LazyByteString
-import Data.ByteString.Lazy.Base64 qualified as LazyByteString
+import Data.ByteString.Lazy.Base64 qualified as Base64
 import Data.Default.Class (Default (def))
 import Data.Digest.Pure.SHA qualified as Digest (bytestringDigest, sha512)
 import Data.Either (fromRight, isRight)
@@ -40,16 +42,16 @@ import Shoggoth.Configuration
 import Shoggoth.Metadata
 import Shoggoth.PostInfo
 import Shoggoth.Prelude
-import Shoggoth.Routing
+import Shoggoth.Routing (Router (..), RoutingTable, Stages (..), permalinkRouter)
+import Shoggoth.Routing qualified as Route
 import Shoggoth.TagSoup qualified as TagSoup
-import Shoggoth.Template.Pandoc (Extension (..), HTMLMathMethod (..), HighlightStyle, Inlines, Lang, Locale, MetaValue, ObfuscationMethod (..), Pandoc (..), ReaderOptions (..), Reference, WriterOptions (..), extensionsFromList, runPandoc, runPandocWith, defaultKaTeXURL)
+import Shoggoth.Template.Pandoc (Extension (..), HTMLMathMethod (..), HighlightStyle, Inlines, Lang, Locale, MetaValue, ObfuscationMethod (..), Pandoc (..), ReaderOptions (..), Reference, WriterOptions (..), defaultKaTeXURL, extensionsFromList, runPandoc, runPandocWith)
 import Shoggoth.Template.Pandoc qualified as Pandoc
 import Shoggoth.Template.Pandoc.Builder qualified as Builder
 import Shoggoth.Template.Pandoc.Citeproc qualified as Citeproc
 import System.Directory (findExecutable, makeAbsolute)
 import System.Exit (ExitCode (..), exitWith)
 import Text.Printf (printf)
-import Buildfile.Stylesheet (Stylesheet(stylesheetId, stylesheetEnabled))
 
 outDir, tmpDir :: FilePath
 outDir = "_site"
@@ -133,8 +135,8 @@ main = do
       let postOrPermalinkRouter :: FilePath -> Action FilePath
           postOrPermalinkRouter src
             | isPostSource src = do
-              PostInfo {..} <- failOnError $ parsePostSource (takeFileName src)
-              return $ outDir </> postYear </> postMonth </> postDay </> postSlug </> "index.html"
+                PostInfo {..} <- failOnError $ parsePostSource (takeFileName src)
+                return $ outDir </> postYear </> postMonth </> postDay </> postSlug </> "index.html"
             | otherwise = permalinkRouter src
 
       let postOrPermalinkRouterWithAgda :: FilePath -> Action Stages
@@ -156,9 +158,9 @@ main = do
                 [webDir </> "TableOfContents.md"] |-> postOrPermalinkRouterWithAgda,
                 [chapterDir </> "plfa" <//> "*.md"] *|-> postOrPermalinkRouterWithAgda,
                 -- Book (Standalone HTML)
-                create (outDir </> "plfa.html"),
+                Route.create (outDir </> "plfa.html"),
                 -- Book (EPUB Version)
-                create (outDir </> "plfa.epub"),
+                Route.create (outDir </> "plfa.epub"),
                 -- Announcements
                 [webDir </> "Announcements.md"] |-> postOrPermalinkRouterWithAgda,
                 [webDir </> "rss.xml"] |-> outDir </> "rss.xml",
@@ -174,7 +176,7 @@ main = do
                 [webDir </> "404.md"] |-> permalinkRouter,
                 [webStyleDir </> "light.scss"] |-> outDir </> "assets/css/light.css",
                 [webStyleDir </> "dark.scss"] |-> outDir </> "assets/css/dark.css",
-                create (outDir </> "assets/css/highlight.css"),
+                Route.create (outDir </> "assets/css/highlight.css"),
                 [webAssetDir <//> "*"] *|-> \src -> outDir </> "assets" </> makeRelative webAssetDir src
               ]
 
@@ -233,14 +235,14 @@ main = do
             liftIO $ do
               stream <- LazyByteString.readFile src
               let digest = Digest.sha512 stream
-              return . Just $ "sha512-" <> LazyByteString.encodeBase64 (Digest.bytestringDigest digest)
+              return . Just $ "sha512-" <> Base64.extractBase64 (Base64.encodeBase64 (Digest.bytestringDigest digest))
       let ?getDigest = getDigest
 
       --------------------------------------------------------------------------------
       -- Phony targets
 
       "build" ~> do
-        need =<< outputs
+        need =<< Route.outputs
 
       let clean = do
             removeFilesAfter tmpRawAgdaHtmlDir ["//*"]
@@ -259,14 +261,14 @@ main = do
       --------------------------------------------------------------------------------
       -- Table of Contents
 
-      let getTableOfContentsField = \() -> do
+      let getTableOfContentsField () = do
             tocMetadata <- toMetadata <$> getTableOfContents ()
             tocResolved <- resolveIncludes (fmap fst . getFileWithMetadata) tocMetadata
             return $ constField "toc" tocResolved
 
       -- Build /
       outDir </> "index.html" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         tocField <- getTableOfContentsField ()
         (fileMetadata, indexMarkdownTemplate) <- getFileWithMetadata src
         stylesheetField <- getStylesheetField
@@ -283,7 +285,7 @@ main = do
 
       -- Stage 1: Compile literate Agda code blocks to raw HTML
       tmpRawAgdaHtmlDir <//> "*.md" %> \next -> do
-        (src, prev) <- (,) <$> routeSource next <*> routePrev next
+        (src, prev) <- (,) <$> Route.source next <*> Route.prev next
         Agda.getVersion
         AgdaFileInfo {libraryRawAgdaHtmlDir, libraries} <- getAgdaFileInfo src
         need [prev]
@@ -292,7 +294,7 @@ main = do
 
       -- Stage 2: Fix raw Agda HTML output
       tmpAgdaHtmlDir <//> "*.md" %> \next -> do
-        (src, prev) <- (,) <$> routeSource next <*> routePrev next
+        (src, prev) <- (,) <$> Route.source next <*> Route.prev next
         need [prev]
         RichAgdaFileInfo {agdaFileInfo} <- getAgdaFileInfo src
         agdaLinkFixer <- getAgdaLinkFixer src
@@ -305,14 +307,14 @@ main = do
 
       -- Stage 3: Compile Markdown to HTML
       tmpBodyHtmlDir <//> "*.html" %> \next -> do
-        (src, prev, out) <- (,,) <$> routeSource next <*> routePrev next <*> route next
+        (src, prev, out) <- (,,) <$> Route.source next <*> Route.prev next <*> Route.output next
         readFile' prev
           >>= markdownToHtml5
           >>= writeFile' next
 
       -- Stage 4: Apply HTML templates
       outDir <//> "*.html" %> \out -> do
-        (src, prev) <- (,) <$> routeSource out <*> routePrev out
+        (src, prev) <- (,) <$> Route.source out <*> Route.prev out
         (fileMetadata, htmlBody) <- getFileWithMetadata prev
         stylesheetField <- getStylesheetField
         scriptField <- getScriptField
@@ -327,10 +329,10 @@ main = do
       --------------------------------------------------------------------------------
       -- Posts
 
-      let getPostsField = \() -> do
-            posts <- filter isPostSource <$> sources
+      let getPostsField () = do
+            posts <- filter isPostSource <$> Route.sources
             postsMetadata <- forM posts $ \post -> do
-              bodyHtml <- routeAnchor "body_html" post
+              bodyHtml <- Route.anchor "body_html" post
               (fileMetadata, body) <- getFileWithMetadata bodyHtml
               let bodyHtmlField = constField "body_html" body
               url <- failOnError $ fileMetadata ^. "url"
@@ -341,7 +343,7 @@ main = do
 
       -- Build /Announcements/index.html
       outDir </> "Announcements" </> "index.html" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         postsField <- getPostsField ()
         (fileMetadata, indexMarkdownTemplate) <- getFileWithMetadata src
         stylesheetField <- getStylesheetField
@@ -355,7 +357,7 @@ main = do
 
       -- Build /Acknowledgements/index.html
       outDir </> "Acknowledgements" </> "index.html" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         contributorField <- constField "contributor" <$> getContributors ()
         (fileMetadata, acknowledgmentsMarkdownTemplate) <- getFileWithMetadata src
         stylesheetField <- getStylesheetField
@@ -369,7 +371,7 @@ main = do
 
       -- Build rss.xml
       outDir </> "rss.xml" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         postsField <- getPostsField ()
         (fileMetadata, rssXmlTemplate) <- getFileWithMetadata src
         let metadata = mconcat [postsField, fileMetadata]
@@ -382,7 +384,7 @@ main = do
 
       -- Build 404.html
       outDir </> "404.html" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         (fileMetadata, errorMarkdownBody) <- getFileWithMetadata src
         stylesheetField <- getStylesheetField
         scriptField <- getScriptField
@@ -394,13 +396,13 @@ main = do
 
       -- Build assets/css/light.css
       outDir </> "assets/css/light.css" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         need =<< getDirectoryFiles "" [webStyleDir <//> "*.scss"]
         sass [] ["--load-path=" <> webStyleDir, "--style=compressed", src, out] Nothing
 
       -- Build assets/css/dark.css
       outDir </> "assets/css/dark.css" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         need =<< getDirectoryFiles "" [webStyleDir <//> "*.scss"]
         sass [] ["--load-path=" <> webStyleDir, "--style=compressed", src, out] Nothing
 
@@ -410,7 +412,7 @@ main = do
 
       -- Copy static assets
       outDir </> "assets" <//> "*" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         copyFile' src out
 
       -- Copy course PDFs
@@ -419,7 +421,7 @@ main = do
       -- TODO: remove PDFs from repository
       --
       outDir <//> "*.pdf" %> \out -> do
-        src <- routeSource out
+        src <- Route.source out
         copyFile' src out
 
       --------------------------------------------------------------------------------
@@ -427,14 +429,14 @@ main = do
 
       outDir </> "plfa.html" %> \out -> do
         -- Require all assets, rss.xml, and standalone template:
-        assets <- filter ((outDir </> "assets" <//> "*") ?==) <$> outputs
+        assets <- filter ((outDir </> "assets" <//> "*") ?==) <$> Route.outputs
         need assets
         need [outDir </> "rss.xml", webTemplateDir </> "standalone.html"]
 
         defaultMetadata <- ?getDefaultMetadata ()
 
         let routeChapter src =
-              if Agda.isAgdaFile src then routeAnchor "agda_html" src else return src
+              if Agda.isAgdaFile src then Route.anchor "agda_html" src else return src
 
         bookDoc <- makeBookDoc routeChapter
 
@@ -475,8 +477,10 @@ main = do
             putWarn "Could not find 'ebook-publish' on the PATH; plfa.epub is unpolished"
             copyFile' src out
           Just ebookPolish -> do
-            command [] ebookPolish [
-                "--smarten-punctuation",
+            command
+              []
+              ebookPolish
+              [ "--smarten-punctuation",
                 "--remove-unused-css",
                 "--add-soft-hyphens",
                 "--upgrade-book",
@@ -493,7 +497,7 @@ main = do
         need [tmpEpubDir </> "epub-metadata.xml", tmpEpubDir </> "style.css"]
 
         let routeChapter src =
-              if Agda.isAgdaFile src then routeAnchor "agda_html" src else return src
+              if Agda.isAgdaFile src then Route.anchor "agda_html" src else return src
 
         bookDoc <-
           makeBookDoc routeChapter
@@ -514,7 +518,7 @@ main = do
                   writerTopLevelDivision = Pandoc.TopLevelPart,
                   writerEpubMetadata = Just epubMetadata,
                   writerEpubFonts = epubFonts,
-                  writerEpubChapterLevel = 2,
+                  writerSplitLevel = 2,
                   writerTOCDepth = 2,
                   writerReferenceLocation = Pandoc.EndOfDocument
                 }
@@ -638,7 +642,7 @@ getFileWithMetadata ::
   FilePath ->
   Action (Metadata, Text)
 getFileWithMetadata cur = do
-  (src, out, url) <- (,,) <$> routeSource cur <*> route cur <*> routeUrl cur
+  (src, out, url) <- (,,) <$> Route.source cur <*> Route.output cur <*> Route.url cur
 
   -- Default metadata:
   defaultMetadata <- ?getDefaultMetadata ()
@@ -660,9 +664,9 @@ getFileWithMetadata cur = do
 
   -- Previous and next chapter URLs:
   chapterTable <- ?getChapterTable ()
-  maybePrevUrl <- traverse routeUrl (previousChapter chapterTable src)
+  maybePrevUrl <- traverse Route.url (previousChapter chapterTable src)
   let prevField = ignoreNothing $ constField "prev" <$> maybePrevUrl
-  maybeNextUrl <- traverse routeUrl (nextChapter chapterTable src)
+  maybeNextUrl <- traverse Route.url (nextChapter chapterTable src)
   let nextField = ignoreNothing $ constField "next" <$> maybeNextUrl
 
   -- Dates:
@@ -710,7 +714,7 @@ makeBookDoc routeChapter = do
     chapters <- for (partChapters part) $ \chapter -> do
       -- Get chapter document
       let chapterSrc = chapterInclude chapter
-      (chapterHtml, chapterUrl) <- (,) <$> routeChapter chapterSrc <*> routeUrl chapterSrc
+      (chapterHtml, chapterUrl) <- (,) <$> routeChapter chapterSrc <*> Route.url chapterSrc
       (chapterMetadata, chapterBody) <- getFileWithMetadata chapterHtml
       Pandoc _ chapterBlocks <- Pandoc.markdownToPandoc chapterBody
       -- Get chapter title & ident
@@ -812,20 +816,21 @@ defaultHtmlMinifierArgs =
   ]
 
 htmlMinifier :: HasCallStack => CmdOutput r -> [CmdOption] -> [String] -> LazyText.Text -> Action r
-htmlMinifier cmdOutput cmdOpts args stdin = getMode >>= \case
-  Development -> do
-    let body = Text.concat $ LazyText.toChunks stdin
-    case cmdOutput of
-      OutputToFile out -> writeFile' out body
-      OutputToText -> return body
-  Production -> do
-    let stdinCmdOpt = StdinBS (LazyText.encodeUtf8 stdin)
-    case cmdOutput of
-      OutputToFile out ->
-        npmExec (stdinCmdOpt : cmdOpts) "html-minifier" (["--output=" <> out] <> args)
-      OutputToText -> do
-        Stdout minifiedHtml <- npmExec (stdinCmdOpt : cmdOpts) "html-minifier" args
-        return (Text.decodeUtf8 minifiedHtml)
+htmlMinifier cmdOutput cmdOpts args stdin =
+  getMode >>= \case
+    Development -> do
+      let body = Text.concat $ LazyText.toChunks stdin
+      case cmdOutput of
+        OutputToFile out -> writeFile' out body
+        OutputToText -> return body
+    Production -> do
+      let stdinCmdOpt = StdinBS (LazyText.encodeUtf8 stdin)
+      case cmdOutput of
+        OutputToFile out ->
+          npmExec (stdinCmdOpt : cmdOpts) "html-minifier" (["--output=" <> out] <> args)
+        OutputToText -> do
+          Stdout minifiedHtml <- npmExec (stdinCmdOpt : cmdOpts) "html-minifier" args
+          return (Text.decodeUtf8 minifiedHtml)
 
 --------------------------------------------------------------------------------
 -- HTML5 post-processing
@@ -845,8 +850,10 @@ postProcessHtml5 = genericPostProcessHtml5 OutputToText
 
 genericPostProcessHtml5 :: CmdOutput r -> FilePath -> FilePath -> Text -> Action r
 genericPostProcessHtml5 cmdOutput outDir out html = do
-  let body = html & TagSoup.withUrls (removeIndexHtml . relativizeUrl outDir out)
-                  & TagSoup.addDefaultTableHeaderScope "col"
+  let body =
+        html
+          & TagSoup.withUrls (removeIndexHtml . relativizeUrl outDir out)
+          & TagSoup.addDefaultTableHeaderScope "col"
   let stdin = LazyText.fromChunks [body]
   htmlMinifier cmdOutput [] defaultHtmlMinifierArgs stdin
 

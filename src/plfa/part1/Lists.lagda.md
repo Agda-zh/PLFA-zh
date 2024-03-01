@@ -401,7 +401,7 @@ Here is an example showing how to compute the length of a list:
 _ : length [ 0 , 1 , 2 ] ≡ 3
 _ =
   begin
-    length (0 ∷ 1 ∷ 2 ∷ [])
+    length (0 ∷ 1 ∷ 2 ∷ [])
   ≡⟨⟩
     suc (length (1 ∷ 2 ∷ []))
   ≡⟨⟩
@@ -574,6 +574,10 @@ reverse of the second appended to the reverse of the first:
 
     reverse (xs ++ ys) ≡ reverse ys ++ reverse xs
 
+```agda
+-- Your code goes here
+```
+
 
 <!--
 #### Exercise `reverse-involutive` (recommended)
@@ -590,6 +594,10 @@ as the identity function.  Show that reverse is an involution:
 证明反转是一个对合：
 
     reverse (reverse xs) ≡ xs
+
+```agda
+-- Your code goes here
+```
 
 
 <!--
@@ -1791,7 +1799,7 @@ the head and tail of the list.
 #### Exercise `Any?` (stretch)
 -->
 
-#### 练习 `Any?`（扩展）
+#### 练习 `Any?`（延伸）
 
 <!--
 Just as `All` has analogues `all` and `All?` which determine whether a
@@ -1814,7 +1822,7 @@ for some element of a list.  Give their definitions.
 #### Exercise `split` (stretch)
 -->
 
-#### 练习 `split`（扩展）
+#### 练习 `split`（延伸）
 
 <!--
 The relation `merge` holds when two lists merge to give a third list.

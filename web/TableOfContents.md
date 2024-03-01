@@ -76,6 +76,13 @@ $endfor$
 
 ### 使用本书教学的课程
 
+#### 2023
+  * [Peter Thiemann, Albert-Ludwigs University][Freiburg-2023]
+  * [Philip Wadler, University of Edinburgh][TSPL-2023]
+
+[Freiburg-2023]: https://web.archive.org/web/20240208112146/https://proglang.informatik.uni-freiburg.de/teaching/proglang/2023ws/
+[TSPL-2023]: /TSPL/2023/
+
 #### 2022
   * [Andrej Bauer, University of Ljubljana][UL-2022]
   * Michael Shulman, University of San Diego

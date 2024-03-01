@@ -212,10 +212,21 @@ practice.
 标记有**实践**的习题供想要更多实践的学生练习。
 
 <!--
-You may need to import library functions required for the solution.
+You may answer the exercises by downloading the book from github and
+editing where it says "-- Your code goes here". Alternatively, you
+may be given a file to edit containing exercises for a given coursework.
+
+In either case, you may need to import additional library functions
+required for the solution. You may also need to set up PLFA as an Agda
+library, as described in
+[Getting Started](/GettingStarted/#install-plfa-and-the-agda-standard-library).
 -->
 
-你在解题时或许需要导入库函数。
+你可以从 Github 上下载本书并将 “-- 请将代码写在此处” 替换为你的习题解答。
+此外，你也可能在课程作业中收到需要编辑的文件，其中包含了练习。
+
+你在解题时或许需要导入库函数，也可能需要将 PLFA 设置为 Agda 库，方法可参考
+[读者指南](/GettingStarted/#install-plfa-and-the-agda-standard-library)。
 
 <!--
 Please do not post answers to the exercises in a public place.

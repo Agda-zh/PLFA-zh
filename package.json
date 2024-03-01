@@ -1,8 +1,8 @@
 {
   "devDependencies": {
-    "browser-sync": "^2.29.1",
-    "html-validate": "^7.15.1",
+    "browser-sync": "^3.0.2",
+    "html-validate": "^8.8.0",
     "html-minifier": "^4.0.0",
-    "sass": "^1.61.0"
+    "sass": "^1.71.1"
   }
 }

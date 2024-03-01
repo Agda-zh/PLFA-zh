@@ -952,27 +952,22 @@ confluence L↠M₁ L↠M₂
 ## 注记
 
 <!--
-Broadly speaking, this proof of confluence, based on parallel
-reduction, is due to W. Tait and P. Martin-Löf (see Barendregt 1984,
-Section 3.2).  Details of the mechanization come from several sources.
-The `subst-par` lemma is the "strong substitutivity" lemma of Shafer,
-Tebbi, and Smolka (ITP 2015). The proofs of `par-triangle`, `strip`,
+This mechanized proof of confluence is based on several sources. The
+`subst-par` lemma is the "strong substitutivity" lemma of
+@Schafer:2015. The proofs of `par-triangle`, `strip`,
 and `par-confluence` are based on the notion of complete development
-by Takahashi (1995) and Pfenning's 1992 technical report about the
+by @Takahashi:1995 and the technical report by @Pfenning:1992 about the
 Church-Rosser theorem. In addition, we consulted Nipkow and
 Berghofer's mechanization in Isabelle, which is based on an earlier
-article by Nipkow (JAR 1996).
+paper by @Nipkow:1996.
 -->
 
-总而言之，这种基于平行规约的合流性的证明
-归功于 W. Tait 和 P. Martin-Löf （参见 Barendregt 1984，章节 3.2）。
-机械化的细节有多个来源。
-`subst-par` 引理是 Shafer、Tebbi 和 Smolka (ITP 2015) 的 「强替换性（Strong Substitutivity）」 引理。
-`par-triangle`、`strip` 和 `par-confluence` 的证明是基于
-Takahashi (1995) 的 complete development
-和 Pfenning 1992 年关于 Church-Rosser 定理的技术报告。
-此外，我们咨询了 Nipkow 和 Berghofer 在 Isabelle 中的机械化，
-它基于 Nipkow 的早期文章（JAR 1996）。
+总而言之，这种机械化的合流性证明基于几个来源。
+`subst-par` 引理是 @Schafer:2015 的「强替换性（Strong Substitutivity）」 引理。
+`par-triangle`、`strip` 和 `par-confluence` 的证明基于 @Takahashi:1995
+完全发展的概念，以及 @Pfenning:1992 关于 Church-Rosser 定理的技术报告。
+此外，我们询问了 Nipkow 和 Berghofer 在 Isabelle 中的机械化，
+它基于 @Nipkow:1996 的早期论文。
 
 ## Unicode
 

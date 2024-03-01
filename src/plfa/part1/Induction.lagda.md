@@ -684,10 +684,10 @@ quantifier_, and it is discussed further in Chapter [Quantifiers](/Quantifiers/)
 [Quantifiers](/Quantifiers/) 章节中进一步讨论。
 
 <!--
-Evidence for a universal quantifier is a function.  The notations
+Evidence for a universal quantifier is a function.  The signatures
 -->
 
-全称量词的证据是一个函数。记法
+全称量词的证据是一个函数。函数签名
 
     +-assoc : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
 
@@ -709,6 +709,22 @@ are called _dependent functions_.
 是等价的。和 `ℕ → ℕ → ℕ` 这样的函数类型不同，上述函数中的变量
 与每一个实参类型相关联，且其结果类型可能会涉及（或依赖于）这些变量，
 因此它们叫做**依赖函数（Dependent Function）**。
+
+Ordinary functions are a special case of dependent functions. For instance,
+the signatures
+
+    _+_ : ℕ → ℕ → ℕ
+
+and
+
+    _+_ : ∀ (m n : ℕ) → ℕ
+
+and
+
+    _+_ : ∀ (m : ℕ) → ∀ (n : ℕ) → ℕ
+
+are all equivalent.
+
 
 
 <!--

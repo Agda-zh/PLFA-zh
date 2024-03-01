@@ -50,7 +50,7 @@ open Eq using (_≡_; refl)
 open Eq.≡-Reasoning
 open import Data.Nat using (ℕ)
 open import Function using (_∘_)
-open import plfa.part1.Isomorphism using (_≃_; _≲_; extensionality)
+open import plfa.part1.Isomorphism using (_≃_; _≲_; extensionality; _⇔_)
 open plfa.part1.Isomorphism.≃-Reasoning
 ```
 
@@ -205,7 +205,7 @@ term `⟨ M , N ⟩` where `M` is a term of type `A` and `N` is a term of type `
 The constructor declaration allows us to write `⟨ M , N ⟩′` in place of the
 record construction.
 
-The data type `_x_` and the record type `_×′_` behave similarly. One
+The data type `_×_` and the record type `_×′_` behave similarly. One
 difference is that for data types we have to prove η-equality, but for record
 types, η-equality holds *by definition*. While proving `η-×′`, we do not have to
 pattern match on `w` to know that η-equality holds:
@@ -375,10 +375,10 @@ corresponds to `⟨ 1 , ⟨ true , aa ⟩ ⟩`, which is a member of the latter.
 一个后者的成员，相对应。
 
 <!--
-#### Exercise `⇔≃×` (recommended)
+#### Exercise `⇔≃×` (practice)
 -->
 
-#### 练习 `⇔≃×` （推荐）
+#### 练习 `⇔≃×`（实践）
 
 <!--
 Show that `A ⇔ B` as defined [earlier](/Isomorphism/#iff)

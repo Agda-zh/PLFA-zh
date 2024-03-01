@@ -285,7 +285,7 @@ cong-app refl x = refl
 ```
 
 <!--
-Equality also satisfies *substitution*.
+Equality also satisfies _substitution_.
 If two values are equal and a predicate holds of the first then it also holds of the second:
 -->
 
@@ -303,9 +303,9 @@ subst P refl px = px
 <!--
 A predicate is a proposition over values of some type `A`, and since we model
 _propositions as types_, a predicate is a type parameterized in `A`.
-As an example, consider our earlier examples `even` and `odd` from
-Chapter [Relations](/Relations/#even-and-odd), which are predicates on natural numbers `ℕ`.
-(We will compare representing predicates as inductive data types `A → Set`
+As an example, `even : ℕ → Set` and `odd : ℕ → Set` from
+Chapter [Relations](/Relations/#even-and-odd) are predicates on natural numbers `ℕ`.
+(We will compare representing predicates as data types `A → Set`
 versus functions to booleans `A → Bool` in Chapter [Decidable](/Decidable/).)
 -->
 
@@ -314,14 +314,14 @@ versus functions to booleans `A → Bool` in Chapter [Decidable](/Decidable/).)
 例如，参考我们之前在 [Relations](/Relations/#even-and-odd) 章节中的例子，
 `even` 和 `odd` 是自然数 `ℕ` 之上的谓词。
 （我们将在 [Decidable](/Decidable/)
-章节中比较谓词的两种表示方式：以归纳数据类型 `A → Set` 
+章节中比较谓词的两种表示方式：以归纳数据类型 `A → Set`
 或者以布尔值函数 `A → Bool`。）
 
 <!--
 ## Chains of equations
 -->
 
-## 等式串
+## 等式链
 
 <!--
 Here we show how to support reasoning with chains of equations, as
@@ -330,14 +330,14 @@ named `≡-Reasoning`, to match the format used in Agda's standard
 library:
 -->
 
-我们在此演示如何使用等式串来论证，正如本书中使用证明形式。我们将声明放在一个叫做
+我们在此演示如何使用等式链来论证，正如本书中使用证明形式。我们将声明放在一个叫做
 `≡-Reasoning` 的模块里，与 Agda 标准库中的格式相对应。
 
 ```agda
 module ≡-Reasoning {A : Set} where
 
   infix  1 begin_
-  infixr 2 _≡⟨⟩_ _≡⟨_⟩_
+  infixr 2 _≡⟨⟩_ step-≡
   infix  3 _∎
 
   begin_ : ∀ {x y : A}
@@ -352,12 +352,10 @@ module ≡-Reasoning {A : Set} where
     → x ≡ y
   x ≡⟨⟩ x≡y  =  x≡y
 
-  _≡⟨_⟩_ : ∀ (x : A) {y z : A}
-    → x ≡ y
-    → y ≡ z
-      -----
-    → x ≡ z
-  x ≡⟨ x≡y ⟩ y≡z  =  trans x≡y y≡z
+  step-≡ : ∀ (x {y z} : A) → y ≡ z → x ≡ y → x ≡ z
+  step-≡ x y≡z x≡y  =  trans x≡y y≡z
+
+  syntax step-≡ x y≡z x≡y  =  x ≡⟨  x≡y ⟩ y≡z
 
   _∎ : ∀ (x : A)
       -----
@@ -384,11 +382,50 @@ available in the current environment.
 打开（`open`）一个模块会把模块内的所有定义导入进当前的环境中。
 
 <!--
-As an example, let's look at a proof of transitivity
+This is also our first use of a syntax declaration, which specifies
+that the term on the left may be written with the syntax on the right.
+The syntax `x ≡⟨ x≡y ⟩ y≡z` inherits the fixity `infixr 2` declared
+for `step-≡`, and the special syntax is available when the identifier
+`step-≡` is imported.
+-->
+
+这也是我们第一次使用语法声明，它指明了左侧的项可以写成右边的语法形式。
+语法 `x ≡⟨ x≡y ⟩ y≡z` 继承了声明 `step-≡` 时使用的中缀式声明 `infixr 2`，
+这种特殊的语法只要导入了 `step-≡` 标识符就能使用。
+
+<!--
+Rather than introducing `step-≡` with special syntax, we might have
+declared `_≡⟨_⟩′_` directly:
+-->
+
+除了引入带特殊语法的 `step-≡` 外，我们也可以直接声明 `_≡⟨_⟩′_`：
+
+```agda
+_≡⟨_⟩′_ : ∀ {A : Set} (x : A) {y z : A}
+  → x ≡ y
+  → y ≡ z
+    -----
+  → x ≡ z
+x ≡⟨ x≡y ⟩′ y≡z  =  trans x≡y y≡z
+```
+
+<!--
+The reason for indirection is that `step-≡` reverses
+the order of the arguments, which happens to allow Agda to
+perform type inference more efficiently. We will encounter some
+long chains in Chapter [Lambda](/Lambda/), so efficiency can be
+important.
+-->
+
+间接使用它的原因是 `step-≡` 反转了实参的顺序，这样能让 Agda 更高效地执行类型推导。
+在 [Lambda](/Lambda/) 一章中我们会遇到一些长等式链，因此效率是很重要的。
+
+<!--
+Let's look at a proof of transitivity
 as a chain of equations:
 -->
 
-举个例子，我们来看看如何用等式串证明传递性：
+我们来看看如何用等式链证明传递性：
 
 ```agda
 trans′ : ∀ {A : Set} {x y z : A}
@@ -449,14 +486,15 @@ refl`, where `e` is a term that proves some equality, even though `e`
 alone would do.
 -->
 
-我们可以把任意等式串转化成一系列的 `trans` 的使用。这样的证明更加精简，但是更难以阅读。
-`∎` 的小窍门意味着等式串化简成为的一系列 `trans` 会以 `trans e refl` 结尾，尽管只需要 `e`
+我们可以把任意等式链转化成一系列的 `trans` 的使用。这样的证明更加精简，但是更难以阅读。
+`∎` 的小窍门意味着等式链化简成为的一系列 `trans` 会以 `trans e refl` 结尾，尽管只需要 `e`
 就足够了，这里的 `e` 是等式的证明。
 
 #### Exercise `trans` and `≡-Reasoning` (practice)
 
-Sadly, we cannot use the definition of trans' using ≡-Reasoning as the definition
-for trans. Can you see why? (Hint: look at the definition of `_≡⟨_⟩_`)
+Sadly, we cannot use the definition of trans' using ≡-Reasoning as the
+definition for trans. Can you see why? (Hint: look at the definition
+of `_≡⟨_⟩_`)
 
 ```agda
 -- Your code goes here
@@ -466,7 +504,7 @@ for trans. Can you see why? (Hint: look at the definition of `_≡⟨_⟩_`)
 ## Chains of equations, another example
 -->
 
-## 等式串的另外一个例子
+## 等式链的另外一个例子
 
 <!--
 As a second example of chains of equations, we repeat the proof that addition
@@ -475,7 +513,7 @@ We cannot import them because (as noted at the beginning of this chapter)
 it would cause a conflict:
 -->
 
-我们重新证明加法的交换律来作为等式串的第二个例子。我们首先重复自然数和加法的定义。
+我们重新证明加法的交换律来作为等式链的第二个例子。我们首先重复自然数和加法的定义。
 我们不能导入它们（正如本章节开头中所解释的那样），因为那样会产生一个冲突：
 
 ```agda
@@ -601,8 +639,6 @@ regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mon
 章节 [Relations](/Relations/) 中的单调性证明亦可以用相似于 `≡-Reasoning` 的，更易于理解的形式给出。
 相似地来定义 `≤-Reasoning`，并用其重新给出加法对于不等式是单调的证明。重写 `+-monoˡ-≤`、`+-monoʳ-≤`
 和 `+-mono-≤` 的定义。
-
-
 
 ```agda
 -- 请将代码写在此处。
@@ -764,7 +800,7 @@ here is a second proof that addition is commutative, relying on rewrites rather
 than chains of equalities:
 -->
 
-我们可以多次使用重写，以竖线隔开。举个例子，这里是加法交换律的第二个证明，使用重写而不是等式串：
+我们可以多次使用重写，以竖线隔开。举个例子，这里是加法交换律的第二个证明，使用重写而不是等式链：
 
 ```agda
 +-comm′ : ∀ (m n : ℕ) → m + n ≡ n + m
@@ -784,7 +820,7 @@ when feasible.
 
 这个证明更加的简短。之前的证明用 `cong suc (+-comm m n)` 作为使用归纳假设的说明，
 而这里我们使用 `+-comm m n` 来重写就足够了，因为重写可以将合同性考虑在其中。尽管使用重写的证明更加的简短，
-使用等式串的证明能容易理解，我们将尽可能的使用后者。
+使用等式链的证明能容易理解，我们将尽可能的使用后者。
 
 
 <!--
