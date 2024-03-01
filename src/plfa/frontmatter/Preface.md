@@ -213,7 +213,7 @@ practice.
 
 <!--
 You may answer the exercises by downloading the book from github and
-editing where it says "-- Your code goes here". Alternatively, you
+editing where it says "__ Your code goes here". Alternatively, you
 may be given a file to edit containing exercises for a given coursework.
 
 In either case, you may need to import additional library functions
