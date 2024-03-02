@@ -435,8 +435,8 @@ Agda 的编辑是通过使用「[洞][agda-readthedocs-holes]」来交互的，�
 - `C-c C-空格`：填洞
 - `C-c C-r`：用构造子精化（**r**efine）
 - `C-c C-a`：自动填洞（**a**utomatic）
-- `C-c C-,`：目标类型和上下文
-- `C-c C-.`：目标类型，上下文，以及推断的类型
+- `C-c C-,`：目标类型和语境
+- `C-c C-.`：目标类型，语境，以及推断的类型
 
 <!--
 See [the emacs-mode docs][agda-readthedocs-emacs-mode] for more details.

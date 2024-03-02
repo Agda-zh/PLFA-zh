@@ -397,7 +397,7 @@ where appropriate (in this case, only for the body of an abstraction).
 -->
 
 此证明的结构与重命名的结构相似：
-使用递归来重新构造每一个项，并在需要时扩充上下文（在这里，我们只需要在 λ 抽象的抽象体中使用）。
+使用递归来重新构造每一个项，并在需要时扩充语境（在这里，我们只需要在 λ 抽象的抽象体中使用）。
 
 
 <!--
@@ -479,7 +479,7 @@ the body of an abstraction).
 -->
 
 与之前一样，这个证明的结构于替换的结构类似：使用递归重新构造每一个项，
-并在需要时扩充上下文（在这里，我们只需要在 λ 抽象的抽象体中使用）。
+并在需要时扩充语境（在这里，我们只需要在 λ 抽象的抽象体中使用）。
 
 <!--
 From the general case of substitution, it is also easy to derive

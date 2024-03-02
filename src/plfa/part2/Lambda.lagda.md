@@ -81,7 +81,7 @@ four.
 
 这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language
 Foundations_）中对应的 _Stlc_ 的内容。
-我们的不同之处在于使用显式的方法来表示上下文（由标识符和类型的序对组成的列表），
+我们的不同之处在于使用显式的方法来表示语境（由标识符和类型的序对组成的列表），
 而不是部分映射（从标识符到类型的部分函数）。
 这样的做法与后续的 de Bruijn 索引表示方法能更好的对应。
 我们使用自然数作为基础类型，而不是布尔值，这样我们可以表示更复杂的例子。
@@ -482,7 +482,7 @@ meta-language, Agda.
 
 相似地来说，非正式的表达通常在**对象语言（Object Language）**（我们正在描述的语言）
 和**元语言（Meta-Language）**（我们用来描述对象语言的语言）
-中使用相同的记法来表示函数类型、λ-抽象和函数应用，相信读者可以通过上下文区分两种语言。
+中使用相同的记法来表示函数类型、λ-抽象和函数应用，相信读者可以通过语境区分两种语言。
 而 Agda 并不能做到这样，因此我们在对象语言中使用 `ƛ x ⇒ N` 和 `L · M` ，
 与我们使用的元语言 Agda 中的 `λ x → N` 和 `L M` 相对。
 
@@ -1706,7 +1706,7 @@ Thus:
 ### Contexts
 -->
 
-### 上下文
+### 语境
 
 <!--
 While reduction considers only closed terms, typing must
@@ -1726,9 +1726,9 @@ for the context that extends `Γ` by associating variable `x` with type `A`.
 For example,
 -->
 
-上下文（Context）将变量和类型联系在一起。
-我们用 `Γ` 和 `Δ` 来表示上下文。
-我们用 `∅` 表示空的上下文，用 `Γ , x ⦂ A` 表示扩充 `Γ` ，将变量 `x` 对应至类型 `A`。
+语境（Context）将变量和类型联系在一起。
+我们用 `Γ` 和 `Δ` 来表示语境。
+我们用 `∅` 表示空的语境，用 `Γ , x ⦂ A` 表示扩充 `Γ` ，将变量 `x` 对应至类型 `A`。
 例如：
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ``
@@ -1738,14 +1738,14 @@ is the context that associates variable `` "s" `` with type `` `ℕ ⇒ `ℕ ``,
 and variable `` "z" `` with type `` `ℕ ``.
 -->
 
-这个上下文将变量 `` "s" `` 对应至类型 `` `ℕ ⇒ `ℕ ``，
+这个语境将变量 `` "s" `` 对应至类型 `` `ℕ ⇒ `ℕ ``，
 将变量 `` "z" `` 对应至类型 `` `ℕ ``。
 
 <!--
 Contexts are formalised as follows:
 -->
 
-上下文如下形式化：
+语境如下形式化：
 
 ```agda
 infixl 5  _,_⦂_
@@ -1773,7 +1773,7 @@ For instance, the isomorphism relates the context
 For instance, the isomorphism relates the context
 -->
 
-例如，如下的上下文
+例如，如下的语境
 
     ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ
 
@@ -1811,7 +1811,7 @@ It is called _lookup_.
 For example,
 -->
 
-表示在上下文 `Γ` 中变量 `x` 的类型是 `A`。这样的判断叫做**查询（Lookup）**判断。
+表示在语境 `Γ` 中变量 `x` 的类型是 `A`。这样的判断叫做**查询（Lookup）**判断。
 例如，
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ∋ "z" ⦂ `ℕ ``
@@ -1834,7 +1834,7 @@ should return the most recently bound variable, which _shadows_
 the other variables.  For example,
 -->
 
-如果上下文中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮盖（Shadow）**
+如果语境中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮盖（Shadow）**
 了另一个变量。例如：
 
 * `` ∅ , "x" ⦂ `ℕ ⇒ `ℕ , "x" ⦂ `ℕ ∋ "x" ⦂ `ℕ ``.
@@ -1925,8 +1925,8 @@ Context `Γ` provides types for all the free variables in `M`.
 For example:
 -->
 
-表示在上下文 `Γ` 中，项 `M` 有类型 `A`。
-上下文 `Γ` 为 `M` 中的所有自由变量提供了类型。
+表示在语境 `Γ` 中，项 `M` 有类型 `A`。
+语境 `Γ` 为 `M` 中的所有自由变量提供了类型。
 例如：
 
 * `` ∅ , "s" ⦂ `ℕ ⇒ `ℕ , "z" ⦂ `ℕ ⊢ ` "z" ⦂ `ℕ ``
@@ -2027,7 +2027,7 @@ the three places where a bound variable is introduced.
 -->
 
 
-另外需要注意的是有三处地方（`⊢ƛ`、`⊢case` 和 `⊢μ`），上下文被 `x` 和相应的类型
+另外需要注意的是有三处地方（`⊢ƛ`、`⊢case` 和 `⊢μ`），语境被 `x` 和相应的类型
 所扩充，对应着三处约束变量的引入。
 
 <!--
@@ -2132,11 +2132,11 @@ contexts, the first where `"n"` is the last binding in the context, and
 the second after `"m"` is bound in the successor branch of the case.
 -->
 
-与之前的例子不同，我们以任意上下文，而不是空上下文来赋型。
-这让我们能够在其他除了顶层之外的上下文中使用这个推导。
+与之前的例子不同，我们以任意语境，而不是空语境来赋型。
+这让我们能够在其他除了顶层之外的语境中使用这个推导。
 这里的查询判断 `∋m` 和 `∋m′` 指代两个变量 `"m"` 的绑定。
-作为对比，查询判断 `∋n` 和 `∋n′` 指代同一个变量 `"n"` 的绑定，但是查询的上下文不同，
-第一次 `"n"` 出现在在上下文的最后，第二次在 `"m"` 之后。
+作为对比，查询判断 `∋n` 和 `∋n′` 指代同一个变量 `"n"` 的绑定，但是查询的语境不同，
+第一次 `"n"` 出现在在语境的最后，第二次在 `"m"` 之后。
 
 <!--
 And here are typings for the remainder of the Church example:

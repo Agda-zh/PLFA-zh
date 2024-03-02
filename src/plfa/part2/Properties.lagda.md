@@ -152,7 +152,7 @@ types without needing to develop a separate inductive definition of the
 
 （这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language Foundations_）中对应的 _StlcProp_ 一章。
 事实上我们技术选择中的一个——通过显示地引入一条判断 `Γ ∋ x ⦂ A`，
-而不是将上下文视作为一个从标识符映射到类型的函数——简化了开发过程。
+而不是将语境视作为一个从标识符映射到类型的函数——简化了开发过程。
 特别地，我们不需要额外地去归纳定义关系 `appears_free_in` 就可以证明替换保留了类型。）
 
 <!--
@@ -248,7 +248,7 @@ must itself be canonical:
 良类型的式子都属于少数几种**标准式（Canonical Form）**中的一种。
 标准式提供了一种类似于 `Value` 的关系，关联值和它们所属的类型。
 一个 λ-表达式一定属于函数类型，同时零和后继表达式都属于自然数。
-更进一步说，此时函数的函数体必须在只包含它的约束变量的上下文中是良类型的，
+更进一步说，此时函数的函数体必须在只包含它的约束变量的语境中是良类型的，
 后继的参数本身也必须是标准式：
 
 ```agda
@@ -362,7 +362,7 @@ exists a term `N` such that `M —→ N`, or if it is done, meaning that
 If a term is well typed in the empty context then it satisfies progress:
 -->
 
-如果一个项在空上下文中是良类型的，那么它满足可进性：
+如果一个项在空语境中是良类型的，那么它满足可进性：
 
 ```agda
 progress : ∀ {M A}
@@ -402,7 +402,7 @@ Let's unpack the first three cases:
 * If the term is a lambda abstraction then it is a value.
 -->
 
-* 这个项不可能是变量，因为没有变量在空上下文中是良类型的。
+* 这个项不可能是变量，因为没有变量在空语境中是良类型的。
 
 * 如果这个项是一个 λ-抽象，可知它是一个值。
 
@@ -593,8 +593,8 @@ if any term is typeable under `Γ`, it has the same type under `Δ`.
 -->
 
 **重命名**：
-考虑两个上下文 `Γ` 和 `Δ`，满足 `Γ` 中出现的每个变量同时
-也在 `Δ` 中出现且具有相同的类型。那么如果一个项在上下文 `Γ` 中
+考虑两个语境 `Γ` 和 `Δ`，满足 `Γ` 中出现的每个变量同时
+也在 `Δ` 中出现且具有相同的类型。那么如果一个项在语境 `Γ` 中
 是可赋型的，它在 `Δ` 中也具有同样的类型。
 
 <!--
@@ -617,11 +617,11 @@ context remains well typed if we swap two variables.
 -->
 
 接下来是三个重要的结论。
-**弱化（Weaken）**引理断言说如果一个项在空上下文中是良类型的，那么它在任意上下文中都是良类型的。
-**去除（Drop）**引理断言说如果一个项在给定上下文中是良类型的，且此上下文中同一个变量出现了两次，
-此时去除上下文中被遮盖的变量，这个项仍然是良类型的。
-**交换（Swap）**引理断言说如果一个项在给定上下文中是良类型的，那么在通过交换上下文中两个变量后得到的
-上下文中，这个项仍然是良类型的。
+**弱化（Weaken）**引理断言说如果一个项在空语境中是良类型的，那么它在任意语境中都是良类型的。
+**去除（Drop）**引理断言说如果一个项在给定语境中是良类型的，且此语境中同一个变量出现了两次，
+此时去除语境中被遮盖的变量，这个项仍然是良类型的。
+**交换（Swap）**引理断言说如果一个项在给定语境中是良类型的，那么在通过交换语境中两个变量后得到的
+语境中，这个项仍然是良类型的。
 
 <!--
 (Renaming is similar to the _context invariance_ lemma in _Software
@@ -674,8 +674,8 @@ in `Γ`.
 
 此结论不依赖于项 `V` 是一个值，但要求 `V` 是一个闭项；
 回忆我们之所以只关注闭项的替换，是为了避免重命名约束变量。
-我们将要做替换的项在上下文 `Γ` 扩充上一个变量 `x` 中是良类型的；
-同时完成替换后的项在上下文 `Γ` 中是良类型的。
+我们将要做替换的项在语境 `Γ` 扩充上一个变量 `x` 中是良类型的；
+同时完成替换后的项在语境 `Γ` 中是良类型的。
 
 <!--
 The lemma establishes that substitution composes well with typing:
@@ -732,7 +732,7 @@ the same type.
 
 我们常常会需要去 「重建」 一个类型推演过程，
 也就是将一个类型推演 `Γ ⊢ M ⦂ A` 替换为对应的推演 `Δ ⊢ M ⦂ A`。
-我们能够这样做的前提是每个在上下文 `Γ` 中出现的变量同时也出现在上下文 `Δ` 中，
+我们能够这样做的前提是每个在语境 `Γ` 中出现的变量同时也出现在语境 `Δ` 中，
 且它们的类型相同。
 
 <!--
@@ -742,9 +742,9 @@ bound variable. In each of these rules, `Γ` appears in the conclusion
 and `Γ , x ⦂ A` appears in a hypothesis.  Thus:
 -->
 
-赋型的三条规则（λ-抽象、对自然数分项与不动点）都有假设来拓展上下文以
-包含一个约束变量。三条规则的每一条中都有上下文 `Γ` 都出现在结论中，同时
-拓展后的上下文 `Γ , x ⦂ A` 出现在假设中。对于 λ-表达式，也就是：
+赋型的三条规则（λ-抽象、对自然数分项与不动点）都有假设来拓展语境以
+包含一个约束变量。三条规则的每一条中都有语境 `Γ` 都出现在结论中，同时
+拓展后的语境 `Γ , x ⦂ A` 出现在假设中。对于 λ-表达式，也就是：
 
     Γ , x ⦂ A ⊢ N ⦂ B
     ------------------- ⊢ƛ
@@ -758,7 +758,7 @@ both contexts:
 -->
 
 对自然数分项和不动点亦是如此。
-要处理这类情况，我们首先证明一条论述 「如果一个上下文和另一个上下文之间存在映射，
+要处理这类情况，我们首先证明一条论述 「如果一个语境和另一个语境之间存在映射，
 在对两者添加同一个变量后映射仍然存在」 的引理：
 
 ```agda
@@ -777,9 +777,9 @@ The proof is by case analysis of the evidence that `x` appears
 in the extended context `Γ , y ⦂ B`:
 -->
 
-令 `ρ` 为这个映射，它将变量 `x` 出现在上下文 `Γ` 中的论据映射到
-变量 `x` 出现在上下文 `Δ` 中的论据。
-这是由分类讨论变量 `x` 出现在拓展后上下文 `Γ , y ⦂ B` 的论据证明的：
+令 `ρ` 为这个映射，它将变量 `x` 出现在语境 `Γ` 中的论据映射到
+变量 `x` 出现在语境 `Δ` 中的论据。
+这是由分类讨论变量 `x` 出现在拓展后语境 `Γ , y ⦂ B` 的论据证明的：
 
 <!--
 * If `x` is the same as `y`, we used `Z` to access the last variable
@@ -802,8 +802,8 @@ applying `ρ` to find the evidence that `x` appears in `Δ`.
 
 * 如果 `x` 与 `y` 不相同，我们则使用 `S` 来跳过拓展后 `Γ` 中的最后一个变量，
   在这里 `x≢y` 即是变量 `x` 与 `y` 不相同的论据，同时 `∋x` 是变量 `x` 出现在
-  上下文 `Γ` 中的论据；类似地，我们使用 `S` 来跳过拓展后 `Δ` 的最后一个变量，
-  应用 `ρ` 来寻找变量 `x` 出现在上下文 `Δ` 中的论据。
+  语境 `Γ` 中的论据；类似地，我们使用 `S` 来跳过拓展后 `Δ` 的最后一个变量，
+  应用 `ρ` 来寻找变量 `x` 出现在语境 `Δ` 中的论据。
 
 <!--
 With the extension lemma under our belts, it is straightforward to
@@ -834,8 +834,8 @@ on the evidence that `M` is well typed in `Γ`.  Let's unpack the
 first three cases:
 -->
 
-像之前一样，令 `ρ` 为 「变量 `x` 出现在上下文 `Γ` 中的论据」 至 「变量 `x` 出现在 `Δ` 的论据」 的映射。
-我们对项 `M` 在上下文 `Γ` 中是良赋型的论据做归纳。我们首先来分析前三种情况：
+像之前一样，令 `ρ` 为 「变量 `x` 出现在语境 `Γ` 中的论据」 至 「变量 `x` 出现在 `Δ` 的论据」 的映射。
+我们对项 `M` 在语境 `Γ` 中是良赋型的论据做归纳。我们首先来分析前三种情况：
 
 <!--
 * If the term is a variable, then applying `ρ` to the evidence
@@ -843,7 +843,7 @@ that the variable appears in `Γ` yields the corresponding evidence that
 the variable appears in `Δ`.
 -->
 
-* 如果项是一个变量，那么对该变量出现在上下文 `Γ` 的论据应用 `ρ` 就能得到
+* 如果项是一个变量，那么对该变量出现在语境 `Γ` 的论据应用 `ρ` 就能得到
   所对应的该变量出现在 `Δ` 的证明。
 
 <!--
@@ -877,7 +877,7 @@ Equivalently, the recursion terminates because the second argument
 always grows smaller, even though the first argument sometimes grows larger.
 -->
 
-由于做归纳的对象是这个项良赋型的推演过程，拓展上下文不会使得归纳假设
+由于做归纳的对象是这个项良赋型的推演过程，拓展语境不会使得归纳假设
 无效。等价地，此时的递归会停机，这是由于第二个参数在递归过程中总是变
 小一些，尽管第一个参数有时候变大一些。
 
@@ -886,13 +886,13 @@ We have three important corollaries, each proved by constructing
 a suitable map between contexts.
 -->
 
-我们有三条重要推论，每条都是通过构造一个恰当的上下文间映射证明的：
+我们有三条重要推论，每条都是通过构造一个恰当的语境间映射证明的：
 
 <!--
 First, a closed term can be weakened to any context:
 -->
 
-第一，一个闭项可以被弱化到任意上下文：
+第一，一个闭项可以被弱化到任意语境：
 
 ```agda
 weaken : ∀ {Γ M A}
@@ -913,14 +913,14 @@ Here the map `ρ` is trivial, since there are no possible
 arguments in the empty context `∅`.
 -->
 
-这里的映射 `ρ` 是平凡的，由于在空上下文 `∅` 中不会出现可能的参数。
+这里的映射 `ρ` 是平凡的，由于在空语境 `∅` 中不会出现可能的参数。
 
 <!--
 Second, if the last two variables in a context are equal then we can
 drop the shadowed one:
 -->
 
-第二，如果上下文中的最后两个变量相等，我们就可以去除掉被遮盖的一个：
+第二，如果语境中的最后两个变量相等，我们就可以去除掉被遮盖的一个：
 
 ```agda
 drop : ∀ {Γ x M A B C}
@@ -956,7 +956,7 @@ contradiction (evidenced by `x≢x refl`).
 Third, if the last two variables in a context differ then we can swap them:
 -->
 
-第三，如果上下文中的最后两个变量不同，我们可以交换它们：
+第三，如果语境中的最后两个变量不同，我们可以交换它们：
 
 ```agda
 swap : ∀ {Γ x y M A B C}
@@ -982,8 +982,8 @@ moving `x` from a position at the end to a position one from the end
 with `y` at the end, and requires the provided evidence that `x ≢ y`.
 -->
 
-在这里重命名将上下文的最后一个变量映射到倒数第二个，反之亦然。
-第一行负责将 `x` 从上下文的最后一个位置移动到倒数第二个，并且
+在这里重命名将语境的最后一个变量映射到倒数第二个，反之亦然。
+第一行负责将 `x` 从语境的最后一个位置移动到倒数第二个，并且
 将 `y` 置于最后，这要求提供 `x ≢ y` 的论据。
 
 
@@ -1026,8 +1026,8 @@ we require an arbitrary context `Γ`, as in the statement of the lemma.
 我们所关注的是规约闭项，这意味着每当我们应用 `β`-规约时，
 所替换的项只含有一个自由变量（也就是所对应 λ-抽象、
 对自然数分项或不动点表达式的绑定变量）。然而，替换是通过
-递归定义的，在我们逐层深入项时遇到的绑定变量增长了上下文。
-所以为了进行归纳，我们需要一个任意的上下文 `Γ`，正如这条引理
+递归定义的，在我们逐层深入项时遇到的绑定变量增长了语境。
+所以为了进行归纳，我们需要一个任意的语境 `Γ`，正如这条引理
 中所陈述的。
 
 <!--
@@ -1067,7 +1067,7 @@ We induct on the evidence that `N` is well typed in the
 context `Γ` extended by `x`.
 -->
 
-我们对 `N` 在由 `x` 拓展 `Γ` 后得到的上下文中是良赋型的论据做归纳。
+我们对 `N` 在由 `x` 拓展 `Γ` 后得到的语境中是良赋型的论据做归纳。
 
 <!--
 First, we note a wee issue with naming.  In the lemma

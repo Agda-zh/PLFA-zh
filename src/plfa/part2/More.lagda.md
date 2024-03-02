@@ -1150,7 +1150,7 @@ data Type : Set where
 ### Contexts
 -->
 
-### 上下文
+### 语境
 
 ```agda
 data Context : Set where
@@ -2126,7 +2126,7 @@ its context adjusted via renaming in order for the right-hand
 side to be well typed.
 -->
 
-注意到我们需要交换参数，而且 `W` 的上下文需要用重命名来调整，使得右手边的项保持良类型。
+注意到我们需要交换参数，而且 `W` 的语境需要用重命名来调整，使得右手边的项保持良类型。
 
 <!--
 ## Test examples
