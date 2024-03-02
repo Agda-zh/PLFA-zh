@@ -1,5 +1,5 @@
 ---
-title     : "Denotational: Denotational semantics of untyped lambda calculus"
+title     : "Denotational: 无类型 λ-演算的指称语义"
 permalink : /Denotational/
 ---
 
@@ -7,6 +7,7 @@ permalink : /Denotational/
 module plfa.part3.Denotational where
 ```
 
+<!--
 The lambda calculus is a language about _functions_, that is, mappings
 from input to output. In computing we often think of such
 mappings as being carried out by a sequence of
@@ -16,7 +17,15 @@ can tabulate a function, that is, create a table where each row has
 two entries, an input and the corresponding output for the function.
 Function application is then the process of looking up the row for
 a given input and reading off the output.
+-->
 
+λ-演算是一种关于**函数**的语言，即从输入到输出的映射。在计算中，
+我们通常认为这种映射是通过一系列将输入转换为输出的操作来执行的。
+但函数也可以表示为数据。例如，可以将函数表格化，即创建一个表，
+其中每行都有两个条目：一个输入和一个该函数对应的输出。
+函数应用则是查找给定输入的行并读取输出的过程。
+
+<!--
 We shall create a semantics for the untyped lambda calculus based on
 this idea of functions-as-tables. However, there are two difficulties
 that arise. First, functions often have an infinite domain, so it
@@ -26,14 +35,28 @@ functions. They can even be applied to themselves! So it would seem
 that the tables would contain cycles. One might start to worry that
 advanced techniques are necessary to address these issues, but
 fortunately this is not the case!
+-->
 
+我们可按照「函数即表格」的思想为无类型 λ-演算创建语义。然而却碰上了两个难点：
+首先，函数的定义域通常是无穷的，因此我们似乎需要无限长的表格来表示函数。
+其次，在 λ-演算中，函数可应用于函数，它们甚至可以应用于自身！
+因而这些表格可能包含循环引用。有人可能会担心需要高级的技术来解决这些问题，
+幸而事实并非如此！
+
+<!--
 The first problem, of functions with infinite domains, is solved by
 observing that in the execution of a terminating program, each lambda
 abstraction will only be applied to a finite number of distinct
 arguments. (We come back later to discuss diverging programs.) This
 observation is another way of looking at Dana Scott's insight that
 only continuous functions are needed to model the lambda calculus.
+-->
 
+第一个问题是带有无穷定义域的函数。注意到每一个 λ-抽象只会应用于数量有限的不同实参，
+该问题因而得以解决（我们回头再讨论发散的程序）。这是看待 Dana Scott
+见解的另一种方式，即只需要对 λ-演算进行建模只需要用到连续函数。
+
+<!--
 The second problem, that of self-application, is solved by relaxing
 the way in which we lookup an argument in a function's table.
 Naively, one would look in the table for a row in which the input
@@ -45,11 +68,28 @@ to find an input such that every row of the input appears as a row of
 the argument (that is, the input is a subset of the argument).  In the
 case of self-application, the table only needs to contain a smaller
 copy of itself, which is fine.
+-->
 
+第二个问题是自应用，可以通过放宽在函数表格中查找实参的方式来解决。
+通常，人们会在表中查找输入条目与实参完全匹配的行。在自应用的情况下，
+这样会要求表包含其自身的副本，当然这是不可能的
+（至少，想要使用归纳数据类型定义来构建表是不可能的，而这就是我们要做的）。
+其实只要找到一个输入，使得每一行输入都对应到一行实参（即，输入是实参的子集）。
+在自应用的情况下，表只需要包含其自身的较小副本，这样就好了。
+
+<!--
 With these two observations in hand, it is straightforward to write
 down a denotational semantics of the lambda calculus.
+-->
 
+基于这两点观察，我们就能直接写出 λ-演算的指称语义。
+
+
+<!--
 ## Imports
+-->
+
+## 导入
 
 ```agda
 open import Agda.Primitive using (lzero; lsuc)
@@ -70,14 +110,24 @@ open import plfa.part2.Substitution using (Rename; extensionality; rename-id)
 ```
 
 
+<!--
 ## Values
+-->
 
+## 值
+
+<!--
 The `Value` data type represents a finite portion of a function.  We
 think of a value as a finite set of pairs that represent input-output
 mappings. The `Value` data type represents the set as a binary tree
 whose internal nodes are the union operator and whose leaves represent
 either a single mapping or the empty set.
+-->
 
+值数据类型 `Value` 表示函数的有限的一部分。我们将值视为表示输入-输出映射的有限序对集合。
+`Value` 数据类型将集合表示为二叉树，其内部节点是并集运算符，叶子节点表示单个映射或空集。
+
+<!--
   * The ⊥ value provides no information about the computation.
 
   * A value of the form `v ↦ w` is a single input-output mapping, from
@@ -86,6 +136,14 @@ either a single mapping or the empty set.
   * A value of the form `v ⊔ w` is a function that maps inputs to
     outputs according to both `v` and `w`.  Think of it as taking the
     union of the two sets.
+-->
+
+  * ⊥ 值不提供有关计算的信息。
+
+  * 形如 `v ↦ w` 的值是从输入 `v` 到输出 `w` 的单个输入-输出映射。
+
+  * 形如 `v ⊔ w` 的值是根据 `v` 和 `w` 将输入映射到输出的函数。
+    可将其视为两个集合的并集。
 
 ```agda
 infixr 7 _↦_
@@ -97,10 +155,15 @@ data Value : Set where
   _⊔_ : Value → Value → Value
 ```
 
+<!--
 The `⊑` relation adapts the familiar notion of subset to the Value data
 type. This relation plays the key role in enabling self-application.
 There are two rules that are specific to functions, `⊑-fun` and `⊑-dist`,
 which we discuss below.
+-->
+
+关系 `⊑` 将熟悉的子集概念适配到 `Value` 数据类型上。这种关系在实现自我应用方面
+起到了关键作用。有两个特定于函数的规则 `⊑-fun` 和 `⊑-dist`，我们将在后面讨论。
 
 ```agda
 infix 4 _⊑_
@@ -143,6 +206,7 @@ data _⊑_ : Value → Value → Set where
 ```
 
 
+<!--
 The first five rules are straightforward.
 The rule `⊑-fun` captures when it is OK to match a higher-order argument
 `v′ ↦ w′` to a table entry whose input is `v ↦ w`.  Considering a
@@ -152,8 +216,21 @@ disregard some of the output, so `w` can be smaller than `w′`.
 The rule `⊑-dist` says that if you have two entries for the same input,
 then you can combine them into a single entry and joins the two
 outputs.
+-->
 
+前五条规则很简单。规则 `⊑-fun` 刻画了何时可以将高阶参数 `v′ ↦ w′` 与输入为
+`v ↦ w` 的表格条目匹配。考虑一个高阶参数的调用，可以传入一个比预期更大的参数，
+因此 `v` 可以大于 `v′`。此外，还可以忽略某些输出，因此 `w` 可以小于 `w′`。
+（译注：即作为子类型的函数，其参数是逆变的，返回值是协变的。）
+规则 `⊑-dist` 表示，如果对同一输入有两个条目匹配，
+则可以将它们组合成一个条目并连接两个输出。
+
+
+<!--
 The `⊑` relation is reflexive.
+-->
+
+`⊑` 关系满足自反性。
 
 ```agda
 ⊑-refl : ∀ {v} → v ⊑ v
@@ -162,8 +239,12 @@ The `⊑` relation is reflexive.
 ⊑-refl {v₁ ⊔ v₂} = ⊑-conj-L (⊑-conj-R1 ⊑-refl) (⊑-conj-R2 ⊑-refl)
 ```
 
+<!--
 The `⊔` operation is monotonic with respect to `⊑`, that is, given two
 larger values it produces a larger value.
+-->
+
+`⊔` 运算对 `⊑` 满足单调性，即给定两个较大的值，它会产生一个更大的值。
 
 ```agda
 ⊔⊑⊔ : ∀ {v w v′ w′}
@@ -173,10 +254,15 @@ larger values it produces a larger value.
 ⊔⊑⊔ d₁ d₂ = ⊑-conj-L (⊑-conj-R1 d₁) (⊑-conj-R2 d₂)
 ```
 
+<!--
 The `⊑-dist` rule can be used to combine two entries even when the
 input values are not identical. One can first combine the two inputs
 using ⊔ and then apply the `⊑-dist` rule to obtain the following
 property.
+-->
+
+即使输入的值不相同，`⊑-dist` 规则也可用于组合两个条目。首先可以使用 ⊔
+将两个输入组合起来，然后应用 `⊑-dist` 规则来获得以下属性。
 
 ```agda
 ⊔↦⊔-dist : ∀{v v′ w w′ : Value}
@@ -189,8 +275,12 @@ property.
  [PLW: above might read more nicely if we introduce inequational reasoning.]
  -->
 
+<!--
 If the join `u ⊔ v` is less than another value `w`,
 then both `u` and `v` are less than `w`.
+-->
+
+如果连接 `u ⊔ v` 小于另一个值 `w`，则 `u` 和 `v` 都小于 `w`。
 
 ```agda
 ⊔⊑-invL : ∀{u v w : Value}
@@ -213,17 +303,30 @@ then both `u` and `v` are less than `w`.
 ```
 
 
+<!--
 ## Environments
+-->
 
+## 环境
+
+<!--
 An environment gives meaning to the free variables in a term by
 mapping variables to values.
+-->
+
+环境通过将变量映射到值来为项中的自由变量赋予含义。
 
 ```agda
 Env : Context → Set
 Env Γ = ∀ (x : Γ ∋ ★) → Value
 ```
 
+<!--
 We have the empty environment, and we can extend an environment.
+-->
+
+我们有空环境，且可以扩展环境。
+
 ```agda
 `∅ : Env ∅
 `∅ ()
@@ -235,8 +338,14 @@ _`,_ : ∀ {Γ} → Env Γ → Value → Env (Γ , ★)
 (γ `, v) (S x) = γ x
 ```
 
+<!--
 We can recover the previous environment from an extended environment,
 and the last value. Putting them together again takes us back to where we started.
+-->
+
+我们可以从扩展的环境中恢复以前的环境以及最后添加的值。
+将它们再次组合在一起能让我们回到开始。
+
 ```agda
 init : ∀ {Γ} → Env (Γ , ★) → Env Γ
 init γ x = γ (S x)
@@ -251,16 +360,24 @@ init-last {Γ} γ = extensionality lemma
         lemma (S x)  =  refl
 ```
 
+<!--
 We extend the `⊑` relation point-wise to environments with the
 following definition.
+-->
+
+我们将 `⊑` 关系逐点扩展到具有以下定义的环境。
 
 ```agda
 _`⊑_ : ∀ {Γ} → Env Γ → Env Γ → Set
 _`⊑_ {Γ} γ δ = ∀ (x : Γ ∋ ★) → γ x ⊑ δ x
 ```
 
+<!--
 We define a bottom environment and a join operator on environments,
 which takes the point-wise join of their values.
+-->
+
+我们定义了一个底环境和一个环境上的连接运算符，它接受它们的值的逐点连接。
 
 ```agda
 `⊥ : ∀ {Γ} → Env Γ
@@ -270,9 +387,20 @@ _`⊔_ : ∀ {Γ} → Env Γ → Env Γ → Env Γ
 (γ `⊔ δ) x = γ x ⊔ δ x
 ```
 
+<!--
 The `⊑-refl`, `⊑-conj-R1`, and `⊑-conj-R2` rules lift to environments.  So
 the join of two environments `γ` and `δ` is greater than the first
 environment `γ` or the second environment `δ`.
+-->
+
+<!--
+The `⊑-refl`, `⊑-conj-R1`, and `⊑-conj-R2` rules lift to environments.  So
+the join of two environments `γ` and `δ` is greater than the first
+environment `γ` or the second environment `δ`.
+-->
+
+`⊑-refl`、`⊑-conj-R1` 和 `⊑-conj-R2` 规则提升到环境。因此两个环境 `γ` 和 `δ`
+的连接大于第一个环境 `γ` 或第二个环境 `δ`。
 
 ```agda
 `⊑-refl : ∀ {Γ} {γ : Env Γ} → γ `⊑ γ
@@ -285,7 +413,11 @@ environment `γ` or the second environment `δ`.
 ⊑-env-conj-R2 γ δ x = ⊑-conj-R2 ⊑-refl
 ```
 
+<!--
 ## Denotational Semantics
+-->
+
+## 指称语义
 
 We define the semantics with a judgment of the form `ρ ⊢ M ↓ v`,
 where `ρ` is the environment, `M` the program, and `v` is a result value.
