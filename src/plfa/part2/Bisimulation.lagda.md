@@ -613,7 +613,7 @@ In its structure, it looks a little bit like a proof of progress:
 
 这个证明由分情况讨论来完成，检查每一个 `M ~ M†` 的例子，和每一个 `M —→ M†` 的例子，
 并在规约是 `ξ` 规则时使用递归，也因此包括了另一个规约。
-证明的结构和进行性的证明也有些类似：
+证明的结构和可进性的证明也有些类似：
 
 <!--
 * If the related terms are variables, no reduction applies.

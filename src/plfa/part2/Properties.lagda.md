@@ -1,5 +1,5 @@
 ---
-title     : "Properties: 进行性与保型性"
+title     : "Properties: 可进性与保型性"
 permalink : /Properties/
 translators : ["starxingchenc","alissa-tung"]
 progress  : 100
@@ -18,7 +18,7 @@ sequences for us.
 -->
 
 本章涵盖了上一章所介绍的简单类型 λ-演算的性质。
-在这些性质中最为重要的是进行性（Progress）与保型性（Preservation）。
+在这些性质中最为重要的是可进性（Progress）与保型性（Preservation）。
 我们将在稍后介绍它们，并展示如何通过组合它们来使 Agda 为我们计算归约序列。
 
 <!--
@@ -95,7 +95,7 @@ _Progress_: If `∅ ⊢ M ⦂ A` then either `M` is a value or there is an `N` s
 that `M —→ N`.
 -->
 
-**进行性**：如果有 `∅ ⊢ M ⦂ A`，那么要么项 `M` 是一个值，要么存在一个项 `N` 使
+**可进性**：如果有 `∅ ⊢ M ⦂ A`，那么要么项 `M` 是一个值，要么存在一个项 `N` 使
 得 `M —→ N` 成立。
 
 <!--
@@ -107,7 +107,7 @@ well-typed term.
 -->
 
 所以要么我们有一个值，这时我们已经完成了规约；要么我们可以进行一步规约。
-当处于后者的情况时，我们想要再一次应用进行性。
+当处于后者的情况时，我们想要再一次应用可进性。
 但这样做需要我们首先知道通过规约得到的项本身是良类型的闭项。
 事实上，只要我们规约的起点是一个良类型的闭项，所得到的项就满足这个性质。
 
@@ -131,7 +131,7 @@ and its Church numeral variant.
 
 这给予我们一种自动化求值的策略。
 从一个良类型的闭项开始。
-由进行性，它要么是一个值，于是求值结束了；要么可以被规约为另一个项。
+由可进性，它要么是一个值，于是求值结束了；要么可以被规约为另一个项。
 由保型性，所以得到的另一个项本身也是一个良类型的闭项。
 重复这一过程。
 我们要么会陷入永久的循环中，此时求值过程将不会停机；
@@ -288,7 +288,7 @@ that is, the canonical forms are exactly the well-typed values.
 ## Progress
 -->
 
-## 进行性
+## 可进性
 
 <!--
 We would like to show that every term is either a value or takes a
@@ -325,7 +325,7 @@ _Progress_: If `∅ ⊢ M ⦂ A` then either `M` is a value or there is an `N` s
 that `M —→ N`.
 -->
 
-**进行性**：如果有 `∅ ⊢ M ⦂ A`，那么要么项 `M` 是一个值，要么存在一个项 `N` 使
+**可进性**：如果有 `∅ ⊢ M ⦂ A`，那么要么项 `M` 是一个值，要么存在一个项 `N` 使
 得 `M —→ N` 成立。
 
 <!--
@@ -362,7 +362,7 @@ exists a term `N` such that `M —→ N`, or if it is done, meaning that
 If a term is well typed in the empty context then it satisfies progress:
 -->
 
-如果一个项在空上下文中是良类型的，那么它满足进行性：
+如果一个项在空上下文中是良类型的，那么它满足可进性：
 
 ```agda
 progress : ∀ {M A}
@@ -420,13 +420,13 @@ Let's unpack the first three cases:
     that `M` is well typed:
 -->
 
-* 如果这个项是一个函数应用 `L · M`，则考虑对项 `L` 良类型的推导过程递归应用进行性：
+* 如果这个项是一个函数应用 `L · M`，则考虑对项 `L` 良类型的推导过程递归应用可进性：
 
   + 如果这个项还能够进行一步规约，我们就有了 `L —→ L′` 的论据，再由 `ξ-·₁`，
     可知原来的项进行到 `L′ · M`。
 
   + 如果这个项的规约结束了，我们就有了 `L` 是一个值的论据。
-    则考虑对项 `L` 良类型的推导过程递归应用进行性：
+    则考虑对项 `L` 良类型的推导过程递归应用可进性：
 
     <!--
     - If the term steps, we have evidence that `M —→ M′`,
@@ -438,7 +438,7 @@ Let's unpack the first three cases:
 
     - 如果这个项还能够进行一步规约，我们就有了 `M —→ M′` 的论据，再由 `ξ-·₂`，
       可知原来的项进行到 `L′ · M`。要应用规约步骤 `ξ-·₂` 需要我们提供项 `L` 是
-      一个值的论据，而之前对子项进行性的分析已经提供了需要的证明。
+      一个值的论据，而之前对子项可进性的分析已经提供了需要的证明。
 
     <!--
     - If the term is done, we have evidence that `M` is
@@ -484,7 +484,7 @@ Instead of defining a data type for `Progress M`, we could
 have formulated progress using disjunction and existentials:
 -->
 
-也可以用析取和存在量化来形式化进行性，
+也可以用析取和存在量化来形式化可进性，
 而不是为 `Progress M` 定义一个数据类型：
 
 ```agda
@@ -1542,7 +1542,7 @@ function that computes the reduction sequence from any given closed,
 well-typed term to its value, if it has one.
 -->
 
-通过重复应用进行性和保型性，我们可以对任何良类型的项求值。
+通过重复应用可进性和保型性，我们可以对任何良类型的项求值。
 在这一节，我们将介绍一个 Agda 函数，
 该函数可以求得任意给定良类型的闭项到其值的规约序列，如果该序列存在。
 
@@ -2105,7 +2105,7 @@ and preservation theorems for the simply typed lambda-calculus.
 -->
 
 不阅读上面的陈述，
-写下简单类型 λ-演算进行性和保型性的定理。
+写下简单类型 λ-演算可进性和保型性的定理。
 
 
 
@@ -2176,7 +2176,7 @@ Stuck M  =  Normal M × ¬ Value M
 Using progress, it is easy to show that no well-typed term is stuck:
 -->
 
-使用进行性，很容易证明没有良类型的项会被卡住。
+使用可进性，很容易证明没有良类型的项会被卡住。
 
 ```agda
 postulate
@@ -2229,7 +2229,7 @@ introduced `wrong` as the denotation of a term with a type error, and
 showed _well-typed terms don't go wrong_.)
 -->
 
-Felleisen 与 Wright 通过进行性和保型性引入了证明，并将其总结为 **良类型的项不会卡住** 的口号。
+Felleisen 与 Wright 通过可进性和保型性引入了证明，并将其总结为 **良类型的项不会卡住** 的口号。
 （他们提及了 Robin Milner 早期的工作，他使用指称而非操作语义。
 他引入了「错误」作为带有类型错误的术语的指称，并展示了 **良类型的项不会出错**。）
 
@@ -2466,7 +2466,7 @@ false, give a counterexample:
 
   - 确定性
 
-  - 进行性
+  - 可进性
 
   - 保型性
 
@@ -2511,7 +2511,7 @@ false, give a counterexample:
 
   - 确定性
 
-  - 进行性
+  - 可进性
 
   - 保型性
 
@@ -2545,7 +2545,7 @@ false, give a counterexample:
 
   - 确定性
 
-  - 进行性
+  - 可进性
 
   - 保型性
 
@@ -2609,7 +2609,7 @@ false, give a counterexample:
 
   - 确定性
 
-  - 进行性
+  - 可进性
 
   - 保型性
 

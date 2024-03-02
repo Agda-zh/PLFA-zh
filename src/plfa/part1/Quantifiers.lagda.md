@@ -765,8 +765,8 @@ result is analogous to the one which tells us that negation
 of a disjunction is isomorphic to a conjunction of negations:
 -->
 
-存在量化的否定与否定的全称量化是同构的。考虑到存在量化是析构的推广，全称量化是合构的推广，
-这样的结果与析构的否定与否定的合构是同构的结果相似。
+存在量化的否定与否定的全称量化是同构的。考虑到存在量化是解构的推广，全称量化是合构的推广，
+这样的结果与解构的否定与否定的合构是同构的结果相似。
 
 ```agda
 ¬∃≃∀¬ : ∀ {A : Set} {B : A → Set}

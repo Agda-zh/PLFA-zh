@@ -810,7 +810,7 @@ and `ζ` rules drive the rest of the normalisation.
 ## Progress
 -->
 
-## 进行性
+## 可进性
 
 <!--
 Progress adapts.  Instead of claiming that every term either is a value
@@ -818,7 +818,7 @@ or takes a reduction step, we claim that every term is either in normal
 form or takes a reduction step.
 -->
 
-进行性相应地也变更了。之前我们说每个项要么是值，要么可以规约一步；我们现在说每个项要么是范式，要么可以规约一步。
+可进性相应地也变更了。之前我们说每个项要么是值，要么可以规约一步；我们现在说每个项要么是范式，要么可以规约一步。
 
 <!--
 Previously, progress only applied to closed, well-typed terms.  We had
@@ -828,7 +828,7 @@ it for open, well-scoped terms.  The definition of normal form permits
 free variables, and we have no terms that are not functions.
 -->
 
-之前，进行性只应用于封闭的、良类型的项。
+之前，可进性只应用于封闭的、良类型的项。
 我们没有考虑诸如应用一个不是函数的项（如 `` `zero` ``）或者是带有自由变量的项。
 现在我们展示的包含了开放的、良作用域的项。
 范式的定义容许了自由变量，且我们也有不是函数的项。
@@ -837,7 +837,7 @@ free variables, and we have no terms that are not functions.
 A term makes progress if it can take a step or is in normal form:
 -->
 
-如果一个项可以规约一步，或其为范式，那么它具有进行性：
+如果一个项可以规约一步，或其为范式，那么它具有可进性：
 
 ```agda
 data Progress {Γ A} (M : Γ ⊢ A) : Set where
@@ -857,7 +857,7 @@ data Progress {Γ A} (M : Γ ⊢ A) : Set where
 If a term is well scoped then it satisfies progress:
 -->
 
-如果一个项是良作用域的，那么它满足进行性：
+如果一个项是良作用域的，那么它满足可进性：
 
 ```agda
 progress : ∀ {Γ A} → (M : Γ ⊢ A) → Progress M
@@ -905,18 +905,18 @@ We induct on the evidence that the term is well scoped:
 
 * 如果项是变量，那么它是范式。
   （这与之前的证明不同，以往项为变量的情况被闭项的条件所排除了。）
-* 如果项是抽象，那么我们对其抽象体应用进行性。
+* 如果项是抽象，那么我们对其抽象体应用可进性。
   （这与之前的证明不同，以往抽象本身即是值。）：
   + 如果它步进，那么整个项由 `ζ` 步进。
   + 如果它是范式，那么整个项也是范式。
 * 如果项是应用，那么我们考虑其函数子项：
-  + 如果它是变量，我们对参数子项递归应用进行性：
+  + 如果它是变量，我们对参数子项递归应用可进性：
     - 如果它步进，那么整个项由 `ξ₂` 步进；
     - 如果它是范式，那么整个项也是范式。
   + 如果它是抽象，那么整个项由 `β` 步进。
-  + 如果它是应用，我们对其函数子项递归应用进行性：
+  + 如果它是应用，我们对其函数子项递归应用可进性：
     - 如果它步进，那么整个项由 `ξ₁` 步进。
-    - 如果它是范式，我们对参数子项递归应用进行性：
+    - 如果它是范式，我们对参数子项递归应用可进性：
       * 如果它步进，那么整个项由 `ξ₂` 步进；
       * 如果它是范式，那么整个项也是范式。
 
@@ -928,7 +928,7 @@ required around it.  In this case, the pattern ensures that `L` is an
 application.
 -->
 
-进行性最后一条等式中使用了 `P@Q` 形式的 **at 模式**，其只在模式 `P` 和 `Q` 都匹配时匹配。
+可进性最后一条等式中使用了 `P@Q` 形式的 **at 模式**，其只在模式 `P` 和 `Q` 都匹配时匹配。
 `@` 是 Agda 不允许出现在变量名中的字符之一，因此不需要在它周围加空格。
 在此处，这个模式确保了 `L` 是一个应用。
 
@@ -942,7 +942,7 @@ application.
 As previously, progress immediately yields an evaluator.
 -->
 
-与之前一样，进行性直接提供了一个求值器。
+与之前一样，可进性直接提供了一个求值器。
 
 <!--
 Gas is specified by a natural number:
