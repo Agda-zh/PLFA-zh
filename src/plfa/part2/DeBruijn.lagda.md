@@ -1395,7 +1395,7 @@ combined with a destructor, labelled with `β`:
 
 规约规则和之前给出的类似，除去我们必须给出每个项的类型。
 如同之前，兼容性规则规约一个项的一部分，用 `ξ` 标出；
-简化构造子与其析构子的规则用 `β` 标出：
+简化构造子与其解构子的规则用 `β` 标出：
 
 ```agda
 infix 2 _—→_
@@ -1658,7 +1658,7 @@ values.
 ## Progress
 -->
 
-## 进行性
+## 可进性
 
 <!--
 As before, every term that is well typed and closed is either
@@ -1667,7 +1667,7 @@ is just as before, but annotated with types:
 -->
 
 和之前一样，每一个良类型的闭项要么是一个值，要么可以进行规约。
-进行性的形式化与之前一样，但是附上了类型：
+可进性的形式化与之前一样，但是附上了类型：
 
 ```agda
 data Progress {A} (M : ∅ ⊢ A) : Set where
@@ -1688,7 +1688,7 @@ The statement and proof of progress is much as before,
 appropriately annotated:
 -->
 
-进行性的声明和证明与之前大抵相同，加上了适当的附注：
+可进性的声明和证明与之前大抵相同，加上了适当的附注：
 
 ```agda
 progress : ∀ {A} → (M : ∅ ⊢ A) → Progress M
@@ -1723,7 +1723,7 @@ We can do much the same here, but we no longer need to explicitly
 refer to preservation, since it is built-in to the definition of reduction.
 -->
 
-之前，我们将保型性和进行性结合来对一个项求值。
+之前，我们将保型性和可进性结合来对一个项求值。
 我们在此处也可以这么做，但是我们不再需要显式地参考保型性，因为它内置于规约的定义中。
 
 <!--

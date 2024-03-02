@@ -126,7 +126,7 @@ foundation of proof is on proud display.
 -->
 
 我发现自己热衷于用 Agda 重构此课程。在 Agda 中，我们不再需要学习策略了：
-这里只有依赖类型编程，简单纯粹。我们总是通过构造子来引入，通过模式匹配来消除。
+这里只有依值类型编程，简单纯粹。我们总是通过构造子来引入，通过模式匹配来消除。
 归纳不再是谜之独立的概念，它与我们熟悉的递归概念直接对应。混缀语法十分灵活，
 但每个概念只需要一个名字，例如代换就是 `_[_:=_]`。标准库虽不完美，但它的一致性却很合理。
 **命题即类型**作为证明的基础则被骄傲地展示了出来。
@@ -140,7 +140,7 @@ types than on the theory of programming languages.
 
 不过，此前还没有用 Agda 语言描述的编程语言理论教材。虽然 Stump 的
 [Verified Functional Programming in Agda][stump] 涵盖了相关的范围，
-但比起编程语言理论，却更多关注于依赖类型编程。
+但比起编程语言理论，却更多关注于依值类型编程。
 
 <!--
 The original goal was to simply adapt *Software Foundations*,
