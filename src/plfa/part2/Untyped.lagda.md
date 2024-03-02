@@ -181,14 +181,14 @@ Show that `Type` is isomorphic to `⊤`, the unit type.
 ## Contexts
 -->
 
-## 上下文
+## 语境
 
 <!--
 As before, a context is a list of types, with the type of the
 most recently bound variable on the right:
 -->
 
-和之前一样，上下文是类型的列表，最新出现的约束变量的类型出现在最右边：
+和之前一样，语境是类型的列表，最新出现的约束变量的类型出现在最右边：
 
 ```agda
 data Context : Set where
@@ -200,7 +200,7 @@ data Context : Set where
 We let `Γ` and `Δ` range over contexts.
 -->
 
-我们使用 `Γ` 和 `Δ` 来指代上下文。
+我们使用 `Γ` 和 `Δ` 来指代语境。
 
 <!--
 #### Exercise (`Context≃ℕ`) (practice)
@@ -259,7 +259,7 @@ binds two variables.
 -->
 
 因为 `★` 是唯一的类型，这样的判断并不会给出很多与类型相关的保证。
-但它确实确保了所有的变量在作用域内。例如，我们不能在只有两个约束变量的上下文中使用 `S S Z`。
+但它确实确保了所有的变量在作用域内。例如，我们不能在只有两个约束变量的语境中使用 `S S Z`。
 
 
 <!--
@@ -320,7 +320,7 @@ every variable has the same type:
 -->
 
 如之前一样，我们可以将自然数转换为对应的 de Bruijn 因子。
-我们不再需要从上下文中查询变量的类型，因为每个变量都有一样的类型：
+我们不再需要从语境中查询变量的类型，因为每个变量都有一样的类型：
 
 ```agda
 length : Context → ℕ
@@ -1019,7 +1019,7 @@ The definition is as before, save that the empty context `∅`
 generalises to an arbitrary context `Γ`.
 -->
 
-定义与之前一样，除了我们将空上下文 `∅` 推广至任意上下文 `Γ`。
+定义与之前一样，除了我们将空语境 `∅` 推广至任意语境 `Γ`。
 
 <!--
 ## Example

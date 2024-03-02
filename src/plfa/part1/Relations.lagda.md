@@ -255,7 +255,7 @@ happily fills it in.
 If Agda fails to infer the value, it reports an error.
 -->
 
-我们用 `_` 来让 Agda 从上下文中推导**显式参数**的值。只有 `m`
+我们用 `_` 来让 Agda 从语境中推导**显式参数**的值。只有 `m`
 这一个值能够给出正确的证明，因此 Agda 愉快地填入了它。
 如果 Agda 推导值失败，那么它会报一个错误。
 
@@ -293,7 +293,7 @@ either `(1 ≤ 2) ≤ 3` or `1 ≤ (2 ≤ 3)`.
 ## Decidability
 -->
 
-## 可决定性
+## 可判定性
 
 <!--
 Given two numbers, it is straightforward to compute whether or not the

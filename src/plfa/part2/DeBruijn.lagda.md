@@ -205,7 +205,7 @@ which in context `Γ` have type `A`.
 在前两章中，项和类型的定义是完全分离的。所有的项拥有 `Term` 类型，Agda 并不会
 阻止我们写出例如 `` `zero · `suc `zero `` 的没有类型的无意义的项。
 这样独立于类型存在的项有时被称为**原项（Preterms）**或者**源项（Raw Terms）**。
-我们将用 `Γ ⊢ A` 类型的内在类型的项，表示它在 `Γ` 上下文中拥有类型 `A`，
+我们将用 `Γ ⊢ A` 类型的内在类型的项，表示它在 `Γ` 语境中拥有类型 `A`，
 来取代 `Term` 类型的源项。
 
 <!--
@@ -298,8 +298,8 @@ of `"n"` but accessed in different contexts, the first where
 -->
 
 注意到，查询判断 `∋m` 和 `∋m′` 表示了两个名称同为 `"m"` 变量的不同约束。
-作为对比， 判断 `∋n` 和 `∋n′` 都表示变量 `"n"` 的约束，但是其上下文不同，
-前者中 `"n"` 是上下文中最后一个约束，后者中则是在匹配表达式后继分支中 `"m"` 约束之后。
+作为对比， 判断 `∋n` 和 `∋n′` 都表示变量 `"n"` 的约束，但是其语境不同，
+前者中 `"n"` 是语境中最后一个约束，后者中则是在匹配表达式后继分支中 `"m"` 约束之后。
 
 <!--
 Here is the term and its type derivation in the notation of this chapter:
@@ -420,7 +420,7 @@ Since terms are intrinsically typed, we must define types and
 contexts before terms.
 -->
 
-由于项是内在类型的，我们必须在定义项之前先定义类型和上下文。
+由于项是内在类型的，我们必须在定义项之前先定义类型和语境。
 
 <!--
 ### Types
@@ -450,8 +450,8 @@ Contexts are as before, but we drop the names.
 Contexts are formalised as follows:
 -->
 
-上下文如同之前一样，但是我们舍去了名字。
-上下文如下形式化：
+语境如同之前一样，但是我们舍去了名字。
+语境如下形式化：
 
 ```agda
 data Context : Set where
@@ -467,9 +467,9 @@ context, and `Γ , A` for the context `Γ` extended by type `A`.
 For example
 -->
 
-上下文就是一个类型的列表，其最近约束的变量出现在右边。
-如之前一样，我们使用 `Γ` 和 `Δ` 来表示上下文。
-我们用 `∅` 表示空上下文，用 `Γ , A` 表示以 `A` 扩充的上下文 `Γ`。
+语境就是一个类型的列表，其最近约束的变量出现在右边。
+如之前一样，我们使用 `Γ` 和 `Δ` 来表示语境。
+我们用 `∅` 表示空语境，用 `Γ , A` 表示以 `A` 扩充的语境 `Γ`。
 例如：
 
 ```agda
@@ -510,8 +510,8 @@ It looks exactly like the old lookup judgment, but
 with all variable names dropped:
 -->
 
-表示上下文 `Γ` 中带有类型 `A` 的变量。
-查询判断由一个以上下文和类型索引的数据类型来形式化。
+表示语境 `Γ` 中带有类型 `A` 的变量。
+查询判断由一个以语境和类型索引的数据类型来形式化。
 它和之前的查询判断看上去一样，但是变量名被舍去了：
 
 ```agda
@@ -571,7 +571,7 @@ and `"s"` by `S Z`
 (as the next most recently bound variable).
 -->
 
-在给出的上下文中，`"z"` 由 `Z` 表示（最近约束的变量），
+在给出的语境中，`"z"` 由 `Z` 表示（最近约束的变量），
 `"s"` 由 `S Z` 表示（下一个最近约束的变量）。
 
 <!--
@@ -597,8 +597,8 @@ It looks exactly like the old typing judgment, but
 with all terms and variable names dropped:
 -->
 
-表示在上下文 `Γ` 中类型为 `A` 的项。
-这个判断用由上下文和类型索引的数据类型进行形式化。
+表示在语境 `Γ` 中类型为 `A` 的项。
+这个判断用由语境和类型索引的数据类型进行形式化。
 它和之前的查询判断看上去一样，但是变量名被舍去了：
 
 ```agda
@@ -707,7 +707,7 @@ We define a helper function that computes the length of a context,
 which will be useful in making sure an index is within context bounds:
 -->
 
-我们定义一个辅助函数来计算上下文的长度，它会在之后确保一个因子在上下文约束中有帮助：
+我们定义一个辅助函数来计算语境的长度，它会在之后确保一个因子在语境约束中有帮助：
 
 ```agda
 length : Context → ℕ
@@ -719,7 +719,7 @@ length (Γ , _)  =  suc (length Γ)
 We can use a natural number to select a type from a context:
 -->
 
-我们可以用一个自然数来从上下文中选择一个类型：
+我们可以用一个自然数来从语境中选择一个类型：
 
 ```agda
 lookup : {Γ : Context} → {n : ℕ} → (p : n < length Γ) → Type
@@ -732,14 +732,14 @@ We intend to apply the function only when the natural is shorter than
 the length of the context, which is witnessed by `p`.
 -->
 
-我们希望只在自然数小于上下文长度的时候应用这个函数，由 `p` 来印证。
+我们希望只在自然数小于语境长度的时候应用这个函数，由 `p` 来印证。
 
 <!--
 Given the above, we can convert a natural to a corresponding
 de Bruijn index, looking up its type in the context:
 -->
 
-结合上述，我们可以将一个自然数转换成其对应的 de Bruijn 因子，从上下文中查询它的类型：
+结合上述，我们可以将一个自然数转换成其对应的 de Bruijn 因子，从语境中查询它的类型：
 
 ```agda
 count : ∀ {Γ} → {n : ℕ} → (p : n < length Γ) → Γ ∋ lookup p
@@ -773,13 +773,13 @@ against invoking `#_` on an `n` that is out of context bounds. Finally, in the
 return type `n∈Γ` is converted to a witness that `n` is within the bounds.
 -->
 
-函数 `#_` 取一个隐式参数 `n∈Γ` 来证明 `n` 在上下文的约束内。
+函数 `#_` 取一个隐式参数 `n∈Γ` 来证明 `n` 在语境的约束内。
 回忆 [`True`](/Decidable/#proof-by-reflection)、
 [`_≤?_`](/Decidable/#the-best-of-both-worlds) 和
 [`toWitness`](/Decidable/#decidables-from-booleans-and-booleans-from-decidables)
 在 [Decidable](/Decidable/) 章节中定义。
-`n∈Γ` 的类型保证了 `#_` 不会在 `n` 超出上下文约束时被应用。
-最后，在返回类型中，`n∈Γ` 被转换为 `n` 在上下文约束内的证明。
+`n∈Γ` 的类型保证了 `#_` 不会在 `n` 超出语境约束时被应用。
+最后，在返回类型中，`n∈Γ` 被转换为 `n` 在语境约束内的证明。
 
 <!--
 With this abbreviation, we can rewrite the Church numeral two more compactly:
@@ -828,7 +828,7 @@ We generalise to arbitrary contexts because later we will give examples
 where `two` appears nested inside binders.
 -->
 
-我们推广到任意上下文，因为我们在稍后给出 `two` 在内部约束时出现的例子。
+我们推广到任意语境，因为我们在稍后给出 `two` 在内部约束时出现的例子。
 
 <!--
 Next, computing two plus two on Church numerals:
@@ -859,7 +859,7 @@ contexts.  While we are at it, we also generalise `twoᶜ` and
 `plusᶜ` to Church numerals over arbitrary types.
 -->
 
-如同之前那样，我们推广到任意上下文。
+如同之前那样，我们推广到任意语境。
 同时，我们将 `twoᶜ` 和 `plusᶜ` 推广至任意类型的 Church 法表示的自然数。
 
 
@@ -896,7 +896,7 @@ chapter, but here the theorem that ensures renaming preserves
 typing also acts as code that performs renaming.
 -->
 
-重命名是替换之前重要的一步，让我们可以将一个项从一个上下文中 「转移」 至另一个上下文。
+重命名是替换之前重要的一步，让我们可以将一个项从一个语境中 「转移」 至另一个语境。
 它直接对应了上一章中的关于重命名的结论，但此处重命名保留类型的定理同时是进行重命名的代码。
 
 <!--
@@ -908,9 +908,9 @@ second context similarly extended.  It looks exactly like the
 old extension lemma, but with all names and terms dropped:
 -->
 
-和之前一样，我们首先需要一条扩充引理，使我们可以到遇到约束时扩充我们的上下文。
-给定一个将一个上下文中的变量映射至另一个上下文中变量的映射，扩充会生成一个
-从扩充后的第一个上下文至以相同方法扩充的第二个上下文的映射。
+和之前一样，我们首先需要一条扩充引理，使我们可以到遇到约束时扩充我们的语境。
+给定一个将一个语境中的变量映射至另一个语境中变量的映射，扩充会生成一个
+从扩充后的第一个语境至以相同方法扩充的第二个语境的映射。
 它看上去和之前的扩充引理完全一样，只是舍去了名字和项：
 
 ```agda
@@ -953,8 +953,8 @@ terms in the second:
 -->
 
 定义了扩充过后，重命名的定义就变得很直接了。
-如果一个上下文中的变量映射至另一个上下文中的变量，那么第一个上下文
-中的项映射至第二个上下文中：
+如果一个语境中的变量映射至另一个语境中的变量，那么第一个语境
+中的项映射至第二个语境中：
 
 ```agda
 rename : ∀ {Γ Δ}
@@ -1014,7 +1014,7 @@ terms that are well typed by the rules of simply-typed lambda
 calculus.
 -->
 
-之前，重命名是一个将项在一个上下文中良类型的证明转换成项在另一个上下文中
+之前，重命名是一个将项在一个语境中良类型的证明转换成项在另一个语境中
 良类型的结论；而现在，它直接转换了整个项，调整了其中的约束变了。
 在 Agda 中类型检查这段代码保证了只有在简单类型的 λ-演算中良类型的项
 可以作为参数或者作为返回项。
@@ -1087,7 +1087,7 @@ an arbitrary context, and need not be closed.
 
 由于 de Bruijn 因子让我们免去了重命名的顾虑，给出一个更广义的替换的定义更加方便。
 与其用一个闭项来替换一个单一的变量，广义的替换提供一个将原来项中各个自由变量至另一个项的映射。
-除此之外，被替换的项可以在任意上下文之中，不需要为闭项。
+除此之外，被替换的项可以在任意语境之中，不需要为闭项。
 
 <!--
 The structure of the definition and the proof is remarkably
@@ -1102,11 +1102,11 @@ extended to the second context similarly extended:
 -->
 
 定义和证明的结构与重命名项类似。
-同样，我们首先需要一个扩充引理，让我们能够在遇到约束时扩充上下文。
-对比在重命名中我们使用从一个上下文中的变量至另一上下文中变量的映射，
-替换使用的是将一个上下文中的变量至另一上下文中**项**的映射。
-给定一个将一个上下文中的变量映射至另一个上下文中项的映射，扩充会生成一个
-从扩充后的第一个上下文至以相同方法扩充的第二个上下文的映射。
+同样，我们首先需要一个扩充引理，让我们能够在遇到约束时扩充语境。
+对比在重命名中我们使用从一个语境中的变量至另一语境中变量的映射，
+替换使用的是将一个语境中的变量至另一语境中**项**的映射。
+给定一个将一个语境中的变量映射至另一个语境中项的映射，扩充会生成一个
+从扩充后的第一个语境至以相同方法扩充的第二个语境的映射。
 
 ```agda
 exts : ∀ {Γ Δ}
@@ -1149,7 +1149,7 @@ to a term over the extended context `Δ , B`.
 -->
 
 这也是为什么我们需要先定义重命名，因为我们需要这个定义来将
-上下文 `Δ` 中的项重命名至扩充后的上下文 `Δ , B`。
+语境 `Δ` 中的项重命名至扩充后的语境 `Δ , B`。
 
 <!--
 With extension under our belts, it is straightforward
@@ -1159,8 +1159,8 @@ map to terms in the second:
 -->
 
 定义了扩充过后，替换的定义就变得很直接了。
-如果一个上下文中的变量映射至另一个上下文中的项，那么第一个上下文
-中的项映射至第二个上下文中：
+如果一个语境中的变量映射至另一个语境中的项，那么第一个语境
+中的项映射至第二个语境中：
 
 ```agda
 subst : ∀ {Γ Δ}
@@ -1245,10 +1245,10 @@ To do so, we use a map from the context `Γ , B` to the context
 type `B` and every other free variable to itself.
 -->
 
-在一个上下文 `Γ , B` 中类型为 `A` 的项，我们将类型为 `B` 的变量
-替换为上下文 `Γ` 中一个类型为 `B` 的项。
-为了这么做，我们用一个从 `Γ , B` 上下文至 `Γ` 上下文的映射，
-令上下文中最后一个变量映射至类型为 `B` 的替换项，令任何其他自由变量映射至其本身。
+在一个语境 `Γ , B` 中类型为 `A` 的项，我们将类型为 `B` 的变量
+替换为语境 `Γ` 中一个类型为 `B` 的项。
+为了这么做，我们用一个从 `Γ , B` 语境至 `Γ` 语境的映射，
+令语境中最后一个变量映射至类型为 `B` 的替换项，令任何其他自由变量映射至其本身。
 
 <!--
 Consider the previous example:
@@ -1455,7 +1455,7 @@ definition of substitution.
 -->
 
 定义中指出，`M —→ N` 只能由类型**都**是 `Γ ⊢ A` 的两个项 `M` 和 `N` 组成，
-其中 `Γ` 是一个上下文，`A` 是一个类型。
+其中 `Γ` 是一个语境，`A` 是一个类型。
 换句话说，我们的定义中**内置**了规约保存类型的证明。
 我们不需要额外证明保型性。
 Agda 的类型检查器检验了每个项保存了类型。
@@ -1537,7 +1537,7 @@ _ =
 As before, we need to supply an explicit context to `` `zero ``.
 -->
 
-和之前一样，我们需要给出为 `` `zero `` 给出显式的上下文。
+和之前一样，我们需要给出为 `` `zero `` 给出显式的语境。
 
 <!--
 Next, a sample reduction demonstrating that two plus two is four:
