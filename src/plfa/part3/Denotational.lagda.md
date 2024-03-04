@@ -40,8 +40,8 @@ fortunately this is not the case!
 我们可按照「函数即表格」的思想为无类型 λ-演算创建语义。然而却碰上了两个难点：
 首先，函数的定义域通常是无穷的，因此我们似乎需要无限长的表格来表示函数。
 其次，在 λ-演算中，函数可应用于函数，它们甚至可以应用于自身！
-因而这些表格可能包含循环引用。有人可能会担心需要高级的技术来解决这些问题，
-幸而事实并非如此！
+因而这些表格可能包含循环引用。你可能会担心需要高级技术来解决这些问题，
+幸而情况并非如此！
 
 <!--
 The first problem, of functions with infinite domains, is solved by
@@ -52,7 +52,7 @@ observation is another way of looking at Dana Scott's insight that
 only continuous functions are needed to model the lambda calculus.
 -->
 
-第一个问题是带有无穷定义域的函数。注意到每一个 λ-抽象只会应用于数量有限的不同实参，
+第一个问题是带有无穷定义域的函数。注意到每一个 λ-抽象只会应用于数量有限的不同参数，
 该问题因而得以解决（我们回头再讨论发散的程序）。这是看待 Dana Scott
 见解的另一种方式，即只需要对 λ-演算进行建模只需要用到连续函数。
 
@@ -70,11 +70,11 @@ case of self-application, the table only needs to contain a smaller
 copy of itself, which is fine.
 -->
 
-第二个问题是自应用，可以通过放宽在函数表格中查找实参的方式来解决。
-通常，人们会在表中查找输入条目与实参完全匹配的行。在自应用的情况下，
+第二个问题是自应用，可以通过放宽在函数表格中查找参数的方式来解决。
+通常，人们会在表中查找输入条目与参数完全匹配的行。在自应用的情况下，
 这样会要求表包含其自身的副本，当然这是不可能的
 （至少，想要使用归纳数据类型定义来构建表是不可能的，而这就是我们要做的）。
-其实只要找到一个输入，使得每一行输入都对应到一行实参（即，输入是实参的子集）。
+其实只要找到一个输入，使得每一行输入都对应到一行参数（即，输入是参数的子集）。
 在自应用的情况下，表只需要包含其自身的较小副本，这样就好了。
 
 <!--
@@ -223,7 +223,7 @@ outputs.
 因此 `v` 可以大于 `v′`。此外，还可以忽略某些输出，因此 `w` 可以小于 `w′`。
 （译注：即作为子类型的函数，其参数是逆变的，返回值是协变的。）
 规则 `⊑-dist` 表示，如果对同一输入有两个条目匹配，
-则可以将它们组合成一个条目并连接两个输出。
+则可以将它们合并成一个条目并连接两个输出。
 
 
 <!--
@@ -261,8 +261,8 @@ using ⊔ and then apply the `⊑-dist` rule to obtain the following
 property.
 -->
 
-即使输入的值不相同，`⊑-dist` 规则也可用于组合两个条目。首先可以使用 ⊔
-将两个输入组合起来，然后应用 `⊑-dist` 规则来获得以下属性。
+即使输入的值不相同，`⊑-dist` 规则也可用于合并两个条目。首先可以使用 ⊔
+将两个输入合并起来，然后应用 `⊑-dist` 规则来获得以下属性。
 
 ```agda
 ⊔↦⊔-dist : ∀{v v′ w w′ : Value}
@@ -344,7 +344,7 @@ and the last value. Putting them together again takes us back to where we starte
 -->
 
 我们可以从扩展的环境中恢复以前的环境以及最后添加的值。
-将它们再次组合在一起能让我们回到开始。
+将它们再次合并在一起能让我们回到开始。
 
 ```agda
 init : ∀ {Γ} → Env (Γ , ★) → Env Γ
@@ -365,7 +365,7 @@ We extend the `⊑` relation point-wise to environments with the
 following definition.
 -->
 
-我们将 `⊑` 关系逐点扩展到具有以下定义的环境。
+我们将 `⊑` 关系逐点(Point-wise扩展到具有以下定义的环境。
 
 ```agda
 _`⊑_ : ∀ {Γ} → Env Γ → Env Γ → Set
@@ -419,12 +419,18 @@ environment `γ` or the second environment `δ`.
 
 ## 指称语义
 
+<!--
 We define the semantics with a judgment of the form `ρ ⊢ M ↓ v`,
 where `ρ` is the environment, `M` the program, and `v` is a result value.
 For readers familiar with big-step semantics, this notation will feel
 quite natural, but don't let the similarity fool you.  There are
 subtle but important differences! So here is the definition of the
 semantics, which we discuss in detail in the following paragraphs.
+-->
+
+我们用 `ρ ⊢ M ↓ v` 形式的判断来定义语义，其中 `ρ` 是环境，`M` 程序，`v` 是结果值。
+对于熟悉大步语义的读者来说，这种表示法会感觉很自然，但不要让这种相似性欺骗了你。
+二者之间存在细微但重要的差异！下面是语义的定义，我们将在后面的段落中详细讨论。
 
 ```agda
 infix 3 _⊢_↓_
@@ -463,12 +469,19 @@ data _⊢_↓_ : ∀{Γ} → Env Γ → (Γ ⊢ ★) → Value → Set where
     → γ ⊢ M ↓ w
 ```
 
-Consider the rule for lambda abstractions, `↦-intro`.  It says that a
+<!--
+Consider the rule for lambda abstractions, .  It says that a
 lambda abstraction results in a single-entry table that maps the input
 `v` to the output `w`, provided that evaluating the body in an
 environment with `v` bound to its parameter produces the output `w`.
 As a simple example of this rule, we can see that the identity function
 maps `⊥` to `⊥` and also that it maps `⊥ ↦ ⊥` to `⊥ ↦ ⊥`.
+-->
+
+考虑 λ-抽象的规则 `↦-intro`，它表示 λ-抽象会生成一个单条目的表，该表将输入 `v`
+映射到输出 `w`，前提是在具有 `v` 绑定到其形参会产生输出 `w`。
+作为此规则的一个简单示例，我们可以看到恒等函数将 `⊥` 映射到 `⊥`，并将 `⊥` ↦ `⊥`
+映射到 `⊥ ↦ ⊥`。
 
 ```agda
 id : ∅ ⊢ ★
@@ -483,6 +496,7 @@ denot-id2 : ∀ {γ} → γ ⊢ id ↓ (⊥ ↦ ⊥) ↦ (⊥ ↦ ⊥)
 denot-id2 = ↦-intro var
 ```
 
+<!--
 Of course, we will need tables with many rows to capture the meaning
 of lambda abstractions. These can be constructed using the `⊔-intro`
 rule.  If term M (typically a lambda abstraction) can produce both
@@ -495,12 +509,23 @@ joins them into a big table using many instances of the rule `⊔-intro`.
 In the following we show that the identity function produces a table
 containing both of the previous results, `⊥ ↦ ⊥` and
 `(⊥ ↦ ⊥) ↦ (⊥ ↦ ⊥)`.
+-->
+
+当然，我们需要多行表格来刻画 λ-抽象的含义。它们可以用 `⊔-intro`
+规则构建。如果项 M（通常是一个 λ-抽象）可以产生表格 `v` 和 `w`，
+那么它也可以产生合并的表格 `v ⊔ w`。我们可以从操作的视角看待规则
+`↦-intro` 和 `⊔-intro`。想象一下，当解释器首次遇到 λ-抽象时，
+它会在许多随机选择的参数上预先对函数求值，使用多个规则 `↦-intro`
+的实例，然后使用多个规则 `⊔-intro` 将它们合并成一个大表格。
+在接下来的内容中，我们将展示恒等函数产生一个包含上述两个结果的表格
+`⊥ ↦ ⊥`和`(⊥ ↦ ⊥) ↦ (⊥ ↦ ⊥)`。
 
 ```agda
 denot-id3 : `∅ ⊢ id ↓ (⊥ ↦ ⊥) ⊔ (⊥ ↦ ⊥) ↦ (⊥ ↦ ⊥)
 denot-id3 = ⊔-intro denot-id1 denot-id2
 ```
 
+<!--
 We most often think of the judgment `γ ⊢ M ↓ v` as taking the
 environment `γ` and term `M` as input, producing the result `v`.  However,
 it is worth emphasizing that the semantics is a _relation_.  The above
@@ -511,22 +536,43 @@ approximations of the same function. Perhaps a better way of thinking
 about the judgment `γ ⊢ M ↓ v` is that the `γ`, `M`, and `v` are all inputs
 and the semantics either confirms or denies whether `v` is an accurate
 partial description of the result of `M` in environment `γ`.
+-->
 
+我们通常认为判断 `γ ⊢ M ↓ v` 以环境 `γ` 和项 `M` 为输入，产生结果 `v`。
+然而重点在于，语义是一种**关系**。上述恒等函数的结果表明，
+相同的环境和项可以映射到不同的结果。然而，对于给定的 `γ` 和 `M`
+，它们的结果并不会有**太大**区别，毕竟它们都是同一个函数的有限近似。
+或许考虑判断 `γ ⊢ M ↓ v` 更好的方法是将 `γ`、`M` 和 `v` 都视为输入，
+其语义则是判定 `v` 是否为精确的环境 `γ` 中 `M` 的求值结果的部分描述。
+
+<!--
 Next we consider the meaning of function application as given by the
 `↦-elim` rule. In the premise of the rule we have that `L` maps `v` to
 `w`. So if `M` produces `v`, then the application of `L` to `M`
 produces `w`.
+-->
 
+接下来我们考虑 `↦-elim` 规则给出的函数应用的含义。
+以此规则为前提，我们有规则 `L` 将 `v` 映射到 `w`。 因此，如果 `M`
+产生 `v`，那么将 `L` 应用于 `M` 会产生 `w`。
+
+<!--
 As an example of function application and the `↦-elim` rule, we apply
 the identity function to itself.  Indeed, we have both that
 `∅ ⊢ id ↓ (u ↦ u) ↦ (u ↦ u)` and also `∅ ⊢ id ↓ (u ↦ u)`, so we can
 apply the rule `↦-elim`.
+-->
+
+举一个函数应用和 `↦-elim` 规则的例子，我们将恒等函数应用于自身。
+实际上，我们有 `∅ ⊢ id ↓ (u ↦ u) ↦ (u ↦ u)` 的同时还有
+`∅ ⊢ id ↓ (u ↦ u)`，因此我们可以应用规则 `↦-elim`。
 
 ```agda
 id-app-id : ∀ {u : Value} → `∅ ⊢ id · id ↓ (u ↦ u)
 id-app-id {u} = ↦-elim (↦-intro var) (↦-intro var)
 ```
 
+<!--
 Next we revisit the Church numeral two: `λ f. λ u. (f (f u))`.
 This function has two parameters: a function `f` and an arbitrary value
 `u`, and it applies `f` twice. So `f` must map `u` to some value, which
@@ -539,6 +585,16 @@ using the `sub` rule.  In particular, we use the ⊑-conj-R1 and
 `u ↦ v ⊔ v ↦ w`. So the meaning of twoᶜ is that it takes this table
 and parameter `u`, and it returns `w`.  Indeed we derive this as
 follows.
+-->
+
+接着我们重新考虑丘奇数二：`λ f. λ u. (f (f u))`。该函数有两个参数：`f`
+和一个任意值 `u`，并将 `f` 应用两次。于是 `f` 必定将 `u` 映射到某个值，
+我们将其命名为 `v`。接着，对于第二次应用，`f` 必定将 `v` 映射到某个值，
+我们将其命名为 `w`。因此该函数的表格必定包含两个条目，即 `u ↦ v` 和 `v ↦ w`。
+对于该表格的每一次应用，我们用 `sub` 规则提取对应的条目。具体来说，
+就是用 `⊑-conj-R1` 和 `⊑-conj-R2` 从表格 `u ↦ v ⊔ v ↦ w` 中分别选出
+`u ↦ v` 和 `v ↦ w`。所以 `twoᶜ` 的涵义就是接受该表格和参数 `u`，然后返回 `w`。
+实际上我们通过以下过程把它推导出来的。
 
 ```agda
 denot-twoᶜ : ∀{u v w : Value} → `∅ ⊢ twoᶜ ↓ ((u ↦ v ⊔ v ↦ w) ↦ u ↦ w)
@@ -552,6 +608,7 @@ denot-twoᶜ {u}{v}{w} =
 ```
 
 
+<!--
 Next we have a classic example of self application: `Δ = λx. (x x)`.
 The input value for `x` needs to be a table, and it needs to have an
 entry that maps a smaller version of itself, call it `v`, to some value
@@ -559,6 +616,13 @@ entry that maps a smaller version of itself, call it `v`, to some value
 output of `Δ` is `w`. The derivation is given below.  The first occurrences
 of `x` evaluates to `v ↦ w`, the second occurrence of `x` evaluates to `v`,
 and then the result of the application is `w`.
+-->
+
+接下来展示一个自应用的经典例子：`Δ = λx. (x x)`。
+`x` 的输入值必须是一个表格，其中有一个条目将其较小的版本 `v`
+映射到某个值 `w`，所以输入值类似于 `v ↦ w ⊔ v`。当然，
+`Δ` 的输出就是 `w`，推导过程如下所示。第一个 `x` 求值为 `v ↦ w`，
+第二个 `x` 求值为 `v`，应用的结果为 `w`。
 
 ```agda
 Δ : ∅ ⊢ ★
@@ -569,6 +633,7 @@ denot-Δ = ↦-intro (↦-elim (sub var (⊑-conj-R1 ⊑-refl))
                           (sub var (⊑-conj-R2 ⊑-refl)))
 ```
 
+<!--
 One might worry whether this semantics can deal with diverging
 programs.  The `⊥` value and the `⊥-intro` rule provide a way to handle
 them. (The `⊥-intro` rule is also what enables β reduction on
@@ -583,6 +648,18 @@ whenever we can show that a program evaluates to two values, we can apply
 `⊔-intro` to join them together, so `Δ` evaluates to `(⊥ ↦ ⊥) ⊔ ⊥`. This
 matches the input of the first occurrence of `Δ`, so we can conclude that
 the result of the application is `⊥`.
+-->
+
+你可能会担心这种语义是否可以处理发散的程序。值 `⊥` 和规则 `⊥-intro`
+提供了一种处理它们的方法（`⊥-intro` 规则也是 β-规约能够应用于不停机参数的原因）。
+经典的 `Ω` 程序是一个特别简单的发散程序，它将 `Δ` 应用于自身，语义赋予
+`Ω` 含义 `⊥`。有多种方法可以得出它，我们将从使用 `⊔-intro` 规则的方法开始。
+首先，`denot-Δ` 告诉我们 `Δ` 的计算结果为 `((⊥ ↦ ⊥) ⊔ ⊥) ↦ ⊥`（选择
+`v₁ = v2 = ⊥` ）。接着，`Δ` 还通过使用 `↦-intro` 和 `⊥-intro` 求值为
+`⊥ ↦ ⊥`，并通过 `⊥-intro` 求值为 `⊥`。正如我们之前所看到的，
+只要我们能证明程序会求值出两个值，我们就能应用 `⊔-intro` 将它们连接在一起，
+于是 `Δ` 求值为 `(⊥ ↦ ⊥) ⊔ ⊥`，这与第一个 `Δ` 的输入相匹配，
+因此可得应用的结果是 `⊥`。
 
 ```agda
 Ω : ∅ ⊢ ★
@@ -592,19 +669,30 @@ denot-Ω : `∅ ⊢ Ω ↓ ⊥
 denot-Ω = ↦-elim denot-Δ (⊔-intro (↦-intro ⊥-intro) ⊥-intro)
 ```
 
+<!--
 A shorter derivation of the same result is by just one use of the
 `⊥-intro` rule.
+-->
+
+同一结果的较短推导就是单纯使用 `⊥-intro` 规则。
 
 ```agda
 denot-Ω' : `∅ ⊢ Ω ↓ ⊥
 denot-Ω' = ⊥-intro
 ```
 
+<!--
 Just because one can derive `∅ ⊢ M ↓ ⊥` for some closed term `M` doesn't mean
 that `M` necessarily diverges. There may be other derivations that
 conclude with `M` producing some more informative value.  However, if
 the only thing that a term evaluates to is `⊥`, then it indeed diverges.
+-->
 
+仅凭对某个封闭项 `M` 可以推导出 `∅ ⊢ M ↓ ⊥` 并不意味着 `M` 必然发散。
+可能还有其他可以推出 `M` 的推导过程能产生包含更多信息的值。然而，
+如果一个项求值的唯一结果是 `⊥`，那么它确实发散。
+
+<!--
 An attentive reader may have noticed a disconnect earlier in the way
 we planned to solve the self-application problem and the actual
 `↦-elim` rule for application. We said at the beginning that we would
@@ -613,6 +701,12 @@ input entry if the argument is equal or greater than the input entry.
 Instead, the `↦-elim` rule seems to require an exact match.  However,
 because of the `sub` rule, application really does allow larger
 arguments.
+-->
+
+细心的读者可能已经发现，我们计划解决自应用问题的方式与实际应用的
+`↦-elim` 规则之间存在脱节。开头说过，我们会放宽查表的概念，
+如果参数等于或大于输入条目，则允许参数匹配输入条目。然而，`↦-elim`
+规则似乎需要精确匹配，但由于存在 `sub` 规则，应用确实可以允许更大的参数。
 
 ```agda
 ↦-elim2 : ∀ {Γ} {γ : Env Γ} {M₁ M₂ v₁ v₂ v₃}
@@ -624,14 +718,23 @@ arguments.
 ↦-elim2 d₁ d₂ lt = ↦-elim d₁ (sub d₂ lt)
 ```
 
+<!--
 #### Exercise `denot-plusᶜ` (practice)
+-->
 
+#### 练习 `denot-plusᶜ`（实践）
+
+<!--
 What is a denotation for `plusᶜ`? That is, find a value `v` (other than `⊥`)
 such that `∅ ⊢ plusᶜ ↓ v`. Also, give the proof of `∅ ⊢ plusᶜ ↓ v`
 for your choice of `v`.
+-->
+
+`plusᶜ` 的指称是什么？即，找到一个值 `v`（排除 `⊥`），使得 `∅ ⊢ plusᶜ ↓ v`。
+此外，对你选择的 `v` 给出 `∅ ⊢ plusᶜ ↓ v` 的证明。
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处
 ```
 
 
