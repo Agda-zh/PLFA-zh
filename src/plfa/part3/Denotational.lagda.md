@@ -124,8 +124,9 @@ whose internal nodes are the union operator and whose leaves represent
 either a single mapping or the empty set.
 -->
 
-值数据类型 `Value` 表示函数的有限的一部分。我们将值视为表示输入-输出映射的有限序对集合。
-`Value` 数据类型将集合表示为二叉树，其内部节点是并集运算符，叶子节点表示单个映射或空集。
+值数据类型 `Value` 表示函数的有限的一部分。我们将值视为表示「输入-输出」
+映射的有限序对集合。`Value` 数据类型将集合表示为二叉树，其内部节点是并集运算符，
+叶子节点表示单个映射或空集。
 
 <!--
   * The ⊥ value provides no information about the computation.
@@ -230,7 +231,7 @@ outputs.
 The `⊑` relation is reflexive.
 -->
 
-`⊑` 关系满足自反性。
+`⊑` 关系满足自反性：
 
 ```agda
 ⊑-refl : ∀ {v} → v ⊑ v
@@ -244,7 +245,7 @@ The `⊔` operation is monotonic with respect to `⊑`, that is, given two
 larger values it produces a larger value.
 -->
 
-`⊔` 运算对 `⊑` 满足单调性，即给定两个较大的值，它会产生一个更大的值。
+`⊔` 运算对 `⊑` 满足单调性，即给定两个较大的值，它会产生一个更大的值：
 
 ```agda
 ⊔⊑⊔ : ∀ {v w v′ w′}
@@ -280,7 +281,7 @@ If the join `u ⊔ v` is less than another value `w`,
 then both `u` and `v` are less than `w`.
 -->
 
-如果连接 `u ⊔ v` 小于另一个值 `w`，则 `u` 和 `v` 都小于 `w`。
+如果连接 `u ⊔ v` 小于另一个值 `w`，则 `u` 和 `v` 都小于 `w`：
 
 ```agda
 ⊔⊑-invL : ∀{u v w : Value}
@@ -314,7 +315,7 @@ An environment gives meaning to the free variables in a term by
 mapping variables to values.
 -->
 
-环境通过将变量映射到值来为项中的自由变量赋予含义。
+环境通过将变量映射到值来为项中的自由变量赋予含义：
 
 ```agda
 Env : Context → Set
@@ -325,7 +326,7 @@ Env Γ = ∀ (x : Γ ∋ ★) → Value
 We have the empty environment, and we can extend an environment.
 -->
 
-我们有空环境，且可以扩展环境。
+我们有空环境，且可以扩展环境：
 
 ```agda
 `∅ : Env ∅
@@ -344,7 +345,7 @@ and the last value. Putting them together again takes us back to where we starte
 -->
 
 我们可以从扩展的环境中恢复以前的环境以及最后添加的值。
-将它们再次合并在一起能让我们回到开始。
+将它们再次合并在一起能让我们回到开始：
 
 ```agda
 init : ∀ {Γ} → Env (Γ , ★) → Env Γ
@@ -365,7 +366,7 @@ We extend the `⊑` relation point-wise to environments with the
 following definition.
 -->
 
-我们将 `⊑` 关系逐点(Point-wise扩展到具有以下定义的环境。
+我们将 `⊑` 关系逐点（Point-wise）扩展到具有以下定义的环境：
 
 ```agda
 _`⊑_ : ∀ {Γ} → Env Γ → Env Γ → Set
@@ -377,7 +378,7 @@ We define a bottom environment and a join operator on environments,
 which takes the point-wise join of their values.
 -->
 
-我们定义了一个底环境和一个环境上的连接运算符，它接受它们的值的逐点连接。
+我们定义了一个底环境和一个环境上的连接运算符，它接受它们的值的逐点连接：
 
 ```agda
 `⊥ : ∀ {Γ} → Env Γ
@@ -399,8 +400,8 @@ the join of two environments `γ` and `δ` is greater than the first
 environment `γ` or the second environment `δ`.
 -->
 
-`⊑-refl`、`⊑-conj-R1` 和 `⊑-conj-R2` 规则提升到环境。因此两个环境 `γ` 和 `δ`
-的连接大于第一个环境 `γ` 或第二个环境 `δ`。
+`⊑-refl`、`⊑-conj-R1` 和 `⊑-conj-R2` 规则对环境也适用，因此两个环境
+`γ` 和 `δ` 的连接大于第一个环境 `γ` 或第二个环境 `δ`：
 
 ```agda
 `⊑-refl : ∀ {Γ} {γ : Env Γ} → γ `⊑ γ
@@ -428,9 +429,9 @@ subtle but important differences! So here is the definition of the
 semantics, which we discuss in detail in the following paragraphs.
 -->
 
-我们用 `ρ ⊢ M ↓ v` 形式的判断来定义语义，其中 `ρ` 是环境，`M` 程序，`v` 是结果值。
+我们用形如 `ρ ⊢ M ↓ v` 的判断来定义语义，其中 `ρ` 是环境，`M` 程序，`v` 是结果值。
 对于熟悉大步语义的读者来说，这种表示法会感觉很自然，但不要让这种相似性欺骗了你。
-二者之间存在细微但重要的差异！下面是语义的定义，我们将在后面的段落中详细讨论。
+二者之间存在细微但重要的差异！下面是语义的定义，我们将在后面的段落中详细讨论：
 
 ```agda
 infix 3 _⊢_↓_
@@ -480,8 +481,8 @@ maps `⊥` to `⊥` and also that it maps `⊥ ↦ ⊥` to `⊥ ↦ ⊥`.
 
 考虑 λ-抽象的规则 `↦-intro`，它表示 λ-抽象会生成一个单条目的表，该表将输入 `v`
 映射到输出 `w`，前提是在具有 `v` 绑定到其形参会产生输出 `w`。
-作为此规则的一个简单示例，我们可以看到恒等函数将 `⊥` 映射到 `⊥`，并将 `⊥` ↦ `⊥`
-映射到 `⊥ ↦ ⊥`。
+作为此规则的简单示例，我们可以看到恒等函数将 `⊥` 映射到 `⊥`，并将 `⊥` ↦ `⊥`
+映射到 `⊥ ↦ ⊥`：
 
 ```agda
 id : ∅ ⊢ ★
@@ -540,7 +541,7 @@ partial description of the result of `M` in environment `γ`.
 
 我们通常认为判断 `γ ⊢ M ↓ v` 以环境 `γ` 和项 `M` 为输入，产生结果 `v`。
 然而重点在于，语义是一种**关系**。上述恒等函数的结果表明，
-相同的环境和项可以映射到不同的结果。然而，对于给定的 `γ` 和 `M`
+相同的环境和项可以映射为不同的结果。然而，对于给定的 `γ` 和 `M`
 ，它们的结果并不会有**太大**区别，毕竟它们都是同一个函数的有限近似。
 或许考虑判断 `γ ⊢ M ↓ v` 更好的方法是将 `γ`、`M` 和 `v` 都视为输入，
 其语义则是判定 `v` 是否为精确的环境 `γ` 中 `M` 的求值结果的部分描述。
@@ -565,7 +566,7 @@ apply the rule `↦-elim`.
 
 举一个函数应用和 `↦-elim` 规则的例子，我们将恒等函数应用于自身。
 实际上，我们有 `∅ ⊢ id ↓ (u ↦ u) ↦ (u ↦ u)` 的同时还有
-`∅ ⊢ id ↓ (u ↦ u)`，因此我们可以应用规则 `↦-elim`。
+`∅ ⊢ id ↓ (u ↦ u)`，因此我们可以应用规则 `↦-elim`：
 
 ```agda
 id-app-id : ∀ {u : Value} → `∅ ⊢ id · id ↓ (u ↦ u)
@@ -594,7 +595,7 @@ follows.
 对于该表格的每一次应用，我们用 `sub` 规则提取对应的条目。具体来说，
 就是用 `⊑-conj-R1` 和 `⊑-conj-R2` 从表格 `u ↦ v ⊔ v ↦ w` 中分别选出
 `u ↦ v` 和 `v ↦ w`。所以 `twoᶜ` 的涵义就是接受该表格和参数 `u`，然后返回 `w`。
-实际上我们通过以下过程把它推导出来的。
+实际上我们通过以下过程把它推导出来的：
 
 ```agda
 denot-twoᶜ : ∀{u v w : Value} → `∅ ⊢ twoᶜ ↓ ((u ↦ v ⊔ v ↦ w) ↦ u ↦ w)
@@ -674,7 +675,7 @@ A shorter derivation of the same result is by just one use of the
 `⊥-intro` rule.
 -->
 
-同一结果的较短推导就是单纯使用 `⊥-intro` 规则。
+同一结果的较短推导就是单纯使用 `⊥-intro` 规则：
 
 ```agda
 denot-Ω' : `∅ ⊢ Ω ↓ ⊥
@@ -703,7 +704,7 @@ because of the `sub` rule, application really does allow larger
 arguments.
 -->
 
-细心的读者可能已经发现，我们计划解决自应用问题的方式与实际应用的
+细心的读者会发现，我们计划解决自应用问题的方式与实际应用的
 `↦-elim` 规则之间存在脱节。开头说过，我们会放宽查表的概念，
 如果参数等于或大于输入条目，则允许参数匹配输入条目。然而，`↦-elim`
 规则似乎需要精确匹配，但由于存在 `sub` 规则，应用确实可以允许更大的参数。
@@ -738,36 +739,58 @@ for your choice of `v`.
 ```
 
 
+<!--
 ## Denotations and denotational equality
+-->
 
+## 指称与指称相等
+
+<!--
 Next we define a notion of denotational equality based on the above
 semantics. Its statement makes use of an if-and-only-if, which we
 define as follows.
+-->
+
+接下来我们基于上述语义来定义指称相等的概念，它的语句使用了「当且仅当」，
+其定义如下
 
 ```agda
 _iff_ : Set → Set → Set
 P iff Q = (P → Q) × (Q → P)
 ```
 
+<!--
 Another way to view the denotational semantics is as a function that
 maps a term to a relation from environments to values.  That is, the
 _denotation_ of a term is a relation from environments to values.
+-->
+
+看待指称语义的另一种方式是将它看作一个函数，它将项映射为一个从环境到值的关系，
+即，项的**指称（Denotation）**是一个从环境到值的关系。
 
 ```agda
 Denotation : Context → Set₁
 Denotation Γ = (Env Γ → Value → Set)
 ```
 
+<!--
 The following function ℰ gives this alternative view of the semantics,
 which really just amounts to changing the order of the parameters.
+-->
+
+下面的函数 ℰ 给出了语义的另一种视角，它相当于只改变了参数的顺序：
 
 ```agda
 ℰ : ∀{Γ} → (M : Γ ⊢ ★) → Denotation Γ
 ℰ M = λ γ v → γ ⊢ M ↓ v
 ```
 
+<!--
 In general, two denotations are equal when they produce the same
 values in the same environment.
+-->
+
+一般来说，当两个指称在相同的环境中能够产生相同的值时，二者就是相等的。
 
 ```agda
 infix 3 _≃_
@@ -776,7 +799,11 @@ _≃_ : ∀ {Γ} → (Denotation Γ) → (Denotation Γ) → Set
 (_≃_ {Γ} D₁ D₂) = (γ : Env Γ) → (v : Value) → D₁ γ v iff D₂ γ v
 ```
 
+<!--
 Denotational equality is an equivalence relation.
+-->
+
+指称相等是一种等价关系：
 
 ```agda
 ≃-refl : ∀ {Γ : Context} → {M : Denotation Γ}
@@ -798,11 +825,19 @@ Denotational equality is an equivalence relation.
                         (λ z → proj₂ (eq1 γ v) (proj₂ (eq2 γ v) z)) ⟩
 ```
 
+<!--
 Two terms `M` and `N` are denotational equal when their denotations are
 equal, that is, `ℰ M ≃ ℰ N`.
+-->
 
+若两个项 `M` 和 `N` 的指称相等，我们就说它们是指称相等的，即 `ℰ M ≃ ℰ N`。
+
+<!--
 The following submodule introduces equational reasoning for the `≃`
 relation.
+-->
+
+以下子模块引入了 `≃` 关系的等式推理：
 
 ```agda
 
@@ -837,25 +872,41 @@ module ≃-Reasoning {Γ : Context} where
   (x ☐)  =  ≃-refl
 ```
 
+<!--
 ## Road map for the following chapters
+-->
 
+## 后续章节的路线图
+
+<!--
 The subsequent chapters prove that the denotational semantics has
 several desirable properties. First, we prove that the semantics is
 compositional, i.e., that the denotation of a term is a function of
 the denotations of its subterms. To do this we shall prove equations
 of the following shape.
+-->
+
+后续章节证明了指称语义拥有几个期望的性质。首先我们证明了语义是可组合的，
+即，一个项的指称是其子项的指称的函数。为此我们需要证明以下形式的等式：
 
     ℰ (` x) ≃ ...
     ℰ (ƛ M) ≃ ... ℰ M ...
     ℰ (M · N) ≃ ... ℰ M ... ℰ N ...
 
+<!--
 The compositionality property is not trivial because the semantics we
 have defined includes three rules that are not syntax directed:
 `⊥-intro`, `⊔-intro`, and `sub`. The above equations suggest that the
 denotational semantics can be defined as a recursive function, and
 indeed, we give such a definition and prove that it is equivalent to
 ℰ.
+-->
 
+组合性的性质并不平凡，因为我们定义的语义包含三个非语法制导的规则：
+`⊥-intro`、`⊔-intro` 和 `sub`。上面的等式表明指称语义可以被定义为递归函数，
+实际上，我们确实给出了这样的定义并证明它等价于 ℰ。
+
+<!--
 Next we investigate whether the denotational semantics and the
 reduction semantics are equivalent. Recall that the job of a language
 semantics is to describe the observable behavior of a given program
@@ -864,27 +915,63 @@ make, but they usually boil down to a single bit of information:
 
   * divergence: the program `M` executes forever.
   * termination: the program `M` halts.
+-->
 
+接下来我们研究指称语义和规约语义是否等价。回想一下，一个语言的语义的作用，
+就是描述给定程序 `M` 的可观测行为。对于 λ-演算，我们可以做出多种选择，
+但它们通常可以归结为一点信息：
+
+  * 发散：程序 `M` 永远执行。
+  * 停机：程序 `M` 停止。
+
+<!--
 We can characterize divergence and termination in terms of reduction.
 
   * divergence: `¬ (M —↠ ƛ N)` for any term `N`.
   * termination: `M —↠ ƛ N` for some term `N`.
+-->
 
+我们可以用规约的项来刻画发散和停机：
+
+  * 发散：对于任意项 `N`，有 `¬ (M —↠ ƛ N)`。
+  * 停机：对于某个项 `N`，有 `M —↠ ƛ N` 。
+
+<!--
 We can also characterize divergence and termination using denotations.
 
   * divergence: `¬ (∅ ⊢ M ↓ v ↦ w)` for any `v` and `w`.
   * termination: `∅ ⊢ M ↓ v ↦ w` for some `v` and `w`.
+-->
 
+我们也可以用指称来刻画发散和停机：
+
+  * 发散：对于任意 `v` 和 `w`，有 `¬ (∅ ⊢ M ↓ v ↦ w)`。
+  * 停机：对于某个 `v` 和 `w`，有 `∅ ⊢ M ↓ v ↦ w`。
+
+<!--
 Alternatively, we can use the denotation function `ℰ`.
 
   * divergence: `¬ (ℰ M ≃ ℰ (ƛ N))` for any term `N`.
   * termination: `ℰ M ≃ ℰ (ƛ N)` for some term `N`.
+-->
 
+此外，我们还可以用指称函数 `ℰ`：
+
+  * 发散：对于任意项 `N`，有 `¬ (ℰ M ≃ ℰ (ƛ N))`。
+  * 停机：对于某个项 `N`，有 `ℰ M ≃ ℰ (ƛ N)`。
+
+<!--
 So the question is whether the reduction semantics and denotational
 semantics are equivalent.
 
     (∃ N. M —↠ ƛ N)  iff  (∃ N. ℰ M ≃ ℰ (ƛ N))
+-->
 
+所以问题在于规约语义和指称语义是否等价：
+
+    (∃ N. M —↠ ƛ N)  当且仅当  (∃ N. ℰ M ≃ ℰ (ƛ N))
+
+<!--
 We address each direction of the equivalence in the second and third
 chapters. In the second chapter we prove that reduction to a lambda
 abstraction implies denotational equality to a lambda
@@ -892,29 +979,59 @@ abstraction. This property is called the _soundness_ in the
 literature.
 
     M —↠ ƛ N  implies  ℰ M ≃ ℰ (ƛ N)
+-->
 
+我们将在第二章和第三章中讨论等价的每个方向。在第二章中，我们证明了
+λ-抽象的规约蕴含 λ-抽象的指称相等。此性质在文献中被称为**可靠性（Soundness）**。
+
+    M —↠ ƛ N  蕴含  ℰ M ≃ ℰ (ƛ N)
+
+<!--
 In the third chapter we prove that denotational equality to a lambda
 abstraction implies reduction to a lambda abstraction. This property
 is called _adequacy_ in the literature.
 
     ℰ M ≃ ℰ (ƛ N)  implies M —↠ ƛ N′ for some N′
+-->
 
+在第三章中，我们证明了 λ-抽象的指称相等蕴含 λ-抽象的规约。
+此性质在文献中被称为**充分性（Adequacy）**。
+
+    ℰ M ≃ ℰ (ƛ N)  蕴含 M —↠ ƛ N′ 对于某个 N′
+
+<!--
 The fourth chapter applies the results of the three preceding
 chapters (compositionality, soundness, and adequacy) to prove that
 denotational equality implies a property called _contextual
 equivalence_. This property is important because it justifies the use
 of denotational equality in proving the correctness of program
 transformations such as performance optimizations.
+-->
 
+第四章应用前三章的结果（组合性、可靠性和充分性）来证明指称相等蕴含一种称为
+**语境等价（Contextual Equivalence）**的性质。这个性质很重要，
+因为它保证了在证明程序变换（如性能优化）的正确性时使用指称相等的合理性。
+
+<!--
 The proofs of all of these properties rely on some basic results about
 the denotational semantics, which we establish in the rest of this
 chapter.  We start with some lemmas about renaming, which are quite
 similar to the renaming lemmas that we have seen in previous chapters.
 We conclude with a proof of an important inversion lemma for the
 less-than relation regarding function values.
+-->
+
+我们会在本章剩下的部分中建立关于指称语义的一些基本结果，
+所有这些性质的证明都依赖此。我们先从一些关于重命名的引理开始，
+它们与我们在前面的章节中见过的重命名引理非常相似。
+我们以关于函数值的小于关系的重要反演引理的证明作为结论。
 
 
+<!--
 ## Renaming preserves denotations
+-->
+
+## 重命名会保留指称
 
 We shall prove that renaming variables, and changing the environment
 accordingly, preserves the meaning of a term. We generalize the
