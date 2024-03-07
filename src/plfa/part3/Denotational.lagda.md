@@ -220,10 +220,10 @@ outputs.
 -->
 
 前五条规则很简单。规则 `⊑-fun` 刻画了何时可以将高阶参数 `v′ ↦ w′` 与输入为
-`v ↦ w` 的表格条目匹配。考虑一个高阶参数的调用，可以传入一个比预期更大的参数，
+`v ↦ w` 的表格条目相匹配。考虑一个高阶参数的调用，可以传入一个比预期更大的参数，
 因此 `v` 可以大于 `v′`。此外，还可以忽略某些输出，因此 `w` 可以小于 `w′`。
 （译注：即作为子类型的函数，其参数是逆变的，返回值是协变的。）
-规则 `⊑-dist` 表示，如果对同一输入有两个条目匹配，
+规则 `⊑-dist` 表示，如果对同一个输入有两个条目相匹配，
 则可以将它们合并成一个条目并连接两个输出。
 
 
@@ -262,7 +262,7 @@ using ⊔ and then apply the `⊑-dist` rule to obtain the following
 property.
 -->
 
-即使输入的值不相同，`⊑-dist` 规则也可用于合并两个条目。首先可以使用 ⊔
+即使输入的值不相同，`⊑-dist` 规则也可用于合并两个条目。首先可以用 `⊔`
 将两个输入合并起来，然后应用 `⊑-dist` 规则来获得以下属性。
 
 ```agda
@@ -1031,19 +1031,31 @@ less-than relation regarding function values.
 ## Renaming preserves denotations
 -->
 
-## 重命名会保留指称
+## 重命名保持指称不变
 
+<!--
 We shall prove that renaming variables, and changing the environment
 accordingly, preserves the meaning of a term. We generalize the
 renaming lemma to allow the values in the new environment to be the
 same or larger than the original values. This generalization is useful
 in proving that reduction implies denotational equality.
+-->
 
+我们将证明重命名变量并更改环境中对应的项仍能保持项的含义。
+我们推广了重命名引理，以允许新环境中的值等于或大于原始值，
+这种推广有助于证明规约蕴含指称相等。
+
+<!--
 As before, we need an extension lemma to handle the case where we
 proceed underneath a lambda abstraction. Suppose that `ρ` is a
 renaming that maps variables in `γ` into variables with equal or
 larger values in `δ`. This lemmas says that extending the renaming
 producing a renaming `ext r` that maps `γ , v` to `δ , v`.
+-->
+
+和以前一样，我们需要一个扩展引理来处理在 λ-抽象的情况下的证明。假设 `ρ`
+是一个重命名，它将 `γ` 中的变量映射为 `δ` 中具有相等或更大值的变量。
+这个引理说明了，扩展重命名会产生一个重命名 `ext r`，它将 `γ , v` 映射到 `δ , v`。
 
 ```agda
 ext-⊑ : ∀ {Γ Δ v} {γ : Env Γ} {δ : Env Δ}
@@ -1055,18 +1067,32 @@ ext-⊑ ρ lt Z = ⊑-refl
 ext-⊑ ρ lt (S n′) = lt n′
 ```
 
+<!--
 We proceed by cases on the de Bruijn index `n`.
 
 * If it is `Z`, then we just need to show that `v ⊑ v`, which we have by `⊑-refl`.
 
 * If it is `S n′`, then the goal simplifies to `γ n′ ⊑ δ (ρ n′)`,
   which is an instance of the premise.
+-->
 
+我们对 de Bruijn 索引 `n` 分情况来证明：
+
+* 若索引为 `Z`，那么我们只需证明 `v ⊑ v`，它根据 `⊑-refl` 成立。
+
+* 若索引为 `S n′`，则目标简化为 `γ n′ ⊑ δ (ρ n′)`，它是前提的一个实例。
+
+<!--
 Now for the renaming lemma. Suppose we have a renaming that maps
 variables in `γ` into variables with the same values in `δ`.  If `M`
 results in `v` when evaluated in environment `γ`, then applying the
 renaming to `M` produces a program that results in the same value `v` when
 evaluated in `δ`.
+-->
+
+现在是重命名引理的证明。假设我们有一个重命名，它将 `γ` 中的变量映射为 `δ`
+中具有相同值的变量。若在环境 `γ` 中 `M` 求值为 `v`，则对 `M`
+应用重命名会生成一个程序，它在环境 `δ` 中求值会产生相同的值 `v`。
 
 ```agda
 rename-pres : ∀ {Γ Δ v} {γ : Env Γ} {δ : Env Δ} {M : Γ ⊢ ★}
@@ -1087,6 +1113,7 @@ rename-pres ρ lt (sub d lt′) =
    sub (rename-pres ρ lt d) lt′
 ```
 
+<!--
 The proof is by induction on the semantics of `M`.  As you can see, all
 of the cases are trivial except the cases for variables and lambda.
 
@@ -1097,10 +1124,24 @@ of the cases are trivial except the cases for variables and lambda.
   extend the renaming. We do so, and use the `ext-⊑` lemma to show
   that the extended renaming maps variables to ones with equivalent
   values.
+-->
+
+证明通过对 `M` 的语义进行归纳而得出。如你所见，除了变量和
+λ-的情况外，其他情况都很简单。
+
+* 对于 `x`，我们根据前提来证明 `γ x ⊑ δ (ρ x)`。
+
+* 对于 λ-抽象，归纳假设需要我们扩展重命名。我们扩展了它并使用 `ext-⊑`
+引理来证明，扩展重命名会将变量映射到具有等价的值的变量。
 
 
+<!--
 ## Environment strengthening and identity renaming
+-->
 
+## 环境增强与恒等重命名
+
+<!--
 We shall need a corollary of the renaming lemma that says that
 replacing the environment with a larger one (a stronger one) does not
 change whether a term `M` results in particular value `v`. In
@@ -1109,6 +1150,15 @@ this have to do with renaming?  It's renaming with the identity
 function.  We apply the renaming lemma with the identity renaming,
 which gives us `δ ⊢ rename (λ {A} x → x) M ↓ v`, and then we apply the
 `rename-id` lemma to obtain `δ ⊢ M ↓ v`.
+-->
+
+我们还需要一个重命名引理的推论，即用更大（或更强）的环境替换当前环境，
+并不会改变项 `M` 是否产生特定的值 `v`。具体来说，即若 `γ ⊢ M ↓ v`
+且 `γ ⊑ δ`，则 `δ ⊢ M ↓ v`。那么这和重命名有何关联呢？
+它其实就是用恒等函数来重命名。我们以恒等重命名来应用重命名引理，
+会得到 `δ ⊢ rename (λ {A} x → x) M ↓ v`，之后应用 `rename-id`
+引理就会得到 `δ ⊢ M ↓ v`。
+
 
 ```agda
 ⊑-env : ∀ {Γ} {γ : Env Γ} {δ : Env Γ} {M v}
@@ -1122,9 +1172,14 @@ which gives us `δ ⊢ rename (λ {A} x → x) M ↓ v`, and then we apply the
       δ⊢id[M]↓v
 ```
 
+<!--
 In the proof that substitution reflects denotations, in the case for
 lambda abstraction, we use a minor variation of `⊑-env`, in which just
 the last element of the environment gets larger.
+-->
+
+在代换反映了指称的证明中，对于 λ-抽象这一情况，我们使用 `⊑-env`
+的一个小变体，其中只有环境中的最后一个元素变大：
 
 ```agda
 up-env : ∀ {Γ} {γ : Env Γ} {M v u₁ u₂}
@@ -1139,14 +1194,25 @@ up-env d lt = ⊑-env d (ext-le lt)
   ext-le lt (S n) = ⊑-refl
 ```
 
+<!--
 #### Exercise `denot-church` (recommended)
+-->
 
+#### 练习 `denot-church`（推荐）
+
+<!--
 Church numerals are more general than natural numbers in that they
 represent paths. A path consists of `n` edges and `n + 1` vertices.
 We store the vertices in a vector of length `n + 1` in reverse
 order. The edges in the path map the ith vertex to the `i + 1` vertex.
 The following function `D^suc` (for denotation of successor) constructs
 a table whose entries are all the edges in the path.
+-->
+
+在路径的表达上，丘奇数比自然数更通用。一条路径由 `n` 条边和 `n + 1` 个顶点构成。
+我们将顶点逆序存储在长度为 `n + 1` 的向量中。路径中的边将第 `i` 个顶点映射到第
+`i + 1` 个顶点。以下函数 `D^suc`（表示后继（successor）的指称）构造了一个表，
+其中的条目是路径上所有的边：
 
 ```agda
 D^suc : (n : ℕ) → Vec Value (suc n) → Value
@@ -1154,9 +1220,14 @@ D^suc zero (a[0] ∷ []) = ⊥
 D^suc (suc i) (a[i+1] ∷ a[i] ∷ ls) =  a[i] ↦ a[i+1]  ⊔  D^suc i (a[i] ∷ ls)
 ```
 
+<!--
 We use the following auxiliary function to obtain the last element of
 a non-empty vector. (This formulation is more convenient for our
 purposes than the one in the Agda standard library.)
+-->
+
+我们用以下辅助函数来获取非空向量的第一个元素（就我们的目的而言，这种表示方式比
+Agda 标准库中的更加方便）。
 
 ```agda
 vec-last : ∀{n : ℕ} → Vec Value (suc n) → Value
@@ -1164,33 +1235,56 @@ vec-last {0} (a ∷ []) = a
 vec-last {suc n} (a ∷ b ∷ ls) = vec-last (b ∷ ls)
 ```
 
+<!--
 The function `Dᶜ` computes the denotation of the nth Church numeral
 for a given path.
+-->
+
+函数 `Dᶜ` 计算给定的路径上第 `n` 个丘奇数的指称。
 
 ```agda
 Dᶜ : (n : ℕ) → Vec Value (suc n) → Value
 Dᶜ n (a[n] ∷ ls) = (D^suc n (a[n] ∷ ls)) ↦ (vec-last (a[n] ∷ ls)) ↦ a[n]
 ```
 
+<!--
 * The Church numeral for 0 ignores its first argument and returns
   its second argument, so for the singleton path consisting of
   just `a[0]`, its denotation is
+-->
+
+* `0` 的丘奇数忽略其第一个参数并返回第二个参数，因此对于只由 `a[0]`
+  构成的单例路径，其指称为
 
         ⊥ ↦ a[0] ↦ a[0]
 
+<!--
 * The Church numeral for `suc n` takes two arguments:
   a successor function whose denotation is given by `D^suc`,
   and the start of the path (last of the vector).
   It returns the `n + 1` vertex in the path.
+-->
+
+* `suc n` 的丘奇数接受两个参数：一个后继函数，其指称由 `D^suc` 给定，
+  以及一个路径的起点（向量的最后一个元素）。它返回路径中的第 `n + 1` 个节点。
 
         (D^suc (suc n) (a[n+1] ∷ a[n] ∷ ls)) ↦ (vec-last (a[n] ∷ ls)) ↦ a[n+1]
 
+<!--
 The exercise is to prove that for any path `ls`, the meaning of the
 Church numeral `n` is `Dᶜ n ls`.
+-->
 
+此练习证明了对于任意路径 `ls` 邱奇数 `n` 的含义是 `Dᶜ n ls`。
+
+<!--
 To facilitate talking about arbitrary Church numerals, the following
 `church` function builds the term for the nth Church numeral,
 using the auxiliary function `apply-n`.
+-->
+
+为了便于讨论任意丘奇数，以下 `church` 函数通过辅助函数 `apply-n`
+来构建第 `n` 个丘奇数的项：
 
 ```agda
 apply-n : (n : ℕ) → ∅ , ★ , ★ ⊢ ★
@@ -1201,18 +1295,27 @@ church : (n : ℕ) → ∅ ⊢ ★
 church n = ƛ ƛ apply-n n
 ```
 
+<!--
 Prove the following theorem.
+-->
+
+证明以下定理：
 
     denot-church : ∀{n : ℕ}{ls : Vec Value (suc n)}
        → `∅ ⊢ church n ↓ Dᶜ n ls
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处
 ```
 
 
+<!--
 ## Inversion of the less-than relation for functions
+-->
 
+## 函数小于关系的反演
+
+<!--
 What can we deduce from knowing that a function `v ↦ w` is less than
 some value `u`?  What can we deduce about `u`? The answer to this
 question is called the inversion property of less-than for functions.
@@ -1224,21 +1327,46 @@ there may be other values inside `u`, such as `⊥`, that have nothing
 to do with `v ↦ w`. But in general, we can deduce that `u` includes
 a collection of functions where the join of their domains is less
 than `v` and the join of their codomains is greater than `w`.
+-->
 
+已知函数 `v ↦ w` 小于某个值 `u`，我们可以推断出什么？关于 `u`
+我们可以推断出什么？问题的答案被称为「函数小于」的**反演性（Inversion）**。
+这个问题并不容易回答，因为 `⊑-dist` 规则将左侧的函数与右侧的一对函数联系了起来。
+因此，`u` 可能包含多个与 `v ↦ w` 相关的一组函数。此外，由于规则 `⊑-conj-R1`
+和 `⊑-conj-R2`，`u` 中可能还有别的值（如 `⊥`）与 `v ↦ w` 无关。但总的来说，
+我们可以推断出 `u` 包含了一组函数，其中它们的定义域的连接小于
+`v`，而它们的陪域的连接大于 `w`。
+
+<!--
 To precisely state and prove this inversion property, we need to
 define what it means for a value to _include_ a collection of values.
 We also need to define how to compute the join of their domains and
 codomains.
+-->
+
+为了精确陈述并证明这种反演性，我们需要定义「一个值**包含**一组值的含义。
+我们还需要定义如何计算它们的定义域和陪域的连接。
 
 
+<!--
 ### Value membership and inclusion
+-->
 
+### 值的成员关系与包含关系
+
+<!--
 Recall that we think of a value as a set of entries with the join
 operator `v ⊔ w` acting like set union. The function value `v ↦ w` and
 bottom value `⊥` constitute the two kinds of elements of the set.  (In
 other contexts one can instead think of `⊥` as the empty set, but here
 we must think of it as an element.)  We write `u ∈ v` to say that `u` is
 an element of `v`, as defined below.
+-->
+
+前面我们将值视作一个集合，它由条目以及类似并集的连接运算符 `v ⊔ w` 组成。
+函数值 `v ↦ w` 和底值 `⊥` 构成了集合的两种元素（在其他语境下，人们可能将
+`⊥` 视作空集，但在这里我们必须将它视为一个元素）。我们用 `u ∈ v`表示
+`u` 是 `v` 的一个元素，定义如下：
 
 ```agda
 infix 5 _∈_
@@ -1249,8 +1377,13 @@ u ∈ v ↦ w = u ≡ v ↦ w
 u ∈ (v ⊔ w) = u ∈ v ⊎ u ∈ w
 ```
 
+<!--
 So we can represent a collection of values simply as a value.  We
 write `v ⊆ w` to say that all the elements of `v` are also in `w`.
+-->
+
+于是我们可以简单地将一组值表示为一个值。我们用 `v ⊆ w` 表示
+`v` 的所有元素也都属于 `w`：
 
 ```agda
 infix 5 _⊆_
@@ -1259,9 +1392,14 @@ _⊆_ : Value → Value → Set
 v ⊆ w = ∀{u} → u ∈ v → u ∈ w
 ```
 
+<!--
 The notions of membership and inclusion for values are closely related
 to the less-than relation. They are narrower relations in that they
 imply the less-than relation but not the other way around.
+-->
+
+值的成员与包含关系的概念和小于关系密切相关，
+它们是蕴含了小于关系的更狭义的关系，反之则不然。
 
 ```agda
 ∈→⊑ : ∀{u v : Value}
@@ -1284,9 +1422,14 @@ imply the less-than relation but not the other way around.
 ⊆→⊑ {u ⊔ u′} s = ⊑-conj-L (⊆→⊑ (λ z → s (inj₁ z))) (⊆→⊑ (λ z → s (inj₂ z)))
 ```
 
+<!--
 We shall also need some inversion principles for value inclusion.  If
 the union of `u` and `v` is included in `w`, then of course both `u` and
 `v` are each included in `w`.
+-->
+
+我们还需要一些值的包含关系的反演原则。如果 `u` 和 `v` 的并含于 `w`，
+那么 `u` 和 `v` 自然都含于 `w`。
 
 ```agda
 ⊔⊆-inv : ∀{u v w : Value}
@@ -1296,9 +1439,14 @@ the union of `u` and `v` is included in `w`, then of course both `u` and
 ⊔⊆-inv uvw = ⟨ (λ x → uvw (inj₁ x)) , (λ x → uvw (inj₂ x)) ⟩
 ```
 
+<!--
 In our value representation, the function value `v ↦ w` is both an
 element and also a singleton set. So if `v ↦ w` is a subset of `u`,
 then `v ↦ w` must be a member of `u`.
+-->
+
+在我们的值的表示中，`v ↦ w` 既是一个元素，又是一个单例集。因此如果 `v ↦ w`
+是 `u` 的一个子集，那么 `v ↦ w` 必定是 `u` 的一个成员。
 
 ```agda
 ↦⊆→∈ : ∀{v w u : Value}
@@ -1309,7 +1457,11 @@ then `v ↦ w` must be a member of `u`.
 ```
 
 
+<!--
 ### Function values
+-->
+
+### 函数值
 
 To identify collections of functions, we define the following two
 predicates. We write `Fun u` if `u` is a function value, that is, if
@@ -1348,7 +1500,11 @@ all-funs∈ {u ⊔ u′} f
 ```
 
 
+<!--
 ### Domains and codomains
+-->
+
+### 定义域与陪域
 
 Returning to our goal, the inversion principle for less-than a
 function, we want to show that `v ↦ w ⊑ u` implies that `u` includes
@@ -1664,7 +1820,11 @@ less-than with functions on the left and right-hand sides.
 ```
 
 
+<!--
 ## Notes
+-->
+
+## 注记
 
 The denotational semantics presented in this chapter is an example of
 a _filter model_ (@Barendregt:1983). Filter
