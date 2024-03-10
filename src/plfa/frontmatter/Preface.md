@@ -209,7 +209,7 @@ Exercises labelled "(practice)" are included for those who want extra
 practice.
 -->
 
-标记有**实践**的习题供想要更多实践的学生练习。
+标有**实践**的习题供想要更多实践的学生练习。
 
 <!--
 You may answer the exercises by downloading the book from github and

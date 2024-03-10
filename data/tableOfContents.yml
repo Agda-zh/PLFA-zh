@@ -32,7 +32,7 @@ part:
   - include: src/plfa/part2/Untyped.lagda.md
   - include: src/plfa/part2/Confluence.lagda.md
   - include: src/plfa/part2/BigStep.lagda.md
-- title: "Part 3: Denotational Semantics"
+- title: "第三分册：指称语义"
   chapter:
   - include: src/plfa/part3/Denotational.lagda.md
   - include: src/plfa/part3/Compositional.lagda.md
