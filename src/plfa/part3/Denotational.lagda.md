@@ -1,6 +1,8 @@
 ---
 title     : "Denotational: 无类型 λ-演算的指称语义"
 permalink : /Denotational/
+translators : ["OlingCat"]
+progress  : 100
 ---
 
 ```agda
@@ -54,7 +56,7 @@ only continuous functions are needed to model the lambda calculus.
 
 第一个问题是带有无穷定义域的函数。注意到每一个 λ-抽象只会应用于数量有限的不同参数，
 该问题因而得以解决（我们回头再讨论发散的程序）。这是看待 Dana Scott
-见解的另一种方式，即只需要对 λ-演算进行建模只需要用到连续函数。
+见解的另一种方式，即对 λ-演算进行建模只需要用到连续函数。
 
 <!--
 The second problem, that of self-application, is solved by relaxing
@@ -163,8 +165,9 @@ There are two rules that are specific to functions, `⊑-fun` and `⊑-dist`,
 which we discuss below.
 -->
 
-关系 `⊑` 将熟悉的子集概念适配到 `Value` 数据类型上。这种关系在实现自我应用方面
-起到了关键作用。有两个特定于函数的规则 `⊑-fun` 和 `⊑-dist`，我们将在后面讨论。
+关系 `⊑` 将熟悉的子集概念适配到 `Value` 数据类型上。
+这种关系在实现自我应用方面起到了关键作用。有两个特定于函数的规则 `⊑-fun`
+和 `⊑-dist`，我们将在后面讨论。
 
 ```agda
 infix 4 _⊑_
@@ -480,9 +483,9 @@ maps `⊥` to `⊥` and also that it maps `⊥ ↦ ⊥` to `⊥ ↦ ⊥`.
 -->
 
 考虑 λ-抽象的规则 `↦-intro`，它表示 λ-抽象会生成一个单条目的表，该表将输入 `v`
-映射到输出 `w`，前提是在具有 `v` 绑定到其形参会产生输出 `w`。
-作为此规则的简单示例，我们可以看到恒等函数将 `⊥` 映射到 `⊥`，并将 `⊥` ↦ `⊥`
-映射到 `⊥ ↦ ⊥`：
+映射到输出 `w`，前提是在 `v` 绑定到形参的环境中求值时会产生输出 `w`。
+作为此规则的简单示例，我们可以看到恒等函数将 `⊥` 映射到 `⊥`，同样也会将
+`⊥` ↦ `⊥` 映射到 `⊥ ↦ ⊥`：
 
 ```agda
 id : ∅ ⊢ ★
@@ -513,11 +516,11 @@ containing both of the previous results, `⊥ ↦ ⊥` and
 -->
 
 当然，我们需要多行表格来刻画 λ-抽象的含义。它们可以用 `⊔-intro`
-规则构建。如果项 M（通常是一个 λ-抽象）可以产生表格 `v` 和 `w`，
+规则构建。如果项 `M`（通常是一个 λ-抽象）可以产生表格 `v` 和 `w`，
 那么它也可以产生合并的表格 `v ⊔ w`。我们可以从操作的视角看待规则
 `↦-intro` 和 `⊔-intro`。想象一下，当解释器首次遇到 λ-抽象时，
-它会在许多随机选择的参数上预先对函数求值，使用多个规则 `↦-intro`
-的实例，然后使用多个规则 `⊔-intro` 将它们合并成一个大表格。
+它会在许多随机选择的参数上预先对函数求值，使用多个 `↦-intro`
+规则的实例，然后再使用多个 `⊔-intro` 规则将它们合并成一个大表格。
 在接下来的内容中，我们将展示恒等函数产生一个包含上述两个结果的表格
 `⊥ ↦ ⊥`和`(⊥ ↦ ⊥) ↦ (⊥ ↦ ⊥)`。
 
@@ -588,14 +591,14 @@ and parameter `u`, and it returns `w`.  Indeed we derive this as
 follows.
 -->
 
-接着我们重新考虑丘奇数二：`λ f. λ u. (f (f u))`。该函数有两个参数：`f`
+接着我们重新考虑丘奇数 `2`：`λ f. λ u. (f (f u))`。该函数有两个参数：`f`
 和一个任意值 `u`，并将 `f` 应用两次。于是 `f` 必定将 `u` 映射到某个值，
 我们将其命名为 `v`。接着，对于第二次应用，`f` 必定将 `v` 映射到某个值，
 我们将其命名为 `w`。因此该函数的表格必定包含两个条目，即 `u ↦ v` 和 `v ↦ w`。
 对于该表格的每一次应用，我们用 `sub` 规则提取对应的条目。具体来说，
 就是用 `⊑-conj-R1` 和 `⊑-conj-R2` 从表格 `u ↦ v ⊔ v ↦ w` 中分别选出
-`u ↦ v` 和 `v ↦ w`。所以 `twoᶜ` 的涵义就是接受该表格和参数 `u`，然后返回 `w`。
-实际上我们通过以下过程把它推导出来的：
+`u ↦ v` 和 `v ↦ w`。所以 `twoᶜ` 的含义就是接受该表格和参数 `u`，然后返回 `w`。
+实际上我们是通过以下过程把它推导出来的：
 
 ```agda
 denot-twoᶜ : ∀{u v w : Value} → `∅ ⊢ twoᶜ ↓ ((u ↦ v ⊔ v ↦ w) ↦ u ↦ w)
@@ -620,7 +623,7 @@ and then the result of the application is `w`.
 -->
 
 接下来展示一个自应用的经典例子：`Δ = λx. (x x)`。
-`x` 的输入值必须是一个表格，其中有一个条目将其较小的版本 `v`
+`x` 的输入值必须是一个表格，其中有一个条目将其自身较小的版本 `v`
 映射到某个值 `w`，所以输入值类似于 `v ↦ w ⊔ v`。当然，
 `Δ` 的输出就是 `w`，推导过程如下所示。第一个 `x` 求值为 `v ↦ w`，
 第二个 `x` 求值为 `v`，应用的结果为 `w`。
@@ -690,7 +693,7 @@ the only thing that a term evaluates to is `⊥`, then it indeed diverges.
 -->
 
 仅凭对某个封闭项 `M` 可以推导出 `∅ ⊢ M ↓ ⊥` 并不意味着 `M` 必然发散。
-可能还有其他可以推出 `M` 的推导过程能产生包含更多信息的值。然而，
+可能还有其他可以推出 `M` 的推导过程，能产生包含更多信息的值。然而，
 如果一个项求值的唯一结果是 `⊥`，那么它确实发散。
 
 <!--
@@ -1022,9 +1025,9 @@ less-than relation regarding function values.
 -->
 
 我们会在本章剩下的部分中建立关于指称语义的一些基本结果，
-所有这些性质的证明都依赖此。我们先从一些关于重命名的引理开始，
+所有这些性质的证明都依赖于此。我们先从一些关于重命名的引理开始，
 它们与我们在前面的章节中见过的重命名引理非常相似。
-我们以关于函数值的小于关系的重要反演引理的证明作为结论。
+我们以函数值小于关系的重要反演引理的证明作为结论。
 
 
 <!--
@@ -1043,7 +1046,7 @@ in proving that reduction implies denotational equality.
 
 我们将证明重命名变量并更改环境中对应的项仍能保持项的含义。
 我们推广了重命名引理，以允许新环境中的值等于或大于原始值，
-这种推广有助于证明规约蕴含指称相等。
+这种推广有助于证明规约蕴含了指称相等。
 
 <!--
 As before, we need an extension lemma to handle the case where we
@@ -1090,7 +1093,7 @@ renaming to `M` produces a program that results in the same value `v` when
 evaluated in `δ`.
 -->
 
-现在是重命名引理的证明。假设我们有一个重命名，它将 `γ` 中的变量映射为 `δ`
+接着是重命名引理的证明。假设我们有一个重命名，它将 `γ` 中的变量映射为 `δ`
 中具有相同值的变量。若在环境 `γ` 中 `M` 求值为 `v`，则对 `M`
 应用重命名会生成一个程序，它在环境 `δ` 中求值会产生相同的值 `v`。
 
@@ -1275,7 +1278,7 @@ The exercise is to prove that for any path `ls`, the meaning of the
 Church numeral `n` is `Dᶜ n ls`.
 -->
 
-此练习证明了对于任意路径 `ls` 邱奇数 `n` 的含义是 `Dᶜ n ls`。
+此练习证明了对于任意路径 `ls`，邱奇数 `n` 的含义是 `Dᶜ n ls`。
 
 <!--
 To facilitate talking about arbitrary Church numerals, the following
@@ -1428,7 +1431,7 @@ the union of `u` and `v` is included in `w`, then of course both `u` and
 `v` are each included in `w`.
 -->
 
-我们还需要一些值的包含关系的反演原则。如果 `u` 和 `v` 的并含于 `w`，
+我们还需要一些值的包含关系的反演法则。如果 `u` 和 `v` 的并含于 `w`，
 那么 `u` 和 `v` 自然都含于 `w`。
 
 ```agda
@@ -1538,7 +1541,7 @@ their domains and `⨆cod u` returns the join of their codomains.
 -->
 
 为此，我们定义了以下 `⨆dom` 和 `⨆cod` 函数。给定某个值 `u`（表示一个条目的集合），
-`⨆dom u` 返回其定义域的连接，`⨆cod u` 返回其共域的连接。
+`⨆dom u` 返回其定义域的连接，`⨆cod u` 返回其陪域的连接：
 
 ```agda
 ⨆dom : (u : Value) → Value
@@ -1559,7 +1562,7 @@ that `v` is included in the domain of `u`.
 -->
 
 对于 `⨆dom` 和 `⨆cod` 我们只需要一个性质。给定一个函数的的集合，表示为值
-`u`，和一个条目 `v ↦ w ∈ u`，我们能够证明 `v` 包含在定义域 `u` 中：
+`u`，和一个条目 `v ↦ w ∈ u`，我们能够证明 `v` 包含在 `u` 的定义域中：
 
 ```agda
 ↦∈→⊆⨆dom : ∀{u v w : Value}
@@ -1654,7 +1657,7 @@ strengthen the conclusion to say that for _every_ function value
 The crux of the proof is the case for `⊑-trans`.
 -->
 
-证明的核心在 `⊑-trans` 的情况：
+证明的重点在 `⊑-trans` 的情况：
 
     u₁ ⊑ u   u ⊑ u₂
     --------------- (⊑-trans)
@@ -1685,7 +1688,7 @@ sub-inv-trans : ∀{u′ u₂ u : Value}
       ---------------------------------------------------------------
     → Σ[ u₃ ∈ Value ] factor u₂ u₃ (⨆dom u′) (⨆cod u′)
 sub-inv-trans {⊥} {u₂} {u} fu′ u′⊆u IH =
-   contradiction (fu′ refl) ¬Fun⊥
+    contradiction (fu′ refl) ¬Fun⊥
 sub-inv-trans {u₁′ ↦ u₂′} {u₂} {u} fg u′⊆u IH = IH (↦⊆→∈ u′⊆u)
 sub-inv-trans {u₁′ ⊔ u₂′} {u₂} {u} fg u′⊆u IH
     with ⊔⊆-inv u′⊆u
@@ -1975,7 +1978,7 @@ The second corollary is the inversion rule that one would expect for
 less-than with functions on the left and right-hand sides.
 -->
 
-第二个推论是反转规则，即我们期望左侧函数小于右侧。
+第二个推论是反演规则，即我们期望左侧函数小于右侧。
 
 ```agda
 ↦⊑↦-inv : ∀{v w v′ w′}
@@ -2023,15 +2026,15 @@ this chapter, but for the entire family of intersection type systems
 (@Barendregt:2013).
 -->
 
-本章中展示的操作语义是**过滤器模型（filter model）**（@Barendregt:1983）的一个例子。
+本章中展示的操作语义是**过滤器模型（filter model，**@Barendregt:1983）的一个例子。
 过滤器模型使用带有交集类型的类型系统来精确刻画运行时行为（@Coppo:1979）。
 我们在本章中使用的记法并不是类型系统和交集类型的记法，但 `Value`
-数据类型与类型同构（`↦` 对应 `→`，`⊔` 对应 `∧`，`⊥` 对应 `⊤`），
+数据类型与这些类型同构（`↦` 对应 `→`，`⊔` 对应 `∧`，`⊥` 对应 `⊤`），
 `⊑` 关系是子类型 `<:` 的逆关系，并且求值关系 `ρ ⊢ M ↓ v` 与类型系统同构。
 将 `ρ` 写成 `Γ`，将 `v` 写成 `A`，将 `↓` 替换为 `:`，就得到了一个类型判断
 `Γ ⊢ M : A`。通过改变子类型的定义和使用类型原子的不同选择，
 交集类型系统为许多不同的无类型 λ-演算提供语义，从完整的
-beta-规约到惰性演算和按值调用演算（@Alessi:2006）（@Rocca:2004）。
+beta-规约到惰性演算和按值调用演算（@Alessi:2006，@Rocca:2004）。
 本章中的指称语义对应于 BCD 系统（@Barendregt:1983）。
 _Lambda Calculus with Types_ 一书中的第三部分描述了一个交集类型系统的框架，
 它可以实现与本章中类似的结果，但适用于整个交集类型系统族（@Barendregt:2013）
@@ -2045,7 +2048,7 @@ work, the inductive definition of `Value` is a bit different than the
 one we use:
 -->
 
-使用有限表来表示函数，以及放宽表的查找以实现自我应用这两个想法首次出现在
+使用有限的表格来表示函数，以及放宽表的查找以实现自我应用这两个想法首次出现在
 @Plotkin:1972 的技术报告中，后来在《理论计算机科学》（@Plotkin:1993）
 的一篇文章中进行了描述。在该项工作中，`Value` 的归纳定义与我们使用的有点不同：
 
@@ -2070,7 +2073,7 @@ version.
 其中 `C` 是一组常量，`℘f` 表示有限幂集。`℘f(Value) × ℘f(Value)`
 中的序对表示输入-输出映射，和本章中的一样。有限幂集用于使函数表能够出现在输入和输出中。
 这些差异相当于改变了 `Value` 定义中递归出现的位置。Plotkin 的模型是无类型
-λ-演算的**图模型（graph model）**示例（@barendregt84:_lambda_calculus）。
+λ-演算的**图模型（graph model）**的一个例子（@barendregt84:_lambda_calculus）。
 在图模型中，语义被表示为从程序和环境到（可能是无限的）值的集合的函数。
 本章中的语义被定义为关系，不过以集合为值的函数与关系同构。
 实际上，我们将在下一章中将语义表示为函数，并证明它等价于关系的版本。
@@ -2082,7 +2085,7 @@ following inductive definition of `Value`.
 -->
 
 @Scott:1976 的 ℘(ω) 模型和 @Engeler:1981 的 B(A) 模型是图模型的另外两个例子。
-二者都试用了以下 `Value` 的归纳定义。
+二者都采用了以下 `Value` 的归纳定义。
 
     Value = C + ℘f(Value) × Value
 
@@ -2096,8 +2099,8 @@ mapped to and from the natural numbers using a kind of Godel encoding.
 
 在输出中使用 `Value` 而非 `℘f(Value)` 相对 Plotkin 的模型来说并不会限制表达能力，
 因为使用了值的集合的语义和集合 `(V, V′)` 的序对可以表示为一个序对的集合
-`{ (V, v′) | v′ ∈ V′ }`。在 Scott 的 ℘(ω) 中，上面的值通过一种哥德尔编码做了
-到自然数的双向映射。
+`{ (V, v′) | v′ ∈ V′ }`。在 Scott 的 ℘(ω) 中，
+上面的值通过一种哥德尔编码做了它和自然数的双向映射。
 
 
 ## Unicode
