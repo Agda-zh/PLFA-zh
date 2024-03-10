@@ -214,7 +214,7 @@ On macOS and Unix, if PLFA is installed in your home directory and you have no e
 -->
 
 在 macOS 和 Unix 上，如果 PLFA
-已经安装至家目录，且你没有希望保存的配置文件，运行下面的命令：
+已经安装至 Home 目录，且你没有希望保存的配置文件，运行下面的命令：
 
 ```bash
 mkdir -p ~/.agda
