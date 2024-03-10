@@ -1463,10 +1463,16 @@ then `v ↦ w` must be a member of `u`.
 
 ### 函数值
 
+<!--
 To identify collections of functions, we define the following two
 predicates. We write `Fun u` if `u` is a function value, that is, if
 `u ≡ v ↦ w` for some values `v` and `w`. We write `all-funs v` if all the elements
 of `v` are functions.
+-->
+
+为了识别函数的集合，我们定义了以下两个谓词。如果 `u` 是一个函数值，
+即对于某些值 `v` 和 `w`，有 `u ≡ v ↦ w`，我们就记作 `Fun u`。
+如果 `v` 中的所有元素都是函数，我们就记作 `all-funs v`。
 
 ```agda
 data Fun : Value → Set where
@@ -1476,16 +1482,25 @@ all-funs : Value → Set
 all-funs v = ∀{u} → u ∈ v → Fun u
 ```
 
+<!--
 The value `⊥` is not a function.
+-->
+
+值 `⊥` 不是函数：
 
 ```agda
 ¬Fun⊥ : ¬ (Fun ⊥)
 ¬Fun⊥ (fun ())
 ```
 
+<!--
 In our values-as-sets representation, our sets always include at least
 one element. Thus, if all the elements are functions, there is at
 least one that is a function.
+-->
+
+在「值作为集合」的表示中，集合总是包含至少一个元素。即，如果所有的元素都是函数，
+那么至少存在一个函数。
 
 ```agda
 all-funs∈ : ∀{u}
@@ -1506,14 +1521,24 @@ all-funs∈ {u ⊔ u′} f
 
 ### 定义域与陪域
 
+<!--
 Returning to our goal, the inversion principle for less-than a
 function, we want to show that `v ↦ w ⊑ u` implies that `u` includes
 a set of function values such that the join of their domains is less
 than `v` and the join of their codomains is greater than `w`.
+-->
 
+回到我们一开始的目标上来，即「小于一个函数」的反演法则。我们想要证明 `v ↦ w ⊑ u`
+蕴含「`u` 包含一个函数值的集合，它们定义域的连接小于 `v`，陪域的连接大于 `w`」。
+
+<!--
 To this end we define the following `⨆dom` and `⨆cod` functions.  Given some
 value `u` (that represents a set of entries), `⨆dom u` returns the join of
 their domains and `⨆cod u` returns the join of their codomains.
+-->
+
+为此，我们定义了以下 `⨆dom` 和 `⨆cod` 函数。给定某个值 `u`（表示一个条目的集合），
+`⨆dom u` 返回其定义域的连接，`⨆cod u` 返回其共域的连接。
 
 ```agda
 ⨆dom : (u : Value) → Value
@@ -1527,9 +1552,14 @@ their domains and `⨆cod u` returns the join of their codomains.
 ⨆cod (u ⊔ u′) = ⨆cod u ⊔ ⨆cod u′
 ```
 
+<!--
 We need just one property each for `⨆dom` and `⨆cod`.  Given a collection of
 functions represented by value `u`, and an entry `v ↦ w ∈ u`, we know
 that `v` is included in the domain of `u`.
+-->
+
+对于 `⨆dom` 和 `⨆cod` 我们只需要一个性质。给定一个函数的的集合，表示为值
+`u`，和一个条目 `v ↦ w ∈ u`，我们能够证明 `v` 包含在定义域 `u` 中：
 
 ```agda
 ↦∈→⊆⨆dom : ∀{u v w : Value}
@@ -1546,9 +1576,14 @@ that `v` is included in the domain of `u`.
    inj₂ (ih u∈v)
 ```
 
+<!--
 Regarding `⨆cod`, suppose we have a collection of functions represented
 by `u`, but all of them are just copies of `v ↦ w`.  Then the `⨆cod u` is
 included in `w`.
+-->
+
+对于 `⨆cod`，假设我们有一个函数集合 `u`，但它们都只是 `v ↦ w` 的副本。
+那么 `⨆cod u` 包含在 `w` 中：
 
 ```agda
 ⊆↦→⨆cod⊆ : ∀{u v w : Value}
@@ -1563,43 +1598,69 @@ included in `w`.
 ⊆↦→⨆cod⊆ {u ⊔ u′} s (inj₂ y) = ⊆↦→⨆cod⊆ (λ {C} z → s (inj₂ z)) y
 ```
 
+<!--
 With the `⨆dom` and `⨆cod` functions in hand, we can make precise the
 conclusion of the inversion principle for functions, which we package
 into the following predicate named `factor`. We say that `v ↦ w`
 _factors_ `u` into `u′` if `u′` is included in `u`, if `u′` contains only
 functions, its domain is less than `v`, and its codomain is greater
 than `w`.
+-->
+
+有了 `⨆dom` 和 `⨆cod` 函数，我们就可以精确地得出函数的反演法则，
+并将其封装到下面的谓词 `factor` 中。 如果 `u′` 包含在 `u` 中，
+我们就说 `v ↦ w` 将 `u` **分解（factor）**为 `u′`，如果 `u′`
+中只包含函数，那么其定义域小于 `v`，其陪域大于 `w`。
 
 ```agda
 factor : (u : Value) → (u′ : Value) → (v : Value) → (w : Value) → Set
 factor u u′ v w = all-funs u′  ×  u′ ⊆ u  ×  ⨆dom u′ ⊑ v  ×  w ⊑ ⨆cod u′
 ```
 
+<!--
 So the inversion principle for functions can be stated as
+-->
+
+因此函数的反演法则可被陈述为：
 
       v ↦ w ⊑ u
       ---------------
     → factor u u′ v w
 
+<!--
 We prove the inversion principle for functions by induction on the
 derivation of the less-than relation. To make the induction hypothesis
 stronger, we broaden the premise `v ↦ w ⊑ u` to `u₁ ⊑ u₂`, and
 strengthen the conclusion to say that for _every_ function value
 `v ↦ w ∈ u₁`, we have that `v ↦ w` factors `u₂` into some value `u₃`.
+-->
+
+我们通过在小于关系的推导上归纳证明了函数的反演法则。为了让归纳假设更强，
+我们将前提 `v ↦ w ⊑ u` 推广为 `u₁ ⊑ u₂` 并加强了结论，即对于**每一个**函数值
+`v ↦ w ∈ u₁`，我们都有 `v ↦ w` 将 `u₂` 分解为某个值 `u₃`。
 
     → u₁ ⊑ u₂
       ------------------------------------------------------
     → ∀{v w} → v ↦ w ∈ u₁ → Σ[ u₃ ∈ Value ] factor u₂ u₃ v w
 
 
+<!--
 ### Inversion of less-than for functions, the case for ⊑-trans
+-->
 
+### 函数小于的反演，`⊑-trans` 的情况
+
+<!--
 The crux of the proof is the case for `⊑-trans`.
+-->
+
+证明的核心在 `⊑-trans` 的情况：
 
     u₁ ⊑ u   u ⊑ u₂
     --------------- (⊑-trans)
         u₁ ⊑ u₂
 
+<!--
 By the induction hypothesis for `u₁ ⊑ u`, we know
 that `v ↦ w factors u into u′`, for some value `u′`,
 so we have `all-funs u′` and `u′ ⊆ u`.
@@ -1608,6 +1669,14 @@ that for any `v′ ↦ w′ ∈ u`, `v′ ↦ w′` factors `u₂` into `u₃`.
 With these facts in hand, we proceed by induction on `u′`
 to prove that `(⨆dom u′) ↦ (⨆cod u′)` factors `u₂` into `u₃`.
 We discuss each case of the proof in the text below.
+-->
+
+根据归纳假设 `u₁ ⊑ u`，我们证明了对某个值 `u′`，有 `v ↦ w factors u into u′`，
+因此我们有 `all-funs u′` 和 `u′ ⊆ u`。
+根据归纳假设 `u ⊑ u₂`，我们证明了对于任意 `v′ ↦ w′ ∈ u`，
+`v′ ↦ w′` 将 `u₂` 分解为 `u₃`。
+有了这些事实，我们就能对 `u′` 进行归纳，证明 `(⨆dom u′) ↦ (⨆cod u′)`
+将 `u₂` 分解为 `u₃`。接下来我们讨论证明的每种情况。
 
 ```agda
 sub-inv-trans : ∀{u′ u₂ u : Value}
@@ -1636,14 +1705,25 @@ sub-inv-trans {u₁′ ⊔ u₂′} {u₂} {u} fg u′⊆u IH
           u₂′⊆u₂ {C} (inj₂ y) = u₃₂⊆u₂ y
 ```
 
+<!--
 * Suppose `u′ ≡ ⊥`. Then we have a contradiction because
   it is not the case that `Fun ⊥`.
+-->
 
+* 假设 `u′ ≡ ⊥`，那么我们可导出矛盾，因为它不满足 `Fun ⊥` 的情况。
+
+<!--
 * Suppose `u′ ≡ u₁′ ↦ u₂′`. Then `u₁′ ↦ u₂′ ∈ u` and we can apply the
   premise (the induction hypothesis from `u ⊑ u₂`) to obtain that
   `u₁′ ↦ u₂′` factors `u₂` into `u₃`. This case is complete because
   `⨆dom u′ ≡ u₁′` and `⨆cod u′ ≡ u₂′`.
+-->
 
+* 假设 `u′ ≡ u₁′ ↦ u₂′`，那么 `u₁′ ↦ u₂′ ∈ u`，且我们可以应用前提
+  （归纳假设 `u ⊑ u₂`）来得到 `u₁′ ↦ u₂′` 将 `u₂` 分解为 `u₃`。
+  此情况是完整的，因为 `⨆dom u′ ≡ u₁′` 且 `⨆cod u′ ≡ u₂′`。
+
+<!--
 * Suppose `u′ ≡ u₁′ ⊔ u₂′`. Then we have `u₁′ ⊆ u` and `u₂′ ⊆ u`. We also
   have `all-funs u₁′` and `all-funs u₂′`, so we can apply the induction hypothesis
   for both `u₁′` and `u₂′`. So there exists values `u₃₁` and `u₃₂` such that
@@ -1651,21 +1731,42 @@ sub-inv-trans {u₁′ ⊔ u₂′} {u₂} {u} fg u′⊆u IH
   `(⨆dom u₂′) ↦ (⨆cod u₂′)` factors `u` into `u₃₂`.
   We will show that `(⨆dom u) ↦ (⨆cod u)` factors `u` into `u₃₁ ⊔ u₃₂`.
   So we need to show that
+-->
+
+* 假设 `u′ ≡ u₁′ ⊔ u₂′`，那么 `u₁′ ⊆ u` 且 `u₂′ ⊆ u`。我们同样有 `all-funs u₁′`
+  且 `all-funs u₂′`，于是我们可以对 `u₁′` 和 `u₂′` 应用归纳假设。因此存在值 `u₃₁`
+  和 `u₃₂` 使得 `(⨆dom u₁′) ↦ (⨆cod u₁′)` 将 `u` 分解为 `u₃₁`，以及
+  `(⨆dom u₂′) ↦ (⨆cod u₂′)` 将 `u` 分解为 `u₃₂`。
+  我们要证明 `(⨆dom u) ↦ (⨆cod u)` 将 `u` 分解为 `u₃₁ ⊔ u₃₂`，因此我们需要证明
 
         ⨆dom (u₃₁ ⊔ u₃₂) ⊑ ⨆dom (u₁′ ⊔ u₂′)
         ⨆cod (u₁′ ⊔ u₂′) ⊑ ⨆cod (u₃₁ ⊔ u₃₂)
 
+<!--
   But those both follow directly from the factoring of
   `u` into `u₃₁` and `u₃₂`, using the monotonicity of `⊔` with respect to `⊑`.
+-->
+
+  然而二者可直接根据 `⊔` 对于 `⊑` 的单调性，从 `u` 分解为 `u₃₁` 和 `u₃₂` 得到。
 
 
+<!--
 ### Inversion of less-than for functions
+-->
 
+### 函数小于的反演
+
+<!--
 We come to the proof of the main lemma concerning the inversion of
 less-than for functions. We show that if `u₁ ⊑ u₂`, then for any
 `v ↦ w ∈ u₁`, we can factor `u₂` into `u₃` according to `v ↦ w`. We proceed
 by induction on the derivation of `u₁ ⊑ u₂`, and describe each case in
 the text after the Agda proof.
+-->
+
+我们来证明有关函数小于的反演的主要引理。我们要证明若 `u₁ ⊑ u₂`，
+则对于任何 `v ↦ w ∈ u₁`，都可以根据 `v ↦ w` 将 `u₂` 分解为 `u₃`。
+我们对 `u₁ ⊑ u₂` 的推导进行归纳，并在 Agda 证明过程后面描述证明中的每一种情况。
 
 ```agda
 sub-inv : ∀{u₁ u₂ : Value}
@@ -1706,16 +1807,25 @@ sub-inv {u₂₁ ↦ (u₂₂ ⊔ u₂₃)} {u₂₁ ↦ u₂₂ ⊔ u₂₁ ↦
         g (inj₂ y) = inj₂ y
 ```
 
+<!--
 Let `v` and `w` be arbitrary values.
 
 * Case `⊑-bot`. So `u₁ ≡ ⊥`. We have `v ↦ w ∈ ⊥`, but that is impossible.
 
 * Case `⊑-conj-L`.
+-->
+
+令 `v` 和 `w` 为任意值。
+
+* 情况 `⊑-bot`：若 `u₁ ≡ ⊥`，我们有 `v ↦ w ∈ ⊥`，但这是不可能的。
+
+* 情况 `⊑-conj-L`：
 
         u₁₁ ⊑ u₂   u₁₂ ⊑ u₂
         -------------------
         u₁₁ ⊔ u₁₂ ⊑ u₂
 
+<!--
   Given that `v ↦ w ∈ u₁₁ ⊔ u₁₂`, there are two subcases to consider.
 
   * Subcase `v ↦ w ∈ u₁₁`. We conclude by the induction
@@ -1723,28 +1833,52 @@ Let `v` and `w` be arbitrary values.
 
   * Subcase `v ↦ w ∈ u₁₂`. We conclude by the induction hypothesis
     for `u₁₂ ⊑ u₂`.
+-->
 
+  给定 `v ↦ w ∈ u₁₁ ⊔ u₁₂`，那么有两种子情况需要考虑：
+
+  * 子情况 `v ↦ w ∈ u₁₁`：我们通过归纳假设 `u₁₁ ⊑ u₂` 得出结论。
+
+  * 子情况 `v ↦ w ∈ u₁₂`：我们通过归纳假设 `u₁₂ ⊑ u₂` 得出结论。
+
+<!--
 * Case `⊑-conj-R1`.
+-->
+
+* 情况 `⊑-conj-R1`：
 
         u₁ ⊑ u₂₁
         --------------
         u₁ ⊑ u₂₁ ⊔ u₂₂
 
+<!--
   Given that `v ↦ w ∈ u₁`, the induction hypothesis for `u₁ ⊑ u₂₁`
   gives us that `v ↦ w` factors `u₂₁` into `u₃₁` for some `u₃₁`.
   To show that `v ↦ w` also factors `u₂₁ ⊔ u₂₂` into `u₃₁`,
   we just need to show that `u₃₁ ⊆ u₂₁ ⊔ u₂₂`, but that follows
   directly from `u₃₁ ⊆ u₂₁`.
+-->
 
+  给定 `v ↦ w ∈ u₁`，归纳假设 `u₁ ⊑ u₂₁` 给出了对某个 `u₃₁`，`v ↦ w`
+  将 `u₂₁` 分解为 `u₃₁`。为了证明 `v ↦ w` 也将 `u₂₁ ⊔ u₂₂` 分解为 `u₃₁`，
+  我们只需证明 `u₃₁ ⊆ u₂₁ ⊔ u₂₂`，而这一点可直接从 `u₃₁ ⊆ u₂₁` 得出。
+
+<!--
 * Case `⊑-conj-R2`. This case follows by reasoning similar to
   the case for `⊑-conj-R1`.
 
 * Case `⊑-trans`.
+-->
+
+* 情况 `⊑-conj-R2`：此情况的论证过程与情况 `⊑-conj-R1` 类似。
+
+* 情况 `⊑-trans`：
 
         u₁ ⊑ u   u ⊑ u₂
         ---------------
             u₁ ⊑ u₂
 
+<!--
   By the induction hypothesis for `u₁ ⊑ u`, we know
   that `v ↦ w` factors `u` into `u′`, for some value `u′`,
   so we have `all-funs u′` and `u′ ⊆ u`.
@@ -1756,35 +1890,71 @@ Let `v` and `w` be arbitrary values.
   From `⨆dom u₃ ⊑ ⨆dom u′` and `⨆dom u′ ⊑ v`, we have `⨆dom u₃ ⊑ v`.
   From `w ⊑ ⨆cod u′` and `⨆cod u′ ⊑ ⨆cod u₃`, we have `w ⊑ ⨆cod u₃`,
   and this case is complete.
+-->
 
+  根据归纳假设 `u₁ ⊑ u`，我们可以证明对于某个值 `u′`，`v ↦ w` 将 `u` 分解为 `u′`，
+  于是我们有 `all-funs u′` 和 `u′ ⊆ u`。跟举归纳假设 `u ⊑ u₂`，我们可以证明对于任意
+  `v′ ↦ w′ ∈ u`，`v′ ↦ w′` 分解了 `u₂`。现在应用引理 `sub-inv-trans`，
+  它会给出 `u₃` 使得 `(⨆dom u′) ↦ (⨆cod u′)` 将 `u₂` 分解为 `u₃`。
+  我们证明了 `v ↦ w` 也将 `u₂` 分解为 `u₃`。
+  从 `⨆dom u₃ ⊑ ⨆dom u′` 和 `⨆dom u′ ⊑ v`，我们可得出 `⨆dom u₃ ⊑ v`。
+  从 `w ⊑ ⨆cod u′` 和 `⨆cod u′ ⊑ ⨆cod u₃`，我们有 `w ⊑ ⨆cod u₃`，于是此情况就覆盖完整了。
+
+<!--
 * Case `⊑-fun`.
+-->
+
+* 情况 `⊑-fun`：
 
         u₂₁ ⊑ u₁₁  u₁₂ ⊑ u₂₂
         ---------------------
         u₁₁ ↦ u₁₂ ⊑ u₂₁ ↦ u₂₂
 
+<!--
   Given that `v ↦ w ∈ u₁₁ ↦ u₁₂`, we have `v ≡ u₁₁` and `w ≡ u₁₂`.
   We show that `u₁₁ ↦ u₁₂` factors `u₂₁ ↦ u₂₂` into itself.
   We need to show that `⨆dom (u₂₁ ↦ u₂₂) ⊑ u₁₁` and `u₁₂ ⊑ ⨆cod (u₂₁ ↦ u₂₂)`,
   but that is equivalent to our premises `u₂₁ ⊑ u₁₁` and `u₁₂ ⊑ u₂₂`.
+-->
 
+  给定 `v ↦ w ∈ u₁₁ ↦ u₁₂`，我们有 `v ≡ u₁₁` 和 `w ≡ u₁₂`。
+  我们证明了 `u₁₁ ↦ u₁₂` 将 `u₂₁ ↦ u₂₂` 分解为其自身。
+  我们还需证明 `⨆dom (u₂₁ ↦ u₂₂) ⊑ u₁₁` 和 `u₁₂ ⊑ ⨆cod (u₂₁ ↦ u₂₂)`，
+  然而这等价于前提 `u₂₁ ⊑ u₁₁` 和 `u₁₂ ⊑ u₂₂`。
+
+<!--
 * Case `⊑-dist`.
+-->
+
+* 情况 `⊑-dist`：
 
         ---------------------------------------------
         u₂₁ ↦ (u₂₂ ⊔ u₂₃) ⊑ (u₂₁ ↦ u₂₂) ⊔ (u₂₁ ↦ u₂₃)
 
+<!--
   Given that `v ↦ w ∈ u₂₁ ↦ (u₂₂ ⊔ u₂₃)`, we have `v ≡ u₂₁`
   and `w ≡ u₂₂ ⊔ u₂₃`.
   We show that `u₂₁ ↦ (u₂₂ ⊔ u₂₃)` factors `(u₂₁ ↦ u₂₂) ⊔ (u₂₁ ↦ u₂₃)`
   into itself. We have `u₂₁ ⊔ u₂₁ ⊑ u₂₁`, and also
   `u₂₂ ⊔ u₂₃ ⊑ u₂₂ ⊔ u₂₃`, so the proof is complete.
+-->
+
+  给定 `v ↦ w ∈ u₂₁ ↦ (u₂₂ ⊔ u₂₃)`，我们有 `v ≡ u₂₁` 和 `w ≡ u₂₂ ⊔ u₂₃`。
+  我们证明了 `u₂₁ ↦ (u₂₂ ⊔ u₂₃)` 将 `(u₂₁ ↦ u₂₂) ⊔ (u₂₁ ↦ u₂₃)` 分解为其自身。
+  我们有 `u₂₁ ⊔ u₂₁ ⊑ u₂₁`，以及 `u₂₂ ⊔ u₂₃ ⊑ u₂₂ ⊔ u₂₃`，于是此证明就覆盖完整了。
 
 
+<!--
 We conclude this section with two corollaries of the sub-inv lemma.
 First, we have the following property that is convenient to use in
 later proofs. We specialize the premise to just `v ↦ w ⊑ u₁`
 and we modify the conclusion to say that for every
 `v′ ↦ w′ ∈ u₂`, we have `v′ ⊑ v`.
+-->
+
+我们用 `sub-inv` 引理的两个推论作为本节的结尾。首先，我们来证明以下性质，
+方便在后面的证明中使用。我们将前提特化为 `v ↦ w ⊑ u₁`，并将结论修改为对于每个
+`v′ ↦ w′ ∈ u₂`，我们有 `v′ ⊑ v`。
 
 ```agda
 sub-inv-fun : ∀{v w u₁ : Value}
@@ -1800,8 +1970,12 @@ sub-inv-fun{v}{w}{u₁} abc
          G{D}{E} m = ⊑-trans (⊆→⊑ (↦∈→⊆⨆dom f m)) db
 ```
 
+<!--
 The second corollary is the inversion rule that one would expect for
 less-than with functions on the left and right-hand sides.
+-->
+
+第二个推论是反转规则，即我们期望左侧函数小于右侧。
 
 ```agda
 ↦⊑↦-inv : ∀{v w v′ w′}
@@ -1826,6 +2000,7 @@ less-than with functions on the left and right-hand sides.
 
 ## 注记
 
+<!--
 The denotational semantics presented in this chapter is an example of
 a _filter model_ (@Barendregt:1983). Filter
 models use type systems with intersection types to precisely
@@ -1846,16 +2021,37 @@ book _Lambda Calculus with Types_ describes a framework for
 intersection type systems that enables results similar to the ones in
 this chapter, but for the entire family of intersection type systems
 (@Barendregt:2013).
+-->
 
+本章中展示的操作语义是**过滤器模型（filter model）**（@Barendregt:1983）的一个例子。
+过滤器模型使用带有交集类型的类型系统来精确刻画运行时行为（@Coppo:1979）。
+我们在本章中使用的记法并不是类型系统和交集类型的记法，但 `Value`
+数据类型与类型同构（`↦` 对应 `→`，`⊔` 对应 `∧`，`⊥` 对应 `⊤`），
+`⊑` 关系是子类型 `<:` 的逆关系，并且求值关系 `ρ ⊢ M ↓ v` 与类型系统同构。
+将 `ρ` 写成 `Γ`，将 `v` 写成 `A`，将 `↓` 替换为 `:`，就得到了一个类型判断
+`Γ ⊢ M : A`。通过改变子类型的定义和使用类型原子的不同选择，
+交集类型系统为许多不同的无类型 λ-演算提供语义，从完整的
+beta-规约到惰性演算和按值调用演算（@Alessi:2006）（@Rocca:2004）。
+本章中的指称语义对应于 BCD 系统（@Barendregt:1983）。
+_Lambda Calculus with Types_ 一书中的第三部分描述了一个交集类型系统的框架，
+它可以实现与本章中类似的结果，但适用于整个交集类型系统族（@Barendregt:2013）
+
+<!--
 The two ideas of using finite tables to represent functions and of
 relaxing table lookup to enable self application first appeared in a
 technical report by @Plotkin:1972 and are later described in
 an article in Theoretical Computer Science (@Plotkin:1993).  In that
 work, the inductive definition of `Value` is a bit different than the
 one we use:
+-->
+
+使用有限表来表示函数，以及放宽表的查找以实现自我应用这两个想法首次出现在
+@Plotkin:1972 的技术报告中，后来在《理论计算机科学》（@Plotkin:1993）
+的一篇文章中进行了描述。在该项工作中，`Value` 的归纳定义与我们使用的有点不同：
 
     Value = C + ℘f(Value) × ℘f(Value)
 
+<!--
 where `C` is a set of constants and `℘f` means finite powerset.  The
 pairs in `℘f(Value) × ℘f(Value)` represent input-output mappings, just
 as in this chapter. The finite powersets are used to enable a function
@@ -1869,23 +2065,48 @@ instead defined as a relation, but set-valued functions are isomorphic
 to relations. Indeed, we present the semantics as a function in the
 next chapter and prove that it is equivalent to the relational
 version.
+-->
 
+其中 `C` 是一组常量，`℘f` 表示有限幂集。`℘f(Value) × ℘f(Value)`
+中的序对表示输入-输出映射，和本章中的一样。有限幂集用于使函数表能够出现在输入和输出中。
+这些差异相当于改变了 `Value` 定义中递归出现的位置。Plotkin 的模型是无类型
+λ-演算的**图模型（graph model）**示例（@barendregt84:_lambda_calculus）。
+在图模型中，语义被表示为从程序和环境到（可能是无限的）值的集合的函数。
+本章中的语义被定义为关系，不过以集合为值的函数与关系同构。
+实际上，我们将在下一章中将语义表示为函数，并证明它等价于关系的版本。
+
+<!--
 The ℘(ω) model of @Scott:1976 and the B(A) model of
 @Engeler:1981 are two more examples of graph models. Both use the
 following inductive definition of `Value`.
+-->
+
+@Scott:1976 的 ℘(ω) 模型和 @Engeler:1981 的 B(A) 模型是图模型的另外两个例子。
+二者都试用了以下 `Value` 的归纳定义。
 
     Value = C + ℘f(Value) × Value
 
+<!--
 The use of `Value` instead of `℘f(Value)` in the output does not restrict
 expressiveness compared to Plotkin's model because the semantics use
 sets of values and a pair of sets `(V, V′)` can be represented as a set
 of pairs `{ (V, v′) | v′ ∈ V′ }`.  In Scott's ℘(ω), the above values are
 mapped to and from the natural numbers using a kind of Godel encoding.
+-->
+
+在输出中使用 `Value` 而非 `℘f(Value)` 相对 Plotkin 的模型来说并不会限制表达能力，
+因为使用了值的集合的语义和集合 `(V, V′)` 的序对可以表示为一个序对的集合
+`{ (V, v′) | v′ ∈ V′ }`。在 Scott 的 ℘(ω) 中，上面的值通过一种哥德尔编码做了
+到自然数的双向映射。
 
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章使用了以下 Unicode：
 
     ⊥  U+22A5  UP TACK (\bot)
     ↦  U+21A6  RIGHTWARDS ARROW FROM BAR (\mapsto)
@@ -1900,4 +2121,8 @@ This chapter uses the following unicode:
     ∈  U+2208  ELEMENT OF (\in)
     ⊆  U+2286  SUBSET OF OR EQUAL TO (\sub= or \subseteq)
 
+<!--
 ## References
+-->
+
+## 参考来源
