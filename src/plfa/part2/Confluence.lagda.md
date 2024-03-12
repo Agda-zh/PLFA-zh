@@ -660,7 +660,6 @@ development_. The desired property may be illustrated as
        \|
         M⁺
 
-<!--
 where downward lines are instances of `⇛`, so we call it the _triangle
 property_.
 -->
