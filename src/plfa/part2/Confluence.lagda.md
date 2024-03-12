@@ -649,12 +649,6 @@ However, a simpler approach is to perform as many beta reductions in
 parallel as possible on `M`, say `M ⁺`, and then show that `N` also
 parallel reduces to `M ⁺`. This is the idea of Takahashi's _complete
 development_. The desired property may be illustrated as
--->
-
-然而，一个更简单的方法是对 `M` 执行尽可能多次平行 β-规约，
-称其为 `M ⁺`，然后证明 `N` 也可以平行规约至 `M ⁺`。
-这就是 Takahashi 的 _complete development_ 的想法。
-所需的性质可以表示为：
 
         M
        /|
