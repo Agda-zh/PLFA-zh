@@ -31,7 +31,7 @@ with such a definition and prove that it is equivalent to ℰ.
 -->
 
 这些等式蕴含了指称语义也可以定义为一个递归函数。
-我们会在本章的结尾给它的定义，并证明它等价于 ℰ。
+我们会在本章的结尾给出它的定义，并证明它等价于 ℰ。
 
 
 <!--
@@ -81,9 +81,9 @@ recursion on the value `v`, then it matches up nicely with the three
 rules `↦-intro`, `⊥-intro`, and `⊔-intro`.
 -->
 
-我们需要定义一个函数，它将 `Denotation (Γ , ★)` 映射到 `Denotation Γ`。
-我们将此函数命名为 `ℱ`，在应用到 λ-项时，它应该能够模拟语义中非递归的部分。
-具体来说，我们需要考虑规则 `↦-intro`、`⊥-intro` 和 `⊔-intro`。因此 `ℱ`
+我们需要定义一个函数，它将 `Denotation (Γ , ★)` 映射到 `Denotation Γ`，
+我们将此函数命名为 `ℱ`。在应用到 λ-项时，它能够模拟语义中非递归的部分。
+具体来说，我们需要考虑规则 `↦-intro`、`⊥-intro` 和 `⊔-intro`，因此 `ℱ`
 有三个参数：子项 `M` 的指称 `D`、环境 `γ`，以及值 `v`。如果我们通过对值
 `v` 进行递归来定义 `ℱ`，那么它正好匹配 `↦-intro`、`⊥-intro` 和 `⊔-intro`
 这三条规则。
@@ -104,14 +104,14 @@ function of one parameter.
 -->
 
 如果你仔细观察，就会发现 `ℱ` 函数看起来像函数式程序员熟悉的 `curry`
-化操作：它将一个以长度为 `n + 1` 的元组（环境 `Γ , ★`）作为参数的函数，
-转化为一个以长度为 `n` 的元组作为参数并返回一个单参函数的函数。
+化操作：它将一个以长度为 `n + 1` 的元组（即环境 `Γ , ★`）作为参数的函数，
+转化为一个以长度为 `n` 的元组作为参数，并返回一个单参函数的函数。
 
 <!--
 Using this `ℱ`, we hope to prove that
 -->
 
-使用该 `ℱ` 函数，我们希望证明
+我们希望通过 `ℱ` 函数证明
 
     ℰ (ƛ N) ≃ ℱ (ℰ N)
 
@@ -122,7 +122,7 @@ derivation of `u ⊑ v`, using the `up-env` lemma in the case for the
 `⊑-fun` rule.
 -->
 
-当从一个更大的值 `v` 映射到一个更小的值 `u` 时，函数 `ℱ` 会被保留。
+当从一个更大的值 `v` 映射到一个更小的值 `u` 时，函数 `ℱ` 会保持成立。
 它的证明就是在 `⊑-fun` 规则的情况中使用 `up-env` 引理，对 `u ⊑ v` 推导过程的直接归纳。
 
 ```agda
@@ -168,7 +168,7 @@ above. The inversion lemma is useful in proving that denotations are
 preserved by reduction.
 -->
 
-λ-抽象的「反演引理」是上面定理的一种特例。反演引理在证明「规约会保留指称」时会很有用。
+λ-抽象的「反演引理」是上面定理的一种特例。反演引理在证明「规约会保持指称不变」时会很有用。
 
 ```agda
 lambda-inversion : ∀{Γ}{γ : Env Γ}{N : Γ , ★ ⊢ ★}{v₁ v₂ : Value}
@@ -241,8 +241,8 @@ demonstrates why the `⊑-dist` rule is important.
 为此我们需要定义一个函数，它接受语境 `Γ` 中的两个指称，并产生语境 `Γ`
 中的另一个指称。我们将此函数命名为 `●`，以模拟应用语义 `L · M`
 中非递归的部分。我们无法像处理 `ℱ` 那样简单地对值 `v` 进行递归来定义函数，
-因为 `↦-elim` 这类的规则课应用于任何值。相反，我们将以直接处理 `↦-elim`
-和 `⊥-intro` 规则而忽略 `⊔-intro` 的方式定义 `●`。这使得证明的前进方向变得更加困难，
+因为 `↦-elim` 这类的规则可应用于任何值。相反，我们将通过直接处理 `↦-elim`
+和 `⊥-intro` 规则而忽略 `⊔-intro` 的方式来定义 `●`。这使得证明的前进方向变得更加困难，
 而 `⊔-intro` 的情况说明了为什么 `⊑-dist` 规则很重要。
 
 <!--
@@ -252,7 +252,7 @@ value `w` that is the output of an entry `v ↦ w` in `D₁`, provided the
 input `v` is in `D₂`, for the `↦-elim` rule.
 -->
 
-于是我们定义了 `D₁` 应用于 `D₂`，记作 `D₁ ● D₂`，来包含 `⊥-intro`
+这样我们就定义了 `D₁` 应用于 `D₂`，记作 `D₁ ● D₂`，来包含 `⊥-intro`
 规则中所有等价于 `⊥` 的值 `w`，以及对于 `↦-elim` 规则，在 `D₁` 中的条目
 `v ↦ w` 的所有输出值 `w`，前提是它的输入值 `v` 在 `D₂` 中。
 
@@ -276,7 +276,7 @@ It takes two parameters and applies the first to the second.
 -->
 
 如果你仔细观察一下，就会发现 `_●_` 运算符看起来像函数式程序员熟悉的
-`apply` 操作：它接受两个参数，并将第一个参数应用于第二个。
+`apply` 操作：它接受两个参数，并将第一个参数应用于第二个参数。
 
 <!--
 Next we consider the inversion lemma for application, which is also
@@ -320,7 +320,7 @@ describe the proof below.
 We proceed by induction on the semantics.
 -->
 
-我们通过在语义上进行归纳来证明：
+我们通过对语义进行归纳来证明：
 
 <!--
 * In case `↦-elim` we have `γ ⊢ L ↓ (v′ ↦ v)` and `γ ⊢ M ↓ v′`,
@@ -330,7 +330,7 @@ We proceed by induction on the semantics.
 -->
 
 * 对于 `↦-elim` 的情况，我们有 `γ ⊢ L ↓ (v′ ↦ v)` 和 `γ ⊢ M ↓ v′`，
-  我们只需证明 `(ℰ L ● ℰ M) γ v` 即可。
+  只需证明 `(ℰ L ● ℰ M) γ v` 即可。
 
 * 对于 `⊥-intro` 的情况，我们有 `v = ⊥`，于是可推出 `v ⊑ ⊥`。
 
@@ -373,7 +373,7 @@ We proceed by induction on the semantics.
     * 假设 `v₁ ⊑ ⊥`，`γ ⊢ L ↓ v₁′ ↦ v₂` 且 `γ ⊢ M ↓ v₁′`，
       根据 `sub` 规则我们有 `γ ⊢ L ↓ v₁′ ↦ (v₁ ⊔ v₂)`，因为
       `v₁′ ↦ (v₁ ⊔ v₂) ⊑ v₁′ ↦ v₂`。
-    * 假设 `γ ⊢ L ↓ v₁′ ↦ v₁`, `γ ⊢ M ↓ v₁′` 且 `v₂ ⊑ ⊥`，
+    * 假设 `γ ⊢ L ↓ v₁′ ↦ v₁`，`γ ⊢ M ↓ v₁′` 且 `v₂ ⊑ ⊥`，
       根据 `sub` 规则我们有 `γ ⊢ L ↓ v₁′ ↦ (v₁ ⊔ v₂)`，因为
       `v₁′ ↦ (v₁ ⊔ v₂) ⊑ v₁′ ↦ v₁`。
     * 假设 `γ ⊢ L ↓ v₁′′ ↦ v₁, γ ⊢ M ↓ v₁′′`，
@@ -478,8 +478,9 @@ produces two programs that are denotationally equal.
 -->
 
 本章的主要工作已经完成：我们建立了语义等式来展示指称语义是如何组合的。
-在本节和下一节中，我们将利用这些等式来证明一些推论：指称相等是满足**合同性（congruence）**，
-并证明**组合性的性质**，该性质指出在同一语境中，两个指称相等的项会产生两个指称相等的程序 。
+在本节和下一节中，我们将利用这些等式来证明一些推论：指称相等满足**合同性（congruence）**，
+并证明指称具有**可组合性（compositionality property）**，
+该性质指出在同一语境中，两个指称相等的项会产生两个指称相等的程序 。
 
 <!--
 We begin by showing that denotational equality is a congruence with
@@ -548,7 +549,7 @@ reduces this to the question of whether the `●` operator
 is a congruence.
 -->
 
-接下来我们证明指称相等对应用也满足合同性：`ℰ L ≃ ℰ L′` 和 `ℰ M ≃ ℰ M′`
+接下来我们证明指称相等对于应用也满足合同性：`ℰ L ≃ ℰ L′` 和 `ℰ M ≃ ℰ M′`
 蕴含 `ℰ (L · M) ≃ ℰ (L′ · M′)`。等式 `app-equiv` 将其规约为 `●`
 运算符是否满足合同性的问题。
 
@@ -572,7 +573,7 @@ Again, both directions of the if-and-only-if are proved via a lemma.
 This time the lemma is proved by cases on `(D₁ ● D₂) γ v`.
 -->
 
-同样，「当且仅当」的两个方向通过一个引理来证明。这里的引理通过对
+同样，「当且仅当」的两个方向需要通过一个引理来证明，而该引理则通过对
 `(D₁ ● D₂) γ v` 进行情况分析来证明。
 
 <!--
@@ -632,8 +633,8 @@ type with two contexts for variables: one for the hole and one for
 terms that result from filling the hole.
 -->
 
-**语境（Context）**是一个带洞的程序。以下数据定义 `Ctx` 将这个概念表现了出来。
-我们使用两个变量的语境来索引 `Ctx` 数据类型：一个表示洞，另一个表示填洞所产生的项。
+**语境（Context）**是一个带洞的程序。以下数据定义 `Ctx` 将这个概念表示了出来。
+我们使用两个变量语境来索引 `Ctx` 数据类型：一个表示洞，另一个表示填洞所产生的项。
 
 ```agda
 data Ctx : Context → Context → Set where
@@ -672,14 +673,15 @@ data Ctx : Context → Context → Set where
 -->
 
 * 应用有两种构造，`ctx-app-L` 和 `ctx-app-R`。`ctx-app-L`
-  对应洞位于左侧项（运算符）内的情况，后者对应洞位于右侧项（运算数）内。
+  对应洞位于左侧项（运算符）内的情况，`ctx-app-R`
+  对应洞位于右侧项（运算数）内的情况。
 
 <!--
 The action of surrounding a term with a context is defined by the
 following `plug` function. It is defined by recursion on the context.
 -->
 
-将项插入某个语境下的操作由以下 `plug` 函数定义，它是通过对语境进行递归来定义的：
+将项插入到某个语境下的操作由以下 `plug` 函数定义，它是通过对语境进行递归来定义的：
 
 ```agda
 plug : ∀{Γ}{Δ} → Ctx Γ Δ → Γ ⊢ ★ → Δ ⊢ ★
@@ -696,8 +698,8 @@ into an arbitrary context `C` produces two programs that are
 denotationally equal.
 -->
 
-我们接下来陈述并证明组合性原则。给定两个项 `M` 和 `N`，它们的指称相等，
-将它们插入到任意语境 `C` 中会产生两个指称相等的程序：
+我们接下来陈述并证明组合性原则：给定两个项 `M` 和 `N`，若它们的指称相等，
+那么将它们插入到任意语境 `C` 中都会产生两个指称相等的程序：
 
 ```agda
 compositionality : ∀{Γ Δ}{C : Ctx Γ Δ} {M N : Γ ⊢ ★}
