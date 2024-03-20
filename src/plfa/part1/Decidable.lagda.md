@@ -319,7 +319,7 @@ may recursively invoke the function to produce evidence that `T (m ≤ᵇ n)`.
 -->
 
 如果证明是 `z≤n`，我们立即可以得到 `zero ≤ᵇ n` 为真，所以 `T (m ≤ᵇ n)` 由 `tt` 证明。
-如果证明是 `s≤s` 作用于 `m≤n`，那么 `suc m ≤ᵇ suc n` 规约到 `m ≤ᵇ n`，我们可以递归地使用函数
+如果证明是 `s≤s` 作用于 `m≤n`，那么 `suc m ≤ᵇ suc n` 归约到 `m ≤ᵇ n`，我们可以递归地使用函数
 来获得 `T (m ≤ᵇ n)` 的证明。
 
 <!--
@@ -1070,8 +1070,8 @@ guard.
   it will throw an error. For instance, if we call `3 - 5` we get `_n≤m_254 : ⊥`.
 -->
 
-- 如果 `n ≤ m` 成立，隐式参数的类型规约为 `⊤`。 然后 Agda 会欣然地提供隐式参数。
-- 否则，类型规约为 `⊥` ，Agda 无法为此类型提供对应的值，因此会报错。例如，如果我们调用 `3 - 5` 会得到 `_n≤m_254 : ⊥`。
+- 如果 `n ≤ m` 成立，隐式参数的类型归约为 `⊤`。 然后 Agda 会欣然地提供隐式参数。
+- 否则，类型归约为 `⊥` ，Agda 无法为此类型提供对应的值，因此会报错。例如，如果我们调用 `3 - 5` 会得到 `_n≤m_254 : ⊥`。
 
 <!--
 We obtain the witness for `n ≤ m` using `toWitness`, which we defined earlier:

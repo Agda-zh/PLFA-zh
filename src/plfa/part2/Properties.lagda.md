@@ -87,7 +87,7 @@ a reduction step.  As we will see, this property does _not_ hold for
 every term, but it does hold for every closed, well-typed term.
 -->
 
-我们可能会希望任意一个项要么是一个值，要么可以进行一步规约。
+我们可能会希望任意一个项要么是一个值，要么可以进行一步归约。
 我们将会看到，此性质**并不**对所有项都成立，但对于所有良类型的闭项成立。
 
 <!--
@@ -106,10 +106,10 @@ It turns out that this property holds whenever we start with a closed,
 well-typed term.
 -->
 
-所以要么我们有一个值，这时我们已经完成了规约；要么我们可以进行一步规约。
+所以要么我们有一个值，这时我们已经完成了归约；要么我们可以进行一步归约。
 当处于后者的情况时，我们想要再一次应用可进性。
-但这样做需要我们首先知道通过规约得到的项本身是良类型的闭项。
-事实上，只要我们规约的起点是一个良类型的闭项，所得到的项就满足这个性质。
+但这样做需要我们首先知道通过归约得到的项本身是良类型的闭项。
+事实上，只要我们归约的起点是一个良类型的闭项，所得到的项就满足这个性质。
 
 <!--
 _Preservation_: If `∅ ⊢ M ⦂ A` and `M —→ N` then `∅ ⊢ N ⦂ A`.
@@ -131,13 +131,13 @@ and its Church numeral variant.
 
 这给予我们一种自动化求值的策略。
 从一个良类型的闭项开始。
-由可进性，它要么是一个值，于是求值结束了；要么可以被规约为另一个项。
+由可进性，它要么是一个值，于是求值结束了；要么可以被归约为另一个项。
 由保型性，所以得到的另一个项本身也是一个良类型的闭项。
 重复这一过程。
 我们要么会陷入永久的循环中，此时求值过程将不会停机；
 要么最终会得到一个被确保是闭项且类型与原始项相同的值。
 接下来我们将这种策略转化为 Agda 代码，以计算 `plus · two · two` 和所
-对应 Church 表示法表示数字的变体的规约序列。
+对应 Church 表示法表示数字的变体的归约序列。
 
 <!--
 (The development in this chapter was inspired by the corresponding
@@ -159,13 +159,13 @@ types without needing to develop a separate inductive definition of the
 ## Values do not reduce
 -->
 
-## 值无法被规约
+## 值无法被归约
 
 <!--
 We start with an easy observation. Values do not reduce:
 -->
 
-我们从一个简单的观察开始。值无法被规约：
+我们从一个简单的观察开始。值无法被归约：
 
 ```agda
 V¬—→ : ∀ {M N}
@@ -193,18 +193,18 @@ We consider the three possibilities for values:
   that reduces, which by induction cannot occur.
 -->
 
-* 如果它是一个 λ-抽象，那么不会匹配任何规约规则
+* 如果它是一个 λ-抽象，那么不会匹配任何归约规则
 
-* 如果它是零，也不会匹配任何规约规则
+* 如果它是零，也不会匹配任何归约规则
 
 * 如果它是一个数的后继，那么它可能可以与规则 `ξ-suc` 相匹配，
-  但由归纳证明它作为值本身还能进行规约的情况是不可能发生的。
+  但由归纳证明它作为值本身还能进行归约的情况是不可能发生的。
 
 <!--
 As a corollary, terms that reduce are not values:
 -->
 
-作为推论，可以再进行规约的项不是值：
+作为推论，可以再进行归约的项不是值：
 
 ```agda
 —→¬V : ∀ {M N}
@@ -295,7 +295,7 @@ We would like to show that every term is either a value or takes a
 reduction step.  However, this is not true in general.  The term
 -->
 
-我们可能希望任意一个项要么是值，要么可以进行一步规约。
+我们可能希望任意一个项要么是值，要么可以进行一步归约。
 但并不是所有情况都是这样。考虑这样的项
 
     `zero · `suc `zero
@@ -305,7 +305,7 @@ is neither a value nor can take a reduction step. And if `` "s" ⦂ `ℕ ⇒ `�
 then the term
 -->
 
-既不是一个值也无法进行一步规约。另外，如果 `` "s" ⦂ `ℕ ⇒ `ℕ ``，那么项
+既不是一个值也无法进行一步归约。另外，如果 `` "s" ⦂ `ℕ ⇒ `ℕ ``，那么项
 
      ` "s" · `zero
 
@@ -316,7 +316,7 @@ second has a free variable.  Every term that is well typed and closed
 has the desired property.
 -->
 
-也无法被规约，因为我们不知道哪个函数被绑定到了自由变量 `"s"` 上。
+也无法被归约，因为我们不知道哪个函数被绑定到了自由变量 `"s"` 上。
 上述例子中的第一个项是不良类型的，第二个项包含一个自由变量。
 只有良类型的闭项才有如下求证的性质：
 
@@ -355,8 +355,8 @@ exists a term `N` such that `M —→ N`, or if it is done, meaning that
 `M` is a value.
 -->
 
-一个进行的项 `M` 要么可以进行一步规约，这意味着存在一个项 `N` 使得 `M —→ N`，
-要么已经完成了规约，这意味着 `M` 是一个值。
+一个进行的项 `M` 要么可以进行一步归约，这意味着存在一个项 `N` 使得 `M —→ N`，
+要么已经完成了归约，这意味着 `M` 是一个值。
 
 <!--
 If a term is well typed in the empty context then it satisfies progress:
@@ -422,10 +422,10 @@ Let's unpack the first three cases:
 
 * 如果这个项是一个函数应用 `L · M`，则考虑对项 `L` 良类型的推导过程递归应用可进性：
 
-  + 如果这个项还能够进行一步规约，我们就有了 `L —→ L′` 的论据，再由 `ξ-·₁`，
+  + 如果这个项还能够进行一步归约，我们就有了 `L —→ L′` 的论据，再由 `ξ-·₁`，
     可知原来的项进行到 `L′ · M`。
 
-  + 如果这个项的规约结束了，我们就有了 `L` 是一个值的论据。
+  + 如果这个项的归约结束了，我们就有了 `L` 是一个值的论据。
     则考虑对项 `L` 良类型的推导过程递归应用可进性：
 
     <!--
@@ -436,8 +436,8 @@ Let's unpack the first three cases:
       subterm has already supplied the required evidence.
     -->
 
-    - 如果这个项还能够进行一步规约，我们就有了 `M —→ M′` 的论据，再由 `ξ-·₂`，
-      可知原来的项进行到 `L′ · M`。要应用规约步骤 `ξ-·₂` 需要我们提供项 `L` 是
+    - 如果这个项还能够进行一步归约，我们就有了 `M —→ M′` 的论据，再由 `ξ-·₂`，
+      可知原来的项进行到 `L′ · M`。要应用归约步骤 `ξ-·₂` 需要我们提供项 `L` 是
       一个值的论据，而之前对子项可进性的分析已经提供了需要的证明。
 
     <!--
@@ -445,8 +445,8 @@ Let's unpack the first three cases:
       a value, so our original term steps by `β-ƛ`.
     -->
 
-    - 如果这个项的规约结束了，我们便有了项 `M` 是一个值的论据。
-      因此原来的项可以使用 `β-ƛ` 来进行一步规约。
+    - 如果这个项的归约结束了，我们便有了项 `M` 是一个值的论据。
+      因此原来的项可以使用 `β-ƛ` 来进行一步归约。
 
 <!--
 The remaining cases are similar.  If by induction we have a
@@ -455,8 +455,8 @@ then either we have a value or apply a `β` rule.  For fixpoint,
 no induction is required as the `β` rule applies immediately.
 -->
 
-剩下的情况都很类似。如果我们由归纳得到了一个可以继续进行规约的
-情况 `step` 则应用一条 `ξ` 规则；如果得到的是已经完成规约的
+剩下的情况都很类似。如果我们由归纳得到了一个可以继续进行归约的
+情况 `step` 则应用一条 `ξ` 规则；如果得到的是已经完成归约的
 情况 `done` 则要么我们已经得到了一个值，要么应用一条 `β` 规则。
 对于不动点，由于可以直接应用所对应的 `β` 规则，不需要再做归纳。
 
@@ -505,7 +505,7 @@ determine its bound variable and body, `ƛ x ⇒ N`, so we can show that
 比起有助于记忆的 `done` 与 `step`，现在我们只能用 `inj₁` 和 `inj₂`；
 同时项 `N` 也不再是隐式的，从而我们需要将其完整写出。
 当遇到 `β-ƛ` 的情况时，需要我们对 λ-表达式 `L` 做匹配，以决定它的约束变量和函数体，
-也就是形如 `ƛ x ⇒ N` 的形式，从而我们才能证明项 `L · M` 规约到了 `N [ x := M ]`。
+也就是形如 `ƛ x ⇒ N` 的形式，从而我们才能证明项 `L · M` 归约到了 `N [ x := M ]`。
 
 <!--
 #### Exercise `Progress-≃` (practice)
@@ -575,7 +575,7 @@ reduction, turns out to require considerably more work.  The proof has
 three key steps.
 -->
 
-规约过程保持类型是我们所期望去证明的另一个性质，
+归约过程保持类型是我们所期望去证明的另一个性质，
 而事实上这需要做一定程度的准备工作。
 在证明中有三个关键步骤。
 
@@ -707,7 +707,7 @@ the substitution lemma is crucial in showing that each of the
 `β` rules that uses substitution preserves types.
 -->
 
-我们对所有可能的规约步骤进行归纳来证明保型性，
+我们对所有可能的归约步骤进行归纳来证明保型性，
 在证明的过程中替换引理起到了重要的作用，
 它论证了在替换过程中用到的每一条 `β`-规则都保留了类型。
 
@@ -1023,7 +1023,7 @@ variables the context grows.  So for the induction to go through,
 we require an arbitrary context `Γ`, as in the statement of the lemma.
 -->
 
-我们所关注的是规约闭项，这意味着每当我们应用 `β`-规约时，
+我们所关注的是归约闭项，这意味着每当我们应用 `β`-归约时，
 所替换的项只含有一个自由变量（也就是所对应 λ-抽象、
 对自然数分项或不动点表达式的绑定变量）。然而，替换是通过
 递归定义的，在我们逐层深入项时遇到的绑定变量增长了语境。
@@ -1404,7 +1404,7 @@ Once we have shown that substitution preserves types, showing
 that reduction preserves types is straightforward:
 -->
 
-一旦我们证明了替换保持类型，证明规约保持类型是简单的：
+一旦我们证明了替换保持类型，证明归约保持类型是简单的：
 
 ```agda
 preserve : ∀ {M N A}
@@ -1437,7 +1437,7 @@ so in what follows we choose type name as convenient.
 Let's unpack the cases for two of the reduction rules:
 -->
 
-让我们分析规约规则的两种情况：
+让我们分析归约规则的两种情况：
 
 <!--
 * Rule `ξ-·₁`.  We have
@@ -1544,13 +1544,13 @@ well-typed term to its value, if it has one.
 
 通过重复应用可进性和保型性，我们可以对任何良类型的项求值。
 在这一节，我们将介绍一个 Agda 函数，
-该函数可以求得任意给定良类型的闭项到其值的规约序列，如果该序列存在。
+该函数可以求得任意给定良类型的闭项到其值的归约序列，如果该序列存在。
 
 <!--
 Some terms may reduce forever.  Here is a simple example:
 -->
 
-一些项将永远规约下去。这是一个例子：
+一些项将永远归约下去。这是一个例子：
 
 ```agda
 sucμ  =  μ "x" ⇒ `suc (` "x")
@@ -1577,9 +1577,9 @@ number of reduction steps.
 -->
 
 由于每个 Agda 计算都必须终止，
-我们不能仅仅要求 Agda 将项规约为值。
+我们不能仅仅要求 Agda 将项归约为值。
 相反，我们将向 Agda 提供一个自然数，
-并允许它在需要比给定的数更多的规约步骤时终止规约。
+并允许它在需要比给定的数更多的归约步骤时终止归约。
 
 <!--
 A similar issue arises with cryptocurrencies.  Systems which use
@@ -1611,7 +1611,7 @@ bound on the number of reduction steps.  `Gas` is specified by a natural number:
 -->
 
 以此类推，我们将使用**燃料**作为参数的名称，
-该参数限制了规约步骤的数量。`Gas` 由一个自然数指定。
+该参数限制了归约步骤的数量。`Gas` 由一个自然数指定。
 
 ```agda
 record Gas : Set where
@@ -1648,7 +1648,7 @@ reduction finished:
 -->
 
 给定一个类型为 `A` 的项 `L`，对于某个 `N`，
-求值器将返回从 `L` 到 `N` 的规约序列以及规约是否完成的指示：
+求值器将返回从 `L` 到 `N` 的归约序列以及归约是否完成的指示：
 
 ```agda
 data Steps (L : Term) : Set where
@@ -1687,7 +1687,7 @@ evidence that `L` is well typed.  We consider the amount of gas
 remaining.  There are two possibilities:
 -->
 
-令 `L` 是我们要规约的项的名称，`⊢L` 是项 `L` 是良类型的论据。
+令 `L` 是我们要归约的项的名称，`⊢L` 是项 `L` 是良类型的论据。
 我们考虑剩余的燃料量。此处有两种可能：
 
 <!--
@@ -1695,7 +1695,7 @@ remaining.  There are two possibilities:
   sequence `L —↠ L` and an indication that we are out of gas.
 -->
 
-* 如果是零，则我们过早地停止了。我们将返回简单的规约序列 `L —↠ L`，
+* 如果是零，则我们过早地停止了。我们将返回简单的归约序列 `L —↠ L`，
   并标明我们用尽了燃料。
 
 
@@ -1715,7 +1715,7 @@ remaining.  There are two possibilities:
   -->
 
   + 项 `L` 是一个值，则我们已经完成了。
-    我们将返回简单的规约序列 `L —↠ L`，以及 `L` 是值的论据。
+    我们将返回简单的归约序列 `L —↠ L`，以及 `L` 是值的论据。
 
   <!--
   + Term `L` steps to another term `M`.  Preservation provides
@@ -1729,8 +1729,8 @@ remaining.  There are two possibilities:
 
   + 项 `L` 步进至另一个项 `M`。保型性提供了 `M` 也是良类型的论据，
     我们对剩余的燃料递归调用 `eval`。
-    结果将得到 `M —↠ N` 的论据以及 `N` 是良类型的论据和规约是否完成的标识。
-    我们将 `L —→ M` 和 `M —↠ N` 的论据结合来得到 `L —↠ N` 以及规约是否完成的标识。
+    结果将得到 `M —↠ N` 的论据以及 `N` 是良类型的论据和归约是否完成的标识。
+    我们将 `L —→ M` 和 `M —↠ N` 的论据结合来得到 `L —↠ N` 以及归约是否完成的标识。
 
 
 <!--
@@ -1745,7 +1745,7 @@ sequence given earlier.  First, we show that the term `sucμ`
 is well typed:
 -->
 
-现在我们可以用 Agda 来计算之前给出的不停机的规约序列。
+现在我们可以用 Agda 来计算之前给出的不停机的归约序列。
 首先我们证明项 `sucμ` 是良赋型的：
 
 ```agda
@@ -1761,7 +1761,7 @@ sequence, we evaluate with three steps worth of gas:
 -->
 
 我们花三步量的燃料来进行求值，
-以展示这个无穷规约序列的前三步：
+以展示这个无穷归约序列的前三步：
 
 ```agda
 _ : eval (gas 3) ⊢sucμ ≡
@@ -1784,7 +1784,7 @@ in the previous chapter.  We start with the Church numeral two
 applied to successor and zero.  Supplying 100 steps of gas is more than enough:
 -->
 
-类似地，我们可以用 Agda 计算前一章节中给出的规约序列。
+类似地，我们可以用 Agda 计算前一章节中给出的归约序列。
 我们从计算 Church 表示法表示数字的数字二应用到后继和数字零开始。
 提供 100 步量的燃料就已远超过需求了：
 
@@ -1816,7 +1816,7 @@ writing `twoᶜ` and `sucᶜ` in place of their expansions.
 -->
 
 上面的例子是通过首先使用组合键 `C-c C-n` 来范式化等式的左侧，
-然后将结果粘贴到等式右侧的方式生成的。前一章中规约的例子便是
+然后将结果粘贴到等式右侧的方式生成的。前一章中归约的例子便是
 通过使用这一方式导出结果、重新排版并且将展开的表达式对应地重
 写为 `twoᶜ` 和 `sucᶜ` 的形式得到的。
 
@@ -2130,9 +2130,9 @@ Find two counter-examples to subject expansion, one
 with case expressions and one not involving case expressions.
 -->
 
-如果 `M —→ N`，我们便称 `M` **规约**至 `N`，
+如果 `M —→ N`，我们便称 `M` **归约**至 `N`，
 相同的情形也被称作 `N` **扩展（Expand）**至 `M`。
-保型性有时也被叫做**子规约（Subject Reduction）**。
+保型性有时也被叫做**子归约（Subject Reduction）**。
 它的对应是**子扩展（Subject Expansion）**，
 如果 `M —→ N` 和 `∅ ⊢ N ⦂ A` 蕴含 `∅ ⊢ M ⦂ A`。
 找到两个子扩展的反例，一个涉及 `case` 表达式而另一个不涉及。
@@ -2154,7 +2154,7 @@ with case expressions and one not involving case expressions.
 A term is _normal_ if it cannot reduce:
 -->
 
-一个项是**范式**，如果它不能被规约。
+一个项是**范式**，如果它不能被归约。
 
 ```agda
 Normal : Term → Set
@@ -2273,7 +2273,7 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 ## Reduction is deterministic
 -->
 
-## 规约是确定的
+## 归约是确定的
 
 <!--
 When we introduced reduction, we claimed it was deterministic.
@@ -2304,7 +2304,7 @@ cong₄ f refl refl refl refl = refl
 It is now straightforward to show that reduction is deterministic:
 -->
 
-现在证明规约是确定的十分简单。
+现在证明归约是确定的十分简单。
 
 ```agda
 det : ∀ {M M′ M″}
@@ -2338,7 +2338,7 @@ The proof is by induction over possible reductions.  We consider
 three typical cases:
 -->
 
-证明通过对可能的规约进行归纳来完成。我们考虑三种典型的情况：
+证明通过对可能的归约进行归纳来完成。我们考虑三种典型的情况：
 
 <!--
 * Two instances of `ξ-·₁`:
@@ -2375,8 +2375,8 @@ three typical cases:
   one of the other reduction rules, then determinism would no longer hold.
   -->
 
-  左侧的规则要求 `L` 被规约，但右侧的规则要求 `L` 是一个值。
-  这是一个矛盾，因为值无法被规约。如果值的约束从 `ξ-·₂` 或任何其他规约规则中被移除，
+  左侧的规则要求 `L` 被归约，但右侧的规则要求 `L` 是一个值。
+  这是一个矛盾，因为值无法被归约。如果值的约束从 `ξ-·₂` 或任何其他归约规则中被移除，
   那么确定性将不再适用。
 
 <!--
@@ -2431,7 +2431,7 @@ and neither is smaller.
 Suppose we add a new term `zap` with the following reduction rule
 -->
 
-假设我们加入了一个新项 `zap` 以及以下规约规则
+假设我们加入了一个新项 `zap` 以及以下归约规则
 
     -------- β-zap
     M —→ zap
@@ -2482,7 +2482,7 @@ Suppose instead that we add a new term `foo` with the following
 reduction rules:
 -->
 
-假设我们加入了一个新项 `foo` 以及以下规约规则：
+假设我们加入了一个新项 `foo` 以及以下归约规则：
 
     ------------------ β-foo₁
     (λ x ⇒ ` x) —→ foo

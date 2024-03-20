@@ -1,5 +1,5 @@
 ---
-title      : "Bisimulation: 联系不同的规约系统"
+title      : "Bisimulation: 联系不同的归约系统"
 permalink  : /Bisimulation/
 translators: ["Fangyi Zhou"]
 progress   : 100
@@ -31,7 +31,7 @@ over terms of the source, and `M†`, `N†` range over terms of the
 target.  We define a relation
 -->
 
-给定两个不同的系统，它们有不同的项和不同的规约规则，我们定义诸如
+给定两个不同的系统，它们有不同的项和不同的归约规则，我们定义诸如
 『一个系统**模拟（Simulate）**了另一个系统』此类断言的意义。
 假设两个系统分别叫做**源**（Source）和**目标**（Target），我们用
 `M` 和 `N` 表示源系统的项，`M†` 和 `N†` 表示目标系统的项。
@@ -47,7 +47,7 @@ in the target:
 -->
 
 于两个系统对应的项之上。
-如果每个源系统的每一个规约都有一个对应的规约序列，那我们就有了一个**模拟**。
+如果每个源系统的每一个归约都有一个对应的归约序列，那我们就有了一个**模拟**。
 
 <!--
 _Simulation_: For every `M`, `M†`, and `N`:
@@ -79,7 +79,7 @@ corresponds to a reduction (rather than a reduction sequence)
 in the target:
 -->
 
-有时我们会使用一个更强的条件，使得每个源系统的规约对应目标系统的规约（而不是规约序列）：
+有时我们会使用一个更强的条件，使得每个源系统的归约对应目标系统的归约（而不是归约序列）：
 
     M  --- —→ --- N
     |             |
@@ -109,7 +109,7 @@ _converse_ relations. Hence, if `~` is a relation from source to target,
 its converse is a relation from target to source.)
 -->
 
-如果从目标系统到源系统也有一个模拟：即每个目标系统的规约在源目标系统中有对应的规约序列，
+如果从目标系统到源系统也有一个模拟：即每个目标系统的归约在源目标系统中有对应的归约序列，
 我们对这样的情况尤其感兴趣。换句话说，`~` 是一个从源到目标的模拟，而 `~`
 的逆是一个从目标的源的模拟。这样的情况被称为**互模拟**（Bisimulation）。
   (In general, if < and > are arbitrary relations such
@@ -124,8 +124,8 @@ reduction step in the source we must show a corresponding reduction
 sequence in the target.
 -->
 
-要建立模拟，我们需要分情况讨论所有的可能规约，以及所有它们可能联系的项。
-对于每个源系统中规约的步骤，我们必须给出目标系统中对应的规约系列。
+要建立模拟，我们需要分情况讨论所有的可能归约，以及所有它们可能联系的项。
+对于每个源系统中归约的步骤，我们必须给出目标系统中对应的归约系列。
 
 <!--
 For instance, the source might be lambda calculus with _let_
@@ -612,7 +612,7 @@ In its structure, it looks a little bit like a proof of progress:
 -->
 
 这个证明由分情况讨论来完成，检查每一个 `M ~ M†` 的例子，和每一个 `M —→ M†` 的例子，
-并在规约是 `ξ` 规则时使用递归，也因此包括了另一个规约。
+并在归约是 `ξ` 规则时使用递归，也因此包括了另一个归约。
 证明的结构和可进性的证明也有些类似：
 
 <!--
@@ -623,10 +623,10 @@ In its structure, it looks a little bit like a proof of progress:
     Recursive invocation gives us
 -->
 
-* 如果相关的项是变量，那么无可应用的规约。
-* 如果相关的项是 λ 抽象，那么无可应用的规约。
+* 如果相关的项是变量，那么无可应用的归约。
+* 如果相关的项是 λ 抽象，那么无可应用的归约。
 * 如果相关的项是应用，那么有三种子情况：
-  - 源项由 `ξ-·₁` 规约，在此情况下目标项也一样。递归应用可以让我们得到：
+  - 源项由 `ξ-·₁` 归约，在此情况下目标项也一样。递归应用可以让我们得到：
 
         L  --- —→ ---  L′
         |              |
@@ -655,7 +655,7 @@ In its structure, it looks a little bit like a proof of progress:
     Recursive invocation gives us
   -->
 
-  - 源项由 `ξ-·₂` 规约，在此情况下目标项也一样。递归应用可以让我们得到：
+  - 源项由 `ξ-·₂` 归约，在此情况下目标项也一样。递归应用可以让我们得到：
 
         M  --- —→ ---  M′
         |              |
@@ -689,7 +689,7 @@ In its structure, it looks a little bit like a proof of progress:
   - The source term reduces via `β-ƛ`, in which case the target term does as well:
   -->
 
-  - 源项由 `β-ƛ` 规约，在此情况下目标项也一样：
+  - 源项由 `β-ƛ` 归约，在此情况下目标项也一样：
 
          (ƛ x ⇒ N) · V  --- —→ ---  N [ x := V ]
               |                           |
@@ -720,7 +720,7 @@ In its structure, it looks a little bit like a proof of progress:
     reduces via `ξ-·₂`.  Recursive invocation gives us
   -->
 
-  - 源项由 `ξ-let` 规约，在此情况下目标项由 `ξ-·₂` 规约。递归应用可以让我们得到：
+  - 源项由 `ξ-let` 归约，在此情况下目标项由 `ξ-·₂` 归约。递归应用可以让我们得到：
 
         M  --- —→ ---  M′
         |              |
@@ -749,7 +749,7 @@ In its structure, it looks a little bit like a proof of progress:
     term reduces via `β-ƛ`:
   -->
 
-  - 源项由 `β-let` 规约，在此情况下目标项由 `β-ƛ` 规约：
+  - 源项由 `β-let` 归约，在此情况下目标项由 `β-ƛ` 归约：
 
         let x = V in N  --- —→ ---  N [ x := V ]
               |                         |

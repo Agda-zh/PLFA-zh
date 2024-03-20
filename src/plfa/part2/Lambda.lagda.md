@@ -267,7 +267,7 @@ FIXME: shadow 应该翻译成什么？
 reduces to `` `suc `suc `suc `suc `zero ``.
 -->
 
-会规约为 `` `suc `suc `suc `suc `zero ``。
+会归约为 `` `suc `suc `suc `suc `zero ``。
 
 <!--
 As a second example, we use higher-order functions to represent
@@ -324,7 +324,7 @@ Church 法表示的二取两个参数 `s` 和 `z`，将 `s` 应用于 `z` 两次
 reduces to `` `suc `suc `suc `suc `zero ``.
 -->
 
-会规约为 `` `suc `suc `suc `suc `zero ``。
+会归约为 `` `suc `suc `suc `suc `zero ``。
 
 
 <!--
@@ -427,7 +427,7 @@ when term `t` is anything but a variable.
 -->
 
 Agda 会抱怨它无法为隐式参数找到一个底类型的值。
-注意此处隐式参数的类型在 `t` 不是变量时会规约至 `⊥`。
+注意此处隐式参数的类型在 `t` 不是变量时会归约至 `⊥`。
 
 <!--
 The definition of `plus` can now be written as follows:
@@ -553,7 +553,7 @@ two are open.  We will focus on reduction of closed terms.
 -->
 
 我们将没有自由变量的项叫做**闭项**，否则它是一个**开项**。
-上面的三个项中，第一个是闭项，剩下两个是开项。我们在讨论规约时，会注重闭项。
+上面的三个项中，第一个是闭项，剩下两个是开项。我们在讨论归约时，会注重闭项。
 
 <!--
 Different occurrences of a variable may be bound and free.
@@ -977,7 +977,7 @@ substitution.
 ## Reduction
 -->
 
-## 规约
+## 归约
 
 <!--
 We give the reduction rules for call-by-value lambda calculus.  To
@@ -987,9 +987,9 @@ right-hand side until it becomes a value; and finally we substitute
 the argument for the variable in the abstraction.
 -->
 
-我们接下来给出 λ-演算的传值规约规则。
-规约一个应用时，我们首先规约左手边，直到它变成一个值（必须是抽象）；
-接下来我们规约右手边，直到它变成一个值；
+我们接下来给出 λ-演算的传值归约规则。
+归约一个应用时，我们首先归约左手边，直到它变成一个值（必须是抽象）；
+接下来我们归约右手边，直到它变成一个值；
 最后我们使用替换，把变量替换成参数。
 
 <!--
@@ -997,7 +997,7 @@ In an informal presentation of the operational semantics,
 the rules for reduction of applications are written as follows:
 -->
 
-在非正式的操作语言表达中，我们可以如下写出应用的规约规则：
+在非正式的操作语言表达中，我们可以如下写出应用的归约规则：
 
     L —→ L′
     --------------- ξ-·₁
@@ -1029,9 +1029,9 @@ letter `β` (_beta_) and such rules are traditionally called _beta rules_.
 -->
 
 规则可以分为两类。
-兼容性规则让我们规约一个项的一部分。我们用希腊字母 `ξ` （_xi_）开头的规则表示。
-当一个项规约到足够的时候，它将会包括一个构造子和一个解构子，在这里是 `ƛ` 和 `·`，
-我们可以直接规约。这样的规则我们用希腊字母 `β` （_beta_）表示，也被称为 **β-规则**。
+兼容性规则让我们归约一个项的一部分。我们用希腊字母 `ξ` （_xi_）开头的规则表示。
+当一个项归约到足够的时候，它将会包括一个构造子和一个解构子，在这里是 `ƛ` 和 `·`，
+我们可以直接归约。这样的规则我们用希腊字母 `β` （_beta_）表示，也被称为 **β-规则**。
 
 <!--
 A bit of terminology: A term that matches the left-hand side of a
@@ -1041,10 +1041,10 @@ as the _actual parameter_ of the function application.  Beta reduction
 replaces the formal parameter by the actual parameter.
 -->
 
-一些额外的术语：可以匹配规约规则左手边的项被称之为**可规约项（Redex）**。
-在可规约项 `(ƛ x ⇒ N) · V` 中，我们把 `x` 叫做函数的**形式参数（形参，Formal Parameter）**，
+一些额外的术语：可以匹配归约规则左手边的项被称之为**可归约项（Redex）**。
+在可归约项 `(ƛ x ⇒ N) · V` 中，我们把 `x` 叫做函数的**形式参数（形参，Formal Parameter）**，
 把 `V` 叫做函数应用的**实际参数（实参，Actual Parameter）**。
-β-规约将形参用实参来替换。
+β-归约将形参用实参来替换。
 
 <!--
 If a term is a value, then no reduction applies; conversely,
@@ -1054,9 +1054,9 @@ this exhausts the possibilities: every well-typed term
 either reduces or is a value.
 -->
 
-如果一个项已经是一个值，它就没有可以规约的规则；
-反过来说，如果一个项可以被规约，那么它就不是一个值。
-我们在下一章里证明这概括了所有的情况——所以良类型的项要么可以规约要么是一个值。
+如果一个项已经是一个值，它就没有可以归约的规则；
+反过来说，如果一个项可以被归约，那么它就不是一个值。
+我们在下一章里证明这概括了所有的情况——所以良类型的项要么可以归约要么是一个值。
 
 <!--
 For numbers, zero does not reduce and successor reduces the subterm.
@@ -1066,8 +1066,8 @@ the bound variable by the entire fixpoint term; this is the one
 case where we substitute by a term that is not a value.
 -->
 
-对于数字来说，零不可以规约，后继可以对它的子项进行规约。
-匹配表达式先将它的参数规约至一个数字，然后根据它是零还是后继选择相应的分支。
+对于数字来说，零不可以归约，后继可以对它的子项进行归约。
+匹配表达式先将它的参数归约至一个数字，然后根据它是零还是后继选择相应的分支。
 不动点会把约束变量替换成整个不动点项——这是我们唯一一处用项、而不是值进行的替换。
 
 <!--
@@ -1127,8 +1127,8 @@ of a term are reduced to values before the whole term is reduced.
 This is referred to as _call-by-value_ reduction.
 -->
 
-我们小心地设计这些规约规则，使得一个项的子项在整项被规约之前先被规约。
-这被称为**传值（Call-by-value）**规约。
+我们小心地设计这些归约规则，使得一个项的子项在整项被归约之前先被归约。
+这被称为**传值（Call-by-value）**归约。
 
 <!--
 Further, we have arranged that subterms are reduced in a
@@ -1137,9 +1137,9 @@ for any term, there is at most one other term to which it reduces.
 Put another way, our reduction relation `—→` is in fact a function.
 -->
 
-除此之外，我们规定规约的顺序是从左向右的。
-这意味着规约是**确定的（Deterministic）**：对于任何一个项，最多存在一个可以被规约至的项。
-换句话说，我们的规约关系 `—→` 实际上是一个函数。
+除此之外，我们规定归约的顺序是从左向右的。
+这意味着归约是**确定的（Deterministic）**：对于任何一个项，最多存在一个可以被归约至的项。
+换句话说，我们的归约关系 `—→` 实际上是一个函数。
 
 <!--
 This style of explaining the meaning of terms is called
@@ -1151,8 +1151,8 @@ of a beta rule, possibly adjusted by zero or more compatibility rules.
 -->
 
 这种解释项的含义的方法叫做**小步操作语义（Small-step Operational Semantics）**。
-如果 `M —→ N`，我们称之为项 `M` **规约**至项 `N`，也称之为项 `M` **步进（Step to）**至项 `N`。
-每条兼容性规则以另一条规约规则作为前提；因此每一步都会用到一条 β-规则，用零或多条兼容性规则进行调整。
+如果 `M —→ N`，我们称之为项 `M` **归约**至项 `N`，也称之为项 `M` **步进（Step to）**至项 `N`。
+每条兼容性规则以另一条归约规则作为前提；因此每一步都会用到一条 β-规则，用零或多条兼容性规则进行调整。
 
 
 <!--
@@ -1213,7 +1213,7 @@ the reflexive and transitive closure `—↠` of the step relation `—→`.
 -->
 
 步进并不是故事的全部。
-总的来说，对于一个封闭的项，我们想要对它反复地步进，直到规约至一个值。
+总的来说，对于一个封闭的项，我们想要对它反复地步进，直到归约至一个值。
 这样可以用定义步进关系 `—→` 的自反传递闭包 `—↠` 来完成。
 
 <!--
@@ -1263,7 +1263,7 @@ We can read this as follows:
   It is written `M ∎`.
 -->
 
-* 对于项 `M`，我们可以一步也不规约而得到类型为 `M —↠ M` 的步骤，写作 `M ∎`。
+* 对于项 `M`，我们可以一步也不归约而得到类型为 `M —↠ M` 的步骤，写作 `M ∎`。
 
 <!--
 * From term `L` we can take a single step of type `L —→ M` followed by zero
@@ -1281,7 +1281,7 @@ The notation is chosen to allow us to lay out example reductions in an
 appealing way, as we will see in the next section.
 -->
 
-在下一部分我们可以看到，这样的记法可以让我们用清晰的步骤来表示规约的例子。
+在下一部分我们可以看到，这样的记法可以让我们用清晰的步骤来表示归约的例子。
 
 <!--
 Recall that in Chapter (Equality)[Equality] we defined chains of equalities
@@ -1295,7 +1295,7 @@ chains of reductions below, so efficiency can be important.
 我们曾在 (Equality)[Equality] 一章中用 `step-≡`
 和一个反转了实参顺序的语法声明定义了等式链，
 这里我们同样以反转了实参顺序的模式声明来引入 `step—→`。
-和之前一样，这能让 Agda 更高效地执行类型推断。我们后面会用到很长的规约链，
+和之前一样，这能让 Agda 更高效地执行类型推断。我们后面会用到很长的归约链，
 因此效率是很重要的。
 
 <!--
@@ -1367,8 +1367,8 @@ to be _confluent_.  If term `L` reduces to two other terms,
 It can be illustrated as follows:
 -->
 
-在讨论规约关系时，有一个重要的性质是**合流性（Confluence）**。
-如果项 `L` 规约至两个项 `M` 和项 `N`，那么它们都可以规约至同一个项 `P`。
+在讨论归约关系时，有一个重要的性质是**合流性（Confluence）**。
+如果项 `L` 归约至两个项 `M` 和项 `N`，那么它们都可以归约至同一个项 `P`。
 我们可以用下面的图来展示这个性质：
 
                L
@@ -1391,8 +1391,8 @@ steps it is called the diamond property. In symbols:
 -->
 
 图中，`L`、`M` 和 `N` 由全称量词涵盖，而 `P` 由存在量词涵盖。
-如果图中的每条线代表了零或多步规约步骤，这样的性质被称为合流性。
-如果上面的两条线代表一步规约步骤，下面的两条线代表零或多步规约步骤，
+如果图中的每条线代表了零或多步归约步骤，这样的性质被称为合流性。
+如果上面的两条线代表一步归约步骤，下面的两条线代表零或多步归约步骤，
 这样的性质被称为菱形性质（Diamond Property）。用符号表示为：
 
 ```agda
@@ -1413,7 +1413,7 @@ The reduction system studied in this chapter is deterministic.
 In symbols:
 -->
 
-在本章中我们讨论的规约系统是确定的。用符号表示为：
+在本章中我们讨论的归约系统是确定的。用符号表示为：
 
 ```agda
 postulate
@@ -1430,9 +1430,9 @@ the diamond and confluence properties. Hence, all the reduction
 systems studied in this text are trivially confluent.
 -->
 
-我们可以简单地证明任何确定的规约关系满足菱形性质，
-任何满足菱形性质的规约关系满足合流性。
-因此，我们研究的规约系统平凡地满足了合流性。
+我们可以简单地证明任何确定的归约关系满足菱形性质，
+任何满足菱形性质的归约关系满足合流性。
+因此，我们研究的归约系统平凡地满足了合流性。
 
 <!--
 ## Examples
@@ -1466,7 +1466,7 @@ _ =
 Here is a sample reduction demonstrating that two plus two is four:
 -->
 
-下面的例子中我们规约二加二至四：
+下面的例子中我们归约二加二至四：
 ```agda
 _ : plus · two · two —↠ `suc `suc `suc `suc `zero
 _ =
@@ -1515,7 +1515,7 @@ _ =
 And here is a similar sample reduction for Church numerals:
 -->
 
-我们用 Church 数规约同样的例子：
+我们用 Church 数归约同样的例子：
 ```agda
 _ : plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero
 _ =
@@ -1554,7 +1554,7 @@ _ =
 In the next chapter, we will see how to compute such reduction sequences.
 -->
 
-下一章节中，我们研究如何计算这样的规约序列。
+下一章节中，我们研究如何计算这样的归约序列。
 
 <!--
 #### Exercise `plus-example` (practice)
@@ -1566,7 +1566,7 @@ In the next chapter, we will see how to compute such reduction sequences.
 Write out the reduction sequence demonstrating that one plus one is two.
 -->
 
-使用规约序列，证明一加一得二。
+使用归约序列，证明一加一得二。
 
 
 
@@ -1715,7 +1715,7 @@ we must first type its subterms, and in particular in the
 body of an abstraction its bound variable may appear free.
 -->
 
-在规约时，我们只讨论封闭的项，但是在赋型时，我们必须考虑带有自由变量的项。
+在归约时，我们只讨论封闭的项，但是在赋型时，我们必须考虑带有自由变量的项。
 给一个项赋型时，我们必须先给它的子项赋型。而在给一个抽象的抽象体赋型时，
 抽象的约束变量在抽象体内部是自由的。
 
@@ -2415,5 +2415,5 @@ We compose reduction `—→` from an em dash `—` and an arrow `→`.
 Similarly for reflexive and transitive closure `—↠`.
 -->
 
-我们用短划 `—` 和箭头 `→` 来构造规约 `—→`。
+我们用短划 `—` 和箭头 `→` 来构造归约 `—→`。
 自反传递闭包 `—↠` 也类似。

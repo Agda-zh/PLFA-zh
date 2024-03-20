@@ -169,7 +169,7 @@ above. The inversion lemma is useful in proving that denotations are
 preserved by reduction.
 -->
 
-λ-抽象的「反演引理」是上面定理的一种特例。反演引理在证明「规约会保持指称不变」时会很有用。
+λ-抽象的「反演引理」是上面定理的一种特例。反演引理在证明「归约会保持指称不变」时会很有用。
 
 ```agda
 lambda-inversion : ∀{Γ}{γ : Env Γ}{N : Γ , ★ ⊢ ★}{v₁ v₂ : Value}
