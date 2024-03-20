@@ -1,6 +1,7 @@
 ---
-title     : "Compositional: 指称语义是可组合的"
-permalink : /Compositional/
+title       : "Compositional: 指称语义是可组合的"
+permalink   : /Compositional/
+translators : ["OlingCat"]
 ---
 
 ```agda
@@ -550,7 +551,7 @@ is a congruence.
 -->
 
 接下来我们证明指称相等对于应用也满足合同性：`ℰ L ≃ ℰ L′` 和 `ℰ M ≃ ℰ M′`
-蕴含 `ℰ (L · M) ≃ ℰ (L′ · M′)`。等式 `app-equiv` 将其规约为 `●`
+蕴含 `ℰ (L · M) ≃ ℰ (L′ · M′)`。等式 `app-equiv` 将其归约为 `●`
 运算符是否满足合同性的问题。
 
 ```agda

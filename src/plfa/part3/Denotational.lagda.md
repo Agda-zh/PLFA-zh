@@ -1,8 +1,7 @@
 ---
-title     : "Denotational: 无类型 λ-演算的指称语义"
-permalink : /Denotational/
+title       : "Denotational: 无类型 λ-演算的指称语义"
+permalink   : /Denotational/
 translators : ["OlingCat"]
-progress  : 100
 ---
 
 ```agda
