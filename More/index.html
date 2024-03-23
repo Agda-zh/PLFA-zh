@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../assets/css/light.css" integrity="sha512-J8Ko83OT11zQ2/+vowqJ0Ovx2JEWUBNPTbNptixluYAHAO009R7GVxRQNKA+Wq4skbsdZr1AEOjF2AeQmKt3/A==" title="Light" id="stylesheet-light"><link rel="stylesheet" href="../assets/css/dark.css" integrity="sha512-kK/Wf2991I8CFsf5/Qu/2GIm2Enzw8H70RQ/yHNIb6iGTPF/SKE0B+kxTG2HjcFOgcjfKxZ9Jr4bvSfuKraNWw==" title="Dark" id="stylesheet-dark" disabled><title>编程语言基础：Agda 描述 – More</title><script src="../assets/js/anchor.js" integrity="sha512-Y5IMGqYQp36NYYdEL6gXISLsHNpx0LxW0NS0twvYBvXI8GH5PZa1g5gm1B5lxg6tlFyUAiOOfgKL/NIn0dtY4w==" id="script-anchor"></script><script src="../assets/js/darkmode.js" integrity="sha512-iUX9HnSphH4WbMv88MYJEFtLfkCtTHrvWyFwjigSm5GkwHv1L31GP5grIGDo7kI2jftuYVvt4xu4qeCn2fKbww==" id="script-darkmode"></script><script src="../assets/js/main.js" integrity="sha512-X7aZg6IUKq1TvTVjSureaMGKZ/ylbAD7kxiU2w42IUgh4lUTWoOsoIWzNvrqkwBJdQ1y2GsS67gtsv39Uuq6ew==" id="script-main"></script></head><body><header class="site-header" aria-label="Site"><div class="wrapper"><a class="site-title" href="../">编程语言基础：Agda 描述</a><nav class="site-nav" aria-label="Site"><input type="checkbox" id="nav-trigger" class="nav-trigger"><label for="nav-trigger"><span class="menu-icon"><svg class="svg-icon grey" viewBox="0 0 18 15" width="18px" height="15px"><path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path><path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path><path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path></svg></span></label><div class="trigger"><a class="page-link" href="../">主页</a> <a class="page-link" href="../Announcements/">公告</a> <a class="page-link" href="../GettingStarted/">使用说明</a> <a class="page-link" href="../Citing/">引用</a> <a class="page-link" href="https://plfa.github.io/">English</a> <a class="page-link" onclick="window.darkmode.toggle()"><i id="darkmode-trigger" class="fas fa-moon"></i> </a><a class="page-link" href="../plfa.epub"><i class="fa fa-book"></i></a></div></nav></div></header><main class="page-content" aria-label="Content"><div class="wrapper"><article class="post"><nav class="pager" aria-label="Chapter"><ul class="pagination"><li><a class="pagelink" href="../DeBruijn/">上一章</a></li><li class="separator">•</li><li><a class="pagelink" href="https://github.com/Agda-zh/PLFA-zh/blob/dev/src/plfa/part2/More.lagda.md">源文件</a></li><li class="separator">•</li><li><a class="pagelink" href="../Bisimulation/">下一章</a></li><li class="separator">•</li></ul></nav><header class="post-header" aria-label="Chapter"><h1 class="post-title">More: 简单类型 λ-演算的更多构造</h1></header><div class="post-content"><pre class="Agda"><a id="plfa_plfa-part2-More-120" class="Keyword">module</a> <a id="plfa_plfa-part2-More-127" href="../More/#" class="Module">plfa.part2.More</a> <a id="plfa_plfa-part2-More-143" class="Keyword">where</a>
-</pre><p>到此，我们主要集中于一门基于 Plotkin 的 PCF 的相对轻便的语言，包括了函数、自然数和不动点。 在本章中，我们将扩展我们的演算，来支持下列特性：</p><ul><li>原语数字</li><li><em>let</em> 绑定</li><li>积</li><li>积的替代表示方法</li><li>和</li><li>单元类型</li><li>单元类型的替代表示方法</li><li>空类型</li><li>列表</li></ul><p>所有上述数据类型和本书第一部分描述的相近。 对于 <em>let</em> 和数据类型的「替代表示方法」，我们展示如何将它们翻译至演算中其他的构造。 介绍的大部分将由非形式化的方式展示。 我们展示如何形式化前四种构造，并将其余留给读者作为习题。</p><p>非形式化的表述会以类似于 <a href="../Lambda/">Lambda</a> 章节中的形式，使用外在类型的项给出。 而形式化的表述会以类似于 <a href="../DeBruijn/">DeBruijn</a> 章节中的形式，使用内在类型的项给出。</p><p>到现在，使用符号来解释应该可以比文字更简洁、更精确、更易于跟随。 对于每一种构造，我们给出它的语法、赋型、规约和例子。 在需要的时候，我们也会给出构造的翻译；在下个章节我们会正式地证明翻译的正确性。</p><h2 id="原语数字">原语数字</h2><p>我们定义 <code>Nat</code> 类型，等同于内置的自然数类型，并定义乘法作为数字的基本运算：</p><h3 id="语法">语法</h3><pre><code>A, B, C ::= ...                     类型
+</pre><p>到此，我们主要集中于一门基于 Plotkin 的 PCF 的相对轻便的语言，包括了函数、自然数和不动点。 在本章中，我们将扩展我们的演算，来支持下列特性：</p><ul><li>原语数字</li><li><em>let</em> 绑定</li><li>积</li><li>积的替代表示方法</li><li>和</li><li>单元类型</li><li>单元类型的替代表示方法</li><li>空类型</li><li>列表</li></ul><p>所有上述数据类型和本书第一部分描述的相近。 对于 <em>let</em> 和数据类型的「替代表示方法」，我们展示如何将它们翻译至演算中其他的构造。 介绍的大部分将由非形式化的方式展示。 我们展示如何形式化前四种构造，并将其余留给读者作为习题。</p><p>非形式化的表述会以类似于 <a href="../Lambda/">Lambda</a> 章节中的形式，使用外在类型的项给出。 而形式化的表述会以类似于 <a href="../DeBruijn/">DeBruijn</a> 章节中的形式，使用内在类型的项给出。</p><p>到现在，使用符号来解释应该可以比文字更简洁、更精确、更易于跟随。 对于每一种构造，我们给出它的语法、赋型、归约和例子。 在需要的时候，我们也会给出构造的翻译；在下个章节我们会正式地证明翻译的正确性。</p><h2 id="原语数字">原语数字</h2><p>我们定义 <code>Nat</code> 类型，等同于内置的自然数类型，并定义乘法作为数字的基本运算：</p><h3 id="语法">语法</h3><pre><code>A, B, C ::= ...                     类型
   Nat                                 原语自然数
 
 L, M, N ::= ...                     项
@@ -14,7 +14,7 @@ V, W ::= ...                        值
 Γ ⊢ L : Nat
 Γ ⊢ M : Nat
 ---------------- _`*_
-Γ ⊢ L `* M : Nat</code></pre><h3 id="规约">规约</h3><p>直接定义原语的规则，例如下面的最后一条规则，被称为 δ 规则。 这里的 δ 规则使用 Agda 标准库中的自然数乘法来定义原语数字的乘法。</p><pre><code>L —→ L′
+Γ ⊢ L `* M : Nat</code></pre><h3 id="归约">归约</h3><p>直接定义原语的规则，例如下面的最后一条规则，被称为 δ 规则。 这里的 δ 规则使用 Agda 标准库中的自然数乘法来定义原语数字的乘法。</p><pre><code>L —→ L′
 ----------------- ξ-*₁
 L `* M —→ L′ `* M
 
@@ -28,7 +28,7 @@ cube = ƛ x ⇒ x `* x `* x</code></pre><h2 id="let-绑定">Let 绑定</h2><p>Le
   `let x `= M `in N                   let</code></pre><h3 id="赋型-1">赋型</h3><pre><code>Γ ⊢ M ⦂ A
 Γ , x ⦂ A ⊢ N ⦂ B
 ------------------------- `let
-Γ ⊢ `let x `= M `in N ⦂ B</code></pre><h3 id="规约-1">规约</h3><pre><code>M —→ M′
+Γ ⊢ `let x `= M `in N ⦂ B</code></pre><h3 id="归约-1">归约</h3><pre><code>M —→ M′
 --------------------------------------- ξ-let
 `let x `= M `in N —→ `let x `= M′ `in N
 
@@ -57,7 +57,7 @@ V, W ::= ...                        值
 
 Γ ⊢ L ⦂ A `× B
 ---------------- `proj₂ 或 `×-E₂
-Γ ⊢ `proj₂ L ⦂ B</code></pre><h3 id="规约-2">规约</h3><pre><code>M —→ M′
+Γ ⊢ `proj₂ L ⦂ B</code></pre><h3 id="归约-2">归约</h3><pre><code>M —→ M′
 ------------------------- ξ-⟨,⟩₁
 `⟨ M , N ⟩ —→ `⟨ M′ , N ⟩
 
@@ -78,7 +78,7 @@ L —→ L′
 
 ---------------------- β-proj₂
 `proj₂ `⟨ V , W ⟩ —→ W</code></pre><h3 id="例子-1">例子</h3><p>下面是一个交换有序对中分量的函数：</p><pre><code>swap× : ∅ ⊢ A `× B ⇒ B `× A
-swap× = ƛ z ⇒ `⟨ `proj₂ z , `proj₁ z ⟩</code></pre><h2 id="积的替代表示方法">积的替代表示方法</h2><p>与其使用两种消去积类型的方法，我们可以使用一个匹配表达式来同时绑定两个变量， 作为积的替代表示方法。 我们重复完整的语法，但只给出新的赋型和规约规则：</p><h3 id="语法-3">语法</h3><pre><code>A, B, C ::= ...                     类型
+swap× = ƛ z ⇒ `⟨ `proj₂ z , `proj₁ z ⟩</code></pre><h2 id="积的替代表示方法">积的替代表示方法</h2><p>与其使用两种消去积类型的方法，我们可以使用一个匹配表达式来同时绑定两个变量， 作为积的替代表示方法。 我们重复完整的语法，但只给出新的赋型和归约规则：</p><h3 id="语法-3">语法</h3><pre><code>A, B, C ::= ...                     类型
   A `× B                              积累性
 
 L, M, N ::= ...                     项
@@ -89,7 +89,7 @@ V, W ::=                            值
   `⟨ V , W ⟩                          有序对</code></pre><h3 id="赋型-3">赋型</h3><pre><code>Γ ⊢ L ⦂ A `× B
 Γ , x ⦂ A , y ⦂ B ⊢ N ⦂ C
 ------------------------------- case× 或 ×-E
-Γ ⊢ case× L [⟨ x , y ⟩⇒ N ] ⦂ C</code></pre><h3 id="规约-3">规约</h3><pre><code>L —→ L′
+Γ ⊢ case× L [⟨ x , y ⟩⇒ N ] ⦂ C</code></pre><h3 id="归约-3">归约</h3><pre><code>L —→ L′
 --------------------------------------------------- ξ-case×
 case× L [⟨ x , y ⟩⇒ N ] —→ case× L′ [⟨ x , y ⟩⇒ N ]
 
@@ -104,7 +104,7 @@ swap×-case = ƛ z ⇒ case× z
   (N †)</code></pre><p>这里 <code>z</code> 是一个不在 <code>N</code> 中以自由变量出现的变量。 我们将这样的变量叫做<strong>新鲜</strong>（Fresh）的变量。</p><p>可能有人认为我们可以使用下面更紧凑的翻译：</p><pre><code>-- 错误
   (case× L [⟨ x , y ⟩⇒ N ]) †
 =
-  (N †) [ x := `proj₁ (L †) ] [ y := `proj₂ (L †) ]</code></pre><p>但是这样的话它们表现的不一样。 第一项总是在规约 <code>N</code> 之前规约 <code>L</code>，它只计算 <code>`proj₁</code> 和 <code>`proj₂</code>一次。 第二项在规约 <code>N</code> 之前不先将 <code>L</code> 规约至值，取决于 <code>x</code> 和 <code>y</code> 在 <code>N</code> 中出现的次数， 它将规约 <code>L</code> 很多次或者根本不规约，因此它会计算 <code>`proj₁</code> 和 <code>`proj₂</code> 很多次或者根本不计算。</p><p>我们也可以反向的翻译：</p><pre><code>(`proj₁ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ x ]
+  (N †) [ x := `proj₁ (L †) ] [ y := `proj₂ (L †) ]</code></pre><p>但是这样的话它们表现的不一样。 第一项总是在归约 <code>N</code> 之前归约 <code>L</code>，它只计算 <code>`proj₁</code> 和 <code>`proj₂</code>一次。 第二项在归约 <code>N</code> 之前不先将 <code>L</code> 归约至值，取决于 <code>x</code> 和 <code>y</code> 在 <code>N</code> 中出现的次数， 它将归约 <code>L</code> 很多次或者根本不归约，因此它会计算 <code>`proj₁</code> 和 <code>`proj₂</code> 很多次或者根本不计算。</p><p>我们也可以反向的翻译：</p><pre><code>(`proj₁ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ x ]
 (`proj₂ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ y ]</code></pre><h2 id="sums">和</h2><h3 id="语法-4">语法</h3><pre><code>A, B, C ::= ...                     类型
   A `⊎ B                              和类型
 
@@ -127,7 +127,7 @@ V, W ::= ...                        值
 Γ , x ⦂ A ⊢ M ⦂ C
 Γ , y ⦂ B ⊢ N ⦂ C
 ----------------------------------------- case⊎ 或 ⊎-E
-Γ ⊢ case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] ⦂ C</code></pre><h3 id="规约-4">规约</h3><pre><code>M —→ M′
+Γ ⊢ case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] ⦂ C</code></pre><h3 id="归约-4">归约</h3><pre><code>M —→ M′
 ------------------- ξ-inj₁
 `inj₁ M —→ `inj₁ M′
 
@@ -146,7 +146,7 @@ case⊎ (`inj₁ V) [inj₁ x ⇒ M |inj₂ y ⇒ N ] —→ M [ x := V ]
 case⊎ (`inj₂ W) [inj₁ x ⇒ M |inj₂ y ⇒ N ] —→ N [ y := W ]</code></pre><h3 id="例子-2">例子</h3><p>下面是交换和的两个分量的函数：</p><pre><code>swap⊎ : ∅ ⊢ A `⊎ B ⇒ B `⊎ A
 swap⊎ = ƛ z ⇒ case⊎ z
                 [inj₁ x ⇒ `inj₂ x
-                |inj₂ y ⇒ `inj₁ y ]</code></pre><h2 id="单元类型">单元类型</h2><p>对于单元类型来说，有一种方法引入单元类型，但是没有消去单元类型的方法。 单元类型没有规约规则。</p><h3 id="语法-5">语法</h3><pre><code>A, B, C ::= ...                     类型
+                |inj₂ y ⇒ `inj₁ y ]</code></pre><h2 id="单元类型">单元类型</h2><p>对于单元类型来说，有一种方法引入单元类型，但是没有消去单元类型的方法。 单元类型没有归约规则。</p><h3 id="语法-5">语法</h3><pre><code>A, B, C ::= ...                     类型
   `⊤                                  单元类型
 
 L, M, N ::= ...                     项
@@ -154,11 +154,11 @@ L, M, N ::= ...                     项
 
 V, W ::= ...                        值
   `tt                                 单元值</code></pre><h3 id="赋型-5">赋型</h3><pre><code>------------ `tt 或 ⊤-I
-Γ ⊢ `tt ⦂ `⊤</code></pre><h3 id="规约-5">规约</h3><p>（无）</p><h3 id="例子-3">例子</h3><p>下面是 <code>A</code> 和 <code>A `× `⊤</code>的同构：</p><pre><code>to×⊤ : ∅ ⊢ A ⇒ A `× `⊤
+Γ ⊢ `tt ⦂ `⊤</code></pre><h3 id="归约-5">归约</h3><p>（无）</p><h3 id="例子-3">例子</h3><p>下面是 <code>A</code> 和 <code>A `× `⊤</code>的同构：</p><pre><code>to×⊤ : ∅ ⊢ A ⇒ A `× `⊤
 to×⊤ = ƛ x ⇒ `⟨ x , `tt ⟩
 
 from×⊤ : ∅ ⊢ A `× `⊤ ⇒ A
-from×⊤ = ƛ z ⇒ `proj₁ z</code></pre><h2 id="单元类型的替代表达方法">单元类型的替代表达方法</h2><p>与其没有消去单元类型的方法，我们可以使用一个匹配表达式来绑定零个变量， 作为单元类型的替代表示方法。 我们重复完整的语法，但只给出新的赋型和规约规则：</p><h3 id="语法-6">语法</h3><pre><code>A, B, C ::= ...                     类型
+from×⊤ = ƛ z ⇒ `proj₁ z</code></pre><h2 id="单元类型的替代表达方法">单元类型的替代表达方法</h2><p>与其没有消去单元类型的方法，我们可以使用一个匹配表达式来绑定零个变量， 作为单元类型的替代表示方法。 我们重复完整的语法，但只给出新的赋型和归约规则：</p><h3 id="语法-6">语法</h3><pre><code>A, B, C ::= ...                     类型
   `⊤                                  单元类型
 
 L, M, N ::= ...                     项
@@ -169,7 +169,7 @@ V, W ::= ...                        值
   `tt                                 单元值</code></pre><h3 id="赋型-6">赋型</h3><pre><code>Γ ⊢ L ⦂ `⊤
 Γ ⊢ M ⦂ A
 ------------------------ case⊤ 或者 ⊤-E
-Γ ⊢ case⊤ L [tt⇒ M ] ⦂ A</code></pre><h3 id="规约-6">规约</h3><pre><code>L —→ L′
+Γ ⊢ case⊤ L [tt⇒ M ] ⦂ A</code></pre><h3 id="归约-6">归约</h3><pre><code>L —→ L′
 ------------------------------------- ξ-case⊤
 case⊤ L [tt⇒ M ] —→ case⊤ L′ [tt⇒ M ]
 
@@ -177,13 +177,13 @@ case⊤ L [tt⇒ M ] —→ case⊤ L′ [tt⇒ M ]
 case⊤ `tt [tt⇒ M ] —→ M</code></pre><p>下面是用新记法重新 <code>A</code> 和 <code>A ‵× `⊤</code> 的同构的一半：</p><pre><code>from×⊤-case : ∅ ⊢ A `× `⊤ ⇒ A
 from×⊤-case = ƛ z ⇒ case× z
                       [⟨ x , y ⟩⇒ case⊤ y
-                                    [tt⇒ x ] ]</code></pre><h3 id="翻译-2">翻译</h3><p>我们可以将替代表示方法翻译到用没有匹配式的表示方法：</p><pre><code>(case⊤ L [tt⇒ M ]) †  =  `let z `= (L †) `in (M †)</code></pre><p>此处 <code>z</code> 是一个在 <code>M</code> 中不以自由变量出现的变量。</p><h2 id="空类型">空类型</h2><p>对于空类型来说，只有一种消去此类型的值的方法，但是没有引入此类型的值的方法。 没有空类型的值，也没有规约规则，但是有 β 规则。 <code>case⊥</code> 构造和 Agda 中的 <code>⊥-elim</code> 的作用相似：</p><h3 id="语法-7">语法</h3><pre><code>A, B, C ::= ...                     类型
+                                    [tt⇒ x ] ]</code></pre><h3 id="翻译-2">翻译</h3><p>我们可以将替代表示方法翻译到用没有匹配式的表示方法：</p><pre><code>(case⊤ L [tt⇒ M ]) †  =  `let z `= (L †) `in (M †)</code></pre><p>此处 <code>z</code> 是一个在 <code>M</code> 中不以自由变量出现的变量。</p><h2 id="空类型">空类型</h2><p>对于空类型来说，只有一种消去此类型的值的方法，但是没有引入此类型的值的方法。 没有空类型的值，也没有归约规则，但是有 β 规则。 <code>case⊥</code> 构造和 Agda 中的 <code>⊥-elim</code> 的作用相似：</p><h3 id="语法-7">语法</h3><pre><code>A, B, C ::= ...                     类型
   `⊥                                  空类型
 
 L, M, N ::= ...                     项
   case⊥ L []                          匹配</code></pre><h3 id="赋型-7">赋型</h3><pre><code>Γ ⊢ L ⦂ `⊥
 ------------------ case⊥ 或 ⊥-E
-Γ ⊢ case⊥ L [] ⦂ A</code></pre><h3 id="规约-7">规约</h3><pre><code>L —→ L′
+Γ ⊢ case⊥ L [] ⦂ A</code></pre><h3 id="归约-7">归约</h3><pre><code>L —→ L′
 ------------------------- ξ-case⊥
 case⊥ L [] —→ case⊥ L′ []</code></pre><h3 id="例子-4">例子</h3><p>下面是 <code>A</code> 和 <code>A `⊎ `⊥</code> 的同构：</p><pre><code>to⊎⊥ : ∅ ⊢ A ⇒ A `⊎ `⊥
 to⊎⊥ = ƛ x ⇒ `inj₁ x
@@ -214,7 +214,7 @@ V, W ::= ...                        值
 Γ ⊢ M ⦂ B
 Γ , x ⦂ A , xs ⦂ `List A ⊢ N ⦂ B
 -------------------------------------- caseL 或 List-E
-Γ ⊢ caseL L [[]⇒ M | x ∷ xs ⇒ N ] ⦂ B</code></pre><h3 id="规约-8">规约</h3><pre><code>M —→ M′
+Γ ⊢ caseL L [[]⇒ M | x ∷ xs ⇒ N ] ⦂ B</code></pre><h3 id="归约-8">归约</h3><pre><code>M —→ M′
 ----------------- ξ-∷₁
 M `∷ N —→ M′ `∷ N
 
@@ -485,7 +485,7 @@ mapL = μ mL ⇒ ƛ f ⇒ ƛ xs ⇒
       <a id="plfa_plfa-part2-More-27845" class="Comment">----------------</a>
     <a id="plfa_plfa-part2-More-27866" class="Symbol">→</a> <a id="plfa_plfa-part2-More-27868" href="../More/#plfa_plfa-part2-More-27383" class="Datatype">Value</a> <a id="plfa_plfa-part2-More-27874" href="../More/#plfa_plfa-part2-More-23484" class="InductiveConstructor Operator">`⟨</a> <a id="plfa_plfa-part2-More-27877" href="../More/#plfa_plfa-part2-More-27788" class="Bound">V</a> <a id="plfa_plfa-part2-More-27879" href="../More/#plfa_plfa-part2-More-23484" class="InductiveConstructor Operator">,</a> <a id="plfa_plfa-part2-More-27881" href="../More/#plfa_plfa-part2-More-27800" class="Bound">W</a> <a id="plfa_plfa-part2-More-27883" href="../More/#plfa_plfa-part2-More-23484" class="InductiveConstructor Operator">⟩</a>
 
-</pre><p>在给出的参数无法确定隐式参数时，我们需要给出隐式参数。</p><h2 id="规约-9">规约</h2><pre class="Agda"><a id="plfa_plfa-part2-More-30197" class="Keyword">infix</a> <a id="plfa_plfa-part2-More-30203" class="Number">2</a> <a id="plfa_plfa-part2-More-30205" href="../More/#plfa_plfa-part2-More-30216" class="Datatype Operator">_—→_</a>
+</pre><p>在给出的参数无法确定隐式参数时，我们需要给出隐式参数。</p><h2 id="归约-9">归约</h2><pre class="Agda"><a id="plfa_plfa-part2-More-30197" class="Keyword">infix</a> <a id="plfa_plfa-part2-More-30203" class="Number">2</a> <a id="plfa_plfa-part2-More-30205" href="../More/#plfa_plfa-part2-More-30216" class="Datatype Operator">_—→_</a>
 
 <a id="plfa_plfa-part2-More-30211" class="Keyword">data</a> <a id="plfa_plfa-part2-More-_—→_"></a><a id="plfa_plfa-part2-More-30216" href="../More/#plfa_plfa-part2-More-30216" class="Datatype Operator">_—→_</a> <a id="plfa_plfa-part2-More-30221" class="Symbol">:</a> <a id="plfa_plfa-part2-More-30223" class="Symbol">∀</a> <a id="plfa_plfa-part2-More-30225" class="Symbol">{</a><a id="plfa_plfa-part2-More-30226" href="../More/#plfa_plfa-part2-More-30226" class="Bound">Γ</a> <a id="plfa_plfa-part2-More-30228" href="../More/#plfa_plfa-part2-More-30228" class="Bound">A</a><a id="plfa_plfa-part2-More-30229" class="Symbol">}</a> <a id="plfa_plfa-part2-More-30231" class="Symbol">→</a> <a id="plfa_plfa-part2-More-30233" class="Symbol">(</a><a id="plfa_plfa-part2-More-30234" href="../More/#plfa_plfa-part2-More-30226" class="Bound">Γ</a> <a id="plfa_plfa-part2-More-30236" href="../More/#plfa_plfa-part2-More-22742" class="Datatype Operator">⊢</a> <a id="plfa_plfa-part2-More-30238" href="../More/#plfa_plfa-part2-More-30228" class="Bound">A</a><a id="plfa_plfa-part2-More-30239" class="Symbol">)</a> <a id="plfa_plfa-part2-More-30241" class="Symbol">→</a> <a id="plfa_plfa-part2-More-30243" class="Symbol">(</a><a id="plfa_plfa-part2-More-30244" href="../More/#plfa_plfa-part2-More-30226" class="Bound">Γ</a> <a id="plfa_plfa-part2-More-30246" href="../More/#plfa_plfa-part2-More-22742" class="Datatype Operator">⊢</a> <a id="plfa_plfa-part2-More-30248" href="../More/#plfa_plfa-part2-More-30228" class="Bound">A</a><a id="plfa_plfa-part2-More-30249" class="Symbol">)</a> <a id="plfa_plfa-part2-More-30251" class="Symbol">→</a> <a id="plfa_plfa-part2-More-30253" href="https://agda.github.io/agda-stdlib/v1.7.1/Agda.Primitive.html#320" class="Primitive">Set</a> <a id="plfa_plfa-part2-More-30257" class="Keyword">where</a>
 
@@ -634,7 +634,7 @@ mapL = μ mL ⇒ ƛ f ⇒ ƛ xs ⇒
     <a id="plfa_plfa-part2-More-33280" class="Comment">------</a>
   <a id="plfa_plfa-part2-More-33289" class="Symbol">→</a> <a id="plfa_plfa-part2-More-33291" href="../More/#plfa_plfa-part2-More-33252" class="Bound">M</a> <a id="plfa_plfa-part2-More-33293" href="../More/#plfa_plfa-part2-More-33004" class="Datatype Operator">—↠</a> <a id="plfa_plfa-part2-More-33296" href="../More/#plfa_plfa-part2-More-33254" class="Bound">N</a>
 <a id="plfa_plfa-part2-More-33298" href="../More/#plfa_plfa-part2-More-33234" class="Function Operator">begin</a> <a id="plfa_plfa-part2-More-33304" href="../More/#plfa_plfa-part2-More-33304" class="Bound">M—↠N</a> <a id="plfa_plfa-part2-More-33309" class="Symbol">=</a> <a id="plfa_plfa-part2-More-33311" href="../More/#plfa_plfa-part2-More-33304" class="Bound">M—↠N</a>
-</pre><h2 id="值不再规约">值不再规约</h2><pre class="Agda"><a id="plfa_plfa-part2-More-V¬—→"></a><a id="plfa_plfa-part2-More-33373" href="../More/#plfa_plfa-part2-More-33373" class="Function">V¬—→</a> <a id="plfa_plfa-part2-More-33378" class="Symbol">:</a> <a id="plfa_plfa-part2-More-33380" class="Symbol">∀</a> <a id="plfa_plfa-part2-More-33382" class="Symbol">{</a><a id="plfa_plfa-part2-More-33383" href="../More/#plfa_plfa-part2-More-33383" class="Bound">Γ</a> <a id="plfa_plfa-part2-More-33385" href="../More/#plfa_plfa-part2-More-33385" class="Bound">A</a><a id="plfa_plfa-part2-More-33386" class="Symbol">}</a> <a id="plfa_plfa-part2-More-33388" class="Symbol">{</a><a id="plfa_plfa-part2-More-33389" href="../More/#plfa_plfa-part2-More-33389" class="Bound">M</a> <a id="plfa_plfa-part2-More-33391" href="../More/#plfa_plfa-part2-More-33391" class="Bound">N</a> <a id="plfa_plfa-part2-More-33393" class="Symbol">:</a> <a id="plfa_plfa-part2-More-33395" href="../More/#plfa_plfa-part2-More-33383" class="Bound">Γ</a> <a id="plfa_plfa-part2-More-33397" href="../More/#plfa_plfa-part2-More-22742" class="Datatype Operator">⊢</a> <a id="plfa_plfa-part2-More-33399" href="../More/#plfa_plfa-part2-More-33385" class="Bound">A</a><a id="plfa_plfa-part2-More-33400" class="Symbol">}</a>
+</pre><h2 id="值不再归约">值不再归约</h2><pre class="Agda"><a id="plfa_plfa-part2-More-V¬—→"></a><a id="plfa_plfa-part2-More-33373" href="../More/#plfa_plfa-part2-More-33373" class="Function">V¬—→</a> <a id="plfa_plfa-part2-More-33378" class="Symbol">:</a> <a id="plfa_plfa-part2-More-33380" class="Symbol">∀</a> <a id="plfa_plfa-part2-More-33382" class="Symbol">{</a><a id="plfa_plfa-part2-More-33383" href="../More/#plfa_plfa-part2-More-33383" class="Bound">Γ</a> <a id="plfa_plfa-part2-More-33385" href="../More/#plfa_plfa-part2-More-33385" class="Bound">A</a><a id="plfa_plfa-part2-More-33386" class="Symbol">}</a> <a id="plfa_plfa-part2-More-33388" class="Symbol">{</a><a id="plfa_plfa-part2-More-33389" href="../More/#plfa_plfa-part2-More-33389" class="Bound">M</a> <a id="plfa_plfa-part2-More-33391" href="../More/#plfa_plfa-part2-More-33391" class="Bound">N</a> <a id="plfa_plfa-part2-More-33393" class="Symbol">:</a> <a id="plfa_plfa-part2-More-33395" href="../More/#plfa_plfa-part2-More-33383" class="Bound">Γ</a> <a id="plfa_plfa-part2-More-33397" href="../More/#plfa_plfa-part2-More-22742" class="Datatype Operator">⊢</a> <a id="plfa_plfa-part2-More-33399" href="../More/#plfa_plfa-part2-More-33385" class="Bound">A</a><a id="plfa_plfa-part2-More-33400" class="Symbol">}</a>
   <a id="plfa_plfa-part2-More-33404" class="Symbol">→</a> <a id="plfa_plfa-part2-More-33406" href="../More/#plfa_plfa-part2-More-27383" class="Datatype">Value</a> <a id="plfa_plfa-part2-More-33412" href="../More/#plfa_plfa-part2-More-33389" class="Bound">M</a>
     <a id="plfa_plfa-part2-More-33418" class="Comment">----------</a>
   <a id="plfa_plfa-part2-More-33431" class="Symbol">→</a> <a id="plfa_plfa-part2-More-33433" href="https://agda.github.io/agda-stdlib/v1.7.1/Relation.Nullary.html#656" class="Function Operator">¬</a> <a id="plfa_plfa-part2-More-33435" class="Symbol">(</a><a id="plfa_plfa-part2-More-33436" href="../More/#plfa_plfa-part2-More-33389" class="Bound">M</a> <a id="plfa_plfa-part2-More-33438" href="../More/#plfa_plfa-part2-More-30216" class="Datatype Operator">—→</a> <a id="plfa_plfa-part2-More-33441" href="../More/#plfa_plfa-part2-More-33391" class="Bound">N</a><a id="plfa_plfa-part2-More-33442" class="Symbol">)</a>
