@@ -20,7 +20,7 @@ In this chapter we prove that the reduction semantics is sound with
 respect to the denotational semantics, i.e., for any term L
 -->
 
-本章中我们会证明指称语义的归约语义是可靠（Sound）的，即对于任意项 `L`：
+本章中我们会证明指称语义的归约语义是**可靠（Sound）**的，即对于任意项 `L`：
 
     L —↠ ƛ N  蕴含  ℰ L ≃ ℰ (ƛ N)
 
@@ -39,13 +39,13 @@ expansion is false for most typed lambda calculi!
 
 证明可通过对归约序列进行归纳得出，因此主引理涉及单个归约步骤。
 我们需要证明，如果任何项 `M` 步进到项 `N`，则 `M` 和 `M` 的指称相等。
-我们将分别证明「当且仅当」的两个方向，一个方向类似于保型性（type preservation）的证明，
+我们将分别证明「当且仅当」的两个方向，一个方向类似于**保型性（type preservation）**的证明，
 另一个方向类似于反向归约（即展开）的保型性证明。回想一下，
-保型性有时称为主体归约（subject reduction）。
-反向的保型性是一个众所周知的属性，称为 **主体展开（subject expansion）**。
+保型性有时称为**主体归约（subject reduction）**。
+反向的保型性是一个众所周知的属性，称为**主体展开（subject expansion）**。
 众所周知，大多数类型化 λ-演算都不满足主体展开！
 （译注：一个 subject 是形如 `(1*2+3) : Int` 这样已经确定类型的项。
-大多数类型化 λ-演算会失去保型性的原因参见 https://www.bananaspace.org/wiki/%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8F%98%E6%80%A7）
+大多数类型化 λ-演算会失去保型性的原因参见[类型不变性](https://www.bananaspace.org/wiki/%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%8F%98%E6%80%A7)。）
 
 
 <!--
@@ -178,7 +178,7 @@ With the extension lemma in hand, the proof that simultaneous
 substitution preserves meaning is straightforward.  Let's dive in!
 -->
 
-有了这个扩展引理，同时代换会保留含义的证明就很直白了，我们继续深入：
+有了这个扩展引理，同时代换会保持含义不变的证明就很直白了，我们继续深入：
 
 ```agda
 subst-pres : ∀ {Γ Δ v} {γ : Env Γ} {δ : Env Δ} {M : Γ ⊢ ★}
@@ -218,8 +218,8 @@ cases are for variables and lambda abstractions.
 * 对于变量 `x`，我们有 `v = γ x`，于是需要证明 `δ ⊢ σ x ↓ v`。
   将前提应用到 `x`，我们有 `δ ⊢ σ x ↓ γ x`，即 `δ ⊢ σ x ↓ v`.
 
-* 对于 λ-抽象，我们必须为归纳假设扩展代换。应用 `subst-ext` 引理可证明
-  扩展的代换会将变量映射到产生对应值的项。
+* 对于 λ-抽象，我们必须为归纳假设扩展代换。应用 `subst-ext`
+引理可证明扩展的代换会将变量映射到产生对应值的项。
 
 
 <!--
@@ -331,7 +331,7 @@ the reduction.
 * 若 `M` 为应用，则归约要么满足合同性（ξ₁ 或 ξ₂），要么是 β-归约。
   对于每一种合同性，我们使用归纳假设。对于 β-归约，我们使用代换引理和 `sub` 规则。
 
-* 其余的情况都很直接。
+* 其余的情况都很直白。
 
 <!--
 ## Reduction reflects denotations
@@ -469,7 +469,7 @@ We cannot prove this lemma by induction on the derivation of
 -->
 
 我们无法通过对 `δ ⊢ rename ρ M ↓ v` 的推导过程进行归纳来证明此引理，
-因此，我们转而通过对 `M` 进行归纳来证明：
+所以我们转而通过对 `M` 进行归纳来证明：
 
 * 若它是一个变量，我们可通过对它应用反演引理得到 `v ⊑ δ (ρ x)`。
   将前提实例化为 `x`，我们有 `δ (ρ x) ⊑ γ x`，于是我们可通过 `var` 规则证明。
@@ -496,7 +496,7 @@ the increment function. So we prove a corollary for that special case.
 -->
 
 在以后使用 `rename-reflect` 的情况中，重命名始终都是增量函数，
-于是我们先在这里为这些特殊情况证明以下推论。
+于是我们先在这里为这些特殊情况证明以下推论：
 
 ```agda
 rename-inc-reflect : ∀ {Γ v′ v} {γ : Env Γ} { M : Γ ⊢ ★}
@@ -1025,7 +1025,7 @@ abstraction.
 -->
 
 最终我们就得到了**可靠性（Soundness Property）**，即多步归约到一个
-λ-抽象蕴含指称等价于该 λ-抽象。
+λ-抽象，蕴含指称等价于该 λ-抽象。
 
 ```agda
 soundness : ∀{Γ} {M : Γ ⊢ ★} {N : Γ , ★ ⊢ ★}
