@@ -36,8 +36,8 @@ In this chapter we play with variations on a theme:
   where reduction continues underneath a lambda.
 -->
 
-* 之前的章节中讨论了**弱头部范式**（Weak Head Normal Form），其规约止步于
-  λ 抽象；我们这次讨论**完全正规化**（Full Normalisation），其在 λ 抽象之下仍然继续规约。
+* 之前的章节中讨论了**弱头部范式**（Weak Head Normal Form），其归约止步于
+  λ 抽象；我们这次讨论**完全正规化**（Full Normalisation），其在 λ 抽象之下仍然继续归约。
 
 <!--
 * Previous chapters consider _deterministic_ reduction,
@@ -46,8 +46,8 @@ In this chapter we play with variations on a theme:
   where a term may contain many redexes and any one of them may reduce.
 -->
 
-* 之前的章节中讨论了**确定性**（Deterministic）的规约，每个项中至多有一个可规约项；
-  我们这次讨论**非确定性**（Non-deterministic）的规约，每个项中可能有多个可规约项，而每一个都可规约。
+* 之前的章节中讨论了**确定性**（Deterministic）的归约，每个项中至多有一个可归约项；
+  我们这次讨论**非确定性**（Non-deterministic）的归约，每个项中可能有多个可归约项，而每一个都可归约。
 
 <!--
 * Previous chapters consider reduction of _closed_ terms,
@@ -382,10 +382,10 @@ to define a term to represent four as a Church numeral, as well as
 two.
 -->
 
-在之前，我们在遇到 λ 抽象时停止规约，因此我们需要计算
+在之前，我们在遇到 λ 抽象时停止归约，因此我们需要计算
 `` plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero ``
-来确保我们规约至自然数四。
-现在，规约在 λ 之下继续进行，所以我们不需要额外的参数。
+来确保我们归约至自然数四。
+现在，归约在 λ 之下继续进行，所以我们不需要额外的参数。
 为了便利，我们定义用 Church 数来表示二和四的项。
 
 <!--
@@ -611,14 +611,14 @@ neutral terms, and using `#′` in place of `#`
 ## Reduction step
 -->
 
-## 规约步骤
+## 归约步骤
 
 <!--
 The reduction rules are altered to switch from call-by-value to
 call-by-name and to enable full normalisation:
 -->
 
-规约规则从传值调用改为传名调用，以实现完全范式化：
+归约规则从传值调用改为传名调用，以实现完全范式化：
 
 <!--
 * The rule `ξ₁` remains the same as it was for the simply-typed
@@ -635,8 +635,8 @@ call-by-name and to enable full normalisation:
 -->
 
 * 规则 `ξ₂` 之中，项 `L` 是值的要求现在被丢弃了。
-  所以这条规则现在与 `ξ₁` 重合，且规约是**非确定的**。
-  现在可选择规约 `L` 或者 `M` 中的项。
+  所以这条规则现在与 `ξ₁` 重合，且归约是**非确定的**。
+  现在可选择归约 `L` 或者 `M` 中的项。
 
 <!--
 * In rule `β`, the requirement that the argument is a value
@@ -646,13 +646,13 @@ call-by-name and to enable full normalisation:
 -->
 
 * 规则 `β` 之中，参数是值的要求现在被丢弃了，对应了传名调用的求值。
-  这引入了更多的非确定性，由于 `β` 与 `ξ₂` 在参数中有可规约项时重合。
+  这引入了更多的非确定性，由于 `β` 与 `ξ₂` 在参数中有可归约项时重合。
 
 <!--
 * A new rule `ζ` is added, to enable reduction underneath a lambda.
 -->
 
-* 额外了新规则 `ζ`，使得 λ 抽象下可以继续规约。
+* 额外了新规则 `ζ`，使得 λ 抽象下可以继续归约。
 
 <!--
 Here are the formalised rules:
@@ -698,7 +698,7 @@ unless both terms are in normal form.
 -->
 
 如果我们想要传值调用，但需要项范式化其中的项的话，要怎么样修改规则？
-假设 `β` 在除了两个项都是范式时，不允许规约。
+假设 `β` 在除了两个项都是范式时，不允许归约。
 
 ```agda
 -- 请将代码写在此处。
@@ -717,9 +717,9 @@ permits reduction when both terms are values (that is, lambda
 abstractions).  What would `2+2ᶜ` reduce to in this case?
 -->
 
-如果我们想要传值调用，但项不在 λ 之下规约的话，要怎么样修改规则？
-假设 `β` 在双项均为值（即 λ 抽象）时允许规约。
-`2+2ᶜ` 在这种情况下会规约成什么？
+如果我们想要传值调用，但项不在 λ 之下归约的话，要怎么样修改规则？
+假设 `β` 在双项均为值（即 λ 抽象）时允许归约。
+`2+2ᶜ` 在这种情况下会归约成什么？
 
 
 ```agda
@@ -771,7 +771,7 @@ begin M—↠N = M—↠N
 ## Example reduction sequence
 -->
 
-## 规约序列的例子
+## 归约序列的例子
 
 <!--
 Here is the demonstration that two plus two is four:
@@ -818,7 +818,7 @@ or takes a reduction step, we claim that every term is either in normal
 form or takes a reduction step.
 -->
 
-可进性相应地也变更了。之前我们说每个项要么是值，要么可以规约一步；我们现在说每个项要么是范式，要么可以规约一步。
+可进性相应地也变更了。之前我们说每个项要么是值，要么可以归约一步；我们现在说每个项要么是范式，要么可以归约一步。
 
 <!--
 Previously, progress only applied to closed, well-typed terms.  We had
@@ -837,7 +837,7 @@ free variables, and we have no terms that are not functions.
 A term makes progress if it can take a step or is in normal form:
 -->
 
-如果一个项可以规约一步，或其为范式，那么它具有可进性：
+如果一个项可以归约一步，或其为范式，那么它具有可进性：
 
 ```agda
 data Progress {Γ A} (M : Γ ⊢ A) : Set where
@@ -983,7 +983,7 @@ a reduction sequence from `L` to `N` and an indication of whether
 reduction finished:
 -->
 
-给定类型 `A` 的项 `L`，求值器会对于某 `N` 返回自 `L` 至 `N` 的规约序列，并提示规约是否完成：
+给定类型 `A` 的项 `L`，求值器会对于某 `N` 返回自 `L` 至 `N` 的归约序列，并提示归约是否完成：
 
 ```agda
 data Steps : ∀ {Γ A} → Γ ⊢ A → Set where
@@ -1169,7 +1169,7 @@ Applying successor to the zero indeed reduces to the Scott numeral
 for one.
 -->
 
-对零使用后继的确规约至 Scott 数表示的一：
+对零使用后继的确归约至 Scott 数表示的一：
 
 ```agda
 _ : eval (gas 100) (`suc_ {∅} `zero) ≡
@@ -1247,8 +1247,8 @@ but they do both reduce to the same normal term.
 -->
 
 由于 `` `suc `` 是定义的项，而不是原语项，
-`plus · two · two` 不再规约至 `four`，
-但是它们都规约至相同的范式。
+`plus · two · two` 不再归约至 `four`，
+但是它们都归约至相同的范式。
 
 
 <!--
@@ -1311,7 +1311,7 @@ save for primitive numbers, in the untyped lambda calculus.
 ## Multi-step reduction is transitive
 -->
 
-## 多步规约是传递的
+## 多步归约是传递的
 
 <!--
 In our formulation of the reflexive transitive closure of reduction,
@@ -1324,7 +1324,7 @@ function `_++_` on lists.
 -->
 
 在我们对自反传递闭包的形式化，即 `—↠` 关系中，没有出现直接的传递性规则。
-取而代之的是，这个关系模仿了列表形式，有一种空规约序列的情况，也有一种将一步规约加在规约序列之前的情况。
+取而代之的是，这个关系模仿了列表形式，有一种空归约序列的情况，也有一种将一步归约加在归约序列之前的情况。
 下面是传递性的证明，其与列表的附加 `_++_` 函数的结构相似。
 
 ```agda
@@ -1358,7 +1358,7 @@ L —↠⟨ L—↠M ⟩ M—↠N = —↠-trans L—↠M M—↠N
 ## Multi-step reduction is a congruence
 -->
 
-## 多步规约是合同性的
+## 多步归约是合同性的
 
 <!--
 Recall from Chapter [Induction](/Induction/) that a
@@ -1383,8 +1383,8 @@ relation `—↠` is also a congruence, which we prove in the following
 three lemmas.
 -->
 
-规则 `ξ₁` 、`ξ₂` 和 `ζ` 保证了规约关系对于无类型的 λ 演算满足合同性。
-多步规约也是一个合同关系，我们在下面三条引理中证明。
+规则 `ξ₁` 、`ξ₂` 和 `ζ` 保证了归约关系对于无类型的 λ 演算满足合同性。
+多步归约也是一个合同关系，我们在下面三条引理中证明。
 
 ```agda
 appL-cong : ∀ {Γ} {L L' M : Γ ⊢ ★}
@@ -1407,7 +1407,7 @@ The proof of `appL-cong` is by induction on the reduction sequence `L —↠ L'`
   facts together using `_—→⟨_⟩_`.
 -->
 
-`appL-cong` 的证明对于规约序列 `L —↠ L'` 进行归纳。
+`appL-cong` 的证明对于归约序列 `L —↠ L'` 进行归纳。
 * 若 `L —↠ L` 由 `L ∎` 成立。那我们可从 `L · M ∎` 得 `L · M —↠ L · M` 。
 * 若 `L —↠ L''` 由 `L —→⟨ r ⟩ rs` 成立，那么
   `L —→ L'` 由 `r` 成立，且 `L' —↠ L''` 由 `rs` 成立。

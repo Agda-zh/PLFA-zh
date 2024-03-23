@@ -378,7 +378,7 @@ incorporates preservation, which no longer requires a separate proof.
 
 项的语法现在包含了它们的赋型规则。
 替换的定义现在更加深入，但包括了之前证明中最棘手的部分，即替换保留了类型。
-规约的定义现在包括了保型性，不需要额外的证明。
+归约的定义现在包括了保型性，不需要额外的证明。
 
 <!--
 ## Syntax
@@ -1383,7 +1383,7 @@ much in the same way that `[]` did in
 ## Reduction
 -->
 
-## 规约
+## 归约
 
 <!--
 The reduction rules are the same as those given earlier, save
@@ -1393,8 +1393,8 @@ labelled with `ξ`, and rules that simplify a constructor
 combined with a destructor, labelled with `β`:
 -->
 
-规约规则和之前给出的类似，除去我们必须给出每个项的类型。
-如同之前，兼容性规则规约一个项的一部分，用 `ξ` 标出；
+归约规则和之前给出的类似，除去我们必须给出每个项的类型。
+如同之前，兼容性规则归约一个项的一部分，用 `ξ` 标出；
 简化构造子与其解构子的规则用 `β` 标出：
 
 ```agda
@@ -1456,7 +1456,7 @@ definition of substitution.
 
 定义中指出，`M —→ N` 只能由类型**都**是 `Γ ⊢ A` 的两个项 `M` 和 `N` 组成，
 其中 `Γ` 是一个语境，`A` 是一个类型。
-换句话说，我们的定义中**内置**了规约保存类型的证明。
+换句话说，我们的定义中**内置**了归约保存类型的证明。
 我们不需要额外证明保型性。
 Agda 的类型检查器检验了每个项保存了类型。
 在 `β` 规则的情况中，保型性依赖于替换保存类型的性质，而它内置于替换的定义之中。
@@ -1543,7 +1543,7 @@ As before, we need to supply an explicit context to `` `zero ``.
 Next, a sample reduction demonstrating that two plus two is four:
 -->
 
-接下来，展示二加二得四的规约例子：
+接下来，展示二加二得四的归约例子：
 
 ```agda
 _ : plus {∅} · two · two —↠ `suc `suc `suc `suc `zero
@@ -1582,7 +1582,7 @@ _ =
 And finally, a similar sample reduction for Church numerals:
 -->
 
-最后，用 Church 数规约同样的例子：
+最后，用 Church 数归约同样的例子：
 
 ```agda
 _ : plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero {∅}
@@ -1620,7 +1620,7 @@ _ =
 ## Values do not reduce
 -->
 
-## 值不再规约
+## 值不再归约
 
 <!--
 We have now completed all the definitions, which of
@@ -1646,7 +1646,7 @@ not reduce, and its corollary, terms that reduce are not
 values.
 -->
 
-使用上文的表示方法，证明值不再规约；以及它的推论：可规约的项不是值。
+使用上文的表示方法，证明值不再归约；以及它的推论：可归约的项不是值。
 
 
 
@@ -1666,7 +1666,7 @@ a value or takes a reduction step.  The formulation of progress
 is just as before, but annotated with types:
 -->
 
-和之前一样，每一个良类型的闭项要么是一个值，要么可以进行规约。
+和之前一样，每一个良类型的闭项要么是一个值，要么可以进行归约。
 可进性的形式化与之前一样，但是附上了类型：
 
 ```agda
@@ -1724,7 +1724,7 @@ refer to preservation, since it is built-in to the definition of reduction.
 -->
 
 之前，我们将保型性和可进性结合来对一个项求值。
-我们在此处也可以这么做，但是我们不再需要显式地参考保型性，因为它内置于规约的定义中。
+我们在此处也可以这么做，但是我们不再需要显式地参考保型性，因为它内置于归约的定义中。
 
 <!--
 As previously, gas is specified by a natural number:
@@ -1765,7 +1765,7 @@ a reduction sequence from `L` to `N` and an indication of whether
 reduction finished:
 -->
 
-给定类型为 `A` 的项 `L`，求值器会返回一个从 `L` 到某个 `N` 的求值序列，并提示规约是否完成：
+给定类型为 `A` 的项 `L`，求值器会返回一个从 `L` 到某个 `N` 的求值序列，并提示归约是否完成：
 
 ```agda
 data Steps {A} : ∅ ⊢ A → Set where
@@ -1826,7 +1826,7 @@ To compute the first three steps of the infinite reduction sequence,
 we evaluate with three steps worth of gas:
 -->
 
-为了计算无限规约序列的前三步，我们使用满足三步的汽油：
+为了计算无限归约序列的前三步，我们使用满足三步的汽油：
 
 ```agda
 _ : eval (gas 3) sucμ ≡
@@ -2083,7 +2083,7 @@ We omit the proof that reduction is deterministic, since it is
 tedious and almost identical to the previous proof.
 -->
 
-我们省去规约是确定的证明，因为它很繁琐，而且与之前的证明几乎完全相同。
+我们省去归约是确定的证明，因为它很繁琐，而且与之前的证明几乎完全相同。
 
 <!--
 #### Exercise `mul-example` (recommended)
@@ -2122,7 +2122,7 @@ number of lines of code is as follows:
 代码行数是有提示性的。
 这一章虽然包括了前两章涵盖的形式化内容，却用了更少的代码。
 除去所有的例子，和 Properties 中出现且没有在 DeBruijn 中出现的证明
-（例如规约是确定的证明），代码行数如下：
+（例如归约是确定的证明），代码行数如下：
 
     Lambda                      216
     Properties                  235

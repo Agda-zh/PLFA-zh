@@ -1282,7 +1282,7 @@ definition to equivalent inference rules for judgments about equality:
 -->
 
 同理，无需利用循环性，我们的加法定义也是可以被赋予意义的。
-为此，我们需要将加法的定义规约到用于判断相等性的等价的推导规则上来。
+为此，我们需要将加法的定义归约到用于判断相等性的等价的推导规则上来。
 
     n : ℕ
     --------------

@@ -74,7 +74,7 @@ correctness of translations will be the subject of the next chapter.
 -->
 
 到现在，使用符号来解释应该可以比文字更简洁、更精确、更易于跟随。
-对于每一种构造，我们给出它的语法、赋型、规约和例子。
+对于每一种构造，我们给出它的语法、赋型、归约和例子。
 在需要的时候，我们也会给出构造的翻译；在下个章节我们会正式地证明翻译的正确性。
 
 <!--
@@ -147,7 +147,7 @@ typing judgment of the defined calculus:
 ### Reduction
 -->
 
-### 规约
+### 归约
 
 <!--
 A rule that defines a primitive directly, such as the last rule below,
@@ -228,7 +228,7 @@ Let 绑定只影响项的语法；不引入新的值或者类型：
 ### Reduction
 -->
 
-### 规约
+### 归约
 
     M —→ M′
     --------------------------------------- ξ-let
@@ -349,7 +349,7 @@ construct to a calculus without the construct.
 ### Reduction
 -->
 
-### 规约
+### 归约
 
     M —→ M′
     ------------------------- ξ-⟨,⟩₁
@@ -404,7 +404,7 @@ and reduction rules:
 
 与其使用两种消去积类型的方法，我们可以使用一个匹配表达式来同时绑定两个变量，
 作为积的替代表示方法。
-我们重复完整的语法，但只给出新的赋型和规约规则：
+我们重复完整的语法，但只给出新的赋型和归约规则：
 
 <!--
 ### Syntax
@@ -456,7 +456,7 @@ and reduction rules:
 ### Reduction
 -->
 
-### 规约
+### 归约
 
     L —→ L′
     --------------------------------------------------- ξ-case×
@@ -534,9 +534,9 @@ and `` `proj₂ `` many times or not at all.
 -->
 
 但是这样的话它们表现的不一样。
-第一项总是在规约 `N` 之前规约 `L`，它只计算 `` `proj₁ `` 和 `` `proj₂ ``一次。
-第二项在规约 `N` 之前不先将 `L` 规约至值，取决于 `x` 和 `y` 在 `N` 中出现的次数，
-它将规约 `L` 很多次或者根本不规约，因此它会计算 `` `proj₁ `` 和 `` `proj₂ ``
+第一项总是在归约 `N` 之前归约 `L`，它只计算 `` `proj₁ `` 和 `` `proj₂ ``一次。
+第二项在归约 `N` 之前不先将 `L` 归约至值，取决于 `x` 和 `y` 在 `N` 中出现的次数，
+它将归约 `L` 很多次或者根本不归约，因此它会计算 `` `proj₁ `` 和 `` `proj₂ ``
 很多次或者根本不计算。
 
 <!--
@@ -626,7 +626,7 @@ We can also translate back the other way:
 ### Reduction
 -->
 
-### 规约
+### 归约
 
     M —→ M′
     ------------------- ξ-inj₁
@@ -677,7 +677,7 @@ There are no reduction rules.
 -->
 
 对于单元类型来说，有一种方法引入单元类型，但是没有消去单元类型的方法。
-单元类型没有规约规则。
+单元类型没有归约规则。
 
 <!--
 ### Syntax
@@ -723,7 +723,7 @@ There are no reduction rules.
 ### Reduction
 -->
 
-### 规约
+### 归约
 
 <!--
 (none)
@@ -764,7 +764,7 @@ We repeat the syntax in full, but only give the new type and reduction rules:
 
 与其没有消去单元类型的方法，我们可以使用一个匹配表达式来绑定零个变量，
 作为单元类型的替代表示方法。
-我们重复完整的语法，但只给出新的赋型和规约规则：
+我们重复完整的语法，但只给出新的赋型和归约规则：
 
 <!--
 ### Syntax
@@ -816,7 +816,7 @@ We repeat the syntax in full, but only give the new type and reduction rules:
 ### Reduction
 -->
 
-### 规约
+### 归约
 
     L —→ L′
     ------------------------------------- ξ-case⊤
@@ -875,7 +875,7 @@ construct plays a role similar to `⊥-elim` in Agda:
 -->
 
 对于空类型来说，只有一种消去此类型的值的方法，但是没有引入此类型的值的方法。
-没有空类型的值，也没有规约规则，但是有 β 规则。
+没有空类型的值，也没有归约规则，但是有 β 规则。
 `case⊥` 构造和 Agda 中的 `⊥-elim` 的作用相似：
 
 <!--
@@ -918,7 +918,7 @@ construct plays a role similar to `⊥-elim` in Agda:
 ### Reduction
 -->
 
-### 规约
+### 归约
 
     L —→ L′
     ------------------------- ξ-case⊥
@@ -1023,7 +1023,7 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
 ### Reduction
 -->
 
-### 规约
+### 归约
 
     M —→ M′
     ----------------- ξ-∷₁
@@ -1576,7 +1576,7 @@ not fixed by the given arguments.
 ## Reduction
 -->
 
-## 规约
+## 归约
 
 <!--
 ```agda
@@ -1855,7 +1855,7 @@ begin M—↠N = M—↠N
 ## Values do not reduce
 -->
 
-## 值不再规约
+## 值不再归约
 
 ```agda
 V¬—→ : ∀ {Γ A} {M N : Γ ⊢ A}

@@ -23,10 +23,10 @@ reduction sequences from any term `L` to two different terms `M₁` and
 some common term `N`. In pictures:
 -->
 
-在这一章我们将证明 β-规约是**合流的（Confluent）**
+在这一章我们将证明 β-归约是**合流的（Confluent）**
 （又被称作 *Church-Rosser* 性质）：
-如果有从任一项 `L` 至两个不同项 `M₁` 和 `M₂` 的规约序列，
-那么一定存在从这两个项至某个相同项 `N` 的规约序列。
+如果有从任一项 `L` 至两个不同项 `M₁` 和 `M₂` 的归约序列，
+那么一定存在从这两个项至某个相同项 `N` 的归约序列。
 如图：
 
         L
@@ -72,7 +72,7 @@ Unfortunately, reduction in the lambda calculus does not satisfy the
 diamond property. Here is a counter example.
 -->
 
-不幸的是 λ-演算的规约并不满足菱形性质。这是一个反例：
+不幸的是 λ-演算的归约并不满足菱形性质。这是一个反例：
 
     (λ x. x x)((λ x. x) a) —→ (λ x. x x) a
     (λ x. x x)((λ x. x) a) —→ ((λ x. x) a) ((λ x. x) a)
@@ -82,7 +82,7 @@ Both terms can reduce to `a a`, but the second term requires two steps
 to get there, not one.
 -->
 
-两个项都可以规约至 `a a`，但第二项需要两步来完成，而不是一步。
+两个项都可以归约至 `a a`，但第二项需要两步来完成，而不是一步。
 
 <!--
 To side-step this problem, we'll define an auxiliary reduction
@@ -94,11 +94,11 @@ Thus, we can reduce the proof of confluence for beta reduction to
 confluence for parallel reduction.
 -->
 
-为了回避这个问题，我们将定义一个辅助规约关系，
-称为**平行规约（Parallel Reduction）** ，
-它可以同时执行许多规约并因此满足菱形性质。
-更进一步地，我们将证明在两个项间存在平行规约序列当且仅当这两个项间存在 β-规约序列。
-因此，我们可以将 β-规约序列合流性的证明约化为平行规约合流性的证明。
+为了回避这个问题，我们将定义一个辅助归约关系，
+称为**平行归约（Parallel Reduction）** ，
+它可以同时执行许多归约并因此满足菱形性质。
+更进一步地，我们将证明在两个项间存在平行归约序列当且仅当这两个项间存在 β-归约序列。
+因此，我们可以将 β-归约序列合流性的证明约化为平行归约合流性的证明。
 
 <!--
 ## Imports
@@ -123,13 +123,13 @@ open import plfa.part2.Untyped
 ## Parallel Reduction
 -->
 
-## 平行规约
+## 平行归约
 
 <!--
 The parallel reduction relation is defined as follows.
 -->
 
-平行规约关系被定义如下。
+平行归约关系被定义如下。
 
 ```agda
 infix 2 _⇛_
@@ -164,8 +164,8 @@ parts simultaneously. The last rule reduces a lambda term and
 term in parallel followed by a beta step.
 -->
 
-前三种规则是同时规约每个部分的合同性。
-最后一个规则平行地规约一个 λ-项和另一个项，接着是一步 β-规约。
+前三种规则是同时归约每个部分的合同性。
+最后一个规则平行地归约一个 λ-项和另一个项，接着是一步 β-归约。
 
 <!--
 We remark that the `pabs`, `papp`, and `pbeta` rules perform reduction
@@ -180,7 +180,7 @@ akin to the `ζ` rule and `pbeta` is akin to `β`.
 Parallel reduction is reflexive.
 -->
 
-平行规约是自反的。
+平行归约是自反的。
 
 ```agda
 par-refl : ∀{Γ A}{M : Γ ⊢ A} → M ⇛ M
@@ -193,7 +193,7 @@ par-refl {Γ} {★} {L · M} = papp par-refl par-refl
 We define the sequences of parallel reduction as follows.
 -->
 
-我们定义平行规约序列如下。
+我们定义平行归约序列如下。
 
 ```agda
 infix  2 _⇛*_
@@ -226,7 +226,7 @@ showing that the diamond property holds for parallel reduction in that
 case.
 -->
 
-回顾上文中菱形性质的反例，证明在这种情况下平行规约具有菱形性质。
+回顾上文中菱形性质的反例，证明在这种情况下平行归约具有菱形性质。
 
 
 
@@ -239,7 +239,7 @@ case.
 ## Equivalence between parallel reduction and reduction
 -->
 
-## 平行规约与规约间等价性
+## 平行归约与归约间等价性
 
 <!--
 Here we prove that for any `M` and `N`, `M ⇛* N` if and only if `M —↠ N`.
@@ -250,7 +250,7 @@ the reduction `M —→ N`.
 
 此处我们证明对于任何 `M` 和 `N`，`M ⇛* N` 当且仅当 `M —↠ N`。
 必要性的证明非常容易，我们开始于说明若 `M —→ N`，则 `M ⇛ N`。
-该证明通过对规约 `M —→ N` 进行归纳。
+该证明通过对归约 `M —→ N` 进行归纳。
 
 ```agda
 beta-par : ∀{Γ A}{M N : Γ ⊢ A}
@@ -270,7 +270,7 @@ induction on the reduction sequence `M —↠ N`.
 -->
 
 证明了该引理后我们便可完成必要性的证明，
-即 `M —↠ N` 蕴含 `M ⇛* N`。该证明是对 `M —↠ N` 规约序列的简单归纳。
+即 `M —↠ N` 蕴含 `M ⇛* N`。该证明是对 `M —↠ N` 归约序列的简单归纳。
 
 ```agda
 betas-pars : ∀{Γ A} {M N : Γ ⊢ A}
@@ -291,7 +291,7 @@ reductions. So instead we shall prove that `M ⇛ N` implies `M —↠ N`.
 
 现在考虑命题的充分性，即 `M ⇛* N` 蕴含 `M —↠ N`。
 充分性的证明有一点不同，因为它不是 `M ⇛ N` 蕴含 `M —→ N` 的情形。
-毕竟 `M ⇛ N` 执行了许多规约，
+毕竟 `M ⇛ N` 执行了许多归约，
 所以我们应当证明 `M ⇛ N` 蕴含 `M —↠ N`。
 
 ```agda
@@ -353,7 +353,7 @@ The proof is by induction on `M ⇛ N`.
 
 * 假定 `(ƛ N) · M  ⇛  N′ [ M′ ]` 因为 `N ⇛ N′` 和 `M ⇛ M′`。
   根据类似的原因，我们有 `(ƛ N) · M —↠ (ƛ N′) · M′`，
-  接着应用 β-规约我们得到 `(ƛ N′) · M′ —→ N′ [ M′ ]`。
+  接着应用 β-归约我们得到 `(ƛ N′) · M′ —→ N′ [ M′ ]`。
 
 <!--
 With this lemma in hand, we complete the proof that `M ⇛* N` implies
@@ -376,7 +376,7 @@ pars-betas (L ⇛⟨ p ⟩ ps) = —↠-trans (par-betas p) (pars-betas ps)
 ## Substitution lemma for parallel reduction
 -->
 
-## 平行规约的替换引理
+## 平行归约的替换引理
 
 <!--
 Our next goal is to prove the diamond property for parallel
@@ -390,13 +390,13 @@ then `subst σ N ⇛ subst τ N′`. We define the notion
 of pointwise parallel reduction as follows.
 -->
 
-我们的下一个目标是对平行规约证明菱形性质。
-为了完成该证明，我们还需证明替换遵从平行规约。
+我们的下一个目标是对平行归约证明菱形性质。
+为了完成该证明，我们还需证明替换遵从平行归约。
 也就是说，如果有 `N ⇛ N′` 和 `M ⇛ M′`，那么 `N [ M ] ⇛ N′ [ M′ ]`。
 我们不能直接通过归纳证明它，所以我们将其推广为：
-如果 `N ⇛ N′` 并且替换 `σ` 逐点（Pointwise）平行规约至 `τ`，
+如果 `N ⇛ N′` 并且替换 `σ` 逐点（Pointwise）平行归约至 `τ`，
 则 `subst σ N ⇛ subst τ N′`。
-我们如下定义逐点平行规约。
+我们如下定义逐点平行归约。
 
 ```agda
 par-subst : ∀{Γ Δ} → Subst Γ Δ → Subst Γ Δ → Set
@@ -467,8 +467,8 @@ are straightforward so we just consider the last one for `pbeta`.
 * 假定 `(ƛ N) · M  ⇛  N′ [ M′ ]` 因为 `N ⇛ N′` 和 `M ⇛ M′`。
   根据归纳假设，我们有 `rename (ext ρ) N ⇛ rename (ext ρ) N′` 和 `rename ρ M ⇛ rename ρ M′`。
   所以根据 `pbeta` 我们有 `(ƛ rename (ext ρ) N) · (rename ρ M) ⇛ (rename (ext ρ) N) [ rename ρ M ]`。
-  然而，为了得出结论我们需要平行规约至 `rename ρ (N [ M ])`。
-  值得庆幸的是，重命名和规约可以相互交换。
+  然而，为了得出结论我们需要平行归约至 `rename ρ (N [ M ])`。
+  值得庆幸的是，重命名和归约可以相互交换。
 
 
 <!--
@@ -496,8 +496,8 @@ lemma from Chapter [Substitution](/Substitution/)
 and restate it below.
 -->
 
-为了证明替换遵从平行规约关系，我们需要证明的下一个引理如下文所示，
-它声称同时规约可以与单步规约相交换。
+为了证明替换遵从平行归约关系，我们需要证明的下一个引理如下文所示，
+它声称同时归约可以与单步归约相交换。
 我们从 [Substitution](/Substitution/) 章节导入这个引理，
 并重申如下。
 
@@ -511,7 +511,7 @@ subst-commute {N = N} = plfa.part2.Substitution.subst-commute {N = N}
 We are ready to prove that substitution respects parallel reduction.
 -->
 
-我们准备好去证明替换遵从平行规约。
+我们准备好去证明替换遵从平行归约。
 
 ```agda
 subst-par : ∀{Γ Δ A} {σ τ : Subst Γ Δ} {M M′ : Γ ⊢ A}
@@ -582,13 +582,13 @@ We proceed by induction on `M ⇛ M′`.
   同样我们根据 `par-subst-exts` 来得到 `par-subst (exts σ) (exts τ)`。
   所以根据归纳假设，我们有
   `subst (exts σ) N ⇛ subst (exts τ) N′` 和 `subst σ M ⇛ subst τ M′`。
-  接着根据 `pbeta` 规则，我们平行规约至 `subst (exts τ) N′ [ subst τ M′ ]`。
+  接着根据 `pbeta` 规则，我们平行归约至 `subst (exts τ) N′ [ subst τ M′ ]`。
   替换在以下意义中与自身交换：
   对于任意 σ、 N 和 M， 我们有
 
         (subst (exts σ) N) [ subst σ M ] ≡ subst σ (N [ M ])
 
-  所以我们平行规约得到 `subst τ (N′ [ M′ ])`。
+  所以我们平行归约得到 `subst τ (N′ [ M′ ])`。
 
 
 <!--
@@ -596,7 +596,7 @@ Of course, if `M ⇛ M′`, then `subst-zero M` pointwise parallel reduces
 to `subst-zero M′`.
 -->
 
-显然，若 `M ⇛ M′`，则 `subst-zero M` 逐点平行规约至 `subst-zero M′`。
+显然，若 `M ⇛ M′`，则 `subst-zero M` 逐点平行归约至 `subst-zero M′`。
 
 ```agda
 par-subst-zero : ∀{Γ}{A}{M M′ : Γ ⊢ A}
@@ -611,7 +611,7 @@ We conclude this section with the desired corollary, that substitution
 respects parallel reduction.
 -->
 
-我们以所期望的推论来结束本节，即替换遵从平行规约。
+我们以所期望的推论来结束本节，即替换遵从平行归约。
 
 ```agda
 sub-par : ∀{Γ A B} {N N′ : Γ , A ⊢ B} {M M′ : Γ ⊢ A}
@@ -626,7 +626,7 @@ sub-par pn pm = subst-par (par-subst-zero pm) pn
 ## Parallel reduction satisfies the diamond property
 -->
 
-## 平行规约满足菱形性质
+## 平行归约满足菱形性质
 
 <!--
 The heart of the confluence proof is made of stone, or rather, of
@@ -639,10 +639,10 @@ performing enough beta reductions in parallel.
 
 合流性证明的核心是石头制成的，更确切地说，是钻石！
 【译注：在英文中 diamond 一词既指钻石，又指菱形。】
-我们将证明平行规约满足菱形性质，即若有 `M ⇛ N` 和 `M ⇛ N′`，
+我们将证明平行归约满足菱形性质，即若有 `M ⇛ N` 和 `M ⇛ N′`，
 那么对某个 `L` 有 `N ⇛ L` 和 `N′ ⇛ L`。
 典型的证明通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳来完成，
-因此每一个可能的对都会在执行足够多次平行 β-规约后产生一个证明 `L`。
+因此每一个可能的对都会在执行足够多次平行 β-归约后产生一个证明 `L`。
 
 <!--
 However, a simpler approach is to perform as many beta reductions in
@@ -723,7 +723,7 @@ The proof of the triangle property is an induction on `M ⇛ N`.
   并且根据定义我们有 `(λ M) ⁺ = λ (M ⁺)`，所以我们得出 `λ N ⇛ λ(M ⁺)`。
 
   * 假定 `(λ N) · M ⇛ N′ [ M′ ]`。根据归纳假设我们有 `N′ ⇛ N ⁺` 和 `M′ ⇛ M ⁺`。
-  因为替换遵从平行规约，于是得到 `N′ [ M′ ] ⇛ N ⁺ [ M ⁺ ]`，
+  因为替换遵从平行归约，于是得到 `N′ [ M′ ] ⇛ N ⁺ [ M ⁺ ]`，
   而右侧即为 `((λ N) · M) ⁺`，因此有 `N′ [ M′ ] ⇛ ((λ N) · M) ⁺`。
 
   * 假定 `(λ L) · M ⇛ (λ L′) · M′`。
@@ -792,13 +792,13 @@ This step is optional, though, in the presence of triangle property.
 * 通过对 `M ⇛ N` 和 `M ⇛ N′` 归纳直接证明菱形性质 `par-diamond`。
 
 * 作图表示 `par-diamond` 的直接证明中的六种情况。
-  图应当包含节点和有向边，其中节点用项标记，边代表平行规约。
+  图应当包含节点和有向边，其中节点用项标记，边代表平行归约。
 
 <!--
 ## Proof of confluence for parallel reduction
 -->
 
-## 平行规约合流性的证明
+## 平行归约合流性的证明
 
 <!--
 As promised at the beginning, the proof that parallel reduction is
@@ -809,7 +809,7 @@ if `M ⇛ N` and `M ⇛* N′`, then
 The following diagram illustrates the strip lemma
 -->
 
-像在开始承诺的那样，平行规约合流性的证明现在十分简单，
+像在开始承诺的那样，平行归约合流性的证明现在十分简单，
 因为我们知道它满足三角性质。
 我们只需证明带状引理（Strip Lemma），它声称若有 `M ⇛ N` 和 `M ⇛* N′`，
 则对于某个 `L` 有 `N ⇛* L` 和 `N′ ⇛ L`。
@@ -857,7 +857,7 @@ induction on the sequence `M ⇛* N`, using the above lemma in the
 induction step.
 -->
 
-平行规约合流性的证明现在通过对序列 `M ⇛* N` 归纳来完成，并在归纳步骤使用上述引理。
+平行归约合流性的证明现在通过对序列 `M ⇛* N` 归纳来完成，并在归纳步骤使用上述引理。
 
 ```agda
 par-confluence : ∀{Γ A} {L M₁ M₂ : Γ ⊢ A}
@@ -908,7 +908,7 @@ induction.
 ## Proof of confluence for reduction
 -->
 
-## 规约合流性的证明
+## 归约合流性的证明
 
 <!--
 Confluence of reduction is a corollary of confluence for parallel
@@ -920,7 +920,7 @@ Then by confluence we obtain some `L` such that
 `M₁ —↠ N` and `M₂ —↠ N` by `pars-betas`.
 -->
 
-规约的合流性是平行规约合流性的一个推论。
+归约的合流性是平行归约合流性的一个推论。
 从 `L —↠ M₁` 和 `L —↠ M₂` 根据 `betas-pars` 我们有 `L ⇛* M₁` 和 `L ⇛* M₂`。
 接着根据合流性我们得到对于某个 `L` 有 `M₁ ⇛* N` 和 `M₂ ⇛* N`。
 因此我们根据 `pars-betas` 得出 `M₁ —↠ N` 和 `M₂ —↠ N`。

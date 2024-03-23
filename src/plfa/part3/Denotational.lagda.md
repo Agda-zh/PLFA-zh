@@ -1,8 +1,7 @@
 ---
-title     : "Denotational: 无类型 λ-演算的指称语义"
-permalink : /Denotational/
+title       : "Denotational: 无类型 λ-演算的指称语义"
+permalink   : /Denotational/
 translators : ["OlingCat"]
-progress  : 100
 ---
 
 ```agda
@@ -655,7 +654,7 @@ the result of the application is `⊥`.
 -->
 
 你可能会担心这种语义是否可以处理发散的程序。值 `⊥` 和规则 `⊥-intro`
-提供了一种处理它们的方法（`⊥-intro` 规则也是 β-规约能够应用于不停机参数的原因）。
+提供了一种处理它们的方法（`⊥-intro` 规则也是 β-归约能够应用于不停机参数的原因）。
 经典的 `Ω` 程序是一个特别简单的发散程序，它将 `Δ` 应用于自身，语义赋予
 `Ω` 含义 `⊥`。有多种方法可以得出它，我们将从使用 `⊔-intro` 规则的方法开始。
 首先，`denot-Δ` 告诉我们 `Δ` 的计算结果为 `((⊥ ↦ ⊥) ⊔ ⊥) ↦ ⊥`（选择
@@ -920,7 +919,7 @@ make, but they usually boil down to a single bit of information:
   * termination: the program `M` halts.
 -->
 
-接下来我们研究指称语义和规约语义是否等价。回想一下，一个语言的语义的作用，
+接下来我们研究指称语义和归约语义是否等价。回想一下，一个语言的语义的作用，
 就是描述给定程序 `M` 的可观测行为。对于 λ-演算，我们可以做出多种选择，
 但它们通常可以归结为一点信息：
 
@@ -934,7 +933,7 @@ We can characterize divergence and termination in terms of reduction.
   * termination: `M —↠ ƛ N` for some term `N`.
 -->
 
-我们可以用规约的项来刻画发散和停机：
+我们可以用归约的项来刻画发散和停机：
 
   * 发散：对于任意项 `N`，有 `¬ (M —↠ ƛ N)`。
   * 停机：对于某个项 `N`，有 `M —↠ ƛ N` 。
@@ -970,7 +969,7 @@ semantics are equivalent.
     (∃ N. M —↠ ƛ N)  iff  (∃ N. ℰ M ≃ ℰ (ƛ N))
 -->
 
-所以问题在于规约语义和指称语义是否等价：
+所以问题在于归约语义和指称语义是否等价：
 
     (∃ N. M —↠ ƛ N)  当且仅当  (∃ N. ℰ M ≃ ℰ (ƛ N))
 
@@ -985,7 +984,7 @@ literature.
 -->
 
 我们将在第二章和第三章中讨论等价的每个方向。在第二章中，我们证明了
-λ-抽象的规约蕴含 λ-抽象的指称相等。此性质在文献中被称为**可靠性（Soundness）**。
+λ-抽象的归约蕴含 λ-抽象的指称相等。此性质在文献中被称为**可靠性（Soundness）**。
 
     M —↠ ƛ N  蕴含  ℰ M ≃ ℰ (ƛ N)
 
@@ -997,7 +996,7 @@ is called _adequacy_ in the literature.
     ℰ M ≃ ℰ (ƛ N)  implies M —↠ ƛ N′ for some N′
 -->
 
-在第三章中，我们证明了 λ-抽象的指称相等蕴含 λ-抽象的规约。
+在第三章中，我们证明了 λ-抽象的指称相等蕴含 λ-抽象的归约。
 此性质在文献中被称为**充分性（Adequacy）**。
 
     ℰ M ≃ ℰ (ƛ N)  蕴含 M —↠ ƛ N′ 对于某个 N′
@@ -1046,7 +1045,7 @@ in proving that reduction implies denotational equality.
 
 我们将证明重命名变量并更改环境中对应的项仍能保持项的含义。
 我们推广了重命名引理，以允许新环境中的值等于或大于原始值，
-这种推广有助于证明规约蕴含了指称相等。
+这种推广有助于证明归约蕴含了指称相等。
 
 <!--
 As before, we need an extension lemma to handle the case where we
@@ -2034,7 +2033,7 @@ this chapter, but for the entire family of intersection type systems
 将 `ρ` 写成 `Γ`，将 `v` 写成 `A`，将 `↓` 替换为 `:`，就得到了一个类型判断
 `Γ ⊢ M : A`。通过改变子类型的定义和使用类型原子的不同选择，
 交集类型系统为许多不同的无类型 λ-演算提供语义，从完整的
-beta-规约到惰性演算和按值调用演算（@Alessi:2006，@Rocca:2004）。
+beta-归约到惰性演算和按值调用演算（@Alessi:2006，@Rocca:2004）。
 本章中的指称语义对应于 BCD 系统（@Barendregt:1983）。
 _Lambda Calculus with Types_ 一书中的第三部分描述了一个交集类型系统的框架，
 它可以实现与本章中类似的结果，但适用于整个交集类型系统族（@Barendregt:2013）
