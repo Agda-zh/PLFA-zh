@@ -387,11 +387,11 @@ about `M` and can therefore use `⊥` for the value of `M`.
 <!--
 Previously we showed that renaming variables preserves meaning.  Now
 we prove the opposite, that it reflects meaning. That is,
-if `δ ⊢ rename ρ M ↓ v`, then `γ ⊢ M ↓ v`, where `(δ ∘ ρ) `⊑ γ`.
--->
+if `δ ⊢ rename ρ M ↓ v`, then `γ ⊢ M ↓ v`, where ``(δ ∘ ρ) `⊑ γ``.
 
 前面我们证明了重命名变量会保持含义不变。现在我们证明它的反面，即重命名反映了含义不变。
 也就是说，若 `δ ⊢ rename ρ M ↓ v` 则 `γ ⊢ M ↓ v`，其中 ``(δ ∘ ρ) `⊑ γ``.
+-->
 
 <!--
 First, we need a variant of a lemma given earlier.
@@ -576,7 +576,7 @@ same-const-env {x = x} rewrite var≟-refl x = refl
 ```
 
 <!--
-and `const-env x v` maps `y` to `⊥, so long as `x ≢ y`.
+and `const-env x v` maps `y` to `⊥`, so long as `x ≢ y`.
 -->
 
 以及 `const-env x v` 将 `y` 映射到 `⊥`，且 `x ≢ y`。
@@ -612,7 +612,7 @@ Now to finish the two cases of the proof.
 
 * In the case where `x ≡ y`, we need to show
   that `γ ⊢ σ y ↓ v`, but that's just our premise.
-* In the case where `x ≢ y,` we need to show
+* In the case where `x ≢ y`, we need to show
   that `γ ⊢ σ y ↓ ⊥`, which we do via rule `⊥-intro`.
 -->
 
@@ -775,7 +775,7 @@ subst-reflect (sub d lt) eq
 ```
 
 <!--
-* Case `var`: We have subst `σ M ≡ y`, so `M` must also be a variable, say `x`.
+* Case `var`: We have `subst σ M ≡ y`, so `M` must also be a variable, say `x`.
   We apply the lemma `subst-reflect-var` to conclude.
 -->
 
