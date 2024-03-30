@@ -1,31 +1,78 @@
 ---
-title     : "Adequacy: Adequacy of denotational semantics with respect to operational semantics"
+title     : "Adequacy: 指称语义相对于操作语义的充分性"
 permalink : /Adequacy/
+translators : ["OlingCat"]
 ---
 
 ```agda
 module plfa.part3.Adequacy where
 ```
 
+<!--
 ## Introduction
+-->
 
+## 引言
+
+<!--
 Having proved a preservation property in the last chapter, a natural
 next step would be to prove progress. That is, to prove a property
 of the form
+-->
 
+在上一章中证明了保型性后，接下来自然就是证明可进性了，即证明以下性质：
+
+<!--
     If γ ⊢ M ↓ v, then either M is a lambda abstraction or M —→ N for some N.
+-->
 
+    若 `γ ⊢ M ↓ v`，那么对于某个 `M`，要么 `M` 是一个λ-抽象，要么 `M —→ N`。
+
+<!--
 Such a property would tell us that having a denotation implies either
 reduction to normal form or divergence. This is indeed true, but we
 can prove a much stronger property! In fact, having a denotation that
 is a function value (not `⊥`) implies reduction to a lambda
 abstraction.
+-->
+
+这样的性质告诉我们，拥有一个指称蕴含了要么可归约为正规形式，要么发散。
+虽然确实如此，但是我们可以证明一个更强的性质！事实上，拥有函数值（非 `⊥`）
+的指称蕴含了可规约为 λ-抽象。
+
+<!--
+This stronger property, reformulated a bit, is known as _adequacy_.
+That is, if a term `M` is denotationally equal to a lambda abstraction,
+then `M` reduces to a lambda abstraction.
+-->
 
 This stronger property, reformulated a bit, is known as _adequacy_.
 That is, if a term `M` is denotationally equal to a lambda abstraction,
 then `M` reduces to a lambda abstraction.
 
+<!--
     ℰ M ≃ ℰ (ƛ N)  implies M —↠ ƛ N' for some N'
+-->
+
+    对于某个 N' 而言，ℰ M ≃ ℰ (ƛ N)  蕴含 M —↠ ƛ N'
+
+<!--
+Recall that `ℰ M ≃ ℰ (ƛ N)` is equivalent to saying that `γ ⊢ M ↓ (v ↦
+w)` for some `v` and `w`. We will show that `γ ⊢ M ↓ (v ↦ w)` implies
+multi-step reduction a lambda abstraction.  The recursive structure of
+the derivations for `γ ⊢ M ↓ (v ↦ w)` are completely different from
+the structure of multi-step reductions, so a direct proof would be
+challenging. However, The structure of `γ ⊢ M ↓ (v ↦ w)` closer to
+that of [BigStep](/BigStep/) call-by-name
+evaluation. Further, we already proved that big-step evaluation
+implies multi-step reduction to a lambda (`cbn→reduce`). So we shall
+prove that `γ ⊢ M ↓ (v ↦ w)` implies that `γ' ⊢ M ⇓ c`, where `c` is a
+closure (a term paired with an environment), `γ'` is an environment
+that maps variables to closures, and `γ` and `γ'` are appropriate
+related.  The proof will be an induction on the derivation of
+`γ ⊢ M ↓ v`, and to strengthen the induction hypothesis, we will relate
+semantic values to closures using a _logical relation_ `𝕍`.
+-->
 
 Recall that `ℰ M ≃ ℰ (ƛ N)` is equivalent to saying that `γ ⊢ M ↓ (v ↦
 w)` for some `v` and `w`. We will show that `γ ⊢ M ↓ (v ↦ w)` implies
@@ -43,7 +90,11 @@ related.  The proof will be an induction on the derivation of
 `γ ⊢ M ↓ v`, and to strengthen the induction hypothesis, we will relate
 semantic values to closures using a _logical relation_ `𝕍`.
 
+<!--
 The rest of this chapter is organized as follows.
+-->
+
+本章后面内容的组织结构如下：
 
 * To make the `𝕍` relation down-closed with respect to `⊑`,
   we must loosen the requirement that `M` result in a function value and
@@ -651,7 +702,7 @@ cbn↔reduce {M} = ⟨ (λ x → reduce→cbn (proj₂ x)) ,
 
 ## Unicode
 
-This chapter uses the following unicode:
+本章使用了以下 Unicode：
 
     𝔼  U+1D53C  MATHEMATICAL DOUBLE-STRUCK CAPITAL E (\bE)
     𝔾  U+1D53E  MATHEMATICAL DOUBLE-STRUCK CAPITAL G (\bG)
