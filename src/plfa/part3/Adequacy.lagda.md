@@ -37,8 +37,8 @@ abstraction.
 -->
 
 这样的性质告诉我们，拥有一个指称蕴含了要么可归约为正规形式，要么发散。
-虽然确实如此，但是我们可以证明一个更强的性质！事实上，拥有函数值（非 `⊥`）
-的指称蕴含了可规约为 λ-抽象。
+虽然确实如此，但是我们可以证明一个更强的性质！事实上，拥有一个函数值（非
+`⊥`）的指称蕴含了它可规约为 λ-抽象。
 
 <!--
 This stronger property, reformulated a bit, is known as _adequacy_.
@@ -46,9 +46,8 @@ That is, if a term `M` is denotationally equal to a lambda abstraction,
 then `M` reduces to a lambda abstraction.
 -->
 
-This stronger property, reformulated a bit, is known as _adequacy_.
-That is, if a term `M` is denotationally equal to a lambda abstraction,
-then `M` reduces to a lambda abstraction.
+这种更强的属性可重新表述为**充分性（Adequacy）**。
+也就是说，如果项 `M` 指称等价于一个 λ-抽象，那么 `M` 就能规约为该 λ-抽象。
 
 <!--
     ℰ M ≃ ℰ (ƛ N)  implies M —↠ ƛ N' for some N'
@@ -74,27 +73,19 @@ related.  The proof will be an induction on the derivation of
 semantic values to closures using a _logical relation_ `𝕍`.
 -->
 
-Recall that `ℰ M ≃ ℰ (ƛ N)` is equivalent to saying that `γ ⊢ M ↓ (v ↦
-w)` for some `v` and `w`. We will show that `γ ⊢ M ↓ (v ↦ w)` implies
-multi-step reduction a lambda abstraction.  The recursive structure of
-the derivations for `γ ⊢ M ↓ (v ↦ w)` are completely different from
-the structure of multi-step reductions, so a direct proof would be
-challenging. However, The structure of `γ ⊢ M ↓ (v ↦ w)` closer to
-that of [BigStep](/BigStep/) call-by-name
-evaluation. Further, we already proved that big-step evaluation
-implies multi-step reduction to a lambda (`cbn→reduce`). So we shall
-prove that `γ ⊢ M ↓ (v ↦ w)` implies that `γ' ⊢ M ⇓ c`, where `c` is a
-closure (a term paired with an environment), `γ'` is an environment
-that maps variables to closures, and `γ` and `γ'` are appropriate
-related.  The proof will be an induction on the derivation of
-`γ ⊢ M ↓ v`, and to strengthen the induction hypothesis, we will relate
-semantic values to closures using a _logical relation_ `𝕍`.
+回想一下，对于某些 `v` 和 `w`，`ℰ M ≃ ℰ (ƛ N)` 等价于 `γ ⊢ M ↓ (v ↦ w)`。
+我们将证明 `γ ⊢ M ↓ (v ↦ w)` 蕴含了 λ-抽象的多步规约。`γ ⊢ M ↓ (v ↦ w)`
+的推导过程的递归结构与多步归约的结构完全不同，所以直接证明是很困难的。
+然而，`γ ⊢ M ↓ (v ↦ w)` 的结构更接近[大步](/BigStep/)的传名求值。
+此外，我们已经证明大步求值意味着多步规约为 λ（`cbn→reduce`）。
+所以我们要证明 `γ ⊢ M ↓ (v ↦ w)` 蕴含 `γ' ⊢ M ⇓ c`，其中 `c` 是一个闭包
+（一个项与环境的序对），`γ'` 是一个环境，它将变量映射为闭包，并且 `γ` 和
+`γ'` 以适当的方式相关联。证明过程是对 `γ ⊢ M ↓ v` 的推导过程的归纳，
+为了加强归纳假设，我们将使用 **逻辑关系（Logical Relation）** `𝕍`
+将语义值与闭包关联起来。
 
 <!--
 The rest of this chapter is organized as follows.
--->
-
-本章后面内容的组织结构如下：
 
 * To make the `𝕍` relation down-closed with respect to `⊑`,
   we must loosen the requirement that `M` result in a function value and
@@ -111,9 +102,27 @@ The rest of this chapter is organized as follows.
   that if `𝔾 γ γ'` and `γ ⊢ M ↓ v`, then `𝔼 v (clos M γ')`.
 
 * We prove adequacy as a corollary to the main lemma.
+-->
+
+本章后面内容的结构组织如下：
+
+* 为了使关系 `𝕍` 相对于 `⊑` 向下封闭，我们必须放宽 `M` 的结果必须为函数值的要求，
+  转而要求 `M` 的结果大于或等于一个函数值。我们建立了几个关于“大于一个函数”的性质。
+
+* 我们定义了逻辑关系 `𝕍` 将值和闭包关联了起来，并将它扩展为项 `𝔼`
+  和环境 `𝔾` 之间的关系。我们证明了几个引理，最终得出以下性质：若 `𝕍 v c`
+  且 `v′ ⊑ v`，则 `𝕍 v′ c`。
+
+* 我们证明了主引理：若 `𝔾 γ γ'` 且 `γ ⊢ M ↓ v`，则 `𝔼 v (clos M γ')`。
+
+* 我们证明了主引理的推论的充分性。
 
 
+<!--
 ## Imports
+-->
+
+## 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -145,18 +154,30 @@ open import plfa.part3.Soundness using (soundness)
 ```
 
 
+<!--
 ## The property of being greater or equal to a function
+-->
 
+## 大于或等于一个函数的性质
+
+<!--
 We define the following short-hand for saying that a value is
 greater-than or equal to a function value.
+-->
+
+我们定义以下简写来表示一个值大于或等于一个函数值：
 
 ```agda
 above-fun : Value → Set
 above-fun u = Σ[ v ∈ Value ] Σ[ w ∈ Value ] v ↦ w ⊑ u
 ```
 
+<!--
 If a value `u` is greater than a function, then an even greater value `u'`
 is too.
+-->
+
+如果值 `u` 大于一个函数，那么更大的值 `u'` 也大于该函数：
 
 ```agda
 above-fun-⊑ : ∀{u u' : Value}
@@ -166,7 +187,11 @@ above-fun-⊑ : ∀{u u' : Value}
 above-fun-⊑ ⟨ v , ⟨ w , lt' ⟩ ⟩ lt = ⟨ v , ⟨ w , ⊑-trans lt' lt ⟩ ⟩
 ```
 
+<!--
 The bottom value `⊥` is not greater than a function.
+-->
+
+底值 `⊥` 不大于任何一个函数：
 
 ```agda
 above-fun⊥ : ¬ above-fun ⊥
@@ -179,8 +204,12 @@ above-fun⊥ ⟨ v , ⟨ w , lt ⟩ ⟩
 ... | ()
 ```
 
+<!--
 If the join of two values `u` and `u'` is greater than a function, then
 at least one of them is too.
+-->
+
+若两个值 `u` 和 `u'` 的连接大于一个函数，那么至少其中之一大于该函数：
 
 ```agda
 above-fun-⊔ : ∀{u u'}
@@ -195,6 +224,11 @@ above-fun-⊔{u}{u'} ⟨ v , ⟨ w , v↦w⊑u⊔u' ⟩ ⟩
 ... | inj₁ x = inj₁ ⟨ A , ⟨ B , (∈→⊑ x) ⟩ ⟩
 ... | inj₂ x = inj₂ ⟨ A , ⟨ B , (∈→⊑ x) ⟩ ⟩
 ```
+
+<!--
+On the other hand, if neither of `u` and `u'` is greater than a function,
+then their join is also not greater than a function.
+-->
 
 On the other hand, if neither of `u` and `u'` is greater than a function,
 then their join is also not greater than a function.
