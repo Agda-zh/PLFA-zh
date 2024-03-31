@@ -230,8 +230,7 @@ On the other hand, if neither of `u` and `u'` is greater than a function,
 then their join is also not greater than a function.
 -->
 
-On the other hand, if neither of `u` and `u'` is greater than a function,
-then their join is also not greater than a function.
+另一方面，若 `u` 和 `u'` 都不大于某一个函数，那么它们的连接都不大于该函数：
 
 ```agda
 not-above-fun-⊔ : ∀{u u' : Value}
@@ -243,8 +242,12 @@ not-above-fun-⊔ naf1 naf2 af12
 ... | inj₂ af2 = contradiction af2 naf2
 ```
 
+<!--
 The converse is also true. If the join of two values is not above a
 function, then neither of them is individually.
+-->
+
+反之亦然。如果两个值的连接不都不大于某个函数，那么它们各自都不大于该函数。
 
 ```agda
 not-above-fun-⊔-inv : ∀{u u' : Value} → ¬ above-fun (u ⊔ u')
@@ -259,8 +262,12 @@ not-above-fun-⊔-inv af = ⟨ f af , g af ⟩
         contradiction ⟨ v , ⟨ w , ⊑-conj-R2 lt ⟩ ⟩ af12
 ```
 
+<!--
 The property of being greater than a function value is decidable, as
 exhibited by the following function.
+-->
+
+「大于一个函数值」的性质是可判定的，如以下函数所示：
 
 ```agda
 above-fun? : (v : Value) → Dec (above-fun v)
@@ -274,8 +281,13 @@ above-fun? (u ⊔ u')
 ```
 
 
+<!--
 ## Relating values to closures
+-->
 
+## 将值关联到闭包
+
+<!--
 Next we relate semantic values to closures.  The relation `𝕍` is for
 closures whose term is a lambda abstraction, i.e., in weak-head normal
 form (WHNF). The relation 𝔼 is for any closure. Roughly speaking,
@@ -283,12 +295,20 @@ form (WHNF). The relation 𝔼 is for any closure. Roughly speaking,
 to a closure `c'` in WHNF and `𝕍 v c'`. Regarding `𝕍 v c`, it will hold when
 `c` is in WHNF, and if `v` is a function, the body of `c` evaluates
 according to `v`.
+-->
+
+接下来我们将语义值关联至闭包。关系 `𝕍` 应用于项是 λ-抽象的闭包，即
+**弱头规范形式（weak-head normal form，缩写 WHNF）**。关系 `𝔼` 应用于任意闭包。
+大致来说，当 `v` 大于一个函数值，`c` 在 WHNF 中求值为闭包 `c'`，且
+`𝕍 v c'` 时，`𝔼 v c` 成立。对于 `𝕍 v c` 而言，它在 `c` 位于 WHNF 中时成立，
+且若 `v` 是一个函数，则 `c` 的主体根据 `v` 进行求值。
 
 ```agda
 𝕍 : Value → Clos → Set
 𝔼 : Value → Clos → Set
 ```
 
+<!--
 We define `𝕍` as a function from values and closures to `Set` and not as a
 data type because it is mutually recursive with `𝔼` in a negative
 position (to the left of an implication).  We first perform case
@@ -296,6 +316,12 @@ analysis on the term in the closure. If the term is a variable or
 application, then `𝕍` is false (`Bot`). If the term is a lambda
 abstraction, we define `𝕍` by recursion on the value, which we
 describe below.
+-->
+
+我们将 `𝕍` 定义为一个从值和闭包到 `Set` 的函数，而非数据类型，
+因为它在否定的位置（蕴含式的左侧）与 `𝔼` 互递归。
+我们首先对闭包中的项进行情况分析。若该项是一个变量或应用，则 `𝕍`
+为假（`Bot`）。若该项是一个 λ-抽象，则 `𝕍` 对值进行递归，如下所述：
 
 ```agda
 𝕍 v (clos (` x₁) γ) = Bot
@@ -307,6 +333,7 @@ describe below.
 𝕍 (u ⊔ v) (clos (ƛ N) γ) = 𝕍 u (clos (ƛ N) γ) × 𝕍 v (clos (ƛ N) γ)
 ```
 
+<!--
 * If the value is `⊥`, then the result is true (`⊤`).
 
 * If the value is a join (u ⊔ v), then the result is the pair
@@ -316,21 +343,40 @@ describe below.
   `clos (ƛ N) γ`. Given any closure `c` such that `𝔼 v c`, if `w` is
   greater than a function, then `N` evaluates (with `γ` extended with `c`)
   to some closure `c'` and we have `𝕍 w c'`.
+-->
 
+* 若值为 `⊥`，则结果为真（`⊤`）。
 
+* 若值是一个连接（`u ⊔ v`），则结果是一个 `𝕍` 为真时 `u` 和 `v` 的序对（合取）。
+
+* 最关键的情况是函数值 `v ↦ w` 和闭包 `clos (ƛ N) γ`。给定任意闭包 `c`
+  使得 `𝔼 v c`，若 `w` 大于一个函数，则 `N` 求值（用 `c` 扩展 `γ`）
+  为某个闭包 `c'`，于是我们有 `𝕍 w c'`。
+
+<!--
 The definition of `𝔼` is straightforward. If `v` is a greater than a
 function, then `M` evaluates to a closure related to `v`.
+-->
+
+`𝔼` 的定义非常直白：若 `v` 大于一个函数，则 `M` 求值为一个与 `v` 关联的闭包。
 
 ```agda
 𝔼 v (clos M γ') = above-fun v → Σ[ c ∈ Clos ] γ' ⊢ M ⇓ c × 𝕍 v c
 ```
 
+<!--
 The proof of the main lemma is by induction on `γ ⊢ M ↓ v`, so it goes
 underneath lambda abstractions and must therefore reason about open
 terms (terms with variables). So we must relate environments of
 semantic values to environments of closures.  In the following, `𝔾`
 relates `γ` to `γ'` if the corresponding values and closures are related
 by `𝔼`.
+-->
+
+主引理通过对 `γ ⊢ M ↓ v` 进行归纳来证明，所以它属于 λ-抽象的情况，
+因而必须对开项（即带变量的项）进行论证。
+因此，我们必须将语义值的环境与闭包的环境关联起来。
+在下文中，如果对应的值和闭包通过 `𝔼` 相关联，则 `𝔾` 将 `γ` 与 `γ'` 相关联。
 
 ```agda
 𝔾 : ∀{Γ} → Env Γ → ClosEnv Γ → Set
@@ -345,9 +391,14 @@ by `𝔼`.
 𝔾-ext {Γ} {γ} {γ'} g e {S x} = g
 ```
 
+<!--
 We need a few properties of the `𝕍` and `𝔼` relations.  The first is that
 a closure in the `𝕍` relation must be in weak-head normal form.  We
 define WHNF has follows.
+-->
+
+我们需要一些关系 `𝕍` 和 `𝔼` 的相关性质。首先 `𝕍` 关系中的闭包必须是弱头范式（WHNF）。
+我们将 WHNF 定义如下：
 
 ```agda
 data WHNF : ∀ {Γ A} → Γ ⊢ A → Set where
@@ -355,7 +406,11 @@ data WHNF : ∀ {Γ A} → Γ ⊢ A → Set where
      → WHNF (ƛ N)
 ```
 
+<!--
 The proof goes by cases on the term in the closure.
+-->
+
+可通过对闭包中的项进行情况分析证明：
 
 ```agda
 𝕍→WHNF : ∀{Γ}{γ : ClosEnv Γ}{M : Γ ⊢ ★}{v}
@@ -365,9 +420,14 @@ The proof goes by cases on the term in the closure.
 𝕍→WHNF {M = L · M} {v} ()
 ```
 
+<!--
 Next we have an introduction rule for `𝕍` that mimics the `⊔-intro`
 rule. If both `u` and `v` are related to a closure `c`, then their join is
 too.
+-->
+
+接着我们有一条 `𝕍` 的引入规则，它类似于 `⊔-intro` 规则。
+若 `u` 和 `v` 都与闭包 `c` 相关联，则它们的连接也与 `c` 相关联：
 
 ```agda
 𝕍⊔-intro : ∀{c u v}
@@ -379,14 +439,29 @@ too.
 𝕍⊔-intro {clos (L · M) γ} () vc
 ```
 
+<!--
 In a moment we prove that `𝕍` is preserved when going from a greater
 value to a lesser value: if `𝕍 v c` and `v' ⊑ v`, then `𝕍 v' c`.
 This property, named `sub-𝕍`, is needed by the main lemma in
 the case for the `sub` rule.
+-->
 
+In a moment we prove that `𝕍` is preserved when going from a greater
+value to a lesser value: if `𝕍 v c` and `v' ⊑ v`, then `𝕍 v' c`.
+This property, named `sub-𝕍`, is needed by the main lemma in
+the case for the `sub` rule.
+稍后我们证明当从较大值映射到较小值时，`𝕍` 保持成立：若 `𝕍 v c` 且
+`v' ⊑ v` 则 `𝕍 v' c`。我们将此性质命名为 `sub-𝕍`，它会在 `sub`
+规则的情况的主引理中用到。
+
+<!--
 To prove `sub-𝕍`, we in turn need the following property concerning
 values that are not greater than a function, that is, values that are
 equivalent to `⊥`. In such cases, `𝕍 v (clos (ƛ N) γ')` is trivially true.
+-->
+
+为了证明 `sub-𝕍`，我们还需要以下关于「不大于函数的值」，也就是等价于
+`⊥` 的值的属性。在此情况下，`𝕍 v (clos (ƛ N) γ')` 平凡成立。
 
 ```agda
 not-above-fun-𝕍 : ∀{v : Value}{Γ}{γ' : ClosEnv Γ}{N : Γ , ★ ⊢ ★ }
@@ -407,9 +482,14 @@ sub-𝕍 : ∀{c : Clos}{v v'} → 𝕍 v c → v' ⊑ v → 𝕍 v' c
 sub-𝔼 : ∀{c : Clos}{v v'} → 𝔼 v c → v' ⊑ v → 𝔼 v' c
 ```
 
+<!--
 We prove `sub-𝕍` by case analysis on the closure's term, to dispatch the
 cases for variables and application. We then proceed by induction on
 `v' ⊑ v`. We describe each case below.
+-->
+
+我们通过对闭包的项进行情况分析来证明 `sub-𝕍`，即将情况分为变量和应用两类，
+然后我们对 `v' ⊑ v` 进行归纳。接下来详述每一种情况。
 
 ```agda
 sub-𝕍 {clos (` x) γ} {v} () lt
@@ -453,58 +533,107 @@ sub-𝕍 {c} {v ↦ w ⊔ v ↦ w'} ⟨ vcw , vcw' ⟩ ⊑-dist ev1c ⟨ v' , �
 ... | inj₂ af3 = contradiction af3 naf3
 ```
 
+<!--
 * Case `⊑-bot`. We immediately have `𝕍 ⊥ (clos (ƛ N) γ)`.
+-->
 
+* 情况 `⊑-bot`：我们直接就有 `𝕍 ⊥ (clos (ƛ N) γ)`。
+
+<!--
 * Case `⊑-conj-L`.
+-->
+
+* 情况 `⊑-conj-L`：
 
         v₁' ⊑ v     v₂' ⊑ v
         -------------------
         (v₁' ⊔ v₂') ⊑ v
 
+<!--
   The induction hypotheses gives us `𝕍 v₁' (clos (ƛ N) γ)`
   and `𝕍 v₂' (clos (ƛ N) γ)`, which is all we need for this case.
+-->
 
+  归纳法则给出了 `𝕍 v₁' (clos (ƛ N) γ)` 和 `𝕍 v₂' (clos (ƛ N) γ)`，
+  这就是本情况中所有需要的东西。
+
+<!--
 * Case `⊑-conj-R1`.
+-->
+
+* 情况 `⊑-conj-R1`：
 
         v' ⊑ v₁
         -------------
         v' ⊑ (v₁ ⊔ v₂)
 
+<!--
   The induction hypothesis gives us `𝕍 v' (clos (ƛ N) γ)`.
+-->
 
+  归纳法则给出了 `𝕍 v' (clos (ƛ N) γ)`。
+
+<!--
 * Case `⊑-conj-R2`.
+-->
+
+* 情况 `⊑-conj-R2`：
 
         v' ⊑ v₂
         -------------
         v' ⊑ (v₁ ⊔ v₂)
 
+<!--
   Again, the induction hypothesis gives us `𝕍 v' (clos (ƛ N) γ)`.
+-->
 
+  同样，归纳法则给出了 `𝕍 v' (clos (ƛ N) γ)`。
+
+<!--
 * Case `⊑-trans`.
+-->
+
+* 情况 `⊑-trans`：
 
         v' ⊑ v₂   v₂ ⊑ v
         -----------------
              v' ⊑ v
 
+<!--
   The induction hypothesis for `v₂ ⊑ v` gives us
   `𝕍 v₂ (clos (ƛ N) γ)`. We apply the induction hypothesis
   for `v' ⊑ v₂` to conclude that `𝕍 v' (clos (ƛ N) γ)`.
+-->
 
+  归纳法则 `v₂ ⊑ v` 给出了 `𝕍 v₂ (clos (ƛ N) γ)`。我们应用归纳法则
+  `v' ⊑ v₂` 可得 `𝕍 v' (clos (ƛ N) γ)`。
+
+<!--
 * Case `⊑-dist`. This case  is the most difficult. We have
+-->
+
+* 情况 `⊑-dist`：这种情况是最困难的。我们有
 
         𝕍 (v ↦ w) (clos (ƛ N) γ)
         𝕍 (v ↦ w') (clos (ƛ N) γ)
 
-  and need to show that
+  需要证明
 
         𝕍 (v ↦ (w ⊔ w')) (clos (ƛ N) γ)
 
+<!--
   Let `c` be an arbitrary closure such that `𝔼 v c`.
   Assume `w ⊔ w'` is greater than a function.
   Unfortunately, this does not mean that both `w` and `w'`
   are above functions. But thanks to the lemma `above-fun-⊔`,
   we know that at least one of them is greater than a function.
+-->
 
+  令 `c` 为任意闭包使得 `𝔼 v c`。假设 `w ⊔ w'` 大于一个函数。
+  不幸的是，这并不意味着 `w` 和 `w'` 都大于该函数。但幸亏有引理
+  `above-fun-⊔`，我们知道它们中至少有一个大于该函数。
+
+<!--
   * Suppose both of them are greater than a function.  Then we have
     `γ ⊢ N ⇓ clos L δ` and `𝕍 w (clos L δ)`.  We also have `γ ⊢ N ⇓ c₃` and
     `𝕍 w' c₃`.  Because the big-step semantics is deterministic, we have
@@ -518,9 +647,25 @@ sub-𝕍 {c} {v ↦ w ⊔ v ↦ w'} ⟨ vcw , vcw' ⟩ ⊑-dist ev1c ⟨ v' , �
     `L ≡ ƛ N'` for some `N'`. Meanwhile, from `¬ above-fun w'` we have
     `𝕍 w' (clos L γ₁)`. We conclude that
     `𝕍 (w ⊔ w') (clos (ƛ N') γ₁)`.
+-->
+
+  * 假设他们都大于该函数，则我们有 `γ ⊢ N ⇓ clos L δ` 和 `𝕍 w (clos L δ)`。
+    我们还有 `γ ⊢ N ⇓ c₃` 和 `𝕍 w' c₃`。由于大步语义是可判定的，于是我们有
+    `c₃ ≡ clos L δ`。此外，根据 `𝕍 w (clos L δ)` 我们知道对于某个 `N'`
+    有 `L ≡ ƛ N'`，于是可得 `𝕍 (w ⊔ w') (clos (ƛ N') δ)`。
+
+  * 假设其中之一大于该函数而另一个不大于：即 `above-fun w` 且 `¬ above-fun w'`。
+    那么根据 `𝕍 (v ↦ w) (clos (ƛ N) γ)` 我们有 `γ ⊢ N ⇓ clos L γ₁` 和
+    `𝕍 w (clos L γ₁)`。据此我们有对于 `N'` 来说 `L ≡ ƛ N'`。
+    同时，根据 `¬ above-fun w'` 我们有 `𝕍 w' (clos L γ₁)`。于是我们可得
+    `𝕍 (w ⊔ w') (clos (ƛ N') γ₁)`。
 
 
+<!--
 The proof of `sub-𝔼` is direct and explained below.
+-->
+
+`sub-𝔼` 的证明很直接，如下所述：
 
 ```agda
 sub-𝔼 {clos M γ} {v} {v'} 𝔼v v'⊑v fv'
@@ -529,12 +674,22 @@ sub-𝔼 {clos M γ} {v} {v'} 𝔼v v'⊑v fv'
       ⟨ c , ⟨ M⇓c , sub-𝕍 𝕍v v'⊑v ⟩ ⟩
 ```
 
+<!--
 From `above-fun v'` and `v' ⊑ v` we have `above-fun v`.  Then with `𝔼 v c` we
 obtain a closure `c` such that `γ ⊢ M ⇓ c` and `𝕍 v c`. We conclude with an
 application of `sub-𝕍` with `v' ⊑ v` to show `𝕍 v' c`.
+-->
+
+根据 `above-fun v'` 和 `v' ⊑ v` 我们有 `above-fun v`。
+然后通过 `𝔼 v c` 我们得到一个闭包 `c`，使得 `γ ⊢ M ⇓ c` 且 `𝕍 v c`。
+最后，我们应用 `sub-𝕍` 和 `v' ⊑ v` 可证明 `𝕍 v' c`。
 
 
+<!--
 ## Programs with function denotation terminate via call-by-name
+-->
+
+## 通过传名调用的带函数指称的程序可停机
 
 The main lemma proves that if a term has a denotation that is above a
 function, then it terminates via call-by-name. More formally, if
