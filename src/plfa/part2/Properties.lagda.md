@@ -2,7 +2,6 @@
 title     : "Properties: 可进性与保型性"
 permalink : /Properties/
 translators : ["starxingchenc","alissa-tung"]
-progress  : 100
 ---
 
 ```agda

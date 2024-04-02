@@ -2,7 +2,6 @@
 title     : "Relations: 关系的归纳定义"
 permalink : /Relations/
 translators : ["Fangyi Zhou"]
-progress  : 100
 ---
 
 ```agda

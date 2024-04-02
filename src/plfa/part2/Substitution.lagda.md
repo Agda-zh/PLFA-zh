@@ -1,6 +1,7 @@
 ---
-title     : "Substitution: Substitution in the untyped lambda calculus"
+title     : "Substitution: 无类型 λ-演算中的代换"
 permalink : /Substitution/
+translators : ["OlingCat"]
 ---
 
 
@@ -8,7 +9,11 @@ permalink : /Substitution/
 module plfa.part2.Substitution where
 ```
 
+<!--
 ## Introduction
+-->
+
+## 引言
 
 The primary purpose of this chapter is to prove that substitution
 commutes with itself. Barendregt (1984) refers to this

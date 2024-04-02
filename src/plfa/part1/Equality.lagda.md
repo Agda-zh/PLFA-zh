@@ -2,7 +2,6 @@
 title     : "Equality: 相等性与等式推理"
 permalink : /Equality/
 translators : ["Fangyi Zhou"]
-progress  : 99
 ---
 
 ```agda

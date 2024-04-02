@@ -2,7 +2,6 @@
 title     : "BigStep: 无类型 λ-演算的大步语义"
 permalink : /BigStep/
 translators : ["starxingchenc"]
-progress  : 100
 ---
 
 ```agda

@@ -2,7 +2,6 @@
 title     : "Isomorphism: 同构与嵌入"
 permalink : /Isomorphism/
 translators : ["Fangyi Zhou"]
-progress  : 95
 ---
 
 ```agda

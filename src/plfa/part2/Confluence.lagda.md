@@ -2,7 +2,6 @@
 title     : "Confluence: 无类型 λ-演算的合流性"
 permalink : /Confluence/
 translators : ["starxingchenc"]
-progress  : 100
 ---
 
 ```agda

@@ -1,8 +1,7 @@
 ---
-title      : "Untyped: 完全正规化的无类型 λ 演算"
+title      : "Untyped: 完全正规化的无类型 λ-演算"
 permalink  : /Untyped/
 translators: ["Fangyi Zhou"]
-progress   : 100
 ---
 
 ```agda

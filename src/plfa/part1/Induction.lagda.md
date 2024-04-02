@@ -2,7 +2,6 @@
 title     : "Induction: 归纳证明"
 permalink : /Induction/
 translators : ["Oling Cat"]
-progress  : 100
 ---
 
 ```agda

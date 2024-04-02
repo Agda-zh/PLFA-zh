@@ -2,7 +2,6 @@
 title     : "Naturals: 自然数"
 permalink : /Naturals/
 translators : ["Rongxiao Fu"]
-progress  : 95
 ---
 
 ```agda

@@ -2,7 +2,6 @@
 title     : "Lambda: λ-演算简介"
 permalink : /Lambda/
 translators : ["Fangyi Zhou"]
-progress  : 100
 ---
 
 ```agda

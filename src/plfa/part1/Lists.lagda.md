@@ -2,7 +2,6 @@
 title     : "Lists: 列表与高阶函数"
 permalink : /Lists/
 translators: ["Fangyi Zhou"]
-progress  : 100
 ---
 
 ```agda
