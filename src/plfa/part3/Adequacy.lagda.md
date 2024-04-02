@@ -698,7 +698,7 @@ function, then it terminates via call-by-name. More formally, if
 induction on the derivation of `γ ⊢ M ↓ v` we discuss each case below.
 -->
 
-主引理证明了若一个项拥有大于某个函数的指称，则它通过传名调用时可停机。
+主引理证明了若一个项拥有大于某个函数的指称，则它通过传名调用（call-by-name）时可停机。
 更形式化地说，若 `γ ⊢ M ↓ v` 且 `𝔾 γ γ'` 则 `𝔼 v (clos M γ')`。
 证明通过对 `γ ⊢ M ↓ v` 的推导过程进行归纳得出，我们接下来讨论每种情况。
 

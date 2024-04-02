@@ -1,5 +1,5 @@
 ---
-title       : "Compositional: 指称语义是可组合的"
+title       : "Compositional: 指称语义的可组合性"
 permalink   : /Compositional/
 translators : ["OlingCat"]
 ---
@@ -19,7 +19,7 @@ In this chapter we prove that the denotational semantics is compositional,
 which means we fill in the ellipses in the following equations.
 -->
 
-本章我们会证明指称语义是可组合的，即我们会填补以下等式中省略号的部分。
+本章我们会证明指称语义满足可组合性，即我们会填补以下等式中省略号的部分。
 
     ℰ (` x) ≃ ...
     ℰ (ƛ M) ≃ ... ℰ M ...
