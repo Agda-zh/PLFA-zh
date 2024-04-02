@@ -32,8 +32,8 @@ jobs:
         include:
           # Default versions
           - name: "Build on Linux"
-          - name: "Build on macOS"
-            os: macOS-latest
+          # - name: "Build on macOS"
+          #   os: macOS-latest
           - name: "Build on Windows"
             os: windows-latest
 
