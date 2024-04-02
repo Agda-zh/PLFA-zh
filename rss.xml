@@ -8,7 +8,7 @@
     </description>
     <language>zh-CN</language>
     <atom:link href="https://agda-zh.github.io/PLFA-zh//rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Tue, 02 Apr 2024 08:47:09 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Apr 2024 08:53:46 +0000</lastBuildDate>
         <item>
       <title>Migration to Agda 2.6.3</title>
       <link>https://agda-zh.github.io/PLFA-zh//2023/02/26/migration-to-agda-2-6-3/index.html</link>
