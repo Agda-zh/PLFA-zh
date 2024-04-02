@@ -36,9 +36,9 @@ is a function value (not `⊥`) implies reduction to a lambda
 abstraction.
 -->
 
-这样的性质告诉我们，拥有一个指称蕴含了要么可归约为正规形式，要么发散。
-虽然确实如此，但是我们可以证明一个更强的性质！事实上，拥有一个函数值（非
-`⊥`）的指称蕴含了它可规约为 λ-抽象。
+这样的性质告诉我们，拥有一个指称蕴含了要么可归约为范式，要么发散。
+虽然确实如此，但是我们可以证明一个更强的性质！事实上，拥有某个函数值（非
+`⊥`）的指称蕴含了它可归约为 λ-抽象。
 
 <!--
 This stronger property, reformulated a bit, is known as _adequacy_.
@@ -47,7 +47,7 @@ then `M` reduces to a lambda abstraction.
 -->
 
 这种更强的属性可重新表述为**充分性（Adequacy）**。
-也就是说，如果项 `M` 指称等价于一个 λ-抽象，那么 `M` 就能规约为该 λ-抽象。
+也就是说，如果项 `M` 指称等价于一个 λ-抽象，那么 `M` 就能归约为该 λ-抽象。
 
 <!--
     ℰ M ≃ ℰ (ƛ N)  implies M —↠ ƛ N' for some N'
@@ -74,10 +74,10 @@ semantic values to closures using a _logical relation_ `𝕍`.
 -->
 
 回想一下，对于某些 `v` 和 `w`，`ℰ M ≃ ℰ (ƛ N)` 等价于 `γ ⊢ M ↓ (v ↦ w)`。
-我们将证明 `γ ⊢ M ↓ (v ↦ w)` 蕴含了 λ-抽象的多步规约。`γ ⊢ M ↓ (v ↦ w)`
+我们将证明 `γ ⊢ M ↓ (v ↦ w)` 蕴含了 λ-抽象的多步归约。`γ ⊢ M ↓ (v ↦ w)`
 的推导过程的递归结构与多步归约的结构完全不同，所以直接证明是很困难的。
 然而，`γ ⊢ M ↓ (v ↦ w)` 的结构更接近[大步](/BigStep/)的传名求值。
-此外，我们已经证明大步求值意味着多步规约为 λ（`cbn→reduce`）。
+此外，我们已经证明大步求值意味着多步归约为 λ（`cbn→reduce`）。
 所以我们要证明 `γ ⊢ M ↓ (v ↦ w)` 蕴含 `γ' ⊢ M ⇓ c`，其中 `c` 是一个闭包
 （一个项与环境的序对），`γ'` 是一个环境，它将变量映射为闭包，并且 `γ` 和
 `γ'` 以适当的方式相关联。证明过程是对 `γ ⊢ M ↓ v` 的推导过程的归纳，
@@ -107,7 +107,7 @@ The rest of this chapter is organized as follows.
 本章后面内容的结构组织如下：
 
 * 为了使关系 `𝕍` 相对于 `⊑` 向下封闭，我们必须放宽 `M` 的结果必须为函数值的要求，
-  转而要求 `M` 的结果大于或等于一个函数值。我们建立了几个关于“大于一个函数”的性质。
+  转而要求 `M` 的结果大于或等于某个函数值。我们建立了几个关于“大于某个函数”的性质。
 
 * 我们定义了逻辑关系 `𝕍` 将值和闭包关联了起来，并将它扩展为项 `𝔼`
   和环境 `𝔾` 之间的关系。我们证明了几个引理，最终得出以下性质：若 `𝕍 v c`
@@ -158,14 +158,14 @@ open import plfa.part3.Soundness using (soundness)
 ## The property of being greater or equal to a function
 -->
 
-## 大于或等于一个函数的性质
+## 大于或等于某个函数的性质
 
 <!--
 We define the following short-hand for saying that a value is
 greater-than or equal to a function value.
 -->
 
-我们定义以下简写来表示一个值大于或等于一个函数值：
+我们定义以下简写来表示一个值大于或等于某个函数值：
 
 ```agda
 above-fun : Value → Set
@@ -177,7 +177,7 @@ If a value `u` is greater than a function, then an even greater value `u'`
 is too.
 -->
 
-如果值 `u` 大于一个函数，那么更大的值 `u'` 也大于该函数：
+如果值 `u` 大于某个函数，那么更大的值 `u'` 也大于该函数：
 
 ```agda
 above-fun-⊑ : ∀{u u' : Value}
@@ -191,7 +191,7 @@ above-fun-⊑ ⟨ v , ⟨ w , lt' ⟩ ⟩ lt = ⟨ v , ⟨ w , ⊑-trans lt' lt 
 The bottom value `⊥` is not greater than a function.
 -->
 
-底值 `⊥` 不大于任何一个函数：
+底值 `⊥` 不大于任何某个函数：
 
 ```agda
 above-fun⊥ : ¬ above-fun ⊥
@@ -209,7 +209,7 @@ If the join of two values `u` and `u'` is greater than a function, then
 at least one of them is too.
 -->
 
-若两个值 `u` 和 `u'` 的连接大于一个函数，那么至少其中之一大于该函数：
+若两个值 `u` 和 `u'` 的连接大于某个函数，那么至少其中之一大于该函数：
 
 ```agda
 above-fun-⊔ : ∀{u u'}
@@ -230,7 +230,7 @@ On the other hand, if neither of `u` and `u'` is greater than a function,
 then their join is also not greater than a function.
 -->
 
-另一方面，若 `u` 和 `u'` 都不大于某一个函数，那么它们的连接都不大于该函数：
+另一方面，若 `u` 和 `u'` 都不大于某个函数，那么它们的连接都不大于该函数：
 
 ```agda
 not-above-fun-⊔ : ∀{u u' : Value}
@@ -267,7 +267,7 @@ The property of being greater than a function value is decidable, as
 exhibited by the following function.
 -->
 
-「大于一个函数值」的性质是可判定的，如以下函数所示：
+「大于某个函数值」的性质是可判定的，如以下函数所示：
 
 ```agda
 above-fun? : (v : Value) → Dec (above-fun v)
@@ -298,10 +298,10 @@ according to `v`.
 -->
 
 接下来我们将语义值关联至闭包。关系 `𝕍` 应用于项是 λ-抽象的闭包，即
-**弱头规范形式（weak-head normal form，缩写 WHNF）**。关系 `𝔼` 应用于任意闭包。
-大致来说，当 `v` 大于一个函数值，`c` 在 WHNF 中求值为闭包 `c'`，且
+**弱头范式（weak-head normal form，缩写 WHNF）**。关系 `𝔼` 应用于任意闭包。
+大致来说，当 `v` 大于某个函数值，`c` 在 WHNF 中求值为闭包 `c'`，且
 `𝕍 v c'` 时，`𝔼 v c` 成立。对于 `𝕍 v c` 而言，它在 `c` 位于 WHNF 中时成立，
-且若 `v` 是一个函数，则 `c` 的主体根据 `v` 进行求值。
+且若 `v` 是某个函数，则 `c` 的主体根据 `v` 进行求值。
 
 ```agda
 𝕍 : Value → Clos → Set
@@ -350,7 +350,7 @@ describe below.
 * 若值是一个连接（`u ⊔ v`），则结果是一个 `𝕍` 为真时 `u` 和 `v` 的序对（合取）。
 
 * 最关键的情况是函数值 `v ↦ w` 和闭包 `clos (ƛ N) γ`。给定任意闭包 `c`
-  使得 `𝔼 v c`，若 `w` 大于一个函数，则 `N` 求值（用 `c` 扩展 `γ`）
+  使得 `𝔼 v c`，若 `w` 大于某个函数，则 `N` 求值（用 `c` 扩展 `γ`）
   为某个闭包 `c'`，于是我们有 `𝕍 w c'`。
 
 <!--
@@ -358,7 +358,7 @@ The definition of `𝔼` is straightforward. If `v` is a greater than a
 function, then `M` evaluates to a closure related to `v`.
 -->
 
-`𝔼` 的定义非常直白：若 `v` 大于一个函数，则 `M` 求值为一个与 `v` 关联的闭包。
+`𝔼` 的定义非常直白：若 `v` 大于某个函数，则 `M` 求值为一个与 `v` 关联的闭包。
 
 ```agda
 𝔼 v (clos M γ') = above-fun v → Σ[ c ∈ Clos ] γ' ⊢ M ⇓ c × 𝕍 v c
@@ -629,7 +629,7 @@ sub-𝕍 {c} {v ↦ w ⊔ v ↦ w'} ⟨ vcw , vcw' ⟩ ⊑-dist ev1c ⟨ v' , �
   we know that at least one of them is greater than a function.
 -->
 
-  令 `c` 为任意闭包使得 `𝔼 v c`。假设 `w ⊔ w'` 大于一个函数。
+  令 `c` 为任意闭包使得 `𝔼 v c`。假设 `w ⊔ w'` 大于某个函数。
   不幸的是，这并不意味着 `w` 和 `w'` 都大于该函数。但幸亏有引理
   `above-fun-⊔`，我们知道它们中至少有一个大于该函数。
 
@@ -682,21 +682,35 @@ application of `sub-𝕍` with `v' ⊑ v` to show `𝕍 v' c`.
 
 根据 `above-fun v'` 和 `v' ⊑ v` 我们有 `above-fun v`。
 然后通过 `𝔼 v c` 我们得到一个闭包 `c`，使得 `γ ⊢ M ⇓ c` 且 `𝕍 v c`。
-最后，我们应用 `sub-𝕍` 和 `v' ⊑ v` 可证明 `𝕍 v' c`。
+最后，我们应用 `sub-𝕍` 和 `v' ⊑ v` 即可证明 `𝕍 v' c`。
 
 
 <!--
 ## Programs with function denotation terminate via call-by-name
 -->
 
-## 通过传名调用的带函数指称的程序可停机
+## 拥有函数指称的程序通过传名调用可停机
 
+<!--
 The main lemma proves that if a term has a denotation that is above a
 function, then it terminates via call-by-name. More formally, if
 `γ ⊢ M ↓ v` and `𝔾 γ γ'`, then `𝔼 v (clos M γ')`. The proof is by
 induction on the derivation of `γ ⊢ M ↓ v` we discuss each case below.
+-->
 
+主引理证明了若一个项拥有大于某个函数的指称，则它通过传名调用时可停机。
+更形式化地说，若 `γ ⊢ M ↓ v` 且 `𝔾 γ γ'` 则 `𝔼 v (clos M γ')`。
+证明通过对 `γ ⊢ M ↓ v` 的推导过程进行归纳得出，我们接下来讨论每种情况。
+
+<!--
 The following lemma, kth-x, is used in the case for the `var` rule.
+-->
+
+<!--
+The following lemma, kth-x, is used in the case for the `var` rule.
+-->
+
+以下引理 `kth-x` 会在 `var` 规则的情况中用到：
 
 ```agda
 kth-x : ∀{Γ}{γ' : ClosEnv Γ}{x : Γ ∋ ★}
@@ -760,13 +774,22 @@ kth-x{γ' = γ'}{x = x} with γ' x
       ⟨ c , ⟨ M⇓c , sub-𝕍 𝕍v v'⊑v ⟩ ⟩
 ```
 
+<!--
 * Case `var`. Looking up `x` in `γ'` yields some closure, `clos M' δ`,
   and from `𝔾 γ γ'` we have `𝔼 (γ x) (clos M' δ)`. With the premise
   `above-fun (γ x)`, we obtain a closure `c` such that `δ ⊢ M' ⇓ c`
   and `𝕍 (γ x) c`. To conclude `γ' ⊢ x ⇓ c` via `⇓-var`, we
   need `γ' x ≡ clos M' δ`, which is obvious, but it requires some
   Agda shananigans via the `kth-x` lemma to get our hands on it.
+-->
 
+* 情况 `var`：在 `γ'` 中查找 `x` 会产生某个闭包，`clos M' δ`，
+  根据 `𝔾 γ γ'` 我们有 `𝔼 (γ x) (clos M' δ)`，根据前提
+  `above-fun (γ x)` 可得闭包 `c` 使得 `δ ⊢ M' ⇓ c` 且 `𝕍 (γ x) c`。
+  为了通过 `⇓-var` 得出 `γ' ⊢ x ⇓ c`，我们需要 `γ' x ≡ clos M' δ`，
+  这很显然，但它需要通过 `kth-x` 引理让 Agda 施展一些「诡计」才能得到。
+
+<!--
 * Case `↦-elim`. We have `γ ⊢ L · M ↓ v`.
   The induction hypothesis for `γ ⊢ L ↓ v₁ ↦ v`
   gives us `γ' ⊢ L ⇓ clos L' δ` and `𝕍 v (clos L' δ)`.
@@ -776,7 +799,16 @@ kth-x{γ' = γ'}{x = x} with γ' x
   Together with the premise `above-fun v` and `𝕍 v (clos L' δ)`,
   we obtain a closure `c'` such that `δ ⊢ N ⇓ c'` and `𝕍 v c'`.
   We conclude that `γ' ⊢ L · M ⇓ c'` by rule `⇓-app`.
+-->
 
+* 情况 `↦-elim`：我们有 `γ ⊢ L · M ↓ v`。
+  归纳假设 `γ ⊢ L ↓ v₁ ↦ v` 给出了 `γ' ⊢ L ⇓ clos L' δ` 和 `𝕍 v (clos L' δ)`。
+  当然，对某些 `N` 有 `L' ≡ ƛ N`。根据归纳假设 `γ ⊢ M ↓ v₁`，我们有
+  `𝔼 v₁ (clos M γ')`，配合前提 `above-fun v` 和 `𝕍 v (clos L' δ)`，
+  可得闭包 `c'` 使得 `δ ⊢ N ⇓ c'` 且 `𝕍 v c'`。最后根据规则 `⇓-app`
+  可得 `γ' ⊢ L · M ⇓ c'`。
+
+<!--
 * Case `↦-intro`. We have `γ ⊢ ƛ N ↓ v ↦ w`.
   We immediately have `γ' ⊢ ƛ M ⇓ clos (ƛ M) γ'` by rule `⇓-lam`.
   But we also need to prove `𝕍 (v ↦ w) (clos (ƛ N) γ')`.
@@ -786,9 +818,24 @@ kth-x{γ' = γ'}{x = x} with γ' x
   We prove this by the induction hypothesis for `γ , v ⊢ N ↓ v'`
   but we must first show that `𝔾 (γ , v) (γ' , c)`. We prove
   that by the lemma `𝔾-ext`, using facts `𝔾 γ γ'` and `𝔼 v c`.
+-->
 
+* 情况 `↦-intro`：我们有 `γ ⊢ ƛ N ↓ v ↦ w`，
+  根据规则 `⇓-lam` 直接可得 `γ' ⊢ ƛ M ⇓ clos (ƛ M) γ'`，
+  但还需证明 `𝕍 (v ↦ w) (clos (ƛ N) γ')`。
+  令 `c` 为任意闭包使得 `𝔼 v c`。假设 `v'` 大于某个函数值，
+  需要证明对于某个 `c'` 有 `γ' , c ⊢ N ⇓ c'` 且 `𝕍 v' c'`。
+  我们可通过归纳假设 `γ , v ⊢ N ↓ v'` 证明它，不过首先需要证明
+  `𝔾 (γ , v) (γ' , c)`，对此可通过引理 `𝔾-ext`，利用 `𝔾 γ γ'` 和 `𝔼 v c`
+  这两个事实来证明。
+
+<!--
 * Case `⊥-intro`. We have the premise `above-fun ⊥`, but that's impossible.
+-->
 
+* 情况 `⊥-intro`：我们有前提 `above-fun ⊥`，但这是不可能的。
+
+<!--
 * Case `⊔-intro`. We have `γ ⊢ M ↓ (v₁ ⊔ v₂)` and `above-fun (v₁ ⊔ v₂)`
   and need to show `γ' ⊢ M ↓ c` and `𝕍 (v₁ ⊔ v₂) c` for some `c`.
   Again, by `above-fun-⊔`, at least one of `v₁` or `v₂` is greater than
@@ -806,18 +853,49 @@ kth-x{γ' = γ'}{x = x} with γ' x
     and `𝕍 v₁ (clos (ƛ N) γ₁)`.
     Then because `v₂` is not greater than a function, we also have
     `𝕍 v₂ (clos (ƛ N) γ₁)`. We conclude that `𝕍 (v₁ ⊔ v₂) (clos (ƛ N) γ₁)`.
+-->
 
+* 情况 `⊔-intro`：我们有 `γ ⊢ M ↓ (v₁ ⊔ v₂)` 和 `above-fun (v₁ ⊔ v₂)`，
+  需要证明对某个 `c` 有 `γ' ⊢ M ↓ c` 和 `𝕍 (v₁ ⊔ v₂) c`。
+  同样，根据 `above-fun-⊔`，`v₁` 或 `v₂` 至少二者之一大于某个函数。
+
+  * 假设 `v₁` 和 `v₂` 二者均大于某个函数。根据归纳假设 `γ ⊢ M ↓ v₁`
+    和 `γ ⊢ M ↓ v₂`，对于某个 `c₁` 和 `c₂` 我们有 `γ' ⊢ M ⇓ c₁`、
+    `𝕍 v₁ c₁`、`γ' ⊢ M ⇓ c₂` 和 `𝕍 v₂ c₂`。由于 `⇓` 是确定性的，因此我们有
+     `c₂ ≡ c₁`。于是根据 `𝕍⊔-intro` 可得 `𝕍 (v₁ ⊔ v₂) c₁`。
+
+  * 不失一般性，假设 `v₁` 大于某个函数但 `v₂` 不大于。根据归纳假设
+    `γ ⊢ M ↓ v₁` 并使用 `𝕍→WHNF`，我们有 `γ' ⊢ M ⇓ clos (ƛ N) γ₁`
+    和 `𝕍 v₁ (clos (ƛ N) γ₁)`。之后由于 `v₂` 不大于该函数，我们还有
+    `𝕍 v₂ (clos (ƛ N) γ₁)`。于是可得 `𝕍 (v₁ ⊔ v₂) (clos (ƛ N) γ₁)`。
+
+<!--
 * Case `sub`. We have `γ ⊢ M ↓ v`, `v' ⊑ v`, and `above-fun v'`.
   We need to show that `γ' ⊢ M ⇓ c` and `𝕍 v' c` for some `c`.
   We have `above-fun v` by `above-fun-⊑`,
   so the induction hypothesis for `γ ⊢ M ↓ v` gives us a closure `c`
   such that `γ' ⊢ M ⇓ c` and `𝕍 v c`. We conclude that `𝕍 v' c` by `sub-𝕍`.
+-->
+
+* 情况 `sub`：我们有 `γ ⊢ M ↓ v`、`v' ⊑ v` 和 `above-fun v'`。
+  我们需要证明对于某个 `c` 有 `γ' ⊢ M ⇓ c` 且 `𝕍 v' c`。
+  根据 `above-fun-⊑` 我们有 `above-fun v`，因此根据归纳假设 `γ ⊢ M ↓ v`
+  可得某个闭包 `c` 使得 `γ' ⊢ M ⇓ c` 且 `𝕍 v c`。根据 `sub-𝕍` 可得 `𝕍 v' c`。
 
 
+<!--
 ## Proof of denotational adequacy
+-->
 
+## 指称充分性的证明
+
+<!--
 From the main lemma we can directly show that `ℰ M ≃ ℰ (ƛ N)` implies
 that `M` big-steps to a lambda, i.e., `∅ ⊢ M ⇓ clos (ƛ N′) γ`.
+-->
+
+根据主引理我们可直接证明 `ℰ M ≃ ℰ (ƛ N)` 蕴含 `M` 可大步归约为一个
+λ-抽象，即 `∅ ⊢ M ⇓ clos (ƛ N′) γ`。
 
 ```agda
 ↓→⇓ : ∀{M : ∅ ⊢ ★}{N : ∅ , ★ ⊢ ★}  →  ℰ M ≃ ℰ (ƛ N)
@@ -832,14 +910,25 @@ that `M` big-steps to a lambda, i.e., `∅ ⊢ M ⇓ clos (ƛ N′) γ`.
     ⟨ Γ , ⟨ N′ , ⟨ γ , M⇓c ⟩  ⟩ ⟩
 ```
 
+<!--
 The proof goes as follows. We derive `∅ ⊢ ƛ N ↓ ⊥ ↦ ⊥` and
 then `ℰ M ≃ ℰ (ƛ N)` gives us `∅ ⊢ M ↓ ⊥ ↦ ⊥`. We conclude
 by applying the main lemma to obtain `∅ ⊢ M ⇓ clos (ƛ N′) γ`
 for some `N′` and `γ`.
+-->
 
+其证明如下：我们推导出 `∅ ⊢ ƛ N ↓ ⊥ ↦ ⊥`，然后根据 `ℰ M ≃ ℰ (ƛ N)`
+得到 `∅ ⊢ M ↓ ⊥ ↦ ⊥`。我们应用主引理可得，对于某些 `N′` 和 `γ`
+有 `∅ ⊢ M ⇓ clos (ƛ N′) γ`。
+
+<!--
 Now to prove the adequacy property. We apply the above
 lemma to obtain `∅ ⊢ M ⇓ clos (ƛ N′) γ` and then
 apply `cbn→reduce` to conclude.
+-->
+
+现在进行充分性的证明。我们应用上面的引理得到 `∅ ⊢ M ⇓ clos (ƛ N′) γ`，
+之后应用 `cbn→reduce` 得出结论。
 
 ```
 adequacy : ∀{M : ∅ ⊢ ★}{N : ∅ , ★ ⊢ ★}
@@ -852,8 +941,13 @@ adequacy{M}{N} eq
     cbn→reduce M⇓
 ```
 
+<!--
 ## Call-by-name is equivalent to beta reduction
+-->
 
+## 传名调用等价于 β-归约
+
+<!--
 As promised, we return to the question of whether call-by-name
 evaluation is equivalent to beta reduction. In chapter
 [BigStep](/BigStep/) we established the forward
@@ -861,6 +955,12 @@ direction: that if call-by-name produces a result, then the program
 beta reduces to a lambda abstraction (`cbn→reduce`).  We now prove the backward
 direction of the if-and-only-if, leveraging our results about the
 denotational semantics.
+-->
+
+按照承诺，我们回到「传名调用求值是否等价于 β-归约」的问题上来。
+在[大步语义](/BigStep/)一章中，我们建立了前进的方向：若传名调用能够产生结果，
+则程序可 β-归约为 λ-抽象（`cbn→reduce`）。
+现在，我们利用关于指称语义的结论来证明「当且仅当」的后退的方向。
 
 ```
 reduce→cbn : ∀ {M : ∅ ⊢ ★} {N : ∅ , ★ ⊢ ★}
@@ -870,13 +970,23 @@ reduce→cbn : ∀ {M : ∅ ⊢ ★} {N : ∅ , ★ ⊢ ★}
 reduce→cbn M—↠ƛN = ↓→⇓ (soundness M—↠ƛN)
 ```
 
+<!--
 Suppose `M —↠ ƛ N`. Soundness of the denotational semantics gives us
 `ℰ M ≃ ℰ (ƛ N)`. Then by `↓→⇓` we conclude that
 `∅' ⊢ M ⇓ clos (ƛ N′) δ` for some `N′` and `δ`.
+-->
 
+假设 `M —↠ ƛ N`，根据指称语义的可靠性可得 `ℰ M ≃ ℰ (ƛ N)`。接着根据
+`↓→⇓` 可得对于某个 `N′` 和 `δ` 有 `∅' ⊢ M ⇓ clos (ƛ N′) δ`。
+
+<!--
 Putting the two directions of the if-and-only-if together, we
 establish that call-by-name evaluation is equivalent to beta reduction
 in the following sense.
+-->
+
+将「当且仅当」的两个方向合并在一起，
+我们就建立了传名调用求值在下面所述的意义上等价于 β-归约。
 
 ```
 cbn↔reduce : ∀ {M : ∅ ⊢ ★}
