@@ -1,5 +1,5 @@
 ---
-title     : "ContextualEquivalence: Denotational equality implies contextual equivalence"
+title     : "ContextualEquivalence: 指称相等蕴含语境等价"
 permalink : /ContextualEquivalence/
 translators : ["OlingCat"]
 ---

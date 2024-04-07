@@ -728,7 +728,7 @@ restated in this way.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -747,7 +747,7 @@ Show that `y ≤ z` holds if and only if there exists a `x` such that
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -905,7 +905,7 @@ which is a corollary of `≡Can`.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--

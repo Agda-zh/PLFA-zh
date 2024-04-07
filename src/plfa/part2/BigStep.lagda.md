@@ -198,7 +198,7 @@ terminates under big-step call-by-name evaluation.
 
 
 ```
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -618,7 +618,7 @@ with `M`. Prove that `M ↓ N` implies `M —↠ N`.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--

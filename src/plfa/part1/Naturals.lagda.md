@@ -145,7 +145,7 @@ Write out `7` in longhand.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -852,7 +852,7 @@ Compute `3 + 4`, writing out your reasoning as a chain of equations, using the e
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -967,7 +967,7 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations, using the e
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -994,7 +994,7 @@ Check that `3 ^ 4` is `81`.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1141,7 +1141,7 @@ Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equati
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1844,7 +1844,7 @@ Confirm that these both give the correct answer for zero through four.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--

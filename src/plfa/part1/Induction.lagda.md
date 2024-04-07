@@ -149,7 +149,7 @@ and are associative, commutative, and distribute over one another.
 （你不必证明这些性质）
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -161,7 +161,7 @@ associative but is not commutative.
 （你不必证明这些性质）
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1363,7 +1363,7 @@ first four days using a finite story of creation, as
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1661,7 +1661,7 @@ is associative and commutative.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1687,7 +1687,7 @@ for all naturals `m`, `n`, and `p`.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1713,7 +1713,7 @@ for all naturals `m`, `n`, and `p`.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1740,7 +1740,7 @@ you will need to formulate and prove suitable lemmas.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1767,7 +1767,7 @@ for all naturals `n`. Did your proof require induction?
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1794,7 +1794,7 @@ for all naturals `m`, `n`, and `p`.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1821,7 +1821,7 @@ for all `m`, `n`, and `p`.
 对于所有 `m`、`n` 和 `p` 成立。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1865,7 +1865,7 @@ For each law: if it holds, prove; if not, give a counterexample.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 

@@ -640,7 +640,7 @@ regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mon
 和 `+-mono-≤` 的定义。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 

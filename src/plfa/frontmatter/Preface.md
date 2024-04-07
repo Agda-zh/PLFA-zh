@@ -2,7 +2,6 @@
 title     : "Preface: 前言"
 permalink : /Preface/
 translators : ["Oling Cat"]
-progress  : 100
 ---
 
 <!--
@@ -235,7 +234,7 @@ There is a private repository of answers to selected questions on
 github. Please contact Philip Wadler if you would like to access it.
 -->
 
-请不要在公共空间中发表习题的答案。
+请勿在公共空间发布习题答案。
 
 GitHub 上有一个发布了部分习题答案的非公开代码仓库。如果你想获得访问，请联系
 Philip Wadler。

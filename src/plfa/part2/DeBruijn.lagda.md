@@ -878,7 +878,7 @@ de Bruijn representation.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1650,7 +1650,7 @@ values.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -2099,7 +2099,7 @@ Using the evaluator, confirm that two times two is four.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 

@@ -280,7 +280,7 @@ that is, the canonical forms are exactly the well-typed values.
 
 
 ```
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -521,7 +521,7 @@ Show that `Progress M` is isomorphic to `Value M ⊎ ∃[ N ](M —→ N)`.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -540,7 +540,7 @@ proof of `progress` above.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1389,7 +1389,7 @@ preserves types.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -2088,7 +2088,7 @@ Using the evaluator, confirm that two times two is four.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -2109,7 +2109,7 @@ and preservation theorems for the simply typed lambda-calculus.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -2139,7 +2139,7 @@ with case expressions and one not involving case expressions.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -2247,7 +2247,7 @@ Give an example of an ill-typed term that does get stuck.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -2265,7 +2265,7 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--

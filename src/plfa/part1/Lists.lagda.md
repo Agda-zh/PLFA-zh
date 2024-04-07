@@ -866,7 +866,7 @@ The last step of the proof requires extensionality.
 证明的最后一步需要外延性。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -884,7 +884,7 @@ Prove the following relationship between map and append:
     map f (xs ++ ys) ≡ map f xs ++ map f ys
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -915,7 +915,7 @@ Define a suitable map operator over trees:
     map-Tree : ∀ {A B C D : Set} → (A → C) → (B → D) → Tree A B → Tree C D
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1058,7 +1058,7 @@ For example:
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1076,7 +1076,7 @@ Show that fold and append are related as follows:
     foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ (foldr _⊗_ e ys) xs
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 #### Exercise `foldr-∷` (practice)
@@ -1102,7 +1102,7 @@ Show that map can be defined using fold:
 证明映射可以用折叠定义：
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1132,7 +1132,7 @@ The proof requires extensionality.
 此证明需要外延性。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1153,7 +1153,7 @@ Define a suitable fold function for the type of trees given earlier:
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1171,7 +1171,7 @@ Demonstrate an analogue of `map-is-foldr` for the type of trees.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1213,7 +1213,7 @@ equal to `n * (n ∸ 1) / 2`:
     sum (downFrom n) * 2 ≡ n * (n ∸ 1)
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1365,7 +1365,7 @@ operations associate to the left rather than the right.  For example:
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1386,7 +1386,7 @@ Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1598,7 +1598,7 @@ replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1616,7 +1616,7 @@ Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1658,7 +1658,7 @@ If so, prove; if not, explain why.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1814,7 +1814,7 @@ for some element of a list.  Give their definitions.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
