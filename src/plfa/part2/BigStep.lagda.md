@@ -2,7 +2,6 @@
 title     : "BigStep: 无类型 λ-演算的大步语义"
 permalink : /BigStep/
 translators : ["starxingchenc"]
-progress  : 100
 ---
 
 ```agda
@@ -199,7 +198,7 @@ terminates under big-step call-by-name evaluation.
 
 
 ```
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -619,7 +618,7 @@ with `M`. Prove that `M ↓ N` implies `M —↠ N`.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--

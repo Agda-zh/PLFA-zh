@@ -2,7 +2,6 @@
 title     : "Negation: 直觉逻辑与命题逻辑中的否定"
 permalink : /Negation/
 translators : ["Oling Cat"]
-progress  : 100
 ---
 
 ```agda

@@ -5,15 +5,13 @@ translators: ["Rongxiao Fu", "Oling Cat"]
 next      : /Dedication/
 ---
 
-[本书][PLFA-zh]是 Philip Wadler 和 Wen Kokke 所著的《Programming Language Foundations in Agda》的中文翻译。英文原书请见 [PLFA]。
-
-This is a Chinese translation of "Programming Language Foundations in Agda" by Philip Wadler and Wen Kokke. The original book is located at [PLFA].
+[本书][PLFA-zh]是 Philip Wadler 和 Wen Kokke 所著的《Programming Language Foundations
+in Agda》的中文翻译。
 
 **本书在线版可访问 [PLFA-zh] 阅读。**
 
-目前第一部分已翻译完毕，欢迎各位参与翻译和审校。详情请参考[翻译规范][TransSpec]。
-由于译者水平有限，错漏之处在所难免，欢迎读者提出修改建议。如有问题可在 [Issue]
-发起讨论或直接发起 PR。项目源码可访问 [Github][Github-zh] 获取。
+目前全书已翻译完毕，由于译者水平有限，错漏之处在所难免，欢迎读者提出修改建议。
+如有问题可在 [Issue] 发起讨论或直接发起 PR。本项目源码可访问 [Github][Github-zh] 获取。
 
 **以下为原书主页内容：**
 
@@ -153,6 +151,6 @@ Please tell us of others!
 [NextJournal]: https://nextjournal.com/plfa/ToC
 [PLFA]: https://plfa.github.io/
 [PLFA-zh]: https://agda-zh.github.io/PLFA-zh/
-[Issue]: https://github.com/Agda-zh/plfa-zh/issues
+[Issue]: https://github.com/Agda-zh/PLFA-zh/issues
 [TransSpec]: https://github.com/Agda-zh/PLFA-zh/issues/1
 [Github-zh]: https://github.com/Agda-zh/PLFA-zh

@@ -1,6 +1,7 @@
 ---
-title     : "Substitution: Substitution in the untyped lambda calculus"
+title     : "Substitution: 无类型 λ-演算中的代换"
 permalink : /Substitution/
+translators : ["OlingCat"]
 ---
 
 
@@ -8,39 +9,71 @@ permalink : /Substitution/
 module plfa.part2.Substitution where
 ```
 
+<!--
 ## Introduction
+-->
 
+## 引言
+
+<!--
 The primary purpose of this chapter is to prove that substitution
 commutes with itself. Barendregt (1984) refers to this
 as the substitution lemma:
+-->
+
+本章的主要目的是证明代换与自身可交换。Barendregt (1984) 将此称为代换引理：
 
     M [x:=N] [y:=L] = M [y:=L] [x:= N[y:=L] ]
 
+<!--
 In our setting, with de Bruijn indices for variables, the statement of
 the lemma becomes:
+-->
+
+在我们的环境中由于，使用了 de Bruijn 索引的变量，因此该引理的陈述变更为：
 
     M [ N ] [ L ] ≡  M〔 L 〕[ N [ L ] ]                     (substitution)
 
+<!--
 where the notation `M 〔 L 〕` is for substituting L for index 1 inside
 M.  In addition, because we define substitution in terms of parallel
 substitution, we have the following generalization, replacing the
 substitution of L with an arbitrary parallel substitution σ.
+-->
+
+其中符号 `M 〔 L 〕` 表示用 L 代换 M 中的索引 1。此外，由于我们用平行代换来定义代换，
+因此我们有以下推广，用任意平行代换 σ 替换掉了 L 的代换。
 
     subst σ (M [ N ]) ≡ (subst (exts σ) M) [ subst σ N ]    (subst-commute)
 
+<!--
 The special case for renamings is also useful.
+-->
+
+代换的特例「重命名」也很有用：
 
     rename ρ (M [ N ]) ≡ (rename (ext ρ) M) [ rename ρ N ]
                                                      (rename-subst-commute)
 
+<!--
 The secondary purpose of this chapter is to define the σ algebra of
 parallel substitution due to Abadi, Cardelli, Curien, and Levy
 (1991). The equations of this algebra not only help us prove the
 substitution lemma, but they are generally useful. Furthermore, when
 the equations are applied from left to right, they form a rewrite
 system that _decides_ whether any two substitutions are equal.
+-->
 
+本章的第二个目的是定义 Abadi、Cardelli、Curien 和 Levy (1991)
+提出的平行代换的 σ-代数。这个代数方程不仅可以帮助我们证明代换引理，
+而且还很有用。此外，当从左到右应用方程时，它们形成了一个重写系统，
+以**确定**任意两个代换是否相等。
+
+<!--
 ## Imports
+-->
+
+## 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -60,25 +93,41 @@ postulate
     → f ≡ g
 ```
 
+<!--
 ## Notation
+-->
 
+## 记法
+
+<!--
 We introduce the following shorthand for the type of a _renaming_ from
 variables in context `Γ` to variables in context `Δ`.
+-->
+
+我们引入了以下简写表示「将语境 `Γ` 中的变量**重命名**为语境 `Δ` 中的变量」的类型。
 
 ```agda
 Rename : Context → Context → Set
 Rename Γ Δ = ∀{A} → Γ ∋ A → Δ ∋ A
 ```
 
+<!--
 Similarly, we introduce the following shorthand for the type of a
 _substitution_ from variables in context `Γ` to terms in context `Δ`.
+-->
+
+与此类似，我们引入了以下简写表示「将语境 `Γ` 中的变量**代换**为语境 `Δ` 中的项」的类型。
 
 ```agda
 Subst : Context → Context → Set
 Subst Γ Δ = ∀{A} → Γ ∋ A → Δ ⊢ A
 ```
 
+<!--
 We use the following more succinct notation for the `subst` function.
+-->
+
+我们用以下更简洁的记法表示 `subst` 代换函数。
 
 ```agda
 ⟪_⟫ : ∀{Γ Δ A} → Subst Γ Δ → Γ ⊢ A → Δ ⊢ A
@@ -86,37 +135,64 @@ We use the following more succinct notation for the `subst` function.
 ```
 
 
+<!--
 ## The σ algebra of substitution
+-->
 
+## 代换的 σ-代数
+
+<!--
 A substitution maps de Bruijn indices (natural numbers) to terms, so we
 can view a substitution simply as a sequence of terms, or more
 precisely, as an infinite sequence of terms. The σ algebra consists of
 four operations for building such sequences: identity `ids`, shift
 `↑`, cons `M • σ`, and sequencing `σ ⨟ τ`.  The sequence `0, 1, 2, ...`
 is constructed by the identity substitution.
+-->
+
+代换将 de Bruijn 索引（自然数）映射为项，于是我们可以简单地将代换视作一系列项，
+或者更精确地，将它视作项的有限序列。σ-代数由四个运算组成，用来构建这样的序列：
+恒等 `ids`、抬升 `↑`，构造 `M • σ`，以及序列 `σ ⨟ τ`。
+序列 `0, 1, 2, ...` 由恒等代换构造：
 
 ```agda
 ids : ∀{Γ} → Subst Γ Γ
 ids x = ` x
 ```
 
+<!--
 The shift operation `↑` constructs the sequence
+-->
+
+抬升运算 `↑` 用于构造序列
 
     1, 2, 3, ...
 
+<!--
 and is defined as follows.
+-->
+
+其定义如下：
 
 ```agda
 ↑ : ∀{Γ A} → Subst Γ (Γ , A)
 ↑ x = ` (S x)
 ```
 
+<!--
 Given a term `M` and substitution `σ`, the operation
 `M • σ` constructs the sequence
+-->
+
+给定项 `M` 和代换 `σ`，运算 `M • σ` 会构造序列
 
     M , σ 0, σ 1, σ 2, ...
 
+<!--
 This operation is analogous to the `cons` operation of Lisp.
+-->
+
+以下运算类似 Lisp 中的 `cons` 构造运算。
 
 ```agda
 infixr 6 _•_
@@ -126,13 +202,22 @@ _•_ : ∀{Γ Δ A} → (Δ ⊢ A) → Subst Γ Δ → Subst (Γ , A) Δ
 (M • σ) (S x) = σ x
 ```
 
+<!--
 Given two substitutions `σ` and `τ`, the sequencing operation `σ ⨟ τ`
 composes the two substitutions by first applying `σ` and then applying
 `τ`. So it produces the sequence
+-->
+
+给定两个代换 `σ` 和 `τ`，序列运算 `σ ⨟ τ` 会通过先应用代换 `σ`，
+然后应用代换 `τ` 来将两个代换组合到一起，因此它会产生序列
 
     ⟪τ⟫(σ 0), ⟪τ⟫(σ 1), ⟪τ⟫(σ 2), ...
 
+<!--
 Here is the definition.
+-->
+
+下面是它的定义：
 
 ```agda
 infixr 5 _⨟_
@@ -141,15 +226,29 @@ _⨟_ : ∀{Γ Δ Σ} → Subst Γ Δ → Subst Δ Σ → Subst Γ Σ
 σ ⨟ τ = ⟪ τ ⟫ ∘ σ
 ```
 
+<!--
 For the sequencing operation, Abadi et al. use the notation of
 function composition, writing `σ ∘ τ`, but still with `σ` applied
 before `τ`, which is the opposite of standard mathematical
 practice. We instead write `σ ⨟ τ`, because semicolon is
 the standard notation for forward function composition.
+-->
 
+对于序列操作，Abadi 等人使用了函数复合的记法，将它记作 `σ ∘ τ`，
+但 `σ` 仍然在 `τ` 之前被应用，这与标准的数学习惯相反。我们记作
+`σ ⨟ τ`，因为分号是函数向右组合的标准记法。
+
+<!--
 ## The σ algebra equations
+-->
 
+## σ-代数方程
+
+<!--
 The σ algebra includes the following equations.
+-->
+
+σ-代数包含以下方程：
 
     (sub-head)  ⟪ M • σ ⟫ (` Z) ≡ M
     (sub-tail)  ↑ ⨟ (M • σ)    ≡ σ
@@ -166,6 +265,7 @@ The σ algebra includes the following equations.
     (sub-assoc) (σ ⨟ τ) ⨟ θ    ≡ σ ⨟ (τ ⨟ θ)
     (sub-dist)  (M • σ) ⨟ τ    ≡ (⟪ τ ⟫ M) • (σ ⨟ τ)
 
+<!--
 The first group of equations describe how the `•` operator acts like cons.
 The equation `sub-head` says that the variable zero `Z` returns the
 head of the sequence (it acts like the `car` of Lisp).  Similarly,
@@ -175,93 +275,174 @@ sequence (it acts like `cdr` of Lisp).  The `sub-η` equation is the
 of a sequence, and then cons'ing them together yields the original
 sequence. The `Z-shift` equation says that cons'ing zero onto the
 shifted sequence produces the identity sequence.
+-->
 
+第一组方程描述了 `•` 算子的行为类似于 `cons`。方程 `sub-head` 表示变量零
+`Z` 返回序列的头部（它的行为类似于 Lisp 中的 `car`）。与此类似，
+`sub-tail` 表示对序列应用抬升运算 `↑` 后返回该序列的尾部（它的行为类似于
+Lisp 中的 `cdr`）。`sub-η` 方程是序列的 η-展开规则，表示接受一个序列的头部和尾部，
+将它们 cons 在一起产生原来的序列。`Z-shift` 方程表示将零 cons
+到抬升的序列会得到恒等的序列。
+
+<!--
 The next four equations involve applying substitutions to terms.  The
 equation `sub-id` says that the identity substitution returns the term
 unchanged. The equations `sub-app` and `sub-abs` says that
 substitution is a congruence for the lambda calculus. The `sub-sub`
 equation says that the sequence operator `⨟` behaves as intended.
+-->
 
+接下来的四个方程涉及对项的代换。方程 `sub-id` 表示恒等代换返回的项保持不变。
+方程 `sub-app` 和 `sub-abs` 表示代换对 λ-演算满足合同性。`sub-sub`
+方程表示序列算子 `⨟` 的行为符合预期。
+
+<!--
 The last four equations concern the sequencing of substitutions.
 The first two equations, `sub-idL` and `sub-idR`, say that
 `ids` is the left and right unit of the sequencing operator.
 The `sub-assoc` equation says that sequencing is associative.
 Finally, `sub-dist` says that post-sequencing distributes through cons.
+-->
 
+最后四个方程涉及代换的序列。前两个方程 `sub-idL` 和 `sub-idR` 表示
+`ids` 是序列算子的左右单位元。`sub-assoc` 方程表示序列满足结合律。
+最后，`sub-dist` 表示后面的序列对 cons 满足分配率。
+
+<!--
 ## Relating the σ algebra and substitution functions
+-->
 
+## 关联 σ-代数和代换函数
+
+<!--
 The definitions of substitution `N [ M ]` and parallel substitution
 `subst σ N` depend on several auxiliary functions: `rename`, `exts`,
 `ext`, and `subst-zero`. We shall relate those functions to terms in
 the σ algebra.
+-->
 
+代换的定义 `N [ M ]` 和平行代换 `subst σ N` 依赖于几个辅助函数：`rename`、
+`exts`、`ext` 和 `subst-zero`。我们应当在 σ-代数中将这些函数与项关联起来。
 
+<!--
 To begin with, renaming can be expressed in terms of substitution.
 We have
+-->
+
+首先，重命名可以用代换表示。我们有：
 
     rename ρ M ≡ ⟪ ren ρ ⟫ M               (rename-subst-ren)
 
+<!--
 where `ren` turns a renaming `ρ` into a substitution by post-composing
 `ρ` with the identity substitution.
+-->
+
+其中 `ren` 通过将 `ρ` 复合到恒等代换后面来将重命名 `ρ` 转换为一个代换：
 
 ```agda
 ren : ∀{Γ Δ} → Rename Γ Δ → Subst Γ Δ
 ren ρ = ids ∘ ρ
 ```
 
+<!--
 When the renaming is the increment function, then it is equivalent to
 shift.
+-->
+
+当重命名为递增函数时，它等价于抬升。
 
     ren S_ ≡ ↑                             (ren-shift)
 
     rename S_ M ≡ ⟪ ↑ ⟫ M                  (rename-shift)
 
+<!--
 Renaming with the identity renaming leaves the term unchanged.
+-->
+
+带恒等重命名的重命名会保持项不变：
 
     rename (λ {A} x → x) M ≡ M             (rename-id)
 
+<!--
 Next we relate the `exts` function to the σ algebra.  Recall that the
 `exts` function extends a substitution as follows:
+-->
+
+接下来我们将 `exts` 函数关联到 σ-代数。回忆 `exts` 函数将代换扩展为以下形式：
 
     exts σ = ` Z, rename S_ (σ 0), rename S_ (σ 1), rename S_ (σ 2), ...
 
+<!--
 So `exts` is equivalent to cons'ing Z onto the sequence formed
 by applying `σ` and then shifting.
+-->
+
+因此 `exts` 等价于将 Z cons 到应用 `σ` 所产生的序列上，之后再抬升它：
 
     exts σ ≡ ` Z • (σ ⨟ ↑)                (exts-cons-shift)
 
+<!--
 The `ext` function does the same job as `exts` but for renamings
 instead of substitutions. So composing `ext` with `ren` is the same as
 composing `ren` with `exts`.
+-->
+
+`ext` 函数做的事情和 `exts` 一样，只不过用于重命名而非代换，因此将 `ren`
+复合到 `ext` 等价于将 `exts` 复合到 `ren`：
 
     ren (ext ρ) ≡ exts (ren ρ)            (ren-ext)
 
+<!--
 Thus, we can recast the `exts-cons-shift` equation in terms of
 renamings.
+-->
+
+于是，我们可以将 `exts-cons-shift` 方程重新转换为重命名：
 
     ren (ext ρ) ≡ ` Z • (ren ρ ⨟ ↑)       (ext-cons-Z-shift)
 
+<!--
 It is also useful to specialize the `sub-sub` equation of the σ
 algebra to the situation where the first substitution is a renaming.
+-->
+
+将 σ-代数的 `sub-sub` 方程特化为第一个代换是重命名的情况也很有用：
 
     ⟪ σ ⟫ (rename ρ M) ≡ ⟪ σ ∘ ρ ⟫ M       (rename-subst)
 
+<!--
 The `subst-zero M` substitution is equivalent to cons'ing
 `M` onto the identity substitution.
+-->
+
+`subst-zero M` 代换等价于将 `M` cons 到恒等代换：
 
     subst-zero M ≡ M • ids                (subst-Z-cons-ids)
 
 
+<!--
 Finally, sequencing `exts σ` with `subst-zero M` is equivalent to
 cons'ing `M` onto `σ`.
+-->
+
+最后，将 `subst-zero M` 列在 `exts σ` 之后等价于将 `M` cons 到 `σ`。
 
     exts σ ⨟ subst-zero M ≡ (M • σ)       (subst-zero-exts-cons)
 
 
+<!--
 ## Proofs of sub-head, sub-tail, sub-η, Z-shift, sub-idL, sub-dist, and sub-app
+-->
 
+## sub-head、sub-tail、sub-η、Z-shift、sub-idL、sub-dist 和 sub-app 的证明
+
+<!--
 We start with the proofs that are immediate from the definitions of
 the operators.
+-->
+
+我们直接从这些算子的定义就能得它们的证明：
 
 ```agda
 sub-head : ∀ {Γ Δ} {A} {M : Δ ⊢ A}{σ : Subst Γ Δ}
@@ -319,12 +500,21 @@ sub-app = refl
 ```
 
 
+<!--
 ## Interlude: congruences
+-->
 
+## 插曲：合同性
+
+<!--
 In this section we establish congruence rules for the σ algebra
 operators `•` and `⨟` and for `subst` and its helper functions `ext`,
 `rename`, `exts`, and `subst-zero`. These congruence rules help with
 the equational reasoning in the later sections of this chapter.
+-->
+
+在本节中，我们将为 σ-代数的算子 `•` 和 `⨟`、`subst` 及其辅助函数 `ext`、
+`rename`、`exts` 以及 `subst-zero` 建立合同律。这些合同律有助于后续章节的等式推理。
 
 ```agda
 cong-ext : ∀{Γ Δ}{ρ ρ′ : Rename Γ Δ}{B}
@@ -417,19 +607,37 @@ cong-seq {Γ}{Δ}{Σ}{σ}{σ′}{τ}{τ′} ss' tt' {A} = extensionality lemma
 ```
 
 
+<!--
 ## Relating `rename`, `exts`, `ext`, and `subst-zero` to the σ algebra
+-->
 
+## 将 `rename`、`exts`、`ext` 和 `subst-zero` 关联到 σ-代数
+
+<!--
 In this section we establish equations that relate `subst` and its
 helper functions (`rename`, `exts`, `ext`, and `subst-zero`) to terms
 in the σ algebra.
+-->
 
+本节中我们将为 σ-代数中的项与 `subst` 及其辅助函数（`rename`、`exts`、`ext`
+和 `subst-zero`）建立关联方程。
+
+<!--
 The first equation we prove is
+-->
+
+我们要证明的第一个方程是
 
     rename ρ M ≡ ⟪ ren ρ ⟫ M              (rename-subst-ren)
 
+<!--
 Because `subst` uses the `exts` function, we need the following lemma
 which says that `exts` and `ext` do the same thing except that `ext`
 works on renamings and `exts` works on substitutions.
+-->
+
+由于 `subst` 使用了 `exts` 函数，我们需要以下引理，它证明了 `exts`
+和 `ext` 做的事情一样，只不过 `ext` 应用于重命名，而 `exts` 应用于代换。
 
 ```agda
 ren-ext : ∀ {Γ Δ}{B C : Type} {ρ : Rename Γ Δ}
@@ -441,8 +649,12 @@ ren-ext {Γ}{Δ}{B}{C}{ρ} = extensionality λ x → lemma {x = x}
   lemma {x = S x} = refl
 ```
 
+<!--
 With this lemma in hand, the proof is a straightforward induction on
 the term `M`.
+-->
+
+有了这条引理，我们只需对项 `M` 进行归纳即可：
 
 ```agda
 rename-subst-ren : ∀ {Γ Δ}{A} {ρ : Rename Γ Δ}{M : Γ ⊢ A}
@@ -463,7 +675,11 @@ rename-subst-ren {ρ = ρ}{M = ƛ N} =
 rename-subst-ren {M = L · M} = cong₂ _·_ rename-subst-ren rename-subst-ren
 ```
 
+<!--
 The substitution `ren S_` is equivalent to `↑`.
+-->
+
+代换 `ren S_` 等价于 `↑`。
 
 ```agda
 ren-shift : ∀{Γ}{A}{B}
@@ -475,7 +691,11 @@ ren-shift {Γ}{A}{B} = extensionality λ x → lemma {x = x}
   lemma {x = S x} = refl
 ```
 
+<!--
 The substitution `rename S_ M` is equivalent to shifting: `⟪ ↑ ⟫ M`.
+-->
+
+代换 `rename S_ M` 等价于抬升：`⟪ ↑ ⟫ M`。
 
 ```agda
 rename-shift : ∀{Γ} {A} {B} {M : Γ ⊢ A}
@@ -490,10 +710,16 @@ rename-shift{Γ}{A}{B}{M} =
   ∎
 ```
 
+<!--
 Next we prove the equation `exts-cons-shift`, which states that `exts`
 is equivalent to cons'ing Z onto the sequence formed by applying `σ`
 and then shifting. The proof is by case analysis on the variable `x`,
 using `rename-subst-ren` for when `x = S y`.
+-->
+
+接下来证明 `exts-cons-shift`，它陈述了 `exts` 等价于将 Z cons 到应用
+`σ` 后抬升所产生的序列上。当 `x = S y` 时，使用 `rename-subst-ren`
+对变量 `x` 进行情况分析即可证明。
 
 ```agda
 exts-cons-shift : ∀{Γ Δ} {A B} {σ : Subst Γ Δ}
@@ -506,7 +732,11 @@ exts-cons-shift = extensionality λ x → lemma{x = x}
   lemma {x = S y} = rename-subst-ren
 ```
 
+<!--
 As a corollary, we have a similar correspondence for `ren (ext ρ)`.
+-->
+
+我们可以定义一个与 `ren (ext ρ)` 类似的函数作为辅助：
 
 ```agda
 ext-cons-Z-shift : ∀{Γ Δ} {ρ : Rename Γ Δ}{A}{B}
@@ -521,8 +751,12 @@ ext-cons-Z-shift {Γ}{Δ}{ρ}{A}{B} =
   ∎
 ```
 
+<!--
 Finally, the `subst-zero M` substitution is equivalent to cons'ing `M`
 onto the identity substitution.
+-->
+
+最后，代换 `subst-zero M` 等价于将 `M` cons 到恒等代换：
 
 ```agda
 subst-Z-cons-ids : ∀{Γ}{A B : Type}{M : Γ ⊢ B}
@@ -536,10 +770,18 @@ subst-Z-cons-ids = extensionality λ x → lemma {x = x}
 ```
 
 
+<!--
 ## Proofs of sub-abs, sub-id, and rename-id
+-->
 
+## sub-ab、sub-id 和 rename-id 的证明
+
+<!--
 The equation `sub-abs` follows immediately from the equation
 `exts-cons-shift`.
+-->
+
+方程 `sub-abs` 可直接从方程 `exts-cons-shift` 得出。
 
 ```agda
 sub-abs : ∀{Γ Δ} {σ : Subst Γ Δ} {N : Γ , ★ ⊢ ★}
@@ -554,9 +796,13 @@ sub-abs {σ = σ}{N = N} =
    ∎
 ```
 
+<!--
 The proof of `sub-id` requires the following lemma which says that
 extending the identity substitution produces the identity
 substitution.
+-->
+
+`sub-id` 的证明需要以下引理，它阐述了扩展一个恒等代换依旧会得到恒等代换：
 
 ```agda
 exts-ids : ∀{Γ}{A B}
@@ -567,8 +813,13 @@ exts-ids {Γ}{A}{B} = extensionality lemma
         lemma (S x) = refl
 ```
 
+<!--
 The proof of `⟪ ids ⟫ M ≡ M` now follows easily by induction on `M`,
 using `exts-ids` in the case for `M ≡ ƛ N`.
+-->
+
+`⟪ ids ⟫ M ≡ M` 的证明现在可以非常容易地对 `M` 进行归纳得出，只需在
+`M ≡ ƛ N` 的情况中使用 `exts-ids` 即可。
 
 ```agda
 sub-id : ∀{Γ} {A} {M : Γ ⊢ A}
@@ -587,7 +838,11 @@ sub-id {M = ƛ N} =
 sub-id {M = L · M} = cong₂ _·_ sub-id sub-id
 ```
 
+<!--
 The `rename-id` equation is a corollary is `sub-id`.
+-->
+
+`rename-id` 方程是 `sub-id` 的对应函数。
 
 ```agda
 rename-id : ∀ {Γ}{A} {M : Γ ⊢ A}
@@ -604,9 +859,17 @@ rename-id {M = M} =
    ∎
 ```
 
+<!--
 ## Proof of sub-idR
+-->
 
+## sub-idR 的证明
+
+<!--
 The proof of `sub-idR` follows directly from `sub-id`.
+-->
+
+`sub-idR` 根据 `sub-id` 直接可得：
 
 ```agda
 sub-idR : ∀{Γ Δ} {σ : Subst Γ Δ} {A}
@@ -622,19 +885,35 @@ sub-idR {Γ}{σ = σ}{A} =
 ```
 
 
+<!--
 ## Proof of sub-sub
+-->
 
+## sub-sub 的证明
+
+<!--
 The `sub-sub` equation states that sequenced substitutions `σ ⨟ τ`
 are equivalent to first applying `σ` then applying `τ`.
+-->
+
+`sub-sub` 方程陈述了代换序列 `σ ⨟ τ` 等价于先应用 `σ` 再应用 `τ`：
 
     ⟪ τ ⟫ ⟪ σ ⟫ M  ≡ ⟪ σ ⨟ τ ⟫ M
 
+<!--
 The proof requires several lemmas. First, we need to prove the
 specialization for renaming.
+-->
+
+它的证明需要几条引理。首先，我们需要证明一个重命名的特化版本：
 
     rename ρ (rename ρ′ M) ≡ rename (ρ ∘ ρ′) M
 
+<!--
 This in turn requires the following lemma about `ext`.
+-->
+
+而它需要以下关于 `ext` 的引理：
 
 ```agda
 compose-ext : ∀{Γ Δ Σ}{ρ : Rename Δ Σ} {ρ′ : Rename Γ Δ} {A B}
@@ -647,9 +926,14 @@ compose-ext = extensionality λ x → lemma {x = x}
   lemma {x = S x} = refl
 ```
 
+<!--
 To prove that composing renamings is equivalent to applying one after
 the other using `rename`, we proceed by induction on the term `M`,
 using the `compose-ext` lemma in the case for `M ≡ ƛ N`.
+-->
+
+要证明复合重命名等价于用 `rename` 应用一个之后再应用另一个，我们需要通过在
+`M ≡ ƛ N` 的情况中用 `compose-ext` 对项 `M` 进行归纳：
 
 ```agda
 compose-rename : ∀{Γ Δ Σ}{A}{M : Γ ⊢ A}{ρ : Rename Δ Σ}{ρ′ : Rename Γ Δ}
@@ -669,9 +953,14 @@ compose-rename {Γ}{Δ}{Σ}{A}{ƛ N}{ρ}{ρ′} = cong ƛ_ G
 compose-rename {M = L · M} = cong₂ _·_ compose-rename compose-rename
 ```
 
+<!--
 The next lemma states that if a renaming and substitution commute on
 variables, then they also commute on terms. We explain the proof in
 detail below.
+-->
+
+下一条引理阐述了若重命名和代换对变量可交换，则它们对项也可交换。
+我们在后面详细解释证明过程：
 
 ```agda
 commute-subst-rename : ∀{Γ Δ}{M : Γ ⊢ ★}{σ : Subst Γ Δ}
@@ -710,6 +999,7 @@ commute-subst-rename {M = L · M}{ρ = ρ} r =
              (commute-subst-rename{M = M}{ρ = ρ} r)
 ```
 
+<!--
 The proof is by induction on the term `M`.
 
 * If `M` is a variable, then we use the premise to conclude.
@@ -725,6 +1015,21 @@ The proof is by induction on the term `M`.
     * If `x = Z`, the two sides are equal by definition.
 
     * If `x = S y`, we obtain the goal by the following equational reasoning.
+-->
+
+证明通过对项 `M` 进行归纳得出：
+
+* 若 `M` 为变量，则我们用前提可得结论。
+
+* 若 `M ≡ ƛ N`，我们对 `N` 应用归纳假设可出结论。然而，要使用归纳假设，我们必须证明
+
+        exts (exts σ) (ext ρ x) ≡ rename (ext ρ) (exts σ x)
+
+  此方程可通过对 `x` 进行情况分析证明：
+
+    * 若 `x = Z`，则两边按照定义相等。
+
+    * 若 `x = S y`，我们通过以下等式推理即可证得目标
 
             exts (exts σ) (ext ρ (S y))
           ≡ rename S_ (exts σ (ρ y))
@@ -734,16 +1039,27 @@ The proof is by induction on the term `M`.
           ≡ rename (ext ρ) (rename S_ (σ y))   (by compose-rename)
           ≡ rename (ext ρ) (exts σ (S y))
 
+<!--
 * If `M` is an application, we obtain the goal using the induction
   hypothesis for each subterm.
+-->
+
+* 若 `M` 为应用，我们对每个子项使用归纳假设即可证得目标。
 
 
+<!--
 The last lemma needed to prove `sub-sub` states that the `exts`
 function distributes with sequencing. It is a corollary of
 `commute-subst-rename` as described below.  (It would have been nicer
 to prove this directly by equational reasoning in the σ algebra, but
 that would require the `sub-assoc` equation, whose proof depends on
 `sub-sub`, which in turn depends on this lemma.)
+-->
+
+证明 `sub-sub` 所需的最后一个引理指出 `exts` 函数按对序列满足分配率。
+它是 `commute-subst-rename` 的一个推论，如下所述。
+（如果直接通过 σ-代数中的等式推理来证明这一点会更好，但这需要 `sub-assoc`
+方程，其证明依赖于 `sub-sub`，而 `sub-sub` 又依赖于于此引理。）
 
 ```agda
 exts-seq : ∀{Γ Δ Δ′} {σ₁ : Subst Γ Δ} {σ₂ : Subst Δ Δ′}
@@ -765,6 +1081,7 @@ exts-seq = extensionality λ x → lemma {x = x}
      ∎
 ```
 
+<!--
 The proof proceed by cases on `x`.
 
 * If `x = Z`, the two sides are equal by the definition of `exts`
@@ -773,9 +1090,21 @@ The proof proceed by cases on `x`.
 * If `x = S x`, we unfold the first use of `exts` and sequencing, then
   apply the lemma `commute-subst-rename`. We conclude by the
   definition of sequencing.
+-->
+
+通过对 `x` 进行情况分析来证明：
+
+* 若 `x = Z`，则根据 `exts` 和序列的定义两边相等。
+
+* 若 `x = S x`，我们展开第一个 `exts` 和序列，之后应用引理 `commute-subst-rename`。
+根据序列的定义可得出结论。
 
 
+<!--
 Now we come to the proof of `sub-sub`, which we explain below.
+-->
+
+现在我们来证明 `sub-sub`，它的解释如下：
 
 ```agda
 sub-sub : ∀{Γ Δ Σ}{A}{M : Γ ⊢ A} {σ₁ : Subst Γ Δ}{σ₂ : Subst Δ Σ}
@@ -794,6 +1123,7 @@ sub-sub {Γ}{Δ}{Σ}{A}{ƛ N}{σ₁}{σ₂} =
 sub-sub {M = L · M} = cong₂ _·_ (sub-sub{M = L}) (sub-sub{M = M})
 ```
 
+<!--
 We proceed by induction on the term `M`.
 
 * If `M = x`, then both sides are equal to `σ₂ (σ₁ x)`.
@@ -808,10 +1138,29 @@ We proceed by induction on the term `M`.
 
 * If `M` is an application, we use the induction hypothesis
   for both subterms.
+-->
+
+我们通过对项 `M` 进行归纳来证明：
+
+* 若 `M = x`，则两边都等于 `σ₂ (σ₁ x)`。
+
+* 若 `M = ƛ N`，哦我们首先用归纳假设证明
+
+        ƛ ⟪ exts σ₂ ⟫ (⟪ exts σ₁ ⟫ N) ≡ ƛ ⟪ exts σ₁ ⨟ exts σ₂ ⟫ N
+
+  之后用引理 `exts-seq` 证明
+
+        ƛ ⟪ exts σ₁ ⨟ exts σ₂ ⟫ N ≡ ƛ ⟪ exts ( σ₁ ⨟ σ₂) ⟫ N
+
+* 若 `M` 是一个应用，我们对两个子项应用归纳假设即可得证。
 
 
+<!--
 The following corollary of `sub-sub` specializes the first
 substitution to a renaming.
+-->
+
+以下 `sub-sub` 的推论特化了重命名的第一个代换：
 
 ```agda
 rename-subst : ∀{Γ Δ Δ′}{M : Γ ⊢ ★}{ρ : Rename Γ Δ}{σ : Subst Δ Δ′}
@@ -829,10 +1178,18 @@ rename-subst {Γ}{Δ}{Δ′}{M}{ρ}{σ} =
 ```
 
 
+<!--
 ## Proof of sub-assoc
+-->
 
+## sub-assoc 的证明
+
+<!--
 The proof of `sub-assoc` follows directly from `sub-sub` and the
 definition of sequencing.
+-->
+
+`sub-assoc` 的证明可直接从 `sub-sub` 以及序列的定义得出：
 
 ```agda
 sub-assoc : ∀{Γ Δ Σ Ψ : Context} {σ : Subst Γ Δ} {τ : Subst Δ Σ}
@@ -853,12 +1210,22 @@ sub-assoc {Γ}{Δ}{Σ}{Ψ}{σ}{τ}{θ}{A} = extensionality λ x → lemma{x = x}
       ∎
 ```
 
+<!--
 ## Proof of subst-zero-exts-cons
+-->
 
+## subst-zero-exts-cons 的证明
+
+<!--
 The last equation we needed to prove `subst-zero-exts-cons` was
 `sub-assoc`, so we can now go ahead with its proof.  We simply apply
 the equations for `exts` and `subst-zero` and then apply the σ algebra
 equation to arrive at the normal form `M • σ`.
+-->
+
+我们证明 `subst-zero-exts-cons` 需要的最后一个方程是 `sub-assoc`，
+现在我们可以继续证明它。只需对 `exts` 和 `subst-zero` 应用方程，然后应用
+σ-代数方程即可得到正规形式 `M • σ`。
 
 ```agda
 subst-zero-exts-cons : ∀{Γ Δ}{σ : Subst Γ Δ}{B}{M : Δ ⊢ B}{A}
@@ -882,23 +1249,40 @@ subst-zero-exts-cons {Γ}{Δ}{σ}{B}{M}{A} =
 ```
 
 
+<!--
 ## Proof of the substitution lemma
+-->
 
+## 代换引理的证明
+
+<!--
 We first prove the generalized form of the substitution lemma, showing
 that a substitution `σ` commutes with the substitution of `M` into
 `N`.
+-->
+
+我们首先证明代换引理的推广形式，证明代换 `σ` 对在 `N` 中代换 `M` 满足交换律。
 
     ⟪ exts σ ⟫ N [ ⟪ σ ⟫ M ] ≡ ⟪ σ ⟫ (N [ M ])
 
+<!--
 This proof is where the σ algebra pays off.  The proof is by direct
 equational reasoning. Starting with the left-hand side, we apply σ
 algebra equations, oriented left-to-right, until we arrive at the
 normal form
+-->
+
+这个证明是 σ-代数得到回报的地方。证明可通过直接得等式推理进项。
+从方程左边开始，我们应用 σ-代数方程，从左到右，直到得到正规形式
 
     ⟪ ⟪ σ ⟫ M • σ ⟫ N
 
+<!--
 We then do the same with the right-hand side, arriving at the same
 normal form.
+-->
+
+之后我们对方程右边做同样的事情，直到得到同样的正规形式。
 
 ```agda
 subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{σ : Subst Γ Δ }
@@ -935,10 +1319,16 @@ subst-commute {Γ}{Δ}{N}{M}{σ} =
      ∎
 ```
 
+<!--
 A corollary of `subst-commute` is that `rename` also commutes with
 substitution. In the proof below, we first exchange `rename ρ` for
 the substitution `⟪ ren ρ ⟫`, and apply `subst-commute`, and
 then convert back to `rename ρ`.
+-->
+
+`subst-commute` 的一个推论是 `rename` 也对代换满足交换律。在下面的证明中，
+我们首先为代换 `⟪ ren ρ ⟫` 交换了 `rename ρ`，然后应用 `subst-commute`，
+之后转换回 `rename ρ`。
 
 ```agda
 rename-subst-commute : ∀{Γ Δ}{N : Γ , ★ ⊢ ★}{M : Γ ⊢ ★}{ρ : Rename Γ Δ }
@@ -958,8 +1348,12 @@ rename-subst-commute {Γ}{Δ}{N}{M}{ρ} =
      ∎
 ```
 
+<!--
 To present the substitution lemma, we introduce the following notation
 for substituting a term `M` for index 1 within term `N`.
+-->
+
+为了展示代换引理，我们为「用项 `M` 代换项 `N` 中的索引 1」引入了以下记法：
 
 ```agda
 _〔_〕 : ∀ {Γ A B C}
@@ -971,8 +1365,12 @@ _〔_〕 {Γ} {A} {B} {C} N M =
    subst {Γ , B , C} {Γ , C} (exts (subst-zero M)) {A} N
 ```
 
+<!--
 The substitution lemma is stated as follows and proved as a corollary
 of the `subst-commute` lemma.
+-->
+
+代换引理陈述如下，其证明是 `subst-commute` 引理的一个推论。
 
 ```agda
 substitution : ∀{Γ}{M : Γ , ★ , ★ ⊢ ★}{N : Γ , ★ ⊢ ★}{L : Γ ⊢ ★}
@@ -982,18 +1380,32 @@ substitution{M = M}{N = N}{L = L} =
 ```
 
 
+<!--
 ## Notes
+-->
 
+## 注记
+
+<!--
 Most of the properties and proofs in this file are based on the paper
 _Autosubst: Reasoning with de Bruijn Terms and Parallel Substitution_
 by Schafer, Tebbi, and Smolka (ITP 2015). That paper, in turn, is
 based on the paper of Abadi, Cardelli, Curien, and Levy (1991) that
 defines the σ algebra.
+-->
+
+本文件中的大部分属性和证明均基于 Schafer、Tebbi 和 Smolka 的论文
+_Autosubst: Reasoning with de BruijnTerms and Parallel Substitution_ (ITP 2015)。
+该论文又基于 Abadi、Cardelli、Curien 和 Levy (1991) 定义 σ-代数的论文。
 
 
 ## Unicode
 
+<!--
 This chapter uses the following unicode:
+-->
+
+本章使用了以下 Unicode：
 
     ⟪  U+27EA  MATHEMATICAL LEFT DOUBLE ANGLE BRACKET (\<<)
     ⟫  U+27EA  MATHEMATICAL RIGHT DOUBLE ANGLE BRACKET (\>>)

@@ -2,7 +2,6 @@
 title      : "Bisimulation: 联系不同的归约系统"
 permalink  : /Bisimulation/
 translators: ["Fangyi Zhou"]
-progress   : 100
 ---
 
 ```agda

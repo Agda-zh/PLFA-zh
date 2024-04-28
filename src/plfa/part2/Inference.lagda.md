@@ -2,7 +2,6 @@
 title      : "Inference: 双向类型推理"
 permalink  : /Inference/
 translators: ["Fangyi Zhou"]
-progress   : 100
 ---
 
 ```agda
@@ -789,7 +788,7 @@ Chapter [Lambda](/Lambda/), decorated to support inference.
 将你在 [Lambda](/Lambda/) 章节中乘法的定义重写，将其装饰至支持类型推理的形式。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -808,7 +807,7 @@ Chapter [More](/More/).
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -826,7 +825,7 @@ Chapter [More](/More/).
 扩充你的双向赋型规则，来包括 [More](/More/) 章节中的其余构造。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1886,7 +1885,7 @@ multiplication from Chapter [DeBruijn](/DeBruijn/).
 并证明推理得到的赋型可以擦除至 [DeBruijn](/DeBruijn/) 章节中你的定义。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1905,7 +1904,7 @@ bidirectional inference to include products. Also extend erasure.
 将双向推理扩充至包括积。此外扩充对应的擦除。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1926,7 +1925,7 @@ Chapter [More](/More/). Also extend erasure.
 此外扩充对应的擦除。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 

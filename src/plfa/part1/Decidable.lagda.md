@@ -2,7 +2,6 @@
 title     : "Decidable: 布尔值与判定过程"
 permalink : /Decidable/
 translators : ["Fangyi Zhou", "Oshmkufa2010"]
-progress  : 100
 ---
 
 ```agda
@@ -524,7 +523,7 @@ postulate
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -547,7 +546,7 @@ postulate
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -988,7 +987,7 @@ postulate
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
