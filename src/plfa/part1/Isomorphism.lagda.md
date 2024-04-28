@@ -2,7 +2,6 @@
 title     : "Isomorphism: 同构与嵌入"
 permalink : /Isomorphism/
 translators : ["Fangyi Zhou"]
-progress  : 95
 ---
 
 ```agda
@@ -687,7 +686,7 @@ postulate
 ```
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -716,7 +715,7 @@ Show that equivalence is reflexive, symmetric, and transitive.
 证明等价性是自反、对称和传递的。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -756,7 +755,7 @@ Using the above, establish that there is an embedding of `ℕ` into `Bin`.
 使用上述条件，证明存在一个从 `ℕ` 到 `Bin` 的嵌入。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--

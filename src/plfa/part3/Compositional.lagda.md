@@ -19,7 +19,7 @@ In this chapter we prove that the denotational semantics is compositional,
 which means we fill in the ellipses in the following equations.
 -->
 
-本章我们会证明指称语义满足可组合性，即我们会填补以下等式中省略号的部分。
+本章我们会证明指称语义满足可组合性，即我们会填补以下方程中省略号的部分。
 
     ℰ (` x) ≃ ...
     ℰ (ƛ M) ≃ ... ℰ M ...
@@ -31,7 +31,7 @@ instead defined as a recursive function. Indeed, we end this chapter
 with such a definition and prove that it is equivalent to ℰ.
 -->
 
-这些等式蕴含了指称语义也可以定义为一个递归函数。
+这些方程蕴含了指称语义也可以定义为一个递归函数。
 我们会在本章的结尾给出它的定义，并证明它等价于 ℰ。
 
 
@@ -61,13 +61,13 @@ open plfa.part3.Denotational.≃-Reasoning
 ## Equation for lambda abstraction
 -->
 
-## λ-抽象的等式
+## λ-抽象的方程
 
 <!--
 Regarding the first equation
 -->
 
-考虑第一个等式
+考虑第一个方程
 
     ℰ (ƛ M) ≃ ... ℰ M ...
 
@@ -149,7 +149,7 @@ induction on the semantics, using `sub-ℱ` in the case for the `sub`
 rule.
 -->
 
-有了这个小前提的性质，我们就可以证明 λ-等式语义前进的方向。
+有了这个小前提的性质，我们就可以证明 λ-方程语义向右的方向。
 证明是通过在 `sub` 规则的情况下使用 `sub-ℱ`，对语义进行归纳得出的。
 
 ```agda
@@ -185,7 +185,7 @@ easier to prove than the forward direction. We proceed by induction on
 the value v.
 -->
 
-λ-等式的语义后退的方向甚至比前进的方向更容易证明，我们只需对值 `v` 进行归纳：
+λ-抽象的语义方程向左的方向甚至比向右的方向更容易证明，我们只需对值 `v` 进行归纳：
 
 ```agda
 ℱℰ→ℰƛ : ∀{Γ}{γ : Env Γ}{N : Γ , ★ ⊢ ★}{v : Value}
@@ -215,14 +215,14 @@ lam-equiv γ v = ⟨ ℰƛ→ℱℰ , ℱℰ→ℰƛ ⟩
 ## Equation for function application
 -->
 
-## 函数应用的等式
+## 函数应用的方程
 
 <!--
 Next we fill in the ellipses for the equation concerning function
 application.
 -->
 
-接下来我们填补关于函数应用的等式中的省略号。
+接下来我们填补关于函数应用的方程中的省略号。
 
     ℰ (M · N) ≃ ... ℰ M ... ℰ N ...
 
@@ -243,7 +243,7 @@ demonstrates why the `⊑-dist` rule is important.
 中的另一个指称。我们将此函数命名为 `●`，以模拟应用语义 `L · M`
 中非递归的部分。我们无法像处理 `ℱ` 那样简单地对值 `v` 进行递归来定义函数，
 因为 `↦-elim` 这类的规则可应用于任何值。相反，我们将通过直接处理 `↦-elim`
-和 `⊥-intro` 规则而忽略 `⊔-intro` 的方式来定义 `●`。这使得证明的前进方向变得更加困难，
+和 `⊥-intro` 规则而忽略 `⊔-intro` 的方式来定义 `●`。这使得证明的向右方向变得更加困难，
 而 `⊔-intro` 的情况说明了为什么 `⊑-dist` 规则很重要。
 
 <!--
@@ -285,7 +285,7 @@ the forward direction of the semantic equation for application.  We
 describe the proof below.
 -->
 
-接下来我们考虑应用的反演引理，它同样是应用的语义等式的前进方向。
+接下来我们考虑应用的反演引理，它同样是应用的语义方程的向右方向。
 下面是它的证明：
 
 ```agda
@@ -403,7 +403,7 @@ In case `v ⊑ ⊥`, we obtain `Γ ⊢ L · M ↓ ⊥` by rule `⊥-intro`.
 Otherwise, we conclude immediately by rule `↦-elim`.
 -->
 
-后退的方向可通过在前提 `(ℰ L ● ℰ M) γ v` 下进行情况分析来证明。
+向左的方向可通过在前提 `(ℰ L ● ℰ M) γ v` 下进行情况分析来证明。
 对于情况 `v ⊑ ⊥`，我们可通过规则 `⊥-intro` 得到 `Γ ⊢ L · M ↓ ⊥`。
 否则，我们可直接通过规则 `↦-elim` 得出结论：
 
@@ -454,7 +454,7 @@ To round-out the semantic equations, we establish the following one
 for variables.
 -->
 
-为了完善语义等式，我们建立以下变量等式：
+为了完善语义方程，我们为变量建立以下方程：
 
 ```agda
 var-equiv : ∀{Γ}{x : Γ ∋ ★} → ℰ (` x) ≃ (λ γ v → v ⊑ γ x)
@@ -478,8 +478,8 @@ that surrounding two denotationally-equal terms in the same context
 produces two programs that are denotationally equal.
 -->
 
-本章的主要工作已经完成：我们建立了语义等式来展示指称语义是如何组合的。
-在本节和下一节中，我们将利用这些等式来证明一些推论：指称相等满足**合同性（congruence）**，
+本章的主要工作已经完成：我们建立了语义方程来展示指称语义是如何组合的。
+在本节和下一节中，我们将利用这些方程来证明一些推论：指称相等满足**合同性（congruence）**，
 并证明指称具有**可组合性（compositionality property）**，
 该性质指出在同一语境中，两个指称相等的项会产生两个指称相等的程序 。
 
@@ -491,7 +491,7 @@ whether `ℱ` is a congruence.
 -->
 
 我们首先证明指称相等对 λ-抽象满足合同性：`ℰ N ≃ ℰ N′` 蕴含
-`ℰ (ƛ N) ≃ ℰ (ƛ N′)`。我们用 `lam-equiv` 等式将这个问题简化为
+`ℰ (ƛ N) ≃ ℰ (ƛ N′)`。我们用 `lam-equiv` 方程将这个问题简化为
 `ℱ` 是否满足合同性：
 
 ```agda
@@ -551,7 +551,7 @@ is a congruence.
 -->
 
 接下来我们证明指称相等对于应用也满足合同性：`ℰ L ≃ ℰ L′` 和 `ℰ M ≃ ℰ M′`
-蕴含 `ℰ (L · M) ≃ ℰ (L′ · M′)`。等式 `app-equiv` 将其归约为 `●`
+蕴含 `ℰ (L · M) ≃ ℰ (L′ · M′)`。方程 `app-equiv` 将其归约为 `●`
 运算符是否满足合同性的问题。
 
 ```agda
@@ -741,7 +741,7 @@ auxiliary curry `ℱ` and apply `●` functions in the cases for lambda
 and application, respectively.
 -->
 
-建立了 `var-equiv`、`lam-equiv` 和 `app-equiv` 三个等式后，
+建立了 `var-equiv`、`lam-equiv` 和 `app-equiv` 三个方程后，
 我们就能将指称语义定义为一个在输入项 `M` 上递归的函数。其实，
 我们可以定义以下函数 `⟦ M ⟧`，利用辅助的柯里化函数 `ℱ`，
 并分别在 λ-抽象和应用的情况下应用 `●` 函数来将项映射到指称。
@@ -761,7 +761,7 @@ with the congruence lemmas for `ℱ` and `●`.
 -->
 
 `ℰ M` 和 `⟦ M ⟧` 指称相等的证明可通过 `var-equiv`、`lam-equiv`
-和 `app-equiv` 三个等式以及 `ℱ` 和 `●` 的合同性引理直接归纳得出。
+和 `app-equiv` 三个方程以及 `ℱ` 和 `●` 的合同性引理直接归纳得出。
 
 ```agda
 ℰ≃⟦⟧ : ∀ {Γ} {M : Γ ⊢ ★} → ℰ M ≃ ⟦ M ⟧

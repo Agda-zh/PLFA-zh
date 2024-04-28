@@ -1,8 +1,7 @@
 ---
-title      : "Untyped: 完全正规化的无类型 λ 演算"
+title      : "Untyped: 完全正规化的无类型 λ-演算"
 permalink  : /Untyped/
 translators: ["Fangyi Zhou"]
-progress   : 100
 ---
 
 ```agda
@@ -174,7 +173,7 @@ Show that `Type` is isomorphic to `⊤`, the unit type.
 证明 `Type` 与单元类型 `⊤` 同构。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -215,7 +214,7 @@ Show that `Context` is isomorphic to `ℕ`.
 证明 `Context` 和 `ℕ` 同构。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -701,7 +700,7 @@ unless both terms are in normal form.
 假设 `β` 在除了两个项都是范式时，不允许归约。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -723,7 +722,7 @@ abstractions).  What would `2+2ᶜ` reduce to in this case?
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1265,7 +1264,7 @@ normalise to the same term.
 使用求值器，证实 `plus · two · two` 和 `four` 正规化至相同的项。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1285,7 +1284,7 @@ Confirm that two times two is four.
 证实二乘二得四。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1303,7 +1302,7 @@ save for primitive numbers, in the untyped lambda calculus.
 用上文中类似的方法，编码 [More](/More/) 章节除了原语数字以外的剩余构造，用无类型的 λ 演算。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 

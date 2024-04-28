@@ -2,6 +2,9 @@
     <data class="u-url" href="/"></data>
     <div class="wrapper">
         <h2 class="footer-heading">$pagetitle$</h2>
+        $if(translators)$
+        本章译者：$for(translators)$$translators$$sep$、$endfor$
+        $endif$
         $for(author)$
         <div class="footer-col-wrapper">
             <div class="footer-col footer-col-1">
@@ -45,14 +48,44 @@
                 $endif$
             </div>
         </div>
-        $endfor$
-        $if(progress)$
-            <h3 class="footer-heading">本章翻译进度：$progress$&#37;
-            $if(translators)$
-            ，译者：$for(translators)$$translators$$sep$、$endfor$
-            $endif$
-            </h3>
-        $endif$
-        This work is licensed under a <a rel="license" href="$license.url$">$license.name$</a>
+        $for(translator)$
+        <div class="footer-col-wrapper">
+            <div class="footer-col footer-col-1">
+                <ul class="contact-list">
+                    <li class="p-name">
+                        $translator.name$
+                    </li>
+                    <li>
+                        $if(translator.corresponding)$
+                        $if(translator.email)$
+                        <a class="u-email" href="mailto:$translator.email$">
+                            <i class="far fa-envelope"></i>
+                            &nbsp;$translator.email$
+                        </a>
+                        $endif$
+                        $endif$
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-col footer-col-2">
+                <ul class="social-media-list">
+                    <li>
+                        <a rel="me" href="https://github.com/$translator.github$" title="$translator.github$">
+                            <i class="fab fa-github"></i>
+                            &nbsp;$translator.github$
+                        </a>
+                    </li>
+                    $if(translator.twitter)$
+                    <li>
+                        <a rel="me" href="https://twitter.com/$translator.twitter$" title="$translator.twitter$">
+                            <i class="fab fa-twitter"></i>
+                            &nbsp;$translator.twitter$
+                        </a>
+                    </li>
+                    $endif$
+                </ul>
+            </div>
+        </div>
+        本书按照<a rel="license" href="$license.url$">$license.name$</a>许可协议授权
     </div>
 </footer>

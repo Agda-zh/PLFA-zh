@@ -2,7 +2,6 @@
 title     : "Connectives: 合取、析取与蕴涵"
 permalink : /Connectives/
 translators : ["Fangyi Zhou"]
-progress  : 95
 ---
 
 ```agda
@@ -388,7 +387,7 @@ is isomorphic to `(A → B) × (B → A)`.
 证明[之前](/Isomorphism/#iff)定义的 `A ⇔ B` 与 `(A → B) × (B → A)` 同构。
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -749,7 +748,7 @@ Show sum is commutative up to isomorphism.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -766,7 +765,7 @@ Show sum is associative up to isomorphism.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -903,7 +902,7 @@ Show empty is the left identity of sums up to isomorphism.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 #### Exercise `⊥-identityʳ` (practice)
@@ -919,7 +918,7 @@ Show empty is the right identity of sums up to isomorphism.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1314,7 +1313,7 @@ distributive law, and explain how it relates to the weak version.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1344,7 +1343,7 @@ Does the converse hold? If so, prove; if not, give a counterexample.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--

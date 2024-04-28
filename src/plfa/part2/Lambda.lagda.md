@@ -2,7 +2,6 @@
 title     : "Lambda: λ-演算简介"
 permalink : /Lambda/
 translators : ["Fangyi Zhou"]
-progress  : 100
 ---
 
 ```agda
@@ -344,7 +343,7 @@ defined earlier.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -367,7 +366,7 @@ definition may use `plusᶜ` as defined earlier (or may not
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -969,7 +968,7 @@ substitution.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1351,7 +1350,7 @@ above embeds into the second. Why are they not isomorphic?
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1571,7 +1570,7 @@ Write out the reduction sequence demonstrating that one plus one is two.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1788,7 +1787,7 @@ to the list
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -2363,7 +2362,7 @@ showing that it is well typed.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -2382,7 +2381,7 @@ showing that it is well typed.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 ## Unicode

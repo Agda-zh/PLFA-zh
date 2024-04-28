@@ -2,7 +2,6 @@
 title     : "Relations: 关系的归纳定义"
 permalink : /Relations/
 translators : ["Fangyi Zhou"]
-progress  : 100
 ---
 
 ```agda
@@ -463,7 +462,7 @@ Give an example of a preorder that is not a partial order.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -475,7 +474,7 @@ Give an example of a partial order that is not a total order.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -698,7 +697,7 @@ argument is `s≤s`.  Why is it ok to omit them?
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1038,7 +1037,7 @@ Show that multiplication is monotonic with regard to inequality.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1128,7 +1127,7 @@ exercise exploits the relation between < and ≤.)
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1165,7 +1164,7 @@ similar to that used for totality.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1184,7 +1183,7 @@ As with inequality, some additional definitions may be required.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1202,7 +1201,7 @@ Show that `suc m ≤ n` implies `m < n`, and conversely.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 <!--
@@ -1223,7 +1222,7 @@ the fact that inequality is transitive.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1401,7 +1400,7 @@ Show that the sum of two odd numbers is even.
 
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
@@ -1502,7 +1501,7 @@ properties of `One`. It may also help to prove the following:
     to (2 * n) ≡ (to n) O
 
 ```agda
--- 请将代码写在此处。
+-- 请将代码写在此处
 ```
 
 
