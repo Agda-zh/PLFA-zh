@@ -69,9 +69,8 @@ James Chapman、James McKinna 和许多其他人也进行了相关的研究。
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
-open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Nat using (ℕ; zero; suc; _<_; _≤?_; z≤n; s≤s)
-open import Relation.Nullary using (¬_)
+open import Relation.Nullary.Negation using (¬_)
 open import Relation.Nullary.Decidable using (True; toWitness)
 ```
 

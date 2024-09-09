@@ -27,13 +27,13 @@ examples of polymorphic types and higher-order functions.
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; sym; trans; cong)
 open Eq.≡-Reasoning
-open import Data.Bool using (Bool; true; false; T; _∧_; _∨_; not)
-open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_; _≤_; s≤s; z≤n)
+open import Data.Bool.Base using (Bool; true; false; T; _∧_; _∨_; not)
+open import Data.Nat.Base using (ℕ; zero; suc; _+_; _*_; _∸_; _≤_; s≤s; z≤n)
 open import Data.Nat.Properties using
   (+-assoc; +-identityˡ; +-identityʳ; *-assoc; *-identityˡ; *-identityʳ; *-distribʳ-+)
 open import Relation.Nullary using (¬_; Dec; yes; no)
-open import Data.Product using (_×_; ∃; ∃-syntax) renaming (_,_ to ⟨_,_⟩)
-open import Function using (_∘_)
+open import Data.Product.Base using (_×_; ∃; ∃-syntax) renaming (_,_ to ⟨_,_⟩)
+open import Function.Base using (_∘_)
 open import Level using (Level)
 open import plfa.part1.Isomorphism using (_≃_; _⇔_)
 ```
@@ -97,24 +97,33 @@ nothing in between, and the tail is itself another list!
 称之为**尾（Tail）**。列表是一个奇怪的怪兽：它有一头一尾，中间没有东西，然而它的尾巴又是一个列表！
 
 <!--
-As we've seen, parameterised types can be translated to
-indexed types. The definition above is equivalent to the following:
+As we've seen, some parameterised types can be translated to
+indexed types. The definition above translates to the following:
 -->
 
-正如我们所见，参数化的类型可以被转换成索引类型。上面的定义与下列等价：
+正如我们所见，有些参数化的类型可以被转换成索引类型。上面的定义与下列等价：
 
 ```agda
-data List′ : Set → Set where
+data List′ : Set → Set₁ where
   []′  : ∀ {A : Set} → List′ A
   _∷′_ : ∀ {A : Set} → A → List′ A → List′ A
 ```
 
 <!--
-Each constructor takes the parameter as an implicit argument.
+This is almost equivalent, save that with parametrised types the result
+can be in `Set`, whereas for technical reasons indexed types require the
+result to be `Set₁`.
+-->
+
+二者几乎是等价的，只不过参数化类型的结果可以是 `Set`，
+而由于技术原因，索引类型要求结果为 `Set₁`。
+
+<!--
+Each constructor of `List` takes the parameter as an implicit argument.
 Thus, our example list could also be written:
 -->
 
-每个构造子将参数作为隐式参数。因此我们列表的例子也可以写作：
+每个 `List` 的构造子都将参数作为隐式参数。因此我们列表的例子也可以写作：
 
 ```agda
 _ : List ℕ
@@ -1073,19 +1082,35 @@ Show that fold and append are related as follows:
 
 证明折叠和附加有如下的关系：
 
+```agda
+postulate
+  foldr-++ : ∀ {A B : Set} (_⊗_ : A → B → B) (e : B) (xs ys : List A) →
     foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ (foldr _⊗_ e ys) xs
+```
 
 ```agda
 -- 请将代码写在此处
 ```
 
+<!--
 #### Exercise `foldr-∷` (practice)
+-->
 
+#### 练习 `foldr-∷` （实践）
+
+<!--
 Show
+-->
+
+证明
 
     foldr _∷_ [] xs ≡ xs
 
+<!--
 Show as a consequence of `foldr-++` above that
+-->
+
+证明它为前面的 `foldr-++` 的推论，使得
 
     xs ++ ys ≡ foldr _∷_ ys xs
 
@@ -1315,10 +1340,10 @@ foldr-monoid _⊗_ e ⊗-monoid (x ∷ xs) y =
 ```
 
 <!--
-In a previous exercise we showed the following.
+In exercise `foldr-++` above we showed the following:
 -->
 
-在之前的练习中，我们证明了以下定理：
+在之前 `foldr-++` 的练习中，我们证明了以下定理：
 
 ```agda
 postulate
@@ -1361,8 +1386,6 @@ operations associate to the left rather than the right.  For example:
 
     foldr _⊗_ e [ x , y , z ]  =  x ⊗ (y ⊗ (z ⊗ e))
     foldl _⊗_ e [ x , y , z ]  =  ((e ⊗ x) ⊗ y) ⊗ z
-
-
 
 ```agda
 -- 请将代码写在此处
@@ -1908,8 +1931,7 @@ import Data.List.Relation.Unary.All using (All; []; _∷_)
 import Data.List.Relation.Unary.Any using (Any; here; there)
 import Data.List.Membership.Propositional using (_∈_)
 import Data.List.Properties
-  using (reverse-++-commute; map-compose; map-++-commute; foldr-++)
-  renaming (mapIsFold to map-is-foldr)
+  using (reverse-++-commute; map-compose; map-++-commute; foldr-++; map-is-foldr)
 import Algebra.Structures using (IsMonoid)
 import Relation.Unary using (Decidable)
 import Relation.Binary using (Decidable)

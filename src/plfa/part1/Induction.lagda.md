@@ -38,19 +38,19 @@ _induction_.
 <!--
 We require equality as in the previous chapter, plus the naturals
 and some operations upon them.  We also require a couple of new operations,
-`cong`, `sym`, and `_≡⟨_⟩_`, which are explained below:
+`cong`, `sym`, `_≡⟨⟩_` and `_≡⟨_⟩_`, which are explained below:
 -->
 
 我们需要上一章中的相等性，加上自然数及其运算。我们还导入了一些新的运算：
-`cong`、`sym` 和 `_≡⟨_⟩_`，之后会解释它们：
+`cong`、`sym`、`_≡⟨⟩_` 和 `_≡⟨_⟩_`，之后会解释它们：
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong; sym)
-open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; step-≡; _∎)
+open Eq.≡-Reasoning using (begin_; step-≡-∣; step-≡-⟩; _∎)
 open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_;_^_)
 ```
-(Importing `step-≡` defines `_≡⟨_⟩_`.)
+(Importing `step--∣` defines `_≡⟨⟩_` and importing `step-≡-⟩` defines `_≡⟨_⟩_`.)
 
 
 <!--

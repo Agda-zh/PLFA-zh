@@ -147,15 +147,15 @@ or using `ghcup tui` and choosing to `set` the appropriate tools.
 ### 安装 Agda {#install-agda}
 
 <!--
-The easiest way to install Agda is using Cabal. PLFA uses Agda version 2.6.3. Run the following command:
+The easiest way to install Agda is using Cabal. PLFA uses Agda version 2.7.0. Run the following command:
 -->
 
 安装 Agda 最简单的方法是通过 Cabal。PLFA 使用 Agda 版本
-2.6.3。运行下面的命令：
+2.7.0。运行下面的命令：
 
 ```bash
 cabal update
-cabal install Agda-2.6.3
+cabal install Agda-2.7.0
 ```
 
 <!--
@@ -191,15 +191,18 @@ We recommend installing PLFA from Github into your home directory, by running th
 我们建议您使用下面的命令把 PLFA 安装至你的家目录：
 
 ```bash
-git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/plfa/plfa.github.io plfa
+git clone --depth 1 https://github.com/plfa/plfa.github.io plfa
 ```
 
-
 <!--
-PLFA ships with the required version of the Agda standard library, so if you cloned with the `recurse-submodules` flag, you’ve already got it, in the `standard-library` directory!
+PLFA ships with the required version of the Agda standard library. You can download it by running the following command from the directory where you installed PLFA:
 -->
 
-PLFA 包括了所需要的 Agda 标准库版本，如果你在克隆时使用了 `--recurse-submodule` 选项，你在 `standard-library` 文件夹中已经有了 Agda 标准库！
+PLFA 包括了所需的 Agda 标准库版本，你可以在安装 PLFA 的目录下运行以下命令来下载它。
+
+```bash
+git submodule update --init
+```
 
 <!--
 Finally, we need to let Agda know where to find the Agda standard library and PLFA. Two configuration files are required, one which lists paths to the libraries and one which specifies which libraries to load by default.
@@ -638,22 +641,22 @@ If you plan to build PLFA locally, please refer to [Contributing][plfa-contribut
 [pre-commit-status-url]: https://results.pre-commit.ci/latest/github/plfa/plfa.github.io/dev
 [plfa-badge-version-svg]: https://img.shields.io/github/v/tag/plfa/plfa.github.io?label=release
 [plfa-badge-version-url]: https://github.com/plfa/plfa.github.io/releases/latest
-[agda-badge-version-svg]: https://img.shields.io/badge/agda-v2.6.3-blue.svg
-[agda-badge-version-url]: https://github.com/agda/agda/releases/tag/v2.6.3.
-[agda-stdlib-version-svg]: https://img.shields.io/badge/agda--stdlib-v1.7.2-blue.svg
-[agda-stdlib-version-url]: https://github.com/agda/agda-stdlib/releases/tag/v1.7.2
+[agda-badge-version-svg]: https://img.shields.io/badge/agda-v2.7.0-blue.svg
+[agda-badge-version-url]: https://github.com/agda/agda/releases/tag/v2.7.0.
+[agda-stdlib-version-svg]: https://img.shields.io/badge/agda--stdlib-v2.1-blue.svg
+[agda-stdlib-version-url]: https://github.com/agda/agda-stdlib/releases/tag/v2.1
 [plfa]: https://plfa.inf.ed.ac.uk
 [plfa-epub]: https://plfa.github.io/plfa.epub
 [plfa-contributing]: https://plfa.github.io/Contributing/
 [ghcup]: https://www.haskell.org/ghcup/
 [git]: https://git-scm.com/downloads
 [xcode]: https://developer.apple.com/xcode/
-[agda-readthedocs-installation]: https://agda.readthedocs.io/en/v2.6.3/getting-started/installation.html
-[agda-readthedocs-hello-world]: https://agda.readthedocs.io/en/v2.6.3/getting-started/hello-world.html
-[agda-readthedocs-holes]: https://agda.readthedocs.io/en/v2.6.3/getting-started/a-taste-of-agda.html#preliminaries
-[agda-readthedocs-emacs-mode]: https://agda.readthedocs.io/en/v2.6.3/tools/emacs-mode.html
-[agda-readthedocs-emacs-notation]: https://agda.readthedocs.io/en/v2.6.3/tools/emacs-mode.html#notation-for-key-combinations
-[agda-readthedocs-package-system]: https://agda.readthedocs.io/en/v2.6.3/tools/package-system.html#example-using-the-standard-library
+[agda-readthedocs-installation]: https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html
+[agda-readthedocs-hello-world]: https://agda.readthedocs.io/en/v2.7.0/getting-started/hello-world.html
+[agda-readthedocs-holes]: https://agda.readthedocs.io/en/v2.7.0/getting-started/a-taste-of-agda.html#preliminaries
+[agda-readthedocs-emacs-mode]: https://agda.readthedocs.io/en/v2.7.0/tools/emacs-mode.html
+[agda-readthedocs-emacs-notation]: https://agda.readthedocs.io/en/v2.7.0/tools/emacs-mode.html#notation-for-key-combinations
+[agda-readthedocs-package-system]: https://agda.readthedocs.io/en/v2.7.0/tools/package-system.html#example-using-the-standard-library
 [emacs]: https://www.gnu.org/software/emacs/download.html
 [emacs-tour]: https://www.gnu.org/software/emacs/tour/
 [emacs-home]: https://www.gnu.org/software/emacs/manual/html_node/efaq-w32/Location-of-init-file.html

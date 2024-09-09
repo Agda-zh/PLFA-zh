@@ -107,15 +107,15 @@ confluence for parallel reduction.
 
 ```agda
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
-open import Function using (_∘_)
-open import Data.Product using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
+open import Function.Base using (_∘_)
+open import Data.Product.Base using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
   renaming (_,_ to ⟨_,_⟩)
 open import plfa.part2.Substitution using (Rename; Subst)
 open import plfa.part2.Untyped
   using (_—→_; β; ξ₁; ξ₂; ζ; _—↠_; begin_; _—→⟨_⟩_; _—↠⟨_⟩_; _∎;
   abs-cong; appL-cong; appR-cong; —↠-trans;
   _⊢_; _∋_; `_; #_; _,_; ★; ƛ_; _·_; _[_];
-  rename; ext; exts; Z; S_; subst; subst-zero)
+  rename; ext; exts; Z; S_; subst; subst-zero; Context)
 ```
 
 <!--
@@ -386,7 +386,7 @@ We cannot prove this directly by induction, so we
 generalize it to: if `N ⇛ N′` and
 the substitution `σ` pointwise parallel reduces to `τ`,
 then `subst σ N ⇛ subst τ N′`. We define the notion
-of pointwise parallel reduction as follows.
+of pointwise parallel reduction of a substitution as follows.
 -->
 
 我们的下一个目标是对平行归约证明菱形性质。
@@ -395,11 +395,31 @@ of pointwise parallel reduction as follows.
 我们不能直接通过归纳证明它，所以我们将其推广为：
 如果 `N ⇛ N′` 并且替换 `σ` 逐点（Pointwise）平行归约至 `τ`，
 则 `subst σ N ⇛ subst τ N′`。
-我们如下定义逐点平行归约。
+我们将代换的逐点平行归约定义如下：
 
 ```agda
 par-subst : ∀{Γ Δ} → Subst Γ Δ → Subst Γ Δ → Set
 par-subst {Γ}{Δ} σ σ′ = ∀{A}{x : Γ ∋ A} → σ x ⇛ σ′ x
+```
+
+<!--
+In the type of `par-subst` we make use of the shorthand `Subst Γ Δ`
+for the type of a substitution. Similarly, we shall make use of
+`Rename Γ Δ` for the type of a renaming. Both are defined in Chapter
+[Substitution](/Substitution/) and have the following meaning.
+-->
+
+In the type of `par-subst` we make use of the shorthand `Subst Γ Δ`
+for the type of a substitution. Similarly, we shall make use of
+`Rename Γ Δ` for the type of a renaming. Both are defined in Chapter
+[Substitution](/Substitution/) and have the following meaning.
+
+```agda
+_ : ∀(Γ Δ : Context) → Set₁
+_ = λ Γ Δ →   Rename Γ Δ ≡ ∀{A} → Γ ∋ A → Δ ∋ A
+
+_ : ∀(Γ Δ : Context) → Set₁
+_ = λ Γ Δ →   Subst Γ Δ ≡ ∀{A} → Γ ∋ A → Δ ⊢ A
 ```
 
 <!--

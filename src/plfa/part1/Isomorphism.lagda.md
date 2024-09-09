@@ -32,7 +32,7 @@ distributivity.
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong; cong-app)
 open Eq.≡-Reasoning
-open import Data.Nat using (ℕ; zero; suc; _+_)
+open import Data.Nat.Base using (ℕ; zero; suc; _+_)
 open import Data.Nat.Properties using (+-comm)
 ```
 
@@ -778,19 +778,18 @@ Definitions similar to those in this chapter can be found in the standard librar
 标准库中可以找到与本章节中相似的定义：
 
 ```agda
-import Function using (_∘_)
-import Function.Inverse using (_↔_)
-import Function.LeftInverse using (_↞_)
+import Function.Base using (_∘_)
+import Function.Bundles using (_↔_; _↩_)
 ```
 
 <!--
-The standard library `_↔_` and `_↞_` correspond to our `_≃_` and
+The standard library `_↔_` and `_↩_` correspond to our `_≃_` and
 `_≲_`, respectively, but those in the standard library are less
 convenient, since they depend on a nested record structure and are
 parameterised with regard to an arbitrary notion of equivalence.
 -->
 
-标准库中的 `_↔_` 和 `_↞_` 分别对应了我们定义的 `_≃_` 和 `_≲_`，
+标准库中的 `_↔_` 和 `_↩_` 分别对应了我们定义的 `_≃_` 和 `_≲_`，
 但是标准库中的定义使用起来不如我们的定义方便，因为标准库中的定义依赖于一个嵌套的记录结构，
 并可以由任何相等性的记法来参数化。
 
