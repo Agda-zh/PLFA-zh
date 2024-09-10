@@ -336,29 +336,22 @@ library:
 module ≡-Reasoning {A : Set} where
 
   infix  1 begin_
-  infixr 2 _≡⟨⟩_ step-≡
+  infixr 2 step-≡-∣ step-≡-⟩
   infix  3 _∎
 
-  begin_ : ∀ {x y : A}
-    → x ≡ y
-      -----
-    → x ≡ y
+  begin_ : ∀ {x y : A} → x ≡ y → x ≡ y
   begin x≡y  =  x≡y
 
-  _≡⟨⟩_ : ∀ (x : A) {y : A}
-    → x ≡ y
-      -----
-    → x ≡ y
-  x ≡⟨⟩ x≡y  =  x≡y
+  step-≡-∣ : ∀ (x : A) {y : A} → x ≡ y → x ≡ y
+  step-≡-∣ x x≡y  =  x≡y
 
-  step-≡ : ∀ (x {y z} : A) → y ≡ z → x ≡ y → x ≡ z
-  step-≡ x y≡z x≡y  =  trans x≡y y≡z
+  step-≡-⟩ : ∀ (x : A) {y z : A} → y ≡ z → x ≡ y → x ≡ z
+  step-≡-⟩ x y≡z x≡y  =  trans x≡y y≡z
 
-  syntax step-≡ x y≡z x≡y  =  x ≡⟨  x≡y ⟩ y≡z
+  syntax step-≡-∣ x x≡y      =  x ≡⟨⟩ x≡y
+  syntax step-≡-⟩ x y≡z x≡y  =  x ≡⟨  x≡y ⟩ y≡z
 
-  _∎ : ∀ (x : A)
-      -----
-    → x ≡ x
+  _∎ : ∀ (x : A) → x ≡ x
   x ∎  =  refl
 
 open ≡-Reasoning
@@ -367,16 +360,18 @@ open ≡-Reasoning
 <!--
 This is our first use of a nested module. It consists of the keyword
 `module` followed by the module name and any parameters, explicit or
-implicit, the keyword `where`, and the contents of the module indented.
-Modules may contain any sort of declaration, including other nested modules.
-Nested modules are similar to the top-level modules that constitute
-each chapter of this book, save that the body of a top-level module
-need not be indented.  Opening the module makes all of the definitions
-available in the current environment.
+implicit, and the keyword `where`; this is followed by the contents of
+the module, which must be indented.  Modules may contain any sort of
+declaration, including other nested modules.  Nested modules are
+similar to the top-level modules that constitute each chapter of this
+book, save that the body of a top-level module need not be indented.
+Opening the module makes all of the definitions available in the
+current environment.
 -->
 
-这是我们第一次使用嵌套的模块。它包括了关键字 `module` 和后续的模块名、隐式或显式参数，
-关键字 `where`，和模块中的内容（在缩进内）。模块里可以包括任何形式的声明，也可以包括其他模块。
+这是我们第一次使用嵌套的模块。它包含关键字 `module` 和后续的模块名、
+隐式或显式参数，以及关键字 `where`；之后模块中的内容（必须缩进）。
+模块里可以包含任何形式的声明，也可以包含其他模块。
 嵌套的模块和本书每章节所定义的顶层模块相似，只是顶层模块不需要缩进。
 打开（`open`）一个模块会把模块内的所有定义导入进当前的环境中。
 
@@ -384,13 +379,13 @@ available in the current environment.
 This is also our first use of a syntax declaration, which specifies
 that the term on the left may be written with the syntax on the right.
 The syntax `x ≡⟨ x≡y ⟩ y≡z` inherits the fixity `infixr 2` declared
-for `step-≡`, and the special syntax is available when the identifier
-`step-≡` is imported.
+for `step-≡-⟩`, and the special syntax is available when the identifier
+`step-≡-⟩` is imported. Similarly for `step-≡-∣`.
 -->
 
 这也是我们第一次使用语法声明，它指明了左侧的项可以写成右边的语法形式。
-语法 `x ≡⟨ x≡y ⟩ y≡z` 继承了声明 `step-≡` 时使用的中缀式声明 `infixr 2`，
-这种特殊的语法只要导入了 `step-≡` 标识符就能使用。
+语法 `x ≡⟨ x≡y ⟩ y≡z` 继承了声明 `step-≡-⟩` 时使用的中缀式声明 `infixr 2`，
+这种特殊的语法只要导入了 `step-≡-⟩` 标识符就能使用，类似于 `step-≡-∣`。
 
 <!--
 Rather than introducing `step-≡` with special syntax, we might have
@@ -400,23 +395,19 @@ declared `_≡⟨_⟩′_` directly:
 除了引入带特殊语法的 `step-≡` 外，我们也可以直接声明 `_≡⟨_⟩′_`：
 
 ```agda
-_≡⟨_⟩′_ : ∀ {A : Set} (x : A) {y z : A}
-  → x ≡ y
-  → y ≡ z
-    -----
-  → x ≡ z
+_≡⟨_⟩′_ : ∀ {A : Set} (x : A) {y z : A} → x ≡ y → y ≡ z → x ≡ z
 x ≡⟨ x≡y ⟩′ y≡z  =  trans x≡y y≡z
 ```
 
 <!--
-The reason for indirection is that `step-≡` reverses
+The reason for indirection is that `step-≡-⟩` reverses
 the order of the arguments, which happens to allow Agda to
 perform type inference more efficiently. We will encounter some
 long chains in Chapter [Lambda](/Lambda/), so efficiency can be
 important.
 -->
 
-间接使用它的原因是 `step-≡` 反转了实参的顺序，这样能让 Agda 更高效地执行类型推导。
+间接使用它的原因是 `step-≡-⟩` 反转了实参的顺序，这样能让 Agda 更高效地执行类型推导。
 在 [Lambda](/Lambda/) 一章中我们会遇到一些长等式链，因此效率是很重要的。
 
 <!--
@@ -454,16 +445,15 @@ According to the fixity declarations, the body parses as follows:
 The application of `begin` is purely cosmetic, as it simply returns
 its argument.  That argument consists of `_≡⟨_⟩_` applied to `x`,
 `x≡y`, and `y ≡⟨ y≡z ⟩ (z ∎)`.  The first argument is a term, `x`,
-while the second and third arguments are both proofs of equations, in
-particular proofs of `x ≡ y` and `y ≡ z` respectively, which are
-combined by `trans` in the body of `_≡⟨_⟩_` to yield a proof of `x ≡
-z`.  The proof of `y ≡ z` consists of `_≡⟨_⟩_` applied to `y`, `y≡z`,
-and `z ∎`.  The first argument is a term, `y`, while the second and
-third arguments are both proofs of equations, in particular proofs of
-`y ≡ z` and `z ≡ z` respectively, which are combined by `trans` in the
-body of `_≡⟨_⟩_` to yield a proof of `y ≡ z`.  Finally, the proof of
-`z ≡ z` consists of `_∎` applied to the term `z`, which yields `refl`.
-After simplification, the body is equivalent to the term:
+while the second and third arguments are proofs of `x ≡ y` and `y ≡ z`
+respectively, which are combined by `trans` in the body of `_≡⟨_⟩_` to
+yield a proof of `x ≡ z`.  The proof of `y ≡ z` consists of `_≡⟨_⟩_`
+applied to `y`, `y≡z`, and `z ∎`.  The first argument is a term, `y`,
+while the second and third arguments are proofs of `y ≡ z` and `z ≡ z`
+respectively, which are combined by `trans` in the body of `_≡⟨_⟩_` to
+yield a proof of `y ≡ z`.  Finally, the proof of `z ≡ z` consists of
+`_∎` applied to the term `z`, which yields `refl`.  After
+simplification, the body is equivalent to the term:
 -->
 
 这里 `begin` 的使用纯粹是装饰性的，因为它直接返回了其参数。其参数包括了
@@ -481,17 +471,26 @@ We could replace any use of a chain of equations by a chain of
 applications of `trans`; the result would be more compact but harder
 to read.  The trick behind `∎` means that a chain of equalities
 simplifies to a chain of applications of `trans` that ends in `trans e
-refl`, where `e` is a term that proves some equality, even though `e`
-alone would do.
+refl`, where `e` is a term that proves some equality.
 -->
 
-我们可以把任意等式链转化成一系列的 `trans` 的使用。这样的证明更加精简，但是更难以阅读。
-`∎` 的小窍门意味着等式链化简成为的一系列 `trans` 会以 `trans e refl` 结尾，尽管只需要 `e`
-就足够了，这里的 `e` 是等式的证明。
+我们可以把任意等式链转化成一系列的 `trans` 的使用。这样的证明更加精简，
+但是更难以阅读。`∎` 的小窍门意味着等式链化简成为的一系列 `trans` 会以
+`trans e refl` 结尾，这里的 `e` 是等式的证明。
+
+<!--
+(That trick might seem inefficient, since `trans e refl` and `e` both
+prove the same equality. But that inefficiency is key to our nice
+notation nice notation for chains of equalities.  One shouldn't fear
+inefficiency if it improves readability!)
+-->
+
+（这个技巧可能看起来效率低下，因为 `trans e refl` 和 `e` 都证明了相同的相等性。
+但这种低效率是我们实现等式链的良好记法的关键。如果它能提高可读性，就不应该担心低效率！）
 
 #### Exercise `trans` and `≡-Reasoning` (practice)
 
-Sadly, we cannot use the definition of trans' using ≡-Reasoning as the
+Sadly, we cannot use the definition of `trans'` using ≡-Reasoning as the
 definition for trans. Can you see why? (Hint: look at the definition
 of `_≡⟨_⟩_`)
 

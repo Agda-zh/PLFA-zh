@@ -50,7 +50,12 @@ open Eq using (_≡_; refl; cong; sym)
 open Eq.≡-Reasoning using (begin_; step-≡-∣; step-≡-⟩; _∎)
 open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_;_^_)
 ```
-(Importing `step--∣` defines `_≡⟨⟩_` and importing `step-≡-⟩` defines `_≡⟨_⟩_`.)
+
+<!--
+(Importing `step-≡-∣` defines `_≡⟨⟩_` and importing `step-≡-⟩` defines `_≡⟨_⟩_`.)
+-->
+
+（导入 `step-≡-∣` 定义了 `_≡⟨⟩_`，导入 `step-≡-⟩` 定义了 `_≡⟨_⟩_`。）
 
 
 <!--
