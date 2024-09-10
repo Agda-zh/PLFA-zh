@@ -1345,11 +1345,7 @@ In exercise `foldr-++` above we showed the following:
 
 在之前 `foldr-++` 的练习中，我们证明了以下定理：
 
-```agda
-postulate
-  foldr-++ : ∀ {A : Set} (_⊗_ : A → A → A) (e : A) (xs ys : List A) →
     foldr _⊗_ e (xs ++ ys) ≡ foldr _⊗_ (foldr _⊗_ e ys) xs
-```
 
 <!--
 As a consequence we can decompose fold over append in a monoid
