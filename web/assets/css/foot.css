@@ -1,0 +1,11 @@
+.term {
+  font-weight: bold;
+  display: inline-flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  vertical-align: bottom;
+}
+.term-en {
+  font-size: 0.75em;
+  text-wrap: nowrap;
+}

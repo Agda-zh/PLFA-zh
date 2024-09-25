@@ -30,7 +30,7 @@ left over as you started with.
 The naturals are an inductive datatype
 -->
 
-## 自然数是一种归纳数据类型（Inductive Datatype）
+## 自然数是一种 **归纳数据类型（Inductive Datatype）**
 
 <!--
 Everyone is familiar with the natural numbers
@@ -59,8 +59,8 @@ its definition in just a few lines.  Here is the definition
 as a pair of inference rules:
 -->
 
-自然数集是无限的，然而其定义只需寥寥几行即可写出。下面是用两条**推导规则（Inference
-Rules）**定义的自然数：
+自然数集是无限的，然而其定义只需寥寥几行即可写出。下面是用两条
+**推导规则（Inference Rules）** 定义的自然数：
 
     --------
     zero : ℕ
