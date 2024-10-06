@@ -1,2 +1,14 @@
-<script src="../assets/js/foot.js" />
-<link rel="stylesheet" href="../assets/css/foot.css">
+<!-- Scripts -->
+$for(scriptInBody)$
+$if(scriptInBody.url)$
+<script src="$scriptInBody.url$"
+  $if(scriptInBody.integrity)$ integrity="$scriptInBody.integrity$"$endif$
+  $if(scriptInBody.id)$  id="$scriptInBody.id$"$endif$></script>
+$else$
+$endif$
+$if(scriptInBody.body)$
+<script>
+  $scriptInBody.body$
+</script>
+$endif$
+$endfor$

@@ -273,7 +273,8 @@ main = do
         (fileMetadata, indexMarkdownTemplate) <- getFileWithMetadata src
         stylesheetField <- getStylesheetField
         scriptField <- getScriptField
-        let metadata = mconcat [tocField, fileMetadata, stylesheetField, scriptField]
+        scriptInBodyField <- getScriptInBodyField
+        let metadata = mconcat [tocField, fileMetadata, stylesheetField, scriptField, scriptInBodyField]
         return indexMarkdownTemplate
           >>= Pandoc.applyAsTemplate metadata
           >>= markdownToHtml5
@@ -318,7 +319,8 @@ main = do
         (fileMetadata, htmlBody) <- getFileWithMetadata prev
         stylesheetField <- getStylesheetField
         scriptField <- getScriptField
-        let metadata = mconcat [fileMetadata, stylesheetField, scriptField]
+        scriptInBodyField <- getScriptInBodyField
+        let metadata = mconcat [fileMetadata, stylesheetField, scriptField, scriptField, scriptInBodyField]
         let htmlTemplates
               | isPostSource src = ["post.html", "default.html"]
               | otherwise = ["page.html", "default.html"]
@@ -348,7 +350,8 @@ main = do
         (fileMetadata, indexMarkdownTemplate) <- getFileWithMetadata src
         stylesheetField <- getStylesheetField
         scriptField <- getScriptField
-        let metadata = mconcat [postsField, fileMetadata, stylesheetField, scriptField]
+        scriptInBodyField <- getScriptInBodyField
+        let metadata = mconcat [postsField, fileMetadata, stylesheetField, scriptField, scriptInBodyField]
         return indexMarkdownTemplate
           >>= Pandoc.applyAsTemplate metadata
           >>= markdownToHtml5
@@ -362,7 +365,8 @@ main = do
         (fileMetadata, acknowledgmentsMarkdownTemplate) <- getFileWithMetadata src
         stylesheetField <- getStylesheetField
         scriptField <- getScriptField
-        let metadata = mconcat [contributorField, fileMetadata, stylesheetField, scriptField]
+        scriptInBodyField <- getScriptInBodyField
+        let metadata = mconcat [contributorField, fileMetadata, stylesheetField, scriptField, scriptInBodyField]
         return acknowledgmentsMarkdownTemplate
           >>= Pandoc.applyAsTemplate metadata
           >>= markdownToHtml5
@@ -388,7 +392,8 @@ main = do
         (fileMetadata, errorMarkdownBody) <- getFileWithMetadata src
         stylesheetField <- getStylesheetField
         scriptField <- getScriptField
-        let metadata = mconcat [fileMetadata, stylesheetField, scriptField]
+        scriptInBodyField <- getScriptInBodyField
+        let metadata = mconcat [fileMetadata, stylesheetField, scriptField, scriptInBodyField]
         return errorMarkdownBody
           >>= markdownToHtml5
           >>= Pandoc.applyTemplates ["page.html", "default.html"] metadata
@@ -623,6 +628,15 @@ getScriptField = do
   darkmode <- Script.fromFilePath (outDir </> "assets/js/darkmode.js")
   main <- Script.fromFilePath (outDir </> "assets/js/main.js")
   return $ constField "script" [anchorjs, darkmode, main]
+
+getScriptInBodyField ::
+  ( ?getDigest :: FilePath -> Action (Maybe LazyText.Text),
+    ?routingTable :: RoutingTable
+  ) =>
+  Action Metadata
+getScriptInBodyField = do
+  rubyTags <- Script.fromFilePath (outDir </> "assets/js/ruby-tags.js")
+  return $ constField "scriptInBody" [rubyTags]
 
 getStylesheetField ::
   ( ?getDigest :: FilePath -> Action (Maybe LazyText.Text),
