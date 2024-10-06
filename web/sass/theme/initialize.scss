@@ -46,5 +46,6 @@ $on-large:         $on-laptop !default;
   "theme/custom-variables", // Hook to override predefined variables.
   "theme/base",             // Defines element resets.
   "theme/layout",           // Defines structure and style based on CSS selectors.
-  "theme/custom-styles"     // Hook to override existing styles.
+  "theme/custom-styles",    // Hook to override existing styles.
+  "theme/ruby-tags"         // Defines classes to display Ruby tags
 ;
