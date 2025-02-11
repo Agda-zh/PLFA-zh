@@ -47,8 +47,8 @@ principle known as _Propositions as Types_:
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open Eq.≡-Reasoning
-open import Data.Nat.Base using (ℕ)
-open import Function.Base using (_∘_)
+open import Data.Nat using (ℕ)
+open import Function using (_∘_)
 open import plfa.part1.Isomorphism using (_≃_; _≲_; extensionality; _⇔_)
 open plfa.part1.Isomorphism.≃-Reasoning
 ```
@@ -70,13 +70,12 @@ declaring a suitable datatype:
 我们用一个合适的数据类型将这样的概念形式化：
 
 ```agda
-data _×_ (A B : Set) : Set where
-
-  ⟨_,_⟩ :
-      A
-    → B
-      -----
-    → A × B
+record _×_ (A B : Set) : Set where
+  constructor ⟨_,_⟩
+  field
+    proj₁ : A
+    proj₂ : B
+open _×_
 ```
 
 <!--
@@ -88,26 +87,17 @@ holds.
 `A × B` 成立的证明由 `⟨ M , N ⟩` 的形式表现，其中 `M` 是 `A` 成立的证明，
 `N` 是 `B` 成立的证明。
 
+The record construction `record { proj₁ = M ; proj₂ = N }` corresponds to the
+term `⟨ M , N ⟩` where `M` is a term of type `A` and `N` is a term of type `B`.
+The constructor declaration allows us to write `⟨ M , N ⟩` in place of the
+record construction.
+
 <!--
 Given evidence that `A × B` holds, we can conclude that both
-`A` holds and `B` holds:
+`A` holds and `B` holds, using the projections `proj₁` and `proj₂` respectively.
 -->
 
-给定 `A × B` 成立的证明，我们可以得出 `A` 成立和 `B` 成立。
-
-```agda
-proj₁ : ∀ {A B : Set}
-  → A × B
-    -----
-  → A
-proj₁ ⟨ x , y ⟩ = x
-
-proj₂ : ∀ {A B : Set}
-  → A × B
-    -----
-  → B
-proj₂ ⟨ x , y ⟩ = y
-```
+给定 `A × B` 成立的证明，我们可以使用投影 `proj₁` 和 `proj₂` 分别得出 `A` 成立和 `B` 成立。
 
 <!--
 If `L` provides evidence that `A × B` holds, then `proj₁ L` provides evidence
@@ -152,24 +142,19 @@ holds-how to _use_ the connective.[^from-wadler-2015]
 什么样的结论——即怎么样**使用**一个运算符。[^from-wadler-2015]
 
 <!--
-In this case, applying each destructor and reassembling the results with the
+Applying each destructor and reassembling the results with the
 constructor is the identity over products:
 -->
 
-在这样的情况下，先使用解构子，再使用构造子将结果重组，得到还是原来的积。
+先使用解构子，再使用构造子将结果重组，得到还是原来的积。
 
 ```agda
 η-× : ∀ {A B : Set} (w : A × B) → ⟨ proj₁ w , proj₂ w ⟩ ≡ w
-η-× ⟨ x , y ⟩ = refl
+η-× w = refl
 ```
-
-<!--
-The pattern matching on the left-hand side is essential, since
-replacing `w` by `⟨ x , y ⟩` allows both sides of the
-propositional equality to simplify to the same term.
--->
-
-左手边的模式匹配是必要的。用 `⟨ x , y ⟩` 来替换 `w` 让等式的两边可以化简成相同的项。
+For record types, η-equality holds *by definition*.
+While proving `η-×`, we do not have to
+pattern match on `w` to know that η-equality holds
 
 <!--
 We set the precedence of conjunction so that it binds less
@@ -188,35 +173,46 @@ Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
 
 因此，`m ≤ n × n ≤ p` 解析为 `(m ≤ n) × (n ≤ p)`。
 
-Alternatively, we can declare conjunction as a record type:
-
+Alternatively, we can declare conjunction as a data type,
+and the projections as functions using pattern matching.
 ```agda
-record _×′_ (A B : Set) : Set where
-  constructor ⟨_,_⟩′
-  field
-    proj₁′ : A
-    proj₂′ : B
-open _×′_
+data _×′_ (A B : Set) : Set where
+
+  ⟨_,_⟩′ :
+      A
+    → B
+      -----
+    → A ×′ B
+
+proj₁′ : ∀ {A B : Set}
+  → A ×′ B
+    -----
+  → A
+proj₁′ ⟨ x , y ⟩′ = x
+
+proj₂′ : ∀ {A B : Set}
+  → A ×′ B
+    -----
+  → B
+proj₂′ ⟨ x , y ⟩′ = y
 ```
-
-The record construction `record { proj₁′ = M ; proj₂′ = N }` corresponds to the
-term `⟨ M , N ⟩` where `M` is a term of type `A` and `N` is a term of type `B`.
-The constructor declaration allows us to write `⟨ M , N ⟩′` in place of the
-record construction.
-
-The data type `_×_` and the record type `_×′_` behave similarly. One
-difference is that for data types we have to prove η-equality, but for record
-types, η-equality holds *by definition*. While proving `η-×′`, we do not have to
-pattern match on `w` to know that η-equality holds:
+The record type `_×_` and the data type `_×′_` behave similarly. One
+difference is that for for record
+types, η-equality holds *by definition*,
+but for data types have to
+pattern match know that η-equality holds:
 
 ```agda
 η-×′ : ∀ {A B : Set} (w : A ×′ B) → ⟨ proj₁′ w , proj₂′ w ⟩′ ≡ w
-η-×′ w = refl
+η-×′ ⟨ x , y ⟩′ = refl
 ```
 
-It can be very convenient to have η-equality *definitionally*, and so the
-standard library defines `_×_` as a record type. We use the definition from the
-standard library in later chapters.
+The pattern matching on the left-hand side is essential, since
+replacing `w` by `⟨ x , y ⟩′` allows both sides of the
+propositional equality to simplify to the same term.
+It is convenient to have η-equality *definitionally*,
+so we use records in preference to data types
+whenever there is only one constructor.
 
 <!--
 Given two types `A` and `B`, we refer to `A × B` as the
@@ -286,15 +282,10 @@ isomorphism_.
 <!--
 For commutativity, the `to` function swaps a pair, taking `⟨ x , y ⟩` to
 `⟨ y , x ⟩`, and the `from` function does the same (up to renaming).
-Instantiating the patterns correctly in `from∘to` and `to∘from` is essential.
-Replacing the definition of `from∘to` by `λ w → refl` will not work;
-and similarly for `to∘from`:
 -->
 
 对于交换律，`to` 函数将有序对交换，将 `⟨ x , y ⟩` 变为 `⟨ y , x ⟩`，`from`
 函数亦是如此（忽略命名）。
-在 `from∘to` 和 `to∘from` 中正确地实例化要匹配的模式是很重要的。
-使用 `λ w → refl` 作为 `from∘to` 的定义是不可行的，`to∘from` 同理。
 
 ```agda
 ×-comm : ∀ {A B : Set} → A × B ≃ B × A
@@ -302,8 +293,8 @@ and similarly for `to∘from`:
   record
     { to       =  λ{ ⟨ x , y ⟩ → ⟨ y , x ⟩ }
     ; from     =  λ{ ⟨ y , x ⟩ → ⟨ x , y ⟩ }
-    ; from∘to  =  λ{ ⟨ x , y ⟩ → refl }
-    ; to∘from  =  λ{ ⟨ y , x ⟩ → refl }
+    ; from∘to  =  λ{ w → refl }
+    ; to∘from  =  λ{ w → refl }
     }
 ```
 
@@ -334,12 +325,11 @@ former, corresponds to `⟨ aa , true ⟩`, which is a member of the latter.
 <!--
 For associativity, the `to` function reassociates two uses of pairing,
 taking `⟨ ⟨ x , y ⟩ , z ⟩` to `⟨ x , ⟨ y , z ⟩ ⟩`, and the `from` function does
-the inverse.  Again, the evidence of left and right inverse requires
-matching against a suitable pattern to enable simplification:
+the inverse.
 -->
 
 对于结合律来说，`to` 函数将两个有序对进行重组：将 `⟨ ⟨ x , y ⟩ , z ⟩` 转换为 `⟨ x , ⟨ y , z ⟩ ⟩`，
-`from` 函数则为其逆。同样，左逆和右逆的证明需要在一个合适的模式来匹配，从而可以直接化简：
+`from` 函数则为其逆。
 
 ```agda
 ×-assoc : ∀ {A B C : Set} → (A × B) × C ≃ A × (B × C)
@@ -347,8 +337,8 @@ matching against a suitable pattern to enable simplification:
   record
     { to      = λ{ ⟨ ⟨ x , y ⟩ , z ⟩ → ⟨ x , ⟨ y , z ⟩ ⟩ }
     ; from    = λ{ ⟨ x , ⟨ y , z ⟩ ⟩ → ⟨ ⟨ x , y ⟩ , z ⟩ }
-    ; from∘to = λ{ ⟨ ⟨ x , y ⟩ , z ⟩ → refl }
-    ; to∘from = λ{ ⟨ x , ⟨ y , z ⟩ ⟩ → refl }
+    ; from∘to = λ{ w → refl }
+    ; to∘from = λ{ w → refl }
     }
 ```
 
@@ -398,17 +388,15 @@ is isomorphic to `(A → B) × (B → A)`.
 
 <!--
 Truth `⊤` always holds. We formalise this idea by
-declaring a suitable datatype:
+declaring the empty record type.
 -->
 
-恒真 `⊤` 恒成立。我们将这个概念用合适的数据类型来形式化：
+恒真 `⊤` 恒成立。我们将这个概念用空记录类型来形式化：
 
 ```agda
-data ⊤ : Set where
+record ⊤ : Set where
+  constructor tt
 
-  tt :
-    --
-    ⊤
 ```
 
 <!--
@@ -416,6 +404,9 @@ Evidence that `⊤` holds is of the form `tt`.
 -->
 
 `⊤` 成立的证明由 `tt` 的形式构成。
+
+The record construction `record {}` corresponds to the term `tt`. The
+constructor declaration allows us to write `tt`.
 
 <!--
 There is an introduction rule, but no elimination rule.
@@ -436,39 +427,38 @@ value of type `⊤` must be equal to `tt`:
 
 ```agda
 η-⊤ : ∀ (w : ⊤) → tt ≡ w
-η-⊤ tt = refl
+η-⊤ w = refl
+
 ```
-
-<!--
-The pattern matching on the left-hand side is essential. Replacing
-`w` by `tt` allows both sides of the propositional equality to
-simplify to the same term.
--->
-
-左手边的模式匹配是必要的。将 `w` 替换为 `tt` 让等式两边可以化简为相同的值。
-
-Alternatively, we can declare truth as an empty record:
+Agda knows that *any* value of type `⊤` must be `tt`, so any time we need a
+value of type `⊤`, we can tell Agda to figure it out:
 ```agda
-record ⊤′ : Set where
-  constructor tt′
+truth : ⊤
+truth = _
 ```
-The record construction `record {}` corresponds to the term `tt`. The
-constructor declaration allows us to write `tt′`.
 
-As with the product, the data type `⊤` and the record type `⊤′` behave
+Alternatively, we can declare truth as a data type:
+```agda
+data ⊤′ : Set where
+
+  tt′ :
+    --
+    ⊤′
+```
+As with the product, the record type `⊤` and the data type `⊤′` behave
 similarly, but η-equality holds *by definition* for the record type. While
 proving `η-⊤′`, we do not have to pattern match on `w`---Agda *knows* it is
 equal to `tt′`:
 ```agda
 η-⊤′ : ∀ (w : ⊤′) → tt′ ≡ w
-η-⊤′ w = refl
+η-⊤′ tt′ = refl
 ```
-Agda knows that *any* value of type `⊤′` must be `tt′`, so any time we need a
-value of type `⊤′`, we can tell Agda to figure it out:
-```agda
-truth′ : ⊤′
-truth′ = _
-```
+The pattern matching on the left-hand side is essential. Replacing
+`w` by `tt′` allows both sides of the propositional equality to
+simplify to the same term.
+As with products, it is convenient to have η-equality *definitionally*,
+so we use records in preference to data types
+whenever there is only one constructor.
 
 <!--
 We refer to `⊤` as the _unit_ type. And, indeed,
@@ -859,6 +849,9 @@ so the equation holds trivially.
 
 使用荒谬模式断言了 `w` 没有任何可能的值，因此等式显然成立。
 
+We can also use `()` in nested patterns. For instance,
+`⟨ () , tt ⟩` is a pattern of type `⊥ × ⊤`.
+
 <!--
 We refer to `⊥` as the _empty_ type. And, indeed,
 type `⊥` has no members. For example, the following function
@@ -1078,11 +1071,10 @@ we have the isomorphism
 Both types can be viewed as functions that given evidence that `A` holds
 and evidence that `B` holds can return evidence that `C` holds.
 This isomorphism sometimes goes by the name *currying*.
-The proof of the right inverse requires extensionality:
 -->
 
 两个类型可以被看作给定 `A` 成立的证据和 `B` 成立的证据，返回 `C` 成立的证据。
-这个同构有时也被称作**柯里化（Currying）**。右逆的证明需要外延性：
+这个同构有时也被称作**柯里化（Currying）**。
 
 ```agda
 currying : ∀ {A B C : Set} → (A → B → C) ≃ (A × B → C)
@@ -1091,7 +1083,7 @@ currying =
     { to      =  λ{ f → λ{ ⟨ x , y ⟩ → f x y }}
     ; from    =  λ{ g → λ{ x → λ{ y → g ⟨ x , y ⟩ }}}
     ; from∘to =  λ{ f → refl }
-    ; to∘from =  λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
+    ; to∘from =  λ{ g → refl }
     }
 ```
 
@@ -1156,7 +1148,7 @@ is the same as the assertion that if `A` holds then `C` holds and if
     { to      = λ{ f → ⟨ f ∘ inj₁ , f ∘ inj₂ ⟩ }
     ; from    = λ{ ⟨ g , h ⟩ → λ{ (inj₁ x) → g x ; (inj₂ y) → h y } }
     ; from∘to = λ{ f → extensionality λ{ (inj₁ x) → refl ; (inj₂ y) → refl } }
-    ; to∘from = λ{ ⟨ g , h ⟩ → refl }
+    ; to∘from = λ{ _ → refl }
     }
 ```
 
@@ -1179,12 +1171,11 @@ we have the isomorphism:
 <!--
 That is, the assertion that if `A` holds then `B` holds and `C` holds
 is the same as the assertion that if `A` holds then `B` holds and if
-`A` holds then `C` holds.  The proof of left inverse requires both extensionality
-and the rule `η-×` for products:
+`A` holds then `C` holds.
 -->
 
 命题如果 `A` 成立，那么 `B` 成立和 `C` 成立，和命题如果 `A` 成立，那么 `B` 成立以及
-如果 `A` 成立，那么 `C` 成立，是一样的。左逆的证明需要外延性和积的 `η-×` 规则：
+如果 `A` 成立，那么 `C` 成立，是一样的。
 
 ```agda
 →-distrib-× : ∀ {A B C : Set} → (A → B × C) ≃ (A → B) × (A → C)
@@ -1192,7 +1183,7 @@ and the rule `η-×` for products:
   record
     { to      = λ{ f → ⟨ proj₁ ∘ f , proj₂ ∘ f ⟩ }
     ; from    = λ{ ⟨ g , h ⟩ → λ x → ⟨ g x , h x ⟩ }
-    ; from∘to = λ{ f → extensionality λ{ x → η-× (f x) } }
+    ; from∘to = λ{ f → refl }
     ; to∘from = λ{ ⟨ g , h ⟩ → refl }
     }
 ```
@@ -1255,15 +1246,15 @@ Sums do not distribute over products up to isomorphism, but it is an embedding:
 
 <!--
 Note that there is a choice in how we write the `from` function.
-As given, it takes `⟨ inj₂ z , inj₂ z′ ⟩` to `inj₂ z`, but it is
-easy to write a variant that instead returns `inj₂ z′`.  We have
+As given, it takes `⟨ inj₂ z , inj₂ w ⟩` to `inj₂ z`, but it is
+easy to write a variant that instead returns `inj₂ w`.  We have
 an embedding rather than an isomorphism because the
-`from` function must discard either `z` or `z′` in this case.
+`from` function must discard either `z` or `w` in this case.
 -->
 
-我们在定义 `from` 函数的时候可以有选择。给定的定义中，它将 `⟨ inj₂ z , inj₂ z′ ⟩`
-转换为 `inj₂ z`，但我们也可以返回 `inj₂ z′` 作为嵌入证明的变种。我们在这里只能证明嵌入，
-而不能证明同构，因为 `from` 函数必须丢弃 `z` 或者 `z′` 其中的一个。
+我们在定义 `from` 函数的时候可以有选择。给定的定义中，它将 `⟨ inj₂ z , inj₂ w ⟩`
+转换为 `inj₂ z`，但我们也可以返回 `inj₂ w` 作为嵌入证明的变种。我们在这里只能证明嵌入，
+而不能证明同构，因为 `from` 函数必须丢弃 `z` 或者 `w` 其中的一个。
 
 <!--
 In the usual approach to logic, both of the distribution laws

@@ -23,12 +23,12 @@ This chapter introduces universal and existential quantification.
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
-open import Data.Nat.Base using (ℕ; zero; suc; _+_; _*_)
-open import Relation.Nullary.Negation using (¬_)
-open import Data.Product.Base using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
-open import Data.Sum.Base using (_⊎_; inj₁; inj₂)
+open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
+open import Relation.Nullary using (¬_)
+open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
+open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import plfa.part1.Isomorphism using (_≃_; extensionality; ∀-extensionality)
-open import Function.Base using (_∘_)
+open import Function using (_∘_)
 ```
 
 
@@ -105,7 +105,7 @@ is a term of type `A` then we may conclude that `B M` holds:
 
 ```agda
 ∀-elim : ∀ {A : Set} {B : A → Set}
-  → (L : ∀ (x : A) → B x)
+  → (∀ (x : A) → B x)
   → (M : A)
     -----------------
   → B M
@@ -178,12 +178,6 @@ Chapter [Connectives](/Connectives/).
 
 将这个结果与 [Connectives](/Connectives/)
 章节中的 (`→-distrib-×`) 结果对比。
-
-<!--
-Hint: you will need to use [`∀-extensionality`](/Isomorphism/#extensionality).
--->
-
-提示：你需要 [`∀-extensionality`](/Isomorphism/#extensionality)。
 
 <!--
 #### Exercise `⊎∀-implies-∀⊎` (practice)
@@ -263,15 +257,29 @@ the proposition `B x` with each free occurrence of `x` replaced by
 
 <!--
 We formalise existential quantification by declaring a suitable
-inductive type:
+record type:
 -->
 
-我们定义一个合适的归纳数据类型来形式化存在量化：
+我们定义一个合适的记录类型来形式化存在量化：
 
 ```agda
-data Σ (A : Set) (B : A → Set) : Set where
-  ⟨_,_⟩ : (x : A) → B x → Σ A B
+record Σ (A : Set) (B : A → Set) : Set where
+  constructor ⟨_,_⟩
+  field
+    proj₁ : A
+    proj₂ : B proj₁
 ```
+
+Here we have a dependent record, where the type of `proj₂`
+refers to the field `proj₁`.
+Evidence that `Σ A B` holds is of the form
+
+    ⟨ M , N ⟩
+
+where `M` is a term of type `A` and `N` is a term of type `B M`.
+Equivalently, the evidence may be written in the form
+
+    record { proj₁ = M ; proj₂ = N }.
 
 <!--
 We define a convenient syntax for existentials as follows:
@@ -285,68 +293,55 @@ infix 2 Σ-syntax
 syntax Σ-syntax A (λ x → Bx) = Σ[ x ∈ A ] Bx
 ```
 
-<!--
-This is our first use of a syntax declaration, which specifies that
-the term on the left may be written with the syntax on the right.
-The special syntax is available only when the identifier
-`Σ-syntax` is imported.
--->
+This is our first use of a syntax declaration to define binding.  It
+specifies that the term on the left may be written with the syntax on
+the right. Note that the term on the left includes a lambda
+expression, with `x` as a bound variable.  The special syntax is
+available only when the identifier `Σ-syntax` is imported.
 
-这是我们第一次使用语法声明，其表示左手边的项可以以右手边的语法来书写。
-这种特殊语法只有在标识符 `Σ-syntax` 被导入时可用。
-
-<!--
-Evidence that `Σ[ x ∈ A ] B x` holds is of the form
-`⟨ M , N ⟩` where `M` is a term of type `A`, and `N` is evidence
-that `B M` holds.
--->
-
-`Σ[ x ∈ A ] B x` 成立的证明由 `⟨ M , N ⟩` 组成，其中 `M` 是类型为 `A` 的项，
-`N` 是 `B M` 成立的证明。
-
+The syntax declaration makes `Σ[ x ∈ A ] Bx` and `Σ A (λ x → Bx)`
+equivalent. In particular, instantiating `Bx` to `B x`, we have
+that `Σ[ x ∈ A ] B x` and `Σ A (λ x → B x)` are equivalent.
+By the η rule we have `(λ x → B x) ≡ B` and so they are also
+equivalent to `Σ A B`.
 
 <!--
-Equivalently, we could also declare existentials as a record type:
+Equivalently, we could also declare existentials as an inductive type:
 -->
 
-我们也可以用记录类型来等价地定义存在量化。
+我们也可以用归纳类型来等价地定义存在量化。
 
 ```agda
-record Σ′ (A : Set) (B : A → Set) : Set where
-  field
-    proj₁′ : A
-    proj₂′ : B proj₁′
+data Σ′ (A : Set) (B : A → Set) : Set where
+  ⟨_,_⟩′ : (x : A) → B x → Σ′ A B
+
+proj₁′ : ∀ {A : Set} {B : A → Set} → Σ′ A B → A
+proj₁′ ⟨ x , y ⟩′ = x
+
+proj₂′ : ∀ {A : Set} {B : A → Set} → ∀ (w : Σ′ A B) → B (proj₁′ w)
+proj₂′ ⟨ x , y ⟩′ = y
 ```
 
-<!--
-Here record construction
--->
-
-这里的记录构造
-
-    record
-      { proj₁′ = M
-      ; proj₂′ = N
-      }
-
-<!--
-corresponds to the term
--->
-
-对应了项
-
-    ⟨ M , N ⟩
-
-<!--
-where `M` is a term of type `A` and `N` is a term of type `B M`.
--->
-
-其中 `M` 是类型为 `A` 的项，`N` 是类型为 `B M` 的项。
+One consequence of the dependence is that `proj₁′` appears in the type
+signature for `proj₂′`.
 
 <!--
 Products arise as a special case of existentials, where the second
-component does not depend on a variable drawn from the first
-component.  When a product is viewed as evidence of a conjunction,
+component does not depend on the first component.
+-->
+
+积是存在量词的一种特殊形式，其第二分量不取决于第一分量中的变量。
+
+```
+_×′_ : Set → Set → Set
+A ×′ B = Σ[ x ∈ A ] B
+```
+
+(Here we prime `×` to avoid collision with product from the standard
+library, which we imported for use in exercises in the last section.)
+
+<!--
+When a product is viewed as evidence of a conjunction,
 both of its components are viewed as evidence, whereas when it is
 viewed as evidence of an existential, the first component is viewed as
 an element of a datatype and the second component is viewed as
@@ -355,8 +350,7 @@ difference is largely a matter of interpretation, since in Agda a value
 of a type and evidence of a proposition are indistinguishable.
 -->
 
-积是存在量词的一种特殊形式，其第二分量不取决于第一分量中的变量。当一个积被视为
-合取的证明时，它的两个分量都是证明，而当一个依赖积被视为存在量词的证明时，
+当一个积被视为合取的证明时，它的两个分量都是证明，而当一个依赖积被视为存在量词的证明时，
 它的第一分量被视为数据类型中的一个元素，而第二分量是一个依赖于第一分量的命题的证明。因为在
 Agda 中，一个数据类型中的一个值一个命题的证明是无法区别的，这样的区别很大程度上
 取决于如何来诠释。
@@ -375,14 +369,16 @@ choice of notation for existentials, since `Σ` stands for sum.
 `Σ` 代表和。
 
 <!--
-Existentials are sometimes referred to as dependent products, since
+Existentials are also sometimes referred to as dependent products, since
 products arise as a special case.  However, that choice of names is
 doubly confusing, since universals also have a claim to the name dependent
 product and since existentials also have a claim to the name dependent sum.
+We will stick with the name dependent sum.
 -->
 
 存在量化有时也被叫做依赖积（Dependent Product），因为积是其中的一种特殊形式。但是，
 这样的叫法非常让人困扰，因为全程量化也被叫做依赖积，而存在量化已经有依赖和的叫法。
+我们将继续使用依赖和这个名称。
 
 <!--
 A common notation for existentials is `∃` (analogous to `∀` for universals).
@@ -455,7 +451,7 @@ Indeed, the converse also holds, and the two together form an isomorphism:
     { to      =  λ{ f → λ{ ⟨ x , y ⟩ → f x y }}
     ; from    =  λ{ g → λ{ x → λ{ y → g ⟨ x , y ⟩ }}}
     ; from∘to =  λ{ f → refl }
-    ; to∘from =  λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
+    ; to∘from =  λ{ g → refl }
     }
 ```
 
@@ -774,7 +770,7 @@ of a disjunction is isomorphic to a conjunction of negations:
   record
     { to      =  λ{ ¬∃xy x y → ¬∃xy ⟨ x , y ⟩ }
     ; from    =  λ{ ∀¬xy ⟨ x , y ⟩ → ∀¬xy x y }
-    ; from∘to =  λ{ ¬∃xy → extensionality λ{ ⟨ x , y ⟩ → refl } }
+    ; from∘to =  λ{ ¬∃xy → refl }
     ; to∘from =  λ{ ∀¬xy → refl }
     }
 ```
@@ -805,11 +801,10 @@ a contradiction.
 可以得到类型为 `¬ B x` 的值，对其使用 `y` 即可获得矛盾。
 
 <!--
-The two inverse proofs are straightforward, where one direction
-requires extensionality.
+The two inverse proofs are straightforward.
 -->
 
-两个逆的证明很直接，其中有一个方向需要外延性。
+两个逆的证明很直接。
 
 <!--
 #### Exercise `∃¬-implies-¬∀` (recommended)

@@ -481,8 +481,8 @@ refl`, where `e` is a term that proves some equality.
 <!--
 (That trick might seem inefficient, since `trans e refl` and `e` both
 prove the same equality. But that inefficiency is key to our nice
-notation nice notation for chains of equalities.  One shouldn't fear
-inefficiency if it improves readability!)
+notation for chains of equalities.  One shouldn't fear inefficiency
+if it improves readability!)
 -->
 
 （这个技巧可能看起来效率低下，因为 `trans e refl` 和 `e` 都证明了相同的相等性。
@@ -490,7 +490,7 @@ inefficiency if it improves readability!)
 
 #### Exercise `trans` and `≡-Reasoning` (practice)
 
-Sadly, we cannot use the definition of `trans'` using ≡-Reasoning as the
+Sadly, we cannot use the definition of `trans′` using ≡-Reasoning as the
 definition for trans. Can you see why? (Hint: look at the definition
 of `_≡⟨_⟩_`)
 
