@@ -714,21 +714,36 @@ are called _dependent functions_.
 与每一个实参类型相关联，且其结果类型可能会涉及（或依赖于）这些变量，
 因此它们叫做**依赖函数（Dependent Function）**。
 
+<!--
 Ordinary functions are a special case of dependent functions. For instance,
 the signatures
+-->
+
+普通函数是依赖函数的特殊形式。例如，下面的签名
 
     _+_ : ℕ → ℕ → ℕ
 
+<!--
 and
+-->
+
+与
 
     _+_ : ∀ (m n : ℕ) → ℕ
 
+<!--
 and
+-->
+
+与
 
     _+_ : ∀ (m : ℕ) → ∀ (n : ℕ) → ℕ
 
+<!--
 are all equivalent.
+-->
 
+都是等价的。
 
 
 <!--

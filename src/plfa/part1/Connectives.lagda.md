@@ -87,10 +87,16 @@ holds.
 `A × B` 成立的证明由 `⟨ M , N ⟩` 的形式表现，其中 `M` 是 `A` 成立的证明，
 `N` 是 `B` 成立的证明。
 
+<!--
 The record construction `record { proj₁ = M ; proj₂ = N }` corresponds to the
 term `⟨ M , N ⟩` where `M` is a term of type `A` and `N` is a term of type `B`.
 The constructor declaration allows us to write `⟨ M , N ⟩` in place of the
 record construction.
+-->
+
+记录构造 `record { proj₁ = M ; proj₂ = N }` 对应了项 `⟨ M , N ⟩`，
+其中 `M` 是类型为 `A` 的项，`N` 是类型为 `B` 的项。
+构造子声明（`constructor`）让我们可以用 `⟨ M , N ⟩` 来代替完整的记录构造。
 
 <!--
 Given evidence that `A × B` holds, we can conclude that both
@@ -152,9 +158,15 @@ constructor is the identity over products:
 η-× : ∀ {A B : Set} (w : A × B) → ⟨ proj₁ w , proj₂ w ⟩ ≡ w
 η-× w = refl
 ```
+
+<!--
 For record types, η-equality holds *by definition*.
 While proving `η-×`, we do not have to
 pattern match on `w` to know that η-equality holds
+-->
+
+对于记录类型来说，η-相等性**由定义**成立。
+在证明 `η-×` 时，我们不需要对于 `w` 进行模式匹配，而得出 η-相等性成立。
 
 <!--
 We set the precedence of conjunction so that it binds less
@@ -173,8 +185,13 @@ Thus, `m ≤ n × n ≤ p` parses as `(m ≤ n) × (n ≤ p)`.
 
 因此，`m ≤ n × n ≤ p` 解析为 `(m ≤ n) × (n ≤ p)`。
 
+<!--
 Alternatively, we can declare conjunction as a data type,
 and the projections as functions using pattern matching.
+-->
+
+或者，我们可以将合取定义为数据类型，其投影则由以使用模式匹配定义的函数得来。
+
 ```agda
 data _×′_ (A B : Set) : Set where
 
@@ -196,23 +213,37 @@ proj₂′ : ∀ {A B : Set}
   → B
 proj₂′ ⟨ x , y ⟩′ = y
 ```
+
+<!--
 The record type `_×_` and the data type `_×′_` behave similarly. One
 difference is that for for record
 types, η-equality holds *by definition*,
 but for data types have to
 pattern match know that η-equality holds:
+-->
+
+记录类型 `_×_` 和数据类型 `_×′_` 很相似。
+两者的差异之一在于，对于记录类型 η-相等性**由定义**可得；
+而对于数据类型，我们必须使用模式匹配来得出：
 
 ```agda
 η-×′ : ∀ {A B : Set} (w : A ×′ B) → ⟨ proj₁′ w , proj₂′ w ⟩′ ≡ w
 η-×′ ⟨ x , y ⟩′ = refl
 ```
 
+<!--
 The pattern matching on the left-hand side is essential, since
 replacing `w` by `⟨ x , y ⟩′` allows both sides of the
 propositional equality to simplify to the same term.
 It is convenient to have η-equality *definitionally*,
 so we use records in preference to data types
 whenever there is only one constructor.
+-->
+
+左手边的模式匹配时必须的，因为用 `⟨ x , y ⟩′` 来代替 `w`
+使得命题相等性的两边都化简至相同的项。
+由**定义**得出的 η-相等性更加便于使用，因此在只有一个构造子时，
+我们更倾向于使用记录类型而不是数据类型。
 
 <!--
 Given two types `A` and `B`, we refer to `A × B` as the
@@ -405,8 +436,12 @@ Evidence that `⊤` holds is of the form `tt`.
 
 `⊤` 成立的证明由 `tt` 的形式构成。
 
+<!--
 The record construction `record {}` corresponds to the term `tt`. The
 constructor declaration allows us to write `tt`.
+-->
+
+记录构造 `record {}` 对应了项 `tt`。构造子声明使得我们可以用 `tt` 来表示。
 
 <!--
 There is an introduction rule, but no elimination rule.
@@ -420,24 +455,37 @@ us nothing new.
 
 <!--
 The nullary case of `η-×` is `η-⊤`, which asserts that any
-value of type `⊤` must be equal to `tt`:
+value of type `⊤` must be equal to `tt`.
+While proving `η-⊤`, we do not have to pattern match on `w`:
 -->
 
-`η-×` 的 零元形式是 `η-⊤`，其断言了任何 `⊤` 类型的值一定等于 `tt`：
+`η-×` 的 零元形式是 `η-⊤`，其断言了任何 `⊤` 类型的值一定等于 `tt`。
+在证明 `η-⊤` 时，我们不需要对于 `w` 进行模式匹配：
 
 ```agda
 η-⊤ : ∀ (w : ⊤) → tt ≡ w
 η-⊤ w = refl
-
 ```
+
+<!--
 Agda knows that *any* value of type `⊤` must be `tt`, so any time we need a
 value of type `⊤`, we can tell Agda to figure it out:
+-->
+
+Agda 知道**任何**类型为 `⊤` 的值必须为 `tt`，所以认识我们需要一个类型为 `⊤` 的值的时候，
+我们可以让 Agda 来自行推断：
+
 ```agda
 truth : ⊤
 truth = _
 ```
 
+<!--
 Alternatively, we can declare truth as a data type:
+-->
+
+或者，我们可以将恒真定义为数据类型：
+
 ```agda
 data ⊤′ : Set where
 
@@ -445,20 +493,32 @@ data ⊤′ : Set where
     --
     ⊤′
 ```
+
+<!--
 As with the product, the record type `⊤` and the data type `⊤′` behave
-similarly, but η-equality holds *by definition* for the record type. While
-proving `η-⊤′`, we do not have to pattern match on `w`---Agda *knows* it is
-equal to `tt′`:
+similarly, but η-equality holds *by definition* for the record type.
+-->
+
+与积类型一样，记录类型的 `⊤` 与数据类型的 `⊤′` 没有太大差异，但是 η-相等性对于记录类型**由定义**可得。
+
+
 ```agda
 η-⊤′ : ∀ (w : ⊤′) → tt′ ≡ w
 η-⊤′ tt′ = refl
 ```
+<!--
 The pattern matching on the left-hand side is essential. Replacing
 `w` by `tt′` allows both sides of the propositional equality to
 simplify to the same term.
 As with products, it is convenient to have η-equality *definitionally*,
 so we use records in preference to data types
 whenever there is only one constructor.
+-->
+
+左手边的模式匹配时必须的，因为用 `tt′` 来代替 `w`
+使得命题相等性的两边都化简至相同的项。
+与积类型的情况一样，由**定义**得出的 η-相等性更加便于使用，因此在只有一个构造子时，
+我们更倾向于使用记录类型而不是数据类型。
 
 <!--
 We refer to `⊤` as the _unit_ type. And, indeed,
@@ -898,7 +958,9 @@ Show empty is the left identity of sums up to isomorphism.
 -- 请将代码写在此处
 ```
 
+<!--
 #### Exercise `⊥-identityʳ` (practice)
+-->
 
 #### 练习 `⊥-identityʳ`（实践）
 

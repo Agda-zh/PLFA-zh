@@ -1548,9 +1548,13 @@ and proofs interactively.
 Agda 被设计为使用 Emacs 作为文本编辑器，二者一同提供了很多能帮助
 用户交互式地创建定义和证明的功能。
 
+<!--
 Let's consider how to define addition interactively. (If you want to
 follow along, use a name other than `_+_` to avoid conflict with the
 definition above.)
+-->
+
+我们来考虑如何交互式地定义加法。（如果你想一起跟着一起来，请使用 `_+_` 以外的名称，以防止和以上的定义发生冲突。）
 
 <!--
 Begin by typing:

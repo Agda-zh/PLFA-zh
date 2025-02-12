@@ -488,14 +488,23 @@ if it improves readability!)
 （这个技巧可能看起来效率低下，因为 `trans e refl` 和 `e` 都证明了相同的相等性。
 但这种低效率是我们实现等式链的良好记法的关键。如果它能提高可读性，就不应该担心低效率！）
 
+<!--
 #### Exercise `trans` and `≡-Reasoning` (practice)
+-->
 
+#### 练习 `trans` 和 `≡-Reasoning` （实践）
+
+<!--
 Sadly, we cannot use the definition of `trans′` using ≡-Reasoning as the
 definition for trans. Can you see why? (Hint: look at the definition
 of `_≡⟨_⟩_`)
+-->
+
+遗憾的是，我们不能把使用了 `≡-Reasoning` 的 `trans′` 作为 `trans` 的定义。你能看出原因么？
+（提示：关注 `_≡⟨_⟩_` 的定义）
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处
 ```
 
 <!--

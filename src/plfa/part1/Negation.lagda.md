@@ -797,8 +797,14 @@ Definitions similar to those in this chapter can be found in the standard librar
 import Relation.Nullary using (¬_)
 import Relation.Nullary.Negation using (contradiction; contraposition)
 ```
+
+<!--
 The standard library uses `contradiction`, which combines our
 `¬-elim` and `⊥-elim`.
+-->
+
+标准库使用 `contradiction`，其结合了我们的 `¬-elim` 和 `⊥-elim`。
+
 
 ## Unicode
 

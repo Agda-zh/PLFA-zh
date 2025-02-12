@@ -230,7 +230,9 @@ Show that `∀ (x : Tri) → B x` is isomorphic to `B aa × B bb × B cc`.
 令 `B` 作为由 `Tri` 索引的一个类型，也就是说 `B : Tri → Set`。
 证明 `∀ (x : Tri) → B x` 和 `B aa × B bb × B cc` 是同构的。
 
+<!--
 Hint: you will need to use [`∀-extensionality`](/Isomorphism/#extensionality).
+-->
 
 提示：你需要 [`∀-extensionality`](/Isomorphism/#extensionality)。
 
@@ -270,14 +272,24 @@ record Σ (A : Set) (B : A → Set) : Set where
     proj₂ : B proj₁
 ```
 
+<!--
 Here we have a dependent record, where the type of `proj₂`
 refers to the field `proj₁`.
 Evidence that `Σ A B` holds is of the form
+-->
+
+此处我们有一个依赖记录，其 `proj₂` 的类型依赖于字段 `proj₁`。
+`Σ A B` 成立的证明由以下形式构成
 
     ⟨ M , N ⟩
 
+<!--
 where `M` is a term of type `A` and `N` is a term of type `B M`.
 Equivalently, the evidence may be written in the form
+-->
+
+其中 `M` 是类型为 `A` 的项，`N` 时类型为 `B M` 的项。
+等价地，这样的证明也可以由下面的形式构成
 
     record { proj₁ = M ; proj₂ = N }.
 
@@ -293,23 +305,36 @@ infix 2 Σ-syntax
 syntax Σ-syntax A (λ x → Bx) = Σ[ x ∈ A ] Bx
 ```
 
+<!--
 This is our first use of a syntax declaration to define binding.  It
 specifies that the term on the left may be written with the syntax on
 the right. Note that the term on the left includes a lambda
 expression, with `x` as a bound variable.  The special syntax is
 available only when the identifier `Σ-syntax` is imported.
+-->
 
+这是我们第一次使用语法声明来定义约束。
+它指示了左边的项可以用右边的语法来表示。
+注意左边的项包含了一个 lambda 表达式，其中 `x` 为约束变量。
+这个特殊的语法仅在标识符 `Σ-syntax` 被导入时可用。
+
+<!--
 The syntax declaration makes `Σ[ x ∈ A ] Bx` and `Σ A (λ x → Bx)`
 equivalent. In particular, instantiating `Bx` to `B x`, we have
 that `Σ[ x ∈ A ] B x` and `Σ A (λ x → B x)` are equivalent.
 By the η rule we have `(λ x → B x) ≡ B` and so they are also
 equivalent to `Σ A B`.
+-->
+
+这个语法声明使得 `Σ[ x ∈ A ] Bx` 和 `Σ A (λ x → Bx)` 等价。
+其中，将 `Bx` 实例化为 `B x`，我们可得 `Σ[ x ∈ A ] B x` 和 `Σ A (λ x → B x)` 等价。
+使用 η 规则，我们可得 `(λ x → B x) ≡ B`，因此它们也等价与 `Σ A B`。
 
 <!--
 Equivalently, we could also declare existentials as an inductive type:
 -->
 
-我们也可以用归纳类型来等价地定义存在量化。
+我们也可以用归纳类型来等价地定义存在量化：
 
 ```agda
 data Σ′ (A : Set) (B : A → Set) : Set where
@@ -322,8 +347,12 @@ proj₂′ : ∀ {A : Set} {B : A → Set} → ∀ (w : Σ′ A B) → B (proj�
 proj₂′ ⟨ x , y ⟩′ = y
 ```
 
+<!--
 One consequence of the dependence is that `proj₁′` appears in the type
 signature for `proj₂′`.
+-->
+
+依赖的结果之一是 `proj₁′` 出现在了 `proj₂′` 的类型签名中。
 
 <!--
 Products arise as a special case of existentials, where the second
@@ -337,8 +366,12 @@ _×′_ : Set → Set → Set
 A ×′ B = Σ[ x ∈ A ] B
 ```
 
+<!--
 (Here we prime `×` to avoid collision with product from the standard
 library, which we imported for use in exercises in the last section.)
+-->
+
+（我们此处对 `×` 加上一撇，防止与标准库中的积产生冲突。我们在上一节的练习中导入使用了积类型。）
 
 <!--
 When a product is viewed as evidence of a conjunction,
@@ -891,9 +924,13 @@ for `Can b`.
 
     ≡Can : ∀ {b : Bin} (c c′ : Can b) → c ≡ c′
 
+<!--
 Many of the alternatives for proving `to∘from` turn out to be tricky.
 However, the proof can be straightforward if you use the following lemma,
 which is a corollary of `≡Can`.
+-->
+
+证明 `to∘from` 的许多方法实际上比较复杂。然而，如果你使用下面的引理，证明可以非常直接，其为 `≡Can` 的推论。
 
     proj₁≡→Can≡ : {c c′ : ∃[ b ] Can b} → proj₁ c ≡ proj₁ c′ → c ≡ c′
 
