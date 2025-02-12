@@ -117,13 +117,13 @@ reader to search for the definition in the code.
 ## Function composition
 -->
 
-## 函数组合 （Function Composition）
+## 函数组合
 
 <!--
 In what follows, we will make use of function composition:
 -->
 
-接下来，我们将使用函数组合：
+接下来，我们将使用**函数组合（Function Composition）**：
 
 ```agda
 _∘_ : ∀ {A B C : Set} → (B → C) → (A → B) → (A → C)
@@ -149,7 +149,7 @@ g ∘′ f  =  λ x → g (f x)
 ## Extensionality {#extensionality}
 -->
 
-## 外延性（Extensionality） {#extensionality}
+## 外延性 {#extensionality}
 
 <!--
 Extensionality asserts that the only way to distinguish functions is
@@ -159,7 +159,7 @@ converse of `cong-app`, as introduced
 [earlier](/Equality/#cong).
 -->
 
-外延性断言了区分函数的唯一方法是应用它们。如果两个函数作用在相同的参数上永远返回相同的结果，
+**外延性（Extensionality）**断言了区分函数的唯一方法是应用它们。如果两个函数作用在相同的参数上永远返回相同的结果，
 那么两个函数相同。这是 `cong-app` 的逆命题，在[之前](/Equality/#cong)有所介绍。
 
 <!--
@@ -253,15 +253,15 @@ dependent functions.
 ## Isomorphism
 -->
 
-## 同构（Isomorphism）
+## 同构
 
 <!--
 Two sets are isomorphic if they are in one-to-one correspondence.
 Here is a formal definition of isomorphism:
 -->
 
-如果两个集合有一一对应的关系，那么它们是同构的。
-下面是同构的正式定义：
+如果两个集合有一一对应的关系，那么它们是**同构（Isomorphic）**的。
+下面是**同构（Isomorphism）**的正式定义：
 
 ```agda
 infix 0 _≃_
@@ -284,6 +284,7 @@ of four things:
 -->
 
 我们来一一展开这个定义。一个集合 `A` 和 `B` 之间的同构有四个要素：
+
   1. 从 `A` 到 `B` 的函数 `to`
   2. 从 `B` 回到 `A` 的函数 `from`
   3. `from` 是 `to` 的**左逆（left-inverse）**的证明 `from∘to`
@@ -508,7 +509,7 @@ open ≃-Reasoning
 ## Embedding
 -->
 
-## 嵌入（Embedding）
+## 嵌入
 
 <!--
 We also need the notion of _embedding_, which is a weakening of
@@ -518,7 +519,7 @@ included in the second; or, equivalently, that there is a many-to-one
 correspondence between the second type and the first.
 -->
 
-我们同时也需要**嵌入**的概念，它是同构的弱化概念。同构要求证明两个类型之间的一一对应，
+我们同时也需要**嵌入（Embedding）**的概念，它是同构的弱化概念。同构要求证明两个类型之间的一一对应，
 而嵌入只需要第一种类型涵盖在第二种类型内，所以两个类型之间有一对多的对应关系。
 
 <!--

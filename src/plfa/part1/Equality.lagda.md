@@ -97,7 +97,7 @@ is illegal.
 ## Equality is an equivalence relation
 -->
 
-## 相等性是一个等价关系（Equivalence Relation）
+## 相等性是一个等价关系
 
 <!--
 An equivalence relation is one which is reflexive, symmetric, and transitive.
@@ -105,7 +105,7 @@ Reflexivity is built-in to the definition of equality, via the
 constructor `refl`.  It is straightforward to show symmetry:
 -->
 
-一个等价关系是自反、对称和传递的。其中自反性可以通过构造子 `refl` 直接从相等性的定义中得来。
+一个**等价关系（Equivalence Relation）**是自反、对称和传递的。其中自反性可以通过构造子 `refl` 直接从相等性的定义中得来。
 我们可以直接地证明其对称性：
 
 ```agda
@@ -632,7 +632,7 @@ an order that will make sense to the reader.
 #### Exercise `≤-Reasoning` (stretch)
 -->
 
-#### 练习 `≤-Reasoning` (延伸)
+#### 练习 `≤-Reasoning` （延伸）
 
 <!--
 The proof of monotonicity from

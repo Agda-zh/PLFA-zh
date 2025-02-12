@@ -44,7 +44,7 @@ type, which has appeared throughout this book.  For instance, in
 Chapter Induction we showed addition is associative:
 -->
 
-我们用依赖函数类型（Dependent Function Type）来形式化全称量化，
+我们用**依赖函数类型（Dependent Function Type）**来形式化全称量化，
 这样的形式在书中贯穿始终。例如，在归纳一章中，我们证明了加法满足结合律：
 
     +-assoc : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
@@ -147,7 +147,7 @@ will stick with the name dependent function, because (as we will see)
 dependent product is ambiguous.
 -->
 
-依赖函数类型也被叫做依赖积（Dependent Product），因为如果 `A` 是一个有限的数据类型，
+依赖函数类型也被叫做**依赖积（Dependent Product）**，因为如果 `A` 是一个有限的数据类型，
 有值 `x₁ , ⋯ , xₙ`，如果每个类型 `B x₁ , ⋯ , B xₙ` 有 `m₁ , ⋯ , mₙ` 个不同的成员，
 那么 `∀ (x : A) → B x` 有 `m₁ * ⋯ * mₙ` 个成员。的确，`∀ (x : A) → B x` 的记法有时
 也被 `Π[ x ∈ A ] (B x)` 取代，其中 `Π` 代表积。然而，我们还是使用依赖函数这个名称，
@@ -396,7 +396,7 @@ then `Σ[ x ∈ A ] B x` has `m₁ + ⋯ + mₙ` members, which explains the
 choice of notation for existentials, since `Σ` stands for sum.
 -->
 
-存在量化也被叫做依赖和（Dependent Sum），因为如果 `A` 是一个有限的数据类型，
+存在量化也被叫做**依赖和（Dependent Sum）**，因为如果 `A` 是一个有限的数据类型，
 有值 `x₁ , ⋯ , xₙ`，如果每个类型 `B x₁ , ⋯ , B xₙ` 有 `m₁ , ⋯ , mₙ` 个不同的成员，
 那么 `Σ[ x ∈ A ] B x` 有 `m₁ + ⋯ + mₙ` 个成员，这也解释了选择使用这个记法的原因——
 `Σ` 代表和。
@@ -409,7 +409,7 @@ product and since existentials also have a claim to the name dependent sum.
 We will stick with the name dependent sum.
 -->
 
-存在量化有时也被叫做依赖积（Dependent Product），因为积是其中的一种特殊形式。但是，
+存在量化有时也被叫做**依赖积（Dependent Product）**，因为积是其中的一种特殊形式。但是，
 这样的叫法非常让人困扰，因为全程量化也被叫做依赖积，而存在量化已经有依赖和的叫法。
 我们将继续使用依赖和这个名称。
 

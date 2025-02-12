@@ -258,7 +258,7 @@ As a second example, it is also easy to validate
 Peano's postulate that zero is not the successor of any number:
 -->
 
-这是我们第一次在 λ-表达式中使用谬模式（Absurd Pattern）。类型 `M ≡ N`
+这是我们第一次在 λ-表达式中使用**谬模式（Absurd Pattern）**。类型 `M ≡ N`
 只有在 `M` 和 `N` 可被化简为相同的项时才能居留。由于 `1` 和 `2`
 会化简为不同的正规形式，因此 Agda 判定没有证据可证明 `1 ≡ 2`。
 第二个例子是，很容易验证皮亚诺公理中「零不是任何数的后继数」的假设：
@@ -411,7 +411,7 @@ Show that conjunction, disjunction, and negation are related by a
 version of De Morgan's Law.
 -->
 
-请证明合取、析取和否定可通过以下版本的德摩根定律（De Morgan's Law）关联在一起。
+请证明合取、析取和否定可通过以下版本的**德摩根定律（De Morgan's Law）**关联在一起。
 
     ¬ (A ⊎ B) ≃ (¬ A) × (¬ B)
 
@@ -500,7 +500,7 @@ a formula is provable in classical logic if and only if its
 translation is provable in intuitionistic logic.
 -->
 
-直觉主义者也拒绝排中律（Law of the Excluded Middle）————该定律断言，对于所有的
+直觉主义者也拒绝**排中律（Law of the Excluded Middle）**————该定律断言，对于所有的
 `A`，`A ⊎ ¬ A` 必定成立————因为该定律没有给出 `A` 和 `¬ A` 中的哪一个成立。
 海廷（Heyting）形式化了希尔伯特（Hilbert）经典逻辑的一个变种，抓住了直觉主义中可证明性的概念。
 具体来说，排中律在希尔伯特逻辑中是可证明的，但在海廷逻辑中却不可证明。
@@ -518,7 +518,7 @@ a disjoint sum.
 
 「命题即类型」最初是为直觉逻辑而制定的。这是一种完美的契合，因为在直觉主义的
 解释中，式子 `A ⊎ B` 刚好可以在给出 `A` 或 `B` 之一的证明时得证，因此对应于析取
-的类型是一个不交和（Disjoint Sum）。
+的类型是一个**不交和（Disjoint Sum）**。
 
 <!--
 (Parts of the above are adopted from "Propositions as Types", Philip Wadler,

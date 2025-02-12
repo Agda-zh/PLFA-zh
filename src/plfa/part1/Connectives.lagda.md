@@ -258,7 +258,7 @@ a type `Tri` with three members:
 -->
 
 给定两个类型 `A` 和 `B`，我们将 `A × B` 称为 `A` 与 `B` 的**积**。
-在集合论中它也被称作**笛卡尔积（Cartesian Product）**，在计算机科学中它对应**记录**类型。
+在集合论中它也被称作**笛卡尔积（Cartesian Product）**，在计算机科学中它对应**记录（Record）**类型。
 如果类型 `A` 有 `m` 个不同的成员，类型 `B` 有 `n` 个不同的成员，
 那么类型 `A × B` 有 `m * n` 个不同的成员。这也是它被称为积的原因之一。
 例如，考虑有两个成员的 `Bool` 类型，和有三个成员的 `Tri` 类型：
@@ -878,7 +878,7 @@ _never_ possible to match against a value of this type by using
 the pattern `()`.
 -->
 
-这是我们第一次使**用荒谬模式（Absurd Pattern）** `()`。在这里，因为 `⊥`
+这是我们第一次使用**荒谬模式（Absurd Pattern）** `()`。在这里，因为 `⊥`
 是一个没有成员的类型，我们用 `()` 模式来指明这里不可能匹配任何这个类型的值。
 
 <!--
