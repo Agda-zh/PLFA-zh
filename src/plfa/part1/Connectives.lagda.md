@@ -909,8 +909,13 @@ so the equation holds trivially.
 
 使用荒谬模式断言了 `w` 没有任何可能的值，因此等式显然成立。
 
+<!--
 We can also use `()` in nested patterns. For instance,
 `⟨ () , tt ⟩` is a pattern of type `⊥ × ⊤`.
+-->
+
+我们也可以在嵌套模式中使用 `()` 。
+例如，`⟨ () , tt ⟩` 是 `⊥ × ⊤` 的模式.
 
 <!--
 We refer to `⊥` as the _empty_ type. And, indeed,
