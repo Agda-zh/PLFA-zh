@@ -97,7 +97,7 @@ is illegal.
 ## Equality is an equivalence relation
 -->
 
-## 相等性是一个等价关系（Equivalence Relation）
+## 相等性是一个等价关系
 
 <!--
 An equivalence relation is one which is reflexive, symmetric, and transitive.
@@ -105,7 +105,7 @@ Reflexivity is built-in to the definition of equality, via the
 constructor `refl`.  It is straightforward to show symmetry:
 -->
 
-一个等价关系是自反、对称和传递的。其中自反性可以通过构造子 `refl` 直接从相等性的定义中得来。
+一个**等价关系（Equivalence Relation）**是自反、对称和传递的。其中自反性可以通过构造子 `refl` 直接从相等性的定义中得来。
 我们可以直接地证明其对称性：
 
 ```agda
@@ -481,21 +481,30 @@ refl`, where `e` is a term that proves some equality.
 <!--
 (That trick might seem inefficient, since `trans e refl` and `e` both
 prove the same equality. But that inefficiency is key to our nice
-notation nice notation for chains of equalities.  One shouldn't fear
-inefficiency if it improves readability!)
+notation for chains of equalities.  One shouldn't fear inefficiency
+if it improves readability!)
 -->
 
 （这个技巧可能看起来效率低下，因为 `trans e refl` 和 `e` 都证明了相同的相等性。
 但这种低效率是我们实现等式链的良好记法的关键。如果它能提高可读性，就不应该担心低效率！）
 
+<!--
 #### Exercise `trans` and `≡-Reasoning` (practice)
+-->
 
-Sadly, we cannot use the definition of `trans'` using ≡-Reasoning as the
+#### 练习 `trans` 和 `≡-Reasoning` （实践）
+
+<!--
+Sadly, we cannot use the definition of `trans′` using ≡-Reasoning as the
 definition for trans. Can you see why? (Hint: look at the definition
 of `_≡⟨_⟩_`)
+-->
+
+遗憾的是，我们不能把使用了 `≡-Reasoning` 的 `trans′` 作为 `trans` 的定义。你能看出原因么？
+（提示：关注 `_≡⟨_⟩_` 的定义）
 
 ```agda
--- Your code goes here
+-- 请将代码写在此处
 ```
 
 <!--
@@ -623,7 +632,7 @@ an order that will make sense to the reader.
 #### Exercise `≤-Reasoning` (stretch)
 -->
 
-#### 练习 `≤-Reasoning` (延伸)
+#### 练习 `≤-Reasoning` （延伸）
 
 <!--
 The proof of monotonicity from

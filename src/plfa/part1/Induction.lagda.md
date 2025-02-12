@@ -48,7 +48,7 @@ and some operations upon them.  We also require a couple of new operations,
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong; sym)
 open Eq.≡-Reasoning using (begin_; step-≡-∣; step-≡-⟩; _∎)
-open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_;_^_)
+open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_; _^_)
 ```
 
 <!--
@@ -714,21 +714,36 @@ are called _dependent functions_.
 与每一个实参类型相关联，且其结果类型可能会涉及（或依赖于）这些变量，
 因此它们叫做**依赖函数（Dependent Function）**。
 
+<!--
 Ordinary functions are a special case of dependent functions. For instance,
 the signatures
+-->
+
+普通函数是依赖函数的特殊形式。例如，下面的签名
 
     _+_ : ℕ → ℕ → ℕ
 
+<!--
 and
+-->
+
+与
 
     _+_ : ∀ (m n : ℕ) → ℕ
 
+<!--
 and
+-->
+
+与
 
     _+_ : ∀ (m : ℕ) → ∀ (n : ℕ) → ℕ
 
+<!--
 are all equivalent.
+-->
 
+都是等价的。
 
 
 <!--
@@ -1204,7 +1219,7 @@ evidence for `y ≡ x`.
 Third, Agda supports a variant of the _section_ notation introduced by
 Richard Bird.  We write `(_+ y)` for the function that applied to `x`
 returns `x + y`.  Thus, applying the congruence `cong (_+ q)` to
-`assoc m n p` takes the equation:
+`+-assoc m n p` takes the equation:
 
     (m + n) + p  ≡  m + (n + p)
 
@@ -1215,7 +1230,7 @@ into the equation:
 -->
 
 第三，Agda 支持 Richard Bird 引入的**片段（Section）**记法。我们将应用到
-`x` 并返回 `x + y` 的函数写作 `(_+ y)`。因此，对于 `assoc m n p` 应用合同性
+`x` 并返回 `x + y` 的函数写作 `(_+ y)`。因此，对于 `+-assoc m n p` 应用合同性
 `cong (_+ q)` 会将等式：
 
     (m + n) + p  ≡  m + (n + p)

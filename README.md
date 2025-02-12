@@ -357,36 +357,38 @@ Aquamacs 用户需要将启动设置放到位于 `~/Library/Preferences/Aquamacs
 对于 Windows 平台，请参阅 [GNU Emacs 文档][emacs-home] 来寻找配置文件的位置。
 
 <!--
-#### Optional: using the mononoki font with Emacs
+#### Optional: using the JuliaMono font with Emacs
 -->
 
-#### 可选：在 Emacs 中使用 Mononoki 字体
+#### 可选：在 Emacs 中使用 JuliaMono 字体
 
 <!--
-Agda uses Unicode characters for many key symbols, and it is important that the font which you use to view and edit Agda programs shows these symbols correctly. The most important part is that the font you use has good Unicode support, so while we recommend [mononoki][font-mononoki], fonts such as [Source Code Pro][font-sourcecodepro], [DejaVu Sans Mono][font-dejavusansmono], and [FreeMono][font-freemono] are all good alternatives.
+Agda uses Unicode characters for many key symbols, and it is important that the font which you use to view and edit Agda programs shows these symbols correctly. The most important part is that the font you use has good Unicode support, so while we recommend [JuliaMono][font-JuliaMono], fonts such as [mononoki][font-mononoki], [Source Code Pro][font-sourcecodepro], [DejaVu Sans Mono][font-dejavusansmono], and [FreeMono][font-freemono] are all good alternatives.
 -->
 
 Agda 中的很多重要符号是用 Unicode 来表示的，因此用来显示和编辑 Agda
 的字体需要正确地显示这些符号。最重要的是你使用的字体需要有好的 Unicode
-字符支持。我们推荐 [Mononoki][font-mononoki]，
-其他的备选字体有 [Source Code Pro][font-sourcecodepro]、
+字符支持。我们推荐 [JuliaMono][font-JuliaMono]，
+其他的备选字体有 [mononoki][font-mononoki]、[Source Code Pro][font-sourcecodepro]、
 [DejaVu Sans Mono][font-dejavusansmono] 和 [FreeMono][font-freemono]。
 
 <!--
-You can download and install mononoki directly from [the website][font-mononoki]. For most systems, installing a font is merely a matter of clicking the downloaded `.otf` or `.ttf` file. If your package manager offers a package for mononoki, that might be easier. For instance, Homebrew on macOS offers the `font-mononoki` package, and APT on Debian offers the `fonts-mononoki` package. To configure Emacs to use mononoki as its default font, add the following to the end of your Emacs configuration file:
+You can download and install JuliaMono directly from [the website][font-JuliaMono]. For most systems, installing a font is merely a matter of clicking the downloaded `.otf` or `.ttf` file.
+If your package manager offers a package for JuliaMono, that might be easier. For instance, Homebrew on macOS offers the [`font-juliamono`][[font-JuliaMono-homebrew]] cask.
+To configure Emacs to use JuliaMono as its default font, add the following to the end of your Emacs configuration file:
 -->
 
-你可以直接从[此网站][font-mononoki] 下载并安装
-Mononoki。对于大多数系统来说，安装字体只是简单的下载 `.otf` 或者 `.ttf` 文件。
-如果你的包管理器提供了 Mononoki 的包，那样可能更加简单。
+你可以直接从[此网站][font-JuliaMono] 下载并安装
+JuliaMono。对于大多数系统来说，安装字体只是简单的下载 `.otf` 或者 `.ttf` 文件。
+如果你的包管理器提供了 JuliaMono 的包，那样可能更加简单。
 例如，macOS 的 Homebrew 提供了
-`font-mononiki` 包；Debian 的 APT 提供了 `fonts-mononoki` 包。
-将下面的内容加入 Emacs 配置文件，可以把 Mononoki 设置为 Emacs 的默认字体：
+[`font-juliamono`][[font-JuliaMono-homebrew]] 包。
+将下面的内容加入 Emacs 配置文件，可以把 JuliaMono 设置为 Emacs 的默认字体：
 
 ```elisp
-;; default to mononoki
+;; default to JuliaMono
 (set-face-attribute 'default nil
-                    :family "mononoki"
+                    :family "JuliaMono"
                     :height 120
                     :weight 'normal
                     :width  'normal)
@@ -667,6 +669,8 @@ If you plan to build PLFA locally, please refer to [Contributing][plfa-contribut
 [vscode-agda]: https://marketplace.visualstudio.com/items?itemName=banacorn.agda-mode
 [font-sourcecodepro]: https://github.com/adobe-fonts/source-code-pro
 [font-dejavusansmono]: https://dejavu-fonts.github.io/
+[font-JuliaMono]: https://juliamono.netlify.app/download/
+[font-JuliaMono-homebrew]: https://juliamono.netlify.app/download/#macos_homebrew
 [font-freemono]: https://www.gnu.org/software/freefont/
 [font-mononoki]: https://madmalik.github.io/mononoki/
 [font-mononoki-debian]: https://packages.debian.org/sid/fonts/fonts-mononoki

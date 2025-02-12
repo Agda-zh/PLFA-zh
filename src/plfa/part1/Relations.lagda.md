@@ -25,8 +25,8 @@ the next step is to define relations, such as _less than or equal_.
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; cong)
-open import Data.Nat using (ℕ; zero; suc; _+_)
-open import Data.Nat.Properties using (+-comm; +-identityʳ)
+open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
+open import Data.Nat.Properties using (+-comm; +-identityʳ; *-comm)
 ```
 
 
@@ -330,7 +330,7 @@ and `n`.  This lets us invert our previous rule.
 -->
 
 只有一种方式能够证明对于任意 `m` 和 `n` 有 `suc m ≤ suc n`。
-这让我们能够反演（invert）之前的规则。
+这让我们能够**反演（invert）**之前的规则。
 
 ```agda
 inv-s≤s : ∀ {m n : ℕ}
@@ -492,7 +492,7 @@ as that will make it easier to invoke reflexivity:
 -->
 
 我们第一个来证明的性质是自反性：对于任意自然数 `n`，关系 `n ≤ n` 成立。我们使用标准库
-的惯例来隐式申明参数，在使用自反性的证明时这样可以更加方便。
+的惯例来隐式声明参数，在使用自反性的证明时这样可以更加方便。
 
 ```agda
 ≤-refl : ∀ {n : ℕ}
@@ -1389,7 +1389,7 @@ successor of the sum of two even numbers, which is even.
 #### Exercise `o+o≡e` (stretch) {#odd-plus-odd}
 -->
 
-#### 练习 `o+o≡e` (延伸) {#odd-plus-odd}
+#### 练习 `o+o≡e` （延伸） {#odd-plus-odd}
 
 <!--
 Show that the sum of two odd numbers is even.
@@ -1408,7 +1408,7 @@ Show that the sum of two odd numbers is even.
 #### Exercise `Bin-predicates` (stretch) {#Bin-predicates}
 -->
 
-#### 练习 `Bin-predicates` (延伸) {#Bin-predicates}
+#### 练习 `Bin-predicates` （延伸） {#Bin-predicates}
 
 <!--
 Recall that
@@ -1439,7 +1439,7 @@ canonical, and the second is not.  To define it, you will need an
 auxiliary predicate
 -->
 
-其在一个二进制字符串的表示是标准的（Canonical）时成立，表示它没有开头的 0。在两个 11 的表达方式中，
+其在一个二进制字符串的表示是**标准的（Canonical）**时成立，表示它没有开头的 0。在两个 11 的表达方式中，
 第一个是标准的，而第二个不是。在定义这个谓词时，你需要一个辅助谓词：
 
     One : Bin → Set
@@ -1518,7 +1518,7 @@ Definitions similar to those in this chapter can be found in the standard librar
 标准库中有类似于本章介绍的定义：
 
 ```agda
-import Data.Nat using (_≤_; z≤n; s≤s)
+import Data.Nat using (_≤_; z≤n; s≤s; _<_)
 import Data.Nat.Properties using (≤-refl; ≤-trans; ≤-antisym; ≤-total;
                                   +-monoʳ-≤; +-monoˡ-≤; +-mono-≤)
 ```
@@ -1533,7 +1533,7 @@ and more arguments are implicit.
 
 在标准库中，`≤-total` 是使用析取定义的（我们将在 [Connectives](/Connectives/) 章节定义）。
 `+-monoʳ-≤`、`+-monoˡ-≤` 和 `+-mono-≤` 的证明方法和本书不同。
-更多的参数是隐式申明的。
+更多的参数是隐式声明的。
 
 
 ## Unicode
