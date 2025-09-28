@@ -162,7 +162,7 @@ constructor is the identity over products:
 <!--
 For record types, η-equality holds *by definition*.
 While proving `η-×`, we do not have to
-pattern match on `w` to know that η-equality holds
+pattern match on `w` to know that η-equality holds.
 -->
 
 对于记录类型来说，η-相等性**由定义**成立。
@@ -450,17 +450,18 @@ can conclude.  Since truth always holds, knowing that it holds tells
 us nothing new.
 -->
 
+<<<<<<< HEAD
 恒真有引入规则，但没有消去规则。给定一个 `⊤` 成立的证明，我们不能得出任何有趣的结论。
 因为恒真恒成立，知道恒真成立不会给我们带来新的知识。
 
 <!--
-The nullary case of `η-×` is `η-⊤`, which asserts that any
-value of type `⊤` must be equal to `tt`.
-While proving `η-⊤`, we do not have to pattern match on `w`:
+The nullary case of `η-×` is `η-⊤`.
+While proving `η-⊤`, we do not have to pattern match on `w`---Agda *knows* it
+is equal to `tt`:
 -->
 
-`η-×` 的 零元形式是 `η-⊤`，其断言了任何 `⊤` 类型的值一定等于 `tt`。
-在证明 `η-⊤` 时，我们不需要对于 `w` 进行模式匹配：
+`η-×` 的 零元形式是 `η-⊤` 。
+在证明 `η-⊤` 时，我们不需要对于 `w` 进行模式匹配——Agda**知道**它等于 `tt`：
 
 ```agda
 η-⊤ : ∀ (w : ⊤) → tt ≡ w
@@ -496,11 +497,12 @@ data ⊤′ : Set where
 
 <!--
 As with the product, the record type `⊤` and the data type `⊤′` behave
-similarly, but η-equality holds *by definition* for the record type.
+similarly, but while η-equality holds *by definition* for the record type,
+it does not for the data type, so we need to pattern match on `w`:
 -->
 
 与积类型一样，记录类型的 `⊤` 与数据类型的 `⊤′` 没有太大差异，但是 η-相等性对于记录类型**由定义**可得。
-
+it does not for the data type, so we need to pattern match on `w`:
 
 ```agda
 η-⊤′ : ∀ (w : ⊤′) → tt′ ≡ w

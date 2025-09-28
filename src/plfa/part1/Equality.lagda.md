@@ -495,8 +495,8 @@ if it improves readability!)
 #### 练习 `trans` 和 `≡-Reasoning` （实践）
 
 <!--
-Sadly, we cannot use the definition of `trans′` using ≡-Reasoning as the
-definition for trans. Can you see why? (Hint: look at the definition
+Sadly, we cannot use the definition of `trans′` using `≡-Reasoning` as the
+definition for `trans`. Can you see why? (Hint: look at the definition
 of `_≡⟨_⟩_`)
 -->
 

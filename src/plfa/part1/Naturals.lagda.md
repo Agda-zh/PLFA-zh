@@ -23,11 +23,12 @@ Count all the stars, and you will still have as many natural numbers
 left over as you started with.
 -->
 
+<<<<<<< HEAD
 星星虽多，但却是有限的，而自然数是无限的。就算用自然数把所有的星星都数尽了，
 剩下的自然数也和开始的一样多。
 
 <!--
-The naturals are an inductive datatype
+## The naturals are an inductive datatype
 -->
 
 ## 自然数是一种 **归纳数据类型（Inductive Datatype）**
@@ -134,6 +135,7 @@ successor of two; and so on.
 #### Exercise `seven` (practice) {#seven}
 -->
 
+<<<<<<< HEAD
 #### 练习 `seven`（实践） {#seven}
 
 <!--
@@ -148,13 +150,18 @@ Write out `7` in longhand.
 -- 请将代码写在此处
 ```
 
+Write out `7` in longhand. The suggestion below loads but is, of course, incorrect.
+
+```agda
+seven : ℕ
+seven = zero
+```
+
 <!--
-You will need to give both a type signature and definition for the
-variable `seven`. Type `C-c C-l` in Emacs to instruct Agda to re-load.
+Type `C-c C-l` in Emacs to instruct Agda to re-load.
 -->
 
-你需要为 `seven` 给出类型签名以及定义。在 Emacs 中使用 `C-c C-l` 来让 Agda
-重新加载。
+在 Emacs 中使用 `C-c C-l` 来让 Agda 重新加载。
 
 
 <!--

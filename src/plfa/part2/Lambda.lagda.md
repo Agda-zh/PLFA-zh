@@ -1278,10 +1278,11 @@ The notation is chosen to allow us to lay out example reductions in an
 appealing way, as we will see in the next section.
 -->
 
+<<<<<<< HEAD
 在下一部分我们可以看到，这样的记法可以让我们用清晰的步骤来表示归约的例子。
 
 <!--
-Recall that in Chapter (Equality)[Equality] we defined chains of equalities
+Recall that in Chapter [Equality](/Equality/) we defined chains of equalities
 using `step-≡` with a syntax declaration to reverse the order of the
 arguments, here we similarly introduce `step—→` with a pattern declaration
 to reverse the order of the arguments.  As before, this happens to allow
@@ -1289,7 +1290,7 @@ Agda to perform type inference more efficiently.  We will need some long
 chains of reductions below, so efficiency can be important.
 -->
 
-我们曾在 (Equality)[Equality] 一章中用 `step-≡`
+我们曾在 [Equality](/Equality/) 一章中用 `step-≡`
 和一个反转了实参顺序的语法声明定义了等式链，
 这里我们同样以反转了实参顺序的模式声明来引入 `step—→`。
 和之前一样，这能让 Agda 更高效地执行类型推断。我们后面会用到很长的归约链，
