@@ -1278,7 +1278,6 @@ The notation is chosen to allow us to lay out example reductions in an
 appealing way, as we will see in the next section.
 -->
 
-<<<<<<< HEAD
 在下一部分我们可以看到，这样的记法可以让我们用清晰的步骤来表示归约的例子。
 
 <!--

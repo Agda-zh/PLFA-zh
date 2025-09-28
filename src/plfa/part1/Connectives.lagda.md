@@ -450,7 +450,6 @@ can conclude.  Since truth always holds, knowing that it holds tells
 us nothing new.
 -->
 
-<<<<<<< HEAD
 恒真有引入规则，但没有消去规则。给定一个 `⊤` 成立的证明，我们不能得出任何有趣的结论。
 因为恒真恒成立，知道恒真成立不会给我们带来新的知识。
 

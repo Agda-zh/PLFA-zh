@@ -23,7 +23,6 @@ Count all the stars, and you will still have as many natural numbers
 left over as you started with.
 -->
 
-<<<<<<< HEAD
 星星虽多，但却是有限的，而自然数是无限的。就算用自然数把所有的星星都数尽了，
 剩下的自然数也和开始的一样多。
 
