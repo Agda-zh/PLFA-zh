@@ -455,7 +455,7 @@ us nothing new.
 
 <!--
 The nullary case of `η-×` is `η-⊤`.
-While proving `η-⊤`, we do not have to pattern match on `w`---Agda *knows* it
+While proving `η-⊤`, we do not have to pattern match on `w`. Agda *knows* it
 is equal to `tt`:
 -->
 
