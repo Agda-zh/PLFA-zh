@@ -1244,7 +1244,7 @@ Similarly, we write `(x +_)` for the function that applied to `y`
 returns `x + y`; the same works for any infix operator.
 -->
 
-类似地，我们将应用到 `x` 并返回 `x + y` 的函数写作 `(x +_ )`。
+类似地，我们将应用到 `y` 并返回 `x + y` 的函数写作 `(x +_ )`。
 这同样适用于任何中缀运算符。
 
 
