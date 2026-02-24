@@ -87,10 +87,10 @@ down a denotational semantics of the lambda calculus.
 
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Data.Nat.Base using (ℕ; zero; suc)
@@ -110,10 +110,10 @@ open import plfa.part2.Substitution using (Rename; extensionality; rename-id)
 
 
 <!--
-## Values
+# Values
 -->
 
-## 值
+# 值
 
 <!--
 The `Value` data type represents a finite portion of a function.  We
@@ -305,10 +305,10 @@ then both `u` and `v` are less than `w`.
 
 
 <!--
-## Environments
+# Environments
 -->
 
-## 环境
+# 环境
 
 <!--
 An environment gives meaning to the free variables in a term by
@@ -415,10 +415,10 @@ environment `γ` or the second environment `δ`.
 ```
 
 <!--
-## Denotational Semantics
+# Denotational Semantics
 -->
 
-## 指称语义
+# 指称语义
 
 <!--
 We define the semantics with a judgment of the form `ρ ⊢ M ↓ v`,
@@ -720,10 +720,10 @@ arguments.
 ```
 
 <!--
-#### Exercise `denot-plusᶜ` (practice)
+## Exercise `denot-plusᶜ` (practice)
 -->
 
-#### 练习 `denot-plusᶜ`（实践）
+## 练习 `denot-plusᶜ`（实践）
 
 <!--
 What is a denotation for `plusᶜ`? That is, find a value `v` (other than `⊥`)
@@ -740,10 +740,10 @@ for your choice of `v`.
 
 
 <!--
-## Denotations and denotational equality
+# Denotations and denotational equality
 -->
 
-## 指称与指称相等
+# 指称与指称相等
 
 <!--
 Next we define a notion of denotational equality based on the above
@@ -873,10 +873,10 @@ module ≃-Reasoning {Γ : Context} where
 ```
 
 <!--
-## Road map for the following chapters
+# Road map for the following chapters
 -->
 
-## 后续章节的路线图
+# 后续章节的路线图
 
 <!--
 The subsequent chapters prove that the denotational semantics has
@@ -1028,10 +1028,10 @@ less-than relation regarding function values.
 
 
 <!--
-## Renaming preserves denotations
+# Renaming preserves denotations
 -->
 
-## 重命名保持指称不变
+# 重命名保持指称不变
 
 <!--
 We shall prove that renaming variables, and changing the environment
@@ -1136,10 +1136,10 @@ of the cases are trivial except the cases for variables and lambda.
 
 
 <!--
-## Environment strengthening and identity renaming
+# Environment strengthening and identity renaming
 -->
 
-## 环境增强与恒等重命名
+# 环境增强与恒等重命名
 
 <!--
 We shall need a corollary of the renaming lemma that says that
@@ -1195,10 +1195,10 @@ up-env d lt = ⊑-env d (ext-le lt)
 ```
 
 <!--
-#### Exercise `denot-church` (recommended)
+## Exercise `denot-church` (recommended)
 -->
 
-#### 练习 `denot-church`（推荐）
+## 练习 `denot-church`（推荐）
 
 <!--
 Church numerals are more general than natural numbers in that they
@@ -1310,10 +1310,10 @@ Prove the following theorem.
 
 
 <!--
-## Inversion of the less-than relation for functions
+# Inversion of the less-than relation for functions
 -->
 
-## 函数小于关系的反演
+# 函数小于关系的反演
 
 <!--
 What can we deduce from knowing that a function `v ↦ w` is less than
@@ -1349,10 +1349,10 @@ codomains.
 
 
 <!--
-### Value membership and inclusion
+## Value membership and inclusion
 -->
 
-### 值的成员关系与包含关系
+## 值的成员关系与包含关系
 
 <!--
 Recall that we think of a value as a set of entries with the join
@@ -1995,10 +1995,10 @@ less-than with functions on the left and right-hand sides.
 
 
 <!--
-## Notes
+# Notes
 -->
 
-## 注记
+# 注记
 
 <!--
 The denotational semantics presented in this chapter is an example of
@@ -2100,7 +2100,7 @@ mapped to and from the natural numbers using a kind of Godel encoding.
 上面的值通过一种哥德尔编码做了它和自然数的双向映射。
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:
@@ -2122,7 +2122,7 @@ This chapter uses the following unicode:
     ⊆  U+2286  SUBSET OF OR EQUAL TO (\sub= or \subseteq)
 
 <!--
-## References
+# References
 -->
 
-## 参考来源
+# 参考来源

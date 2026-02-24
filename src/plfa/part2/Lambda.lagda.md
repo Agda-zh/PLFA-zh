@@ -87,10 +87,10 @@ Foundations_）中对应的 _Stlc_ 的内容。
 特别的是，我们将可以证明（两次！）二加二得四。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Data.Bool.Base using (Bool; true; false; T; not)
@@ -105,10 +105,10 @@ open import Relation.Binary.PropositionalEquality using (_≡_; _≢_; refl)
 ```
 
 <!--
-## Syntax of terms
+# Syntax of terms
 -->
 
-## 项的语法
+# 项的语法
 
 <!--
 Terms have seven constructs. Three are for the core lambda calculus:
@@ -215,10 +215,10 @@ Case expressions are self-bracketing.
 匹配表达式自带了括号。
 
 <!--
-### Example terms
+## Example terms
 -->
 
-### 项的例子
+## 项的例子
 
 <!--
 Here are a couple of example terms: the natural number two
@@ -247,8 +247,6 @@ the former and the second to the latter.  Any use of "m" in the successor branch
 must refer to the latter binding, and so we say that the latter binding _shadows_
 the former.  Later we will confirm that two plus two is four, in other words that
 the term
-
-FIXME: shadow 应该翻译成什么？
 -->
 
 加法的递归定义与我们一开始在 [Naturals](/Naturals/#plus) 章节中定义的
@@ -325,10 +323,10 @@ reduces to `` `suc `suc `suc `suc `zero ``.
 
 
 <!--
-#### Exercise `mul` (recommended)
+## Exercise `mul` (recommended)
 -->
 
-#### 练习 `mul` （推荐）
+## 练习 `mul` （推荐）
 
 <!--
 Write out the definition of a lambda term that multiplies
@@ -345,10 +343,10 @@ defined earlier.
 ```
 
 <!--
-#### Exercise `mulᶜ` (practice)
+## Exercise `mulᶜ` (practice)
 -->
 
-#### 练习 `mulᶜ` （习题）
+## 练习 `mulᶜ` （习题）
 
 <!--
 Write out the definition of a lambda term that multiplies
@@ -369,10 +367,10 @@ definition may use `plusᶜ` as defined earlier (or may not
 
 
 <!--
-#### Exercise `primed` (stretch) {#primed}
+## Exercise `primed` (stretch) {#primed}
 -->
 
-#### 练习 `primed` （延伸）{#primed}
+## 练习 `primed` （延伸）{#primed}
 
 <!--
 Some people find it annoying to write `` ` "x" `` instead of `x`.
@@ -452,10 +450,10 @@ Write out the definition of multiplication in the same style.
 <!--
 FIXME: 形式化？正式？
 
-### Formal vs informal
+## Formal vs informal
 -->
 
-### 形式化与非正式
+## 形式化与非正式
 
 <!--
 In informal presentation of formal semantics, one uses choice of
@@ -484,10 +482,10 @@ meta-language, Agda.
 与我们使用的元语言 Agda 中的 `λ x → N` 和 `L M` 相对。
 
 <!--
-### Bound and free variables
+## Bound and free variables
 -->
 
-### 约束变量与自由变量
+## 约束变量与自由变量
 
 <!--
 In an abstraction `ƛ x ⇒ N` we call `x` the _bound_ variable
@@ -614,10 +612,10 @@ names, `x` and `x′`.
 其中两次出现的 `m` 现在用 `x` 和 `x′` 两个不同的名字表示。
 
 <!--
-## Values
+# Values
 -->
 
-## 值
+# 值
 
 <!--
 A _value_ is a term that corresponds to an answer.
@@ -662,10 +660,10 @@ In what follows, we let `V` and `W` range over values.
 后文中我们用 `V` 和 `W` 来表示值。
 
 <!--
-### Formal vs informal
+## Formal vs informal
 -->
 
-### 正式与非正式
+## 正式与非正式
 
 <!--
 In informal presentations of formal semantics, using
@@ -678,10 +676,10 @@ invoke the `Value` predicate.
 在 Agda 中，我们必须使用 `Value` 谓词来显式地表达。
 
 <!--
-### Other approaches
+## Other approaches
 -->
 
-### 其他方法
+## 其他方法
 
 <!--
 An alternative is not to focus on closed terms,
@@ -699,10 +697,10 @@ Chapter [Untyped](/Untyped/).
 
 
 <!--
-## Substitution
+# Substitution
 -->
 
-## 替换
+# 替换
 
 <!--
 The heart of lambda calculus is the operation of
@@ -898,10 +896,10 @@ simply push substitution recursively into the subterms.
 除此之外的情况，我们递归地对于子项进行替换。
 
 <!--
-### Examples
+## Examples
 -->
 
-### 例子
+## 例子
 
 <!--
 Here is confirmation that the examples above are correct:
@@ -928,10 +926,10 @@ _ = refl
 ```
 
 <!--
-#### Quiz
+## Quiz
 -->
 
-#### 小测验
+## 小测验
 
 <!--
 What is the result of the following substitution?
@@ -947,10 +945,10 @@ What is the result of the following substitution?
 4. `` (ƛ "y" ⇒ `zero · (ƛ "x" ⇒ `zero)) ``
 
 <!--
-#### Exercise `_[_:=_]′` (stretch)
+## Exercise `_[_:=_]′` (stretch)
 -->
 
-#### 练习 `_[_:=_]′` （延伸）
+## 练习 `_[_:=_]′` （延伸）
 
 <!--
 The definition of substitution above has three clauses (`ƛ`, `case`,
@@ -971,10 +969,10 @@ substitution.
 
 
 <!--
-## Reduction
+# Reduction
 -->
 
-## 归约
+# 归约
 
 <!--
 We give the reduction rules for call-by-value lambda calculus.  To
@@ -1153,10 +1151,10 @@ of a beta rule, possibly adjusted by zero or more compatibility rules.
 
 
 <!--
-#### Quiz
+## Quiz
 -->
 
-#### 小测验
+## 小测验
 
 <!--
 What does the following term step to?
@@ -1198,10 +1196,10 @@ defined above.)
 
 
 <!--
-## Reflexive and transitive closure
+# Reflexive and transitive closure
 -->
 
-## 自反传递闭包
+# 自反传递闭包
 
 <!--
 A single step is only part of the story. In general, we wish to repeatedly
@@ -1332,10 +1330,10 @@ the two definitions are equivalent (indeed, one embeds in the other).
 证明两者是等价的是一个很好的练习。（的确，一者嵌入了另一者）
 
 <!--
-#### Exercise `—↠≲—↠′` (practice)
+## Exercise `—↠≲—↠′` (practice)
 -->
 
-#### 练习 `—↠≲—↠′` （习题）
+## 练习 `—↠≲—↠′` （习题）
 
 <!--
 Show that the first notion of reflexive and transitive closure
@@ -1352,10 +1350,10 @@ above embeds into the second. Why are they not isomorphic?
 ```
 
 <!--
-## Confluence
+# Confluence
 -->
 
-## 合流性
+# 合流性
 
 <!--
 One important property a reduction relation might satisfy is
@@ -1432,10 +1430,10 @@ systems studied in this text are trivially confluent.
 因此，我们研究的归约系统平凡地满足了合流性。
 
 <!--
-## Examples
+# Examples
 -->
 
-## 例子
+# 例子
 
 <!--
 We start with a simple example. The Church numeral two applied to the
@@ -1443,6 +1441,7 @@ successor function and zero yields the natural number two:
 -->
 
 我们用一个简单的例子开始。Church 数二应用于后继函数和零可以得到自然数二：
+
 ```agda
 _ : twoᶜ · sucᶜ · `zero —↠ `suc `suc `zero
 _ =
@@ -1464,6 +1463,7 @@ Here is a sample reduction demonstrating that two plus two is four:
 -->
 
 下面的例子中我们归约二加二至四：
+
 ```agda
 _ : plus · two · two —↠ `suc `suc `suc `suc `zero
 _ =
@@ -1513,6 +1513,7 @@ And here is a similar sample reduction for Church numerals:
 -->
 
 我们用 Church 数归约同样的例子：
+
 ```agda
 _ : plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero —↠ `suc `suc `suc `suc `zero
 _ =
@@ -1554,10 +1555,10 @@ In the next chapter, we will see how to compute such reduction sequences.
 下一章节中，我们研究如何计算这样的归约序列。
 
 <!--
-#### Exercise `plus-example` (practice)
+## Exercise `plus-example` (practice)
 -->
 
-#### 练习 `plus-example` （习题）
+## 练习 `plus-example` （习题）
 
 <!--
 Write out the reduction sequence demonstrating that one plus one is two.
@@ -1572,10 +1573,10 @@ Write out the reduction sequence demonstrating that one plus one is two.
 ```
 
 <!--
-## Syntax of types
+# Syntax of types
 -->
 
-## 类型的语法
+# 类型的语法
 
 <!--
 We have just two types:
@@ -1620,10 +1621,10 @@ data Type : Set where
 ```
 
 <!--
-### Precedence
+## Precedence
 -->
 
-### 优先级
+## 优先级
 
 <!--
 As in Agda, functions of two or more arguments are represented via
@@ -1645,10 +1646,10 @@ Thus:
 * `plus · two · two` 表示 `(plus · two) · two`。
 
 <!--
-### Quiz
+## Quiz
 -->
 
-### 小测验
+## 小测验
 
 <!--
 * What is the type of the following term?
@@ -1694,16 +1695,16 @@ Thus:
 
 
 <!--
-## Typing
+# Typing
 -->
 
-## 赋型
+# 赋型
 
 <!--
-### Contexts
+## Contexts
 -->
 
-### 语境
+## 语境
 
 <!--
 While reduction considers only closed terms, typing must
@@ -1754,10 +1755,10 @@ data Context : Set where
 
 
 <!--
-#### Exercise `Context-≃` (practice)
+## Exercise `Context-≃` (practice)
 -->
 
-#### 练习 `Context-≃` （习题）
+## 练习 `Context-≃` （习题）
 
 <!--
 Show that `Context` is isomorphic to `List (Id × Type)`.
@@ -1789,10 +1790,10 @@ to the list
 ```
 
 <!--
-### Lookup judgment
+## Lookup judgment
 -->
 
-### 查询判断
+## 查询判断
 
 <!--
 We have two forms of _judgment_.  The first is written
@@ -1847,6 +1848,7 @@ Lookup is formalised as follows:
 -->
 
 我们如下形式化查询：
+
 ```agda
 infix  4  _∋_⦂_
 
@@ -1903,10 +1905,10 @@ S′ {x≢y = x≢y} x = S (toWitnessFalse x≢y) x
 ```
 
 <!--
-### Typing judgment
+## Typing judgment
 -->
 
-### 赋型判断
+## 赋型判断
 
 <!--
 The second judgment is written
@@ -1938,6 +1940,7 @@ Typing is formalised as follows:
 -->
 
 赋型可以如下形式化：
+
 ```agda
 infix  4  _⊢_⦂_
 
@@ -2034,10 +2037,10 @@ The rules are deterministic, in that at most one rule applies to every term.
 这些规则是确定的，对于每一项至多有一条规则使用。
 
 <!--
-### Example type derivations {#derivation}
+## Example type derivations {#derivation}
 -->
 
-### 类型推导的例子 {#derivation}
+## 类型推导的例子 {#derivation}
 
 <!--
 Type derivations correspond to trees. In informal notation, here
@@ -2084,6 +2087,7 @@ Here is the above typing derivation formalised in Agda:
 -->
 
 上面的推导可以如下用 Agda 形式化：
+
 ```agda
 Ch : Type → Type
 Ch A = (A ⇒ A) ⇒ A ⇒ A
@@ -2100,6 +2104,7 @@ Here are the typings corresponding to computing two plus two:
 -->
 
 下面是针对二加二的赋型：
+
 ```agda
 ⊢two : ∀ {Γ} → Γ ⊢ two ⦂ `ℕ
 ⊢two = ⊢suc (⊢suc ⊢zero)
@@ -2140,6 +2145,7 @@ And here are typings for the remainder of the Church example:
 -->
 
 对 Church 数赋型的余下推导如下：
+
 ```agda
 ⊢plusᶜ : ∀ {Γ A} → Γ  ⊢ plusᶜ ⦂ Ch A ⇒ Ch A ⇒ Ch A
 ⊢plusᶜ = ⊢ƛ (⊢ƛ (⊢ƛ (⊢ƛ (⊢` ∋m · ⊢` ∋s · (⊢` ∋n · ⊢` ∋s · ⊢` ∋z)))))
@@ -2159,10 +2165,10 @@ And here are typings for the remainder of the Church example:
 ```
 
 <!--
-### Interaction with Agda
+## Interaction with Agda
 -->
 
-### 与 Agda 交互
+## 与 Agda 交互
 
 <!--
 Construction of a type derivation may be done interactively.
@@ -2245,10 +2251,10 @@ will show how to use Agda to compute type derivations directly.
 来直接计算出类型推导。
 
 <!--
-### Lookup is functional
+## Lookup is functional
 -->
 
-### 查询是函数
+## 查询是函数
 
 <!--
 The lookup relation `Γ ∋ x ⦂ A` is functional, in that for each `Γ` and `x`
@@ -2275,10 +2281,10 @@ the term `` ƛ "x" ⇒ ` "x" `` has type `A ⇒ A` for any type `A`.
 项 `` ƛ "x" ⇒ ` "x" `` 有类型 `A ⇒ A`，`A` 为任何类型。
 
 <!--
-### Non-examples
+## Non-examples
 -->
 
-### 非例子
+## 非例子
 
 <!--
 We can also show that terms are _not_ typeable.  For example, here is
@@ -2317,10 +2323,10 @@ nope₂ (⊢ƛ (⊢` ∋x · ⊢` ∋x′))  = impossible (∋-functional ∋x �
 
 
 <!--
-#### Quiz
+## Quiz
 -->
 
-#### 小测验
+## 小测验
 
 <!--
 For each of the following, give a type `A` for which it is derivable,
@@ -2345,10 +2351,10 @@ or explain why there are no such types.
 
 
 <!--
-#### Exercise `⊢mul` (recommended)
+## Exercise `⊢mul` (recommended)
 -->
 
-#### 练习 `⊢mul` （推荐）
+## 练习 `⊢mul` （推荐）
 
 <!--
 Using the term `mul` you defined earlier, write out the derivation
@@ -2365,9 +2371,9 @@ showing that it is well typed.
 
 
 <!--
-#### Exercise `⊢mulᶜ` (practice)
+## Exercise `⊢mulᶜ` (practice)
 -->
-#### 练习 `⊢mulᶜ` （习题）
+## 练习 `⊢mulᶜ` （习题）
 
 <!--
 Using the term `mulᶜ` you defined earlier, write out the derivation
@@ -2382,7 +2388,7 @@ showing that it is well typed.
 -- 请将代码写在此处
 ```
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

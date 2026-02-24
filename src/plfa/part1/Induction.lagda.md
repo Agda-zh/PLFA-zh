@@ -30,10 +30,10 @@ _induction_.
 来证明的。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 <!--
 We require equality as in the previous chapter, plus the naturals
@@ -59,10 +59,10 @@ open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_; _^_)
 
 
 <!--
-## Properties of operators
+# Properties of operators
 -->
 
-## 运算符的性质
+# 运算符的性质
 
 <!--
 Operators pop up all the time, and mathematicians have agreed
@@ -140,10 +140,10 @@ that a newly introduced operator is associative but not commutative.
 但不满足交换律。
 
 <!--
-#### Exercise `operators` (practice) {#operators}
+## Exercise `operators` (practice) {#operators}
 -->
 
-#### 练习 `operators`（实践） {#operators}
+## 练习 `operators`（实践） {#operators}
 
 <!--
 Give another example of a pair of operators that have an identity
@@ -171,10 +171,10 @@ associative but is not commutative.
 
 
 <!--
-## Associativity
+# Associativity
 -->
 
-## 结合律
+# 结合律
 
 <!--
 One property of addition is that it is _associative_, that is, that the
@@ -247,10 +247,10 @@ _proof by induction_.
 
 
 <!--
-## Proof by induction
+# Proof by induction
 -->
 
-## 归纳证明
+# 归纳证明
 
 <!--
 Recall the definition of natural numbers consists of a _base case_
@@ -415,10 +415,10 @@ day _n+1_.
 
 
 <!--
-## Our first proof: associativity
+# Our first proof: associativity
 -->
 
-## 第一个证明：结合律
+# 第一个证明：结合律
 
 <!--
 To prove associativity, we take `P m` to be the property:
@@ -616,10 +616,10 @@ recursion is one of the most appealing aspects of Agda.
 归纳证明和递归定义之间的这种对应是 Agda 中最吸引人的方面之一。
 
 <!--
-## Induction as recursion
+# Induction as recursion
 -->
 
-## 归纳即递归
+# 归纳即递归
 
 <!--
 As a concrete example of how induction corresponds to recursion, here
@@ -672,10 +672,10 @@ proof of associativity.
 
 
 <!--
-## Terminology and notation
+# Terminology and notation
 -->
 
-## 术语与记法
+# 术语与记法
 
 <!--
 The symbol `∀` appears in the statement of associativity to indicate that
@@ -747,10 +747,10 @@ are all equivalent.
 
 
 <!--
-## Our second proof: commutativity
+# Our second proof: commutativity
 -->
 
-## 第二个证明：交换律
+# 第二个证明：交换律
 
 <!--
 Another important property of addition is that it is _commutative_, that is,
@@ -768,10 +768,10 @@ The proof requires that we first demonstrate two lemmas.
 要证明它，我们需要先证明两条引理（Lemma）。
 
 <!--
-### The first lemma
+## The first lemma
 -->
 
-### 第一条引理
+## 第一条引理
 
 <!--
 The base case of the definition of addition states that zero
@@ -894,10 +894,10 @@ yield the needed equation.  This completes the first lemma.
 会在等式两边的前面加上 `suc` 以得到需要的等式。第一条引理证毕。
 
 <!--
-### The second lemma
+## The second lemma
 -->
 
-### 第二条引理
+## 第二条引理
 
 <!--
 The inductive case of the definition of addition pushes `suc` on the
@@ -1024,10 +1024,10 @@ yield the needed equation.  This completes the second lemma.
 会在等式两边的前面加上 `suc` 以得到需要的等式。第二条引理证毕。
 
 <!--
-### The proposition
+## The proposition
 -->
 
-### 命题
+## 命题
 
 <!--
 Finally, here is our proposition's statement and proof:
@@ -1153,10 +1153,10 @@ Agda 要求标识符必须在使用前定义，因此我们必须在主命题之
 
 
 <!--
-## Our first corollary: rearranging {#sections}
+# Our first corollary: rearranging {#sections}
 -->
 
-## 第一个推论：重排定理 {#sections}
+# 第一个推论：重排定理 {#sections}
 
 <!--
 We can apply associativity to rearrange parentheses however we like.
@@ -1249,10 +1249,10 @@ returns `x + y`; the same works for any infix operator.
 
 
 <!--
-## Creation, one last time
+# Creation, one last time
 -->
 
-## 创世，最后一次
+# 创世，最后一次
 
 <!--
 Returning to the proof of associativity, it may be helpful to view the inductive
@@ -1367,10 +1367,10 @@ which is left as an exercise for the reader.
 还有一种完全有限的方法来生成同样的等式，它的证明留作读者的练习。
 
 <!--
-#### Exercise `finite-+-assoc` (stretch) {#finite-plus-assoc}
+## Exercise `finite-+-assoc` (stretch) {#finite-plus-assoc}
 -->
 
-#### 练习 `finite-+-assoc`（延伸） {#finite-plus-assoc}
+## 练习 `finite-+-assoc`（延伸） {#finite-plus-assoc}
 
 <!--
 Write out what is known about associativity of addition on each of the
@@ -1387,10 +1387,10 @@ first four days using a finite story of creation, as
 ```
 
 <!--
-## Associativity with rewrite
+# Associativity with rewrite
 -->
 
-## 用改写来证明结合律
+# 用改写来证明结合律
 
 <!--
 There is more than one way to skin a cat.  Here is a second proof of
@@ -1462,10 +1462,10 @@ not only chains of equations but also the need to invoke `cong`.
 
 
 <!--
-## Commutativity with rewrite
+# Commutativity with rewrite
 -->
 
-## 使用改写证明交换律
+# 使用改写证明交换律
 
 <!--
 Here is a second proof of commutativity of addition, using `rewrite` rather than
@@ -1500,10 +1500,10 @@ right.
 
 
 <!--
-## Building proofs interactively
+# Building proofs interactively
 -->
 
-## 交互式构造证明
+# 交互式构造证明
 
 <!--
 It is instructive to see how to build the alternative proof of
@@ -1657,10 +1657,10 @@ typing `C-c C-r` will fill it in, completing the proof:
 
 
 <!--
-#### Exercise `+-swap` (recommended) {#plus-swap}
+## Exercise `+-swap` (recommended) {#plus-swap}
 -->
 
-#### 练习：`+-swap`（推荐） {#plus-swap}
+## 练习：`+-swap`（推荐） {#plus-swap}
 
 <!--
 Show
@@ -1685,10 +1685,10 @@ is associative and commutative.
 ```
 
 <!--
-#### Exercise `*-distrib-+` (recommended) {#times-distrib-plus}
+## Exercise `*-distrib-+` (recommended) {#times-distrib-plus}
 -->
 
-#### 练习 `*-distrib-+`（推荐） {#times-distrib-plus}
+## 练习 `*-distrib-+`（推荐） {#times-distrib-plus}
 
 <!--
 Show multiplication distributes over addition, that is,
@@ -1711,10 +1711,10 @@ for all naturals `m`, `n`, and `p`.
 ```
 
 <!--
-#### Exercise `*-assoc` (recommended) {#times-assoc}
+## Exercise `*-assoc` (recommended) {#times-assoc}
 -->
 
-#### 练习 `*-assoc`（推荐） {#times-assoc}
+## 练习 `*-assoc`（推荐） {#times-assoc}
 
 <!--
 Show multiplication is associative, that is,
@@ -1737,10 +1737,10 @@ for all naturals `m`, `n`, and `p`.
 ```
 
 <!--
-#### Exercise `*-comm` (practice) {#times-comm}
+## Exercise `*-comm` (practice) {#times-comm}
 -->
 
-#### 练习 `*-comm`（实践） {#times-comm}
+## 练习 `*-comm`（实践） {#times-comm}
 
 <!--
 Show multiplication is commutative, that is,
@@ -1765,10 +1765,10 @@ you will need to formulate and prove suitable lemmas.
 
 
 <!--
-#### Exercise `0∸n≡0` (practice) {#zero-monus}
+## Exercise `0∸n≡0` (practice) {#zero-monus}
 -->
 
-#### 练习 `0∸n≡0`（实践） {#zero-monus}
+## 练习 `0∸n≡0`（实践） {#zero-monus}
 
 <!--
 Show
@@ -1792,10 +1792,10 @@ for all naturals `n`. Did your proof require induction?
 
 
 <!--
-#### Exercise `∸-+-assoc` (practice) {#monus-plus-assoc}
+## Exercise `∸-+-assoc` (practice) {#monus-plus-assoc}
 -->
 
-#### 练习 `∸-+-assoc`（实践） {#monus-plus-assoc}
+## 练习 `∸-+-assoc`（实践） {#monus-plus-assoc}
 
 <!--
 Show that monus associates with addition, that is,
@@ -1819,10 +1819,10 @@ for all naturals `m`, `n`, and `p`.
 
 
 <!--
-#### Exercise `+*^` (stretch)
+## Exercise `+*^` (stretch)
 -->
 
-#### 练习 `+*^` （延伸）
+## 练习 `+*^` （延伸）
 
 <!--
 Show the following three laws
@@ -1845,10 +1845,10 @@ for all `m`, `n`, and `p`.
 ```
 
 <!--
-#### Exercise `Bin-laws` (stretch) {#Bin-laws}
+## Exercise `Bin-laws` (stretch) {#Bin-laws}
 -->
 
-#### 练习 `Bin-laws`（延伸） {#Bin-laws}
+## 练习 `Bin-laws`（延伸） {#Bin-laws}
 
 <!--
 Recall that
@@ -1890,10 +1890,10 @@ For each law: if it holds, prove; if not, give a counterexample.
 
 
 <!--
-## Standard library
+# Standard library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 Definitions similar to those in this chapter can be found in the standard library:
@@ -1906,10 +1906,10 @@ import Data.Nat.Properties using (+-assoc; +-identityʳ; +-suc; +-comm)
 ```
 
 <!--
-## Unicode
+# Unicode
 -->
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

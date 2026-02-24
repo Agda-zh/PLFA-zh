@@ -9,10 +9,10 @@ module plfa.part3.ContextualEquivalence where
 ```
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Data.Product using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
@@ -26,10 +26,10 @@ open import plfa.part3.Adequacy using (↓→⇓)
 ```
 
 <!--
-## Contextual Equivalence
+# Contextual Equivalence
 -->
 
-## 语境等价
+# 语境等价
 
 <!--
 The notion of _contextual equivalence_ is an important one for
@@ -82,10 +82,10 @@ two terms.
 
 
 <!--
-## Denotational equivalence implies contextual equivalence
+# Denotational equivalence implies contextual equivalence
 -->
 
-## 指称等价蕴含语境等价
+# 指称等价蕴含语境等价
 
 <!--
 Thankfully, the proof that denotational equality implies contextual
@@ -180,7 +180,7 @@ denot-equal-contex-equal{Γ}{M}{N} eq {C} =
 ```
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

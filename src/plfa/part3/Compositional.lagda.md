@@ -9,10 +9,10 @@ module plfa.part3.Compositional where
 ```
 
 <!--
-## Introduction
+# Introduction
 -->
 
-## 简介
+# 简介
 
 <!--
 In this chapter we prove that the denotational semantics is compositional,
@@ -36,10 +36,10 @@ with such a definition and prove that it is equivalent to ℰ.
 
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Data.Product.Base using (_×_; Σ; Σ-syntax; ∃; ∃-syntax; proj₁; proj₂)
@@ -58,10 +58,10 @@ open plfa.part3.Denotational.≃-Reasoning
 ```
 
 <!--
-## Equation for lambda abstraction
+# Equation for lambda abstraction
 -->
 
-## λ-抽象的方程
+# λ-抽象的方程
 
 <!--
 Regarding the first equation
@@ -212,10 +212,10 @@ lam-equiv γ v = ⟨ ℰƛ→ℱℰ , ℱℰ→ℰƛ ⟩
 
 
 <!--
-## Equation for function application
+# Equation for function application
 -->
 
-## 函数应用的方程
+# 函数应用的方程
 
 <!--
 Next we fill in the ellipses for the equation concerning function
@@ -463,10 +463,10 @@ var-equiv γ v = ⟨ var-inv , (λ lt → sub var lt) ⟩
 
 
 <!--
-## Congruence
+# Congruence
 -->
 
-## 合同性
+# 合同性
 
 <!--
 The main work of this chapter is complete: we have established
@@ -604,10 +604,10 @@ app-cong {Γ}{L}{L′}{M}{M′} L≅L′ M≅M′ =
 
 
 <!--
-## Compositionality
+# Compositionality
 -->
 
-## 可组合性
+# 可组合性
 
 <!--
 The _compositionality property_ states that surrounding two terms that
@@ -727,10 +727,10 @@ above.
 `lam-cong` 和 `app-cong` 来证明。
 
 <!--
-## The denotational semantics defined as a function
+# The denotational semantics defined as a function
 -->
 
-## 指称语义作为函数来定义
+# 指称语义作为函数来定义
 
 <!--
 Having established the three equations `var-equiv`, `lam-equiv`, and
@@ -788,7 +788,7 @@ with the congruence lemmas for `ℱ` and `●`.
 ```
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

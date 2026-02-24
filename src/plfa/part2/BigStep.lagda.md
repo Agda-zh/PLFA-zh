@@ -8,10 +8,10 @@ translators : ["starxingchenc"]
 module plfa.part2.BigStep where
 ```
 <!--
-## Introduction
+# Introduction
 -->
 
-## 简介
+# 简介
 
 <!--
 The call-by-name evaluation strategy is a deterministic method for
@@ -49,12 +49,11 @@ single sub-computation has been completed.
 它通常被叫做**大步语义（Big-stepsemantics）**，写做 `M ⇓ V`。
 而小步归约关系则被写做 `M —→ M′`，它仅通过一步子计算来将 `M` 归约为另一个表达式 `M′`。
 
-
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Relation.Binary.PropositionalEquality
@@ -70,10 +69,10 @@ open import plfa.part2.Substitution using (Subst; ids)
 ```
 
 <!--
-## Environments
+# Environments
 -->
 
-## 环境
+# 环境
 
 <!--
 To handle variables and function applications, there is the choice
@@ -124,10 +123,10 @@ _,'_ : ∀ {Γ} → ClosEnv Γ → Clos → ClosEnv (Γ , ★)
 ```
 
 <!--
-## Big-step evaluation
+# Big-step evaluation
 -->
 
-## 大步求值
+# 大步求值
 
 <!--
 The big-step semantics is represented as a ternary relation,
@@ -180,13 +179,11 @@ data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
   就在扩展了参数 `M` 的环境中对 `N` 求值。注意到 `M` 并未在 `⇓-app` 规则中被求值，
   因为进行的是传名调用而不是传值调用。
 
-
 <!--
-#### Exercise `big-step-eg` (practice)
+## Exercise `big-step-eg` (practice)
 -->
 
-#### 练习 `big-step-eg`（实践）
-
+## 练习 `big-step-eg`（实践）
 
 <!--
 Show that `(ƛ ƛ # 1) · ((ƛ # 0 · # 0) · (ƛ # 0 · # 0))`
@@ -195,17 +192,15 @@ terminates under big-step call-by-name evaluation.
 
 证明 `(ƛ ƛ # 1) · ((ƛ # 0 · # 0) · (ƛ # 0 · # 0))` 能在大步传名调用求值下终止。
 
-
-
-```
+```agda
 -- 请将代码写在此处
 ```
 
 <!--
-## The big-step semantics is deterministic
+# The big-step semantics is deterministic
 -->
 
-## 大步语义是确定的
+# 大步语义是确定的
 
 <!--
 If the big-step relation evaluates a term `M` to both `V` and
@@ -230,12 +225,11 @@ straightforward induction on the two big-step derivations.
 ... | refl = ⇓-determ mc₁ mc''
 ```
 
-
 <!--
-## Big-step evaluation implies beta reduction to a lambda
+# Big-step evaluation implies beta reduction to a lambda
 -->
 
-## 大步求值蕴含 β-归约至 λ-抽象
+# 大步求值蕴含 β-归约至 λ-抽象
 
 <!--
 If big-step evaluation produces a value, then the input term can
@@ -415,7 +409,6 @@ We proceed by induction on the input variable.
 * 如果它是 `Z`，那么我们使用前提 `V ≈ N` 立即得出结论。
 
 * 如果它是 `S x`，那么我们使用 `subst-zero-exts` 引理来重写，并使用前提 `γ ≈ₑ σ` 来得出结论。
-
 
 <!--
 To prove the main lemma, we need another technical lemma about
@@ -598,10 +591,10 @@ cbn→reduce {M}{Δ}{δ}{N′} M⇓c
 ```
 
 <!--
-#### Exercise `big-alt-implies-multi` (practice)
+## Exercise `big-alt-implies-multi` (practice)
 -->
 
-#### 练习 `big-alt-implies-multi`（实践）
+## 练习 `big-alt-implies-multi`（实践）
 
 <!--
 Formulate an alternative big-step semantics, of the form `M ↓ N`, for
@@ -615,17 +608,15 @@ with `M`. Prove that `M ↓ N` implies `M —↠ N`.
 即应用规则 `⇓-app` 应像在 `N [ M ]` 中一样执行替换而不是用 `M` 扩展环境。
 证明 `M ↓ N` 蕴含 `M —↠ N`。
 
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
 <!--
-## Beta reduction to a lambda implies big-step evaluation
+# Beta reduction to a lambda implies big-step evaluation
 -->
 
-## β-归约至 λ-抽象蕴含大步求值
+# β-归约至 λ-抽象蕴含大步求值
 
 <!--
 The proof of the backward direction, that beta reduction to a lambda
@@ -742,7 +733,7 @@ soundness and adequacy of the denotational semantics.
 而是将其推迟到发展出 λ-演算的指称语义后，
 此时该证明是指称语义中 soundness 和 adequacy 的推论。
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

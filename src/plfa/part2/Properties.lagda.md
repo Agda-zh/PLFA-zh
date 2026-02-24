@@ -21,10 +21,10 @@ sequences for us.
 我们将在稍后介绍它们，并展示如何通过组合它们来使 Agda 为我们计算归约序列。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Relation.Binary.PropositionalEquality
@@ -42,12 +42,11 @@ open import plfa.part1.Isomorphism
 open import plfa.part2.Lambda
 ```
 
-
 <!--
-## Introduction
+# Introduction
 -->
 
-## 简介
+# 简介
 
 <!--
 The last chapter introduced simply-typed lambda calculus,
@@ -66,7 +65,6 @@ that two plus two is four,
 
 最终，我们将要展示我们能够通过持续地对一个项做归约，直到它达到一个值。
 例如，在上一章中我们展示了二加二的和是四，
-
 
     plus · two · two  —↠  `suc `suc `suc `suc `zero
 
@@ -155,10 +153,10 @@ types without needing to develop a separate inductive definition of the
 特别地，我们不需要额外地去归纳定义关系 `appears_free_in` 就可以证明替换保留了类型。）
 
 <!--
-## Values do not reduce
+# Values do not reduce
 -->
 
-## 值无法被归约
+# 值无法被归约
 
 <!--
 We start with an easy observation. Values do not reduce:
@@ -229,10 +227,10 @@ which are the same function with the arguments swapped.
 可知原命题与推论是同一个函数，只是交换了参数顺序。
 
 <!--
-#### Exercise `Canonical-≃` (practice)
+## Exercise `Canonical-≃` (practice)
 -->
 
-#### 练习 `Canonical-≃` （实践）
+## 练习 `Canonical-≃` （实践）
 
 <!--
 Well-typed values must take one of a small number of _canonical forms_,
@@ -278,16 +276,15 @@ that is, the canonical forms are exactly the well-typed values.
 证明 `Canonical V ⦂ A` 与 `(∅ ⊢ V ⦂ A) × (Value V)` 同构，
 也就是标准式即良类型的值。
 
-
-```
+```agda
 -- 请将代码写在此处
 ```
 
 <!--
-## Progress
+# Progress
 -->
 
-## 可进性
+# 可进性
 
 <!--
 We would like to show that every term is either a value or takes a
@@ -507,10 +504,10 @@ determine its bound variable and body, `ƛ x ⇒ N`, so we can show that
 也就是形如 `ƛ x ⇒ N` 的形式，从而我们才能证明项 `L · M` 归约到了 `N [ x := M ]`。
 
 <!--
-#### Exercise `Progress-≃` (practice)
+## Exercise `Progress-≃` (practice)
 -->
 
-#### 练习 `Progress-≃`（实践）
+## 练习 `Progress-≃`（实践）
 
 <!--
 Show that `Progress M` is isomorphic to `Value M ⊎ ∃[ N ](M —→ N)`.
@@ -518,17 +515,15 @@ Show that `Progress M` is isomorphic to `Value M ⊎ ∃[ N ](M —→ N)`.
 
 证明 `Progress M` 与 `Value M ⊎ ∃[ N ](M —→ N)` 是同构的。
 
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
 <!--
-#### Exercise `progress′` (practice)
+## Exercise `progress′` (practice)
 -->
 
-#### 练习 `progress′`（实践）
+## 练习 `progress′`（实践）
 
 <!--
 Write out the proof of `progress′` in full, and compare it to the
@@ -537,17 +532,15 @@ proof of `progress` above.
 
 补全 `progress′` 的证明，并与之前 `progress` 的证明相对比。
 
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
 <!--
-#### Exercise `value?` (practice)
+## Exercise `value?` (practice)
 -->
 
-#### 练习 `value?`（实践）
+## 练习 `value?`（实践）
 
 <!--
 Combine `progress` and `—→¬V` to write a program that decides
@@ -563,10 +556,10 @@ postulate
 ```
 
 <!--
-## Prelude to preservation
+# Prelude to preservation
 -->
 
-## 证明保型性前的准备工作
+# 证明保型性前的准备工作
 
 <!--
 The other property we wish to prove, preservation of typing under
@@ -699,7 +692,6 @@ If `∅ ⊢ M ⦂ A` and `M —→ N` then `∅ ⊢ N ⦂ A`.
 **保型性**：
 如果 `∅ ⊢ M ⦂ A` 且 `M —→ N`，那么 `∅ ⊢ N ⦂ A`。
 
-
 <!--
 The proof is by induction over the possible reductions, and
 the substitution lemma is crucial in showing that each of the
@@ -717,10 +709,10 @@ We now proceed with our three-step programme.
 现在继续我们的三步走。
 
 <!--
-## Renaming
+# Renaming
 -->
 
-## 重命名
+# 重命名
 
 <!--
 We often need to "rebase" a type derivation, replacing a derivation
@@ -789,7 +781,6 @@ variable in the extended `Δ`.
 * 如果变量 `x` 与变量 `y` 相同，我们使用 `Z` 来访问
   拓展后 `Γ` 中的最后一个变量；类似地，访问拓展后 `Δ` 中
   的最后一个变量也是通过使用 `Z` 来完成的。
-
 
 <!--
 * If `x` differs from `y`, then we used `S` to skip over the last
@@ -985,12 +976,11 @@ with `y` at the end, and requires the provided evidence that `x ≢ y`.
 第一行负责将 `x` 从语境的最后一个位置移动到倒数第二个，并且
 将 `y` 置于最后，这要求提供 `x ≢ y` 的论据。
 
-
 <!--
-## Substitution
+# Substitution
 -->
 
-## 替换
+# 替换
 
 <!--
 The key to preservation – and the trickiest bit of the proof – is
@@ -1368,10 +1358,10 @@ arguments and to be consistent.
 因此考虑参数的顺序和保持一致性非常重要。
 
 <!--
-#### Exercise `subst′` (stretch)
+## Exercise `subst′` (stretch)
 -->
 
-#### 练习 `subst`（延伸）
+## 练习 `subst`（延伸）
 
 <!--
 Rewrite `subst` to work with the modified definition `_[_:=_]′`
@@ -1385,18 +1375,15 @@ preserves types.
 和之前一样，需要将处理约束变量的部分提取成一个单独的函数，与替换保持类型的
 证明一同互递归定义。
 
-
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
 <!--
-## Preservation
+# Preservation
 -->
 
-## 保型性
+# 保型性
 
 <!--
 Once we have shown that substitution preserves types, showing
@@ -1483,7 +1470,6 @@ Let's unpack the cases for two of the reduction rules:
 
 * 规则 `β-ƛ`。我们有
 
-
       Value V
       -----------------------------
       (ƛ x ⇒ N) · V —→ N [ x := V ]
@@ -1527,12 +1513,11 @@ and each `β` rule follows by the substitution lemma.
 剩余情况与此类似，对每个 `ξ` 规则使用归纳，
 对每个 `β` 规则使用替换引理。
 
-
 <!--
-## Evaluation
+# Evaluation
 -->
 
-## 求值
+# 求值
 
 <!--
 By repeated application of progress and preservation, we can evaluate
@@ -1697,7 +1682,6 @@ remaining.  There are two possibilities:
 * 如果是零，则我们过早地停止了。我们将返回简单的归约序列 `L —↠ L`，
   并标明我们用尽了燃料。
 
-
 <!--
 * It is non-zero and after the next step we have `m` gas remaining.
   Apply progress to the evidence that term `L` is well typed.  There
@@ -1731,12 +1715,11 @@ remaining.  There are two possibilities:
     结果将得到 `M —↠ N` 的论据以及 `N` 是良类型的论据和归约是否完成的标识。
     我们将 `L —→ M` 和 `M —↠ N` 的论据结合来得到 `L —↠ N` 以及归约是否完成的标识。
 
-
 <!--
-### Examples
+## Examples
 -->
 
-### 例子
+## 例子
 
 <!--
 We can now use Agda to compute the non-terminating reduction
@@ -2074,10 +2057,10 @@ above.
 再一次地，上一节中的示例是通过编辑上述内容得出的。
 
 <!--
-#### Exercise `mul-eval` (recommended)
+## Exercise `mul-eval` (recommended)
 -->
 
-#### 练习 `mul-eval`（推荐）
+## 练习 `mul-eval`（推荐）
 
 <!--
 Using the evaluator, confirm that two times two is four.
@@ -2085,18 +2068,15 @@ Using the evaluator, confirm that two times two is four.
 
 用这个求值器来验证二乘二的积是四。
 
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
-
 <!--
-#### Exercise: `progress-preservation` (practice)
+## Exercise: `progress-preservation` (practice)
 -->
 
-#### 练习 `progress-preservation` （实践）
+## 练习 `progress-preservation` （实践）
 
 <!--
 Without peeking at their statements above, write down the progress
@@ -2106,17 +2086,15 @@ and preservation theorems for the simply typed lambda-calculus.
 不阅读上面的陈述，
 写下简单类型 λ-演算可进性和保型性的定理。
 
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
 <!--
-#### Exercise `subject_expansion` (practice)
+## Exercise `subject_expansion` (practice)
 -->
 
-#### 练习 `subject_expansion` （实践）
+## 练习 `subject_expansion` （实践）
 
 <!--
 We say that `M` _reduces_ to `N` if `M —→ N`,
@@ -2136,18 +2114,15 @@ with case expressions and one not involving case expressions.
 如果 `M —→ N` 和 `∅ ⊢ N ⦂ A` 蕴含 `∅ ⊢ M ⦂ A`。
 找到两个主体扩展的反例，一个涉及 `case` 表达式而另一个不涉及。
 
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
-
 <!--
-## Well-typed terms don't get stuck
+# Well-typed terms don't get stuck
 -->
 
-## 良类型的项不会卡住
+# 良类型的项不会卡住
 
 <!--
 A term is _normal_ if it cannot reduce:
@@ -2233,10 +2208,10 @@ Felleisen 与 Wright 通过可进性和保型性引入了证明，并将其总�
 他引入了「错误」作为带有类型错误的术语的指称，并展示了 **良类型的项不会出错**。）
 
 <!--
-#### Exercise `stuck` (practice)
+## Exercise `stuck` (practice)
 -->
 
-#### 练习 `stuck` （实践）
+## 练习 `stuck` （实践）
 
 <!--
 Give an example of an ill-typed term that does get stuck.
@@ -2244,17 +2219,15 @@ Give an example of an ill-typed term that does get stuck.
 
 给出一个会被卡住的不良类型的项的例子。
 
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
 <!--
-#### Exercise `unstuck` (recommended)
+## Exercise `unstuck` (recommended)
 -->
 
-#### 练习 `unstuck` （推荐）
+## 练习 `unstuck` （推荐）
 
 <!--
 Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` above.
@@ -2262,17 +2235,15 @@ Provide proofs of the three postulates, `unstuck`, `preserves`, and `wttdgs` abo
 
 提供上文中 `unstuck`、`preserves` 和 `wttdgs` 三个假设的证明。
 
-
-
 ```agda
 -- 请将代码写在此处
 ```
 
 <!--
-## Reduction is deterministic
+# Reduction is deterministic
 -->
 
-## 归约是确定的
+# 归约是确定的
 
 <!--
 When we introduced reduction, we claimed it was deterministic.
@@ -2419,12 +2390,11 @@ and neither is smaller.
 
 但这不起作用：停机检查器报错，因为参数只是被交换了顺序，而且没有任何一个变得更小。
 
-
 <!--
-#### Quiz
+## Quiz
 -->
 
-#### 小测验
+## 小测验
 
 <!--
 Suppose we add a new term `zap` with the following reduction rule
@@ -2469,12 +2439,11 @@ false, give a counterexample:
 
   - 保型性
 
-
 <!--
-#### Quiz
+## Quiz
 -->
 
-#### 小测验
+## 小测验
 
 <!--
 Suppose instead that we add a new term `foo` with the following
@@ -2514,12 +2483,11 @@ false, give a counterexample:
 
   - 保型性
 
-
 <!--
-#### Quiz
+## Quiz
 -->
 
-#### 小测验
+## 小测验
 
 <!--
 Suppose instead that we remove the rule `ξ·₁` from the step
@@ -2548,12 +2516,11 @@ false, give a counterexample:
 
   - 保型性
 
-
 <!--
-#### Quiz
+## Quiz
 -->
 
-#### 小测验
+## 小测验
 
 <!--
 We can enumerate all the computable function from naturals to
@@ -2570,7 +2537,6 @@ to interpret a natural as a function from naturals to naturals:
 -->
 
 假设我们添加了一个赋性规则，应用上述遍历来将一个自然数解释为一个从自然数到自然数的函数：
-
 
     Γ ⊢ L ⦂ `ℕ
     Γ ⊢ M ⦂ `ℕ
@@ -2620,7 +2586,7 @@ other alterations we would wish to make to the system?
 在这种情况下是否保留了所有属性？
 我们是否希望对系统进行任何其他更改？
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

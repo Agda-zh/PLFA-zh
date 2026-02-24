@@ -10,10 +10,10 @@ module plfa.part3.Soundness where
 
 
 <!--
-## Introduction
+# Introduction
 -->
 
-## 简介
+# 简介
 
 <!--
 In this chapter we prove that the reduction semantics is sound with
@@ -49,10 +49,10 @@ expansion is false for most typed lambda calculi!
 
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Relation.Binary.PropositionalEquality
@@ -76,10 +76,10 @@ open import plfa.part3.Compositional using (lambda-inversion; var-inv)
 ```
 
 <!--
-## Forward reduction preserves denotations
+# Forward reduction preserves denotations
 -->
 
-## 向前归约保持指称不变
+# 向前归约保持指称不变
 
 <!--
 The proof of preservation in this section mixes techniques from
@@ -104,10 +104,10 @@ relation: substitution, renaming, and extension.
 
 
 <!--
-### Simultaneous substitution preserves denotations
+## Simultaneous substitution preserves denotations
 -->
 
-### 同时代换保持指称不变
+## 同时代换保持指称不变
 
 <!--
 Our next goal is to prove that simultaneous substitution preserves
@@ -331,10 +331,10 @@ the reduction.
 * 其余的情况都很直白。
 
 <!--
-## Reduction reflects denotations
+# Reduction reflects denotations
 -->
 
-## 归约反映了指称不变
+# 归约反映了指称不变
 
 <!--
 This section proves that reduction reflects the denotation of a
@@ -376,10 +376,10 @@ about `M` and can therefore use `⊥` for the value of `M`.
 
 
 <!--
-### Renaming reflects meaning
+## Renaming reflects meaning
 -->
 
-### 重命名反映了含义不变
+## 重命名反映了含义不变
 
 <!--
 Previously we showed that renaming variables preserves meaning.  Now
@@ -994,10 +994,10 @@ reflect (sub d lt) r mn = sub (reflect d r mn) lt
 ```
 
 <!--
-## Reduction implies denotational equality
+# Reduction implies denotational equality
 -->
 
-## 归约蕴含指称等价
+# 归约蕴含指称等价
 
 <!--
 We have proved that reduction both preserves and reflects
@@ -1037,7 +1037,7 @@ soundness {Γ} (L —→⟨ r ⟩ M—↠N) γ v =
 ```
 
 
-## Unicode
+# Unicode
 
 本章使用了以下 Unicode：
 

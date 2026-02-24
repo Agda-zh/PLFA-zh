@@ -10,10 +10,10 @@ module plfa.part2.Substitution where
 ```
 
 <!--
-## Introduction
+# Introduction
 -->
 
-## 引言
+# 引言
 
 <!--
 The primary purpose of this chapter is to prove that substitution
@@ -70,10 +70,10 @@ system that _decides_ whether any two substitutions are equal.
 以**确定**任意两个代换是否相等。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -94,10 +94,10 @@ postulate
 ```
 
 <!--
-## Notation
+# Notation
 -->
 
-## 记法
+# 记法
 
 <!--
 We introduce the following shorthand for the type of a _renaming_ from
@@ -136,10 +136,10 @@ We use the following more succinct notation for the `subst` function.
 
 
 <!--
-## The σ algebra of substitution
+# The σ algebra of substitution
 -->
 
-## 代换的 σ-代数
+# 代换的 σ-代数
 
 <!--
 A substitution maps de Bruijn indices (natural numbers) to terms, so we
@@ -239,10 +239,10 @@ the standard notation for forward function composition.
 `σ ⨟ τ`，因为分号是函数向右组合的标准记法。
 
 <!--
-## The σ algebra equations
+# The σ algebra equations
 -->
 
-## σ-代数方程
+# σ-代数方程
 
 <!--
 The σ algebra includes the following equations.
@@ -309,10 +309,10 @@ Finally, `sub-dist` says that post-sequencing distributes through cons.
 最后，`sub-dist` 表示后面的序列对 cons 满足分配率。
 
 <!--
-## Relating the σ algebra and substitution functions
+# Relating the σ algebra and substitution functions
 -->
 
-## 关联 σ-代数和代换函数
+# 关联 σ-代数和代换函数
 
 <!--
 The definitions of substitution `N [ M ]` and parallel substitution
@@ -432,10 +432,10 @@ cons'ing `M` onto `σ`.
 
 
 <!--
-## Proofs of sub-head, sub-tail, sub-η, Z-shift, sub-idL, sub-dist, and sub-app
+# Proofs of sub-head, sub-tail, sub-η, Z-shift, sub-idL, sub-dist, and sub-app
 -->
 
-## sub-head、sub-tail、sub-η、Z-shift、sub-idL、sub-dist 和 sub-app 的证明
+# sub-head、sub-tail、sub-η、Z-shift、sub-idL、sub-dist 和 sub-app 的证明
 
 <!--
 We start with the proofs that are immediate from the definitions of
@@ -501,10 +501,10 @@ sub-app = refl
 
 
 <!--
-## Interlude: congruences
+# Interlude: congruences
 -->
 
-## 插曲：合同性
+# 插曲：合同性
 
 <!--
 In this section we establish congruence rules for the σ algebra
@@ -608,10 +608,10 @@ cong-seq {Γ}{Δ}{Σ}{σ}{σ′}{τ}{τ′} ss' tt' {A} = extensionality lemma
 
 
 <!--
-## Relating `rename`, `exts`, `ext`, and `subst-zero` to the σ algebra
+# Relating `rename`, `exts`, `ext`, and `subst-zero` to the σ algebra
 -->
 
-## 将 `rename`、`exts`、`ext` 和 `subst-zero` 关联到 σ-代数
+# 将 `rename`、`exts`、`ext` 和 `subst-zero` 关联到 σ-代数
 
 <!--
 In this section we establish equations that relate `subst` and its
@@ -771,10 +771,10 @@ subst-Z-cons-ids = extensionality λ x → lemma {x = x}
 
 
 <!--
-## Proofs of sub-abs, sub-id, and rename-id
+# Proofs of sub-abs, sub-id, and rename-id
 -->
 
-## sub-ab、sub-id 和 rename-id 的证明
+# sub-ab、sub-id 和 rename-id 的证明
 
 <!--
 The equation `sub-abs` follows immediately from the equation
@@ -860,10 +860,10 @@ rename-id {M = M} =
 ```
 
 <!--
-## Proof of sub-idR
+# Proof of sub-idR
 -->
 
-## sub-idR 的证明
+# sub-idR 的证明
 
 <!--
 The proof of `sub-idR` follows directly from `sub-id`.
@@ -886,10 +886,10 @@ sub-idR {Γ}{σ = σ}{A} =
 
 
 <!--
-## Proof of sub-sub
+# Proof of sub-sub
 -->
 
-## sub-sub 的证明
+# sub-sub 的证明
 
 <!--
 The `sub-sub` equation states that sequenced substitutions `σ ⨟ τ`
@@ -1175,10 +1175,10 @@ rename-subst {Γ}{Δ}{Δ′}{M}{ρ}{σ} =
 
 
 <!--
-## Proof of sub-assoc
+# Proof of sub-assoc
 -->
 
-## sub-assoc 的证明
+# sub-assoc 的证明
 
 <!--
 The proof of `sub-assoc` follows directly from `sub-sub` and the
@@ -1207,10 +1207,10 @@ sub-assoc {Γ}{Δ}{Σ}{Ψ}{σ}{τ}{θ}{A} = extensionality λ x → lemma{x = x}
 ```
 
 <!--
-## Proof of subst-zero-exts-cons
+# Proof of subst-zero-exts-cons
 -->
 
-## subst-zero-exts-cons 的证明
+# subst-zero-exts-cons 的证明
 
 <!--
 The last equation we needed to prove `subst-zero-exts-cons` was
@@ -1246,10 +1246,10 @@ subst-zero-exts-cons {Γ}{Δ}{σ}{B}{M}{A} =
 
 
 <!--
-## Proof of the substitution lemma
+# Proof of the substitution lemma
 -->
 
-## 代换引理的证明
+# 代换引理的证明
 
 <!--
 We first prove the generalized form of the substitution lemma, showing
@@ -1377,10 +1377,10 @@ substitution{M = M}{N = N}{L = L} =
 
 
 <!--
-## Notes
+# Notes
 -->
 
-## 注记
+# 注记
 
 <!--
 Most of the properties and proofs in this file are based on the paper
@@ -1395,7 +1395,7 @@ _Autosubst: Reasoning with de BruijnTerms and Parallel Substitution_ (ITP 2015)�
 该论文又基于 Abadi、Cardelli、Curien 和 Levy (1991) 定义 σ-代数的论文。
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

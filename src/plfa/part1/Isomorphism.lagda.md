@@ -23,10 +23,10 @@ distributivity.
 
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -38,10 +38,10 @@ open import Data.Nat.Properties using (+-comm)
 
 
 <!--
-## Lambda expressions
+# Lambda expressions
 -->
 
-## Lambda 表达式
+# Lambda 表达式
 
 <!--
 The chapter begins with a few preliminaries that will be useful
@@ -114,10 +114,10 @@ reader to search for the definition in the code.
 
 
 <!--
-## Function composition
+# Function composition
 -->
 
-## 函数组合
+# 函数组合
 
 <!--
 In what follows, we will make use of function composition:
@@ -146,10 +146,10 @@ g ∘′ f  =  λ x → g (f x)
 
 
 <!--
-## Extensionality {#extensionality}
+# Extensionality {#extensionality}
 -->
 
-## 外延性 {#extensionality}
+# 外延性 {#extensionality}
 
 <!--
 Extensionality asserts that the only way to distinguish functions is
@@ -237,6 +237,7 @@ We occasionally need to postulate extensionality in what follows.
 
 More generally, we may wish to postulate extensionality for
 dependent functions.
+
 ```agda
 postulate
   ∀-extensionality : ∀ {A : Set} {B : A → Set} {f g : ∀(x : A) → B x}
@@ -244,16 +245,17 @@ postulate
       -----------------------
     → f ≡ g
 ```
+
 Here the type of `f` and `g` has changed from `A → B` to
 `∀ (x : A) → B x`, generalising ordinary functions to
 dependent functions.
 
 
 <!--
-## Isomorphism
+# Isomorphism
 -->
 
-## 同构
+# 同构
 
 <!--
 Two sets are isomorphic if they are in one-to-one correspondence.
@@ -359,10 +361,10 @@ where `f`, `g`, `g∘f`, and `f∘g` are values of suitable types.
 
 
 <!--
-## Isomorphism is an equivalence
+# Isomorphism is an equivalence
 -->
 
-## 同构是一个等价关系
+# 同构是一个等价关系
 
 <!--
 Isomorphism is an equivalence, meaning that it is reflexive, symmetric,
@@ -461,10 +463,10 @@ functions, and use equational reasoning to combine the inverses:
 
 
 <!--
-## Equational reasoning for isomorphism
+# Equational reasoning for isomorphism
 -->
 
-## 同构的相等性论证
+# 同构的相等性论证
 
 <!--
 It is straightforward to support a variant of equational reasoning for
@@ -506,10 +508,10 @@ open ≃-Reasoning
 
 
 <!--
-## Embedding
+# Embedding
 -->
 
-## 嵌入
+# 嵌入
 
 <!--
 We also need the notion of _embedding_, which is a weakening of
@@ -626,10 +628,10 @@ the right inverse of the isomorphism.
 
 
 <!--
-## Equational reasoning for embedding
+# Equational reasoning for embedding
 -->
 
-## 嵌入的相等性论证
+# 嵌入的相等性论证
 
 <!--
 We can also support tabular reasoning for embedding,
@@ -667,10 +669,10 @@ open ≲-Reasoning
 ```
 
 <!--
-#### Exercise `≃-implies-≲` (practice)
+## Exercise `≃-implies-≲` (practice)
 -->
 
-#### 练习 `≃-implies-≲`（实践）
+## 练习 `≃-implies-≲`（实践）
 
 <!--
 Show that every isomorphism implies an embedding.
@@ -691,10 +693,10 @@ postulate
 ```
 
 <!--
-#### Exercise `_⇔_` (practice) {#iff}
+## Exercise `_⇔_` (practice) {#iff}
 -->
 
-#### 练习 `_⇔_`（实践） {#iff}
+## 练习 `_⇔_`（实践） {#iff}
 
 <!--
 Define equivalence of propositions (also known as "if and only if") as follows:
@@ -720,10 +722,10 @@ Show that equivalence is reflexive, symmetric, and transitive.
 ```
 
 <!--
-#### Exercise `Bin-embedding` (stretch) {#Bin-embedding}
+## Exercise `Bin-embedding` (stretch) {#Bin-embedding}
 -->
 
-#### 练习 `Bin-embedding` （延伸） {#Bin-embedding}
+## 练习 `Bin-embedding` （延伸） {#Bin-embedding}
 
 <!--
 Recall that Exercises
@@ -767,10 +769,10 @@ Why do `to` and `from` not form an isomorphism?
 
 
 <!--
-## Standard library
+# Standard library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 Definitions similar to those in this chapter can be found in the standard library:
@@ -795,7 +797,7 @@ parameterised with regard to an arbitrary notion of equivalence.
 并可以由任何相等性的记法来参数化。
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

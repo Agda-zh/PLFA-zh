@@ -27,10 +27,10 @@ left over as you started with.
 剩下的自然数也和开始的一样多。
 
 <!--
-## The naturals are an inductive datatype
+# The naturals are an inductive datatype
 -->
 
-## 自然数是一种 **归纳数据类型（Inductive Datatype）**
+# 自然数是一种**归纳数据类型（Inductive Datatype）**
 
 <!--
 Everyone is familiar with the natural numbers
@@ -131,11 +131,11 @@ successor of two; and so on.
 即一的后继数，简写为 `2`；将二的后继数简写为 `3`；以此类推。
 
 <!--
-#### Exercise `seven` (practice) {#seven}
+## Exercise `seven` (practice) {#seven}
 -->
 
 <<<<<<< HEAD
-#### 练习 `seven`（实践） {#seven}
+## 练习 `seven`（实践） {#seven}
 
 <!--
 Write out `7` in longhand.
@@ -164,10 +164,10 @@ Type `C-c C-l` in Emacs to instruct Agda to re-load.
 
 
 <!--
-## Unpacking the inference rules
+# Unpacking the inference rules
 -->
 
-## 推导规则分析
+# 推导规则分析
 
 <!--
 Let's unpack the inference rules.  Each inference rule consists of
@@ -187,10 +187,10 @@ is also a natural.
 一条假设，即 `m` 是自然数，而结论断言 `suc m` 也是一个自然数。
 
 <!--
-Unpacking the Agda definition
+# Unpacking the Agda definition
 -->
 
-## Agda 定义分析
+# Agda 定义分析
 
 <!--
 Let's unpack the Agda definition. The keyword `data` tells us this is an
@@ -241,10 +241,10 @@ _type_ refers to typing with fingers as opposed to data types!
 符号列表，以及在 Emacs 编辑器中输入它们的方法。
 
 <!--
-The story of creation
+# The story of creation
 -->
 
-## 创世故事
+# 创世故事
 
 <!--
 Let's look again at the rules that define the natural numbers:
@@ -423,10 +423,10 @@ a base case is useless, as in the phrase "Brexit means Brexit".
 一个没有起始步骤的归纳定义是无用的，就像「脱欧即是脱欧」一样。
 
 <!--
-Philosophy and history
+# Philosophy and history
 -->
 
-## 哲学和历史
+# 哲学和历史
 
 <!--
 A philosopher might observe that our reference to the first day,
@@ -459,10 +459,10 @@ presented by a new method), published the following year.
 "*Arithmetices principia, nova methodo exposita*"（《算术原理：用一种新方法呈现》）。
 
 <!--
-A pragma
+# A pragma
 -->
 
-## 编译指令
+# 编译指令
 
 <!--
 In Agda, any text following or enclosed between `{-`
@@ -511,10 +511,10 @@ requires space proportional to the logarithm of _n_.
 于 *n* 的空间，而将其表示为 Haskell 中的任意精度整数只会占用正比于 *n* 的对数的空间。
 
 <!--
-Imports
+# Imports
 -->
 
-## 导入模块
+# 导入模块
 
 <!--
 Shortly we will want to write some equations that hold between
@@ -578,10 +578,10 @@ appear in names, so we do not need extra spaces in the `using` list.
 列表中不需要额外的空格来消除歧义。
 
 <!--
-## Operations on naturals are recursive functions {#plus}
+# Operations on naturals are recursive functions {#plus}
 -->
 
-## 自然数的运算是递归函数 {#plus}
+# 自然数的运算是递归函数 {#plus}
 
 <!--
 Now that we have the natural numbers, what can we do with them?
@@ -846,10 +846,10 @@ other word for evidence, which we will use interchangeably, is _proof_.
 我们也会使用**证明**一词表达相同的意思，在本书中这两个词可以互换使用。
 
 <!--
-#### Exercise `+-example` (practice) {#plus-example}
+## Exercise `+-example` (practice) {#plus-example}
 -->
 
-#### 练习 `+-example`（实践） {#plus-example}
+## 练习 `+-example`（实践） {#plus-example}
 
 <!--
 Compute `3 + 4`, writing out your reasoning as a chain of equations, using the equations for `+`.
@@ -864,10 +864,10 @@ Compute `3 + 4`, writing out your reasoning as a chain of equations, using the e
 ```
 
 <!--
-Multiplication
+# Multiplication
 -->
 
-## 乘法
+# 乘法
 
 <!--
 Once we have defined addition, we can define multiplication
@@ -959,10 +959,10 @@ it can easily be inferred from the corresponding term.
 `_ : 2 * 3 ≡ 6` 的签名，因为它很容易从对应的项推导出来。
 
 <!--
-#### Exercise `*-example` (practice) {#times-example}
+## Exercise `*-example` (practice) {#times-example}
 -->
 
-#### 练习 `*-example`（实践） {#times-example}
+## 练习 `*-example`（实践） {#times-example}
 
 <!--
 Compute `3 * 4`, writing out your reasoning as a chain of equations, using the equations for `*`.
@@ -979,10 +979,10 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations, using the e
 ```
 
 <!--
-#### Exercise `_^_` (recommended) {#power}
+## Exercise `_^_` (recommended) {#power}
 -->
 
-#### 练习 `_^_`（推荐） {#power}
+## 练习 `_^_`（推荐） {#power}
 
 <!--
 Define exponentiation, which is given by the following equations:
@@ -1006,10 +1006,10 @@ Check that `3 ^ 4` is `81`.
 ```
 
 <!--
-Monus
+# Monus
 -->
 
-## 饱和减法
+# 饱和减法
 
 <!--
 We can also define subtraction.  Since there are no negative
@@ -1135,10 +1135,10 @@ Section [Logical Connectives](/Decidable/#logical-connectives).
 展示一个这样的例子。
 
 <!--
-#### Exercise `∸-example₁` and `∸-example₂` (recommended) {#monus-examples}
+## Exercise `∸-example₁` and `∸-example₂` (recommended) {#monus-examples}
 -->
 
-#### 练习 `∸-example₁` 和 `∸-example₂`（推荐） {#monus-examples}
+## 练习 `∸-example₁` 和 `∸-example₂`（推荐） {#monus-examples}
 
 <!--
 Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equations.
@@ -1153,10 +1153,10 @@ Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equati
 ```
 
 <!--
-Precedence
+# Precedence
 -->
 
-## 优先级
+# 优先级
 
 <!--
 We often use _precedence_ to avoid writing too many parentheses.
@@ -1203,10 +1203,10 @@ indicate that parentheses are always required to disambiguate.
 某个运算符是右结合的，或者用 `infix` 来表示总是需要括号来消除歧义。
 
 <!--
-Currying
+# Currying
 -->
 
-## 柯里化
+# 柯里化
 
 <!--
 We have chosen to represent a function of two arguments in terms
@@ -1269,10 +1269,10 @@ Schönfinkel 化的，但是咖喱（Curry）更好吃」。直到之后我才�
 （Gottlob Frege）发表于 1879 年的 **"Begriffsschrift"（《概念文字》）**中就出现了。
 
 <!--
-The story of creation, revisited
+# The story of creation, revisited
 -->
 
-## 又一个创世故事
+# 又一个创世故事
 
 <!--
 Just as our inductive definition defines the naturals in terms of the
@@ -1423,10 +1423,10 @@ the same coin.
 如上所示，归纳定义和递归定义的的推导过程十分相似。它们就像一枚硬币的两面。
 
 <!--
-## The story of creation, finitely {#finite-creation}
+# The story of creation, finitely {#finite-creation}
 -->
 
-## 有限的创世故事 {#finite-creation}
+# 有限的创世故事 {#finite-creation}
 
 <!--
 The above story was told in a stratified way.  First, we create
@@ -1540,10 +1540,10 @@ equations relating the data.
 一种无限的数据集合及与之相关的等式的有限主义视角。
 
 <!--
-Writing definitions interactively
+# Writing definitions interactively
 -->
 
-## 交互式地编写定义
+# 交互式地编写定义
 
 <!--
 Agda is designed to be used with the Emacs text editor, and the two
@@ -1732,10 +1732,10 @@ a program this simple, using `C-c C-c` to split cases can be helpful.
 `C-c C-c` 来分项仍然是有用的。
 
 <!--
-More pragmas
+# More pragmas
 -->
 
-## 更多编译指令
+# 更多编译指令
 
 <!--
 Including the lines
@@ -1769,10 +1769,10 @@ _m_ and _n_.
 时间，而用 Haskell 整数表示的情况下只需要正比于 `m` 和 `n` 的对数之和的时间。
 
 <!--
-#### Exercise `Bin` (stretch) {#Bin}
+## Exercise `Bin` (stretch) {#Bin}
 -->
 
-#### 练习 `Bin`（拓展） {#Bin}
+## 练习 `Bin`（拓展） {#Bin}
 
 <!--
 A more efficient representation of natural numbers uses a binary
@@ -1864,10 +1864,10 @@ Confirm that these both give the correct answer for zero through four.
 ```
 
 <!--
-Standard library
+# Standard library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 At the end of each chapter, we will show where to find relevant
@@ -1907,10 +1907,10 @@ Information on pragmas can be found in the (Agda documentation)[https://agda.rea
 [Agda 文档](https://agda-zh.readthedocs.io/zh_CN/latest/language/pragmas.html)中找到。
 
 <!--
-Unicode
+# Unicode
 -->
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

@@ -77,10 +77,10 @@ correctness of translations will be the subject of the next chapter.
 在需要的时候，我们也会给出构造的翻译；在下个章节我们会正式地证明翻译的正确性。
 
 <!--
-## Primitive numbers
+# Primitive numbers
 -->
 
-## 原语数字
+# 原语数字
 
 <!--
 We define a `Nat` type equivalent to the built-in natural number type
@@ -90,10 +90,10 @@ with multiplication as a primitive operation on numbers:
 我们定义 `Nat` 类型，等同于内置的自然数类型，并定义乘法作为数字的基本运算：
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     A, B, C ::= ...                     Types
@@ -119,10 +119,10 @@ with multiplication as a primitive operation on numbers:
 
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
 <!--
 The hypothesis of the `con` rule is unusual, in that
@@ -143,10 +143,10 @@ typing judgment of the defined calculus:
     Γ ⊢ L `* M : Nat
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
 <!--
 A rule that defines a primitive directly, such as the last rule below,
@@ -170,10 +170,10 @@ by the Agda standard prelude:
     con c `* con d —→ con (c * d)
 
 <!--
-### Example
+## Example
 -->
 
-### 例子
+## 例子
 
 <!--
 Here is a function to cube a primitive number:
@@ -186,10 +186,10 @@ Here is a function to cube a primitive number:
 
 
 <!--
-## Let bindings
+# Let bindings
 -->
 
-## Let 绑定
+# Let 绑定
 
 <!--
 Let bindings affect only the syntax of terms; they introduce no new
@@ -199,10 +199,10 @@ types or values:
 Let 绑定只影响项的语法；不引入新的值或者类型：
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     L, M, N ::= ...                     Terms
@@ -213,10 +213,10 @@ Let 绑定只影响项的语法；不引入新的值或者类型：
       `let x `= M `in N                   let
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
     Γ ⊢ M ⦂ A
     Γ , x ⦂ A ⊢ N ⦂ B
@@ -224,10 +224,10 @@ Let 绑定只影响项的语法；不引入新的值或者类型：
     Γ ⊢ `let x `= M `in N ⦂ B
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
     M —→ M′
     --------------------------------------- ξ-let
@@ -237,7 +237,7 @@ Let 绑定只影响项的语法；不引入新的值或者类型：
     `let x `= V `in N —→ N [ x := V ]
 
 <!--
-### Example
+## Example
 -->
 
 <!--
@@ -253,10 +253,10 @@ Here is a function to raise a primitive number to the tenth power:
                   x5 `* x5
 
 <!--
-### Translation
+## Translation
 -->
 
-### 翻译
+## 翻译
 
 <!--
 We can translate each _let_ term into an application of an abstraction:
@@ -274,16 +274,16 @@ construct to a calculus without the construct.
 此处的 `M †` 代表了将项 `M` 从带有此构造的演算到不带此构造演算的翻译。
 
 <!--
-## Products {#products}
+# Products {#products}
 -->
 
-## 积 {#products}
+# 积 {#products}
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     A, B, C ::= ...                     Types
@@ -310,10 +310,10 @@ construct to a calculus without the construct.
       `⟨ V , W ⟩                          有序对
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
 <!--
     Γ ⊢ M ⦂ A
@@ -345,10 +345,10 @@ construct to a calculus without the construct.
 
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
     M —→ M′
     ------------------------- ξ-⟨,⟩₁
@@ -373,10 +373,10 @@ construct to a calculus without the construct.
     `proj₂ `⟨ V , W ⟩ —→ W
 
 <!--
-### Example
+## Example
 -->
 
-### 例子
+## 例子
 
 <!--
 Here is a function to swap the components of a pair:
@@ -389,10 +389,10 @@ Here is a function to swap the components of a pair:
 
 
 <!--
-## Alternative formulation of products
+# Alternative formulation of products
 -->
 
-## 积的替代表示方法
+# 积的替代表示方法
 
 <!--
 There is an alternative formulation of products, where in place of two
@@ -406,10 +406,10 @@ and reduction rules:
 我们重复完整的语法，但只给出新的赋型和归约规则：
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     A, B, C ::= ...                     Types
@@ -434,10 +434,10 @@ and reduction rules:
       `⟨ V , W ⟩                          有序对
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
 <!--
     Γ ⊢ L ⦂ A `× B
@@ -452,10 +452,10 @@ and reduction rules:
     Γ ⊢ case× L [⟨ x , y ⟩⇒ N ] ⦂ C
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
     L —→ L′
     --------------------------------------------------- ξ-case×
@@ -465,7 +465,7 @@ and reduction rules:
     case× `⟨ V , W ⟩ [⟨ x , y ⟩⇒ N ] —→ N [ x := V ][ y := W ]
 
 <!--
-### Example
+## Example
 -->
 
 <!--
@@ -479,10 +479,10 @@ Here is a function to swap the components of a pair rewritten in the new notatio
                          [⟨ x , y ⟩⇒ `⟨ y , x ⟩ ]
 
 <!--
-### Translation
+## Translation
 -->
 
-### 翻译
+## 翻译
 
 <!--
 We can translate the alternative formulation into the one with projections:
@@ -548,16 +548,16 @@ We can also translate back the other way:
     (`proj₂ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ y ]
 
 <!--
-## Sums {#sums}
+# Sums {#sums}
 -->
 
-## 和 {#sums}
+# 和 {#sums}
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     A, B, C ::= ...                     Types
@@ -586,10 +586,10 @@ We can also translate back the other way:
       `inj₂ W                             注入第二分量
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
 <!--
 
@@ -624,10 +624,10 @@ We can also translate back the other way:
     Γ ⊢ case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] ⦂ C
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
     M —→ M′
     ------------------- ξ-inj₁
@@ -648,10 +648,10 @@ We can also translate back the other way:
     case⊎ (`inj₂ W) [inj₁ x ⇒ M |inj₂ y ⇒ N ] —→ N [ y := W ]
 
 <!--
-### Example
+## Example
 -->
 
-### 例子
+## 例子
 
 <!--
 Here is a function to swap the components of a sum:
@@ -666,10 +666,10 @@ Here is a function to swap the components of a sum:
 
 
 <!--
-## Unit type
+# Unit type
 -->
 
-## 单元类型
+# 单元类型
 
 <!--
 For the unit type, there is a way to introduce
@@ -681,10 +681,10 @@ There are no reduction rules.
 单元类型没有归约规则。
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     A, B, C ::= ...                     Types
@@ -707,10 +707,10 @@ There are no reduction rules.
       `tt                                 单元值
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
 <!--
     `tt or ⊤-I
@@ -721,10 +721,10 @@ There are no reduction rules.
     Γ ⊢ `tt ⦂ `⊤
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
 <!--
 (none)
@@ -733,10 +733,10 @@ There are no reduction rules.
 （无）
 
 <!--
-### Example
+## Example
 -->
 
-### 例子
+## 例子
 
 <!--
 Here is the isomorphism between `A` and ``A `× `⊤``:
@@ -752,10 +752,10 @@ Here is the isomorphism between `A` and ``A `× `⊤``:
 
 
 <!--
-## Alternative formulation of unit type
+# Alternative formulation of unit type
 -->
 
-## 单元类型的替代表达方法
+# 单元类型的替代表达方法
 
 <!--
 There is an alternative formulation of the unit type, where in place of
@@ -768,10 +768,10 @@ We repeat the syntax in full, but only give the new type and reduction rules:
 我们重复完整的语法，但只给出新的赋型和归约规则：
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     A, B, C ::= ...                     Types
@@ -796,10 +796,10 @@ We repeat the syntax in full, but only give the new type and reduction rules:
       `tt                                 单元值
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
 <!--
     Γ ⊢ L ⦂ `⊤
@@ -814,10 +814,10 @@ We repeat the syntax in full, but only give the new type and reduction rules:
     Γ ⊢ case⊤ L [tt⇒ M ] ⦂ A
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
     L —→ L′
     ------------------------------------- ξ-case⊤
@@ -827,7 +827,7 @@ We repeat the syntax in full, but only give the new type and reduction rules:
     case⊤ `tt [tt⇒ M ] —→ M
 
 <!--
-### Example
+## Example
 -->
 
 <!--
@@ -843,10 +843,10 @@ Here is half the isomorphism between `A` and ``A `× `⊤`` rewritten in the new
 
 
 <!--
-### Translation
+## Translation
 -->
 
-### 翻译
+## 翻译
 
 <!--
 We can translate the alternative formulation into one without case:
@@ -863,10 +863,10 @@ Here `z` is a variable that does not appear free in `M`.
 此处 `z` 是一个在 `M` 中不以自由变量出现的变量。
 
 <!--
-## Empty type
+# Empty type
 -->
 
-## 空类型
+# 空类型
 
 <!--
 For the empty type, there is a way to eliminate values of
@@ -880,10 +880,10 @@ construct plays a role similar to `⊥-elim` in Agda:
 `case⊥` 构造和 Agda 中的 `⊥-elim` 的作用相似：
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     A, B, C ::= ...                     Types
@@ -900,10 +900,10 @@ construct plays a role similar to `⊥-elim` in Agda:
       case⊥ L []                          匹配
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
 <!--
     Γ ⊢ L ⦂ `⊥
@@ -916,20 +916,20 @@ construct plays a role similar to `⊥-elim` in Agda:
     Γ ⊢ case⊥ L [] ⦂ A
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
     L —→ L′
     ------------------------- ξ-case⊥
     case⊥ L [] —→ case⊥ L′ []
 
 <!--
-### Example
+## Example
 -->
 
-### 例子
+## 例子
 
 <!--
 Here is the isomorphism between `A` and ``A `⊎ `⊥``:
@@ -947,16 +947,16 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
                                  [] ]
 
 <!--
-## Lists
+# Lists
 -->
 
-## 列表
+# 列表
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 <!--
     A, B, C ::= ...                     Types
@@ -985,10 +985,10 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
       V `∷ W                              构造列表
 
 <!--
-### Typing
+## Typing
 -->
 
-### 赋型
+## 赋型
 
 <!--
     `[] or List-I₁
@@ -1021,10 +1021,10 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
     Γ ⊢ caseL L [[]⇒ M | x ∷ xs ⇒ N ] ⦂ B
 
 <!--
-### Reduction
+## Reduction
 -->
 
-### 归约
+## 归约
 
     M —→ M′
     ----------------- ξ-∷₁
@@ -1045,10 +1045,10 @@ Here is the isomorphism between `A` and ``A `⊎ `⊥``:
     caseL (V `∷ W) [[]⇒ M | x ∷ xs ⇒ N ] —→ N [ x := V ][ xs := W ]
 
 <!--
-### Example
+## Example
 -->
 
-### 例子
+## 例子
 
 <!--
 Here is the map function for lists:
@@ -1064,10 +1064,10 @@ Here is the map function for lists:
 
 
 <!--
-## Formalisation
+# Formalisation
 -->
 
-## 形式化
+# 形式化
 
 <!--
 We now show how to formalise
@@ -1094,10 +1094,10 @@ and leave formalisation of the remaining constructs as an exercise.
 其余构造的形式化作为练习留给读者。
 
 <!--
-### Imports
+## Imports
 -->
 
-### 导入
+## 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -1109,10 +1109,10 @@ open import Relation.Nullary.Decidable using (True; toWitness)
 
 
 <!--
-### Syntax
+## Syntax
 -->
 
-### 语法
+## 语法
 
 ```agda
 infix  4 _⊢_
@@ -1133,10 +1133,10 @@ infix  9 #_
 ```
 
 <!--
-### Types
+## Types
 -->
 
-### 类型
+## 类型
 
 ```agda
 data Type : Set where
@@ -1147,10 +1147,10 @@ data Type : Set where
 ```
 
 <!--
-### Contexts
+## Contexts
 -->
 
-### 语境
+## 语境
 
 ```agda
 data Context : Set where
@@ -1159,10 +1159,10 @@ data Context : Set where
 ```
 
 <!--
-### Variables and the lookup judgment
+## Variables and the lookup judgment
 -->
 
-### 变量及查询判断
+## 变量及查询判断
 
 ```agda
 data _∋_ : Context → Type → Set where
@@ -1178,10 +1178,10 @@ data _∋_ : Context → Type → Set where
 ```
 
 <!--
-### Terms and the typing judgment
+## Terms and the typing judgment
 -->
 
-### 项以及赋型判断
+## 项以及赋型判断
 
 <!--
 ```
@@ -1369,10 +1369,10 @@ data _⊢_ : Context → Type → Set where
 ```
 
 <!--
-### Abbreviating de Bruijn indices
+## Abbreviating de Bruijn indices
 -->
 
-### 缩减 de Bruijn 因子
+## 缩减 de Bruijn 因子
 
 ```agda
 length : Context → ℕ
@@ -1396,10 +1396,10 @@ count {Γ , _} {(suc n)} (s≤s p)    =  S (count p)
 ```
 
 <!--
-## Renaming
+# Renaming
 -->
 
-## 重命名
+# 重命名
 
 ```agda
 ext : ∀ {Γ Δ}
@@ -1430,10 +1430,10 @@ rename ρ (case× L M)    =  case× (rename ρ L) (rename (ext (ext ρ)) M)
 ```
 
 <!--
-## Simultaneous Substitution
+# Simultaneous Substitution
 -->
 
-## 同时代换
+# 同时代换
 
 ```agda
 exts : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ⊢ A) → (∀ {A B} → Γ , A ∋ B → Δ , A ⊢ B)
@@ -1458,10 +1458,10 @@ subst σ (case× L M)    =  case× (subst σ L) (subst (exts (exts σ)) M)
 ```
 
 <!--
-## Single and double substitution
+# Single and double substitution
 -->
 
-## 单个和双重代换
+# 单个和双重代换
 
 ```agda
 _[_] : ∀ {Γ A B}
@@ -1490,10 +1490,10 @@ _[_][_] {Γ} {A} {B} N V W =  subst {Γ , A , B} {Γ} σ N
 ```
 
 <!--
-## Values
+# Values
 -->
 
-## 值
+# 值
 
 <!--
 ```agda
@@ -1573,10 +1573,10 @@ not fixed by the given arguments.
 在给出的参数无法确定隐式参数时，我们需要给出隐式参数。
 
 <!--
-## Reduction
+# Reduction
 -->
 
-## 归约
+# 归约
 
 <!--
 ```agda
@@ -1819,10 +1819,10 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
 ```
 
 <!--
-## Reflexive and transitive closure
+# Reflexive and transitive closure
 -->
 
-## 自反传递闭包
+# 自反传递闭包
 
 ```agda
 infix  2 _—↠_
@@ -1852,10 +1852,10 @@ begin M—↠N = M—↠N
 ```
 
 <!--
-## Values do not reduce
+# Values do not reduce
 -->
 
-## 值不再归约
+# 值不再归约
 
 ```agda
 V¬—→ : ∀ {Γ A} {M N : Γ ⊢ A}
@@ -1872,10 +1872,10 @@ V¬—→ V-⟨ _ , VN ⟩ (ξ-⟨,⟩₂ _ N—→N′)  =  V¬—→ VN N—�
 
 
 <!--
-## Progress
+# Progress
 -->
 
-## 可进性
+# 可进性
 
 ```agda
 data Progress {A} (M : ∅ ⊢ A) : Set where
@@ -1937,10 +1937,10 @@ progress (case× L M) with progress L
 
 
 <!--
-## Evaluation
+# Evaluation
 -->
 
-## 求值
+# 求值
 
 ```agda
 record Gas : Set where
@@ -1981,10 +1981,10 @@ eval (gas (suc m)) L with progress L
 
 
 <!--
-## Examples
+# Examples
 -->
 
-## 例子
+# 例子
 
 ```agda
 cube : ∅ ⊢ Nat ⇒ Nat
@@ -2060,10 +2060,10 @@ _ =
 ```
 
 <!--
-#### Exercise `More` (recommended and practice)
+## Exercise `More` (recommended and practice)
 -->
 
-#### 练习 `More` （推荐和实践）
+## 练习 `More` （推荐和实践）
 
 <!--
 Formalise the remaining constructs defined in this chapter.
@@ -2101,10 +2101,10 @@ Please delimit any code you add as follows:
 
 
 <!--
-#### Exercise `double-subst` (stretch)
+## Exercise `double-subst` (stretch)
 -->
 
-#### 练习 `double-subst`（延伸）
+## 练习 `double-subst`（延伸）
 
 <!--
 Show that a double substitution is equivalent to two single
@@ -2129,10 +2129,10 @@ side to be well typed.
 注意到我们需要交换参数，而且 `W` 的语境需要用重命名来调整，使得右手边的项保持良类型。
 
 <!--
-## Test examples
+# Test examples
 -->
 
-## 测试例子
+# 测试例子
 
 <!--
 We repeat the [test examples](/DeBruijn/#examples) from Chapter [DeBruijn](/DeBruijn/),
@@ -2168,7 +2168,7 @@ sucᶜ = ƛ `suc (# 0)
 2+2ᶜ = plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero
 ```
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

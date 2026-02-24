@@ -61,24 +61,24 @@ James Chapman, James McKinna, and many others.
 James Chapman、James McKinna 和许多其他人也进行了相关的研究。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; refl)
-open import Data.Nat using (ℕ; zero; suc; _<_; _≤?_; z≤n; s≤s)
+open Eq using (_≡_; refl; cong)
+open import Data.Nat using (ℕ; zero; suc; _<_; z<s; s<s; _≤_; z≤n; s≤s; _≤?_)
 open import Relation.Nullary.Negation using (¬_)
 open import Relation.Nullary.Decidable using (True; toWitness)
 ```
 
 <!--
-## Introduction
+# Introduction
 -->
 
-## 简介
+# 简介
 
 <!--
 There is a close correspondence between the structure of a
@@ -221,10 +221,10 @@ are intrinsically scoped but not typed.
 但不包含类型。
 
 <!--
-## A second example
+# A second example
 -->
 
-## 第二个例子
+# 第二个例子
 
 <!--
 De Bruijn indices can be tricky to get the hang of, so before
@@ -351,10 +351,10 @@ De Bruijn 因子计算了对应查询推断中 `S` 构造子的数量。
 在后者的作用域内指代外部的约束，但是我们可以用 de Bruijn 因子 `# 2` 来指代。
 
 <!--
-## Order of presentation
+# Order of presentation
 -->
 
-## 展示的顺序
+# 展示的顺序
 
 <!--
 In the current chapter, the use of intrinsically-typed terms
@@ -379,10 +379,10 @@ incorporates preservation, which no longer requires a separate proof.
 归约的定义现在包括了保型性，不需要额外的证明。
 
 <!--
-## Syntax
+# Syntax
 -->
 
-## 语法
+# 语法
 
 <!--
 We now begin our formal development.
@@ -421,10 +421,10 @@ contexts before terms.
 由于项是内在类型的，我们必须在定义项之前先定义类型和语境。
 
 <!--
-### Types
+## Types
 -->
 
-### 类型
+## 类型
 
 <!--
 As before, we have just two types, functions and naturals.
@@ -440,8 +440,10 @@ data Type : Set where
 ```
 
 <!--
-### Contexts
+## Contexts
 -->
+
+## 语境
 
 <!--
 Contexts are as before, but we drop the names.
@@ -484,10 +486,10 @@ type `` `ℕ ``.
 在作用域中有两个变量，外部约束的变量的类型是 `` `ℕ ⇒ `ℕ ``，内部约束的类型是 `` `ℕ ``。
 
 <!--
-### Variables and the lookup judgment
+## Variables and the lookup judgment
 -->
 
-### 变量及查询判断
+## 变量及查询判断
 
 <!--
 Intrinsically-typed variables correspond to the lookup judgment.
@@ -573,10 +575,10 @@ and `"s"` by `S Z`
 `"s"` 由 `S Z` 表示（下一个最近约束的变量）。
 
 <!--
-### Terms and the typing judgment
+## Terms and the typing judgment
 -->
 
-### 项以及赋型判断
+## 项以及赋型判断
 
 <!--
 Intrinsically-typed terms correspond to the typing judgment.
@@ -696,9 +698,10 @@ The final term represents the Church numeral two.
 最后的项表示了 Church 法表示的二。
 
 <!--
-### Abbreviating de Bruijn indices
+## Abbreviating de Bruijn indices
 -->
-### 简化 de Bruijn 因子
+
+## 简化 de Bruijn 因子
 
 <!--
 We define a helper function that computes the length of a context,
@@ -708,9 +711,9 @@ which will be useful in making sure an index is within context bounds:
 我们定义一个辅助函数来计算语境的长度，它会在之后确保一个因子在语境约束中有帮助：
 
 ```agda
-length : Context → ℕ
-length ∅        =  zero
-length (Γ , _)  =  suc (length Γ)
+size : Context → ℕ
+size ∅        =  zero
+size (Γ , _)  =  suc (size Γ)
 ```
 
 <!--
@@ -720,17 +723,17 @@ We can use a natural number to select a type from a context:
 我们可以用一个自然数来从语境中选择一个类型：
 
 ```agda
-lookup : {Γ : Context} → {n : ℕ} → (p : n < length Γ) → Type
+lookup : {Γ : Context} → {n : ℕ} → (p : n < size Γ) → Type
 lookup {(_ , A)} {zero}    (s≤s z≤n)  =  A
 lookup {(Γ , _)} {(suc n)} (s≤s p)    =  lookup p
 ```
 
 <!--
-We intend to apply the function only when the natural is shorter than
-the length of the context, which is witnessed by `p`.
+We intend to apply the function only when the natural is smaller than
+the size of the context, which is witnessed by `p`.
 -->
 
-我们希望只在自然数小于语境长度的时候应用这个函数，由 `p` 来印证。
+我们希望只在自然数小于语境大小的时候应用这个函数，由 `p` 来印证。
 
 <!--
 Given the above, we can convert a natural to a corresponding
@@ -740,7 +743,7 @@ de Bruijn index, looking up its type in the context:
 结合上述，我们可以将一个自然数转换成其对应的 de Bruijn 因子，从语境中查询它的类型：
 
 ```agda
-count : ∀ {Γ} → {n : ℕ} → (p : n < length Γ) → Γ ∋ lookup p
+count : ∀ {Γ} → {n : ℕ} → (p : n < size Γ) → Γ ∋ lookup p
 count {_ , _} {zero}    (s≤s z≤n)  =  Z
 count {Γ , _} {(suc n)} (s≤s p)    =  S (count p)
 ```
@@ -754,7 +757,7 @@ We can then introduce a convenient abbreviation for variables:
 ```agda
 #_ : ∀ {Γ}
   → (n : ℕ)
-  → {n∈Γ : True (suc n ≤? length Γ)}
+  → {n∈Γ : True (suc n ≤? size Γ)}
     --------------------------------
   → Γ ⊢ lookup (toWitness n∈Γ)
 #_ n {n∈Γ}  =  ` count (toWitness n∈Γ)
@@ -791,10 +794,10 @@ _ = ƛ ƛ (# 1 · (# 1 · # 0))
 ```
 
 <!--
-### Test examples
+## Test examples
 -->
 
-### 测试例子
+## 测试例子
 
 <!--
 We repeat the test examples from Chapter [Lambda](/Lambda/). You can find them
@@ -862,10 +865,10 @@ contexts.  While we are at it, we also generalise `twoᶜ` and
 
 
 <!--
-#### Exercise `mul` (recommended)
+## Exercise `mul` (recommended)
 -->
 
-#### 练习 `mul` （推荐）
+## 练习 `mul` （推荐）
 
 <!--
 Write out the definition of a lambda term that multiplies
@@ -881,10 +884,10 @@ de Bruijn representation.
 ```
 
 <!--
-## Renaming
+# Renaming
 -->
 
-## 重命名
+# 重命名
 
 <!--
 Renaming is a necessary prelude to substitution, enabling us
@@ -1068,10 +1071,10 @@ terms is intrinsically reliable.
 因此这里内在类型的 de Bruijn 项的 Agda 代码是本质上更加可靠。
 
 <!--
-## Simultaneous Substitution
+# Simultaneous Substitution
 -->
 
-## 同时替换
+# 同时替换
 
 <!--
 Because de Bruijn indices free us of concerns with renaming,
@@ -1209,10 +1212,10 @@ bound variable.
 剩下的情况都很类似，在各个项中递归，并在引入约束变量的时候扩充映射。
 
 <!--
-## Single substitution
+# Single substitution
 -->
 
-## 单个替换
+# 单个替换
 
 <!--
 From the general case of substitution for multiple free
@@ -1341,10 +1344,10 @@ to sneak in.
 将定义和证明结合在一起可以让错误更不易出现。
 
 <!--
-## Values
+# Values
 -->
 
-## 值
+# 值
 
 <!--
 The definition of value is much as before:
@@ -1378,10 +1381,10 @@ much in the same way that `[]` did in
 此处的 `zero` 需要一个隐式函数来帮助类型推测，与 [Lists](/Lists/) 中 `[]` 的情况类似。
 
 <!--
-## Reduction
+# Reduction
 -->
 
-## 归约
+# 归约
 
 <!--
 The reduction rules are the same as those given earlier, save
@@ -1460,10 +1463,10 @@ Agda 的类型检查器检验了每个项保存了类型。
 在 `β` 规则的情况中，保型性依赖于替换保存类型的性质，而它内置于替换的定义之中。
 
 <!--
-## Reflexive and transitive closure
+# Reflexive and transitive closure
 -->
 
-## 自反传递闭包
+# 自反传递闭包
 
 <!--
 The reflexive and transitive closure is exactly as before.
@@ -1502,10 +1505,10 @@ begin M—↠N = M—↠N
 
 
 <!--
-## Examples
+# Examples
 -->
 
-## 例子 {#examples}
+# 例子 {#examples}
 
 <!--
 We reiterate each of our previous examples.  First, the Church
@@ -1615,10 +1618,10 @@ _ =
 ```
 
 <!--
-## Values do not reduce
+# Values do not reduce
 -->
 
-## 值不再归约
+# 值不再归约
 
 <!--
 We have now completed all the definitions, which of
@@ -1633,10 +1636,10 @@ previous development.
 我们接下来证明剩下的结论。
 
 <!--
-#### Exercise `V¬—→` (practice)
+## Exercise `V¬—→` (practice)
 -->
 
-#### 练习 `V¬—→`（习题）
+## 练习 `V¬—→`（习题）
 
 <!--
 Following the previous development, show values do
@@ -1653,10 +1656,10 @@ values.
 ```
 
 <!--
-## Progress
+# Progress
 -->
 
-## 可进性
+# 可进性
 
 <!--
 As before, every term that is well typed and closed is either
@@ -1710,10 +1713,10 @@ progress (μ N)                          =  step (β-μ)
 
 
 <!--
-## Evaluation
+# Evaluation
 -->
 
-## 求值
+# 求值
 
 <!--
 Before, we combined progress and preservation to evaluate a term.
@@ -1731,10 +1734,9 @@ As previously, gas is specified by a natural number:
 如同之前，汽油由自然数表示：
 
 ```agda
-record Gas : Set where
-  constructor gas
-  field
-    amount : ℕ
+length : ∀ {A} {M N : ∅ ⊢ A} → M —↠ N → ℕ
+length (M ∎)                =  zero
+length (L —→⟨ L—→M ⟩ M—↠N)  =  suc (length M—↠N)
 ```
 
 <!--
@@ -1745,16 +1747,20 @@ When our evaluator returns a term `N`, it will either give evidence that
 当求值器返回项 `N` 时，它要么给出 `N` 是值的证明，要么提示汽油耗尽：
 
 ```agda
-data Finished {Γ A} (N : Γ ⊢ A) : Set where
+data Eval {A} (M : ∅ ⊢ A) (g : ℕ) : Set where
 
-   done :
-       Value N
-       ----------
-     → Finished N
+  out-of-gas : {N : ∅ ⊢ A}
+    → (M—↠N : M —↠ N)
+    → length M—↠N ≡ g
+      ---------------
+    → Eval M g
 
-   out-of-gas :
-       ----------
-       Finished N
+  terminates : {N : ∅ ⊢ A}
+    → (M—↠N : M —↠ N)
+    → length M—↠N < g
+    → Value N
+      ---------------
+    → Eval M g
 ```
 
 <!--
@@ -1776,22 +1782,26 @@ data Steps {A} : ∅ ⊢ A → Set where
 ```
 
 <!--
-The evaluator takes gas and a term and returns the corresponding steps:
+The evaluator takes gas and an intrinsically-typed term,
+and returns a reduction sequence, indicating either that it
+ran out of gas or that it terminated.
 -->
 
-求值器取汽油和项，返回对应的步骤：
+求值器接收汽油和一个内在类型的项，并返回一个归约序列，
+指示它是耗尽了汽油还是终止了。
 
 ```agda
 eval : ∀ {A}
-  → Gas
+  → (g : ℕ)
   → (L : ∅ ⊢ A)
-    -----------
-  → Steps L
-eval (gas zero)    L                     =  steps (L ∎) out-of-gas
-eval (gas (suc m)) L with progress L
-... | done VL                            =  steps (L ∎) (done VL)
-... | step {M} L—→M with eval (gas m) M
-...    | steps M—↠N fin                  =  steps (L —→⟨ L—→M ⟩ M—↠N) fin
+    ---------
+  → Eval L g
+eval zero L            =  out-of-gas (L ∎) refl
+eval (suc g) L with progress L
+... | done VL                  =  terminates (L ∎) z<s VL
+... | step {M} L—→M with eval g M
+...   | out-of-gas M—↠N ≡g     =  out-of-gas (L —→⟨ L—→M ⟩ M—↠N) (cong suc ≡g)
+...   | terminates M—↠N <g VN  =  terminates (L —→⟨ L—→M ⟩ M—↠N) (s<s <g) VN
 ```
 
 <!--
@@ -1802,292 +1812,17 @@ to invoke preservation.
 由于我们不再需要使用保型性，定义比之前略微简单。
 
 <!--
-## Examples
+We don't repeat the previous examples, as they add little save length.
+Similarly for the proof that reduction is deterministic.
 -->
 
-## 例子
+我们不重复前面的例子，因为它们增加的篇幅不多。证明归约是确定性的也类似。
 
 <!--
-We reiterate each of our previous examples.  We re-define the term
-`sucμ` that loops forever:
+## Exercise `mul-example` (recommended)
 -->
 
-我们重复之前的例子，重新定义无限循环的项 `sucμ`：
-
-```agda
-sucμ : ∅ ⊢ `ℕ
-sucμ = μ (`suc (# 0))
-```
-
-<!--
-To compute the first three steps of the infinite reduction sequence,
-we evaluate with three steps worth of gas:
--->
-
-为了计算无限归约序列的前三步，我们使用满足三步的汽油：
-
-```agda
-_ : eval (gas 3) sucμ ≡
-  steps
-   (μ `suc ` Z
-   —→⟨ β-μ ⟩
-    `suc (μ `suc ` Z)
-   —→⟨ ξ-suc β-μ ⟩
-    `suc (`suc (μ `suc ` Z))
-   —→⟨ ξ-suc (ξ-suc β-μ) ⟩
-    `suc (`suc (`suc (μ `suc ` Z)))
-   ∎)
-   out-of-gas
-_ = refl
-```
-
-<!--
-The Church numeral two applied to successor and zero:
--->
-
-将 Church 法表示的二应用于后继函数和零：
-
-```agda
-_ : eval (gas 100) (twoᶜ · sucᶜ · `zero) ≡
-  steps
-   ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · `zero
-   —→⟨ ξ-·₁ (β-ƛ V-ƛ) ⟩
-    (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) · `zero
-   —→⟨ β-ƛ V-zero ⟩
-    (ƛ `suc ` Z) · ((ƛ `suc ` Z) · `zero)
-   —→⟨ ξ-·₂ V-ƛ (β-ƛ V-zero) ⟩
-    (ƛ `suc ` Z) · `suc `zero
-   —→⟨ β-ƛ (V-suc V-zero) ⟩
-    `suc (`suc `zero)
-   ∎)
-   (done (V-suc (V-suc V-zero)))
-_ = refl
-```
-
-<!--
-Two plus two is four:
--->
-
-二加二等于四：
-
-```agda
-_ : eval (gas 100) (plus · two · two) ≡
-  steps
-   ((μ
-     (ƛ
-      (ƛ
-       case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-    · `suc (`suc `zero)
-    · `suc (`suc `zero)
-   —→⟨ ξ-·₁ (ξ-·₁ β-μ) ⟩
-    (ƛ
-     (ƛ
-      case (` (S Z)) (` Z)
-      (`suc
-       ((μ
-         (ƛ
-          (ƛ
-           case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-        · ` Z
-        · ` (S Z)))))
-    · `suc (`suc `zero)
-    · `suc (`suc `zero)
-   —→⟨ ξ-·₁ (β-ƛ (V-suc (V-suc V-zero))) ⟩
-    (ƛ
-     case (`suc (`suc `zero)) (` Z)
-     (`suc
-      ((μ
-        (ƛ
-         (ƛ
-          case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-       · ` Z
-       · ` (S Z))))
-    · `suc (`suc `zero)
-   —→⟨ β-ƛ (V-suc (V-suc V-zero)) ⟩
-    case (`suc (`suc `zero)) (`suc (`suc `zero))
-    (`suc
-     ((μ
-       (ƛ
-        (ƛ
-         case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-      · ` Z
-      · `suc (`suc `zero)))
-   —→⟨ β-suc (V-suc V-zero) ⟩
-    `suc
-    ((μ
-      (ƛ
-       (ƛ
-        case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-     · `suc `zero
-     · `suc (`suc `zero))
-   —→⟨ ξ-suc (ξ-·₁ (ξ-·₁ β-μ)) ⟩
-    `suc
-    ((ƛ
-      (ƛ
-       case (` (S Z)) (` Z)
-       (`suc
-        ((μ
-          (ƛ
-           (ƛ
-            case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-         · ` Z
-         · ` (S Z)))))
-     · `suc `zero
-     · `suc (`suc `zero))
-   —→⟨ ξ-suc (ξ-·₁ (β-ƛ (V-suc V-zero))) ⟩
-    `suc
-    ((ƛ
-      case (`suc `zero) (` Z)
-      (`suc
-       ((μ
-         (ƛ
-          (ƛ
-           case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-        · ` Z
-        · ` (S Z))))
-     · `suc (`suc `zero))
-   —→⟨ ξ-suc (β-ƛ (V-suc (V-suc V-zero))) ⟩
-    `suc
-    case (`suc `zero) (`suc (`suc `zero))
-    (`suc
-     ((μ
-       (ƛ
-        (ƛ
-         case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-      · ` Z
-      · `suc (`suc `zero)))
-   —→⟨ ξ-suc (β-suc V-zero) ⟩
-    `suc
-    (`suc
-     ((μ
-       (ƛ
-        (ƛ
-         case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-      · `zero
-      · `suc (`suc `zero)))
-   —→⟨ ξ-suc (ξ-suc (ξ-·₁ (ξ-·₁ β-μ))) ⟩
-    `suc
-    (`suc
-     ((ƛ
-       (ƛ
-        case (` (S Z)) (` Z)
-        (`suc
-         ((μ
-           (ƛ
-            (ƛ
-             case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-          · ` Z
-          · ` (S Z)))))
-      · `zero
-      · `suc (`suc `zero)))
-   —→⟨ ξ-suc (ξ-suc (ξ-·₁ (β-ƛ V-zero))) ⟩
-    `suc
-    (`suc
-     ((ƛ
-       case `zero (` Z)
-       (`suc
-        ((μ
-          (ƛ
-           (ƛ
-            case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-         · ` Z
-         · ` (S Z))))
-      · `suc (`suc `zero)))
-   —→⟨ ξ-suc (ξ-suc (β-ƛ (V-suc (V-suc V-zero)))) ⟩
-    `suc
-    (`suc
-     case `zero (`suc (`suc `zero))
-     (`suc
-      ((μ
-        (ƛ
-         (ƛ
-          case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
-       · ` Z
-       · `suc (`suc `zero))))
-   —→⟨ ξ-suc (ξ-suc β-zero) ⟩
-    `suc (`suc (`suc (`suc `zero)))
-   ∎)
-   (done (V-suc (V-suc (V-suc (V-suc V-zero)))))
-_ = refl
-```
-
-<!--
-And the corresponding term for Church numerals:
--->
-
-以及 Church 法表示的对应的项：
-
-```agda
-_ : eval (gas 100) (plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero) ≡
-  steps
-   ((ƛ
-     (ƛ
-      (ƛ (ƛ ` (S (S (S Z))) · ` (S Z) · (` (S (S Z)) · ` (S Z) · ` Z)))))
-    · (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z)))
-    · (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z)))
-    · (ƛ `suc ` Z)
-    · `zero
-   —→⟨ ξ-·₁ (ξ-·₁ (ξ-·₁ (β-ƛ V-ƛ))) ⟩
-    (ƛ
-     (ƛ
-      (ƛ
-       (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · ` (S Z) ·
-       (` (S (S Z)) · ` (S Z) · ` Z))))
-    · (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z)))
-    · (ƛ `suc ` Z)
-    · `zero
-   —→⟨ ξ-·₁ (ξ-·₁ (β-ƛ V-ƛ)) ⟩
-    (ƛ
-     (ƛ
-      (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · ` (S Z) ·
-      ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · ` (S Z) · ` Z)))
-    · (ƛ `suc ` Z)
-    · `zero
-   —→⟨ ξ-·₁ (β-ƛ V-ƛ) ⟩
-    (ƛ
-     (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) ·
-     ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · ` Z))
-    · `zero
-   —→⟨ β-ƛ V-zero ⟩
-    (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) ·
-    ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · `zero)
-   —→⟨ ξ-·₁ (β-ƛ V-ƛ) ⟩
-    (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) ·
-    ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · `zero)
-   —→⟨ ξ-·₂ V-ƛ (ξ-·₁ (β-ƛ V-ƛ)) ⟩
-    (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) ·
-    ((ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) · `zero)
-   —→⟨ ξ-·₂ V-ƛ (β-ƛ V-zero) ⟩
-    (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) ·
-    ((ƛ `suc ` Z) · ((ƛ `suc ` Z) · `zero))
-   —→⟨ ξ-·₂ V-ƛ (ξ-·₂ V-ƛ (β-ƛ V-zero)) ⟩
-    (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) ·
-    ((ƛ `suc ` Z) · `suc `zero)
-   —→⟨ ξ-·₂ V-ƛ (β-ƛ (V-suc V-zero)) ⟩
-    (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) · `suc (`suc `zero)
-   —→⟨ β-ƛ (V-suc (V-suc V-zero)) ⟩
-    (ƛ `suc ` Z) · ((ƛ `suc ` Z) · `suc (`suc `zero))
-   —→⟨ ξ-·₂ V-ƛ (β-ƛ (V-suc (V-suc V-zero))) ⟩
-    (ƛ `suc ` Z) · `suc (`suc (`suc `zero))
-   —→⟨ β-ƛ (V-suc (V-suc (V-suc V-zero))) ⟩
-    `suc (`suc (`suc (`suc `zero)))
-   ∎)
-   (done (V-suc (V-suc (V-suc (V-suc V-zero)))))
-_ = refl
-```
-
-<!--
-We omit the proof that reduction is deterministic, since it is
-tedious and almost identical to the previous proof.
--->
-
-我们省去归约是确定的证明，因为它很繁琐，而且与之前的证明几乎完全相同。
-
-<!--
-#### Exercise `mul-example` (recommended)
--->
-
-#### 练习 `mul-example` （推荐）
+## 练习 `mul-example` （推荐）
 
 <!--
 Using the evaluator, confirm that two times two is four.
@@ -2103,10 +1838,10 @@ Using the evaluator, confirm that two times two is four.
 
 
 <!--
-## Intrinsic typing is golden
+# Intrinsic typing is golden
 -->
 
-## 内在类型是黄金的
+# 内在类型是黄金的
 
 <!--
 Counting the lines of code is instructive.  While this chapter
@@ -2134,7 +1869,7 @@ require about 1.6 times as much code as intrinsically-typed.
 
 两种方法的比例接近于黄金比例：外在类型的项代码行数大约是内在类型项的 1.6 倍。
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:
@@ -2143,10 +1878,280 @@ This chapter uses the following unicode:
 本章中使用了以下 Unicode：
 
     σ  U+03C3  GREEK SMALL LETTER SIGMA (\Gs or \sigma)
-    ₀  U+2080  SUBSCRIPT ZERO (\_0)
-    ₃  U+20B3  SUBSCRIPT THREE (\_3)
+    ₀  U+20R0  SUBSCRIPT ZERO (\_0)
+    ₁  U+2081  SUBSCRIPT ONE (\_1)
+    ₂  U+2082  SUBSCRIPT TWO (\_2)
+    ₃  U+2083  SUBSCRIPT THREE (\_3)
     ₄  U+2084  SUBSCRIPT FOUR (\_4)
     ₅  U+2085  SUBSCRIPT FIVE (\_5)
     ₆  U+2086  SUBSCRIPT SIX (\_6)
     ₇  U+2087  SUBSCRIPT SEVEN (\_7)
     ≠  U+2260  NOT EQUAL TO (\=n)
+
+
+<!--
+Following omitted as for some reason they vastly increase
+time for Agda to check the file.
+
+# Examples
+
+We reiterate each of our previous examples.  We re-define the term
+`sucμ` that loops forever:
+```agda
+-- sucμ : ∅ ⊢ `ℕ
+-- sucμ = μ (`suc (# 0))
+```
+
+To compute the first three steps of the infinite reduction sequence,
+we evaluate with three steps worth of gas:
+
+```agda
+-- _ : eval 3 sucμ ≡
+--   out-of-gas
+--    (μ `suc ` Z
+--    —→⟨ β-μ ⟩
+--     `suc (μ `suc ` Z)
+--    —→⟨ ξ-suc β-μ ⟩
+--     `suc (`suc (μ `suc ` Z))
+--    —→⟨ ξ-suc (ξ-suc β-μ) ⟩
+--     `suc (`suc (`suc (μ `suc ` Z)))
+--    ∎)
+--    refl
+-- _ = refl
+```
+
+The Church numeral two applied to successor and zero:
+
+```agda
+-- _ : eval 100 (twoᶜ · sucᶜ · `zero) ≡
+--   terminates
+--    ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · `zero
+--    —→⟨ ξ-·₁ (β-ƛ V-ƛ) ⟩
+--     (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) · `zero
+--    —→⟨ β-ƛ V-zero ⟩
+--     (ƛ `suc ` Z) · ((ƛ `suc ` Z) · `zero)
+--    —→⟨ ξ-·₂ V-ƛ (β-ƛ V-zero) ⟩
+--     (ƛ `suc ` Z) · `suc `zero
+--    —→⟨ β-ƛ (V-suc V-zero) ⟩
+--     `suc (`suc `zero)
+--    ∎)
+--    (s≤s (s≤s (s≤s (s≤s (s≤s z≤n)))))
+--    (V-suc (V-suc V-zero))
+-- _ = refl
+```
+
+We omit the proof that reduction is deterministic, since it is
+tedious and almost identical to the previous proof.
+
+Two plus two is four:
+
+```agda
+-- _ : eval 100 (plus · two · two) ≡
+--   terminates
+--    ((μ
+--      (ƛ
+--       (ƛ
+--        case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--     · `suc (`suc `zero)
+--     · `suc (`suc `zero)
+--    —→⟨ ξ-·₁ (ξ-·₁ β-μ) ⟩
+--     (ƛ
+--      (ƛ
+--       case (` (S Z)) (` Z)
+--       (`suc
+--        ((μ
+--          (ƛ
+--           (ƛ
+--            case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--         · ` Z
+--         · ` (S Z)))))
+--     · `suc (`suc `zero)
+--     · `suc (`suc `zero)
+--    —→⟨ ξ-·₁ (β-ƛ (V-suc (V-suc V-zero))) ⟩
+--     (ƛ
+--      case (`suc (`suc `zero)) (` Z)
+--      (`suc
+--       ((μ
+--         (ƛ
+--          (ƛ
+--           case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--        · ` Z
+--        · ` (S Z))))
+--     · `suc (`suc `zero)
+--    —→⟨ β-ƛ (V-suc (V-suc V-zero)) ⟩
+--     case (`suc (`suc `zero)) (`suc (`suc `zero))
+--     (`suc
+--      ((μ
+--        (ƛ
+--         (ƛ
+--          case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--       · ` Z
+--       · `suc (`suc `zero)))
+--    —→⟨ β-suc (V-suc V-zero) ⟩
+--     `suc
+--     ((μ
+--       (ƛ
+--        (ƛ
+--         case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--      · `suc `zero
+--      · `suc (`suc `zero))
+--    —→⟨ ξ-suc (ξ-·₁ (ξ-·₁ β-μ)) ⟩
+--     `suc
+--     ((ƛ
+--       (ƛ
+--        case (` (S Z)) (` Z)
+--        (`suc
+--         ((μ
+--           (ƛ
+--            (ƛ
+--             case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--          · ` Z
+--          · ` (S Z)))))
+--      · `suc `zero
+--      · `suc (`suc `zero))
+--    —→⟨ ξ-suc (ξ-·₁ (β-ƛ (V-suc V-zero))) ⟩
+--     `suc
+--     ((ƛ
+--       case (`suc `zero) (` Z)
+--       (`suc
+--        ((μ
+--          (ƛ
+--           (ƛ
+--            case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--         · ` Z
+--         · ` (S Z))))
+--      · `suc (`suc `zero))
+--    —→⟨ ξ-suc (β-ƛ (V-suc (V-suc V-zero))) ⟩
+--     `suc
+--     case (`suc `zero) (`suc (`suc `zero))
+--     (`suc
+--      ((μ
+--        (ƛ
+--         (ƛ
+--          case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--       · ` Z
+--       · `suc (`suc `zero)))
+--    —→⟨ ξ-suc (β-suc V-zero) ⟩
+--     `suc
+--     (`suc
+--      ((μ
+--        (ƛ
+--         (ƛ
+--          case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--       · `zero
+--       · `suc (`suc `zero)))
+--    —→⟨ ξ-suc (ξ-suc (ξ-·₁ (ξ-·₁ β-μ))) ⟩
+--     `suc
+--     (`suc
+--      ((ƛ
+--        (ƛ
+--         case (` (S Z)) (` Z)
+--         (`suc
+--          ((μ
+--            (ƛ
+--             (ƛ
+--              case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--           · ` Z
+--           · ` (S Z)))))
+--       · `zero
+--       · `suc (`suc `zero)))
+--    —→⟨ ξ-suc (ξ-suc (ξ-·₁ (β-ƛ V-zero))) ⟩
+--     `suc
+--     (`suc
+--      ((ƛ
+--        case `zero (` Z)
+--        (`suc
+--         ((μ
+--           (ƛ
+--            (ƛ
+--             case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--          · ` Z
+--          · ` (S Z))))
+--       · `suc (`suc `zero)))
+--    —→⟨ ξ-suc (ξ-suc (β-ƛ (V-suc (V-suc V-zero)))) ⟩
+--     `suc
+--     (`suc
+--      case `zero (`suc (`suc `zero))
+--      (`suc
+--       ((μ
+--         (ƛ
+--          (ƛ
+--           case (` (S Z)) (` Z) (`suc (` (S (S (S Z))) · ` Z · ` (S Z))))))
+--        · ` Z
+--        · `suc (`suc `zero))))
+--    —→⟨ ξ-suc (ξ-suc β-zero) ⟩
+--     `suc (`suc (`suc (`suc `zero)))
+--    ∎)
+--    (s≤s
+--     (s≤s
+--      (s≤s
+--       (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s z≤n)))))))))))))
+--    (V-suc (V-suc (V-suc (V-suc V-zero))))
+-- _ = refl
+```
+
+And the corresponding term for Church numerals:
+
+```agda
+-- _ : eval 100 (plusᶜ · twoᶜ · twoᶜ · sucᶜ · `zero) ≡
+--   terminates
+--    ((ƛ
+--      (ƛ
+--       (ƛ (ƛ ` (S (S (S Z))) · ` (S Z) · (` (S (S Z)) · ` (S Z) · ` Z)))))
+--     · (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z)))
+--     · (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z)))
+--     · (ƛ `suc ` Z)
+--     · `zero
+--    —→⟨ ξ-·₁ (ξ-·₁ (ξ-·₁ (β-ƛ V-ƛ))) ⟩
+--     (ƛ
+--      (ƛ
+--       (ƛ
+--        (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · ` (S Z) ·
+--        (` (S (S Z)) · ` (S Z) · ` Z))))
+--     · (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z)))
+--     · (ƛ `suc ` Z)
+--     · `zero
+--    —→⟨ ξ-·₁ (ξ-·₁ (β-ƛ V-ƛ)) ⟩
+--     (ƛ
+--      (ƛ
+--       (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · ` (S Z) ·
+--       ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · ` (S Z) · ` Z)))
+--     · (ƛ `suc ` Z)
+--     · `zero
+--    —→⟨ ξ-·₁ (β-ƛ V-ƛ) ⟩
+--     (ƛ
+--      (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) ·
+--      ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · ` Z))
+--     · `zero
+--    —→⟨ β-ƛ V-zero ⟩
+--     (ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) ·
+--     ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · `zero)
+--    —→⟨ ξ-·₁ (β-ƛ V-ƛ) ⟩
+--     (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) ·
+--     ((ƛ (ƛ ` (S Z) · (` (S Z) · ` Z))) · (ƛ `suc ` Z) · `zero)
+--    —→⟨ ξ-·₂ V-ƛ (ξ-·₁ (β-ƛ V-ƛ)) ⟩
+--     (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) ·
+--     ((ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) · `zero)
+--    —→⟨ ξ-·₂ V-ƛ (β-ƛ V-zero) ⟩
+--     (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) ·
+--     ((ƛ `suc ` Z) · ((ƛ `suc ` Z) · `zero))
+--    —→⟨ ξ-·₂ V-ƛ (ξ-·₂ V-ƛ (β-ƛ V-zero)) ⟩
+--     (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) ·
+--     ((ƛ `suc ` Z) · `suc `zero)
+--    —→⟨ ξ-·₂ V-ƛ (β-ƛ (V-suc V-zero)) ⟩
+--     (ƛ (ƛ `suc ` Z) · ((ƛ `suc ` Z) · ` Z)) · `suc (`suc `zero)
+--    —→⟨ β-ƛ (V-suc (V-suc V-zero)) ⟩
+--     (ƛ `suc ` Z) · ((ƛ `suc ` Z) · `suc (`suc `zero))
+--    —→⟨ ξ-·₂ V-ƛ (β-ƛ (V-suc (V-suc V-zero))) ⟩
+--     (ƛ `suc ` Z) · `suc (`suc (`suc `zero))
+--    —→⟨ β-ƛ (V-suc (V-suc (V-suc V-zero))) ⟩
+--     `suc (`suc (`suc (`suc `zero)))
+--    ∎)
+--    (s≤s
+--     (s≤s
+--      (s≤s
+--       (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s z≤n)))))))))))))
+--    (done (V-suc (V-suc (V-suc (V-suc V-zero)))))
+-- _ = refl
+```
+-->

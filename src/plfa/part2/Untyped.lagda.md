@@ -83,25 +83,25 @@ the range of different lambda calculi one may encounter.
 
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
-open Eq using (_≡_; refl)
-open import Data.Nat using (ℕ; zero; suc; _<_; _≤?_; z≤n; s≤s)
+open Eq using (_≡_; refl; cong)
+open import Data.Nat using (ℕ; zero; suc; _<_; z<s; s<s; _≤_; z≤n; s≤s; _≤?_)
 open import Relation.Nullary.Negation using (¬_)
 open import Relation.Nullary.Decidable using (True; toWitness)
 ```
 
 
 <!--
-## Untyped is Uni-typed
+# Untyped is Uni-typed
 -->
 
-## 无类型即是单一类型
+# 无类型即是单一类型
 
 <!--
 Our development will be close to that in
@@ -121,10 +121,10 @@ can now be defined in the language itself.
 
 
 <!--
-## Syntax
+# Syntax
 -->
 
-## 语法
+# 语法
 
 <!--
 First, we get all our infix declarations out of the way:
@@ -143,10 +143,10 @@ infixl 7  _·_
 ```
 
 <!--
-## Types
+# Types
 -->
 
-## 类型
+# 类型
 
 <!--
 We have just one type:
@@ -160,10 +160,10 @@ data Type : Set where
 ```
 
 <!--
-#### Exercise (`Type≃⊤`) (practice)
+## Exercise (`Type≃⊤`) (practice)
 -->
 
-#### 练习 (`Type≃⊤`) （习题）
+## 练习 (`Type≃⊤`) （习题）
 
 <!--
 Show that `Type` is isomorphic to `⊤`, the unit type.
@@ -176,10 +176,10 @@ Show that `Type` is isomorphic to `⊤`, the unit type.
 ```
 
 <!--
-## Contexts
+# Contexts
 -->
 
-## 语境
+# 语境
 
 <!--
 As before, a context is a list of types, with the type of the
@@ -201,10 +201,10 @@ We let `Γ` and `Δ` range over contexts.
 我们使用 `Γ` 和 `Δ` 来指代语境。
 
 <!--
-#### Exercise (`Context≃ℕ`) (practice)
+## Exercise (`Context≃ℕ`) (practice)
 -->
 
-#### 练习 (`Context≃ℕ`) （习题）
+## 练习 (`Context≃ℕ`) （习题）
 
 <!--
 Show that `Context` is isomorphic to `ℕ`.
@@ -217,10 +217,10 @@ Show that `Context` is isomorphic to `ℕ`.
 ```
 
 <!--
-## Variables and the lookup judgment
+# Variables and the lookup judgment
 -->
 
-## 变量和查询判断
+# 变量和查询判断
 
 <!--
 Intrinsically-scoped variables correspond to the lookup judgment.  The
@@ -261,10 +261,10 @@ binds two variables.
 
 
 <!--
-## Terms and the scoping judgment
+# Terms and the scoping judgment
 -->
 
-## 项与作用域判断
+# 项与作用域判断
 
 <!--
 Intrinsically-scoped terms correspond to the typing judgment, but with
@@ -306,10 +306,10 @@ fixpoints into this calculus.
 接下来我们展示如果将自然数和不动点编码进这个演算中。
 
 <!--
-## Writing variables as numerals
+# Writing variables as numerals
 -->
 
-## 用数表示变量
+# 用数表示变量
 
 <!--
 As before, we can convert a natural to the corresponding de Bruijn
@@ -321,11 +321,11 @@ every variable has the same type:
 我们不再需要从语境中查询变量的类型，因为每个变量都有一样的类型：
 
 ```agda
-length : Context → ℕ
-length ∅        =  zero
-length (Γ , _)  =  suc (length Γ)
+size : Context → ℕ
+size ∅        =  zero
+size (Γ , _)  =  suc (size Γ)
 
-count : ∀ {Γ} → {n : ℕ} → (p : n < length Γ) → Γ ∋ ★
+count : ∀ {Γ} → {n : ℕ} → (p : n < size Γ) → Γ ∋ ★
 count {Γ , ★} {zero}    (s≤s z≤n)  =  Z
 count {Γ , ★} {(suc n)} (s≤s p)    =  S (count p)
 ```
@@ -339,17 +339,17 @@ We can then introduce a convenient abbreviation for variables:
 ```agda
 #_ : ∀ {Γ}
   → (n : ℕ)
-  → {n∈Γ : True (suc n ≤? length Γ)}
+  → {n∈Γ : True (suc n ≤? size Γ)}
     --------------------------------
   → Γ ⊢ ★
 #_ n {n∈Γ}  =  ` count (toWitness n∈Γ)
 ```
 
 <!--
-## Test examples
+# Test examples
 -->
 
-## 测试例子
+# 测试例子
 
 <!--
 Our only example is computing two plus two on Church numerals:
@@ -387,10 +387,10 @@ two.
 为了便利，我们定义用 Church 数来表示二和四的项。
 
 <!--
-## Renaming
+# Renaming
 -->
 
-## 重命名
+# 重命名
 
 <!--
 Our definition of renaming is as before.  First, we need an extension lemma:
@@ -405,6 +405,7 @@ ext : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ∋ A)
 ext ρ Z      =  Z
 ext ρ (S x)  =  S (ρ x)
 ```
+
 <!--
 We could replace all instances of `A` and `B` by `★`, but arguably it is
 clearer not to do so.
@@ -427,6 +428,7 @@ rename ρ (` x)          =  ` (ρ x)
 rename ρ (ƛ N)          =  ƛ (rename (ext ρ) N)
 rename ρ (L · M)        =  (rename ρ L) · (rename ρ M)
 ```
+
 <!--
 This is exactly as before, save that there are fewer term forms.
 -->
@@ -434,10 +436,10 @@ This is exactly as before, save that there are fewer term forms.
 这和之前一样，只是我们项的形式更少了。
 
 <!--
-## Simultaneous substitution
+# Simultaneous substitution
 -->
 
-## 同时替换
+# 同时替换
 
 <!--
 Our definition of substitution is also exactly as before.
@@ -453,6 +455,7 @@ exts : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ⊢ A)
 exts σ Z      =  ` Z
 exts σ (S x)  =  rename S_ (σ x)
 ```
+
 <!--
 Again, we could replace all instances of `A` and `B` by `★`.
 -->
@@ -481,10 +484,10 @@ Again, this is exactly as before, save that there are fewer term forms.
 同样，这和之前一样，只是我们项的形式更少了。
 
 <!--
-## Single substitution
+# Single substitution
 -->
 
-## 单个替换
+# 单个替换
 
 <!--
 It is easy to define the special case of substitution for one free variable:
@@ -506,10 +509,10 @@ _[_] {Γ} {A} {B} N M =  subst {Γ , B} {Γ} (subst-zero M) {A} N
 ```
 
 <!--
-## Neutral and normal terms
+# Neutral and normal terms
 -->
 
-## 中性项和范式
+# 中性项和范式
 
 <!--
 Reduction continues until a term is fully normalised.  Hence, instead
@@ -580,7 +583,7 @@ We introduce a convenient abbreviation for evidence that a variable is neutral:
 我们引入一种缩略用法，来提供变量是中型项的证明：
 
 ```agda
-#′_ : ∀ {Γ} (n : ℕ) {n∈Γ : True (suc n ≤? length Γ)} → Neutral {Γ} (# n)
+#′_ : ∀ {Γ} (n : ℕ) {n∈Γ : True (suc n ≤? size Γ)} → Neutral {Γ} (# n)
 #′_ n {n∈Γ}  =  ` count (toWitness n∈Γ)
 ```
 
@@ -606,10 +609,10 @@ neutral terms, and using `#′` in place of `#`
 
 
 <!--
-## Reduction step
+# Reduction step
 -->
 
-## 归约步骤
+# 归约步骤
 
 <!--
 The reduction rules are altered to switch from call-by-value to
@@ -684,10 +687,10 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
 ```
 
 <!--
-#### Exercise (`variant-1`) (practice)
+## Exercise (`variant-1`) (practice)
 -->
 
-#### 练习 (`variant-1`) （习题）
+## 练习 (`variant-1`) （习题）
 
 <!--
 How would the rules change if we want call-by-value where terms
@@ -703,10 +706,10 @@ unless both terms are in normal form.
 ```
 
 <!--
-#### Exercise (`variant-2`) (practice)
+## Exercise (`variant-2`) (practice)
 -->
 
-#### 练习 (`variant-2`) （习题）
+## 练习 (`variant-2`) （习题）
 
 <!--
 How would the rules change if we want call-by-value where terms
@@ -726,10 +729,10 @@ abstractions).  What would `2+2ᶜ` reduce to in this case?
 
 
 <!--
-## Reflexive and transitive closure
+# Reflexive and transitive closure
 -->
 
-## 自反传递闭包
+# 自反传递闭包
 
 <!--
 We cut-and-paste the previous definition:
@@ -766,10 +769,10 @@ begin M—↠N = M—↠N
 
 
 <!--
-## Example reduction sequence
+# Example reduction sequence
 -->
 
-## 归约序列的例子
+# 归约序列的例子
 
 <!--
 Here is the demonstration that two plus two is four:
@@ -796,6 +799,7 @@ _ =
    ƛ (ƛ # 1 · (# 1 · (# 1 · (# 1 · # 0))))
   ∎
 ```
+
 <!--
 After just two steps the top-level term is an abstraction,
 and `ζ` rules drive the rest of the normalisation.
@@ -805,10 +809,10 @@ and `ζ` rules drive the rest of the normalisation.
 
 
 <!--
-## Progress
+# Progress
 -->
 
-## 可进性
+# 可进性
 
 <!--
 Progress adapts.  Instead of claiming that every term either is a value
@@ -931,10 +935,10 @@ application.
 在此处，这个模式确保了 `L` 是一个应用。
 
 <!--
-## Evaluation
+# Evaluation
 -->
 
-## 求值
+# 求值
 
 <!--
 As previously, progress immediately yields an evaluator.
@@ -943,73 +947,62 @@ As previously, progress immediately yields an evaluator.
 与之前一样，可进性直接提供了一个求值器。
 
 <!--
-Gas is specified by a natural number:
+We relate gas to the number of steps in a reduction sequence.
 -->
 
-汽油由自然数给出：
+我们将汽油与归约序列中的步骤数联系起来。
 
 ```agda
-record Gas : Set where
-  constructor gas
-  field
-    amount : ℕ
+length : ∀ {Γ A} {M N : Γ ⊢ A} → M —↠ N → ℕ
+length (M ∎)                =  zero
+length (L —→⟨ L—→M ⟩ M—↠N)  =  suc (length M—↠N)
 ```
 
 <!--
-When our evaluator returns a term `N`, it will either give evidence that
-`N` is normal or indicate that it ran out of gas:
+If the evaluator runs out of gas it returns a sequence
+of length equal to the amount of gas, while if it terminates in returns
+a sequence of length less than the amount of gas and ending in a
+normal form.
 -->
 
-当我们的求值器返回项 `N`，它要么会给出 `N` 是范式的证明，或者提示汽油耗尽：
+如果求值器耗尽了汽油，则返回长度等于汽油量的序列；
+如果求值器终止，则返回长度小于汽油量且以范式结尾的序列。
 
 ```agda
-data Finished {Γ A} (N : Γ ⊢ A) : Set where
+data Eval {Γ A} (M : Γ ⊢ A) (g : ℕ) : Set where
 
-   done :
-       Normal N
-       ----------
-     → Finished N
+  out-of-gas : {N : Γ ⊢ A}
+    → (M—↠N : M —↠ N)
+    → length M—↠N ≡ g
+      ---------------
+    → Eval M g
 
-   out-of-gas :
-       ----------
-       Finished N
+  terminates : {N : Γ ⊢ A}
+    → (M—↠N : M —↠ N)
+    → length M—↠N < g
+    → Normal N
+      ---------------
+    → Eval M g
 ```
 
 <!--
-Given a term `L` of type `A`, the evaluator will, for some `N`, return
-a reduction sequence from `L` to `N` and an indication of whether
-reduction finished:
+The evaluator takes gas and a term and returns the corresponding steps.
 -->
 
-给定类型 `A` 的项 `L`，求值器会对于某 `N` 返回自 `L` 至 `N` 的归约序列，并提示归约是否完成：
-
-```agda
-data Steps : ∀ {Γ A} → Γ ⊢ A → Set where
-
-  steps : ∀ {Γ A} {L N : Γ ⊢ A}
-    → L —↠ N
-    → Finished N
-      ----------
-    → Steps L
-```
-
-<!--
-The evaluator takes gas and a term and returns the corresponding steps:
--->
-
-求值器取汽油和项，返回对应的步骤：
+求值器接受汽油和项，返回对应的步骤。
 
 ```agda
 eval : ∀ {Γ A}
-  → Gas
+  → (g : ℕ)
   → (L : Γ ⊢ A)
-    -----------
-  → Steps L
-eval (gas zero)    L                     =  steps (L ∎) out-of-gas
-eval (gas (suc m)) L with progress L
-... | done NrmL                          =  steps (L ∎) (done NrmL)
-... | step {M} L—→M with eval (gas m) M
-...    | steps M—↠N fin                  =  steps (L —→⟨ L—→M ⟩ M—↠N) fin
+    ---------
+  → Eval L g
+eval zero L            =  out-of-gas (L ∎) refl
+eval (suc g) L with progress L
+... | done VL                  =  terminates (L ∎) z<s VL
+... | step {M} L—→M with eval g M
+...   | out-of-gas M—↠N ≡g     =  out-of-gas (L —→⟨ L—→M ⟩ M—↠N) (cong suc ≡g)
+...   | terminates M—↠N <g VN  =  terminates (L —→⟨ L—→M ⟩ M—↠N) (s<s <g) VN
 ```
 
 <!--
@@ -1020,10 +1013,10 @@ generalises to an arbitrary context `Γ`.
 定义与之前一样，除了我们将空语境 `∅` 推广至任意语境 `Γ`。
 
 <!--
-## Example
+# Example
 -->
 
-## 例子
+# 例子
 
 <!--
 We reiterate our previous example. Two plus two is four, with Church numerals:
@@ -1032,8 +1025,8 @@ We reiterate our previous example. Two plus two is four, with Church numerals:
 我们重复之前的例子。二加二得四，以 Church 数来表示：
 
 ```agda
-_ : eval (gas 100) 2+2ᶜ ≡
-  steps
+_ : eval 100 2+2ᶜ ≡
+  terminates
    ((ƛ
      (ƛ
       (ƛ
@@ -1074,20 +1067,20 @@ _ : eval (gas 100) 2+2ᶜ ≡
    —→⟨ ζ (ζ (ξ₂ (ξ₂ β))) ⟩
     ƛ (ƛ (` (S Z)) · ((` (S Z)) · ((` (S Z)) · ((` (S Z)) · (` Z)))))
    ∎)
-   (done
+   (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s (s≤s z≤n)))))))
+   (ƛ
     (ƛ
-     (ƛ
-      (′
-       (` (S Z)) ·
-       (′ (` (S Z)) · (′ (` (S Z)) · (′ (` (S Z)) · (′ (` Z)))))))))
+     (′
+      (` (S Z)) ·
+      (′ (` (S Z)) · (′ (` (S Z)) · (′ (` (S Z)) · (′ (` Z))))))))
 _ = refl
 ```
 
 <!--
-## Naturals and fixpoint
+# Naturals and fixpoint
 -->
 
-## 自然数和不动点
+# 自然数和不动点
 
 <!--
 We could simulate naturals using Church numerals, but computing
@@ -1170,13 +1163,14 @@ for one.
 对零使用后继的确归约至 Scott 数表示的一：
 
 ```agda
-_ : eval (gas 100) (`suc_ {∅} `zero) ≡
-    steps
+_ : eval 100 (`suc_ {∅} `zero) ≡
+    terminates
         ((ƛ (ƛ (ƛ # 1 · # 2))) · (ƛ (ƛ # 0))
     —→⟨ β ⟩
          ƛ (ƛ # 1 · (ƛ (ƛ # 0)))
     ∎)
-    (done (ƛ (ƛ (′ (` (S Z)) · (ƛ (ƛ (′ (` Z))))))))
+    (s≤s (s≤s z≤n))
+    (ƛ (ƛ (′ (` (S Z)) · (ƛ (ƛ (′ (` Z)))))))
 _ = refl
 ```
 
@@ -1250,10 +1244,10 @@ but they do both reduce to the same normal term.
 
 
 <!--
-#### Exercise `plus-eval` (practice)
+## Exercise `plus-eval` (practice)
 -->
 
-#### 练习 `plus-eval` （实践）
+## 练习 `plus-eval` （实践）
 
 <!--
 Use the evaluator to confirm that `plus · two · two` and `four`
@@ -1267,10 +1261,10 @@ normalise to the same term.
 ```
 
 <!--
-#### Exercise `multiplication-untyped` (recommended)
+## Exercise `multiplication-untyped` (recommended)
 -->
 
-#### 练习 `multiplication-untyped` （推荐）
+## 练习 `multiplication-untyped` （推荐）
 
 <!--
 Use the encodings above to translate your definition of
@@ -1287,10 +1281,10 @@ Confirm that two times two is four.
 ```
 
 <!--
-#### Exercise `encode-more` (stretch)
+## Exercise `encode-more` (stretch)
 -->
 
-#### 练习 `encode-more` （延伸）
+## 练习 `encode-more` （延伸）
 
 <!--
 Along the lines above, encode all of the constructs of
@@ -1306,10 +1300,10 @@ save for primitive numbers, in the untyped lambda calculus.
 
 
 <!--
-## Multi-step reduction is transitive
+# Multi-step reduction is transitive
 -->
 
-## 多步归约是传递的
+# 多步归约是传递的
 
 <!--
 In our formulation of the reflexive transitive closure of reduction,
@@ -1353,10 +1347,10 @@ L —↠⟨ L—↠M ⟩ M—↠N = —↠-trans L—↠M M—↠N
 ```
 
 <!--
-## Multi-step reduction is a congruence
+# Multi-step reduction is a congruence
 -->
 
-## 多步归约是合同性的
+# 多步归约是合同性的
 
 <!--
 Recall from Chapter [Induction](/Induction/) that a
@@ -1438,7 +1432,7 @@ abs-cong (M ∎) = ƛ M ∎
 abs-cong (L —→⟨ r ⟩ rs) = ƛ L —→⟨ ζ r ⟩ abs-cong rs
 ```
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

@@ -39,7 +39,7 @@ GitHub 上有带有习题答案的私有仓库。如果你想要获取访问权�
 
 
 $for(toc.part)$
-## $toc.part.title$
+# $toc.part.title$
 $for(toc.part.chapter)$
 $if(toc.part.chapter.titlerunning)$
   * [$toc.part.chapter.titlerunning$]($toc.part.chapter.url$): $toc.part.chapter.subtitle$
@@ -52,7 +52,7 @@ $endfor$
 
 <!-- NOTE: The Mailing Lists are Deprecated -->
 <!--
-### Mailing lists
+## Mailing lists
   * [plfa-interest@inf.ed.ac.uk](https://lists.inf.ed.ac.uk/mailman/listinfo/plfa-interest): <br />
     A mailing list for users of the book. <br />
     This is the place to ask and answer questions, or comment on the content of the book.
@@ -74,26 +74,31 @@ $endfor$
 
 ### 使用本书教学的课程
 
-#### 2025
+### 2026
+  * [Jeremy Siek, Indiana University][IU-2026]
+
+[IU-2026]: https://jsiek.github.io/PLFA-Spring-2026/
+
+### 2025
   * [Peter Thiemann, Albert-Ludwigs University][Freiburg-2025]
   * [Joseph Eremondi, University of Regina][EremondiPage]
 
 [Freiburg-2025]: https://proglang.github.io/teaching/25ss/eopl.html
 [EremondiPage]: https://www2.cs.uregina.ca/~eremondj/
 
-#### 2024
+### 2024
   * [Philip Wadler, University of Edinburgh][TSPL-2024]
 
 [TSPL-2024]: /TSPL/2024/
 
-#### 2023
+### 2023
   * [Peter Thiemann, Albert-Ludwigs University][Freiburg-2023]
   * [Philip Wadler, University of Edinburgh][TSPL-2023]
 
 [Freiburg-2023]: https://web.archive.org/web/20240208112146/https://proglang.informatik.uni-freiburg.de/teaching/proglang/2023ws/
 [TSPL-2023]: /TSPL/2023/
 
-#### 2022
+### 2022
   * [Andrej Bauer, University of Ljubljana][UL-2022]
   * Michael Shulman, University of San Diego
     <!-- The course website is not public. -->
@@ -104,7 +109,7 @@ $endfor$
 [Freiburg-2022]: https://web.archive.org/web/20220810154516/https://proglang.informatik.uni-freiburg.de/teaching/proglang/2022ss/
 [TSPL-2022]: https://plfa.github.io/TSPL/2022/
 
-#### 2021
+### 2021
   * Favonia, University of Minnesota
     <!-- The course website is not public. -->
   * [Prabhakar Ragde, University of Waterloo][UW-2021]
@@ -113,7 +118,7 @@ $endfor$
 [UW-2021]: https://web.archive.org/web/20210424214202/https://cs.uwaterloo.ca/~plragde/747/
 [McM-2021]: https://github.com/JacquesCarette/CAS706-F2021/
 
-#### 2020
+### 2020
   * [William Cook, University of Texas][UT-2020]
   * [Maria Emilia Maietti and Ingo Blechschmidt, Università di Padova][Padova-2020]
   * [John Maraist, University of Wisconsin-La Crosse][UWL-2020]
@@ -126,7 +131,7 @@ $endfor$
 [UWL-2020]: https://web.archive.org/web/20220810155032/https://github.com/jphmrst/PLC/tree/fall2020#readme
 [IU-2020]: https://web.archive.org/web/20220421134334/https://jsiek.github.io/B522-PL-Foundations/
 
-#### 2019
+### 2019
   * [Dan Ghica, University of Birmingham][BHAM-2019]
   * [Adrian King, San Francisco Types, Theorems, and Programming Languages Meetup][SFPL-Meetup-2019]
   * [Prabhakar Ragde, University of Waterloo][UW-2019]
@@ -142,7 +147,7 @@ $endfor$
 [EUSA-2020]: https://web.archive.org/web/20201130051416/https://www.eusa.ed.ac.uk/representation/campaigns/teachingawards2020/
 <!-- The link to the teaching awards is unused. -->
 
-#### 2018
+### 2018
   * [David Darais, University of Vermont][UVM-2018]
   * [Philip Wadler, University of Edinburgh][TSPL-2018]
   * John Leo, Google Seattle
@@ -151,7 +156,7 @@ $endfor$
 [TSPL-2018]: https://plfa.github.io/19.08/TSPL/2018/
 [UVM-2018]: https://web.archive.org/web/20190324115921/https://david.darais.com/courses/fa2018-cs295A/
 
-### Derived works
+## Derived works
 
 * [PLFArend](https://github.com/marat-rkh/PLFArend): the PLFA book with all code snippets rewritten in Arend.
 * [PLFaLean](https://github.com/rami3l/PLFaLean): PLFA proofs implemented in Lean 4, covering Parts 2-3 of the v22.08 release of the book.

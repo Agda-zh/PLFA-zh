@@ -18,10 +18,10 @@ examples of polymorphic types and higher-order functions.
 列表也给我们带来多态类型（Polymorphic Types）和高阶函数（Higher-order Functions）的例子。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -40,16 +40,17 @@ open import plfa.part1.Isomorphism using (_≃_; _⇔_)
 
 
 <!--
-## Lists
+# Lists
 -->
 
-## 列表
+# 列表
 
 <!--
 Lists are defined in Agda as follows:
 -->
 
 Agda 中的列表如下定义：
+
 ```agda
 data List (A : Set) : Set where
   []  : List A
@@ -154,10 +155,10 @@ cons respectively, allowing a more efficient representation of lists.
 分别代表了 nil 和 cons，这可以让列表的表示更加的有效率。
 
 <!--
-## List syntax
+# List syntax
 -->
 
-## 列表语法
+# 列表语法
 
 <!--
 We can write lists more conveniently by introducing the following definitions:
@@ -186,10 +187,10 @@ on the right-hand side of an equation.
 `x ∷ y ∷ z ∷ []`。前者可以在模式或者等式的左手边，或者是等式右手边的项中出现。
 
 <!--
-## Append
+# Append
 -->
 
-## 附加
+# 附加
 
 <!--
 Our first function on lists is written `_++_` and pronounced
@@ -250,10 +251,10 @@ number of elements in the first list.
 
 
 <!--
-## Reasoning about append
+# Reasoning about append
 -->
 
-## 论证附加
+# 论证附加
 
 <!--
 We can reason about lists in much the same way that we reason
@@ -261,6 +262,7 @@ about numbers.  Here is the proof that append is associative:
 -->
 
 我们可以与用论证数几乎相同的方法来论证列表。下面是附加满足结合律的证明：
+
 ```agda
 ++-assoc : ∀ {A : Set} (xs ys zs : List A)
   → (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
@@ -346,6 +348,7 @@ That it is a right identity follows by simple induction:
 -->
 
 右幺元的证明可由简单的归纳得到：
+
 ```agda
 ++-identityʳ : ∀ {A : Set} (xs : List A) → xs ++ [] ≡ xs
 ++-identityʳ [] =
@@ -373,10 +376,10 @@ a _monoid_ over lists.
 我们之后会了解到，这三条性质表明了 `_++_` 和 `[]` 在列表上构成了一个**幺半群（Monoid）**。
 
 <!--
-## Length
+# Length
 -->
 
-## 长度
+# 长度
 
 <!--
 Our next function finds the length of a list:
@@ -405,6 +408,7 @@ Here is an example showing how to compute the length of a list:
 -->
 
 我们用下面的例子来展示如何计算列表的长度：
+
 ```agda
 _ : length [ 0 , 1 , 2 ] ≡ 3
 _ =
@@ -438,10 +442,10 @@ has insufficient information to infer the implicit parameter.
 因为 `[]` 没有元素，Agda 没有足够的信息来推导其隐式参数。
 
 <!--
-## Reasoning about length
+# Reasoning about length
 -->
 
-## 论证长度
+# 论证长度
 
 <!--
 The length of one list appended to another is the
@@ -491,16 +495,17 @@ and it is promoted by the congruence `cong suc`.
 由 `cong suc` 来提升。
 
 <!--
-## Reverse
+# Reverse
 -->
 
-## 反转
+# 反转
 
 <!--
 Using append, it is easy to formulate a function to reverse a list:
 -->
 
 我们可以使用附加，来简单地构造一个函数来反转一个列表：
+
 ```agda
 reverse : ∀ {A : Set} → List A → List A
 reverse []        =  []
@@ -522,6 +527,7 @@ Here is an example showing how to reverse a list:
 -->
 
 下面的例子展示了如何反转一个列表。
+
 ```agda
 _ : reverse [ 0 , 1 , 2 ] ≡ [ 2 , 1 , 0 ]
 _ =
@@ -568,10 +574,10 @@ list, and the sum of the numbers up to `n - 1` is `n * (n - 1) / 2`.
 因此加起来就需要 `n * (n - 1) / 2` 的时间。（我们将在本章节后部分验证这一结果）
 
 <!--
-#### Exercise `reverse-++-distrib` (recommended)
+## Exercise `reverse-++-distrib` (recommended)
 -->
 
-#### 练习 `reverse-++-distrib`（推荐）
+## 练习 `reverse-++-distrib`（推荐）
 
 <!--
 Show that the reverse of one list appended to another is the
@@ -588,10 +594,10 @@ reverse of the second appended to the reverse of the first:
 
 
 <!--
-#### Exercise `reverse-involutive` (recommended)
+## Exercise `reverse-involutive` (recommended)
 -->
 
-#### 练习 `reverse-involutive`（推荐）
+## 练习 `reverse-involutive`（推荐）
 
 <!--
 A function is an _involution_ if when applied twice it acts
@@ -609,10 +615,10 @@ as the identity function.  Show that reverse is an involution:
 
 
 <!--
-## Faster reverse
+# Faster reverse
 -->
 
-## 更快地反转
+# 更快地反转
 
 <!--
 The definition above, while easy to reason about, is less efficient than
@@ -635,14 +641,15 @@ actually becomes _larger_, but this is not a problem because the argument
 on which we recurse becomes _smaller_.
 -->
 
-这个定义对于第一个参数进行递归。第二个参数会变_大_，但这样做没有问题，因为我们递归的参数
-在变_小_。
+这个定义对于第一个参数进行递归。第二个参数会变**大**，但这样做没有问题，因为我们递归的参数
+在变**小**。
 
 <!--
 Shunt is related to reverse as follows:
 -->
 
 转移（Shunt）与反转的关系如下：
+
 ```agda
 shunt-reverse : ∀ {A : Set} (xs ys : List A)
   → shunt xs ys ≡ reverse xs ++ ys
@@ -757,10 +764,10 @@ Now the time to reverse a list is linear in the length of the list.
 现在反转一个列表需要的时间与列表的长度线性相关。
 
 <!--
-## Map {#Map}
+# Map {#Map}
 -->
 
-## 映射 {#Map}
+# 映射 {#Map}
 
 <!--
 Map applies a function to every element of a list to generate a corresponding list.
@@ -855,10 +862,10 @@ _n_ functions.
 参数化的类型常常会有一个对于 _n_ 个函数参数化的映射。
 
 <!--
-#### Exercise `map-compose` (practice)
+## Exercise `map-compose` (practice)
 -->
 
-#### 练习 `map-compose`（实践）
+## 练习 `map-compose`（实践）
 
 <!--
 Prove that the map of a composition is equal to the composition of two maps:
@@ -879,10 +886,10 @@ The last step of the proof requires extensionality.
 ```
 
 <!--
-#### Exercise `map-++-distribute` (practice)
+## Exercise `map-++-distribute` (practice)
 -->
 
-#### 练习 `map-++-distribute`（实践）
+## 练习 `map-++-distribute`（实践）
 
 <!--
 Prove the following relationship between map and append:
@@ -897,10 +904,10 @@ Prove the following relationship between map and append:
 ```
 
 <!--
-#### Exercise `map-Tree` (practice)
+## Exercise `map-Tree` (practice)
 -->
 
-#### 练习 `map-Tree`（实践）
+## 练习 `map-Tree`（实践）
 
 <!--
 Define a type of trees with leaves of type `A` and internal
@@ -928,10 +935,10 @@ Define a suitable map operator over trees:
 ```
 
 <!--
-## Fold {#Fold}
+# Fold {#Fold}
 -->
 
-## 折叠 {#Fold}
+# 折叠 {#Fold}
 
 <!--
 Fold takes an operator and a value, and uses the operator to combine
@@ -1050,10 +1057,10 @@ Demonstrating both these equations is left as an exercise.
 
 
 <!--
-#### Exercise `product` (recommended)
+## Exercise `product` (recommended)
 -->
 
-#### 练习 `product` （推荐）
+## 练习 `product` （推荐）
 
 <!--
 Use fold to define a function to find the product of a list of numbers.
@@ -1071,10 +1078,10 @@ For example:
 ```
 
 <!--
-#### Exercise `foldr-++` (recommended)
+## Exercise `foldr-++` (recommended)
 -->
 
-#### 练习 `foldr-++` （推荐）
+## 练习 `foldr-++` （推荐）
 
 <!--
 Show that fold and append are related as follows:
@@ -1093,10 +1100,10 @@ postulate
 ```
 
 <!--
-#### Exercise `foldr-∷` (practice)
+## Exercise `foldr-∷` (practice)
 -->
 
-#### 练习 `foldr-∷` （实践）
+## 练习 `foldr-∷` （实践）
 
 <!--
 Show
@@ -1115,10 +1122,10 @@ Show as a consequence of `foldr-++` above that
     xs ++ ys ≡ foldr _∷_ ys xs
 
 <!--
-#### Exercise `map-is-foldr`
+## Exercise `map-is-foldr`
 -->
 
-#### 练习 `map-is-foldr`
+## 练习 `map-is-foldr`
 
 <!--
 Show that map can be defined using fold:
@@ -1137,10 +1144,10 @@ This requires extensionality.
 此证明需要外延性。
 
 <!--
-#### Exercise `map-is-foldr` (practice)
+## Exercise `map-is-foldr` (practice)
 -->
 
-#### 练习 `map-is-foldr`（实践）
+## 练习 `map-is-foldr`（实践）
 
 <!--
 Show that map can be defined using fold:
@@ -1161,10 +1168,10 @@ The proof requires extensionality.
 ```
 
 <!--
-#### Exercise `fold-Tree` (practice)
+## Exercise `fold-Tree` (practice)
 -->
 
-#### 练习 `fold-Tree`（实践）
+## 练习 `fold-Tree`（实践）
 
 <!--
 Define a suitable fold function for the type of trees given earlier:
@@ -1182,10 +1189,10 @@ Define a suitable fold function for the type of trees given earlier:
 ```
 
 <!--
-#### Exercise `map-is-fold-Tree` (practice)
+## Exercise `map-is-fold-Tree` (practice)
 -->
 
-#### 练习 `map-is-fold-Tree`（实践）
+## 练习 `map-is-fold-Tree`（实践）
 
 <!--
 Demonstrate an analogue of `map-is-foldr` for the type of trees.
@@ -1200,10 +1207,10 @@ Demonstrate an analogue of `map-is-foldr` for the type of trees.
 ```
 
 <!--
-#### Exercise `sum-downFrom` (stretch)
+## Exercise `sum-downFrom` (stretch)
 -->
 
-#### 证明 `sum-downFrom` （延伸）
+## 证明 `sum-downFrom` （延伸）
 
 <!--
 Define a function that counts down as follows:
@@ -1242,10 +1249,10 @@ equal to `n * (n ∸ 1) / 2`:
 ```
 
 <!--
-## Monoids
+# Monoids
 -->
 
-## 幺半群
+# 幺半群
 
 <!--
 Typically when we use a fold the operator is associative and the
@@ -1368,10 +1375,10 @@ foldr-monoid-++ _⊗_ e monoid-⊗ xs ys =
 ```
 
 <!--
-#### Exercise `foldl` (practice)
+## Exercise `foldl` (practice)
 -->
 
-#### 练习 `foldl`（实践）
+## 练习 `foldl`（实践）
 
 <!--
 Define a function `foldl` which is analogous to `foldr`, but where
@@ -1389,10 +1396,10 @@ operations associate to the left rather than the right.  For example:
 
 
 <!--
-#### Exercise `foldr-monoid-foldl`
+## Exercise `foldr-monoid-foldl`
 -->
 
-#### 练习 `foldr-monoid-foldl`（实践）
+## 练习 `foldr-monoid-foldl`（实践）
 
 <!--
 Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
@@ -1410,10 +1417,10 @@ Show that if `_⊗_` and `e` form a monoid, then `foldr _⊗_ e` and
 
 
 <!--
-## All {#All}
+# All {#All}
 -->
 
-## 所有 {#All}
+# 所有 {#All}
 
 <!--
 We can also define predicates over lists. Two of the most important
@@ -1486,10 +1493,10 @@ scope when the pattern is declared.  That's not the case here, since
 之后定义。）
 
 <!--
-## Any
+# Any
 -->
 
-## 任意
+# 任意
 
 <!--
 Predicate `Any P` holds if predicate `P` is satisfied by some element of a list:
@@ -1566,10 +1573,10 @@ possible evidence for `3 ≡ 0`, `3 ≡ 1`, `3 ≡ 0`, `3 ≡ 2`, and
 `3 ∈ []` 的证明。
 
 <!--
-## All and append
+# All and append
 -->
 
-## 所有和附加
+# 所有和附加
 
 <!--
 A predicate holds for every element of one list appended to another if and
@@ -1601,10 +1608,10 @@ All-++-⇔ xs ys =
 ```
 
 <!--
-#### Exercise `Any-++-⇔` (recommended)
+## Exercise `Any-++-⇔` (recommended)
 -->
 
-#### 练习 `Any-++-⇔` （推荐）
+## 练习 `Any-++-⇔` （推荐）
 
 <!--
 Prove a result similar to `All-++-⇔`, but with `Any` in place of `All`, and a suitable
@@ -1621,10 +1628,10 @@ replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 ```
 
 <!--
-#### Exercise `All-++-≃` (stretch)
+## Exercise `All-++-≃` (stretch)
 -->
 
-#### 练习 `All-++-≃` （延伸）
+## 练习 `All-++-≃` （延伸）
 
 <!--
 Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
@@ -1639,10 +1646,10 @@ Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
 ```
 
 <!--
-#### Exercise `¬Any⇔All¬` (recommended)
+## Exercise `¬Any⇔All¬` (recommended)
 -->
 
-#### 练习 `¬Any⇔All¬`（推荐）
+## 练习 `¬Any⇔All¬`（推荐）
 
 <!--
 Show that `Any` and `All` satisfy a version of De Morgan's Law:
@@ -1681,10 +1688,10 @@ If so, prove; if not, explain why.
 ```
 
 <!--
-#### Exercise `¬Any≃All¬` (stretch)
+## Exercise `¬Any≃All¬` (stretch)
 -->
 
-#### 练习 `¬Any≃All¬`（拓展）
+## 练习 `¬Any≃All¬`（拓展）
 
 <!--
 Show that the equivalence `¬Any⇔All¬` can be extended to an isomorphism.
@@ -1699,10 +1706,10 @@ Show that the equivalence `¬Any⇔All¬` can be extended to an isomorphism.
 ```
 
 <!--
-#### Exercise `All-∀` (practice)
+## Exercise `All-∀` (practice)
 -->
 
-#### 练习 `All-∀`（实践）
+## 练习 `All-∀`（实践）
 
 <!--
 Show that `All P xs` is isomorphic to `∀ x → x ∈ xs → P x`.
@@ -1717,10 +1724,10 @@ Show that `All P xs` is isomorphic to `∀ x → x ∈ xs → P x`.
 
 
 <!--
-#### Exercise `Any-∃` (practice)
+## Exercise `Any-∃` (practice)
 -->
 
-#### 练习 `Any-∃`（实践）
+## 练习 `Any-∃`（实践）
 
 <!--
 Show that `Any P xs` is isomorphic to `∃[ x ] (x ∈ xs × P x)`.
@@ -1741,10 +1748,10 @@ If so, prove; if not, explain why.
 
 
 <!--
-## Decidability of All
+# Decidability of All
 -->
 
-## 所有的可判定性
+# 所有的可判定性
 
 <!--
 If we consider a predicate as a function that yields a boolean,
@@ -1790,6 +1797,7 @@ element of a list satisfies the predicate:
 -->
 
 那么当谓词 `P` 可判定时，我们亦可判定列表中的每一个元素是否满足这个谓词：
+
 ```agda
 All? : ∀ {A : Set} {P : A → Set} → Decidable P → Decidable (All P)
 All? P? []                                 =  yes []
@@ -1812,10 +1820,10 @@ the head and tail of the list.
 来整合头元素和尾列表的证明。
 
 <!--
-#### Exercise `Any?` (stretch)
+## Exercise `Any?` (stretch)
 -->
 
-#### 练习 `Any?`（延伸）
+## 练习 `Any?`（延伸）
 
 <!--
 Just as `All` has analogues `all` and `All?` which determine whether a
@@ -1835,10 +1843,10 @@ for some element of a list.  Give their definitions.
 ```
 
 <!--
-#### Exercise `split` (stretch)
+## Exercise `split` (stretch)
 -->
 
-#### 练习 `split`（延伸）
+## 练习 `split`（延伸）
 
 <!--
 The relation `merge` holds when two lists merge to give a third list.
@@ -1908,10 +1916,10 @@ with their corresponding proofs.
 
 
 <!--
-## Standard Library
+# Standard Library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 Definitions similar to those in this chapter can be found in the standard library:
@@ -1948,7 +1956,7 @@ ranges over a binary relation).
 `Relation.Unary` 和 `Relation.Binary` 都定义了 `Decidable` 的某个版本，一个
 用于单元关系（正如本章中的单元谓词 `P`），一个用于二元关系（正如之前使用的 `_≤_`）。
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

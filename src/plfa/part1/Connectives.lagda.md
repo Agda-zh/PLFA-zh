@@ -38,10 +38,10 @@ principle known as _Propositions as Types_:
   * **蕴涵（Implication）**即是**函数空间（Function Space）**
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -55,10 +55,10 @@ open plfa.part1.Isomorphism.≃-Reasoning
 
 
 <!--
-## Conjunction is product
+# Conjunction is product
 -->
 
-## 合取即是积
+# 合取即是积
 
 <!--
 Given two propositions `A` and `B`, the conjunction `A × B` holds
@@ -395,10 +395,10 @@ corresponds to `⟨ 1 , ⟨ true , aa ⟩ ⟩`, which is a member of the latter.
 一个后者的成员，相对应。
 
 <!--
-#### Exercise `⇔≃×` (practice)
+## Exercise `⇔≃×` (practice)
 -->
 
-#### 练习 `⇔≃×`（实践）
+## 练习 `⇔≃×`（实践）
 
 <!--
 Show that `A ⇔ B` as defined [earlier](/Isomorphism/#iff)
@@ -412,10 +412,10 @@ is isomorphic to `(A → B) × (B → A)`.
 ```
 
 <!--
-## Truth is unit
+# Truth is unit
 -->
 
-## 真即是单元类型
+# 真即是单元类型
 
 <!--
 Truth `⊤` always holds. We formalise this idea by
@@ -507,6 +507,7 @@ it does not for the data type, so we need to pattern match on `w`:
 η-⊤′ : ∀ (w : ⊤′) → tt′ ≡ w
 η-⊤′ tt′ = refl
 ```
+
 <!--
 The pattern matching on the left-hand side is essential. Replacing
 `w` by `tt′` allows both sides of the propositional equality to
@@ -607,10 +608,10 @@ equality.
 我们在此使用了同构链，与等式链相似。
 
 <!--
-## Disjunction is sum
+# Disjunction is sum
 -->
 
-## 析取即是和
+# 析取即是和
 
 <!--
 Given two propositions `A` and `B`, the disjunction `A ⊎ B` holds
@@ -786,10 +787,10 @@ commutative and associative _up to isomorphism_.
 更确切地说，和在**在同构意义下**是交换和结合的。
 
 <!--
-#### Exercise `⊎-comm` (recommended)
+## Exercise `⊎-comm` (recommended)
 -->
 
-#### 练习 `⊎-comm` （推荐）
+## 练习 `⊎-comm` （推荐）
 
 <!--
 Show sum is commutative up to isomorphism.
@@ -803,10 +804,10 @@ Show sum is commutative up to isomorphism.
 ```
 
 <!--
-#### Exercise `⊎-assoc` (practice)
+## Exercise `⊎-assoc` (practice)
 -->
 
-#### 练习 `⊎-assoc`（实践）
+## 练习 `⊎-assoc`（实践）
 
 <!--
 Show sum is associative up to isomorphism.
@@ -820,10 +821,10 @@ Show sum is associative up to isomorphism.
 ```
 
 <!--
-## False is empty
+# False is empty
 -->
 
-## 假即是空类型
+# 假即是空类型
 
 <!--
 False `⊥` never holds.  We formalise this idea by declaring
@@ -831,12 +832,6 @@ a suitable inductive type:
 -->
 
 恒假 `⊥` 从不成立。我们将这个概念用合适的归纳类型来形式化：
-
-<!--
-FIXME: the code block is removed to make Agda not recognise this as code.
-data ⊥ : Set where
-  no clauses!
--->
 
 ```agda
 data ⊥ : Set where
@@ -947,10 +942,10 @@ is the identity of sums _up to isomorphism_.
 对于数来说，0 是加法的幺元。对应地，空是和的幺元（**在同构意义下**）。
 
 <!--
-#### Exercise `⊥-identityˡ` (recommended)
+## Exercise `⊥-identityˡ` (recommended)
 -->
 
-#### 练习 `⊥-identityˡ` （推荐）
+## 练习 `⊥-identityˡ` （推荐）
 
 <!--
 Show empty is the left identity of sums up to isomorphism.
@@ -965,10 +960,10 @@ Show empty is the left identity of sums up to isomorphism.
 ```
 
 <!--
-#### Exercise `⊥-identityʳ` (practice)
+## Exercise `⊥-identityʳ` (practice)
 -->
 
-#### 练习 `⊥-identityʳ`（实践）
+## 练习 `⊥-identityʳ`（实践）
 
 <!--
 Show empty is the right identity of sums up to isomorphism.
@@ -983,10 +978,10 @@ Show empty is the right identity of sums up to isomorphism.
 ```
 
 <!--
-## Implication is function {#implication}
+# Implication is function {#implication}
 -->
 
-## 蕴涵即是函数 {#implication}
+# 蕴涵即是函数 {#implication}
 
 <!--
 Given two propositions `A` and `B`, the implication `A → B` holds if
@@ -1258,10 +1253,10 @@ is the same as the assertion that if `A` holds then `B` holds and if
 
 
 <!--
-## Distribution
+# Distribution
 -->
 
-## 分配律
+# 分配律
 
 <!--
 Products distribute over sum, up to isomorphism.  The code to validate
@@ -1346,10 +1341,10 @@ one of these laws is "more true" than the other.
 
 
 <!--
-#### Exercise `⊎-weak-×` (recommended)
+## Exercise `⊎-weak-×` (recommended)
 -->
 
-#### 练习 `⊎-weak-×` （推荐）
+## 练习 `⊎-weak-×` （推荐）
 
 <!--
 Show that the following property holds:
@@ -1377,10 +1372,10 @@ distributive law, and explain how it relates to the weak version.
 
 
 <!--
-#### Exercise `⊎×-implies-×⊎` (practice)
+## Exercise `⊎×-implies-×⊎` (practice)
 -->
 
-#### 练习 `⊎×-implies-×⊎`（实践）
+## 练习 `⊎×-implies-×⊎`（实践）
 
 <!--
 Show that a disjunct of conjuncts implies a conjunct of disjuncts:
@@ -1406,10 +1401,10 @@ Does the converse hold? If so, prove; if not, give a counterexample.
 ```
 
 <!--
-## Standard library
+# Standard library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 Definitions similar to those in this chapter can be found in the standard library:
@@ -1445,7 +1440,7 @@ respect to an arbitrary notion of equivalence.
 标准库中的 `_⇔_` 和我们的相似，但使用起来比较不便，
 因为它可以根据任意的相等性定义进行参数化。
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

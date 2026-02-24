@@ -9,10 +9,10 @@ module plfa.part3.Adequacy where
 ```
 
 <!--
-## Introduction
+# Introduction
 -->
 
-## 引言
+# 引言
 
 <!--
 Having proved a preservation property in the last chapter, a natural
@@ -119,10 +119,10 @@ The rest of this chapter is organized as follows.
 
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
@@ -153,10 +153,10 @@ open import plfa.part3.Soundness using (soundness)
 
 
 <!--
-## The property of being greater or equal to a function
+# The property of being greater or equal to a function
 -->
 
-## 大于或等于某个函数的性质
+# 大于或等于某个函数的性质
 
 <!--
 We define the following short-hand for saying that a value is
@@ -280,10 +280,10 @@ above-fun? (u ⊔ u')
 
 
 <!--
-## Relating values to closures
+# Relating values to closures
 -->
 
-## 将值关联到闭包
+# 将值关联到闭包
 
 <!--
 Next we relate semantic values to closures.  The relation `𝕍` is for
@@ -684,10 +684,10 @@ application of `sub-𝕍` with `v' ⊑ v` to show `𝕍 v' c`.
 
 
 <!--
-## Programs with function denotation terminate via call-by-name
+# Programs with function denotation terminate via call-by-name
 -->
 
-## 拥有函数指称的程序通过传名调用可停机
+# 拥有函数指称的程序通过传名调用可停机
 
 <!--
 The main lemma proves that if a term has a denotation that is above a
@@ -882,10 +882,10 @@ kth-x{γ' = γ'}{x = x} with γ' x
 
 
 <!--
-## Proof of denotational adequacy
+# Proof of denotational adequacy
 -->
 
-## 指称充分性的证明
+# 指称充分性的证明
 
 <!--
 From the main lemma we can directly show that `ℰ M ≃ ℰ (ƛ N)` implies
@@ -928,7 +928,7 @@ apply `cbn→reduce` to conclude.
 现在进行充分性的证明。我们应用上面的引理得到 `∅ ⊢ M ⇓ clos (ƛ N′) γ`，
 之后应用 `cbn→reduce` 得出结论。
 
-```
+```agda
 adequacy : ∀{M : ∅ ⊢ ★}{N : ∅ , ★ ⊢ ★}
    →  ℰ M ≃ ℰ (ƛ N)
    → Σ[ N′ ∈ (∅ , ★ ⊢ ★) ]
@@ -940,10 +940,10 @@ adequacy{M}{N} eq
 ```
 
 <!--
-## Call-by-name is equivalent to beta reduction
+# Call-by-name is equivalent to beta reduction
 -->
 
-## 传名调用等价于 β-归约
+# 传名调用等价于 β-归约
 
 <!--
 As promised, we return to the question of whether call-by-name
@@ -960,7 +960,7 @@ denotational semantics.
 则程序可 β-归约为 λ-抽象（`cbn→reduce`）。
 现在，我们利用关于指称语义的结论来证明「当且仅当」的向左的方向。
 
-```
+```agda
 reduce→cbn : ∀ {M : ∅ ⊢ ★} {N : ∅ , ★ ⊢ ★}
            → M —↠ ƛ N
            → Σ[ Δ ∈ Context ] Σ[ N′ ∈ Δ , ★ ⊢ ★ ] Σ[ δ ∈ ClosEnv Δ ]
@@ -986,7 +986,7 @@ in the following sense.
 将「当且仅当」的两个方向合并在一起，
 我们就建立了下述意义上，传名调用求值等价于 β-归约的结论。
 
-```
+```agda
 cbn↔reduce : ∀ {M : ∅ ⊢ ★}
            → (Σ[ N ∈ ∅ , ★ ⊢ ★ ] (M —↠ ƛ N))
              iff
@@ -997,7 +997,7 @@ cbn↔reduce {M} = ⟨ (λ x → reduce→cbn (proj₂ x)) ,
 ```
 
 
-## Unicode
+# Unicode
 
 本章使用了以下 Unicode：
 

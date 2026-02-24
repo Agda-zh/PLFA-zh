@@ -24,10 +24,10 @@ of a new notion of _decidable_.
 使用一种新的**可判定性（Decidable）**记法将会是更好的选择。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -45,10 +45,10 @@ open import plfa.part1.Isomorphism using (_⇔_)
 ```
 
 <!--
-## Evidence vs Computation
+# Evidence vs Computation
 -->
 
-## 证据 vs 计算
+# 证据 vs 计算
 
 <!--
 Recall that Chapter [Relations](/Relations/)
@@ -184,10 +184,10 @@ and the one use of `()` when showing there can be no evidence that `4 ≤ 2`.
 使用两次 `s≤s` 和一次 `()` 来说明没有 `4 ≤ 2` 的证明。
 
 <!--
-## Relating evidence and computation
+# Relating evidence and computation
 -->
 
-## 将证明与计算相联系 {#relating-evidence-and-computation}
+# 将证明与计算相联系 {#relating-evidence-and-computation}
 
 <!--
 We would hope to be able to show these two approaches are related, and
@@ -348,10 +348,10 @@ there is a way to get the benefits of both.
 我们有一种更好的方法来兼取其优。
 
 <!--
-## The best of both worlds
+# The best of both worlds
 -->
 
-## 取二者之精华 {#the-best-of-both-worlds}
+# 取二者之精华 {#the-best-of-both-worlds}
 
 <!--
 A function that returns a boolean returns exactly a single bit of information:
@@ -503,10 +503,10 @@ Agda 可能会在规范化否定的证明中出现问题。）
 
 
 <!--
-#### Exercise `_<?_` (recommended)
+## Exercise `_<?_` (recommended)
 -->
 
-#### 练习 `_<?_` （推荐）
+## 练习 `_<?_` （推荐）
 
 <!--
 Analogous to the function above, define a function to decide strict inequality:
@@ -526,10 +526,10 @@ postulate
 ```
 
 <!--
-#### Exercise `_≡ℕ?_` (practice)
+## Exercise `_≡ℕ?_` (practice)
 -->
 
-#### 练习 `_≡ℕ?_`（实践）
+## 练习 `_≡ℕ?_`（实践）
 
 <!--
 Define a function to decide whether two naturals are equal:
@@ -550,10 +550,10 @@ postulate
 
 
 <!--
-## Decidables from booleans, and booleans from decidables
+# Decidables from booleans, and booleans from decidables
 -->
 
-## 从可判定的值到布尔值，从布尔值到可判定的值 {#decidables-from-booleans-and-booleans-from-decidables}
+# 从可判定的值到布尔值，从布尔值到可判定的值 {#decidables-from-booleans-and-booleans-from-decidables}
 
 <!--
 Curious readers might wonder if we could reuse the definition of
@@ -651,6 +651,7 @@ inhabited exactly when `A` is inhabited:
 
 更进一步来说，如果 `D` 是一个类型为 `Dec A` 的值，那么 `T ⌊ D ⌋`
 当且仅当 `A` 成立时成立：
+
 ```agda
 toWitness : ∀ {A : Set} {D : Dec A} → T ⌊ D ⌋ → A
 toWitness {A} {yes x} tt  =  x
@@ -687,10 +688,10 @@ corresponding decidables.
 
 
 <!--
-## Logical connectives
+# Logical connectives
 -->
 
-## 逻辑连接符{#logical-connectives}
+# 逻辑连接符{#logical-connectives}
 
 <!--
 Most readers will be familiar with the logical connectives for booleans.
@@ -943,10 +944,10 @@ on which matches; but either is equally valid.
 这一次，我们给出的结果会因为是哪一条被匹配而不一样，但两者都是同样正确的。
 
 <!--
-#### Exercise `erasure` (practice)
+## Exercise `erasure` (practice)
 -->
 
-#### 练习 `erasure`（实践）
+## 练习 `erasure`（实践）
 
 <!--
 Show that erasure relates corresponding boolean and decidable operations:
@@ -962,10 +963,10 @@ postulate
 ```
 
 <!--
-#### Exercise `iff-erasure` (recommended)
+## Exercise `iff-erasure` (recommended)
 -->
 
-#### 练习 `iff-erasure` （推荐）
+## 练习 `iff-erasure` （推荐）
 
 <!--
 Give analogues of the `_⇔_` operation from
@@ -990,10 +991,10 @@ postulate
 ```
 
 <!--
-## Proof by reflection {#proof-by-reflection}
+# Proof by reflection {#proof-by-reflection}
 -->
 
-## 互映证明 {#proof-by-reflection}
+# 互映证明 {#proof-by-reflection}
 
 <!--
 Let's revisit our definition of monus from
@@ -1105,10 +1106,10 @@ True : ∀ {Q} → Dec Q → Set
 True Q = T ⌊ Q ⌋
 ```
 <!--
-#### Exercise `False` (practice)
+## Exercise `False` (practice)
 -->
 
-#### 练习 `False` （实践）
+## 练习 `False` （实践）
 
 <!--
 Give analogues of `True`, `toWitness`, and `fromWitness` which work
@@ -1120,10 +1121,10 @@ with *negated* properties. Call these `False`, `toWitnessFalse`, and
 `False`，`toWitnessFalse` 和 `fromWitnessFalse`。
 
 <!--
-#### Exercise `Bin-decidable` (stretch)
+## Exercise `Bin-decidable` (stretch)
 -->
 
-#### 练习 `Bin-decidable`（延伸）
+## 练习 `Bin-decidable`（延伸）
 
 <!--
 Recall that Exercises
@@ -1154,10 +1155,10 @@ Show that both of the above are decidable.
 
 
 <!--
-## Standard Library
+# Standard Library
 -->
 
-## 标准库
+# 标准库
 
 ```agda
 import Data.Bool.Base using (Bool; true; false; T; _∧_; _∨_; not)
@@ -1169,7 +1170,7 @@ import Relation.Binary.Definitions using (Decidable)
 ```
 
 
-## Unicode
+# Unicode
 
 <!--
     ∧  U+2227  LOGICAL AND (\and, \wedge)

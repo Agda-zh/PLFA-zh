@@ -15,10 +15,10 @@ This chapter introduces universal and existential quantification.
 本章节介绍全称量化（Universal Quantification）和存在量化（Existential Quantification）。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -33,10 +33,10 @@ open import Function using (_∘_)
 
 
 <!--
-## Universals
+# Universals
 -->
 
-## 全称量化
+# 全称量化
 
 <!--
 We formalise universal quantification using the dependent function
@@ -154,10 +154,10 @@ dependent product is ambiguous.
 因为依赖积这个名称是有歧义的，我们后续会体会到歧义所在。
 
 <!--
-#### Exercise `∀-distrib-×` (recommended)
+## Exercise `∀-distrib-×` (recommended)
 -->
 
-#### 练习 `∀-distrib-×` （推荐）
+## 练习 `∀-distrib-×` （推荐）
 
 <!--
 Show that universals distribute over conjunction:
@@ -180,10 +180,10 @@ Chapter [Connectives](/Connectives/).
 章节中的 (`→-distrib-×`) 结果对比。
 
 <!--
-#### Exercise `⊎∀-implies-∀⊎` (practice)
+## Exercise `⊎∀-implies-∀⊎` (practice)
 -->
 
-#### 练习 `⊎∀-implies-∀⊎`（实践）
+## 练习 `⊎∀-implies-∀⊎`（实践）
 
 <!--
 Show that a disjunction of universals implies a universal of disjunctions:
@@ -204,10 +204,10 @@ Does the converse hold? If so, prove; if not, explain why.
 逆命题成立么？如果成立，给出证明。如果不成立，解释为什么。
 
 <!--
-#### Exercise `∀-×` (practice)
+## Exercise `∀-×` (practice)
 -->
 
-#### 练习 `∀-×`（实践）
+## 练习 `∀-×`（实践）
 
 <!--
 Consider the following type.
@@ -237,10 +237,10 @@ Hint: you will need to use [`∀-extensionality`](/Isomorphism/#extensionality).
 提示：你需要 [`∀-extensionality`](/Isomorphism/#extensionality)。
 
 <!--
-## Existentials
+# Existentials
 -->
 
-## 存在量化
+# 存在量化
 
 <!--
 Given a variable `x` of type `A` and a proposition `B x` which
@@ -361,7 +361,7 @@ component does not depend on the first component.
 
 积是存在量词的一种特殊形式，其第二分量不取决于第一分量中的变量。
 
-```
+```agda
 _×′_ : Set → Set → Set
 A ×′ B = Σ[ x ∈ A ] B
 ```
@@ -498,10 +498,10 @@ establish the isomorphism is identical to what we wrote when discussing
 [蕴涵](/Connectives/#implication)时给出的证明是一样的。
 
 <!--
-#### Exercise `∃-distrib-⊎` (recommended)
+## Exercise `∃-distrib-⊎` (recommended)
 -->
 
-#### 练习 `∃-distrib-⊎` （推荐）
+## 练习 `∃-distrib-⊎` （推荐）
 
 <!--
 Show that existentials distribute over disjunction:
@@ -516,10 +516,10 @@ postulate
 ```
 
 <!--
-#### Exercise `∃×-implies-×∃` (practice)
+## Exercise `∃×-implies-×∃` (practice)
 -->
 
-#### 练习 `∃×-implies-×∃`（实践）
+## 练习 `∃×-implies-×∃`（实践）
 
 <!--
 Show that an existential of conjunctions implies a conjunction of existentials:
@@ -540,10 +540,10 @@ Does the converse hold? If so, prove; if not, explain why.
 逆命题成立么？如果成立，给出证明。如果不成立，解释为什么。
 
 <!--
-#### Exercise `∃-⊎` (practice)
+## Exercise `∃-⊎` (practice)
 -->
 
-#### 练习 `∃-⊎`（实践）
+## 练习 `∃-⊎`（实践）
 
 <!--
 Let `Tri` and `B` be as in Exercise `∀-×`.
@@ -554,10 +554,10 @@ Show that `∃[ x ] B x` is isomorphic to `B aa ⊎ B bb ⊎ B cc`.
 证明 `∃[ x ] B x` 与 `B aa ⊎ B bb ⊎ B cc` 是同构的。
 
 <!--
-## An existential example
+# An existential example
 -->
 
-## 一个存在量化的例子
+# 一个存在量化的例子
 
 <!--
 Recall the definitions of `even` and `odd` from
@@ -740,10 +740,10 @@ This completes the proof in the backward direction.
 这样，我们就完成了向后方向的证明。
 
 <!--
-#### Exercise `∃-even-odd` (practice)
+## Exercise `∃-even-odd` (practice)
 -->
 
-#### 练习 `∃-even-odd`（实践）
+## 练习 `∃-even-odd`（实践）
 
 <!--
 How do the proofs become more difficult if we replace `m * 2` and `1 + m * 2`
@@ -761,10 +761,10 @@ restated in this way.
 ```
 
 <!--
-#### Exercise `∃-+-≤` (practice)
+## Exercise `∃-+-≤` (practice)
 -->
 
-#### 练习 `∃-+-≤`（实践）
+## 练习 `∃-+-≤`（实践）
 
 <!--
 Show that `y ≤ z` holds if and only if there exists a `x` such that
@@ -780,10 +780,10 @@ Show that `y ≤ z` holds if and only if there exists a `x` such that
 ```
 
 <!--
-## Existentials, Universals, and Negation
+# Existentials, Universals, and Negation
 -->
 
-## 存在量化、全称量化和否定
+# 存在量化、全称量化和否定
 
 <!--
 Negation of an existential is isomorphic to the universal
@@ -840,10 +840,10 @@ The two inverse proofs are straightforward.
 两个逆的证明很直接。
 
 <!--
-#### Exercise `∃¬-implies-¬∀` (recommended)
+## Exercise `∃¬-implies-¬∀` (recommended)
 -->
 
-#### 练习 `∃¬-implies-¬∀` （推荐）
+## 练习 `∃¬-implies-¬∀` （推荐）
 
 <!--
 Show that existential of a negation implies negation of a universal:
@@ -866,10 +866,10 @@ Does the converse hold? If so, prove; if not, explain why.
 逆命题成立吗？如果成立，给出证明。如果不成立，解释为什么。
 
 <!--
-#### Exercise `Bin-isomorphism` (stretch) {#Bin-isomorphism}
+## Exercise `Bin-isomorphism` (stretch) {#Bin-isomorphism}
 -->
 
-#### 练习 `Bin-isomorphism` （延伸） {#Bin-isomorphism}
+## 练习 `Bin-isomorphism` （延伸） {#Bin-isomorphism}
 
 <!--
 Recall that Exercises
@@ -941,10 +941,10 @@ which is a corollary of `≡Can`.
 ```
 
 <!--
-## Standard library
+# Standard library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 Definitions similar to those in this chapter can be found in the standard library:
@@ -957,7 +957,7 @@ import Data.Product using (Σ; _,_; ∃; Σ-syntax; ∃-syntax)
 ```
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

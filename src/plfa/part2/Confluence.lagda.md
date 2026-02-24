@@ -9,10 +9,10 @@ module plfa.part2.Confluence where
 ```
 
 <!--
-## Introduction
+# Introduction
 -->
 
-## 简介
+# 简介
 
 <!--
 In this chapter we prove that beta reduction is _confluent_, a
@@ -100,10 +100,10 @@ confluence for parallel reduction.
 因此，我们可以将 β-归约序列合流性的证明约化为平行归约合流性的证明。
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
@@ -119,10 +119,10 @@ open import plfa.part2.Untyped
 ```
 
 <!--
-## Parallel Reduction
+# Parallel Reduction
 -->
 
-## 平行归约
+# 平行归约
 
 <!--
 The parallel reduction relation is defined as follows.
@@ -214,10 +214,10 @@ data _⇛*_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
 
 
 <!--
-#### Exercise `par-diamond-eg` (practice)
+## Exercise `par-diamond-eg` (practice)
 -->
 
-#### 练习 `par-diamond-eg`（实践）
+## 练习 `par-diamond-eg`（实践）
 
 <!--
 Revisit the counter example to the diamond property for reduction by
@@ -235,10 +235,10 @@ case.
 
 
 <!--
-## Equivalence between parallel reduction and reduction
+# Equivalence between parallel reduction and reduction
 -->
 
-## 平行归约与归约间等价性
+# 平行归约与归约间等价性
 
 <!--
 Here we prove that for any `M` and `N`, `M ⇛* N` if and only if `M —↠ N`.
@@ -372,10 +372,10 @@ pars-betas (L ⇛⟨ p ⟩ ps) = —↠-trans (par-betas p) (pars-betas ps)
 
 
 <!--
-## Substitution lemma for parallel reduction
+# Substitution lemma for parallel reduction
 -->
 
-## 平行归约的替换引理
+# 平行归约的替换引理
 
 <!--
 Our next goal is to prove the diamond property for parallel
@@ -642,10 +642,10 @@ sub-par pn pm = subst-par (par-subst-zero pm) pn
 ```
 
 <!--
-## Parallel reduction satisfies the diamond property
+# Parallel reduction satisfies the diamond property
 -->
 
-## 平行归约满足菱形性质
+# 平行归约满足菱形性质
 
 <!--
 The heart of the confluence proof is made of stone, or rather, of
@@ -794,10 +794,10 @@ This step is optional, though, in the presence of triangle property.
 不过，在存在三角性质的情况下，该步骤是可选的。
 
 <!--
-#### Exercise (practice)
+## Exercise (practice)
 -->
 
-#### 练习（实践）
+## 练习（实践）
 
 <!--
 * Prove the diamond property `par-diamond` directly by induction on `M ⇛ N` and `M ⇛ N′`.
@@ -814,10 +814,10 @@ This step is optional, though, in the presence of triangle property.
   图应当包含节点和有向边，其中节点用项标记，边代表平行归约。
 
 <!--
-## Proof of confluence for parallel reduction
+# Proof of confluence for parallel reduction
 -->
 
-## 平行归约合流性的证明
+# 平行归约合流性的证明
 
 <!--
 As promised at the beginning, the proof that parallel reduction is
@@ -924,10 +924,10 @@ induction.
 
 
 <!--
-## Proof of confluence for reduction
+# Proof of confluence for reduction
 -->
 
-## 归约合流性的证明
+# 归约合流性的证明
 
 <!--
 Confluence of reduction is a corollary of confluence for parallel
@@ -958,10 +958,10 @@ confluence L↠M₁ L↠M₂
 
 
 <!--
-## Notes
+# Notes
 -->
 
-## 注记
+# 注记
 
 <!--
 This mechanized proof of confluence is based on several sources. The
@@ -981,7 +981,7 @@ paper by @Nipkow:1996.
 此外，我们询问了 Nipkow 和 Berghofer 在 Isabelle 中的机械化，
 它基于 @Nipkow:1996 的早期论文。
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

@@ -17,10 +17,10 @@ the next step is to define relations, such as _less than or equal_.
 
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -31,10 +31,10 @@ open import Data.Nat.Properties using (+-comm; +-identityʳ; *-comm)
 
 
 <!--
-## Defining relations
+# Defining relations
 -->
 
-## 定义关系
+# 定义关系
 
 <!--
 The relation _less than or equal_ has an infinite number of
@@ -157,10 +157,10 @@ _ = s≤s (s≤s z≤n)
 ```
 
 <!--
-## Implicit arguments
+# Implicit arguments
 -->
 
-## 隐式参数
+# 隐式参数
 
 <!--
 This is our first use of implicit arguments.  In the definition of
@@ -260,10 +260,10 @@ If Agda fails to infer the value, it reports an error.
 
 
 <!--
-## Precedence
+# Precedence
 -->
 
-## 优先级
+# 优先级
 
 <!--
 We declare the precedence for comparison as follows:
@@ -289,10 +289,10 @@ either `(1 ≤ 2) ≤ 3` or `1 ≤ (2 ≤ 3)`.
 
 
 <!--
-## Decidability
+# Decidability
 -->
 
-## 可判定性
+# 可判定性
 
 <!--
 Given two numbers, it is straightforward to compute whether or not the
@@ -306,10 +306,10 @@ Chapter [Decidable](/Decidable/).
 
 
 <!--
-## Inversion
+# Inversion
 -->
 
-## 反演
+# 反演
 
 <!--
 In our definitions, we go from smaller things to larger things.
@@ -376,10 +376,10 @@ inv-z≤n z≤n = refl
 ```
 
 <!--
-## Properties of ordering relations
+# Properties of ordering relations
 -->
 
-## 序关系的性质
+# 序关系的性质
 
 <!--
 Relations pop up all the time, and mathematicians have agreed
@@ -448,10 +448,10 @@ partial order but not a total order.
 上述性质，比如说指出新定义的关系是一个偏序而不是全序。
 
 <!--
-#### Exercise `orderings` (practice) {#orderings}
+## Exercise `orderings` (practice) {#orderings}
 -->
 
-#### 练习 `orderings`（实践） {#orderings}
+## 练习 `orderings`（实践） {#orderings}
 
 <!--
 Give an example of a preorder that is not a partial order.
@@ -479,10 +479,10 @@ Give an example of a partial order that is not a total order.
 
 
 <!--
-## Reflexivity
+# Reflexivity
 -->
 
-## 自反性
+# 自反性
 
 <!--
 The first property to prove about comparison is that it is reflexive:
@@ -523,10 +523,10 @@ using holes and the `C-c C-c`, `C-c C-,`, and `C-c C-r` commands.
 
 
 <!--
-## Transitivity
+# Transitivity
 -->
 
-## 传递性
+# 传递性
 
 <!--
 The second property to prove about comparison is that it is
@@ -627,10 +627,10 @@ using holes and the `C-c C-c`, `C-c C-,`, and `C-c C-r` commands.
 
 
 <!--
-## Anti-symmetry
+# Anti-symmetry
 -->
 
-## 反对称性
+# 反对称性
 
 <!--
 The third property to prove about comparison is that it is
@@ -682,10 +682,10 @@ follows by congruence.
 
 
 <!--
-#### Exercise `≤-antisym-cases` (practice) {#leq-antisym-cases}
+## Exercise `≤-antisym-cases` (practice) {#leq-antisym-cases}
 -->
 
-#### 练习 `≤-antisym-cases`（实践） {#leq-antisym-cases}
+## 练习 `≤-antisym-cases`（实践） {#leq-antisym-cases}
 
 <!--
 The above proof omits cases where one argument is `z≤n` and one
@@ -702,10 +702,10 @@ argument is `s≤s`.  Why is it ok to omit them?
 
 
 <!--
-## Total
+# Total
 -->
 
-## 完全性
+# 完全性
 
 <!--
 The fourth property to prove about comparison is that it is total:
@@ -917,10 +917,10 @@ matches on the second argument before the first argument.
 
 
 <!--
-## Monotonicity
+# Monotonicity
 -->
 
-## 单调性
+# 单调性
 
 <!--
 If one bumps into both an operator and an ordering at a party, one may ask if
@@ -1023,10 +1023,10 @@ transitivity proves `m + p ≤ n + q`, as was to be shown.
 我们可以获得 `m + p ≤ n + q` 的证明，如上所示。
 
 <!--
-#### Exercise `*-mono-≤` (stretch)
+## Exercise `*-mono-≤` (stretch)
 -->
 
-#### 练习 `*-mono-≤` （延伸）
+## 练习 `*-mono-≤` （延伸）
 
 <!--
 Show that multiplication is monotonic with regard to inequality.
@@ -1042,10 +1042,10 @@ Show that multiplication is monotonic with regard to inequality.
 
 
 <!--
-## Strict inequality {#strict-inequality}
+# Strict inequality {#strict-inequality}
 -->
 
-## 严格不等关系 {#strict-inequality}
+# 严格不等关系 {#strict-inequality}
 
 <!--
 We can define strict inequality similarly to inequality:
@@ -1112,10 +1112,10 @@ exploiting the corresponding properties of inequality.
 因此我们亦可从不等关系的性质中，使用此性质来证明严格不等关系的性质。
 
 <!--
-#### Exercise `<-trans` (recommended) {#less-trans}
+## Exercise `<-trans` (recommended) {#less-trans}
 -->
 
-#### 练习 `<-trans` （推荐） {#less-trans}
+## 练习 `<-trans` （推荐） {#less-trans}
 
 <!--
 Show that strict inequality is transitive. Use a direct proof. (A later
@@ -1131,10 +1131,10 @@ exercise exploits the relation between < and ≤.)
 ```
 
 <!--
-#### Exercise `trichotomy` (practice) {#trichotomy}
+## Exercise `trichotomy` (practice) {#trichotomy}
 -->
 
-#### 练习 `trichotomy`（实践） {#trichotomy}
+## 练习 `trichotomy`（实践） {#trichotomy}
 
 <!--
 Show that strict inequality satisfies a weak version of trichotomy, in
@@ -1168,10 +1168,10 @@ similar to that used for totality.
 ```
 
 <!--
-#### Exercise `+-mono-<` (practice) {#plus-mono-less}
+## Exercise `+-mono-<` (practice) {#plus-mono-less}
 -->
 
-#### 练习 `+-mono-<`（实践） {#plus-mono-less}
+## 练习 `+-mono-<`（实践） {#plus-mono-less}
 
 <!--
 Show that addition is monotonic with respect to strict inequality.
@@ -1187,10 +1187,10 @@ As with inequality, some additional definitions may be required.
 ```
 
 <!--
-#### Exercise `≤-iff-<` (recommended) {#leq-iff-less}
+## Exercise `≤-iff-<` (recommended) {#leq-iff-less}
 -->
 
-#### 练习 `≤-iff-<` (推荐) {#leq-iff-less}
+## 练习 `≤-iff-<` (推荐) {#leq-iff-less}
 
 <!--
 Show that `suc m ≤ n` implies `m < n`, and conversely.
@@ -1205,10 +1205,10 @@ Show that `suc m ≤ n` implies `m < n`, and conversely.
 ```
 
 <!--
-#### Exercise `<-trans-revisited` (practice) {#less-trans-revisited}
+## Exercise `<-trans-revisited` (practice) {#less-trans-revisited}
 -->
 
-#### 练习 `<-trans-revisited`（实践） {#less-trans-revisited}
+## 练习 `<-trans-revisited`（实践） {#less-trans-revisited}
 
 <!--
 Give an alternative proof that strict inequality is transitive,
@@ -1227,10 +1227,10 @@ the fact that inequality is transitive.
 
 
 <!--
-## Even and odd
+# Even and odd
 -->
 
-## 奇和偶 {#even-and-odd}
+# 奇和偶 {#even-and-odd}
 
 <!--
 As a further example, let's specify even and odd numbers.  Inequality
@@ -1386,10 +1386,10 @@ successor of the sum of two even numbers, which is even.
 
 
 <!--
-#### Exercise `o+o≡e` (stretch) {#odd-plus-odd}
+## Exercise `o+o≡e` (stretch) {#odd-plus-odd}
 -->
 
-#### 练习 `o+o≡e` （延伸） {#odd-plus-odd}
+## 练习 `o+o≡e` （延伸） {#odd-plus-odd}
 
 <!--
 Show that the sum of two odd numbers is even.
@@ -1405,10 +1405,10 @@ Show that the sum of two odd numbers is even.
 
 
 <!--
-#### Exercise `Bin-predicates` (stretch) {#Bin-predicates}
+## Exercise `Bin-predicates` (stretch) {#Bin-predicates}
 -->
 
-#### 练习 `Bin-predicates` （延伸） {#Bin-predicates}
+## 练习 `Bin-predicates` （延伸） {#Bin-predicates}
 
 <!--
 Recall that
@@ -1506,10 +1506,10 @@ properties of `One`. It may also help to prove the following:
 
 
 <!--
-## Standard library
+# Standard library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 Definitions similar to those in this chapter can be found in the standard library:
@@ -1536,7 +1536,7 @@ and more arguments are implicit.
 更多的参数是隐式声明的。
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

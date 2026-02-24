@@ -15,7 +15,7 @@ and classical logic.
 
 本章介绍了否定的性质，讨论了直觉逻辑和经典逻辑。
 
-## Imports
+# Imports
 
 ```agda
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
@@ -29,10 +29,10 @@ open import plfa.part1.Isomorphism using (_≃_; extensionality)
 
 
 <!--
-## Negation
+# Negation
 -->
 
-## 否定
+# 否定
 
 <!--
 Given a proposition `A`, the negation `¬ A` holds if `A` cannot hold.
@@ -347,10 +347,10 @@ again causing the equality to hold trivially.
 
 
 <!--
-#### Exercise `<-irreflexive` (recommended)
+## Exercise `<-irreflexive` (recommended)
 -->
 
-#### 练习 `<-irreflexive`（推荐）
+## 练习 `<-irreflexive`（推荐）
 
 <!--
 Using negation, show that
@@ -368,10 +368,10 @@ is irreflexive, that is, `n < n` holds for no `n`.
 ```
 
 <!--
-#### Exercise `trichotomy` (practice)
+## Exercise `trichotomy` (practice)
 -->
 
-#### 练习 `trichotomy`（实践）
+## 练习 `trichotomy`（实践）
 
 <!--
 Show that strict inequality satisfies
@@ -401,10 +401,10 @@ but that when one holds the negation of the other two must also hold.
 ```
 
 <!--
-#### Exercise `⊎-dual-×` (recommended)
+## Exercise `⊎-dual-×` (recommended)
 -->
 
-#### 练习 `⊎-dual-×`（推荐）
+## 练习 `⊎-dual-×`（推荐）
 
 <!--
 Show that conjunction, disjunction, and negation are related by a
@@ -444,10 +444,10 @@ isomorphism that relates the two sides?
 
 
 <!--
-## Intuitive and Classical logic
+# Intuitive and Classical logic
 -->
 
-## 直觉逻辑与经典逻辑
+# 直觉逻辑与经典逻辑
 
 <!--
 In Gilbert and Sullivan's _The Gondoliers_, Casilda is told that
@@ -529,10 +529,10 @@ _Communications of the ACM_, December 2015.)
 _Communications of the ACM_，2015 年 12 月。）
 
 <!--
-## Excluded middle is irrefutable
+# Excluded middle is irrefutable
 -->
 
-## 排中律是不可辩驳的
+# 排中律是不可辩驳的
 
 <!--
 The law of the excluded middle can be formulated as follows:
@@ -715,10 +715,10 @@ Philip Wadler, _International Conference on Functional Programming_, 2003 年。
 
 
 <!--
-#### Exercise `Classical` (stretch)
+## Exercise `Classical` (stretch)
 -->
 
-#### 练习 `Classical`（延伸）
+## 练习 `Classical`（延伸）
 
 <!--
 Consider the following principles:
@@ -752,10 +752,10 @@ Show that each of these implies all the others.
 
 
 <!--
-#### Exercise `Stable` (stretch)
+## Exercise `Stable` (stretch)
 -->
 
-#### 联系 `Stable`（延伸）
+## 联系 `Stable`（延伸）
 
 <!--
 Say that a formula is _stable_ if double negation elimination holds for it:
@@ -782,10 +782,10 @@ of two stable formulas is stable.
 ```
 
 <!--
-## Standard library
+# Standard library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 Definitions similar to those in this chapter can be found in the standard library:
@@ -806,7 +806,7 @@ The standard library uses `contradiction`, which combines our
 标准库使用 `contradiction`，其结合了我们的 `¬-elim` 和 `⊥-elim`。
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

@@ -21,10 +21,10 @@ here we show how to define it as an inductive datatype.
 
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 <!--
 This chapter has no imports.  Every chapter in this book, and nearly
@@ -37,16 +37,17 @@ Since we define equality here, any import would create a conflict.
 
 
 <!--
-## Equality
+# Equality
 -->
 
-## 相等性
+# 相等性
 
 <!--
 We declare equality as follows:
 -->
 
 我们如下定义相等性：
+
 ```agda
 data _≡_ {A : Set} (x : A) : A → Set where
   refl : x ≡ x
@@ -94,10 +95,10 @@ is illegal.
 
 
 <!--
-## Equality is an equivalence relation
+# Equality is an equivalence relation
 -->
 
-## 相等性是一个等价关系
+# 相等性是一个等价关系
 
 <!--
 An equivalence relation is one which is reflexive, symmetric, and transitive.
@@ -231,10 +232,10 @@ instantiated.
 同样，交互式地证明这个特性是一个很好的练习，尤其是观察 Agda 的已知内容根据参数的实例而变化的过程。
 
 <!--
-## Congruence and substitution {#cong}
+# Congruence and substitution {#cong}
 -->
 
-## 合同性和替换性 {#cong}
+# 合同性和替换性 {#cong}
 
 <!--
 Equality satisfies _congruence_.  If two terms are equal,
@@ -317,10 +318,10 @@ versus functions to booleans `A → Bool` in Chapter [Decidable](/Decidable/).)
 或者以布尔值函数 `A → Bool`。）
 
 <!--
-## Chains of equations
+# Chains of equations
 -->
 
-## 等式链
+# 等式链
 
 <!--
 Here we show how to support reasoning with chains of equations, as
@@ -489,10 +490,10 @@ if it improves readability!)
 但这种低效率是我们实现等式链的良好记法的关键。如果它能提高可读性，就不应该担心低效率！）
 
 <!--
-#### Exercise `trans` and `≡-Reasoning` (practice)
+## Exercise `trans` and `≡-Reasoning` (practice)
 -->
 
-#### 练习 `trans` 和 `≡-Reasoning` （实践）
+## 练习 `trans` 和 `≡-Reasoning` （实践）
 
 <!--
 Sadly, we cannot use the definition of `trans′` using `≡-Reasoning` as the
@@ -508,10 +509,10 @@ of `_≡⟨_⟩_`)
 ```
 
 <!--
-## Chains of equations, another example
+# Chains of equations, another example
 -->
 
-## 等式链的另外一个例子
+# 等式链的另外一个例子
 
 <!--
 As a second example of chains of equations, we repeat the proof that addition
@@ -629,10 +630,10 @@ an order that will make sense to the reader.
 
 
 <!--
-#### Exercise `≤-Reasoning` (stretch)
+## Exercise `≤-Reasoning` (stretch)
 -->
 
-#### 练习 `≤-Reasoning` （延伸）
+## 练习 `≤-Reasoning` （延伸）
 
 <!--
 The proof of monotonicity from
@@ -653,10 +654,10 @@ regard to inequality.  Rewrite all of `+-monoˡ-≤`, `+-monoʳ-≤`, and `+-mon
 
 
 <!--
-## Rewriting
+# Rewriting
 -->
 
-## 重写
+# 重写
 
 <!--
 Consider a property of natural numbers, such as being even.
@@ -796,10 +797,10 @@ the same type as the goal.
 
 
 <!--
-## Multiple rewrites
+# Multiple rewrites
 -->
 
-## 多重重写
+# 多重重写
 
 <!--
 One may perform multiple rewrites, each separated by a vertical bar.  For instance,
@@ -831,10 +832,10 @@ when feasible.
 
 
 <!--
-## Rewriting expanded
+# Rewriting expanded
 -->
 
-## 深入重写
+# 深入重写
 
 <!--
 The `rewrite` notation is in fact shorthand for an appropriate use of `with`
@@ -902,10 +903,10 @@ it sparingly, but it is occasionally essential.
 
 
 <!--
-## Leibniz equality
+# Leibniz equality
 -->
 
-## 莱布尼兹（Leibniz）相等性
+# 莱布尼兹（Leibniz）相等性
 
 <!--
 The form of asserting equality that we have used is due to Martin-Löf,
@@ -1106,10 +1107,10 @@ Isomorphic to Martin-Löf Identity, Parametrically*
 
 
 <!--
-## Universe polymorphism {#unipoly}
+# Universe polymorphism {#unipoly}
 -->
 
-## 全体多态 {#unipoly}
+# 全体多态 {#unipoly}
 
 <!--
 As we have seen, not every type belongs to `Set`, but instead every
@@ -1255,10 +1256,10 @@ Further information on levels can be found in the [Agda docs][docs].
 
 
 <!--
-## Standard library
+# Standard library
 -->
 
-## 标准库
+# 标准库
 
 <!--
 Definitions similar to those in this chapter can be found in the standard
@@ -1287,7 +1288,7 @@ collisions, as mentioned in the introduction.
 
 [step-≡]: https://github.com/agda/agda-stdlib/blob/master/CHANGELOG/v1.3.md#changes-to-how-equational-reasoning-is-implemented
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

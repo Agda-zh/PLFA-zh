@@ -50,10 +50,10 @@ Chapter [DeBruijn](/DeBruijn/).
 从此我们计算出内在类型的项，如同 [DeBruijn](/DeBruijn) 章节中那样。
 
 <!--
-## Introduction: Inference rules as algorithms {#algorithms}
+# Introduction: Inference rules as algorithms {#algorithms}
 -->
 
-## 绪论：推理规则作为算法 {#algorithms}
+# 绪论：推理规则作为算法 {#algorithms}
 
 <!--
 In the calculus we have considered so far, a term may have more than
@@ -210,10 +210,10 @@ another that takes it as an input.
 
 
 <!--
-## Synthesising and inheriting types
+# Synthesising and inheriting types
 -->
 
-## 生成和继承类型
+# 生成和继承类型
 
 <!--
 In addition to the lookup judgment for variables, which will remain
@@ -374,10 +374,10 @@ We will formalise the above shortly.
 
 
 <!--
-## Soundness and completeness
+# Soundness and completeness
 -->
 
-## 可靠性和完备性
+# 可靠性和完备性
 
 <!--
 What we intend to show is that the typing judgments are
@@ -454,10 +454,10 @@ We are now ready to begin the formal development.
 我们现在可以开始正式的形式化了：
 
 <!--
-## Imports
+# Imports
 -->
 
-## 导入
+# 导入
 
 ```agda
 import Relation.Binary.PropositionalEquality as Eq
@@ -496,10 +496,10 @@ invoked as `Γ DB.⊢ A`, where `Γ` has type
 `A` 的类型是 `DB.Type`。
 
 <!--
-## Syntax
+# Syntax
 -->
 
-## 语法
+# 语法
 
 <!--
 First, we get all our infix declarations out of the way.
@@ -588,10 +588,10 @@ in deconstructors inherit.
 解构子中的主项由生成赋型，解构子中的构造子和副项由继承赋型。
 
 <!--
-## Example terms
+# Example terms
 -->
 
-## 项的例子
+# 项的例子
 
 <!--
 We can recreate the examples from preceding chapters.
@@ -656,10 +656,10 @@ required for `sucᶜ`, which inherits its type as an argument of `plusᶜ`.
 `sucᶜ` 甚至不需要类型注释，因为它从 `plusᶜ` 的参数中继承了类型。
 
 <!--
-## Bidirectional type checking
+# Bidirectional type checking
 -->
 
-## 双向类型检查
+# 双向类型检查
 
 <!--
 The typing rules for variables are as in
@@ -775,10 +775,10 @@ the equality test in the application rule in the first
 
 
 <!--
-#### Exercise `bidirectional-mul` (recommended) {#bidirectional-mul}
+## Exercise `bidirectional-mul` (recommended) {#bidirectional-mul}
 -->
 
-#### 练习 `bidirectional-mul` （推荐） {#bidirectional-mul}
+## 练习 `bidirectional-mul` （推荐） {#bidirectional-mul}
 
 <!--
 Rewrite your definition of multiplication from
@@ -793,10 +793,10 @@ Chapter [Lambda](/Lambda/), decorated to support inference.
 
 
 <!--
-#### Exercise `bidirectional-products` (recommended) {#bidirectional-products}
+## Exercise `bidirectional-products` (recommended) {#bidirectional-products}
 -->
 
-#### 练习 `bidirectional-products` （推荐） {#bidirectional-products}
+## 练习 `bidirectional-products` （推荐） {#bidirectional-products}
 
 <!--
 Extend the bidirectional type rules to include products from
@@ -812,10 +812,10 @@ Chapter [More](/More/).
 
 
 <!--
-#### Exercise `bidirectional-rest` (stretch) {#bidirectional-rest}
+## Exercise `bidirectional-rest` (stretch) {#bidirectional-rest}
 -->
 
-#### 练习 `bidirectional-rest` （延伸）{#bidirectional-rest}
+## 练习 `bidirectional-rest` （延伸）{#bidirectional-rest}
 
 <!--
 Extend the bidirectional type rules to include the rest of the constructs from
@@ -830,10 +830,10 @@ Chapter [More](/More/).
 
 
 <!--
-## Prerequisites
+# Prerequisites
 -->
 
-## 前置需求
+# 前置需求
 
 <!--
 The rule for `M ↑` requires the ability to decide whether two types
@@ -885,10 +885,10 @@ and `A ⇒ B` are not equal:
 
 
 <!--
-## Unique types
+# Unique types
 -->
 
-## 唯一的类型
+# 唯一的类型
 
 <!--
 Looking up a type in the context is unique.  Given two derivations,
@@ -956,10 +956,10 @@ follows since both terms are decorated with the same type.
 如果项是变向，两者装饰的类型相等，从此可得唯一性。
 
 <!--
-## Lookup type of a variable in the context
+# Lookup type of a variable in the context
 -->
 
-## 查询语境中变量的类型
+# 查询语境中变量的类型
 
 <!--
 Given `Γ` and two distinct variables `x` and `y`, if there is no type `A`
@@ -1062,10 +1062,10 @@ Consider the context:
 
 
 <!--
-## Promoting negations
+# Promoting negations
 -->
 
-## 提升否定
+# 提升否定
 
 <!--
 For each possible term form, we need to show that if one of its
@@ -1154,10 +1154,10 @@ type `A` and the other type `A′`.
 因为其中的类型分别是 `A` 和 `A′`。
 
 <!--
-## Synthesize and inherit types
+# Synthesize and inherit types
 -->
 
-## 生成和继承类型
+# 生成和继承类型
 
 <!--
 The table has been set and we are ready for the main course.
@@ -1455,10 +1455,10 @@ read directly from the corresponding typing rules.
 剩余的情况类似，它们的代码可以由对应的赋型规则直接对应得来。
 
 <!--
-## Testing the example terms
+# Testing the example terms
 -->
 
-## 测试项的例子
+# 测试项的例子
 
 <!--
 First, we copy the smart constructor `S′` introduced earlier that makes it easy to
@@ -1467,7 +1467,7 @@ access a variable in a context:
 
 首先，我们复制之前介绍过的智能构造子 `S′`，使得访问语境中的变量更加便利：
 
-```
+```agda
 S′ : ∀ {Γ x y A B}
    → {x≢y : False (x ≟ y)}
    → Γ ∋ x ⦂ A
@@ -1595,10 +1595,10 @@ term on the left and editing.
 同样，上面的推导使用对左手边的项求值所得，加上一些修改。
 
 <!--
-## Testing the error cases
+# Testing the error cases
 -->
 
-## 测试错误的例子
+# 测试错误的例子
 
 <!--
 It is important not just to check that code works as intended,
@@ -1734,10 +1734,10 @@ _ = refl
 
 
 <!--
-## Erasure
+# Erasure
 -->
 
-## 擦除
+# 擦除
 
 <!--
 From the evidence that a decorated term has the correct type it is
@@ -1869,10 +1869,10 @@ Chapter [DeBruijn](/DeBruijn/).
 λ 项转换至 [DeBruijn](/DeBruijn) 章节中内在类型的项。
 
 <!--
-#### Exercise `inference-multiplication` (recommended)
+## Exercise `inference-multiplication` (recommended)
 -->
 
-#### 练习 `inference-multiplication` （推荐）
+## 练习 `inference-multiplication` （推荐）
 
 <!--
 Apply inference to your decorated definition of multiplication from
@@ -1889,10 +1889,10 @@ multiplication from Chapter [DeBruijn](/DeBruijn/).
 ```
 
 <!--
-#### Exercise `inference-products` (recommended)
+## Exercise `inference-products` (recommended)
 -->
 
-#### 练习 `inference-products` （推荐）
+## 练习 `inference-products` （推荐）
 
 <!--
 Using your rules from exercise
@@ -1908,10 +1908,10 @@ bidirectional inference to include products. Also extend erasure.
 ```
 
 <!--
-#### Exercise `inference-rest` (stretch)
+## Exercise `inference-rest` (stretch)
 -->
 
-#### 练习 `inference-rest` （延伸）
+## 练习 `inference-rest` （延伸）
 
 <!--
 Using your rules from exercise
@@ -1930,10 +1930,10 @@ Chapter [More](/More/). Also extend erasure.
 
 
 <!--
-## Bidirectional inference in Agda
+# Bidirectional inference in Agda
 -->
 
-## Agda 中的双向推理
+# Agda 中的双向推理
 
 <!--
 Agda itself uses bidirectional inference.  This explains why
@@ -1965,7 +1965,7 @@ answer = 6 * 7
 ```
 
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:

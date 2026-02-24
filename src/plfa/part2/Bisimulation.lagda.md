@@ -213,10 +213,10 @@ are in bisimulation.
 另一个习题是证明 [More](/More/) 章节中积的替代表示方法形成了一个互模拟。
 
 <!--
-## Imports
+#Imports
 -->
 
-## 导入
+# 导入
 
 <!--
 We import our source language from
@@ -231,10 +231,10 @@ open import plfa.part2.More
 
 
 <!--
-## Simulation
+#Simulation
 -->
 
-## 模拟
+# 模拟
 
 <!--
 The simulation is a straightforward formalisation of the rules
@@ -284,10 +284,10 @@ but only bother to include in the simulation the terms of interest.
 
 
 <!--
-#### Exercise `_†` (practice)
+## Exercise `_†` (practice)
 -->
 
-#### 练习 `_†` （实践）
+## 练习 `_†` （实践）
 
 <!--
 Formalise the translation from source to target given in the introduction.
@@ -313,10 +313,10 @@ to use a decidable predicate to pick out terms in the domain of `_†`, using
 
 
 <!--
-## Simulation commutes with values
+#Simulation commutes with values
 -->
 
-## 模拟与值可交换
+# 模拟与值可交换
 
 <!--
 We need a number of technical results. The first is that simulation
@@ -346,10 +346,10 @@ of interest is a lambda abstraction.
 这是一个直接的分情况讨论，唯一有意思的情况是 λ 抽象。
 
 <!--
-#### Exercise `~val⁻¹` (practice)
+## Exercise `~val⁻¹` (practice)
 -->
 
-#### Exercise `~val⁻¹` （实践）
+## Exercise `~val⁻¹` （实践）
 
 <!--
 Show that this also holds in the reverse direction: if `M ~ M†`
@@ -364,10 +364,10 @@ and `Value M†` then `Value M`.
 ```
 
 <!--
-## Simulation commutes with renaming
+#Simulation commutes with renaming
 -->
 
-## 模拟与重命名可交换
+# 模拟与重命名可交换
 
 <!--
 The next technical result is that simulation commutes with renaming.
@@ -400,10 +400,10 @@ where appropriate (in this case, only for the body of an abstraction).
 
 
 <!--
-## Simulation commutes with substitution
+#Simulation commutes with substitution
 -->
 
-## 模拟与替换可交换
+# 模拟与替换可交换
 
 <!--
 The third technical result is that simulation commutes with substitution.
@@ -510,10 +510,10 @@ Once more, the structure of the proof resembles the original.
 
 
 <!--
-## The relation is a simulation
+#The relation is a simulation
 -->
 
-## 给出的关系是模拟
+# 给出的关系是模拟
 
 <!--
 Finally, we can show that the relation actually is a simulation.
@@ -769,10 +769,10 @@ In its structure, it looks a little bit like a proof of progress:
 
 
 <!--
-#### Exercise `sim⁻¹` (practice)
+## Exercise `sim⁻¹` (practice)
 -->
 
-#### 练习 `sim⁻¹` （实践）
+## 练习 `sim⁻¹` （实践）
 
 <!--
 Show that we also have a simulation in the other direction, and hence that we have
@@ -786,10 +786,10 @@ a bisimulation.
 ```
 
 <!--
-#### Exercise `products` (practice)
+## Exercise `products` (practice)
 -->
 
-#### 练习 `products` （实践）
+## 练习 `products` （实践）
 
 <!--
 Show that the two formulations of products in
@@ -807,7 +807,7 @@ In this case, the simulation is _not_ lock-step.
 -- 在这里写出你的代码。
 ```
 
-## Unicode
+# Unicode
 
 <!--
 This chapter uses the following unicode:
