@@ -1764,24 +1764,6 @@ data Eval {A} (M : ∅ ⊢ A) (g : ℕ) : Set where
 ```
 
 <!--
-Given a term `L` of type `A`, the evaluator will, for some `N`, return
-a reduction sequence from `L` to `N` and an indication of whether
-reduction finished:
--->
-
-给定类型为 `A` 的项 `L`，求值器会返回一个从 `L` 到某个 `N` 的求值序列，并提示归约是否完成：
-
-```agda
-data Steps {A} : ∅ ⊢ A → Set where
-
-  steps : {L N : ∅ ⊢ A}
-    → L —↠ N
-    → Finished N
-      ----------
-    → Steps L
-```
-
-<!--
 The evaluator takes gas and an intrinsically-typed term,
 and returns a reduction sequence, indicating either that it
 ran out of gas or that it terminated.
