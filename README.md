@@ -1,6 +1,6 @@
 ---
 title     : 使用说明
-permalink: /GettingStarted/
+permalink : /GettingStarted/
 translators : ["Rongxiao Fu", "Oling Cat"]
 ---
 
@@ -55,7 +55,7 @@ You can read PLFA [online][plfa] without installing anything. However, if you wi
 PLFA is tested against specific versions of Agda and the standard library, which are shown in the badges above. Agda and the standard library change rapidly, and these changes often break PLFA, so using older or newer versions usually causes problems.
 -->
 
-PLFA 只针对特定的 Agda 和 标准库版本进行了测试，相应版本已在前面的徽章中指明。
+PLFA 只针对特定的 Agda 和标准库版本进行了测试，相应版本已在前面的徽章中指明。
 Agda 和标准库变化得十分迅速，而这些改变经常搞坏 PLFA，因此使用旧版或新版通常会出现问题。
 
 <!--
@@ -188,7 +188,7 @@ If you'd like, you can [test to see if you've installed Agda correctly][agda-rea
 We recommend installing PLFA from Github into your home directory, by running the following command:
 -->
 
-我们建议您使用下面的命令把 PLFA 安装至你的家目录：
+我们建议你使用下面的命令把 PLFA 安装至你的家目录：
 
 ```bash
 git clone --depth 1 https://github.com/plfa/plfa.github.io plfa
@@ -208,7 +208,7 @@ git submodule update --init
 Finally, we need to let Agda know where to find the Agda standard library and PLFA. Two configuration files are required, one which lists paths to the libraries and one which specifies which libraries to load by default.
 -->
 
-最后，我们需要让 Agda 知道如何找到标准库。
+最后，我们需要让 Agda 知道如何找到标准库和 PLFA。
 你需要两个配置文件，一个用于指定库的路径，一个用于指定默认载入的库。
 
 
@@ -297,7 +297,7 @@ Make sure that you are able to open, edit, and save text files with your install
 -->
 
 确保你可以用你安装的版本打开、编辑、保存文件。GNU Emacs 网站上的 [Emacs
-向导][emacs-tour]描述了如果打开 Emacs 安装中的教程。
+向导][emacs-tour]描述了如何打开 Emacs 安装中的教程。
 
 <!--
 Agda ships with the editor support for Emacs built-in, so if you’ve installed Agda, all you have to do to configure Emacs is run:
@@ -314,8 +314,8 @@ agda-mode compile
 If you are already an Emacs user and have customized your setup, you may want to note the configuration which the `setup` appends to your `.emacs` file, and integrate it with your own preferred setup.
 -->
 
-如果你已经是 Emacs 用户，并有自己的设置，你会发现 `setup` 命令向你的 `.emacs`
-文件中追加了配置，来配合你已有的设置。
+如果你已经是 Emacs 用户，并有自己的设置，你可能需要留意 `setup` 命令追加到 `.emacs`
+文件中的配置，并将其与你已有的设置整合。
 
 
 <!--
@@ -585,7 +585,7 @@ All the supported characters in `agda-mode` are shown.
 If you want to know how you input a specific Unicode character in agda file, move the cursor onto the character and type the following command:
 -->
 
-如果你想知道如何在 agda 文件输入一个特定的 Unicode 字符，请将光标移动到该字符上并输入以下命令：
+如果你想知道如何在 agda 文件中输入一个特定的 Unicode 字符，请将光标移动到该字符上并输入以下命令：
 
     M-x quail-show-key
 
@@ -603,7 +603,7 @@ You'll see the key sequence of the character in mini buffer.
 
 [Spacemacs][spacemacs] 是一个「社区引领的 Emacs 版本」，对 Emacs 和 Vim
 的编辑方式都有很好的支持。它自带[集成了
-`agda-mode`][spacemacs-agda]，所需的只是将 `.spacemacs` 中启用 Agda 支持。
+`agda-mode`][spacemacs-agda]，所需的只是在 `.spacemacs` 中启用 Agda 支持。
 
 ### Visual Studio Code
 
@@ -614,9 +614,15 @@ You'll see the key sequence of the character in mini buffer.
 [Visual Studio Code][vscode] 是一个微软开发的开源代码编辑器。
 Visual Studio 市场中有 [Agda 插件][vscode-agda]。
 
+<!--
 ## Getting Started for Contributors
 
 If you plan to build PLFA locally, please refer to [Contributing][plfa-contributing] for additional instructions.
+-->
+
+## 贡献者指南
+
+如果你打算在本地构建 PLFA，请参阅[贡献指南][plfa-contributing]以获取更多说明。
 
 <!-- Links -->
 [epub-zh]: https://agda-zh.github.io/PLFA-zh/out/epub/plfa.epub
