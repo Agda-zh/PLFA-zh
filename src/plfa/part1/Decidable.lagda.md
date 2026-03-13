@@ -379,7 +379,7 @@ or of the form `no ¬x`, where `¬x` provides evidence that `A` cannot hold
 -->
 
 正如布尔值，这个类型有两个构造子。一个 `Dec A` 类型的值要么是以 `yes x` 的形式，其中 `x` 提供 `A`
-成立的证明，或者是以 `no ¬x` 的形式，其中 `x` 提供了 `A` 无法成立的证明。（也就是说，`¬x` 是一个给定
+成立的证明，或者是以 `no ¬x` 的形式，其中 `¬x` 提供了 `A` 无法成立的证明。（也就是说，`¬x` 是一个给定
 `A` 成立的证据，返回矛盾的函数）
 
 <!--
@@ -827,7 +827,7 @@ but it would be equally valid to pick the second.
 -->
 
 同样地，在 Emacs 中，第二条等式在左手边以灰色显示，说明等式的顺序决定了第一条还是第二条会被匹配。
-这一次，我们给出的结果会因为是第二条还是第三条而不一样。如果两个命题都成立，我们选择第一个来构造析取，
+这一次，我们给出的结果会因为是第一条还是第二条而不一样。如果两个命题都成立，我们选择第一个来构造析取，
 但选择第二个也是同样正确的。
 
 <!--
@@ -892,7 +892,7 @@ first or the second can match.  However, regardless of which matches
 the answer is the same.
 -->
 
-当任何一个布尔值为真的时候，另一个布尔值恒为真，我们成为第一个布尔值蕴涵第二个布尔值。
+当任何一个布尔值为真的时候，另一个布尔值恒为真，我们称为第一个布尔值蕴涵第二个布尔值。
 因此，两者的蕴涵在第二个为真或者第一个为假时为真，在第一个为真而第二个为假时为假。
 在 Emacs 中，第二个等式的左手边显示为灰色，表示这些等式出现的顺序决定了是第一条还是第二条
 会被匹配到。然而，不管是哪一条被匹配到，结果都是一样的。
@@ -902,7 +902,7 @@ Correspondingly, given two decidable propositions,
 we can decide if the first implies the second:
 -->
 
-相应地，给定两个可判定的命题，我们可以判定它们的析取：
+相应地，给定两个可判定的命题，我们可以判定第一个是否蕴涵第二个：
 
 ```agda
 _→-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A → B)
@@ -974,7 +974,7 @@ Chapter [Isomorphism](/Isomorphism/#iff),
 operation on booleans and decidables, and also show the corresponding erasure:
 -->
 
-给出与[同构与嵌入](/Isomorphism/#iff)章节中 `_↔_` 相对应的布尔值与可判定的值的操作，
+给出与[同构与嵌入](/Isomorphism/#iff)章节中 `_⇔_` 相对应的布尔值与可判定的值的操作，
 并证明其对应的擦除：
 
 ```agda
