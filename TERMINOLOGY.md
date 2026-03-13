@@ -14,7 +14,7 @@ English to Chinese translation reference for PLFA-zh.
 | Commutativity | 交换律 |
 | Compute | 计算 |
 | Conclusion | 结论 |
-| Congruence | 合同性 |
+| Congruence | 同余性 |
 | Corollary | 推论 |
 | Conjunction | 合取 |
 | Constructor | 构造子 |
@@ -45,7 +45,7 @@ English to Chinese translation reference for PLFA-zh.
 | Indexed Datatype | 索引数据类型 |
 | Inductive Case | 归纳步骤 |
 | Inductive Datatype | 归纳数据类型 |
-| Inference Rule | 推导规则 |
+| Inference Rule | 推理规则 |
 | Infix | 中缀 |
 | Irreflexive | 非自反的 |
 | Isomorphism | 同构 |
@@ -66,7 +66,7 @@ English to Chinese translation reference for PLFA-zh.
 | Product | 积 |
 | Proof by Induction | 归纳证明 |
 | Property | 性质 |
-| Proof by Reflection | 互映证明 |
+| Proof by Reflection | 反射证明 |
 | Proposition | 命题 |
 | Propositions as Types | 命题即类型 |
 | Record | 记录 |
