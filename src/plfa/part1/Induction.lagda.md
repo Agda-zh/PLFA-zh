@@ -1244,7 +1244,7 @@ Similarly, we write `(x +_)` for the function that applied to `y`
 returns `x + y`; the same works for any infix operator.
 -->
 
-类似地，我们将应用到 `y` 并返回 `x + y` 的函数写作 `(x +_ )`。
+类似地，我们将应用到 `y` 并返回 `x + y` 的函数写作 `(x +_)`。
 这同样适用于任何中缀运算符。
 
 
@@ -1302,7 +1302,7 @@ more judgments:
 
 之后我们重复此过程，因此接下来一天我们知道今天以前的所有判断，
 以及任何通过此规则添加的判断。起始步骤并未告诉我们新的东西，
-而如今归归纳步骤添加了更多的判断：
+而如今归纳步骤添加了更多的判断：
 
 <!--
     On the second day, we know about associativity of 0 and 1.
@@ -1445,6 +1445,7 @@ Simplifying both sides with the inductive case of addition yields the equation:
 
     suc ((m + n) + p) ≡ suc (m + (n + p))
 
+<!--
 This is our goal to be proved.  Rewriting by a given equation is
 indicated by the keyword `rewrite` followed by a proof of that
 equation.  Rewriting replaces each occurrence of the left-hand side of
@@ -1453,12 +1454,16 @@ rewriting by the inductive hypothesis our goal becomes
 
     suc (m + (n + p)) ≡ suc (m + (n + p))
 
-<!--
 and the proof is again given by `refl`.  Rewriting avoids
 not only chains of equations but also the need to invoke `cong`.
 -->
 
-其证明同样由 `refl` 给出。改写不仅可以省去等式链还可以避免调用 `cong`.
+这就是我们要证明的目标。对于给定等式的改写由关键字 `rewrite` 加上该等式的证明来表示。
+改写会将目标中等式左侧的每次出现替换为右侧。在此步骤中，根据归纳假设改写后，目标变为
+
+    suc (m + (n + p)) ≡ suc (m + (n + p))
+
+其证明同样由 `refl` 给出。改写不仅可以省去等式链，还可以避免调用 `cong`。
 
 
 <!--
@@ -1660,7 +1665,7 @@ typing `C-c C-r` will fill it in, completing the proof:
 ## Exercise `+-swap` (recommended) {#plus-swap}
 -->
 
-## 练习：`+-swap`（推荐） {#plus-swap}
+## 练习 `+-swap`（推荐） {#plus-swap}
 
 <!--
 Show
