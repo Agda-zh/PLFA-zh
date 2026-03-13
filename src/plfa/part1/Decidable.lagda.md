@@ -994,7 +994,7 @@ postulate
 # Proof by reflection {#proof-by-reflection}
 -->
 
-# 互映证明 {#proof-by-reflection}
+# 反射证明 {#proof-by-reflection}
 
 <!--
 Let's revisit our definition of monus from
@@ -1034,7 +1034,7 @@ know the two numbers *statically*. In that case, we can use a technique called
 equality `n ≤? m` while type checking, and make sure that `n ≤ m`!
 -->
 
-这个问题没有通用的解决方案，但是在上述的情景下，我们恰好**静态地**知道这两个数字。这种情况下，我们可以使用一种被称为**互映证明（proof by reflection）**的技术。
+这个问题没有通用的解决方案，但是在上述的情景下，我们恰好**静态地**知道这两个数字。这种情况下，我们可以使用一种被称为**反射证明（proof by reflection）**的技术。
 实质上，在类型检查的时候我们可以让 Agda 运行可判定的等式 `n ≤? m` 并且保证 `n ≤ m`！
 
 <!--
