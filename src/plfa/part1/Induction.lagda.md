@@ -280,7 +280,7 @@ If we write `P m` for a property of `m`, then what we need to
 demonstrate are the following two inference rules:
 -->
 
-若将 `m` 的某种性质（Property）写作 `P m`，那么我们需要证明的就是以下两个推导规则：
+若将 `m` 的某种性质（Property）写作 `P m`，那么我们需要证明的就是以下两个推理规则：
 
     ------
     P zero
@@ -597,7 +597,7 @@ preserved by applying that function.  If `e` is evidence that `x ≡ y`,
 then `cong f e` is evidence that `f x ≡ f y`, for any function `f`.
 -->
 
-若某个关系在应用了给定的函数后仍然保持不变，则称该关系满足**合同性（Congruence）**。
+若某个关系在应用了给定的函数后仍然保持不变，则称该关系满足**同余性（Congruence）**。
 若 `e` 是 `x ≡ y` 的证据，那么对于任意函数 `f`，`cong f e` 就是 `f x ≡ f y` 的证据。
 
 <!--
@@ -1137,7 +1137,7 @@ which is justified by congruence and the induction hypothesis,
 `⟨ cong suc (+-comm m n) ⟩`.  This completes the proof.
 -->
 
-它依据合同性和归纳假设 `⟨ cong suc (+-comm m n) ⟩` 得出。证毕。
+它依据同余性和归纳假设 `⟨ cong suc (+-comm m n) ⟩` 得出。证毕。
 
 <!--
 Agda requires that identifiers are defined before they are used,
@@ -1230,7 +1230,7 @@ into the equation:
 -->
 
 第三，Agda 支持 Richard Bird 引入的**片段（Section）**记法。我们将应用到
-`x` 并返回 `x + y` 的函数写作 `(_+ y)`。因此，对于 `+-assoc m n p` 应用合同性
+`x` 并返回 `x + y` 的函数写作 `(_+ y)`。因此，对于 `+-assoc m n p` 应用同余性
 `cong (_+ q)` 会将等式：
 
     (m + n) + p  ≡  m + (n + p)
