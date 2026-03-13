@@ -134,7 +134,6 @@ successor of two; and so on.
 ## Exercise `seven` (practice) {#seven}
 -->
 
-<<<<<<< HEAD
 ## 练习 `seven`（实践） {#seven}
 
 <!--
@@ -147,13 +146,6 @@ Write out `7` in longhand.
 
 ```agda
 -- 请将代码写在此处
-```
-
-Write out `7` in longhand. The suggestion below loads but is, of course, incorrect.
-
-```agda
-seven : ℕ
-seven = zero
 ```
 
 <!--
@@ -1055,10 +1047,15 @@ We can do a simple analysis to show that all the cases are covered.
       - 如果它是 `zero`，应用第二个等式。
       - 如果它是 `suc m`，应用第三个等式。
 
+<!--
 Agda will raise an error if all the cases are not covered.
 As with addition and multiplication, the recursive definition is well
 founded because monus on bigger numbers is defined in terms of monus
 on smaller numbers.
+-->
+
+如果有情况没有被覆盖，Agda 会报错。和加法、乘法一样，这个递归定义也是良基的，
+因为较大数的饱和减法是根据较小数的饱和减法来定义的。
 
 <!--
 For example, let's subtract two from three:
