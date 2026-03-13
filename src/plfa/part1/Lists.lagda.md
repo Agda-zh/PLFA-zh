@@ -1666,7 +1666,7 @@ to arbitrary levels, as described in the section on
 -->
 
 （你能明白为什么这里的 `_∘_` 被泛化到任意层级很重要吗？
-如[全体多态](/Equality/#unipoly)一节所述。）
+如[宇宙多态](/Equality/#unipoly)一节所述。）
 
 <!--
 Do we also have the following?

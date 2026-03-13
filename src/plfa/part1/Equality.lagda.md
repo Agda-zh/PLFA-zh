@@ -1110,7 +1110,7 @@ Isomorphic to Martin-Löf Identity, Parametrically*
 # Universe polymorphism {#unipoly}
 -->
 
-# 全体多态 {#unipoly}
+# 宇宙多态 {#unipoly}
 
 <!--
 As we have seen, not every type belongs to `Set`, but instead every
@@ -1132,7 +1132,7 @@ with respect to an arbitrary level `ℓ`. To make use of levels, we
 first import the following:
 -->
 
-答案是**全体多态（Universe Polymorphism）**，一个定义可以根据任何层级 `ℓ` 来做出。
+答案是**宇宙多态（Universe Polymorphism）**，一个定义可以根据任何层级 `ℓ` 来做出。
 为了使用层级，我们首先导入下列内容：
 
 ```agda
@@ -1210,7 +1210,7 @@ the text, but most definitions in the standard library, including those for
 equality, are generalised to arbitrary levels as above.
 -->
 
-为了简洁，我们在本书中给出的定义将避免使用全体多态，但是大多数标准库中的定义，
+为了简洁，我们在本书中给出的定义将避免使用宇宙多态，但是大多数标准库中的定义，
 包括相等性的定义，都推广到了任意层级，如上所示。
 
 <!--
