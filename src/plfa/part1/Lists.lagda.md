@@ -1637,7 +1637,7 @@ replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
 -->
 
-证明 `All-++-⇔` 的等价关系可以被扩展至一个同构关系。
+证明 `All-++-⇔` 的等价关系可以被扩展至一个同构。
 
 
 
