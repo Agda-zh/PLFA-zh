@@ -518,7 +518,7 @@ a disjoint sum.
 
 「命题即类型」最初是为直觉逻辑而制定的。这是一种完美的契合，因为在直觉主义的
 解释中，式子 `A ⊎ B` 刚好可以在给出 `A` 或 `B` 之一的证明时得证，因此对应于析取
-的类型是一个**不交并（Disjoint Union）**。
+的类型是一个**不交和（Disjoint Sum）**。
 
 <!--
 (Parts of the above are adopted from "Propositions as Types", Philip Wadler,
