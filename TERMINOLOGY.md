@@ -1,0 +1,93 @@
+# Terminology Table
+
+English to Chinese translation reference for PLFA-zh.
+
+| English | 中文翻译 |
+|---------|----------|
+| Absurd Pattern | 荒谬模式 |
+| Anti-symmetric | 反对称 |
+| Associativity | 结合律 |
+| Base Case | 起始步骤 |
+| Binary Relation | 二元关系 |
+| Boolean | 布尔值 |
+| Cartesian Product | 笛卡尔积 |
+| Commutativity | 交换律 |
+| Compute | 计算 |
+| Conclusion | 结论 |
+| Congruence | 合同性 |
+| Corollary | 推论 |
+| Conjunction | 合取 |
+| Constructor | 构造子 |
+| Currying | 柯里化 |
+| Datatype | 数据类型 |
+| Decidable | 可判定性/可判定的 |
+| Dependent Function | 依赖函数 |
+| Destructor | 解构子 |
+| Disjoint Sum | 不交和 |
+| Disjoint Union | 不交并 |
+| Disjunction | 析取 |
+| Distributivity | 分配律 |
+| Dot Pattern | 点模式 |
+| Embedding | 嵌入 |
+| Empty Type | 空类型 |
+| Equivalence Relation | 等价关系 |
+| Evidence | 证据/证明 |
+| Extensionality | 外延性 |
+| False | 假 |
+| Function Composition | 函数组合 |
+| Function Space | 函数空间 |
+| Hole | 洞 |
+| Hypothesis | 假设 |
+| Identity (neutral element) | 幺元 |
+| Implication | 蕴涵 |
+| Induction | 归纳 |
+| Induction Hypothesis | 归纳假设 |
+| Indexed Datatype | 索引数据类型 |
+| Inductive Case | 归纳步骤 |
+| Inductive Datatype | 归纳数据类型 |
+| Inference Rule | 推导规则 |
+| Infix | 中缀 |
+| Irreflexive | 非自反的 |
+| Isomorphism | 同构 |
+| Judgment | 判断 |
+| Left-inverse | 左逆 |
+| Lemma | 引理 |
+| Levels | 层级 |
+| Mixfix | 混缀 |
+| Monotonic | 单调的 |
+| Parameter | 参数 |
+| Partial Order | 偏序 |
+| Pattern Matching | 模式匹配 |
+| Predicate | 谓词 |
+| Preorder | 预序 |
+| Postulate | 假设（Agda 关键字） |
+| Pragma | 编译指令 |
+| Precedence | 优先级 |
+| Product | 积 |
+| Proof by Induction | 归纳证明 |
+| Property | 性质 |
+| Proof by Reflection | 互映证明 |
+| Proposition | 命题 |
+| Propositions as Types | 命题即类型 |
+| Record | 记录 |
+| Recursion | 递归 |
+| Reflexivity | 自反性 |
+| Right-inverse | 右逆 |
+| Scope | 作用域 |
+| Signature | 签名 |
+| Substitution | 替换性 |
+| Sum | 和 |
+| Term | 项 |
+| Total Order | 全序 |
+| Transitive | 传递 |
+| Trichotomy | 三分律 |
+| True | 真 |
+| Type | 类型 |
+| Unit (neutral element) | 单位元 |
+| Unit Type | 单元类型 |
+| Universal Quantifier | 全称量词 |
+| Universe Polymorphism | 宇宙多态 |
+| Unary Relation | 一元关系 |
+| Value | 值 |
+| Weak Distributive Law | 弱分配律 |
+| Well-founded | 良基的 |
