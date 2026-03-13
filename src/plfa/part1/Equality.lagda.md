@@ -968,10 +968,10 @@ mentions `Set` on the right-hand side, the corresponding signature
 must use `Set₁`.  We say a bit more about levels below.
 -->
 
-这是我们第一次使用**等级（Levels）**。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
+这是我们第一次使用**层级（Levels）**。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
 比如罗素悖论（Russell's Paradox）或者 Girard 悖论。不同的是，我们有一个阶级的类型：其中
 `Set : Set₁`，`Set₁ : Set₂`，以此类推。实际上，`Set` 本身就是 `Set₀` 的缩写。定义
-`_≐_` 的等式在右手边提到了 `Set`，因此签名中必须使用 `Set₁`。我们稍后将进一步介绍等级。
+`_≐_` 的等式在右手边提到了 `Set`，因此签名中必须使用 `Set₁`。我们稍后将进一步介绍层级。
 
 <!--
 Leibniz equality is reflexive and transitive,
@@ -1124,7 +1124,7 @@ two values of a type that belongs to `Set ℓ` for some arbitrary level `ℓ`?
 正如我们之前看到的那样，不是每个类型都属于 `Set`，但是每个类型都属于类型阶级的某处，
 `Set₀`、`Set₁`、`Set₂`等等。其中 `Set` 是 `Set₀` 的缩写，此外 `Set₀ : Set₁`，`Set₁ : Set₂`，以此类推。
 当我们需要比较两个属于 `Set` 的类型的值时，我们之前给出的定义是足够的，
-但如果我们需要比较对于任何等级 `ℓ`，两个属于 `Set ℓ` 的类型的值该怎么办呢？
+但如果我们需要比较对于任何层级 `ℓ`，两个属于 `Set ℓ` 的类型的值该怎么办呢？
 
 <!--
 The answer is _universe polymorphism_, where a definition is made
@@ -1132,8 +1132,8 @@ with respect to an arbitrary level `ℓ`. To make use of levels, we
 first import the following:
 -->
 
-答案是**全体多态（Universe Polymorphism）**，一个定义可以根据任何等级 `ℓ` 来做出。
-为了使用等级，我们首先导入下列内容：
+答案是**全体多态（Universe Polymorphism）**，一个定义可以根据任何层级 `ℓ` 来做出。
+为了使用层级，我们首先导入下列内容：
 
 ```agda
 open import Level using (Level; _⊔_) renaming (zero to lzero; suc to lsuc)
@@ -1144,13 +1144,13 @@ We rename constructors `zero` and `suc` to `lzero` and `lsuc` to avoid confusion
 between levels and naturals.
 -->
 
-我们将构造子 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和等级之间的混淆。
+我们将构造子 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和层级之间的混淆。
 
 <!--
 Levels are isomorphic to natural numbers, and have similar constructors:
 -->
 
-等级与自然数是同构的，有相似的构造子：
+层级与自然数是同构的，有相似的构造子：
 
     lzero : Level
     lsuc  : Level → Level
@@ -1177,13 +1177,13 @@ and so on. There is also an operator
 that given two levels returns the larger of the two.
 -->
 
-给定两个等级，返回两者中较大的那个。
+给定两个层级，返回两者中较大的那个。
 
 <!--
 Here is the definition of equality, generalised to an arbitrary level:
 -->
 
-下面是相等性的定义，推广到任意等级：
+下面是相等性的定义，推广到任意层级：
 
 ```agda
 data _≡′_ {ℓ : Level} {A : Set ℓ} (x : A) : A → Set ℓ where
@@ -1211,7 +1211,7 @@ equality, are generalised to arbitrary levels as above.
 -->
 
 为了简洁，我们在本书中给出的定义将避免使用全体多态，但是大多数标准库中的定义，
-包括相等性的定义，都推广到了任意等级，如上所示。
+包括相等性的定义，都推广到了任意层级，如上所示。
 
 <!--
 Here is the generalised definition of Leibniz equality:
