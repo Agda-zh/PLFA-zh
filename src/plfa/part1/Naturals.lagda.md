@@ -60,7 +60,7 @@ as a pair of inference rules:
 -->
 
 自然数集是无限的，然而其定义只需寥寥几行即可写出。下面是用两条
-**推导规则（Inference Rules）** 定义的自然数：
+**推理规则（Inference Rules）** 定义的自然数：
 
     --------
     zero : ℕ
@@ -159,7 +159,7 @@ Type `C-c C-l` in Emacs to instruct Agda to re-load.
 # Unpacking the inference rules
 -->
 
-# 推导规则分析
+# 推理规则分析
 
 <!--
 Let's unpack the inference rules.  Each inference rule consists of
@@ -172,7 +172,7 @@ is a natural, and the conclusion asserts that `suc m`
 is also a natural.
 -->
 
-我们来分析一下刚才的两条推导规则。每条推导规则包含写在一条水平直线上的
+我们来分析一下刚才的两条推理规则。每条推理规则包含写在一条水平直线上的
 零条或多条**判断（Judgment）**，称之为**假设（Hypothesis）**；以及写在
 直线下的一条判断，称之为**结论（Conclusion）**。第一条规则是起始步骤：它没
 有任何假设，其结论断言 `zero` 是一个自然数。第二条规则是归纳步骤：它有
@@ -1286,7 +1286,7 @@ definition to equivalent inference rules for judgments about equality:
 -->
 
 同理，无需利用循环性，我们的加法定义也是可以被赋予意义的。
-为此，我们需要将加法的定义归约到用于判断相等性的等价的推导规则上来。
+为此，我们需要将加法的定义归约到用于判断相等性的等价的推理规则上来。
 
     n : ℕ
     --------------
@@ -1306,8 +1306,8 @@ case. It asserts that if adding `m` and `n` gives `p`, then adding `suc m` and
 -->
 
 假设我们已经定义了自然数的无限集合，指定了判断 `n : ℕ` 的意义。
-第一条推导规则是起始步骤。它断言如果 `n` 是一个自然数，那么零加上它得 `n`。
-第二条推导规则是归纳步骤。它断言如果 `m` 加上 `n` 得 `p`，那么 `suc m` 加
+第一条推理规则是起始步骤。它断言如果 `n` 是一个自然数，那么零加上它得 `n`。
+第二条推理规则是归纳步骤。它断言如果 `m` 加上 `n` 得 `p`，那么 `suc m` 加
 上 `n` 得 `suc p`。
 
 <!--
