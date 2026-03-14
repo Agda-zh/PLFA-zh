@@ -129,7 +129,7 @@ and its Church numeral variant.
 这给予我们一种自动化求值的策略。
 从一个良类型的闭项开始。
 由可进性，它要么是一个值，于是求值结束了；要么可以被归约为另一个项。
-由保型性，所以得到的另一个项本身也是一个良类型的闭项。
+由保型性，所得到的另一个项本身也是一个良类型的闭项。
 重复这一过程。
 我们要么会陷入永久的循环中，此时求值过程将不会停机；
 要么最终会得到一个被确保是闭项且类型与原始项相同的值。
@@ -148,7 +148,7 @@ types without needing to develop a separate inductive definition of the
 -->
 
 （这一章启发自《软件基础》（_Software Foundations_）/《程序语言基础》（_Programming Language Foundations_）中对应的 _StlcProp_ 一章。
-事实上我们技术选择中的一个——通过显示地引入一条判断 `Γ ∋ x ⦂ A`，
+事实上我们技术选择中的一个——通过显式地引入一条判断 `Γ ∋ x ⦂ A`，
 而不是将语境视作为一个从标识符映射到类型的函数——简化了开发过程。
 特别地，我们不需要额外地去归纳定义关系 `appears_free_in` 就可以证明替换保留了类型。）
 
@@ -351,7 +351,7 @@ exists a term `N` such that `M —→ N`, or if it is done, meaning that
 `M` is a value.
 -->
 
-一个进行的项 `M` 要么可以进行一步归约，这意味着存在一个项 `N` 使得 `M —→ N`，
+一个可进的项 `M` 要么可以进行一步归约，这意味着存在一个项 `N` 使得 `M —→ N`，
 要么已经完成了归约，这意味着 `M` 是一个值。
 
 <!--
@@ -421,8 +421,8 @@ Let's unpack the first three cases:
   + 如果这个项还能够进行一步归约，我们就有了 `L —→ L′` 的论据，再由 `ξ-·₁`，
     可知原来的项进行到 `L′ · M`。
 
-  + 如果这个项的归约结束了，我们就有了 `L` 是一个值的论据。
-    则考虑对项 `L` 良类型的推导过程递归应用可进性：
+  + 如果这个项的归约结束了，我们就有了 `L` 是一个值的论据，
+    它必须是一个 λ-抽象。则考虑对项 `M` 良类型的推导过程递归应用可进性：
 
     <!--
     - If the term steps, we have evidence that `M —→ M′`,
@@ -1361,7 +1361,7 @@ arguments and to be consistent.
 ## Exercise `subst′` (stretch)
 -->
 
-## 练习 `subst`（延伸）
+## 练习 `subst′`（延伸）
 
 <!--
 Rewrite `subst` to work with the modified definition `_[_:=_]′`
@@ -1688,7 +1688,7 @@ remaining.  There are two possibilities:
   are two possibilities:
 -->
 
-* 如果非零，则在下一个步骤中我们还剩下 `m` 燃料。将进度应用于项 `L` 是良类型的论据。
+* 如果非零，则在下一个步骤中我们还剩下 `m` 燃料。对项 `L` 是良类型的论据应用可进性。
   此处有两种可能：
 
   <!--
@@ -1767,8 +1767,8 @@ applied to successor and zero.  Supplying 100 steps of gas is more than enough:
 -->
 
 类似地，我们可以用 Agda 计算前一章节中给出的归约序列。
-我们从计算 Church 表示法表示数字的数字二应用到后继和数字零开始。
-提供 100 步量的燃料就已远超过需求了：
+我们从将 Church 数字二应用到后继函数和零开始。
+提供 100 步量的燃料已远超需求：
 
 ```agda
 _ : eval (gas 100) (⊢twoᶜ · ⊢sucᶜ · ⊢zero) ≡
@@ -2182,8 +2182,8 @@ An easy consequence is that starting from a well-typed term, taking
 any number of reduction steps leads to a term that is not stuck:
 -->
 
-一个简单地结果是，从一个良类型的项开始，进行任意多次步进，
-将得到一个不被卡住的项。
+一个简单的结果是，从一个良类型的项开始，进行任意多次步进，
+将得到一个不会卡住的项。
 
 ```agda
 postulate
@@ -2260,7 +2260,7 @@ of congruence to deal with functions of four arguments
 is exactly analogous to `cong` and `cong₂` as defined previously:
 -->
 
-我们的证明需要一个合同变体来处理四个参数的函数（处理`case_[zero⇒_|suc_⇒_]`）。
+我们的证明需要一个同余变体来处理四个参数的函数（处理`case_[zero⇒_|suc_⇒_]`）。
 它与之前定义的 `cong` 和 `cong₂` 完全类似：
 
 ```agda
@@ -2325,7 +2325,7 @@ three typical cases:
   `L′ · M ≡ L″ · M`.
   -->
 
-  根据归纳我们有 `L′ ≡ L″`，因此根据合同性有 `L′ · M ≡ L″ · M`。
+  根据归纳我们有 `L′ ≡ L″`，因此根据同余性有 `L′ · M ≡ L″ · M`。
 
 <!--
 * An instance of `ξ-·₁` and an instance of `ξ-·₂`:
@@ -2347,7 +2347,7 @@ three typical cases:
 
   左侧的规则要求 `L` 被归约，但右侧的规则要求 `L` 是一个值。
   这是一个矛盾，因为值无法被归约。如果值的约束从 `ξ-·₂` 或任何其他归约规则中被移除，
-  那么确定性将不再适用。
+  那么确定性将不再成立。
 
 <!--
 * Two instances of `β-ƛ`:
@@ -2536,7 +2536,7 @@ Say we add a typing rule that applies the above enumeration
 to interpret a natural as a function from naturals to naturals:
 -->
 
-假设我们添加了一个赋性规则，应用上述遍历来将一个自然数解释为一个从自然数到自然数的函数：
+假设我们添加了一个赋型规则，应用上述遍历来将一个自然数解释为一个从自然数到自然数的函数：
 
     Γ ⊢ L ⦂ `ℕ
     Γ ⊢ M ⦂ `ℕ
