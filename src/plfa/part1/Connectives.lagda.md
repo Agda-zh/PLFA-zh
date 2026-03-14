@@ -308,7 +308,7 @@ isomorphism_.
 -->
 
 类型上的积与数的积有相似的性质——它们满足交换律和结合律。
-更确切地说，积在**在同构意义下**满足交换律和结合率。
+更确切地说，积在**在同构意义下**满足交换律和结合律。
 
 <!--
 For commutativity, the `to` function swaps a pair, taking `⟨ x , y ⟩` to
@@ -459,7 +459,7 @@ While proving `η-⊤`, we do not have to pattern match on `w`. Agda *knows* it
 is equal to `tt`:
 -->
 
-`η-×` 的 零元形式是 `η-⊤` 。
+`η-×` 的零元形式是 `η-⊤`。
 在证明 `η-⊤` 时，我们不需要对于 `w` 进行模式匹配——Agda**知道**它等于 `tt`：
 
 ```agda
@@ -472,7 +472,7 @@ Agda knows that *any* value of type `⊤` must be `tt`, so any time we need a
 value of type `⊤`, we can tell Agda to figure it out:
 -->
 
-Agda 知道**任何**类型为 `⊤` 的值必须为 `tt`，所以认识我们需要一个类型为 `⊤` 的值的时候，
+Agda 知道**任何**类型为 `⊤` 的值必须为 `tt`，所以任何时候我们需要一个类型为 `⊤` 的值的时候，
 我们可以让 Agda 来自行推断：
 
 ```agda
@@ -500,8 +500,8 @@ similarly, but while η-equality holds *by definition* for the record type,
 it does not for the data type, so we need to pattern match on `w`:
 -->
 
-与积类型一样，记录类型的 `⊤` 与数据类型的 `⊤′` 没有太大差异，但是 η-相等性对于记录类型**由定义**可得。
-it does not for the data type, so we need to pattern match on `w`:
+与积类型一样，记录类型的 `⊤` 与数据类型的 `⊤′` 没有太大差异，但是 η-相等性对于记录类型**由定义**可得，
+而对于数据类型则不然，因此我们需要对 `w` 进行模式匹配：
 
 ```agda
 η-⊤′ : ∀ (w : ⊤′) → tt′ ≡ w
@@ -517,7 +517,7 @@ so we use records in preference to data types
 whenever there is only one constructor.
 -->
 
-左手边的模式匹配时必须的，因为用 `tt′` 来代替 `w`
+左手边的模式匹配是必须的，因为用 `tt′` 来代替 `w`
 使得命题相等性的两边都化简至相同的项。
 与积类型的情况一样，由**定义**得出的 η-相等性更加便于使用，因此在只有一个构造子时，
 我们更倾向于使用记录类型而不是数据类型。
@@ -919,7 +919,7 @@ type `⊥` has no members. For example, the following function
 enumerates all possible arguments of type `⊥`:
 -->
 
-我们将 `⊥` 成为**空（Empty）**类型。实际上，`⊥` 类型没有成员。
+我们将 `⊥` 称为**空（Empty）**类型。实际上，`⊥` 类型没有成员。
 例如，下面的函数枚举了所有 `⊥` 类型的参数：
 
 ```agda
@@ -1471,4 +1471,4 @@ This chapter uses the following unicode:
 -->
 
 [^from-wadler-2015]: 此段内容由 Propositions as Types（命题即类型）改编而来，
-作者：Philip Wadler，发表于 《ACM 通讯》，2015 年 9 月
+作者：Philip Wadler，发表于 《ACM 通讯》，2015 年 12 月

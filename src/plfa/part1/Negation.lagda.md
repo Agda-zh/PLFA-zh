@@ -258,7 +258,7 @@ As a second example, it is also easy to validate
 Peano's postulate that zero is not the successor of any number:
 -->
 
-这是我们第一次在 λ-表达式中使用**谬模式（Absurd Pattern）**。类型 `M ≡ N`
+这是我们第一次在 λ-表达式中使用**荒谬模式（Absurd Pattern）**。类型 `M ≡ N`
 只有在 `M` 和 `N` 可被化简为相同的项时才能居留。由于 `1` 和 `2`
 会化简为不同的正规形式，因此 Agda 判定没有证据可证明 `1 ≡ 2`。
 第二个例子是，很容易验证皮亚诺公理中「零不是任何数的后继数」的假设：
@@ -481,8 +481,8 @@ conveniently, already in love.
 
 逻辑学有很多变种，而**经典逻辑**和**直觉逻辑**之间有一个区别。
 直觉主义者关注于某些逻辑学家对无限性本质的假设，坚持真理的构造主义的概念。
-具体来说，它们坚持认为 `A ⊎ B` 的证明必须确定 `A` 或 `B` 中的**哪一个**成立，
-因此它们会解决宣称 Casilda 嫁给了 Marco 或者 Giuseppe，直到其中一个被确定为
+具体来说，他们坚持认为 `A ⊎ B` 的证明必须确定 `A` 或 `B` 中的**哪一个**成立，
+因此他们会拒绝宣称 Casilda 嫁给了 Marco 或者 Giuseppe，直到其中一个被确定为
 她的丈夫为止。或许 Gilbert 和 Sullivan 期待直觉主义，因为在故事的结局中，
 继承人是第三个人 Luiz，他和 Casilda 已经顺利地相爱了。
 
@@ -755,7 +755,7 @@ Show that each of these implies all the others.
 ## Exercise `Stable` (stretch)
 -->
 
-## 联系 `Stable`（延伸）
+## 练习 `Stable`（延伸）
 
 <!--
 Say that a formula is _stable_ if double negation elimination holds for it:

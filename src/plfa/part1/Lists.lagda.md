@@ -93,7 +93,7 @@ _tail_. A list is a strange beast: it has a head and a tail,
 nothing in between, and the tail is itself another list!
 -->
 
-表示了一个三个自然数的列表。因为 `_∷_` 向右结合，这一项被解析成 `0 ∷ (1 ∷ (2 ∷ []))`。
+表示了前三个自然数的列表。因为 `_∷_` 向右结合，这一项被解析成 `0 ∷ (1 ∷ (2 ∷ []))`。
 在这里，`0` 是列表的第一个元素，称之为**头（Head）**，`1 ∷ (2 ∷ [])` 是剩下元素的列表，
 称之为**尾（Tail）**。列表是一个奇怪的怪兽：它有一头一尾，中间没有东西，然而它的尾巴又是一个列表！
 
@@ -261,7 +261,7 @@ We can reason about lists in much the same way that we reason
 about numbers.  Here is the proof that append is associative:
 -->
 
-我们可以与用论证数几乎相同的方法来论证列表。下面是附加满足结合律的证明：
+我们可以用与论证数几乎相同的方法来论证列表。下面是附加满足结合律的证明：
 
 ```agda
 ++-assoc : ∀ {A : Set} (xs ys zs : List A)
@@ -1177,7 +1177,7 @@ The proof requires extensionality.
 Define a suitable fold function for the type of trees given earlier:
 -->
 
-请为预先给定的三个类型定义一个合适的折叠函数：
+请为之前给定的树数据类型定义一个合适的折叠函数：
 
     fold-Tree : ∀ {A B C : Set} → (A → C) → (C → B → C → C) → Tree A B → C
 
@@ -1210,7 +1210,7 @@ Demonstrate an analogue of `map-is-foldr` for the type of trees.
 ## Exercise `sum-downFrom` (stretch)
 -->
 
-## 证明 `sum-downFrom` （延伸）
+## 练习 `sum-downFrom`（延伸）
 
 <!--
 Define a function that counts down as follows:
@@ -1517,7 +1517,7 @@ the tail of the list satisfies `P`.  For example, we can define list
 membership as follows:
 -->
 
-第一个构造子证明了列表的头元素满足 `P`，第二个构造子证明的列表的尾列表中的一些元素满足 `P`。
+第一个构造子证明了列表的头元素满足 `P`，第二个构造子证明了列表的尾列表中的一些元素满足 `P`。
 举例来说，我们可以如下定义列表的成员关系：
 
 ```agda
@@ -1637,7 +1637,7 @@ replacement for `_×_`.  As a consequence, demonstrate an equivalence relating
 Show that the equivalence `All-++-⇔` can be extended to an isomorphism.
 -->
 
-证明 `All-++-⇔` 的等价关系可以被扩展至一个同构关系。
+证明 `All-++-⇔` 的等价关系可以被扩展至一个同构。
 
 
 
@@ -1666,7 +1666,7 @@ to arbitrary levels, as described in the section on
 -->
 
 （你能明白为什么这里的 `_∘_` 被泛化到任意层级很重要吗？
-如[全体多态](/Equality/#unipoly)一节所述。）
+如[宇宙多态](/Equality/#unipoly)一节所述。）
 
 <!--
 Do we also have the following?
@@ -1954,7 +1954,7 @@ ranges over a binary relation).
 -->
 
 `Relation.Unary` 和 `Relation.Binary` 都定义了 `Decidable` 的某个版本，一个
-用于单元关系（正如本章中的单元谓词 `P`），一个用于二元关系（正如之前使用的 `_≤_`）。
+用于一元关系（正如本章中的一元谓词 `P`），一个用于二元关系（正如之前使用的 `_≤_`）。
 
 # Unicode
 

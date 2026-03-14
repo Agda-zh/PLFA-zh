@@ -235,14 +235,14 @@ instantiated.
 # Congruence and substitution {#cong}
 -->
 
-# 合同性和替换性 {#cong}
+# 同余性和替换性 {#cong}
 
 <!--
 Equality satisfies _congruence_.  If two terms are equal,
 they remain so after the same function is applied to both:
 -->
 
-相等性满足**合同性（Congruence）**。如果两个项相等，那么对它们使用相同的函数，
+相等性满足**同余性（Congruence）**。如果两个项相等，那么对它们使用相同的函数，
 其结果仍然相等：
 
 ```agda
@@ -257,7 +257,7 @@ cong f refl  =  refl
 Congruence of functions with two arguments is similar:
 -->
 
-两个参数的函数也满足合同性：
+两个参数的函数也满足同余性：
 
 ```agda
 cong₂ : ∀ {A B C : Set} (f : A → B → C) {u x : A} {v y : B}
@@ -274,7 +274,7 @@ If two functions are equal, then applying them to the same term
 yields equal terms:
 -->
 
-在函数上的等价性也满足合同性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
+在函数上的等价性也满足同余性。如果两个函数是相等的，那么它们作用在同一项上的结果是相等的：
 
 ```agda
 cong-app : ∀ {A B : Set} {f g : A → B}
@@ -703,7 +703,7 @@ corresponds to equality:
 -->
 
 Agda 对这种论证有特殊记法的支持——我们之前提到过的 `rewrite` 记法。来启用这种记法，
-我们只用编译程序指令来告诉 Agda 什么类型对应相等性：
+我们只需使用编译指令来告诉 Agda 什么类型对应相等性：
 
 ```agda
 {-# BUILTIN EQUALITY _≡_ #-}
@@ -827,7 +827,7 @@ when feasible.
 -->
 
 这个证明更加的简短。之前的证明用 `cong suc (+-comm m n)` 作为使用归纳假设的说明，
-而这里我们使用 `+-comm m n` 来重写就足够了，因为重写可以将合同性考虑在其中。尽管使用重写的证明更加的简短，
+而这里我们使用 `+-comm m n` 来重写就足够了，因为重写可以将同余性考虑在其中。尽管使用重写的证明更加的简短，
 使用等式链的证明能容易理解，我们将尽可能的使用后者。
 
 
@@ -872,8 +872,8 @@ reversing the order of the clauses will cause Agda to report an error.
 (Try it and see!)
 -->
 
-总的来着，我们可以在 `with` 后面跟上任何数量的表达式，用竖线分隔开，并且在每个等式中使用相同个数的模式。
-我们经常将表达式和模式如上对齐。这个第一列表明了 `m + n` 和 `n + m` 是相同的，第二列使用相应等式来证明的前述的断言。
+总的来说，我们可以在 `with` 后面跟上任何数量的表达式，用竖线分隔开，并且在每个等式中使用相同个数的模式。
+我们经常将表达式和模式如上对齐。第一列表明了 `m + n` 和 `n + m` 是相同的，第二列以相应等式的证据来证明前述的断言。
 注意在这里使用的**点模式（Dot Pattern）**，`.(n + m)`。点模式由一个点和一个表达式组成，
 在其他信息迫使这个值和点模式中的值相等时使用。在这里，`m + n` 和 `n + m` 由后续的
 `+-comm m n` 与 `refl` 的匹配来识别。我们可能会认为第一种情况是多余的，因为第二种情况中才蕴涵了需要的信息。
@@ -968,10 +968,10 @@ mentions `Set` on the right-hand side, the corresponding signature
 must use `Set₁`.  We say a bit more about levels below.
 -->
 
-这是我们第一次使用**等级（Levels）**。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
+这是我们第一次使用**层级（Levels）**。我们不能将 `Set` 赋予类型 `Set`，因为这会导致自相矛盾，
 比如罗素悖论（Russell's Paradox）或者 Girard 悖论。不同的是，我们有一个阶级的类型：其中
 `Set : Set₁`，`Set₁ : Set₂`，以此类推。实际上，`Set` 本身就是 `Set₀` 的缩写。定义
-`_≐_` 的等式在右手边提到了 `Set`，因此签名中必须使用 `Set₁`。我们稍后将进一步介绍等级。
+`_≐_` 的等式在右手边提到了 `Set`，因此签名中必须使用 `Set₁`。我们稍后将进一步介绍层级。
 
 <!--
 Leibniz equality is reflexive and transitive,
@@ -1110,7 +1110,7 @@ Isomorphic to Martin-Löf Identity, Parametrically*
 # Universe polymorphism {#unipoly}
 -->
 
-# 全体多态 {#unipoly}
+# 宇宙多态 {#unipoly}
 
 <!--
 As we have seen, not every type belongs to `Set`, but instead every
@@ -1124,7 +1124,7 @@ two values of a type that belongs to `Set ℓ` for some arbitrary level `ℓ`?
 正如我们之前看到的那样，不是每个类型都属于 `Set`，但是每个类型都属于类型阶级的某处，
 `Set₀`、`Set₁`、`Set₂`等等。其中 `Set` 是 `Set₀` 的缩写，此外 `Set₀ : Set₁`，`Set₁ : Set₂`，以此类推。
 当我们需要比较两个属于 `Set` 的类型的值时，我们之前给出的定义是足够的，
-但如果我们需要比较对于任何等级 `ℓ`，两个属于 `Set ℓ` 的类型的值该怎么办呢？
+但如果我们需要比较对于任何层级 `ℓ`，两个属于 `Set ℓ` 的类型的值该怎么办呢？
 
 <!--
 The answer is _universe polymorphism_, where a definition is made
@@ -1132,8 +1132,8 @@ with respect to an arbitrary level `ℓ`. To make use of levels, we
 first import the following:
 -->
 
-答案是**全体多态（Universe Polymorphism）**，一个定义可以根据任何等级 `ℓ` 来做出。
-为了使用等级，我们首先导入下列内容：
+答案是**宇宙多态（Universe Polymorphism）**，一个定义可以根据任何层级 `ℓ` 来做出。
+为了使用层级，我们首先导入下列内容：
 
 ```agda
 open import Level using (Level; _⊔_) renaming (zero to lzero; suc to lsuc)
@@ -1144,13 +1144,13 @@ We rename constructors `zero` and `suc` to `lzero` and `lsuc` to avoid confusion
 between levels and naturals.
 -->
 
-我们将构造子 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和等级之间的混淆。
+我们将构造子 `zero` 和 `suc` 重命名至 `lzero` 和 `lsuc`，为了防止自然数和层级之间的混淆。
 
 <!--
 Levels are isomorphic to natural numbers, and have similar constructors:
 -->
 
-等级与自然数是同构的，有相似的构造子：
+层级与自然数是同构的，有相似的构造子：
 
     lzero : Level
     lsuc  : Level → Level
@@ -1177,13 +1177,13 @@ and so on. There is also an operator
 that given two levels returns the larger of the two.
 -->
 
-给定两个等级，返回两者中较大的那个。
+给定两个层级，返回两者中较大的那个。
 
 <!--
 Here is the definition of equality, generalised to an arbitrary level:
 -->
 
-下面是相等性的定义，推广到任意等级：
+下面是相等性的定义，推广到任意层级：
 
 ```agda
 data _≡′_ {ℓ : Level} {A : Set ℓ} (x : A) : A → Set ℓ where
@@ -1210,8 +1210,8 @@ the text, but most definitions in the standard library, including those for
 equality, are generalised to arbitrary levels as above.
 -->
 
-为了简洁，我们在本书中给出的定义将避免使用全体多态，但是大多数标准库中的定义，
-包括相等性的定义，都推广到了任意等级，如上所示。
+为了简洁，我们在本书中给出的定义将避免使用宇宙多态，但是大多数标准库中的定义，
+包括相等性的定义，都推广到了任意层级，如上所示。
 
 <!--
 Here is the generalised definition of Leibniz equality:

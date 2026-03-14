@@ -111,7 +111,7 @@ Both definitions above tell us the same two things:
 
 这两条定义告诉我们相同的两件事：
 
-* **起始步骤**: 对于所有的自然数 `n`，命题 `zero ≤ n` 成立。
+* **起始步骤**：对于所有的自然数 `n`，命题 `zero ≤ n` 成立。
 * **归纳步骤**：对于所有的自然数 `m` 和 `n`，如果命题 `m ≤ n` 成立，
   那么命题 `suc m ≤ suc n` 成立。
 
@@ -125,9 +125,9 @@ In fact, they each give us a bit more detail:
   `suc m ≤ suc n` holds.
 -->
 
-实际上，他们分别给我们更多的信息：
+实际上，它们分别给我们更多的信息：
 
-* **起始步骤**: 对于所有的自然数 `n`，构造子 `z≤n` 提供了 `zero ≤ n` 成立的证明。
+* **起始步骤**：对于所有的自然数 `n`，构造子 `z≤n` 提供了 `zero ≤ n` 成立的证明。
 * **归纳步骤**：对于所有的自然数 `m` 和 `n`，构造子 `s≤s` 将 `m ≤ n` 成立的证明
   转化为 `suc m ≤ suc n` 成立的证明。
 
@@ -197,7 +197,7 @@ Agda proof that `2 ≤ 4` repeated, with the implicit arguments made
 explicit:
 -->
 
-如果有希望的话，我们也可以在大括号里显式声明隐式参数。例如，下面是 `2 ≤ 4` 的 Agda
+如有需要的话，我们也可以在大括号里显式声明隐式参数。例如，下面是 `2 ≤ 4` 的 Agda
 证明，包括了显式声明了的隐式参数：
 
 ```agda
@@ -534,7 +534,7 @@ transitive: for any naturals `m`, `n`, and `p`, if `m ≤ n` and `n ≤ p`
 hold, then `m ≤ p` holds.  Again, `m`, `n`, and `p` are implicit:
 -->
 
-我们第二个证明的性质是传递性：对于任意自然数 `m` 和 `n`，如果 `m ≤ n` 和 `n ≤ p`
+我们第二个证明的性质是传递性：对于任意自然数 `m`、`n` 和 `p`，如果 `m ≤ n` 和 `n ≤ p`
 成立，那么 `m ≤ p` 成立。同样，`m`、`n` 和 `p` 是隐式参数：
 
 ```agda
@@ -994,8 +994,8 @@ Rewriting by `+-comm m p` and `+-comm n p` converts `m + p ≤ n + p` into
 `p + m ≤ p + n`, which is proved by invoking `+-monoʳ-≤ p m n m≤n`.
 -->
 
-用 `+-comm m p` 和 `+-comm n p` 来重写，可以让 `m + p ≤ n + p` 转换成 `p + n ≤ p + m`，
-而我们可以用 `+-moroʳ-≤ p m n m≤n` 来证明。
+用 `+-comm m p` 和 `+-comm n p` 来重写，可以让 `m + p ≤ n + p` 转换成 `p + m ≤ p + n`，
+而我们可以用 `+-monoʳ-≤ p m n m≤n` 来证明。
 
 <!--
 Third, we combine the two previous results:
@@ -1144,7 +1144,7 @@ the sense that for any `m` and `n` that one of the following holds:
   * `m > n`.
 -->
 
-证明严格不等关系满足弱化的三元律，证明对于任意 `m` 和 `n`，下列命题有一条成立：
+证明严格不等关系满足弱化的三分律，证明对于任意 `m` 和 `n`，下列命题有一条成立：
 
   * `m < n`，
   * `m ≡ n`，或者

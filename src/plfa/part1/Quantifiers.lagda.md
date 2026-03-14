@@ -288,7 +288,7 @@ where `M` is a term of type `A` and `N` is a term of type `B M`.
 Equivalently, the evidence may be written in the form
 -->
 
-其中 `M` 是类型为 `A` 的项，`N` 时类型为 `B M` 的项。
+其中 `M` 是类型为 `A` 的项，`N` 是类型为 `B M` 的项。
 等价地，这样的证明也可以由下面的形式构成
 
     record { proj₁ = M ; proj₂ = N }.
@@ -328,7 +328,7 @@ equivalent to `Σ A B`.
 
 这个语法声明使得 `Σ[ x ∈ A ] Bx` 和 `Σ A (λ x → Bx)` 等价。
 其中，将 `Bx` 实例化为 `B x`，我们可得 `Σ[ x ∈ A ] B x` 和 `Σ A (λ x → B x)` 等价。
-使用 η 规则，我们可得 `(λ x → B x) ≡ B`，因此它们也等价与 `Σ A B`。
+使用 η 规则，我们可得 `(λ x → B x) ≡ B`，因此它们也等价于 `Σ A B`。
 
 <!--
 Equivalently, we could also declare existentials as an inductive type:
@@ -385,7 +385,7 @@ of a type and evidence of a proposition are indistinguishable.
 
 当一个积被视为合取的证明时，它的两个分量都是证明，而当一个依赖积被视为存在量词的证明时，
 它的第一分量被视为数据类型中的一个元素，而第二分量是一个依赖于第一分量的命题的证明。因为在
-Agda 中，一个数据类型中的一个值一个命题的证明是无法区别的，这样的区别很大程度上
+Agda 中，一个数据类型中的一个值和一个命题的证明是无法区别的，这样的区别很大程度上
 取决于如何来诠释。
 
 <!--
@@ -410,7 +410,7 @@ We will stick with the name dependent sum.
 -->
 
 存在量化有时也被叫做**依赖积（Dependent Product）**，因为积是其中的一种特殊形式。但是，
-这样的叫法非常让人困扰，因为全程量化也被叫做依赖积，而存在量化已经有依赖和的叫法。
+这样的叫法非常让人困扰，因为全称量化也被叫做依赖积，而存在量化已经有依赖和的叫法。
 我们将继续使用依赖和这个名称。
 
 <!--
@@ -419,7 +419,7 @@ We follow the convention of the Agda standard library, and reserve this
 notation for the case where the domain of the bound variable is left implicit:
 -->
 
-存在量词的普通记法是 `∃` （与全程量词的 `∀` 记法相类似）。我们使用 Agda 标准库中的惯例，
+存在量词的普通记法是 `∃` （与全称量词的 `∀` 记法相类似）。我们使用 Agda 标准库中的惯例，
 使用一种隐式申明约束变量定义域的记法。
 
 ```agda
@@ -730,7 +730,7 @@ follows by `odd-suc`.
 - 在偶数是 `suc n` 的情况中，我们需要证明 `suc m * 2` 是偶数。归纳假设告诉我们，
 `1 + m * 2` 是奇数，那么所求证的结果由 `even-suc` 可得。
 
-- 在偶数的情况中，我们需要证明 `1 + m * 2` 是奇数。归纳假设告诉我们，`m * 2` 是偶数，
+- 在奇数的情况中，我们需要证明 `1 + m * 2` 是奇数。归纳假设告诉我们，`m * 2` 是偶数，
 那么所求证的结果由 `odd-suc` 可得。
 
 <!--
@@ -793,7 +793,7 @@ result is analogous to the one which tells us that negation
 of a disjunction is isomorphic to a conjunction of negations:
 -->
 
-存在量化的否定与否定的全称量化是同构的。考虑到存在量化是解构的推广，全称量化是合构的推广，
+存在量化的否定与否定的全称量化是同构的。考虑到存在量化是析取的推广，全称量化是合取的推广，
 这样的结果与解构的否定与否定的合构是同构的结果相似。
 
 ```agda

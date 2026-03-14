@@ -99,7 +99,7 @@ both of which are equivalent to `λ{x → N}`. The latter allows one to
 specify the domain of the function.
 -->
 
-两个都与 `λ{x → N}` 等价。后者可以指定函数的作用域。
+两个都与 `λ{x → N}` 等价。后者可以指定函数的定义域。
 
 <!--
 Often using an anonymous lambda expression is more convenient than
@@ -235,8 +235,12 @@ We occasionally need to postulate extensionality in what follows.
 
 我们偶尔需要在之后的情况中假设外延性。
 
+<!--
 More generally, we may wish to postulate extensionality for
 dependent functions.
+-->
+
+更一般地，我们可能希望对依赖函数也假设外延性。
 
 ```agda
 postulate
@@ -246,9 +250,13 @@ postulate
     → f ≡ g
 ```
 
+<!--
 Here the type of `f` and `g` has changed from `A → B` to
 `∀ (x : A) → B x`, generalising ordinary functions to
 dependent functions.
+-->
+
+这里 `f` 和 `g` 的类型从 `A → B` 变为了 `∀ (x : A) → B x`，将普通函数推广到了依赖函数。
 
 
 <!--
@@ -588,7 +596,7 @@ weak form of anti-symmetry:
 -->
 
 显而易见的是，如果两个类型相互嵌入，且其嵌入函数相互对应，那么它们是同构的。
-这个一种反对称性的弱化形式：
+这是一种反对称性的弱化形式：
 
 ```agda
 ≲-antisym : ∀ {A B : Set}

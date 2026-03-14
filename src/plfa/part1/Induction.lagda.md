@@ -280,7 +280,7 @@ If we write `P m` for a property of `m`, then what we need to
 demonstrate are the following two inference rules:
 -->
 
-若将 `m` 的某种性质（Property）写作 `P m`，那么我们需要证明的就是以下两个推导规则：
+若将 `m` 的某种性质（Property）写作 `P m`，那么我们需要证明的就是以下两个推理规则：
 
     ------
     P zero
@@ -597,7 +597,7 @@ preserved by applying that function.  If `e` is evidence that `x ≡ y`,
 then `cong f e` is evidence that `f x ≡ f y`, for any function `f`.
 -->
 
-若某个关系在应用了给定的函数后仍然保持不变，则称该关系满足**合同性（Congruence）**。
+若某个关系在应用了给定的函数后仍然保持不变，则称该关系满足**同余性（Congruence）**。
 若 `e` 是 `x ≡ y` 的证据，那么对于任意函数 `f`，`cong f e` 就是 `f x ≡ f y` 的证据。
 
 <!--
@@ -1137,7 +1137,7 @@ which is justified by congruence and the induction hypothesis,
 `⟨ cong suc (+-comm m n) ⟩`.  This completes the proof.
 -->
 
-它依据合同性和归纳假设 `⟨ cong suc (+-comm m n) ⟩` 得出。证毕。
+它依据同余性和归纳假设 `⟨ cong suc (+-comm m n) ⟩` 得出。证毕。
 
 <!--
 Agda requires that identifiers are defined before they are used,
@@ -1230,7 +1230,7 @@ into the equation:
 -->
 
 第三，Agda 支持 Richard Bird 引入的**片段（Section）**记法。我们将应用到
-`x` 并返回 `x + y` 的函数写作 `(_+ y)`。因此，对于 `+-assoc m n p` 应用合同性
+`x` 并返回 `x + y` 的函数写作 `(_+ y)`。因此，对于 `+-assoc m n p` 应用同余性
 `cong (_+ q)` 会将等式：
 
     (m + n) + p  ≡  m + (n + p)
@@ -1244,7 +1244,7 @@ Similarly, we write `(x +_)` for the function that applied to `y`
 returns `x + y`; the same works for any infix operator.
 -->
 
-类似地，我们将应用到 `y` 并返回 `x + y` 的函数写作 `(x +_ )`。
+类似地，我们将应用到 `y` 并返回 `x + y` 的函数写作 `(x +_)`。
 这同样适用于任何中缀运算符。
 
 
@@ -1302,7 +1302,7 @@ more judgments:
 
 之后我们重复此过程，因此接下来一天我们知道今天以前的所有判断，
 以及任何通过此规则添加的判断。起始步骤并未告诉我们新的东西，
-而如今归归纳步骤添加了更多的判断：
+而如今归纳步骤添加了更多的判断：
 
 <!--
     On the second day, we know about associativity of 0 and 1.
@@ -1445,6 +1445,7 @@ Simplifying both sides with the inductive case of addition yields the equation:
 
     suc ((m + n) + p) ≡ suc (m + (n + p))
 
+<!--
 This is our goal to be proved.  Rewriting by a given equation is
 indicated by the keyword `rewrite` followed by a proof of that
 equation.  Rewriting replaces each occurrence of the left-hand side of
@@ -1453,12 +1454,16 @@ rewriting by the inductive hypothesis our goal becomes
 
     suc (m + (n + p)) ≡ suc (m + (n + p))
 
-<!--
 and the proof is again given by `refl`.  Rewriting avoids
 not only chains of equations but also the need to invoke `cong`.
 -->
 
-其证明同样由 `refl` 给出。改写不仅可以省去等式链还可以避免调用 `cong`.
+这就是我们要证明的目标。对于给定等式的改写由关键字 `rewrite` 加上该等式的证明来表示。
+改写会将目标中等式左侧的每次出现替换为右侧。在此步骤中，根据归纳假设改写后，目标变为
+
+    suc (m + (n + p)) ≡ suc (m + (n + p))
+
+其证明同样由 `refl` 给出。改写不仅可以省去等式链，还可以避免调用 `cong`。
 
 
 <!--
@@ -1660,7 +1665,7 @@ typing `C-c C-r` will fill it in, completing the proof:
 ## Exercise `+-swap` (recommended) {#plus-swap}
 -->
 
-## 练习：`+-swap`（推荐） {#plus-swap}
+## 练习 `+-swap`（推荐） {#plus-swap}
 
 <!--
 Show
