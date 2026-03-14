@@ -4,23 +4,29 @@ English to Chinese translation reference for PLFA-zh.
 
 | English | 中文翻译 |
 |---------|----------|
+| Abstraction | 抽象 |
 | Absurd Pattern | 荒谬模式 |
 | Anti-symmetric | 反对称 |
+| Application | 应用 |
 | Associativity | 结合律 |
 | Base Case | 起始步骤 |
 | Binary Relation | 二元关系 |
 | Boolean | 布尔值 |
+| Call-by-value | 传值 |
 | Cartesian Product | 笛卡尔积 |
 | Commutativity | 交换律 |
 | Compute | 计算 |
 | Conclusion | 结论 |
+| Confluence | 合流性 |
 | Congruence | 同余性 |
+| Context | 语境 |
 | Corollary | 推论 |
 | Conjunction | 合取 |
 | Constructor | 构造子 |
 | Currying | 柯里化 |
 | Datatype | 数据类型 |
 | Decidable | 可判定性/可判定的 |
+| Deterministic | 确定的 |
 | Dependent Function | 依赖函数 |
 | Destructor | 解构子 |
 | Disjoint Sum | 不交和 |
@@ -50,12 +56,16 @@ English to Chinese translation reference for PLFA-zh.
 | Irreflexive | 非自反的 |
 | Isomorphism | 同构 |
 | Judgment | 判断 |
+| Lambda Calculus | λ-演算 |
 | Left-inverse | 左逆 |
 | Lemma | 引理 |
+| Lookup | 查询 |
 | Levels | 层级 |
+| Meta-Language | 元语言 |
 | Mixfix | 混缀 |
 | Monotonic | 单调的 |
 | Parameter | 参数 |
+| Object Language | 对象语言 |
 | Partial Order | 偏序 |
 | Pattern Matching | 模式匹配 |
 | Predicate | 谓词 |
@@ -71,10 +81,13 @@ English to Chinese translation reference for PLFA-zh.
 | Propositions as Types | 命题即类型 |
 | Record | 记录 |
 | Recursion | 递归 |
+| Redex | 可归约项 |
 | Reflexivity | 自反性 |
 | Right-inverse | 右逆 |
 | Scope | 作用域 |
+| Shadow | 遮蔽 |
 | Signature | 签名 |
+| Small-step Operational Semantics | 小步操作语义 |
 | Substitution | 替换性 |
 | Sum | 和 |
 | Term | 项 |
@@ -89,5 +102,6 @@ English to Chinese translation reference for PLFA-zh.
 | Universe Polymorphism | 宇宙多态 |
 | Unary Relation | 一元关系 |
 | Value | 值 |
+| Variable | 变量 |
 | Weak Distributive Law | 弱分配律 |
 | Well-founded | 良基的 |
