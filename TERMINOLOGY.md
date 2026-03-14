@@ -12,11 +12,13 @@ English to Chinese translation reference for PLFA-zh.
 | Base Case | 起始步骤 |
 | Binary Relation | 二元关系 |
 | Bisimulation | 互模拟 |
+| Bidirectional (type inference) | 双向 |
 | Boolean | 布尔值 |
 | Call-by-value | 传值 |
 | Canonical Form | 标准式 |
 | Cartesian Product | 笛卡尔积 |
 | Commutativity | 交换律 |
+| Completeness | 完备性 |
 | Compute | 计算 |
 | Conclusion | 结论 |
 | Confluence | 合流性 |
@@ -40,6 +42,7 @@ English to Chinese translation reference for PLFA-zh.
 | Distributivity | 分配律 |
 | Dot Pattern | 点模式 |
 | Embedding | 嵌入 |
+| Erasure | 擦除 |
 | Empty Type | 空类型 |
 | Equivalence Relation | 等价关系 |
 | Evidence | 证据/证明 |
@@ -54,6 +57,7 @@ English to Chinese translation reference for PLFA-zh.
 | Induction | 归纳 |
 | Induction Hypothesis | 归纳假设 |
 | Indexed Datatype | 索引数据类型 |
+| Inherit (type) | 继承 |
 | Injection | 注入 |
 | Intrinsically Typed | 内在类型 |
 | Inductive Case | 归纳步骤 |
@@ -100,6 +104,8 @@ English to Chinese translation reference for PLFA-zh.
 | Shadow | 遮蔽 |
 | Signature | 签名 |
 | Simulation | 模拟 |
+| Soundness | 可靠性 |
+| Synthesise (type) | 生成 |
 | Small-step Operational Semantics | 小步操作语义 |
 | Subject Expansion | 主体扩展 |
 | Subject Reduction | 主体归约 |
