@@ -53,6 +53,7 @@ English to Chinese translation reference for PLFA-zh.
 | Induction | 归纳 |
 | Induction Hypothesis | 归纳假设 |
 | Indexed Datatype | 索引数据类型 |
+| Injection | 注入 |
 | Intrinsically Typed | 内在类型 |
 | Inductive Case | 归纳步骤 |
 | Inductive Datatype | 归纳数据类型 |
@@ -74,6 +75,7 @@ English to Chinese translation reference for PLFA-zh.
 | Partial Order | 偏序 |
 | Pattern Matching | 模式匹配 |
 | Predicate | 谓词 |
+| Primitive Number | 原语数字 |
 | Preorder | 预序 |
 | Postulate | 假设（Agda 关键字） |
 | Pragma | 编译指令 |
@@ -81,6 +83,7 @@ English to Chinese translation reference for PLFA-zh.
 | Product | 积 |
 | Preservation | 保型性 |
 | Progress | 可进性 |
+| Projection | 投影 |
 | Proof by Induction | 归纳证明 |
 | Preterm / Raw Term | 原项/源项 |
 | Property | 性质 |
