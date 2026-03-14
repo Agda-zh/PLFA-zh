@@ -11,6 +11,7 @@ English to Chinese translation reference for PLFA-zh.
 | Associativity | 结合律 |
 | Base Case | 起始步骤 |
 | Binary Relation | 二元关系 |
+| Bisimulation | 互模拟 |
 | Boolean | 布尔值 |
 | Call-by-value | 传值 |
 | Canonical Form | 标准式 |
@@ -98,6 +99,7 @@ English to Chinese translation reference for PLFA-zh.
 | Scope | 作用域 |
 | Shadow | 遮蔽 |
 | Signature | 签名 |
+| Simulation | 模拟 |
 | Small-step Operational Semantics | 小步操作语义 |
 | Subject Expansion | 主体扩展 |
 | Subject Reduction | 主体归约 |
