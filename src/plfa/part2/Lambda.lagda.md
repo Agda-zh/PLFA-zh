@@ -253,7 +253,7 @@ the term
 `_+_` 相似。
 在这里，变量「m」被约束了两次，一次在 λ-抽象中，另一次在匹配表达式的后继分支中。
 第一次使用的「m」指代前者，第二次使用的指代后者。
-任何在后继分支中的「m」必须指代后者，因此我们称之为后者**屏蔽（Shadow）**了前者。
+任何在后继分支中的「m」必须指代后者，因此我们称之为后者**遮蔽（Shadow）**了前者。
 后面我们会证实二加二得四，也就是说下面的项
 
     plus · two · two
@@ -1832,7 +1832,7 @@ should return the most recently bound variable, which _shadows_
 the other variables.  For example,
 -->
 
-如果语境中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮盖（Shadow）**
+如果语境中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮蔽（Shadow）**
 了另一个变量。例如：
 
 * `` ∅ , "x" ⦂ `ℕ ⇒ `ℕ , "x" ⦂ `ℕ ∋ "x" ⦂ `ℕ ``.
@@ -1841,7 +1841,7 @@ the other variables.  For example,
 Here `` "x" ⦂ `ℕ ⇒ `ℕ `` is shadowed by `` "x" ⦂ `ℕ ``.
 -->
 
-在这里 `` "x" ⦂ `ℕ ⇒ `ℕ `` 被 `` "x" ⦂ `ℕ `` 遮盖了。
+在这里 `` "x" ⦂ `ℕ ⇒ `ℕ `` 被 `` "x" ⦂ `ℕ `` 遮蔽了。
 
 <!--
 Lookup is formalised as follows:
@@ -1874,7 +1874,7 @@ variable with the same name to its left in the list.
 -->
 
 构造子 `Z` 和 `S` 大致与列表包含关系 `_∈_` 的 `here` 和 `there` 构造子对应。
-但是构造子 `S` 多取一个参数，来保证查询时我们不会查询一个被**遮盖**的同名变量。
+但是构造子 `S` 多取一个参数，来保证查询时我们不会查询一个被**遮蔽**的同名变量。
 
 <!--
 It can be rather tedious to use the `S` constructor, as you have to provide
