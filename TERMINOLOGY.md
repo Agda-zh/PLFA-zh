@@ -13,6 +13,7 @@ English to Chinese translation reference for PLFA-zh.
 | Binary Relation | 二元关系 |
 | Boolean | 布尔值 |
 | Call-by-value | 传值 |
+| Canonical Form | 标准式 |
 | Cartesian Product | 笛卡尔积 |
 | Commutativity | 交换律 |
 | Compute | 计算 |
@@ -74,6 +75,8 @@ English to Chinese translation reference for PLFA-zh.
 | Pragma | 编译指令 |
 | Precedence | 优先级 |
 | Product | 积 |
+| Preservation | 保型性 |
+| Progress | 可进性 |
 | Proof by Induction | 归纳证明 |
 | Property | 性质 |
 | Proof by Reflection | 反射证明 |
@@ -88,6 +91,8 @@ English to Chinese translation reference for PLFA-zh.
 | Shadow | 遮蔽 |
 | Signature | 签名 |
 | Small-step Operational Semantics | 小步操作语义 |
+| Subject Expansion | 主体扩展 |
+| Subject Reduction | 主体归约 |
 | Substitution | 替换性 |
 | Sum | 和 |
 | Term | 项 |
