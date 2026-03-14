@@ -26,6 +26,9 @@ English to Chinese translation reference for PLFA-zh.
 | Constructor | 构造子 |
 | Currying | 柯里化 |
 | Datatype | 数据类型 |
+| Church Style | 邱奇法 |
+| Curry Style | 柯里法 |
+| de Bruijn Index | de Bruijn 因子 |
 | Decidable | 可判定性/可判定的 |
 | Deterministic | 确定的 |
 | Dependent Function | 依赖函数 |
@@ -50,6 +53,7 @@ English to Chinese translation reference for PLFA-zh.
 | Induction | 归纳 |
 | Induction Hypothesis | 归纳假设 |
 | Indexed Datatype | 索引数据类型 |
+| Intrinsically Typed | 内在类型 |
 | Inductive Case | 归纳步骤 |
 | Inductive Datatype | 归纳数据类型 |
 | Inference Rule | 推理规则 |
@@ -78,6 +82,7 @@ English to Chinese translation reference for PLFA-zh.
 | Preservation | 保型性 |
 | Progress | 可进性 |
 | Proof by Induction | 归纳证明 |
+| Preterm / Raw Term | 原项/源项 |
 | Property | 性质 |
 | Proof by Reflection | 反射证明 |
 | Proposition | 命题 |
