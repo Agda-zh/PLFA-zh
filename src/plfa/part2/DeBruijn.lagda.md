@@ -114,7 +114,7 @@ The two definitions are in close correspondence, where:
 -->
 
 （两者都摘自 [Lambda](/Lambda/) 章节，你可以在[这里](/Lambda/#derivation)查看完整的推导树。）
-两者的定义对应的很紧密，其中：
+两者的定义对应得很紧密，其中：
 
 <!--
   * `` `_ `` corresponds to `` ⊢` ``
@@ -199,7 +199,7 @@ raw terms by the type `Γ ⊢ A` of intrinsically-typed terms
 which in context `Γ` have type `A`.
 -->
 
-我们选择的表示方式的另一个重要特性是：他是**内在类型（Intrinsically Typed）**的。
+我们选择的表示方式的另一个重要特性是：它是**内在类型（Intrinsically Typed）**的。
 在前两章中，项和类型的定义是完全分离的。所有的项拥有 `Term` 类型，Agda 并不会
 阻止我们写出例如 `` `zero · `suc `zero `` 的没有类型的无意义的项。
 这样独立于类型存在的项有时被称为**原项（Preterms）**或者**源项（Raw Terms）**。
@@ -272,7 +272,7 @@ The two definitions are in close correspondence, where in
 addition to the previous correspondences we have:
 -->
 
-两者的定义对应的很紧密，除去之前的对应，我们注意到：
+两者的定义对应得很紧密，除去之前的对应，我们注意到：
 
 <!--
   * `` `zero `` corresponds to `⊢zero`
@@ -303,7 +303,7 @@ of `"n"` but accessed in different contexts, the first where
 Here is the term and its type derivation in the notation of this chapter:
 -->
 
-下面是用本章中的记法表示的这个项极其类型推导：
+下面是用本章中的记法表示的这个项及其类型推导：
 
     plus : ∀ {Γ} → Γ ⊢ `ℕ ⇒ `ℕ ⇒ `ℕ
     plus = μ ƛ ƛ case (# 1) (# 0) (`suc (# 3 · # 0 · # 1))
@@ -993,7 +993,7 @@ to variables in `Δ`.  Let's unpack the first three cases:
 * 如果项是一个变量，直接应用 `ρ`。
 
 * 如果项是一个抽象，使用之前的扩充结论来扩充映射 `ρ`，
-  然后在递归地对于抽象本体进行重命名。
+  然后递归地对抽象本体进行重命名。
 
 * 如果项是一个应用，递归地重命名函数及其参数。
 
@@ -1016,7 +1016,7 @@ calculus.
 -->
 
 之前，重命名是一个将项在一个语境中良类型的证明转换成项在另一个语境中
-良类型的结论；而现在，它直接转换了整个项，调整了其中的约束变了。
+良类型的结论；而现在，它直接转换了整个项，调整了其中的约束变量。
 在 Agda 中类型检查这段代码保证了只有在简单类型的 λ-演算中良类型的项
 可以作为参数或者作为返回项。
 
@@ -1067,7 +1067,7 @@ terms is intrinsically reliable.
 我们稍后可以看到，使用 `S_` 进行重命名在替换中起到了重要作用。
 对于没有使用内在类型的 de Bruijn 因子表示法来说，这会有一点棘手。
 这种方法需要记忆一个因子数，更大的因子为自由变量，更小的因子为约束变量。
-这样很容易出现差一错误，而出现差一错误以后很难保证类型的保存性。
+这样很容易出现差一错误，而出现差一错误以后很难保证类型的保型性。
 因此这里内在类型的 de Bruijn 项的 Agda 代码是本质上更加可靠。
 
 <!--
@@ -1141,7 +1141,7 @@ variable in `Γ , B`:
   那么返回 `` ` Z`` 项，在 `Δ , B` 中的类型也是 `B`。
 
 * 如果它是 `S x`，其中 `x` 是某个 `Γ` 中的变量，那么 `σ x` 是 `Δ` 中的一个项，
-  因此 `S_ (σ x)` 是一个 `Δ , B` 中的项。
+  因此 `rename S_ (σ x)` 是一个 `Δ , B` 中的项。
 
 <!--
 This is why we had to define renaming first, since
@@ -1199,7 +1199,7 @@ to terms over `Δ`.  Let's unpack the first three cases:
 * 如果项是一个变量，直接应用 `σ`。
 
 * 如果项是一个抽象，使用之前的扩充结论来扩充映射 `σ`，
-  然后在递归地对于抽象本体进行进行替换。
+  然后递归地对抽象本体进行替换。
 
 * 如果项是一个应用，递归地替换函数及其参数。
 
@@ -1378,7 +1378,7 @@ much in the same way that `[]` did in
 [Lists](/Lists/).
 -->
 
-此处的 `zero` 需要一个隐式函数来帮助类型推测，与 [Lists](/Lists/) 中 `[]` 的情况类似。
+此处的 `zero` 需要一个隐式参数来帮助类型推断，与 [Lists](/Lists/) 中 `[]` 的情况类似。
 
 <!--
 # Reduction
@@ -1639,7 +1639,7 @@ previous development.
 ## Exercise `V¬—→` (practice)
 -->
 
-## 练习 `V¬—→`（习题）
+## 练习 `V¬—→`（实践）
 
 <!--
 Following the previous development, show values do
