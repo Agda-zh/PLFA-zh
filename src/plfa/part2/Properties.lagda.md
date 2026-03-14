@@ -611,7 +611,7 @@ context remains well typed if we swap two variables.
 接下来是三个重要的结论。
 **弱化（Weaken）**引理断言说如果一个项在空语境中是良类型的，那么它在任意语境中都是良类型的。
 **去除（Drop）**引理断言说如果一个项在给定语境中是良类型的，且此语境中同一个变量出现了两次，
-此时去除语境中被遮盖的变量，这个项仍然是良类型的。
+此时去除语境中被遮蔽的变量，这个项仍然是良类型的。
 **交换（Swap）**引理断言说如果一个项在给定语境中是良类型的，那么在通过交换语境中两个变量后得到的
 语境中，这个项仍然是良类型的。
 
@@ -910,7 +910,7 @@ Second, if the last two variables in a context are equal then we can
 drop the shadowed one:
 -->
 
-第二，如果语境中的最后两个变量相等，我们就可以去除掉被遮盖的一个：
+第二，如果语境中的最后两个变量相等，我们就可以去除掉被遮蔽的一个：
 
 ```agda
 drop : ∀ {Γ x M A B C}
@@ -937,7 +937,7 @@ found in the second position, which also contains `x`, this leads to a
 contradiction (evidenced by `x≢x refl`).
 -->
 
-在这里映射 `ρ` 不可能被较里出现的 `x` 调用，由于它被较外的出现遮盖了。
+在这里映射 `ρ` 不可能被较里出现的 `x` 调用，由于它被较外的出现遮蔽了。
 忽略掉在首位的 `x` 的情况只可能发生在当前寻找的变量不同于 `x` 时
 （由 `x≢x` 或 `z≢x` 论证），但如果变量在第二个位置被发现了，
 并且也包含 `x`，便会导出矛盾（由 `x≢x refl` 论证）。
