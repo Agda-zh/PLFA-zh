@@ -110,7 +110,7 @@ we take the context `Γ` and the variable `x` as inputs, and the
 type `A` as output.  Consider the rules:
 -->
 
-我们将语境 `Γ` 和变量 `x` 作为输入，类型 `A` 作为输出。
+我们将上下文 `Γ` 和变量 `x` 作为输入，类型 `A` 作为输出。
 考虑下面的规则：
 
     ----------------- Z
@@ -132,9 +132,9 @@ of the hypothesis determines the output of the conclusion.
 -->
 
 从输入中，我们可以决定应用哪一条规则：
-如果语境中最后一个变量与给定的变量一致，那么应用第一条规则，否则应用第二条。
-（对于 de Bruijn 因子来说，这更加简单：零对应第一条，后继对应第二条。）
-对于第一条，输出类型可以直接从语境中得到。
+如果上下文中最后一个变量与给定的变量一致，那么应用第一条规则，否则应用第二条。
+（对于 de Bruijn 索引来说，这更加简单：零对应第一条，后继对应第二条。）
+对于第一条，输出类型可以直接从上下文中得到。
 对于第二条，结论中的输入可以作为假设的输入，而假设的输出决定了结论的输出。
 
 <!--
@@ -150,7 +150,7 @@ we take the context `Γ` and term `M` as inputs, and the type `A`
 as output. Consider the rules:
 -->
 
-我们将语境 `Γ` 和项 `M` 作为输入，类型 `A` 作为输出。
+我们将上下文 `Γ` 和项 `M` 作为输入，类型 `A` 作为输出。
 考虑下面的规则：
 
     Γ ∋ x ⦂ A
@@ -189,7 +189,7 @@ determines the output of the conclusion.
 变量使用第一条，抽象使用第二条，应用使用第三条。
 我们把这样的规则叫做**语法导向的**（Syntax directed）规则。
 对于变量的规则，结论的输入决定了假设的输入，而假设的输出决定了结论的输出。
-抽象的规则也是一样——约束变量和参数从结论的输入流向假设中的语境；
+抽象的规则也是一样——约束变量和参数从结论的输入流向假设中的上下文；
 这得以实现，因为我们在抽象中加入了参数的类型。
 对于应用的规则，我们加入第三条假设来检查函数的定义域是否与参数的类型一致；
 这条判断是在两个类型已知时是可判定的。
@@ -233,8 +233,8 @@ second, all three of the context, term, and type are inputs.
 -->
 
 第一类判断**生成**（Synthesise）项的类型，如上，而第二类**继承**（Inherit）类型。
-在第一类中，语境和项作为输入，类型作为输出；
-而在第二类中，语境、项和类型三者都作为输入。
+在第一类中，上下文和项作为输入，类型作为输出；
+而在第二类中，上下文、项和类型三者都作为输入。
 
 <!--
 Which terms use synthesis and which inheritance?  Our approach will be
@@ -270,7 +270,7 @@ typed by inheritance.
 对于分情况讨论来说，主项提供了自然数，副项则是两条分支。
 在解构子中，主项使用生成进行赋型，而副项使用继承进行赋型。
 我们将看到，这自然地导致函数应用作为整体由生成进行赋型，而分情况讨论作为整体则使用继承进行赋型。
-变量一般使用生成进行赋型，因为我们可以直接从语境中查询其类型。
+变量一般使用生成进行赋型，因为我们可以直接从上下文中查询其类型。
 不动点自然是用继承来赋型。
 
 <!--
@@ -401,9 +401,9 @@ Similarly, given context `Γ`, inherited term `M`, and type `A`, we
 must decide whether `Γ ⊢ M ↓ A` holds, or its negation.
 -->
 
-给定语境 `Γ` 和生成项 `M`，我们必须判定是否存在一个类型 `A` 使得 `Γ ⊢ M ↑ A` 成立，
+给定上下文 `Γ` 和生成项 `M`，我们必须判定是否存在一个类型 `A` 使得 `Γ ⊢ M ↑ A` 成立，
 或者其否定。
-同样，给定语境 `Γ` 、继承项 `M` 和类型 `A`，我们必须判定 `Γ ⊢ M ↓ A` 成立，或者其否定。
+同样，给定上下文 `Γ` 、继承项 `M` 和类型 `A`，我们必须判定 `Γ ⊢ M ↓ A` 成立，或者其否定。
 
 <!--
 Our proof is constructive. In the synthesised case, it will either
@@ -530,7 +530,7 @@ infix   9  `_
 Identifiers, types, and contexts are as before:
 -->
 
-标识符、类型和语境与之前一样：
+标识符、类型和上下文与之前一样：
 
 ```agda
 Id : Set
@@ -896,7 +896,7 @@ one showing `Γ ∋ x ⦂ A` and one showing `Γ ∋ x ⦂ B`, it follows that
 `A` and `B` must be identical:
 -->
 
-从语境查询一个类型是唯一的。
+从上下文查询一个类型是唯一的。
 给定两个推导，其一证明 `Γ ∋ x ⦂ A`，另一个证明 `Γ ∋ x ⦂ B`，那么
 `A` 和 `B` 一定是一样的：
 
@@ -922,7 +922,7 @@ it is not.
 如果两个推导都使用 `Z` 规则，那么唯一性即可直接得出；
 如果两个推导都使用 `S` 规则，那么唯一性可以由归纳得出。
 如果一个使用了 `Z` 规则，另一个使用了 `S` 规则，这则是一个矛盾，
-因为 `Z` 要求我们查询的变量是语境中的最后一个，而 `S` 要求不是这样。
+因为 `Z` 要求我们查询的变量是上下文中的最后一个，而 `S` 要求不是这样。
 
 <!--
 Synthesizing a type is also unique.  Given two derivations,
@@ -959,7 +959,7 @@ follows since both terms are decorated with the same type.
 # Lookup type of a variable in the context
 -->
 
-# 查询语境中变量的类型
+# 查询上下文中变量的类型
 
 <!--
 Given `Γ` and two distinct variables `x` and `y`, if there is no type `A`
@@ -999,7 +999,7 @@ there exists a type `A` such that `Γ ∋ x ⦂ A` holds, or its
 negation:
 -->
 
-给定语境 `Γ` 和变量 `x`，我们可判断是否存在一个类型 `A` 使得
+给定上下文 `Γ` 和变量 `x`，我们可判断是否存在一个类型 `A` 使得
 `Γ ∋ x ⦂ A` 成立，或者其反命题：
 
 ```agda
@@ -1018,20 +1018,20 @@ lookup (Γ , y ⦂ B) x with x ≟ y
 Consider the context:
 -->
 
-考虑语境的情况：
+考虑上下文的情况：
 
 <!--
 * If it is empty, then trivially there is no possible derivation.
 -->
 
-* 如果语境为空，那么平凡地，我们没有任何可能的推导。
+* 如果上下文为空，那么平凡地，我们没有任何可能的推导。
 
 <!--
 * If it is non-empty, compare the given variable to the most
   recent binding:
 -->
 
-* 如果语境非空，比较给定的变量和最新的绑定：
+* 如果上下文非空，比较给定的变量和最新的绑定：
 
   <!--
   + If they are identical, we have succeeded, with `Z` as
@@ -1052,7 +1052,7 @@ Consider the context:
       to the extended context.
     -->
 
-    - 如果查询失败了，我们使用 `ext∋` 将变量不存在于内部的语境中的证明扩充至扩充后的语境。
+    - 如果查询失败了，我们使用 `ext∋` 将变量不存在于内部的上下文中的证明扩充至扩充后的上下文。
 
     <!--
     - If lookup succeeds, we extend the derivation with `S`.
@@ -1172,8 +1172,8 @@ or its negation:
 
 餐桌已经布置好了，我们已经准备好享用今天的主菜了。
 我们定义两个共同递归的函数，一个用于生成，一个用于继承。
-生成在给定语境 `Γ` 和生成项 `M` 时，要么返回一个类型 `A` 和 `Γ ⊢ M ↑ A` 成立的证明，或者其否定。
-继承在给定语境 `Γ` 、继承项 `M` 和类型 `A` 时要么返回 `Γ ⊢ M ↓ A` 成立的证明，或者其否定：
+生成在给定上下文 `Γ` 和生成项 `M` 时，要么返回一个类型 `A` 和 `Γ ⊢ M ↑ A` 成立的证明，或者其否定。
+继承在给定上下文 `Γ` 、继承项 `M` 和类型 `A` 时要么返回 `Γ ⊢ M ↓ A` 成立的证明，或者其否定：
 
 ```agda
 synthesize : ∀ (Γ : Context) (M : Term⁺)
@@ -1381,7 +1381,7 @@ and for switching from inherited to synthesized:
   `N` inheriting type `B`:
 -->
 
-* 如果项是 `ƛ x ⇒ N`，而继承的类型是 `A ⇒ B`，我们用语境 `Γ , x ⦂ A` 递归至
+* 如果项是 `ƛ x ⇒ N`，而继承的类型是 `A ⇒ B`，我们用上下文 `Γ , x ⦂ A` 递归至
   子项 `N` 继承类型 `B`：
 
   <!--
@@ -1465,7 +1465,7 @@ First, we copy the smart constructor `S′` introduced earlier that makes it eas
 access a variable in a context:
 -->
 
-首先，我们复制之前介绍过的智能构造子 `S′`，使得访问语境中的变量更加便利：
+首先，我们复制之前介绍过的智能构造子 `S′`，使得访问上下文中的变量更加便利：
 
 ```agda
 S′ : ∀ {Γ x y A B}
@@ -1774,7 +1774,7 @@ It simply renames to the corresponding constructors in module `DB`.
 Next, we give the code to erase a context:
 -->
 
-接下来，我们给出擦除语境的代码：
+接下来，我们给出擦除上下文的代码：
 
 ```agda
 ∥_∥Cx : Context → DB.Context
