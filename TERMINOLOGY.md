@@ -29,12 +29,14 @@ English to Chinese translation reference for PLFA-zh.
 | Conjunction | 合取 |
 | Constructor | 构造子 |
 | Currying | 柯里化 |
+| Complete Development | 完全发展 |
 | Datatype | 数据类型 |
 | Church Style | 邱奇法 |
 | Curry Style | 柯里法 |
 | de Bruijn Index | de Bruijn 因子 |
 | Decidable | 可判定性/可判定的 |
 | Deterministic | 确定的 |
+| Diamond Property | 菱形性质 |
 | Dependent Function | 依赖函数 |
 | Destructor | 解构子 |
 | Disjoint Sum | 不交和 |
@@ -76,6 +78,7 @@ English to Chinese translation reference for PLFA-zh.
 | Meta-Language | 元语言 |
 | Mixfix | 混缀 |
 | Monotonic | 单调的 |
+| Parallel Reduction | 平行归约 |
 | Parameter | 参数 |
 | Neutral Term | 中性项 |
 | Normal Form | 范式 |
@@ -85,6 +88,7 @@ English to Chinese translation reference for PLFA-zh.
 | Predicate | 谓词 |
 | Primitive Number | 原语数字 |
 | Preorder | 预序 |
+| Pointwise | 逐点 |
 | Postulate | 假设（Agda 关键字） |
 | Pragma | 编译指令 |
 | Precedence | 优先级 |
@@ -110,6 +114,7 @@ English to Chinese translation reference for PLFA-zh.
 | Soundness | 可靠性 |
 | Synthesise (type) | 生成 |
 | Small-step Operational Semantics | 小步操作语义 |
+| Strip Lemma | 带状引理 |
 | Subject Expansion | 主体扩展 |
 | Subject Reduction | 主体归约 |
 | Substitution | 替换性 |
@@ -117,6 +122,7 @@ English to Chinese translation reference for PLFA-zh.
 | Term | 项 |
 | Total Order | 全序 |
 | Transitive | 传递 |
+| Triangle Property | 三角性质 |
 | Trichotomy | 三分律 |
 | True | 真 |
 | Type | 类型 |
