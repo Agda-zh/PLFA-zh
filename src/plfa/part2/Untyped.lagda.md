@@ -77,7 +77,7 @@ The aim of this chapter is to give some appreciation for
 the range of different lambda calculi one may encounter.
 -->
 
-一般来说，我们可以将这些特性选择性的混合匹配，而完全正规化要求开放项，
+一般来说，我们可以将这些特性选择性地混合匹配，而完全正规化要求开放项，
 且编码自然数和不动点需要无类型的演算。
 本章的目的是展示 λ 演算可能出现的不同形式。
 
@@ -117,7 +117,7 @@ can now be defined in the language itself.
 
 我们的内容将会和 [DeBruijn] 章节中相似，只是每个项会有相同的类型，写作 `★`，读作『任意』。
 这呼应了一条 Dana Scott 提出，Robert Harper 重复的口号：『无类型即是单一类型』。
-这样的结果之一就是之前我们需要额外给出的构造（例如自然数和不动点），现在可以在直接在语言本身中定义。
+这样的结果之一就是之前我们需要额外给出的构造（例如自然数和不动点），现在可以直接在语言本身中定义。
 
 
 <!--
@@ -163,7 +163,7 @@ data Type : Set where
 ## Exercise (`Type≃⊤`) (practice)
 -->
 
-## 练习 (`Type≃⊤`) （习题）
+## 练习 (`Type≃⊤`) （实践）
 
 <!--
 Show that `Type` is isomorphic to `⊤`, the unit type.
@@ -204,7 +204,7 @@ We let `Γ` and `Δ` range over contexts.
 ## Exercise (`Context≃ℕ`) (practice)
 -->
 
-## 练习 (`Context≃ℕ`) （习题）
+## 练习 (`Context≃ℕ`) （实践）
 
 <!--
 Show that `Context` is isomorphic to `ℕ`.
@@ -273,7 +273,7 @@ well scoped — that is, that all variables they mention are in scope —
 but not that they are well typed:
 -->
 
-内类作用域的项对应了赋型判断，但类型只有唯一的 `★` 类型。
+内在作用域的项对应了赋型判断，但类型只有唯一的 `★` 类型。
 得到的结果则是我们检查了每个项都是良作用域的——即所有使用的变量都在作用域内——而不是它们是良类型的：
 
 ```agda
@@ -302,8 +302,8 @@ application.  Below we will see how to encode naturals and
 fixpoints into this calculus.
 -->
 
-现在我们有了一个迷你的演算，至包含变量、抽象和应用。
-接下来我们展示如果将自然数和不动点编码进这个演算中。
+现在我们有了一个迷你的演算，只包含变量、抽象和应用。
+接下来我们展示如何将自然数和不动点编码进这个演算中。
 
 <!--
 # Writing variables as numerals
@@ -446,7 +446,7 @@ Our definition of substitution is also exactly as before.
 First we need an extension lemma:
 -->
 
-我们重命名的定义与以前一样。首先我们需要一条扩充引理：
+我们替换的定义与以前一样。首先我们需要一条扩充引理：
 
 ```agda
 exts : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ⊢ A)
@@ -520,7 +520,7 @@ of values, we are now interested in _normal forms_.  Terms in normal
 form are defined by mutual recursion with _neutral_ terms:
 -->
 
-直到项完全范式化之前，规则可以继续进行。
+归约直到项完全范式化之前都可以继续进行。
 因此，我们现在在意的是**范式**（Normal Form），而不是值。
 范式的项由与**中性项**（Neutral Terms）共同递归定义：
 
@@ -558,9 +558,9 @@ body is a normal form. We use `′_` to label neutral terms.
 Like `` `_ ``, it is unobtrusive:
 -->
 
-一个项在其为中型项时，或者其为抽象且抽象体是范式时，是一个范式。
-我们用 `′_` 来标记中型项。
-如果 `` `_ `` 一样，它不显眼：
+一个项在其为中性项时，或者其为抽象且抽象体是范式时，是一个范式。
+我们用 `′_` 来标记中性项。
+如同 `` `_ `` 一样，它不显眼：
 
 ```agda
 data Normal where
@@ -580,7 +580,7 @@ data Normal where
 We introduce a convenient abbreviation for evidence that a variable is neutral:
 -->
 
-我们引入一种缩略用法，来提供变量是中型项的证明：
+我们引入一种缩略用法，来提供变量是中性项的证明：
 
 ```agda
 #′_ : ∀ {Γ} (n : ℕ) {n∈Γ : True (suc n ≤? size Γ)} → Neutral {Γ} (# n)
@@ -605,7 +605,7 @@ the term itself, decorated with some additional primes to indicate
 neutral terms, and using `#′` in place of `#`
 -->
 
-某一项为范式的证明与其本身基本一致，其中包括的额外的撇来标记中型项，并且其中使用了 `#′` 而不是 `#`。
+某一项为范式的证明与其本身基本一致，其中包括的额外的撇来标记中性项，并且其中使用了 `#′` 而不是 `#`。
 
 
 <!--
@@ -653,7 +653,7 @@ call-by-name and to enable full normalisation:
 * A new rule `ζ` is added, to enable reduction underneath a lambda.
 -->
 
-* 额外了新规则 `ζ`，使得 λ 抽象下可以继续归约。
+* 添加了新规则 `ζ`，使得 λ 抽象下可以继续归约。
 
 <!--
 Here are the formalised rules:
@@ -690,7 +690,7 @@ data _—→_ : ∀ {Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
 ## Exercise (`variant-1`) (practice)
 -->
 
-## 练习 (`variant-1`) （习题）
+## 练习 (`variant-1`) （实践）
 
 <!--
 How would the rules change if we want call-by-value where terms
@@ -698,7 +698,7 @@ normalise completely?  Assume that `β` should not permit reduction
 unless both terms are in normal form.
 -->
 
-如果我们想要传值调用，但需要项范式化其中的项的话，要怎么样修改规则？
+如果我们想要传值调用，但需要项完全范式化的话，要怎么样修改规则？
 假设 `β` 在除了两个项都是范式时，不允许归约。
 
 ```agda
@@ -709,7 +709,7 @@ unless both terms are in normal form.
 ## Exercise (`variant-2`) (practice)
 -->
 
-## 练习 (`variant-2`) （习题）
+## 练习 (`variant-2`) （实践）
 
 <!--
 How would the rules change if we want call-by-value where terms
@@ -831,9 +831,9 @@ free variables, and we have no terms that are not functions.
 -->
 
 之前，可进性只应用于封闭的、良类型的项。
-我们没有考虑诸如应用一个不是函数的项（如 `` `zero` ``）或者是带有自由变量的项。
+我们没有考虑诸如应用一个不是函数的项（如 `` `zero ``）或者是带有自由变量的项。
 现在我们展示的包含了开放的、良作用域的项。
-范式的定义容许了自由变量，且我们也有不是函数的项。
+范式的定义容许了自由变量，且我们没有不是函数的项。
 
 <!--
 A term makes progress if it can take a step or is in normal form:
@@ -1350,7 +1350,7 @@ L —↠⟨ L—↠M ⟩ M—↠N = —↠-trans L—↠M M—↠N
 # Multi-step reduction is a congruence
 -->
 
-# 多步归约是合同性的
+# 多步归约满足同余性
 
 <!--
 Recall from Chapter [Induction](/Induction/) that a
@@ -1363,10 +1363,10 @@ say that the relation is a congruence for the language in question, in
 this case the untyped lambda calculus.
 -->
 
-回忆 [Induction](/Induction/) 章节中，一个关系 `R` 对于一个给定的函数 `f` 在函数应用后仍然保持关系时，满足**合同关系**，
+回忆 [Induction](/Induction/) 章节中，一个关系 `R` 对于一个给定的函数 `f` 在函数应用后仍然保持关系时，满足**同余性**，
 即『若 `R x y`，则 `R (f x) (f y)`』。
-项构造子 `ƛ_` and `_·_` 是函数，因此合同性的概念也可作用于它们之上。
-另外，当一个关系对于所有项的构造子满足合同时，我们说它对于整个语言满足合同性，在此即无类型的 λ 演算。
+项构造子 `ƛ_` 和 `_·_` 是函数，因此同余性的概念也可作用于它们之上。
+另外，当一个关系对于所有项的构造子满足同余性时，我们说它对于整个语言满足同余性，在此即无类型的 λ 演算。
 
 <!--
 The rules `ξ₁`, `ξ₂`, and `ζ` ensure that the reduction relation is a
@@ -1375,8 +1375,8 @@ relation `—↠` is also a congruence, which we prove in the following
 three lemmas.
 -->
 
-规则 `ξ₁` 、`ξ₂` 和 `ζ` 保证了归约关系对于无类型的 λ 演算满足合同性。
-多步归约也是一个合同关系，我们在下面三条引理中证明。
+规则 `ξ₁` 、`ξ₂` 和 `ζ` 保证了归约关系对于无类型的 λ 演算满足同余性。
+多步归约也满足同余性，我们在下面三条引理中证明。
 
 ```agda
 appL-cong : ∀ {Γ} {L L' M : Γ ⊢ ★}
