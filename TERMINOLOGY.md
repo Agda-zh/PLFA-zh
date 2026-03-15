@@ -14,6 +14,7 @@ English to Chinese translation reference for PLFA-zh.
 | Bisimulation | 互模拟 |
 | Bidirectional (type inference) | 双向 |
 | Boolean | 布尔值 |
+| Call-by-name | 传名 |
 | Call-by-value | 传值 |
 | Canonical Form | 标准式 |
 | Cartesian Product | 笛卡尔积 |
@@ -76,6 +77,8 @@ English to Chinese translation reference for PLFA-zh.
 | Mixfix | 混缀 |
 | Monotonic | 单调的 |
 | Parameter | 参数 |
+| Neutral Term | 中性项 |
+| Normal Form | 范式 |
 | Object Language | 对象语言 |
 | Partial Order | 偏序 |
 | Pattern Matching | 模式匹配 |
