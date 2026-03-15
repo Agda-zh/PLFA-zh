@@ -239,7 +239,7 @@ direction of the proof more difficult, and the case for `⊔-intro`
 demonstrates why the `⊑-dist` rule is important.
 -->
 
-为此我们需要定义一个函数，它接受语境 `Γ` 中的两个指称，并产生语境 `Γ`
+为此我们需要定义一个函数，它接受上下文 `Γ` 中的两个指称，并产生上下文 `Γ`
 中的另一个指称。我们将此函数命名为 `●`，以模拟应用语义 `L · M`
 中非递归的部分。我们无法像处理 `ℱ` 那样简单地对值 `v` 进行递归来定义函数，
 因为 `↦-elim` 这类的规则可应用于任何值。相反，我们将通过直接处理 `↦-elim`
@@ -481,7 +481,7 @@ produces two programs that are denotationally equal.
 本章的主要工作已经完成：我们建立了语义方程来展示指称语义是如何组合的。
 在本节和下一节中，我们将利用这些方程来证明一些推论：指称相等满足**合同性（congruence）**，
 并证明指称具有**可组合性（compositionality property）**，
-该性质指出在同一语境中，两个指称相等的项会产生两个指称相等的程序 。
+该性质指出在同一上下文中，两个指称相等的项会产生两个指称相等的程序 。
 
 <!--
 We begin by showing that denotational equality is a congruence with
@@ -616,9 +616,9 @@ that are denotationally equal. To make this precise, we define what we
 mean by "context" and "surround".
 -->
 
-**可组合性（Compositionality Property）**说明了在同一语境下，
+**可组合性（Compositionality Property）**说明了在同一上下文下，
 两个指称相等的项会产生两个指称相等的程序。为准确起见，我们定义了
-「语境」和「在语境下」的含义。
+「上下文」和「在上下文下」的含义。
 
 <!--
 A _context_ is a program with one hole in it. The following data
@@ -634,8 +634,8 @@ type with two contexts for variables: one for the hole and one for
 terms that result from filling the hole.
 -->
 
-**语境（Context）**是一个带洞的程序。以下数据定义 `Ctx` 将这个概念表示了出来。
-我们使用两个变量语境来索引 `Ctx` 数据类型：一个表示洞，另一个表示填洞所产生的项。
+**上下文（Context）**是一个带洞的程序。以下数据定义 `Ctx` 将这个概念表示了出来。
+我们使用两个变量上下文来索引 `Ctx` 数据类型：一个表示洞，另一个表示填洞所产生的项。
 
 ```agda
 data Ctx : Context → Context → Set where
@@ -651,8 +651,8 @@ data Ctx : Context → Context → Set where
   for the term that results from filling the hole.
 -->
 
-* 构造子 `ctx-hole` 表示洞，且在此情况中洞的变量语境
-  与填洞所产生的项的变量语境相同。
+* 构造子 `ctx-hole` 表示洞，且在此情况中洞的变量上下文
+  与填洞所产生的项的变量上下文相同。
 
 <!--
 * The constructor `ctx-lam` takes a `Ctx` and produces a larger one that
@@ -663,7 +663,7 @@ data Ctx : Context → Context → Set where
 -->
 
 * 构造子 `ctx-lam` 接受一个 `Ctx` 并在顶部添加 λ-抽象来产生一个更大的 `Ctx`。
-  洞的变量语境保持不变，而我们从结果项的语境中删除一个变量，因为它被此
+  洞的变量上下文保持不变，而我们从结果项的上下文中删除一个变量，因为它被此
   λ-抽象约束。
 
 <!--
@@ -682,7 +682,7 @@ The action of surrounding a term with a context is defined by the
 following `plug` function. It is defined by recursion on the context.
 -->
 
-将项插入到某个语境下的操作由以下 `plug` 函数定义，它是通过对语境进行递归来定义的：
+将项插入到某个上下文下的操作由以下 `plug` 函数定义，它是通过对上下文进行递归来定义的：
 
 ```agda
 plug : ∀{Γ}{Δ} → Ctx Γ Δ → Γ ⊢ ★ → Δ ⊢ ★
@@ -700,7 +700,7 @@ denotationally equal.
 -->
 
 我们接下来陈述并证明组合性原则：给定两个项 `M` 和 `N`，若它们的指称相等，
-那么将它们插入到任意语境 `C` 中都会产生两个指称相等的程序：
+那么将它们插入到任意上下文 `C` 中都会产生两个指称相等的程序：
 
 ```agda
 compositionality : ∀{Γ Δ}{C : Ctx Γ Δ} {M N : Γ ⊢ ★}
@@ -723,7 +723,7 @@ congruence properties `lam-cong` and `app-cong` that we established
 above.
 -->
 
-它可以通过直接对语境 `C` 进行归纳，用我们之前建立的合同性质
+它可以通过直接对上下文 `C` 进行归纳，用我们之前建立的合同性质
 `lam-cong` 和 `app-cong` 来证明。
 
 <!--

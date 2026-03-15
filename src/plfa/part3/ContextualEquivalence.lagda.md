@@ -1,5 +1,5 @@
 ---
-title     : "ContextualEquivalence: 指称相等蕴含语境等价"
+title     : "ContextualEquivalence: 指称相等蕴含上下文等价"
 permalink : /ContextualEquivalence/
 translators : ["OlingCat"]
 ---
@@ -29,7 +29,7 @@ open import plfa.part3.Adequacy using (↓→⇓)
 # Contextual Equivalence
 -->
 
-# 语境等价
+# 上下文等价
 
 <!--
 The notion of _contextual equivalence_ is an important one for
@@ -42,9 +42,9 @@ a program in the lambda calculus is to terminate or not.
 We characterize termination with the reduction semantics as follows.
 -->
 
-**语境等价（Contextual Equivalence）**对编程语言来说是一种很重要的概念，
+**上下文等价（Contextual Equivalence）**对编程语言来说是一种很重要的概念，
 因为它是在保持程序整体行为的同时更改程序子项的充分条件。若两个项 `M`
-和 `N` 分别插入到任意语境 `C` 中所产生的结果等价，则二者语境等价。
+和 `N` 分别插入到任意上下文 `C` 中所产生的结果等价，则二者上下文等价。
 正如指称语义一章中所讨论过的，λ-演算中程序所产生的结果要么停机要么发散。
 我们用下面的归约语义来刻画停机：
 
@@ -59,7 +59,7 @@ same context produces two programs that either terminate or diverge
 together.
 -->
 
-因此将语境等价的两个项插入到相同的语境中，产生的两个程序要么都停机，
+因此将上下文等价的两个项插入到相同的上下文中，产生的两个程序要么都停机，
 要么都发散。
 
 ```agda
@@ -77,15 +77,15 @@ contextual equivalence that instead only requires reasoning about the
 two terms.
 -->
 
-由于语境 `C` 是全称量化的，因此两个项是否语境等价很难直接基于上述定义来证明。
-发展指称语义的主要动机之一就是找到一种方式，只需要对两个项进行论证就能证明二者语境等价。
+由于上下文 `C` 是全称量化的，因此两个项是否上下文等价很难直接基于上述定义来证明。
+发展指称语义的主要动机之一就是找到一种方式，只需要对两个项进行论证就能证明二者上下文等价。
 
 
 <!--
 # Denotational equivalence implies contextual equivalence
 -->
 
-# 指称等价蕴含语境等价
+# 指称等价蕴含上下文等价
 
 <!--
 Thankfully, the proof that denotational equality implies contextual
@@ -95,7 +95,7 @@ symmetric, so we can prove one lemma and then use it twice in the
 theorem.
 -->
 
-值得庆幸的是，「指称等价蕴含语境等价」的证明是我们已经证明的结果的一个简单推论。
+值得庆幸的是，「指称等价蕴含上下文等价」的证明是我们已经证明的结果的一个简单推论。
 除此之外，「当且仅当」的两个方向是对称的，因此我们可以证明一个引理，
 然后在主定理中应用它两次。
 

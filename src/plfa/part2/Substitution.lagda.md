@@ -104,7 +104,7 @@ We introduce the following shorthand for the type of a _renaming_ from
 variables in context `Γ` to variables in context `Δ`.
 -->
 
-我们引入了以下简写表示「将语境 `Γ` 中的变量**重命名**为语境 `Δ` 中的变量」的类型。
+我们引入了以下简写表示「将上下文 `Γ` 中的变量**重命名**为上下文 `Δ` 中的变量」的类型。
 
 ```agda
 Rename : Context → Context → Set
@@ -116,7 +116,7 @@ Similarly, we introduce the following shorthand for the type of a
 _substitution_ from variables in context `Γ` to terms in context `Δ`.
 -->
 
-与此类似，我们引入了以下简写表示「将语境 `Γ` 中的变量**代换**为语境 `Δ` 中的项」的类型。
+与此类似，我们引入了以下简写表示「将上下文 `Γ` 中的变量**代换**为上下文 `Δ` 中的项」的类型。
 
 ```agda
 Subst : Context → Context → Set
