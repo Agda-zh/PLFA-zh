@@ -26,7 +26,7 @@ English to Chinese translation reference for PLFA-zh.
 | Conclusion | 结论 |
 | Confluence | 合流性 |
 | Congruence | 同余性 |
-| Context | 语境 |
+| Context | 上下文 |
 | Corollary | 推论 |
 | Conjunction | 合取 |
 | Constructor | 构造子 |
@@ -36,7 +36,7 @@ English to Chinese translation reference for PLFA-zh.
 | Datatype | 数据类型 |
 | Church Style | 邱奇法 |
 | Curry Style | 柯里法 |
-| de Bruijn Index | de Bruijn 因子 |
+| de Bruijn Index | de Bruijn 索引 |
 | Decidable | 可判定性/可判定的 |
 | Deterministic | 确定的 |
 | Diamond Property | 菱形性质 |
@@ -125,7 +125,7 @@ English to Chinese translation reference for PLFA-zh.
 | Strip Lemma | 带状引理 |
 | Subject Expansion | 主体扩展 |
 | Subject Reduction | 主体归约 |
-| Substitution | 替换性 |
+| Substitution | 替换 |
 | Sum | 和 |
 | Term | 项 |
 | Total Order | 全序 |
