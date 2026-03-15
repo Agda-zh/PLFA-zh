@@ -712,14 +712,14 @@ are called _dependent functions_.
 
 是等价的。和 `ℕ → ℕ → ℕ` 这样的函数类型不同，上述函数中的变量
 与每一个实参类型相关联，且其结果类型可能会涉及（或依赖于）这些变量，
-因此它们叫做**依赖函数（Dependent Function）**。
+因此它们叫做**依值函数（Dependent Function）**。
 
 <!--
 Ordinary functions are a special case of dependent functions. For instance,
 the signatures
 -->
 
-普通函数是依赖函数的特殊形式。例如，下面的签名
+普通函数是依值函数的特殊形式。例如，下面的签名
 
     _+_ : ℕ → ℕ → ℕ
 

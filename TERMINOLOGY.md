@@ -26,7 +26,7 @@ English to Chinese translation reference for PLFA-zh.
 | Conclusion | 结论 |
 | Confluence | 合流性 |
 | Congruence | 同余性 |
-| Context | 上下文 |
+| Context | 语境 |
 | Corollary | 推论 |
 | Conjunction | 合取 |
 | Constructor | 构造子 |
@@ -41,7 +41,7 @@ English to Chinese translation reference for PLFA-zh.
 | Deterministic | 确定的 |
 | Diamond Property | 菱形性质 |
 | Denotational Semantics | 指称语义 |
-| Dependent Function | 依赖函数 |
+| Dependent Function | 依值函数 |
 | Destructor | 解构子 |
 | Disjoint Sum | 不交和 |
 | Disjoint Union | 不交并 |
