@@ -5,11 +5,13 @@ English to Chinese translation reference for PLFA-zh.
 | English | 中文翻译 |
 |---------|----------|
 | Abstraction | 抽象 |
+| Adequacy | 充分性 |
 | Absurd Pattern | 荒谬模式 |
 | Anti-symmetric | 反对称 |
 | Application | 应用 |
 | Associativity | 结合律 |
 | Base Case | 起始步骤 |
+| Big-step Semantics | 大步语义 |
 | Binary Relation | 二元关系 |
 | Bisimulation | 互模拟 |
 | Bidirectional (type inference) | 双向 |
@@ -28,6 +30,7 @@ English to Chinese translation reference for PLFA-zh.
 | Corollary | 推论 |
 | Conjunction | 合取 |
 | Constructor | 构造子 |
+| Closure | 闭包 |
 | Currying | 柯里化 |
 | Complete Development | 完全发展 |
 | Datatype | 数据类型 |
@@ -37,6 +40,7 @@ English to Chinese translation reference for PLFA-zh.
 | Decidable | 可判定性/可判定的 |
 | Deterministic | 确定的 |
 | Diamond Property | 菱形性质 |
+| Denotational Semantics | 指称语义 |
 | Dependent Function | 依赖函数 |
 | Destructor | 解构子 |
 | Disjoint Sum | 不交和 |
@@ -45,6 +49,7 @@ English to Chinese translation reference for PLFA-zh.
 | Distributivity | 分配律 |
 | Dot Pattern | 点模式 |
 | Embedding | 嵌入 |
+| Environment | 环境 |
 | Erasure | 擦除 |
 | Empty Type | 空类型 |
 | Equivalence Relation | 等价关系 |
@@ -71,6 +76,7 @@ English to Chinese translation reference for PLFA-zh.
 | Isomorphism | 同构 |
 | Judgment | 判断 |
 | Lambda Calculus | λ-演算 |
+| Left Reduction | 左归约 |
 | Left-inverse | 左逆 |
 | Lemma | 引理 |
 | Lookup | 查询 |
@@ -114,6 +120,8 @@ English to Chinese translation reference for PLFA-zh.
 | Soundness | 可靠性 |
 | Synthesise (type) | 生成 |
 | Small-step Operational Semantics | 小步操作语义 |
+| Standard Reduction Sequence | 标准归约序列 |
+| Standardisation | 标准化 |
 | Strip Lemma | 带状引理 |
 | Subject Expansion | 主体扩展 |
 | Subject Reduction | 主体归约 |
