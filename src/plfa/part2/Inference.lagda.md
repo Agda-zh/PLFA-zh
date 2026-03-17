@@ -45,9 +45,9 @@ and from it we compute an intrinsically-typed term, in the style of
 Chapter [DeBruijn](/DeBruijn/).
 -->
 
-本章中，我们讲之前的进展结合在一起。
+本章中，我们将之前的进展结合在一起。
 我们首先由带有类型注释的项开始，其与 [Lambda](/Lambda/) 章节中的源项相似，
-从此我们计算出内在类型的项，如同 [DeBruijn](/DeBruijn) 章节中那样。
+从此我们计算出内在类型的项，如同 [DeBruijn](/DeBruijn/) 章节中那样。
 
 <!--
 # Introduction: Inference rules as algorithms {#algorithms}
@@ -133,7 +133,7 @@ of the hypothesis determines the output of the conclusion.
 
 从输入中，我们可以决定应用哪一条规则：
 如果语境中最后一个变量与给定的变量一致，那么应用第一条规则，否则应用第二条。
-（对于 de Bruijn 因子来说，这更加简单：零对应第一条，后继对应第二条。）
+（对于 de Bruijn 索引来说，这更加简单：零对应第一条，后继对应第二条。）
 对于第一条，输出类型可以直接从语境中得到。
 对于第二条，结论中的输入可以作为假设的输入，而假设的输出决定了结论的输出。
 
@@ -188,10 +188,10 @@ determines the output of the conclusion.
 输入项决定了应用哪一条规则：
 变量使用第一条，抽象使用第二条，应用使用第三条。
 我们把这样的规则叫做**语法导向的**（Syntax directed）规则。
-对于变量的规则，结论的输入决定了结论的输出。
+对于变量的规则，结论的输入决定了假设的输入，而假设的输出决定了结论的输出。
 抽象的规则也是一样——约束变量和参数从结论的输入流向假设中的语境；
 这得以实现，因为我们在抽象中加入了参数的类型。
-对于应用的规则，我们加入第三条假设来检查函数类型中的作用域是否与参数的类型一致；
+对于应用的规则，我们加入第三条假设来检查函数的定义域是否与参数的类型一致；
 这条判断是在两个类型已知时是可判定的。
 结论的输入决定了前两个假设的输入，而前两个假设的输出决定了第三个假设的输入，而第一个假设的输出决定了结论的输出。
 
@@ -245,7 +245,7 @@ inheritance.  The inherited type in an abstraction term serves the
 same purpose as the argument type decoration of the previous section.
 -->
 
-什么项生成类型，什么项继承类型的？
+什么项生成类型，什么项继承类型？
 我们的宗旨是**解构子**中的主项使用生成来赋型，而**构造子**使用继承。
 比如，函数应用中的函数由生成来赋型，而抽象是由继承来赋型。
 抽象中继承的类型和之前我们为参数额外增加的注解起到一样的作用。
@@ -267,7 +267,7 @@ typed by inheritance.
 
 解构某一类型的值的项总有一个主项（提供一个所需类型的参数），且经常有副项。
 对于函数应用来说，主项提供了函数，副项提供了参数。
-对于分情况讨论来说，主项提供了自然数，副项则是两种情况不同的情况。
+对于分情况讨论来说，主项提供了自然数，副项则是两条分支。
 在解构子中，主项使用生成进行赋型，而副项使用继承进行赋型。
 我们将看到，这自然地导致函数应用作为整体由生成进行赋型，而分情况讨论作为整体则使用继承进行赋型。
 变量一般使用生成进行赋型，因为我们可以直接从语境中查询其类型。
@@ -584,7 +584,7 @@ deconstructors synthesise, constructors and side terms
 in deconstructors inherit.
 -->
 
-至于每个项是由继承或者生成来赋型，我们在上文中已经讨论过，并且可以直接上文的非形式化语法中直接得来。
+至于每个项是由继承或者生成来赋型，我们在上文中已经讨论过，并且可以直接从上文的非形式化语法中得来。
 解构子中的主项由生成赋型，解构子中的构造子和副项由继承赋型。
 
 <!--
@@ -861,7 +861,7 @@ and range of equal function types are equal:
 -->
 
 我们也会需要一些显然的引理；
-作用域和值域相等的函数类型相等：
+定义域和值域相等的函数类型相等：
 
 ```agda
 dom≡ : ∀ {A A′ B B′} → A ⇒ B ≡ A′ ⇒ B′ → A ≡ A′
@@ -1172,7 +1172,7 @@ or its negation:
 
 餐桌已经布置好了，我们已经准备好享用今天的主菜了。
 我们定义两个共同递归的函数，一个用于生成，一个用于继承。
-生成在给定语境 `Γ` 和生成项 `M` 时，要么返回一个类型 `A` 和 `Γ ⊢ M ↑ A` 成立的证明，或者其/否定。
+生成在给定语境 `Γ` 和生成项 `M` 时，要么返回一个类型 `A` 和 `Γ ⊢ M ↑ A` 成立的证明，或者其否定。
 继承在给定语境 `Γ` 、继承项 `M` 和类型 `A` 时要么返回 `Γ ⊢ M ↓ A` 成立的证明，或者其否定：
 
 ```agda
@@ -1813,7 +1813,7 @@ there are two mutually recursive erasure functions:
 -->
 
 最后，我们给出擦除赋型判断的代码。
-正如由两个共同递归的赋型判断，我们有两个共同递归的擦除函数：
+正如有两个共同递归的赋型判断，我们有两个共同递归的擦除函数：
 
 ```agda
 ∥_∥⁺ : ∀ {Γ M A} → Γ ⊢ M ↑ A → ∥ Γ ∥Cx DB.⊢ ∥ A ∥Tp
@@ -1866,7 +1866,7 @@ Chapter [DeBruijn](/DeBruijn/).
 -->
 
 因此，我们证实了双向类型推理把装饰后的 [Lambda](/Lambda/) 章节的
-λ 项转换至 [DeBruijn](/DeBruijn) 章节中内在类型的项。
+λ 项转换至 [DeBruijn](/DeBruijn/) 章节中内在类型的项。
 
 <!--
 ## Exercise `inference-multiplication` (recommended)
@@ -1900,7 +1900,7 @@ Using your rules from exercise
 bidirectional inference to include products. Also extend erasure.
 -->
 
-使用你在 [`bidirectional-mul`](/Inference/#bidirectional-mul) 练习中的赋型规则，
+使用你在 [`bidirectional-products`](/Inference/#bidirectional-products) 练习中的赋型规则，
 将双向推理扩充至包括积。此外扩充对应的擦除。
 
 ```agda
@@ -1921,7 +1921,7 @@ Chapter [More](/More/). Also extend erasure.
 -->
 
 使用你从练习 [`bidirectional-rest`](/Inference/#bidirectional-rest)
-中得到的规则，扩充双向推导规则，来包括 [More](/More/) 章节的剩余构造。
+中得到的规则，扩充双向推理，来包括 [More](/More/) 章节的剩余构造。
 此外扩充对应的擦除。
 
 ```agda
@@ -1957,7 +1957,7 @@ typed by synthesis, such as an application, does not require a type
 declaration.
 -->
 
-Agda 中多数的顶层声明时函数，其由继承来赋型，也就是为什么 Agda 会对这些定义要求类型声明。
+Agda 中多数的顶层声明是函数，其由继承来赋型，也就是为什么 Agda 会对这些定义要求类型声明。
 一个由生成赋型的右手边的定义，比如说函数应用，则不需要类型声明。
 
 ```agda

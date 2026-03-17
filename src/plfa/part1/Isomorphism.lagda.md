@@ -240,7 +240,7 @@ More generally, we may wish to postulate extensionality for
 dependent functions.
 -->
 
-更一般地，我们可能希望对依赖函数也假设外延性。
+更一般地，我们可能希望对依值函数也假设外延性。
 
 ```agda
 postulate
@@ -256,7 +256,7 @@ Here the type of `f` and `g` has changed from `A → B` to
 dependent functions.
 -->
 
-这里 `f` 和 `g` 的类型从 `A → B` 变为了 `∀ (x : A) → B x`，将普通函数推广到了依赖函数。
+这里 `f` 和 `g` 的类型从 `A → B` 变为了 `∀ (x : A) → B x`，将普通函数推广到了依值函数。
 
 
 <!--

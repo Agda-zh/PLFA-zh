@@ -44,7 +44,7 @@ type, which has appeared throughout this book.  For instance, in
 Chapter Induction we showed addition is associative:
 -->
 
-我们用**依赖函数类型（Dependent Function Type）**来形式化全称量化，
+我们用**依值函数类型（Dependent Function Type）**来形式化全称量化，
 这样的形式在书中贯穿始终。例如，在归纳一章中，我们证明了加法满足结合律：
 
     +-assoc : ∀ (m n p : ℕ) → (m + n) + p ≡ m + (n + p)
@@ -57,7 +57,7 @@ evidence for the corresponding equation.
 -->
 
 它断言对于所有的自然数 `m`、`n` 和 `p`，`(m + n) + p ≡ m + (n + p)` 成立。
-它是一个依赖函数，给出 `m`、`n` 和 `p` 的值，它会返回与该等式对应的证据。
+它是一个依值函数，给出 `m`、`n` 和 `p` 的值，它会返回与该等式对应的证据。
 
 <!--
 In general, given a variable `x` of type `A` and a proposition `B x`
@@ -130,8 +130,8 @@ a matter of interpretation, since in Agda a value of a type and
 evidence of a proposition are indistinguishable.
 -->
 
-函数是依赖函数的一种特殊形式，其值域不取决于定义域中的变量。当一个函数被视为
-蕴涵的证明时，它的参数和结果都是证明，而当一个依赖函数被视为全称量词的证明时，
+函数是依值函数的一种特殊形式，其值域不取决于定义域中的变量。当一个函数被视为
+蕴涵的证明时，它的参数和结果都是证明，而当一个依值函数被视为全称量词的证明时，
 它的参数被视为数据类型中的一个元素，而结果是一个依赖于参数的命题的证明。因为在
 Agda 中，一个数据类型中的一个值和一个命题的证明是无法区别的，这样的区别很大程度上
 取决于如何来诠释。
@@ -147,10 +147,10 @@ will stick with the name dependent function, because (as we will see)
 dependent product is ambiguous.
 -->
 
-依赖函数类型也被叫做**依赖积（Dependent Product）**，因为如果 `A` 是一个有限的数据类型，
+依值函数类型也被叫做**依赖积（Dependent Product）**，因为如果 `A` 是一个有限的数据类型，
 有值 `x₁ , ⋯ , xₙ`，如果每个类型 `B x₁ , ⋯ , B xₙ` 有 `m₁ , ⋯ , mₙ` 个不同的成员，
 那么 `∀ (x : A) → B x` 有 `m₁ * ⋯ * mₙ` 个成员。的确，`∀ (x : A) → B x` 的记法有时
-也被 `Π[ x ∈ A ] (B x)` 取代，其中 `Π` 代表积。然而，我们还是使用依赖函数这个名称，
+也被 `Π[ x ∈ A ] (B x)` 取代，其中 `Π` 代表积。然而，我们还是使用依值函数这个名称，
 因为依赖积这个名称是有歧义的，我们后续会体会到歧义所在。
 
 <!--

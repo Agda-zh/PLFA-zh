@@ -21,7 +21,7 @@ substantially fewer lines of code to cover the same ground.
 
 前面两个章节介绍了 λ-演算，用以带名字的变量进行形式化，而且将项与类型分开定义。
 我们之所以使用这样的方法，是因为这是传统的定义方法，但不是我们推荐的方法。
-在本节中，我们使用另一种方法，用 de Bruijn 因子来代替带名字的变量，并且用项的类型来索引项。
+在本节中，我们使用另一种方法，用 de Bruijn 索引来代替带名字的变量，并且用项的类型来索引项。
 这种新的表示法更加紧凑，可以使用更少的代码来证明相同的内容。
 
 <!--
@@ -114,7 +114,7 @@ The two definitions are in close correspondence, where:
 -->
 
 （两者都摘自 [Lambda](/Lambda/) 章节，你可以在[这里](/Lambda/#derivation)查看完整的推导树。）
-两者的定义对应的很紧密，其中：
+两者的定义对应得很紧密，其中：
 
 <!--
   * `` `_ `` corresponds to `` ⊢` ``
@@ -181,9 +181,9 @@ equivalence class of terms under alpha renaming.
 -->
 
 用数字代替变量的这种表示方法叫做 **de Bruijn 表示法**，这些数字本身被称为
-**de Bruijn 因子（de Bruijn Indices）**，得名于荷兰数学家
+**de Bruijn 索引（de Bruijn Indices）**，得名于荷兰数学家
 Nicolaas Govert (Dick) de Bruijn （1918 - 2012），一位创造证明助理的先锋。
-使用 de Bruijn 因子表示变量的一个好处是：每个项有一个唯一的表示方法，而不是
+使用 de Bruijn 索引表示变量的一个好处是：每个项有一个唯一的表示方法，而不是
 在 α-重命名下的一个相等类。
 
 <!--
@@ -199,7 +199,7 @@ raw terms by the type `Γ ⊢ A` of intrinsically-typed terms
 which in context `Γ` have type `A`.
 -->
 
-我们选择的表示方式的另一个重要特性是：他是**内在类型（Intrinsically Typed）**的。
+我们选择的表示方式的另一个重要特性是：它是**内在类型（Intrinsically Typed）**的。
 在前两章中，项和类型的定义是完全分离的。所有的项拥有 `Term` 类型，Agda 并不会
 阻止我们写出例如 `` `zero · `suc `zero `` 的没有类型的无意义的项。
 这样独立于类型存在的项有时被称为**原项（Preterms）**或者**源项（Raw Terms）**。
@@ -216,7 +216,7 @@ are intrinsically scoped but not typed.
 -->
 
 尽管这两个选择很适合我们，这两个选择仍然是独立的。
-可以用 de Bruijn 因子配合源项，也可以用内在类型的项配合变量名。
+可以用 de Bruijn 索引配合源项，也可以用内在类型的项配合变量名。
 在 [Untyped](/Untyped/) 章节中，我们将使用 de Bruijn 表示内在作用域的项，
 但不包含类型。
 
@@ -249,7 +249,7 @@ binding, due to shadowing.
 -->
 
 注意变量 `"m"` 被约束了两次，一次在 λ 抽象中，另一次在匹配表达式的后继分支中。
-由于屏蔽效应，在匹配表达式后继分支出现的 `"m"` 必须指代后面的约束。
+由于遮蔽效应，在匹配表达式后继分支出现的 `"m"` 必须指代后面的约束。
 
 <!--
 Here is its corresponding type derivation:
@@ -272,7 +272,7 @@ The two definitions are in close correspondence, where in
 addition to the previous correspondences we have:
 -->
 
-两者的定义对应的很紧密，除去之前的对应，我们注意到：
+两者的定义对应得很紧密，除去之前的对应，我们注意到：
 
 <!--
   * `` `zero `` corresponds to `⊢zero`
@@ -303,7 +303,7 @@ of `"n"` but accessed in different contexts, the first where
 Here is the term and its type derivation in the notation of this chapter:
 -->
 
-下面是用本章中的记法表示的这个项极其类型推导：
+下面是用本章中的记法表示的这个项及其类型推导：
 
     plus : ∀ {Γ} → Γ ⊢ `ℕ ⇒ `ℕ ⇒ `ℕ
     plus = μ ƛ ƛ case (# 1) (# 0) (`suc (# 3 · # 0 · # 1))
@@ -313,7 +313,7 @@ Reading from left to right, each de Bruijn index corresponds
 to a lookup derivation:
 -->
 
-从左往右，每个 de Bruijn 因子对应了一个查询判断：
+从左往右，每个 de Bruijn 索引对应了一个查询判断：
 
 <!--
   * `# 1` corresponds to `∋m`
@@ -347,8 +347,8 @@ De Bruijn 因子计算了对应查询推断中 `S` 构造子的数量。
 里面抽象约束的变量 `"n"` 在匹配表达式零分支中由 `# 0` 表示， 但在后继分支中由
 `# 1` 表示，因为中间产生了约束。
 抽象约束的变量 `"m"` 第一次出现是由 `# 1` 表示，然而第二次出现在匹配表达式
-的后继分支时则由 `# 0` 表示。这里没有屏蔽效应————使用变量名时，我们无法
-在后者的作用域内指代外部的约束，但是我们可以用 de Bruijn 因子 `# 2` 来指代。
+的后继分支时则由 `# 0` 表示。这里没有遮蔽效应————使用变量名时，我们无法
+在后者的作用域内指代外部的约束，但是我们可以用 de Bruijn 索引 `# 2` 来指代。
 
 <!--
 # Order of presentation
@@ -497,7 +497,7 @@ They are represented by de Bruijn indices, and hence also
 correspond to natural numbers.  We write
 -->
 
-内在类型的变量对应着查询判断。它们由 de Bruijn 因子表示，因此也对应着自然数。
+内在类型的变量对应着查询判断。它们由 de Bruijn 索引表示，因此也对应着自然数。
 我们用
 
     Γ ∋ A
@@ -536,7 +536,7 @@ constructors `here` and `there` for the element-of relation
 for natural numbers.
 -->
 
-`S` 构造子不再需要额外的参数，由于没有名字以后就不需要处理屏蔽效应。
+`S` 构造子不再需要额外的参数，由于没有名字以后就不需要处理遮蔽效应。
 现在的构造子 `Z` 和 `S` 更紧密地对应了列表中成员关系的构造子 `here` 和 `there`，
 以及自然数的构造子 `zero` 和 `suc`。
 
@@ -701,7 +701,7 @@ The final term represents the Church numeral two.
 ## Abbreviating de Bruijn indices
 -->
 
-## 简化 de Bruijn 因子
+## 简化 de Bruijn 索引
 
 <!--
 We define a helper function that computes the length of a context,
@@ -740,7 +740,7 @@ Given the above, we can convert a natural to a corresponding
 de Bruijn index, looking up its type in the context:
 -->
 
-结合上述，我们可以将一个自然数转换成其对应的 de Bruijn 因子，从语境中查询它的类型：
+结合上述，我们可以将一个自然数转换成其对应的 de Bruijn 索引，从语境中查询它的类型：
 
 ```agda
 count : ∀ {Γ} → {n : ℕ} → (p : n < size Γ) → Γ ∋ lookup p
@@ -930,7 +930,7 @@ variable in `Γ , B`:
 -->
 
 令 `ρ` 为从 `Γ` 中变量至 `Δ` 中变量的映射的名称。
-考虑 `Γ , B` 中变量的 de Bruijn 因子：
+考虑 `Γ , B` 中变量的 de Bruijn 索引：
 
 <!--
 * If it is `Z`, which has type `B` in `Γ , B`,
@@ -993,7 +993,7 @@ to variables in `Δ`.  Let's unpack the first three cases:
 * 如果项是一个变量，直接应用 `ρ`。
 
 * 如果项是一个抽象，使用之前的扩充结论来扩充映射 `ρ`，
-  然后在递归地对于抽象本体进行重命名。
+  然后递归地对抽象本体进行重命名。
 
 * 如果项是一个应用，递归地重命名函数及其参数。
 
@@ -1016,7 +1016,7 @@ calculus.
 -->
 
 之前，重命名是一个将项在一个语境中良类型的证明转换成项在另一个语境中
-良类型的结论；而现在，它直接转换了整个项，调整了其中的约束变了。
+良类型的结论；而现在，它直接转换了整个项，调整了其中的约束变量。
 在 Agda 中类型检查这段代码保证了只有在简单类型的 λ-演算中良类型的项
 可以作为参数或者作为返回项。
 
@@ -1047,8 +1047,8 @@ extended for each bound variable by a map that leaves it
 unchanged.
 -->
 
-通常来说，`rename S_` 会把所有自由变量的 de Bruijn 因子增加一，
-而不改变约束变量的 de Bruijn 因子。
+通常来说，`rename S_` 会把所有自由变量的 de Bruijn 索引增加一，
+而不改变约束变量的 de Bruijn 索引。
 这个代码自然地完成了这样的操作：映射将所有的变量增加一，然而在扩充作用下，
 每个约束变量的因子不变。
 
@@ -1065,9 +1065,9 @@ terms is intrinsically reliable.
 -->
 
 我们稍后可以看到，使用 `S_` 进行重命名在替换中起到了重要作用。
-对于没有使用内在类型的 de Bruijn 因子表示法来说，这会有一点棘手。
+对于没有使用内在类型的 de Bruijn 索引表示法来说，这会有一点棘手。
 这种方法需要记忆一个因子数，更大的因子为自由变量，更小的因子为约束变量。
-这样很容易出现差一错误，而出现差一错误以后很难保证类型的保存性。
+这样很容易出现差一错误，而出现差一错误以后很难保证类型的保型性。
 因此这里内在类型的 de Bruijn 项的 Agda 代码是本质上更加可靠。
 
 <!--
@@ -1086,7 +1086,7 @@ term to another term. Further, the substituted terms are over
 an arbitrary context, and need not be closed.
 -->
 
-由于 de Bruijn 因子让我们免去了重命名的顾虑，给出一个更广义的替换的定义更加方便。
+由于 de Bruijn 索引让我们免去了重命名的顾虑，给出一个更广义的替换的定义更加方便。
 与其用一个闭项来替换一个单一的变量，广义的替换提供一个将原来项中各个自由变量至另一个项的映射。
 除此之外，被替换的项可以在任意语境之中，不需要为闭项。
 
@@ -1125,7 +1125,7 @@ variable in `Γ , B`:
 -->
 
 令 `σ` 为从 `Γ` 中变量至 `Δ` 中变量的项的名称。
-考虑 `Γ , B` 中变量的 de Bruijn 因子：
+考虑 `Γ , B` 中变量的 de Bruijn 索引：
 
 <!--
 * If it is `Z`, which has type `B` in `Γ , B`,
@@ -1141,7 +1141,7 @@ variable in `Γ , B`:
   那么返回 `` ` Z`` 项，在 `Δ , B` 中的类型也是 `B`。
 
 * 如果它是 `S x`，其中 `x` 是某个 `Γ` 中的变量，那么 `σ x` 是 `Δ` 中的一个项，
-  因此 `S_ (σ x)` 是一个 `Δ , B` 中的项。
+  因此 `rename S_ (σ x)` 是一个 `Δ , B` 中的项。
 
 <!--
 This is why we had to define renaming first, since
@@ -1199,7 +1199,7 @@ to terms over `Δ`.  Let's unpack the first three cases:
 * 如果项是一个变量，直接应用 `σ`。
 
 * 如果项是一个抽象，使用之前的扩充结论来扩充映射 `σ`，
-  然后在递归地对于抽象本体进行进行替换。
+  然后递归地对抽象本体进行替换。
 
 * 如果项是一个应用，递归地替换函数及其参数。
 
@@ -1338,7 +1338,7 @@ to sneak in.
 -->
 
 逻辑学家 Haskell Curry 注意到，正确地定义替换可能很棘手。
-使用 de Bruijn 因子来定义替换可能更加棘手，且不易理解。
+使用 de Bruijn 索引来定义替换可能更加棘手，且不易理解。
 在现在的方法中，任何替换的定义必须保存类型。
 虽然这样让定义更加深入，但这也意味着一旦定义完成以后最难的部分就完成了。
 将定义和证明结合在一起可以让错误更不易出现。
@@ -1378,7 +1378,7 @@ much in the same way that `[]` did in
 [Lists](/Lists/).
 -->
 
-此处的 `zero` 需要一个隐式函数来帮助类型推测，与 [Lists](/Lists/) 中 `[]` 的情况类似。
+此处的 `zero` 需要一个隐式参数来帮助类型推断，与 [Lists](/Lists/) 中 `[]` 的情况类似。
 
 <!--
 # Reduction
@@ -1639,7 +1639,7 @@ previous development.
 ## Exercise `V¬—→` (practice)
 -->
 
-## 练习 `V¬—→`（习题）
+## 练习 `V¬—→`（实践）
 
 <!--
 Following the previous development, show values do

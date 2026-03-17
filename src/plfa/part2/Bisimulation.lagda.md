@@ -108,13 +108,12 @@ _converse_ relations. Hence, if `~` is a relation from source to target,
 its converse is a relation from target to source.)
 -->
 
-如果从目标系统到源系统也有一个模拟：即每个目标系统的归约在源目标系统中有对应的归约序列，
+如果从目标系统到源系统也有一个模拟：即每个目标系统的归约在源系统中有对应的归约序列，
 我们对这样的情况尤其感兴趣。换句话说，`~` 是一个从源到目标的模拟，而 `~`
-的逆是一个从目标的源的模拟。这样的情况被称为**互模拟**（Bisimulation）。
-  (In general, if < and > are arbitrary relations such
-that `x < y` if and only if `y > x` then we say that `<` and `>` are
-_converse_ relations. Hence, if `~` is a relation from source to target,
-its converse is a relation from target to source.)
+的逆是一个从目标到源的模拟。这样的情况被称为**互模拟**（Bisimulation）。
+（一般来说，如果 `<` 和 `>` 是满足 `x < y` 当且仅当 `y > x` 的任意关系，
+那么我们称 `<` 和 `>` 为**逆**关系。因此，如果 `~` 是一个从源到目标的关系，
+那么它的逆是一个从目标到源的关系。）
 
 <!--
 Simulation is established by case analysis over all possible
@@ -124,7 +123,7 @@ sequence in the target.
 -->
 
 要建立模拟，我们需要分情况讨论所有的可能归约，以及所有它们可能联系的项。
-对于每个源系统中归约的步骤，我们必须给出目标系统中对应的归约系列。
+对于每个源系统中归约的步骤，我们必须给出目标系统中对应的归约序列。
 
 <!--
 For instance, the source might be lambda calculus with _let_
@@ -132,7 +131,7 @@ added, and the target the same system with `let` translated out.
 The key rule defining our relation will be:
 -->
 
-譬如说，源系统可以是带 _let_ 项的 λ 演算，而目标系统中的 `let` 被翻译了。
+譬如说，源系统可以是带 _let_ 项的 λ 演算，而目标系统是将 `let` 翻译消除后的系统。
 定义这个关系的关键规则是：
 
     M ~ M†
@@ -146,7 +145,7 @@ themselves, and abstractions and applications relate if their
 components relate:
 -->
 
-其他的规则都是合同性的规则：变量于它们自身相关，抽象与应用在它们的组成部分分别相关时相关：
+其他的规则都是同余性的规则：变量与它们自身相关，抽象与应用在它们的组成部分分别相关时相关：
 
     -----
     x ~ x
@@ -304,7 +303,7 @@ to use a decidable predicate to pick out terms in the domain of `_†`, using
 [proof by reflection](/Decidable/#proof-by-reflection).
 -->
 **提示：**为了简洁，我们只注重语言中的一小部分构造，所以 `_†` 的定义只需要注重相关的部分。
-达成此目的的一种方法是用[互映证明](/Decidable/#proof-by-reflection)定义一个谓词来选出
+达成此目的的一种方法是用[反射证明](/Decidable/#proof-by-reflection)定义一个谓词来选出
  `_†` 定义域中的项。
 
 ```agda
@@ -349,7 +348,7 @@ of interest is a lambda abstraction.
 ## Exercise `~val⁻¹` (practice)
 -->
 
-## Exercise `~val⁻¹` （实践）
+## 练习 `~val⁻¹`（实践）
 
 <!--
 Show that this also holds in the reverse direction: if `M ~ M†`
@@ -443,7 +442,7 @@ The newly introduced variable trivially relates to itself, and otherwise
 we apply renaming to the hypothesis.
 -->
 
-这个证明的结构于扩充的结构相似。
+这个证明的结构与扩充的结构相似。
 新加入的变量平凡地与它自身相关，否则我们可以对假设使用重命名。
 
 <!--
@@ -477,7 +476,7 @@ extending the environment where appropriate (in this case, only for
 the body of an abstraction).
 -->
 
-与之前一样，这个证明的结构于替换的结构类似：使用递归重新构造每一个项，
+与之前一样，这个证明的结构与替换的结构类似：使用递归重新构造每一个项，
 并在需要时扩充语境（在这里，我们只需要在 λ 抽象的抽象体中使用）。
 
 <!--

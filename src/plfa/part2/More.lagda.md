@@ -262,7 +262,7 @@ Here is a function to raise a primitive number to the tenth power:
 We can translate each _let_ term into an application of an abstraction:
 -->
 
-我们可以将每个 _let_ 项翻译成一个抽象：
+我们可以将每个 _let_ 项翻译成一个抽象的应用：
 
     (`let x `= M `in N) †  =  (ƛ x ⇒ (N †)) · (M †)
 
@@ -424,7 +424,7 @@ and reduction rules:
 -->
 
     A, B, C ::= ...                     类型
-      A `× B                              积累性
+      A `× B                              积类型
 
     L, M, N ::= ...                     项
       `⟨ M , N ⟩                          有序对
@@ -467,6 +467,8 @@ and reduction rules:
 <!--
 ## Example
 -->
+
+## 例子
 
 <!--
 Here is a function to swap the components of a pair rewritten in the new notation:
@@ -533,7 +535,7 @@ and `` `proj₂ `` many times or not at all.
 -->
 
 但是这样的话它们表现的不一样。
-第一项总是在归约 `N` 之前归约 `L`，它只计算 `` `proj₁ `` 和 `` `proj₂ ``一次。
+第一项总是在归约 `N` 之前归约 `L`，它只计算 `` `proj₁ `` 和 `` `proj₂ `` 一次。
 第二项在归约 `N` 之前不先将 `L` 归约至值，取决于 `x` 和 `y` 在 `N` 中出现的次数，
 它将归约 `L` 很多次或者根本不归约，因此它会计算 `` `proj₁ `` 和 `` `proj₂ ``
 很多次或者根本不计算。
@@ -542,7 +544,7 @@ and `` `proj₂ `` many times or not at all.
 We can also translate back the other way:
 -->
 
-我们也可以反向的翻译：
+我们也可以反向地翻译：
 
     (`proj₁ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ x ]
     (`proj₂ L) ‡  =  case× (L ‡) [⟨ x , y ⟩⇒ y ]
@@ -608,7 +610,6 @@ We can also translate back the other way:
     Γ ⊢ case⊎ L [inj₁ x ⇒ M |inj₂ y ⇒ N ] ⦂ C
 -->
 
-⊥
     Γ ⊢ M ⦂ A
     -------------------- `inj₁ 或 ⊎-I₁
     Γ ⊢ `inj₁ M ⦂ A `⊎ B
@@ -830,11 +831,13 @@ We repeat the syntax in full, but only give the new type and reduction rules:
 ## Example
 -->
 
+## 例子
+
 <!--
 Here is half the isomorphism between `A` and ``A `× `⊤`` rewritten in the new notation:
 -->
 
-下面是用新记法重新 `A` 和 ``A ‵× `⊤`` 的同构的一半：
+下面是用新记法重写的 `A` 和 ``A `× `⊤`` 的同构的一半：
 
     from×⊤-case : ∅ ⊢ A `× `⊤ ⇒ A
     from×⊤-case = ƛ z ⇒ case× z
@@ -852,7 +855,7 @@ Here is half the isomorphism between `A` and ``A `× `⊤`` rewritten in the new
 We can translate the alternative formulation into one without case:
 -->
 
-我们可以将替代表示方法翻译到用没有匹配式的表示方法：
+我们可以将替代表示方法翻译为没有匹配式的表示方法：
 
     (case⊤ L [tt⇒ M ]) †  =  `let z `= (L †) `in (M †)
 
@@ -876,7 +879,7 @@ construct plays a role similar to `⊥-elim` in Agda:
 -->
 
 对于空类型来说，只有一种消去此类型的值的方法，但是没有引入此类型的值的方法。
-没有空类型的值，也没有归约规则，但是有 β 规则。
+没有空类型的值，也没有 β 规则，但是有 ξ 规则。
 `case⊥` 构造和 Agda 中的 `⊥-elim` 的作用相似：
 
 <!--
@@ -1372,7 +1375,7 @@ data _⊢_ : Context → Type → Set where
 ## Abbreviating de Bruijn indices
 -->
 
-## 缩减 de Bruijn 因子
+## 缩减 de Bruijn 索引
 
 ```agda
 length : Context → ℕ

@@ -82,9 +82,9 @@ four.
 Foundations_）中对应的 _Stlc_ 的内容。
 我们的不同之处在于使用显式的方法来表示语境（由标识符和类型的序对组成的列表），
 而不是部分映射（从标识符到类型的部分函数）。
-这样的做法与后续的 de Bruijn 索引表示方法能更好的对应。
+这样的做法与后续的 de Bruijn 索引表示方法能更好地对应。
 我们使用自然数作为基础类型，而不是布尔值，这样我们可以表示更复杂的例子。
-特别的是，我们将可以证明（两次！）二加二得四。
+特别地，我们将可以证明（两次！）二加二得四。
 
 <!--
 # Imports
@@ -251,9 +251,9 @@ the term
 
 加法的递归定义与我们一开始在 [Naturals](/Naturals/#plus) 章节中定义的
 `_+_` 相似。
-在这里，变量「m」被约束了两次，一个在 λ-抽象中，另一次在匹配表达式的后继分支中。
+在这里，变量「m」被约束了两次，一次在 λ-抽象中，另一次在匹配表达式的后继分支中。
 第一次使用的「m」指代前者，第二次使用的指代后者。
-任何在后继分支中的「m」必须指代后者，因此我们称之为后者**屏蔽（Shadow）**了前者。
+任何在后继分支中的「m」必须指代后者，因此我们称之为后者**遮蔽（Shadow）**了前者。
 后面我们会证实二加二得四，也就是说下面的项
 
     plus · two · two
@@ -278,7 +278,7 @@ function that adds Church numerals, and a function to compute successor:
 应用于第二个参数上 _n_ 次。
 这样的表示方法叫做自然数的 **Church 表示法**。
 下面是一些项的例子：Church 表示法的数字二、一个将两个用 Church
-表示法表示的数字相加的函数和 一个计算后继的函数：
+表示法表示的数字相加的函数和一个计算后继的函数：
 
 ```agda
 twoᶜ : Term
@@ -346,7 +346,7 @@ defined earlier.
 ## Exercise `mulᶜ` (practice)
 -->
 
-## 练习 `mulᶜ` （习题）
+## 练习 `mulᶜ` （实践）
 
 <!--
 Write out the definition of a lambda term that multiplies
@@ -792,8 +792,8 @@ substitution by terms that are _not_ closed may require renaming
 of bound variables. For example:
 -->
 
-我们将要给出替换的定义在用来替换变量的项是封闭时有效。
-这是因为用**不**封闭的项可能需要对于约束变量进行重命名。例如：
+我们将要给出的替换的定义只在用来替换变量的项是封闭的时候有效。
+这是因为用**不**封闭的项进行替换可能需要对约束变量进行重命名。例如：
 
 <!--
 * `` (ƛ "x" ⇒ ` "x" · ` "y") [ "y" := ` "x" · `zero] `` should not yield <br/>
@@ -807,7 +807,7 @@ of bound variables. For example:
 Instead, we should rename the bound variable to avoid capture:
 -->
 
-不同如上，我们应该将约束变量进行重命名，来防止捕获：
+与上面不同，我们应该对约束变量进行重命名，来防止捕获：
 
 <!--
 * `` (ƛ "x" ⇒ ` "x" · ` "y") [ "y" := ` "x" · `zero ] `` should yield <br/>
@@ -992,7 +992,7 @@ In an informal presentation of the operational semantics,
 the rules for reduction of applications are written as follows:
 -->
 
-在非正式的操作语言表达中，我们可以如下写出应用的归约规则：
+在操作语义的非正式表达中，我们可以如下写出应用的归约规则：
 
     L —→ L′
     --------------- ξ-·₁
@@ -1012,7 +1012,7 @@ which terms are values.
 -->
 
 稍后给出的 Agda 版本的规则与上述相似，但是我们需要将全称量化显式地表示出来，也需要
-使用谓词来表示一个是值的项。
+使用谓词来表示哪些项是值。
 
 <!--
 The rules break into two sorts. Compatibility rules direct us to
@@ -1051,7 +1051,7 @@ either reduces or is a value.
 
 如果一个项已经是一个值，它就没有可以归约的规则；
 反过来说，如果一个项可以被归约，那么它就不是一个值。
-我们在下一章里证明这概括了所有的情况——所以良类型的项要么可以归约要么是一个值。
+我们在下一章里证明这穷尽了所有的情况——每个良类型的项要么可以归约，要么是一个值。
 
 <!--
 For numbers, zero does not reduce and successor reduces the subterm.
@@ -1333,7 +1333,7 @@ the two definitions are equivalent (indeed, one embeds in the other).
 ## Exercise `—↠≲—↠′` (practice)
 -->
 
-## 练习 `—↠≲—↠′` （习题）
+## 练习 `—↠≲—↠′` （实践）
 
 <!--
 Show that the first notion of reflexive and transitive closure
@@ -1558,7 +1558,7 @@ In the next chapter, we will see how to compute such reduction sequences.
 ## Exercise `plus-example` (practice)
 -->
 
-## 练习 `plus-example` （习题）
+## 练习 `plus-example` （实践）
 
 <!--
 Write out the reduction sequence demonstrating that one plus one is two.
@@ -1758,7 +1758,7 @@ data Context : Set where
 ## Exercise `Context-≃` (practice)
 -->
 
-## 练习 `Context-≃` （习题）
+## 练习 `Context-≃` （实践）
 
 <!--
 Show that `Context` is isomorphic to `List (Id × Type)`.
@@ -1832,7 +1832,7 @@ should return the most recently bound variable, which _shadows_
 the other variables.  For example,
 -->
 
-如果语境中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮盖（Shadow）**
+如果语境中有相同名称的两个变量，那么查询会返回被约束的最近的变量，它**遮蔽（Shadow）**
 了另一个变量。例如：
 
 * `` ∅ , "x" ⦂ `ℕ ⇒ `ℕ , "x" ⦂ `ℕ ∋ "x" ⦂ `ℕ ``.
@@ -1841,7 +1841,7 @@ the other variables.  For example,
 Here `` "x" ⦂ `ℕ ⇒ `ℕ `` is shadowed by `` "x" ⦂ `ℕ ``.
 -->
 
-在这里 `` "x" ⦂ `ℕ ⇒ `ℕ `` 被 `` "x" ⦂ `ℕ `` 遮盖了。
+在这里 `` "x" ⦂ `ℕ ⇒ `ℕ `` 被 `` "x" ⦂ `ℕ `` 遮蔽了。
 
 <!--
 Lookup is formalised as follows:
@@ -1874,7 +1874,7 @@ variable with the same name to its left in the list.
 -->
 
 构造子 `Z` 和 `S` 大致与列表包含关系 `_∈_` 的 `here` 和 `there` 构造子对应。
-但是构造子 `S` 多取一个参数，来保证查询时我们不会查询一个被**遮盖**的同名变量。
+但是构造子 `S` 多取一个参数，来保证查询时我们不会查询一个被**遮蔽**的同名变量。
 
 <!--
 It can be rather tedious to use the `S` constructor, as you have to provide
@@ -2197,7 +2197,7 @@ the outermost term in `sucᶜ` is `ƛ`, which is typed using `⊢ƛ`. The
 -->
 
 现在使用 C-c C-r 来填补这个洞。Agda 注意到 `sucᶜ` 最外层的项是 `ƛ`，应该使用 `⊢ƛ` 来赋型。
-`⊢ƛ` 规则需要一个变量，用一个新的洞表示：
+`⊢ƛ` 规则需要一个参数，Agda 用一个新的洞表示：
 
     ⊢sucᶜ = ⊢ƛ { }1
     ?1 : ∅ , "n" ⦂ `ℕ ⊢ `suc ` "n" ⦂ `ℕ
@@ -2232,7 +2232,7 @@ A further attempt with C-c C-r yields the message:
 We can fill in `Z` by hand. If we type C-c C-space, Agda will confirm we are done:
 -->
 
-我们使用填入 `Z`。如果我们使用 C-c C-space，Agda 证实我们完成了：
+我们手动填入 `Z`。如果我们使用 C-c C-space，Agda 证实我们完成了：
 
     ⊢sucᶜ = ⊢ƛ (⊢suc (⊢` Z))
 
@@ -2344,7 +2344,7 @@ For each of the following, give types `A`, `B`, and `C` for which it is derivabl
 or explain why there are no such types.
 -->
 
-对于下面的每一条，如果可以推导，给出类型 `A`、`B` 和 `C`，否则说明为什么这样的类型 不存在。
+对于下面的每一条，如果可以推导，给出类型 `A`、`B` 和 `C`，否则说明为什么这样的类型不存在。
 
 1. `` ∅ , "x" ⦂ A ⊢ ` "x" · ` "x" ⦂ B ``
 2. `` ∅ , "x" ⦂ A , "y" ⦂ B ⊢ ƛ "z" ⇒ ` "x" · (` "y" · ` "z") ⦂ C ``
@@ -2373,7 +2373,7 @@ showing that it is well typed.
 <!--
 ## Exercise `⊢mulᶜ` (practice)
 -->
-## 练习 `⊢mulᶜ` （习题）
+## 练习 `⊢mulᶜ` （实践）
 
 <!--
 Using the term `mulᶜ` you defined earlier, write out the derivation
@@ -2418,5 +2418,5 @@ We compose reduction `—→` from an em dash `—` and an arrow `→`.
 Similarly for reflexive and transitive closure `—↠`.
 -->
 
-我们用短划 `—` 和箭头 `→` 来构造归约 `—→`。
+我们用长划 `—` 和箭头 `→` 来组合归约 `—→`。
 自反传递闭包 `—↠` 也类似。

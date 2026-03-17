@@ -163,7 +163,7 @@ parts simultaneously. The last rule reduces a lambda term and
 term in parallel followed by a beta step.
 -->
 
-前三种规则是同时归约每个部分的合同性。
+前三种规则是同时归约每个部分的同余性。
 最后一个规则平行地归约一个 λ-项和另一个项，接着是一步 β-归约。
 
 <!--
@@ -248,7 +248,7 @@ the reduction `M —→ N`.
 -->
 
 此处我们证明对于任何 `M` 和 `N`，`M ⇛* N` 当且仅当 `M —↠ N`。
-必要性的证明非常容易，我们开始于说明若 `M —→ N`，则 `M ⇛ N`。
+必要性的证明非常容易，我们首先说明若 `M —→ N`，则 `M ⇛ N`。
 该证明通过对归约 `M —→ N` 进行归纳。
 
 ```agda
@@ -343,12 +343,12 @@ The proof is by induction on `M ⇛ N`.
 * 假定 `x ⇛ x`。我们立刻有 `x —↠ x`。
 
 * 假定 `ƛ N ⇛ ƛ N′` 因为 `N ⇛ N′`。根据归纳假设我们有 `N —↠ N′`。
-  我们得出 `ƛ N —↠ ƛ N′` 因为 `—↠` 具有合同性。
+  我们得出 `ƛ N —↠ ƛ N′` 因为 `—↠` 具有同余性。
 
 * 假定 `L · M ⇛ L′ · M′` 因为 `L ⇛ L′` 和 `M ⇛ M′`。
   根据归纳假设，我们有 `L —↠ L′` 和 `M —↠ M′`。
   所以有 `L · M —↠ L′ · M` 以及 `L′ · M  —↠ L′ · M′`
-  因为 `—↠` 具有合同性。
+  因为 `—↠` 具有同余性。
 
 * 假定 `(ƛ N) · M  ⇛  N′ [ M′ ]` 因为 `N ⇛ N′` 和 `M ⇛ M′`。
   根据类似的原因，我们有 `(ƛ N) · M —↠ (ƛ N′) · M′`，
@@ -395,7 +395,7 @@ of pointwise parallel reduction of a substitution as follows.
 我们不能直接通过归纳证明它，所以我们将其推广为：
 如果 `N ⇛ N′` 并且替换 `σ` 逐点（Pointwise）平行归约至 `τ`，
 则 `subst σ N ⇛ subst τ N′`。
-我们将代换的逐点平行归约定义如下：
+我们将替换的逐点平行归约定义如下：
 
 ```agda
 par-subst : ∀{Γ Δ} → Subst Γ Δ → Subst Γ Δ → Set
@@ -409,10 +409,9 @@ for the type of a substitution. Similarly, we shall make use of
 [Substitution](/Substitution/) and have the following meaning.
 -->
 
-In the type of `par-subst` we make use of the shorthand `Subst Γ Δ`
-for the type of a substitution. Similarly, we shall make use of
-`Rename Γ Δ` for the type of a renaming. Both are defined in Chapter
-[Substitution](/Substitution/) and have the following meaning.
+在 `par-subst` 的类型中，我们使用了 `Subst Γ Δ` 作为替换类型的简写。
+类似地，我们也将使用 `Rename Γ Δ` 作为重命名类型的简写。
+两者都在[替换](/Substitution/)章节中定义，含义如下。
 
 ```agda
 _ : ∀(Γ Δ : Context) → Set₁
@@ -433,7 +432,7 @@ and restate here.
 -->
 
 因为替换依赖于扩展函数 `exts`，而其又依赖于 `rename`，
-我们开始于被称为 `par-rename` 的替换引理的一种版本，该引理专门用于重命名。
+我们首先给出替换引理的一个特例 `par-rename`，该引理专门用于重命名。
 `par-rename` 依赖于重命名和替换可以相互交换的事实，
 这是一个我们在 [Substitution](/Substitution/) 章节引入并在此处重申的引理。
 
@@ -487,7 +486,7 @@ are straightforward so we just consider the last one for `pbeta`.
   根据归纳假设，我们有 `rename (ext ρ) N ⇛ rename (ext ρ) N′` 和 `rename ρ M ⇛ rename ρ M′`。
   所以根据 `pbeta` 我们有 `(ƛ rename (ext ρ) N) · (rename ρ M) ⇛ (rename (ext ρ) N) [ rename ρ M ]`。
   然而，为了得出结论我们需要平行归约至 `rename ρ (N [ M ])`。
-  值得庆幸的是，重命名和归约可以相互交换。
+  值得庆幸的是，重命名和替换可以相互交换。
 
 
 <!--
@@ -516,7 +515,7 @@ and restate it below.
 -->
 
 为了证明替换遵从平行归约关系，我们需要证明的下一个引理如下文所示，
-它声称同时归约可以与单步归约相交换。
+它声称同时替换可以与单次替换相交换。
 我们从 [Substitution](/Substitution/) 章节导入这个引理，
 并重申如下。
 
@@ -683,7 +682,21 @@ where downward lines are instances of `⇛`, so we call it the _triangle
 property_.
 -->
 
-其中向下的线是 `⇛` 的实例。因此我们称其为**三角性质（Triangle Property）**。
+然而，一种更简单的方法是对 `M` 尽可能多地平行执行 β-归约，记作 `M ⁺`，
+然后证明 `N` 也平行归约至 `M ⁺`。这就是高桥（Takahashi）的
+**完全发展（Complete Development）** 的思想。所期望的性质可以如下图表示：
+
+        M
+       /|
+      / |
+     /  |
+    N   2
+     \  |
+      \ |
+       \|
+        M⁺
+
+其中向下的线是 `⇛` 的实例，因此我们称其为**三角性质（Triangle Property）**。
 
 ```agda
 _⁺ : ∀ {Γ A}
@@ -776,7 +789,7 @@ That is, the diamond property is proved by applying the
 triangle property on each side with the same confluent term `M ⁺`.
 -->
 
-也就是说，菱形性质通过在两侧应用具有相同合流项 `M ⁺`的三角性质而证明。
+也就是说，菱形性质通过在两侧应用具有相同合流项 `M ⁺` 的三角性质而证明。
 
 ```agda
 par-diamond : ∀{Γ A} {M N N′ : Γ ⊢ A}
@@ -828,7 +841,7 @@ if `M ⇛ N` and `M ⇛* N′`, then
 The following diagram illustrates the strip lemma
 -->
 
-像在开始承诺的那样，平行归约合流性的证明现在十分简单，
+正如在开头承诺的那样，平行归约合流性的证明现在十分简单，
 因为我们知道它满足三角性质。
 我们只需证明带状引理（Strip Lemma），它声称若有 `M ⇛ N` 和 `M ⇛* N′`，
 则对于某个 `L` 有 `N ⇛* L` 和 `N′ ⇛ L`。
@@ -974,11 +987,11 @@ Berghofer's mechanization in Isabelle, which is based on an earlier
 paper by @Nipkow:1996.
 -->
 
-总而言之，这种机械化的合流性证明基于几个来源。
+这种机械化的合流性证明基于几个来源。
 `subst-par` 引理是 @Schafer:2015 的「强替换性（Strong Substitutivity）」 引理。
 `par-triangle`、`strip` 和 `par-confluence` 的证明基于 @Takahashi:1995
 完全发展的概念，以及 @Pfenning:1992 关于 Church-Rosser 定理的技术报告。
-此外，我们询问了 Nipkow 和 Berghofer 在 Isabelle 中的机械化，
+此外，我们参考了 Nipkow 和 Berghofer 在 Isabelle 中的机械化，
 它基于 @Nipkow:1996 的早期论文。
 
 # Unicode
