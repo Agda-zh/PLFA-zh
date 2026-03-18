@@ -32,7 +32,7 @@ target.  We define a relation
 
 给定两个不同的系统，它们有不同的项和不同的归约规则，我们定义诸如
 『一个系统**模拟（Simulate）**了另一个系统』此类断言的意义。
-假设两个系统分别叫做**源**（Source）和**目标**（Target），我们用
+假设两个系统分别叫做**源（Source）**和**目标（Target）**，我们用
 `M` 和 `N` 表示源系统的项，`M†` 和 `N†` 表示目标系统的项。
 我们定义一个关系
 
@@ -92,7 +92,7 @@ in the target:
 This stronger condition is known as _lock-step_ or _on the nose_ simulation.
 -->
 
-这个更强的条件被称为**锁步**（Lock-step）或者**准确无误**（On the nose）的模拟。
+这个更强的条件被称为**锁步（Lock-step）**或者**准确无误（On the nose）**的模拟。
 
 『译注：[On the nose][on-the-nose] 本义为在鼻子之上，用于表述准确无误。』
 
@@ -110,7 +110,7 @@ its converse is a relation from target to source.)
 
 如果从目标系统到源系统也有一个模拟：即每个目标系统的归约在源系统中有对应的归约序列，
 我们对这样的情况尤其感兴趣。换句话说，`~` 是一个从源到目标的模拟，而 `~`
-的逆是一个从目标到源的模拟。这样的情况被称为**互模拟**（Bisimulation）。
+的逆是一个从目标到源的模拟。这样的情况被称为**互模拟（Bisimulation）**。
 （一般来说，如果 `<` 和 `>` 是满足 `x < y` 当且仅当 `y > x` 的任意关系，
 那么我们称 `<` 和 `>` 为**逆**关系。因此，如果 `~` 是一个从源到目标的关系，
 那么它的逆是一个从目标到源的关系。）
@@ -323,7 +323,7 @@ commutes with values.  That is, if `M ~ M†` and `M` is a value then
 `M†` is also a value:
 -->
 
-我们需要一系列技术结果。首先是模拟与值可交换（Commute）。
+我们需要一系列技术结果。首先是模拟与值**可交换（Commute）**。
 即：若 `M ~ M†` 且 `M` 是一个值，那么 `M†` 也是一个值。
 
 ```agda

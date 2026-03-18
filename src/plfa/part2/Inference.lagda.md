@@ -33,9 +33,9 @@ Agda uses is based on a technique called _bidirectional_ type
 inference, which will be presented in this chapter.
 -->
 
-在实践中，我们一般可以给项加上一些装饰，然后运用算法来**推理**（Infer）出类型推导。
+在实践中，我们一般可以给项加上一些装饰，然后运用算法来**推理（Infer）**出类型推导。
 的确，Agda 中也是这样：我们给顶层的函数声明指定类型，而其余可由给出的信息推理而来。
-Agda 使用的这种推理被称为**双向**（Bidirectional）类型推理，我们将在本章中进行展示。
+Agda 使用的这种推理被称为**双向（Bidirectional）**类型推理，我们将在本章中进行展示。
 
 <!--
 This chapter ties our previous developments together. We begin with
@@ -95,7 +95,7 @@ as either an _input_ or an _output_.
 -->
 
 每一条相关的赋型规则可以被读作类型检查的算法。
-对于每一条赋型规则，我们将每个位置标记如**输入**（Input）或者**输出**（Output）。
+对于每一条赋型规则，我们将每个位置标记如**输入（Input）**或者**输出（Output）**。
 
 <!--
 For the judgment
@@ -187,7 +187,7 @@ determines the output of the conclusion.
 
 输入项决定了应用哪一条规则：
 变量使用第一条，抽象使用第二条，应用使用第三条。
-我们把这样的规则叫做**语法导向的**（Syntax directed）规则。
+我们把这样的规则叫做**语法导向的（Syntax Directed）**规则。
 对于变量的规则，结论的输入决定了假设的输入，而假设的输出决定了结论的输出。
 抽象的规则也是一样——约束变量和参数从结论的输入流向假设中的语境；
 这得以实现，因为我们在抽象中加入了参数的类型。
@@ -232,7 +232,7 @@ and term are inputs and the type is an output; while in the
 second, all three of the context, term, and type are inputs.
 -->
 
-第一类判断**生成**（Synthesise）项的类型，如上，而第二类**继承**（Inherit）类型。
+第一类判断**生成（Synthesise）**项的类型，如上，而第二类**继承（Inherit）**类型。
 在第一类中，语境和项作为输入，类型作为输出；
 而在第二类中，语境、项和类型三者都作为输入。
 
@@ -420,8 +420,8 @@ they cannot possibly succeed.
 我们的证明是构造性的。
 在生成的情况中，它要么给出一个包括类型 `A` 和 `Γ ⊢ M ↑ A` 成立的证明的有序对，或是一个将上述有序对转换成矛盾的函数。
 在继承的情况中，它要么给出 `Γ ⊢ M ↓ A` 成立的证明，或是一个将上述证明转换成矛盾的函数。
-成立的情况被称为**可靠性**（Soundness）——生成和继承只在对应关系成立时成功。
-不成立的情况被称为**完备性**（Completeness）——生成和继承只在对应关系无法成立时失败。
+成立的情况被称为**可靠性（Soundness）**——生成和继承只在对应关系成立时成功。
+不成立的情况被称为**完备性（Completeness）**——生成和继承只在对应关系无法成立时失败。
 
 <!--
 Another approach might be to return a derivation if synthesis or
@@ -1750,7 +1750,7 @@ type judgment into the corresponding intrinsically-typed term.
 
 从装饰过的项拥有正确的类型的证明中，我们可以简单地提取出对应的内在类型的项。
 我们使用 `DB` 来指代 [DeBruijn](/DeBruijn/) 章节中的代码。
-我们可以简单地定义一个**擦除**（Erasure）从外在的赋型判断，至对应的内在类型的项的函数。
+我们可以简单地定义一个**擦除（Erasure）**从外在的赋型判断，至对应的内在类型的项的函数。
 
 <!--
 First, we give code to erase a type:

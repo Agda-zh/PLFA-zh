@@ -20,6 +20,7 @@ English to Chinese translation reference for PLFA-zh.
 | Call-by-value | 传值 |
 | Canonical Form | 标准式 |
 | Cartesian Product | 笛卡尔积 |
+| Commute | 可交换 |
 | Commutativity | 交换律 |
 | Completeness | 完备性 |
 | Compute | 计算 |
