@@ -202,7 +202,7 @@ Another law of logic is _contraposition_,
 stating that if `A` implies `B`, then `¬ B` implies `¬ A`:
 -->
 
-另一个逻辑规则是**换质换位律（contraposition）**，它陈述了若 `A` 蕴涵 `B`，
+另一个逻辑规则是**换质换位律（Contraposition）**，它陈述了若 `A` 蕴涵 `B`，
 则 `¬ B` 蕴涵 `¬ A`：
 
 ```agda
@@ -734,7 +734,7 @@ Consider the following principles:
 
   * 排中律：对于所有 `A`，`A ⊎ ¬ A`。
   * 双重否定消去：对于所有的 `A`，`¬ ¬ A → A`。
-  * 皮尔士定律：对于所有的 `A` 和 `B`，`((A → B) → A) → A`。
+  * **皮尔士定律（Peirce's Law）**：对于所有的 `A` 和 `B`，`((A → B) → A) → A`。
   * 蕴涵表示为析取：对于所有的 `A` 和 `B`，`(A → B) → ¬ A ⊎ B`。
   * 德摩根定律：对于所有的 `A` 和 `B`，`¬ (¬ A × ¬ B) → A ⊎ B`。
 

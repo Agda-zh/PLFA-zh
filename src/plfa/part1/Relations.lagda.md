@@ -330,7 +330,7 @@ and `n`.  This lets us invert our previous rule.
 -->
 
 只有一种方式能够证明对于任意 `m` 和 `n` 有 `suc m ≤ suc n`。
-这让我们能够**反演（invert）**之前的规则。
+这让我们能够**反演（Invert）**之前的规则。
 
 ```agda
 inv-s≤s : ∀ {m n : ℕ}
@@ -555,7 +555,7 @@ which follows immediately by `z≤n`.  In this case, the fact that
 that the corresponding evidence is unused.
 -->
 
-这里我们在 `m ≤ n` 的**证据（Evidence）**上进行归纳。在起始步骤里，第一个不等式因为 `z≤n` 而成立，
+这里我们在 `m ≤ n` 的证据（Evidence）上进行归纳。在起始步骤里，第一个不等式因为 `z≤n` 而成立，
 那么结论亦可由 `z≤n` 而得出。在这里，`n ≤ p` 的证明是不需要的，我们用 `_` 来表示这个
 证明没有被使用。
 

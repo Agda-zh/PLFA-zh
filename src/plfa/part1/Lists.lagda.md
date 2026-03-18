@@ -648,7 +648,7 @@ on which we recurse becomes _smaller_.
 Shunt is related to reverse as follows:
 -->
 
-转移（Shunt）与反转的关系如下：
+**转移（Shunt）**与反转的关系如下：
 
 ```agda
 shunt-reverse : ∀ {A : Set} (xs ys : List A)

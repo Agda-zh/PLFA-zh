@@ -17,7 +17,7 @@ satisfy properties akin to associativity, commutativity, and
 distributivity.
 -->
 
-本部分介绍同构（Isomorphism）与嵌入（Embedding）。
+本部分介绍**同构（Isomorphism）**与**嵌入（Embedding）**。
 同构可以断言两个类型是相等的，嵌入可以断言一个类型比另一个类型小。
 我们会在下一章中使用同构来展示类型上的运算，例如积或者和，满足类似于交换律、结合律和分配律的性质。
 
