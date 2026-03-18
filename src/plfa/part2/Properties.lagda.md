@@ -2592,7 +2592,7 @@ other alterations we would wish to make to the system?
 This chapter uses the following unicode:
 -->
 
-本章使用了下列 Unicode：
+本章中使用了以下 Unicode：
 
     ƛ  U+019B  LATIN SMALL LETTER LAMBDA WITH STROKE (\Gl-)
     Δ  U+0394  GREEK CAPITAL LETTER DELTA (\GD or \Delta)

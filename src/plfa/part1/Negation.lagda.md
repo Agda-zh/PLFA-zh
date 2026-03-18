@@ -812,7 +812,7 @@ The standard library uses `contradiction`, which combines our
 This chapter uses the following unicode:
 -->
 
-本章使用了以下 Unicode：
+本章中使用了以下 Unicode：
 
 <!--
     ¬  U+00AC  NOT SIGN (\neg)

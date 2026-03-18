@@ -817,7 +817,7 @@ This chapter uses the following unicode:
     ⇔  U+21D4  LEFT RIGHT DOUBLE ARROW (\<=>)
 -->
 
-本章节使用了如下 Unicode：
+本章中使用了以下 Unicode：
 
     ∘  U+2218  环运算符 (\o, \circ, \comp)
     λ  U+03BB  小写希腊字母 LAMBDA (\lambda, \Gl)

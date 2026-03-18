@@ -968,7 +968,7 @@ This chapter uses the following unicode:
 
 -->
 
-本章节使用下列 Unicode：
+本章中使用了以下 Unicode：
 
     Π  U+03A0  大写希腊字母 PI (\Pi)
     Σ  U+03A3  大写希腊字母 SIGMA (\Sigma)

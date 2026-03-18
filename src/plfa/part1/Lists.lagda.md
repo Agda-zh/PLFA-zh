@@ -1962,7 +1962,7 @@ ranges over a binary relation).
 This chapter uses the following unicode:
 -->
 
-本章使用了下列 Unicode：
+本章中使用了以下 Unicode：
 
 <!--
     ∷  U+2237  PROPORTION  (\::)

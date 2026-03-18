@@ -1173,6 +1173,8 @@ import Relation.Binary.Definitions using (Decidable)
 # Unicode
 
 <!--
+This chapter uses the following unicode:
+
     ∧  U+2227  LOGICAL AND (\and, \wedge)
     ∨  U+2228  LOGICAL OR (\or, \vee)
     ⊃  U+2283  SUPERSET OF (\sup)
@@ -1180,6 +1182,8 @@ import Relation.Binary.Definitions using (Decidable)
     ⌊  U+230A  LEFT FLOOR (\clL)
     ⌋  U+230B  RIGHT FLOOR (\clR)
 -->
+
+本章中使用了以下 Unicode：
 
     ∧  U+2227  逻辑和 (\and, \wedge)
     ∨  U+2228  逻辑或 (\or, \vee)

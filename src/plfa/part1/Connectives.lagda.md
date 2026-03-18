@@ -1455,7 +1455,7 @@ This chapter uses the following unicode:
     ⇔  U+21D4  LEFT RIGHT DOUBLE ARROW (\<=>)
 -->
 
-本章节使用下列 Unicode：
+本章中使用了以下 Unicode：
 
     ×  U+00D7  乘法符号 (\x)
     ⊎  U+228E  多重集并集 (\u+)

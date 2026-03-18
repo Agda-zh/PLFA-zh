@@ -812,7 +812,7 @@ In this case, the simulation is _not_ lock-step.
 This chapter uses the following unicode:
 -->
 
-本章节使用了下列 Unicode：
+本章中使用了以下 Unicode：
 
     †  U+2020  DAGGER (\dag)
     ⁻  U+207B  SUPERSCRIPT MINUS (\^-)

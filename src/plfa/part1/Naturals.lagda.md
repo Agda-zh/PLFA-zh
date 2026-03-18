@@ -1921,7 +1921,7 @@ This chapter uses the following unicode:
     ∎  U+220E  END OF PROOF (\qed)
 -->
 
-这一章使用了如下的 Unicode 符号：
+本章中使用了以下 Unicode：
 
     ℕ  U+2115  双线体大写 N (\bN)
     →  U+2192  右箭头 (\to, \r, \->)

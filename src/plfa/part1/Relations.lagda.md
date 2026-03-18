@@ -1547,7 +1547,7 @@ This chapter uses the following unicode:
     ʳ  U+02B3  MODIFIER LETTER SMALL R (\^r)
 -->
 
-本章使用了如下 Unicode 符号：
+本章中使用了以下 Unicode：
 
     ≤  U+2264  小于等于 (\<=, \le)
     ≥  U+2265  大于等于 (\>=, \ge)

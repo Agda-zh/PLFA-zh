@@ -1438,7 +1438,7 @@ abs-cong (L —→⟨ r ⟩ rs) = ƛ L —→⟨ ζ r ⟩ abs-cong rs
 This chapter uses the following unicode:
 -->
 
-本章使用了下列 Unicode：
+本章中使用了以下 Unicode：
 
     ★  U+2605  BLACK STAR (\st)
 
