@@ -1128,7 +1128,7 @@ Section [Logical Connectives](/Decidable/#logical-connectives).
 -->
 
 写在文件的开始可以让 Agda 在不同情况相互重叠时产生一个错误，
-有些时候这会有帮助。我们会在[逻辑连接符](/Decidable/#logical-connectives)部分
+有些时候这会有帮助。我们会在[逻辑联结词](/Decidable/#logical-connectives)部分
 展示一个这样的例子。
 
 <!--

@@ -29,6 +29,7 @@ English to Chinese translation reference for PLFA-zh.
 | Context | 语境 |
 | Corollary | 推论 |
 | Conjunction | 合取 |
+| Connective | 联结词 |
 | Constructor | 构造子 |
 | Closure | 闭包 |
 | Currying | 柯里化 |
