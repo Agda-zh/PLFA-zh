@@ -1724,7 +1724,7 @@ for the context that extends `Γ` by associating variable `x` with type `A`.
 For example,
 -->
 
-语境（Context）将变量和类型联系在一起。
+**语境（Context）**将变量和类型联系在一起。
 我们用 `Γ` 和 `Δ` 来表示语境。
 我们用 `∅` 表示空的语境，用 `Γ , x ⦂ A` 表示扩充 `Γ` ，将变量 `x` 对应至类型 `A`。
 例如：
@@ -1892,7 +1892,7 @@ _ = S (λ()) (S (λ()) Z)
 Instead, we'll use a "smart constructor", which uses [proof by reflection](/Decidable/#proof-by-reflection) to check the inequality while type checking:
 -->
 
-取而代之的是，我们在类型检查时可以使用以[互映证明](/Decidable/#proof-by-reflection)来检查不等性的「智慧构造子」：
+取而代之的是，我们在类型检查时可以使用以[反射证明](/Decidable/#proof-by-reflection)来检查不等性的「智慧构造子」：
 
 ```agda
 S′ : ∀ {Γ x y A B}

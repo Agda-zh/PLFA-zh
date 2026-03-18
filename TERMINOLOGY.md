@@ -54,10 +54,12 @@ English to Chinese translation reference for PLFA-zh.
 | Empty Type | 空类型 |
 | Equivalence Relation | 等价关系 |
 | Evidence | 证据/证明 |
+| Existential Quantifier | 存在量词 |
 | Extensionality | 外延性 |
 | False | 假 |
 | Function Composition | 函数组合 |
 | Function Space | 函数空间 |
+| Higher-order Function | 高阶函数 |
 | Hole | 洞 |
 | Hypothesis | 假设 |
 | Identity (neutral element) | 幺元 |
@@ -79,6 +81,7 @@ English to Chinese translation reference for PLFA-zh.
 | Left Reduction | 左归约 |
 | Left-inverse | 左逆 |
 | Lemma | 引理 |
+| List | 列表 |
 | Lookup | 查询 |
 | Levels | 层级 |
 | Meta-Language | 元语言 |
@@ -95,6 +98,7 @@ English to Chinese translation reference for PLFA-zh.
 | Primitive Number | 原语数字 |
 | Preorder | 预序 |
 | Pointwise | 逐点 |
+| Polymorphic Type | 多态类型 |
 | Postulate | 假设（Agda 关键字） |
 | Pragma | 编译指令 |
 | Precedence | 优先级 |
@@ -119,9 +123,11 @@ English to Chinese translation reference for PLFA-zh.
 | Simulation | 模拟 |
 | Soundness | 可靠性 |
 | Synthesise (type) | 生成 |
+| Simply-Typed Lambda Calculus (STLC) | 简单类型 λ-演算 |
 | Small-step Operational Semantics | 小步操作语义 |
 | Standard Reduction Sequence | 标准归约序列 |
 | Standardisation | 标准化 |
+| Strong Substitutivity | 强替换性 |
 | Strip Lemma | 带状引理 |
 | Subject Expansion | 主体扩展 |
 | Subject Reduction | 主体归约 |
@@ -142,4 +148,5 @@ English to Chinese translation reference for PLFA-zh.
 | Value | 值 |
 | Variable | 变量 |
 | Weak Distributive Law | 弱分配律 |
+| Weak Head Normal Form (WHNF) | 弱头范式 |
 | Well-founded | 良基的 |

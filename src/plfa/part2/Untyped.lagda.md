@@ -26,7 +26,7 @@ In this chapter we play with variations on a theme:
   here we consider call-by-name.
 -->
 
-* 之前的章节中讨论了传值调用（Call-by-value）的演算；我们这次讨论传名调用（Call-by-name）。
+* 之前的章节中讨论了**传值调用（Call-by-value）**的演算；我们这次讨论**传名调用（Call-by-name）**。
 
 <!--
 * Previous chapters consider _weak head normal form_,
@@ -35,7 +35,7 @@ In this chapter we play with variations on a theme:
   where reduction continues underneath a lambda.
 -->
 
-* 之前的章节中讨论了**弱头部范式**（Weak Head Normal Form），其归约止步于
+* 之前的章节中讨论了**弱头范式**（Weak Head Normal Form），其归约止步于
   λ 抽象；我们这次讨论**完全正规化**（Full Normalisation），其在 λ 抽象之下仍然继续归约。
 
 <!--

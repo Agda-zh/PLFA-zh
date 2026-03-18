@@ -14,8 +14,8 @@ of many of the techniques we have developed so far, and provides
 examples of polymorphic types and higher-order functions.
 -->
 
-本章节讨论列表（List）数据类型。我们用列表作为例子，来使用我们之前学习的技巧。同时，
-列表也给我们带来多态类型（Polymorphic Types）和高阶函数（Higher-order Functions）的例子。
+本章节讨论**列表（List）**数据类型。我们用列表作为例子，来使用我们之前学习的技巧。同时，
+列表也给我们带来**多态类型（Polymorphic Types）**和**高阶函数（Higher-order Functions）**的例子。
 
 <!--
 # Imports

@@ -12,7 +12,7 @@ module plfa.part1.Quantifiers where
 This chapter introduces universal and existential quantification.
 -->
 
-本章节介绍全称量化（Universal Quantification）和存在量化（Existential Quantification）。
+本章节介绍**全称量化（Universal Quantification）**和**存在量化（Existential Quantification）**。
 
 <!--
 # Imports
