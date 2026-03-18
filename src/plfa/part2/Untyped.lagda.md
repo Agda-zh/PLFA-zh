@@ -35,8 +35,8 @@ In this chapter we play with variations on a theme:
   where reduction continues underneath a lambda.
 -->
 
-* 之前的章节中讨论了**弱头范式**（Weak Head Normal Form），其归约止步于
-  λ 抽象；我们这次讨论**完全正规化**（Full Normalisation），其在 λ 抽象之下仍然继续归约。
+* 之前的章节中讨论了**弱头范式（Weak Head Normal Form）**，其归约止步于
+  λ 抽象；我们这次讨论**完全正规化（Full Normalisation）**，其在 λ 抽象之下仍然继续归约。
 
 <!--
 * Previous chapters consider _deterministic_ reduction,
@@ -45,8 +45,8 @@ In this chapter we play with variations on a theme:
   where a term may contain many redexes and any one of them may reduce.
 -->
 
-* 之前的章节中讨论了**确定性**（Deterministic）的归约，每个项中至多有一个可归约项；
-  我们这次讨论**非确定性**（Non-deterministic）的归约，每个项中可能有多个可归约项，而每一个都可归约。
+* 之前的章节中讨论了**确定性（Deterministic）**的归约，每个项中至多有一个可归约项；
+  我们这次讨论**非确定性（Non-deterministic）**的归约，每个项中可能有多个可归约项，而每一个都可归约。
 
 <!--
 * Previous chapters consider reduction of _closed_ terms,
@@ -55,8 +55,8 @@ In this chapter we play with variations on a theme:
   those which may have free variables.
 -->
 
-* 之前的章节中讨论了**封闭**（Closed）的项，其不包含自由变量；
-  我们这次讨论**开放**（Open）的项，其可能包含自由变量。
+* 之前的章节中讨论了**封闭（Closed）**的项，其不包含自由变量；
+  我们这次讨论**开放（Open）**的项，其可能包含自由变量。
 
 <!--
 * Previous chapters consider lambda calculus extended
@@ -115,7 +115,7 @@ had to be given separately (such as natural numbers and fixpoints)
 can now be defined in the language itself.
 -->
 
-我们的内容将会和 [DeBruijn] 章节中相似，只是每个项会有相同的类型，写作 `★`，读作『任意』。
+我们的内容将会和 [DeBruijn](/DeBruijn/) 章节中相似，只是每个项会有相同的类型，写作 `★`，读作『任意』。
 这呼应了一条 Dana Scott 提出，Robert Harper 重复的口号：『无类型即是单一类型』。
 这样的结果之一就是之前我们需要额外给出的构造（例如自然数和不动点），现在可以直接在语言本身中定义。
 
@@ -521,8 +521,8 @@ form are defined by mutual recursion with _neutral_ terms:
 -->
 
 归约直到项完全范式化之前都可以继续进行。
-因此，我们现在在意的是**范式**（Normal Form），而不是值。
-范式的项由与**中性项**（Neutral Terms）共同递归定义：
+因此，我们现在在意的是**范式（Normal Form）**，而不是值。
+范式的项由与**中性项（Neutral Terms）**共同递归定义：
 
 ```agda
 data Neutral : ∀ {Γ A} → Γ ⊢ A → Set
@@ -950,7 +950,7 @@ As previously, progress immediately yields an evaluator.
 We relate gas to the number of steps in a reduction sequence.
 -->
 
-我们将汽油与归约序列中的步骤数联系起来。
+我们将燃料与归约序列中的步骤数联系起来。
 
 ```agda
 length : ∀ {Γ A} {M N : Γ ⊢ A} → M —↠ N → ℕ
@@ -965,8 +965,8 @@ a sequence of length less than the amount of gas and ending in a
 normal form.
 -->
 
-如果求值器耗尽了汽油，则返回长度等于汽油量的序列；
-如果求值器终止，则返回长度小于汽油量且以范式结尾的序列。
+如果求值器耗尽了燃料，则返回长度等于燃料量的序列；
+如果求值器终止，则返回长度小于燃料量且以范式结尾的序列。
 
 ```agda
 data Eval {Γ A} (M : Γ ⊢ A) (g : ℕ) : Set where
@@ -989,7 +989,7 @@ data Eval {Γ A} (M : Γ ⊢ A) (g : ℕ) : Set where
 The evaluator takes gas and a term and returns the corresponding steps.
 -->
 
-求值器接受汽油和项，返回对应的步骤。
+求值器接受燃料和项，返回对应的步骤。
 
 ```agda
 eval : ∀ {Γ A}

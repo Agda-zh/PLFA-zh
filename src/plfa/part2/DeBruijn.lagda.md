@@ -1731,7 +1731,7 @@ refer to preservation, since it is built-in to the definition of reduction.
 As previously, gas is specified by a natural number:
 -->
 
-如同之前，汽油由自然数表示：
+如同之前，燃料由自然数表示：
 
 ```agda
 length : ∀ {A} {M N : ∅ ⊢ A} → M —↠ N → ℕ
@@ -1744,7 +1744,7 @@ When our evaluator returns a term `N`, it will either give evidence that
 `N` is a value or indicate that it ran out of gas:
 -->
 
-当求值器返回项 `N` 时，它要么给出 `N` 是值的证明，要么提示汽油耗尽：
+当求值器返回项 `N` 时，它要么给出 `N` 是值的证明，要么提示燃料耗尽：
 
 ```agda
 data Eval {A} (M : ∅ ⊢ A) (g : ℕ) : Set where
@@ -1769,8 +1769,8 @@ and returns a reduction sequence, indicating either that it
 ran out of gas or that it terminated.
 -->
 
-求值器接收汽油和一个内在类型的项，并返回一个归约序列，
-指示它是耗尽了汽油还是终止了。
+求值器接收燃料和一个内在类型的项，并返回一个归约序列，
+指示它是耗尽了燃料还是终止了。
 
 ```agda
 eval : ∀ {A}
