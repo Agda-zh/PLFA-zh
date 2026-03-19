@@ -12,7 +12,7 @@ module plfa.part1.Quantifiers where
 This chapter introduces universal and existential quantification.
 -->
 
-本章节介绍全称量化（Universal Quantification）和存在量化（Existential Quantification）。
+本章节介绍**全称量化（Universal Quantification）**和**存在量化（Existential Quantification）**。
 
 <!--
 # Imports
@@ -968,7 +968,7 @@ This chapter uses the following unicode:
 
 -->
 
-本章节使用下列 Unicode：
+本章中使用了以下 Unicode：
 
     Π  U+03A0  大写希腊字母 PI (\Pi)
     Σ  U+03A3  大写希腊字母 SIGMA (\Sigma)

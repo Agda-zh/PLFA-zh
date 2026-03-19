@@ -691,14 +691,14 @@ corresponding decidables.
 # Logical connectives
 -->
 
-# 逻辑连接符{#logical-connectives}
+# 逻辑联结词{#logical-connectives}
 
 <!--
 Most readers will be familiar with the logical connectives for booleans.
 Each of these extends to decidables.
 -->
 
-大多数读者对于布尔值的逻辑运算符很熟悉了。每个逻辑运算符都可以被延伸至可判定的值。
+大多数读者对于布尔值的逻辑联结词很熟悉了。每个逻辑联结词都可以被延伸至可判定的值。
 
 <!--
 The conjunction of two booleans is true if both are true,
@@ -871,7 +871,7 @@ There is also a slightly less familiar connective,
 corresponding to implication:
 -->
 
-还有一个与蕴涵相对应，但是稍微不那么知名的运算符：
+还有一个与蕴涵相对应，但是稍微不那么知名的联结词：
 
 ```agda
 _⊃_ : Bool → Bool → Bool
@@ -1007,7 +1007,7 @@ from `m` only if `n ≤ m`:
 
 让我们回顾一下章节[自然数](/Naturals/)中 `monus` 的定义。
 如果从一个较小的数中减去一个较大的数，结果为零。毕竟我们总是要得到一个结果。
-我们可以用其他方式定义吗？可以定义一版带有**守卫（guarded）**的减法──只有当 `n ≤ m` 时才能从 `m` 中减去 `n` ：
+我们可以用其他方式定义吗？可以定义一版带有**守卫（Guarded）**的减法──只有当 `n ≤ m` 时才能从 `m` 中减去 `n` ：
 
 ```agda
 minus : (m n : ℕ) (n≤m : n ≤ m) → ℕ
@@ -1034,7 +1034,7 @@ know the two numbers *statically*. In that case, we can use a technique called
 equality `n ≤? m` while type checking, and make sure that `n ≤ m`!
 -->
 
-这个问题没有通用的解决方案，但是在上述的情景下，我们恰好**静态地**知道这两个数字。这种情况下，我们可以使用一种被称为**反射证明（proof by reflection）**的技术。
+这个问题没有通用的解决方案，但是在上述的情景下，我们恰好**静态地**知道这两个数字。这种情况下，我们可以使用一种被称为**反射证明（Proof by Reflection）**的技术。
 实质上，在类型检查的时候我们可以让 Agda 运行可判定的等式 `n ≤? m` 并且保证 `n ≤ m`！
 
 <!--
@@ -1173,6 +1173,8 @@ import Relation.Binary.Definitions using (Decidable)
 # Unicode
 
 <!--
+This chapter uses the following unicode:
+
     ∧  U+2227  LOGICAL AND (\and, \wedge)
     ∨  U+2228  LOGICAL OR (\or, \vee)
     ⊃  U+2283  SUPERSET OF (\sup)
@@ -1180,6 +1182,8 @@ import Relation.Binary.Definitions using (Decidable)
     ⌊  U+230A  LEFT FLOOR (\clL)
     ⌋  U+230B  RIGHT FLOOR (\clR)
 -->
+
+本章中使用了以下 Unicode：
 
     ∧  U+2227  逻辑和 (\and, \wedge)
     ∨  U+2228  逻辑或 (\or, \vee)

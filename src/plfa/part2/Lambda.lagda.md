@@ -1724,7 +1724,7 @@ for the context that extends `Γ` by associating variable `x` with type `A`.
 For example,
 -->
 
-语境（Context）将变量和类型联系在一起。
+**语境（Context）**将变量和类型联系在一起。
 我们用 `Γ` 和 `Δ` 来表示语境。
 我们用 `∅` 表示空的语境，用 `Γ , x ⦂ A` 表示扩充 `Γ` ，将变量 `x` 对应至类型 `A`。
 例如：
@@ -1892,7 +1892,7 @@ _ = S (λ()) (S (λ()) Z)
 Instead, we'll use a "smart constructor", which uses [proof by reflection](/Decidable/#proof-by-reflection) to check the inequality while type checking:
 -->
 
-取而代之的是，我们在类型检查时可以使用以[互映证明](/Decidable/#proof-by-reflection)来检查不等性的「智慧构造子」：
+取而代之的是，我们在类型检查时可以使用以[反射证明](/Decidable/#proof-by-reflection)来检查不等性的「智慧构造子」：
 
 ```agda
 S′ : ∀ {Γ x y A B}
@@ -2013,10 +2013,10 @@ deconstruct a value of the given type (applications use functions,
 case expressions use naturals).
 -->
 
-大多数规则有第二个名字，从逻辑中的惯例得到。规则的名称也可以用类型的连接符中得到，
-引入和消去连接符分别用 `-I` 和 `-E` 表示。
-我们从上往下阅读时，引入和消去的规则一目了然：前者**引入**了一个带有连接符的式子，
-其出现在结论中，而不是条件中；后者**消去**了带有连接符的式子，其出现在条件中，而不是结论中。
+大多数规则有第二个名字，从逻辑中的惯例得到。规则的名称也可以用类型的联结词中得到，
+引入和消去联结词分别用 `-I` 和 `-E` 表示。
+我们从上往下阅读时，引入和消去的规则一目了然：前者**引入**了一个带有联结词的式子，
+其出现在结论中，而不是条件中；后者**消去**了带有联结词的式子，其出现在条件中，而不是结论中。
 引入规则表示了如何构造一个给定类型的值（抽象产生函数、零和后继产生自然数），而消去规则
 表示了如何解构一个给定类型的值（应用使用函数，匹配表达式使用自然数）。
 

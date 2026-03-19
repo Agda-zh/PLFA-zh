@@ -1401,7 +1401,7 @@ _Autosubst: Reasoning with de BruijnTerms and Parallel Substitution_ (ITP 2015)�
 This chapter uses the following unicode:
 -->
 
-本章使用了以下 Unicode：
+本章中使用了以下 Unicode：
 
     ⟪  U+27EA  MATHEMATICAL LEFT DOUBLE ANGLE BRACKET (\<<)
     ⟫  U+27EA  MATHEMATICAL RIGHT DOUBLE ANGLE BRACKET (\>>)

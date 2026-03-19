@@ -27,7 +27,7 @@ calculus, at which point the proof is an easy corollary of properties
 of the denotational semantics.
 -->
 
-传名调用求值策略（Call-by-name Evaluation Strategy）是在 λ-演算中计算程序值的一种确定性方法。
+**传名调用求值策略（Call-by-name Evaluation Strategy）**是在 λ-演算中计算程序值的一种确定性方法。
 也就是说，传名调用能够求出值当且仅当 β-归约能将程序归约为一个 λ-抽象。
 在这一章节，我们将定义传名调用求值并且证明这个等价命题的必要性。
 充分性的部分较为复杂，通常通过 Curry-Feys 标准化证明。
@@ -89,7 +89,7 @@ is made easier by aligning these choices.
 为了处理变量和函数应用，我们要么像在 `—→` 中一样使用替换，要么使用一个**环境（Environment）**。
 传名调用中的环境是一个从变量到闭包（即项与其对应的环境）的映射。
 我们之所以使用环境取代替换是因为传名调用的核心更接近于语言的实现。
-在后续章节中介绍的指称语义也会用到环境，而且对充分性（adequacy）的证明也会变得更加容易。
+在后续章节中介绍的指称语义也会用到环境，而且对**充分性（Adequacy）**的证明也会变得更加容易。
 
 <!--
 We define environments and closures as follows.
@@ -136,7 +136,7 @@ is a lambda abstraction.
 -->
 
 大步语义被表现为一个三元关系，写作 `γ ⊢ M ⇓ V`，
-其中 `γ` 是环境，`M` 是输入项，`V` 是结果值。**值（Value）** 是一个项为 λ-抽象的闭包。
+其中 `γ` 是环境，`M` 是输入项，`V` 是结果值。**值（Value）**是一个项为 λ-抽象的闭包。
 
 ```agda
 data _⊢_⇓_ : ∀{Γ} → ClosEnv Γ → (Γ ⊢ ★) → Clos → Set where
@@ -641,7 +641,7 @@ related to `L` by a standard reduction sequence.
 在文章 **Call-by-name, call-by-value, and the λ-calculus** 中，
 Plotkin 使用两个辅助归约关系分两步完成了证明。
 第一步使用了 Curry-Feys 标准化这一经典方法，
-它依赖于 **标准归约序列（Standard Reduction Sequence）** 的概念，
+它依赖于**标准归约序列（Standard Reduction Sequence）**的概念，
 通过将传名调用扩展为也包括 λ-抽象之下的归约，
 标准归约序列充当了完整 β-归约与传名调用求值的中间点。
 Plotkin 证明了 `M` 能被归约为 `L` 当且仅当 `M` 与 `L` 通过一个标准归约序列相关。
@@ -660,7 +660,7 @@ call-by-name and uses the above theorem to prove that beta reduction
 and left reduction are equivalent in the following sense.
 -->
 
-Plotkin 接着引入了**左归约（Left Reduction）** 作为传名调用的小步版本，
+Plotkin 接着引入了**左归约（Left Reduction）**作为传名调用的小步版本，
 并且用上方的定理证明了 β-归约与左归约在如下意义上等价。
 
 <!--
@@ -731,7 +731,7 @@ soundness and adequacy of the denotational semantics.
 
 我们不通过上文描述的标准化方式来完成充分性的证明，
 而是将其推迟到发展出 λ-演算的指称语义后，
-此时该证明是指称语义的可靠性（soundness）和充分性（adequacy）的推论。
+此时该证明是指称语义的**可靠性（Soundness）**和**充分性（Adequacy）**的推论。
 
 # Unicode
 

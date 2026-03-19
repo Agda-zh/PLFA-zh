@@ -20,7 +20,7 @@ correspondence between connectives of logic and data types, a
 principle known as _Propositions as Types_:
 -->
 
-本章节介绍基础的逻辑运算符。我们使用逻辑运算符与数据类型之间的对应关系，
+本章节介绍基础的逻辑联结词。我们使用逻辑联结词与数据类型之间的对应关系，
 即**命题即类型（Propositions as Types）**原理。
 
 <!--
@@ -142,10 +142,10 @@ holds-how to _use_ the connective.[^from-wadler-2015]
 
 其他的术语将 `⟨_,_⟩` 称作**引入（Introduce）**合取，将 `proj₁` 和 `proj₂` 称作**消去（Eliminate）**合取。
 前者亦记作 `×-I`，后者 `×-E₁` 和 `×-E₂`。如果我们从上到下来阅读这些规则，引入和消去
-正如其名字所说的那样：第一条**引入**一个运算符，所以运算符出现在结论中，而不是假设中；
-第二条**消去**一个带有运算符的式子，而运算符出现在假设中，而不是结论中。引入规则描述了
-运算符在什么情况下成立——即怎么样**定义**一个运算符。消去规则描述了运算符成立时，可以得出
-什么样的结论——即怎么样**使用**一个运算符。[^from-wadler-2015]
+正如其名字所说的那样：第一条**引入**一个联结词，所以联结词出现在结论中，而不是假设中；
+第二条**消去**一个带有联结词的式子，而联结词出现在假设中，而不是结论中。引入规则描述了
+联结词在什么情况下成立——即怎么样**定义**一个联结词。消去规则描述了联结词成立时，可以得出
+什么样的结论——即怎么样**使用**一个联结词。[^from-wadler-2015]
 
 <!--
 Applying each destructor and reassembling the results with the
@@ -1455,7 +1455,7 @@ This chapter uses the following unicode:
     ⇔  U+21D4  LEFT RIGHT DOUBLE ARROW (\<=>)
 -->
 
-本章节使用下列 Unicode：
+本章中使用了以下 Unicode：
 
     ×  U+00D7  乘法符号 (\x)
     ⊎  U+228E  多重集并集 (\u+)

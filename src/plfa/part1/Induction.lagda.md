@@ -765,7 +765,7 @@ that the order of the operands does not matter:
 The proof requires that we first demonstrate two lemmas.
 -->
 
-要证明它，我们需要先证明两条引理（Lemma）。
+要证明它，我们需要先证明两条**引理（Lemma）**。
 
 <!--
 ## The first lemma

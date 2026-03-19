@@ -1128,7 +1128,7 @@ Section [Logical Connectives](/Decidable/#logical-connectives).
 -->
 
 写在文件的开始可以让 Agda 在不同情况相互重叠时产生一个错误，
-有些时候这会有帮助。我们会在[逻辑连接符](/Decidable/#logical-connectives)部分
+有些时候这会有帮助。我们会在[逻辑联结词](/Decidable/#logical-connectives)部分
 展示一个这样的例子。
 
 <!--
@@ -1921,7 +1921,7 @@ This chapter uses the following unicode:
     ∎  U+220E  END OF PROOF (\qed)
 -->
 
-这一章使用了如下的 Unicode 符号：
+本章中使用了以下 Unicode：
 
     ℕ  U+2115  双线体大写 N (\bN)
     →  U+2192  右箭头 (\to, \r, \->)

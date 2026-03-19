@@ -14,8 +14,8 @@ of many of the techniques we have developed so far, and provides
 examples of polymorphic types and higher-order functions.
 -->
 
-本章节讨论列表（List）数据类型。我们用列表作为例子，来使用我们之前学习的技巧。同时，
-列表也给我们带来多态类型（Polymorphic Types）和高阶函数（Higher-order Functions）的例子。
+本章节讨论**列表（List）**数据类型。我们用列表作为例子，来使用我们之前学习的技巧。同时，
+列表也给我们带来**多态类型（Polymorphic Types）**和**高阶函数（Higher-order Functions）**的例子。
 
 <!--
 # Imports
@@ -648,7 +648,7 @@ on which we recurse becomes _smaller_.
 Shunt is related to reverse as follows:
 -->
 
-转移（Shunt）与反转的关系如下：
+**转移（Shunt）**与反转的关系如下：
 
 ```agda
 shunt-reverse : ∀ {A : Set} (xs ys : List A)
@@ -1962,7 +1962,7 @@ ranges over a binary relation).
 This chapter uses the following unicode:
 -->
 
-本章使用了下列 Unicode：
+本章中使用了以下 Unicode：
 
 <!--
     ∷  U+2237  PROPORTION  (\::)

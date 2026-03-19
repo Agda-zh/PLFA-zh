@@ -17,7 +17,7 @@ satisfy properties akin to associativity, commutativity, and
 distributivity.
 -->
 
-本部分介绍同构（Isomorphism）与嵌入（Embedding）。
+本部分介绍**同构（Isomorphism）**与**嵌入（Embedding）**。
 同构可以断言两个类型是相等的，嵌入可以断言一个类型比另一个类型小。
 我们会在下一章中使用同构来展示类型上的运算，例如积或者和，满足类似于交换律、结合律和分配律的性质。
 
@@ -817,7 +817,7 @@ This chapter uses the following unicode:
     ⇔  U+21D4  LEFT RIGHT DOUBLE ARROW (\<=>)
 -->
 
-本章节使用了如下 Unicode：
+本章中使用了以下 Unicode：
 
     ∘  U+2218  环运算符 (\o, \circ, \comp)
     λ  U+03BB  小写希腊字母 LAMBDA (\lambda, \Gl)

@@ -56,7 +56,7 @@ If we write `⇛*` for the reflexive and transitive closure of `⇛`, then
 confluence of `⇛*` follows immediately from the diamond property.
 -->
 
-合流性（Confluence）也在许多 λ-演算外的重写系统中被研究，
+**合流性（Confluence）**也在许多 λ-演算外的重写系统中被研究，
 并且如何在满足**菱形性质（Diamond Property）**，
 一种合流性的单步版本的重写系统中证明合流性是广为人知的。
 令 `⇛` 为一个关系。`⇛` 具有菱形性质，
@@ -988,7 +988,7 @@ paper by @Nipkow:1996.
 -->
 
 这种机械化的合流性证明基于几个来源。
-`subst-par` 引理是 @Schafer:2015 的「强替换性（Strong Substitutivity）」 引理。
+`subst-par` 引理是 @Schafer:2015 的「**强替换性（Strong Substitutivity）**」引理。
 `par-triangle`、`strip` 和 `par-confluence` 的证明基于 @Takahashi:1995
 完全发展的概念，以及 @Pfenning:1992 关于 Church-Rosser 定理的技术报告。
 此外，我们参考了 Nipkow 和 Berghofer 在 Isabelle 中的机械化，

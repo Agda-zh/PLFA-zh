@@ -17,7 +17,7 @@ sequences for us.
 -->
 
 本章涵盖了上一章所介绍的简单类型 λ-演算的性质。
-在这些性质中最为重要的是可进性（Progress）与保型性（Preservation）。
+在这些性质中最为重要的是**可进性（Progress）**与**保型性（Preservation）**。
 我们将在稍后介绍它们，并展示如何通过组合它们来使 Agda 为我们计算归约序列。
 
 <!--
@@ -2592,7 +2592,7 @@ other alterations we would wish to make to the system?
 This chapter uses the following unicode:
 -->
 
-本章使用了下列 Unicode：
+本章中使用了以下 Unicode：
 
     ƛ  U+019B  LATIN SMALL LETTER LAMBDA WITH STROKE (\Gl-)
     Δ  U+0394  GREEK CAPITAL LETTER DELTA (\GD or \Delta)

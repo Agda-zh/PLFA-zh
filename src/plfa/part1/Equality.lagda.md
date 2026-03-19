@@ -1305,7 +1305,7 @@ This chapter uses the following unicode:
     ₂  U+2082  SUBSCRIPT TWO (\_2)
 -->
 
-本章节使用下列 Unicode：
+本章中使用了以下 Unicode：
 
     ≡  U+2261  等同于 (\==, \equiv)
     ⟨  U+27E8  数学左尖括号 (\<)
