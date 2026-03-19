@@ -239,7 +239,7 @@ Set (lsuc (lsuc lzero))</code></pre><p>以此类推。我们还有一个运算�
 </pre><p>更多关于层级的信息可以从<a href="https://agda.readthedocs.io/en/v2.6.1/language/universe-levels.html">Agda 文档</a>中查询。</p><h2 id="标准库">标准库</h2><p>标准库中可以找到与本章节中相似的定义。Agda 标准库将 <code>_≡⟨_⟩_</code> 定义为 <code>step-≡</code>， <a href="https://github.com/agda/agda-stdlib/blob/master/CHANGELOG/v1.3.md#changes-to-how-equational-reasoning-is-implemented">它反转了参数的顺序</a>。标准库还定义了一个语法宏，它可以在你导入 <code>step-≡</code> 时被自动导入，它能够恢复原始的参数顺序：</p><pre class="Agda"><a id="plfa_plfa-part1-Equality-31912" class="Comment">-- import Relation.Binary.PropositionalEquality as Eq</a>
 <a id="plfa_plfa-part1-Equality-31966" class="Comment">-- open Eq using (_≡_; refl; trans; sym; cong; cong-app; subst)</a>
 <a id="plfa_plfa-part1-Equality-32030" class="Comment">-- open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; step-≡; _∎)</a>
-</pre><p>这里的导入以注释的形式给出，以防止冲突，如引言中解释的那样。</p><h2 id="unicode">Unicode</h2><p>本章节使用下列 Unicode：</p><pre><code>≡  U+2261  等同于 (\==, \equiv)
+</pre><p>这里的导入以注释的形式给出，以防止冲突，如引言中解释的那样。</p><h2 id="unicode">Unicode</h2><p>本章中使用了以下 Unicode：</p><pre><code>≡  U+2261  等同于 (\==, \equiv)
 ⟨  U+27E8  数学左尖括号 (\&lt;)
 ⟩  U+27E9  数学右尖括号 (\&gt;)
 ∎  U+220E  证毕 (\qed)
