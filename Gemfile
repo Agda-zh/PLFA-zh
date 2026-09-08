@@ -3,3 +3,4 @@
 source 'https://rubygems.org'
 
 gem 'html-proofer', "~> 5.2.0", :require => false
+gem 'json', ">= 2.21.2", "< 3"
