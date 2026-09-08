@@ -13,10 +13,10 @@ on:
   merge_group:
 
 env:
-  DEFAULT_AGDA_VERSION: "2.7.0"
+  DEFAULT_AGDA_VERSION: "2.7.0.1"
   DEFAULT_AGDA_STDLIB_VERSION: "2.1"
-  DEFAULT_GHC_VERSION: "9.4.8"
-  DEFAULT_CABAL_VERSION: "3.10.1.0"
+  DEFAULT_GHC_VERSION: "9.12.4"
+  DEFAULT_CABAL_VERSION: "3.16.1.0"
   DEFAULT_EPUBCHECK_VERSION: "4.2.6"
   NOKOGIRI_USE_SYSTEM_LIBRARIES: true
 
@@ -52,26 +52,20 @@ jobs:
           #   Version 2.0 of the standard library breaks backwards compatibility.
           #   Therefore, versions of Agda before 2.6.4.3 are no longer supported.
 
-          # Newer versions of GHC
-          - name: "Build with newer GHC 9.8.2"
-            ghc-version: "9.8.2"
-          # - name: "Build with newer GHC 9.6.6"
-          #   ghc-version: "9.6.6"
-
           # Older versions of GHC
-          # - name: "Build with older GHC 9.2.8"
-          #   ghc-version: "9.2.8"
-          # - name: "Build with older GHC 9.0.2"
-          #   ghc-version: "9.0.2"
-          # - name: "Build with older GHC 8.10.7"
-          #   ghc-version: "8.10.7"
+          - name: "Build with older GHC 9.10.3"
+            ghc-version: "9.10.3"
+          # - name: "Build with older GHC 9.8.4"
+          #   ghc-version: "9.8.4"
+          # - name: "Build with older GHC 9.6.7"
+          #   ghc-version: "9.6.7"
 
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os || 'ubuntu-latest' }}
     continue-on-error: ${{ matrix.experimental || false }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: "true"
 
@@ -105,7 +99,7 @@ jobs:
         uses: ./.github/actions/setup-calibre
 
       - name: "Cache build"
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: _cache
           key: build-${{ runner.os }}-${{ secrets.BUILD_CACHE_VERSION }}
@@ -148,7 +142,7 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: "true"
 
@@ -174,7 +168,7 @@ jobs:
           path: "site"
 
       - name: Publish to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.8.0
+        uses: JamesIves/github-pages-deploy-action@v4.9.0
         with:
           branch: web
           folder: "site"
@@ -187,7 +181,7 @@ jobs:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: "true"
 
